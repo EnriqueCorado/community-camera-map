@@ -44,9 +44,13 @@ export default function App() {
   const [showAbout, setShowAbout] = useState(false);
   const [accessFor, setAccessFor] = useState<Attribution | null>(null);
   const [bakedAt, setBakedAt] = useState<string | null>(null);
+  const [liveAt, setLiveAt] = useState<string | null>(null);
 
   useEffect(() => {
-    api.meta().then((m) => setBakedAt(m.baked_at ?? null));
+    api.meta().then((m) => {
+      setBakedAt(m.baked_at ?? null);
+      setLiveAt(m.live_at ?? null);
+    });
   }, []);
 
   // Keep the URL hash in sync so the current view is shareable.
@@ -106,6 +110,7 @@ export default function App() {
         onCoverageCenter={() => setCoverageCenterTick((n) => n + 1)}
         coverageHits={coverageHits}
         bakedAt={bakedAt}
+        liveAt={liveAt}
         onAbout={() => setShowAbout(true)}
       />
       <main className="stage">

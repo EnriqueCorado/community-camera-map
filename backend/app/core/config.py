@@ -58,6 +58,10 @@ class Settings(BaseSettings):
     airnow_api_key: str = ""
     airnow_zips: tuple[str, ...] = ("95354", "95350", "95382", "95307", "95361", "95367")
 
+    # --- Windy Webcams API (free key: https://api.windy.com/keys, "Webcams API").
+    # Sent as a header, never in URLs/logs. Used server-side/at bake time only.
+    windy_api_key: str = ""
+
     # --- Future state (documented extension points; not yet wired) ---
     # database_url: str = "sqlite+aiosqlite:///./cams.db"
     # See README "Roadmap" for how the service layer becomes a repository.

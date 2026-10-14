@@ -63,8 +63,11 @@ async def get_layer(name: str, service: LayerService = Depends(get_service)) -> 
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     except httpx.HTTPError as exc:
         raise HTTPException(status_code=502, detail="Upstream layer source unavailable") from exc
+    # Browser caching follows the layer's own freshness (15 s for flights, …).
+    layer = next((x for x in service.list_layers() if x.name == name), None)
+    ttl = layer.ttl if layer and layer.ttl is not None else service.settings.overlay_ttl_seconds
     return Response(
         content=body,
         media_type="application/geo+json",
-        headers={"Cache-Control": "max-age=3600"},
+        headers={"Cache-Control": f"max-age={max(5, min(3600, ttl))}"},
     )

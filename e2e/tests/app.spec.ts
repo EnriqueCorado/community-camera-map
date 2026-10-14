@@ -134,6 +134,8 @@ const OVERLAYS = [
   "Dams",
   "Wildfire cameras",
   "River cameras",
+  "Smoke & haze (experimental)",
+  "Flights overhead",
 ];
 
 for (const label of OVERLAYS) {
@@ -174,11 +176,13 @@ for (const label of OVERLAYS) {
       Dams: "dams",
       "Wildfire cameras": "fire-cameras",
       "River cameras": "river-cameras",
+      "Smoke & haze (experimental)": "smoke-haze",
+      "Flights overhead": "flights",
     }[label]!;
 
     const resp = page.waitForResponse(
       (r) => r.url().includes(`/api/layers/${slug}`),
-      { timeout: 20000 },
+      { timeout: 40000 }, // smoke-haze scores ~14 camera frames on a cold cache
     );
     await toggle.click();
     const r = await resp;
@@ -260,4 +264,91 @@ test("rapidly toggling the camera layer does not error", async ({ page }) => {
   for (let i = 0; i < 6; i++) await cams.click();
   await page.waitForTimeout(500);
   expect(realErrors(errors), realErrors(errors).join("\n")).toEqual([]);
+});
+
+// ---------------- Imagery & live layers ----------------
+
+test("rain radar animates the last hour of RainViewer frames", async ({ page }) => {
+  const errors = trackErrors(page);
+  await page.goto("/");
+  await waitForMap(page);
+  const tiles = page.waitForResponse((r) => r.url().startsWith("https://tilecache.rainviewer.com/v2/radar/"), {
+    timeout: 20000,
+  });
+  await page.getByText("Rain radar", { exact: true }).click();
+  expect((await tiles).status()).toBe(200);
+  const frameOpacities = () =>
+    page.evaluate(() => {
+      const m = (window as any).__map;
+      return m.getStyle().layers.filter((l: any) => l.id.startsWith("ov-rain-radar-f")).map((l: any) => m.getPaintProperty(l.id, "raster-opacity"));
+    });
+  await expect.poll(async () => (await frameOpacities()).length).toBeGreaterThan(1);
+  // Exactly one frame is shown at a time, and the shown frame changes.
+  const first = await frameOpacities();
+  expect(first.filter((o: number) => o > 0)).toHaveLength(1);
+  await expect.poll(async () => (await frameOpacities()).indexOf(0.7)).not.toBe(first.indexOf(0.7));
+  // Off removes every frame.
+  await page.getByText("Rain radar", { exact: true }).click();
+  await expect.poll(async () => (await frameOpacities()).length).toBe(0);
+  expect(realErrors(errors), realErrors(errors).join("\n")).toEqual([]);
+});
+
+test("satellite loads yesterday's NASA GIBS tiles, with attribution and no download button", async ({ page }) => {
+  await page.goto("/");
+  await waitForMap(page);
+  const yesterday = new Date(Date.now() - 86_400_000).toISOString().slice(0, 10);
+  const tiles = page.waitForResponse((r) => r.url().includes(`/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/${yesterday}/`), {
+    timeout: 20000,
+  });
+  await page.getByText("Satellite (yesterday)", { exact: true }).click();
+  expect((await tiles).status()).toBe(200);
+  await expect(page.locator(".maplibregl-ctrl-attrib")).toContainText("NASA EOSDIS GIBS");
+  await expect(page.getByRole("button", { name: /Download Satellite/ })).toHaveCount(0);
+});
+
+test("Windy webcams show 'needs API key' until a key is configured", async ({ page }) => {
+  await page.goto("/");
+  await waitForMap(page);
+  const row = page.locator(".layerrow", { hasText: "Windy webcams" });
+  await expect(row).toContainText("needs API key");
+  await expect(row.locator("input")).toBeDisabled();
+});
+
+test("flights refresh themselves while the layer is on", async ({ page }) => {
+  await page.clock.install();
+  let calls = 0;
+  await page.route("**/api/layers/flights", (route) => {
+    calls++;
+    route.fulfill({
+      contentType: "application/geo+json",
+      body: JSON.stringify({
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            geometry: { type: "Point", coordinates: [-120.99 + calls * 0.01, 37.64] },
+            properties: { callsign: `TEST${calls}`, type: "C172", alt_ft: 3000, on_ground: false, speed_kt: 100, track: 90 },
+          },
+        ],
+      }),
+    });
+  });
+  await page.goto("/#ov=flights&v=-120.99,37.64,10");
+  await waitForMap(page);
+  await expect.poll(() => calls).toBeGreaterThanOrEqual(1);
+  const before = calls;
+  await page.clock.fastForward(16_000);
+  await expect.poll(() => calls).toBeGreaterThan(before);
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        (window as any).__map.querySourceFeatures("ov-flights").map((f: any) => f.properties.callsign),
+      ),
+    )
+    .toContain(`TEST${calls}`);
+  // Switched off: no more polling.
+  await page.getByText("Flights overhead", { exact: true }).click();
+  const after = calls;
+  await page.clock.fastForward(60_000);
+  expect(calls).toBe(after);
 });

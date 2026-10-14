@@ -160,6 +160,8 @@ WEBCAM_PAGE_HOSTS = (
     "www.alertwildfire.org",
     "alertwildfire.org",
     "apps.usgs.gov",
+    "www.windy.com",
+    "webcams.windy.com",
 )
 
 
@@ -253,3 +255,95 @@ def usgs_cameras(payload: object) -> dict:
             )
         )
     return _fc(feats)
+
+
+def windy_webcams(payload: object) -> dict:
+    """Windy Webcams API v3 `/webcams` response -> points.
+
+    Free-tier image URLs expire after 10 minutes, so we keep only the stable
+    page/player links; the popup links out to Windy's live view.
+    """
+    rows = payload.get("webcams", []) if isinstance(payload, dict) else []
+    feats = []
+    for w in rows:
+        if not isinstance(w, dict) or str(w.get("status", "active")) != "active":
+            continue
+        loc = w.get("location") or {}
+        lat, lon = _num(loc.get("latitude")), _num(loc.get("longitude"))
+        if lat is None or lon is None:
+            continue
+        urls = w.get("urls") or {}
+        player = w.get("player") or {}
+        page = _https_on(urls.get("detail"), WEBCAM_PAGE_HOSTS) or _https_on(
+            player.get("day") or player.get("live"), WEBCAM_PAGE_HOSTS
+        )
+        if not page:  # no image either (expiring), so nothing useful to show
+            continue
+        feats.append(
+            _pt(
+                lon,
+                lat,
+                {
+                    "name": str(w.get("title") or "").strip(),
+                    "network": "Windy",
+                    "county": str(loc.get("city") or "").strip(),
+                    "image": "",
+                    "page": page,
+                },
+            )
+        )
+    return _fc(feats)
+
+
+# readsb `dbFlags` bits: 1 military, 2 interesting, 4 PIA, 8 LADD.
+ADSB_PIA = 4
+ADSB_LADD = 8
+
+
+def _round(v: object) -> int | None:
+    n = _num(v)
+    return None if n is None else round(n)
+
+
+def adsb_flights(payload: object) -> dict:
+    """adsb.fi / readsb `aircraft` JSON -> points.
+
+    Keeps only what an aircraft broadcasts about its flight (callsign, type,
+    altitude, speed, heading); owner/operator and registration fields are
+    dropped. A private plane's callsign is often its tail number, so aircraft
+    whose owners opted out of tracking (FAA LADD, or a PIA privacy address)
+    are excluded entirely. Missing values stay None (never "0 ft").
+    """
+    rows = payload.get("aircraft", []) if isinstance(payload, dict) else []
+    feats = []
+    for a in rows:
+        if not isinstance(a, dict):
+            continue
+        flags = a.get("dbFlags")
+        if isinstance(flags, int) and flags & (ADSB_PIA | ADSB_LADD):
+            continue
+        lat, lon = _num(a.get("lat")), _num(a.get("lon"))
+        if lat is None or lon is None:
+            continue
+        alt = a.get("alt_baro")
+        on_ground = alt == "ground"
+        feats.append(
+            _pt(
+                lon,
+                lat,
+                {
+                    "callsign": str(a.get("flight") or "").strip(),
+                    "type": str(a.get("desc") or a.get("t") or "").strip(),
+                    "alt_ft": 0 if on_ground else _round(alt),
+                    "on_ground": on_ground,
+                    "speed_kt": _round(a.get("gs")),
+                    "track": _round(a.get("track")),
+                },
+            )
+        )
+    fc = _fc(feats)
+    # When these positions were true (lets the browser glide dots forward).
+    now = _num(payload.get("now")) if isinstance(payload, dict) else None
+    if now is not None:
+        fc["generated_at"] = now
+    return fc

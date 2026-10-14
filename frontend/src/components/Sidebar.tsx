@@ -99,6 +99,7 @@ interface Props {
   onCoverageCenter: () => void;
   coverageHits: number | null;
   bakedAt: string | null;
+  liveAt: string | null;
   onAbout: () => void;
 }
 
@@ -117,6 +118,7 @@ export function Sidebar({
   onCoverageCenter,
   coverageHits,
   bakedAt,
+  liveAt,
   onAbout,
 }: Props) {
   const { lang, setLang, t, locale } = useI18n();
@@ -183,7 +185,11 @@ export function Sidebar({
             {t("about")}
           </button>
           <span className="sidebar__asof">
-            {bakedAt
+            {bakedAt && liveAt
+              ? t("liveAsOf", {
+                  time: new Date(liveAt).toLocaleString(locale, { dateStyle: "short", timeStyle: "short" }),
+                })
+              : bakedAt
               ? t("dataAsOf", { date: new Date(bakedAt).toLocaleDateString(locale) })
               : t("dataLive")}
           </span>
@@ -262,7 +268,7 @@ export function Sidebar({
                 )}
               </span>
             </label>
-            {(layers.overlays[l.name] ?? false) && (
+            {(layers.overlays[l.name] ?? false) && l.category !== "raster" && (
               <button
                 type="button"
                 className="dl"

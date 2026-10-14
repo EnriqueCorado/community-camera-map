@@ -1,11 +1,18 @@
 # Builds the static site (pre-baked data in frontend/public/data, no backend)
-# and publishes it to GitHub Pages on every push to main.
+# and publishes it to GitHub Pages on every push to main — and every 15 minutes,
+# refreshing the live, keyless layers (flights, fires, quakes, …) first so the
+# public site stays current without a server. Hourly runs also refresh the
+# heavier layers (haze index, webcam lists). Nothing is committed back.
 # Actions are pinned to commit SHAs (tag noted alongside) for supply-chain safety.
 name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: "*/15 * * * *" # fast live layers (flights, fires, quakes, …)
+    - cron: "7 * * * *" # hourly: + haze index and webcam lists (its own cron, so a
+    #                       delayed fast run can never skip it)
   workflow_dispatch:
 
 permissions:
@@ -13,13 +20,33 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  # Queue rather than cancel: a scheduled refresh must not kill a push deploy.
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.21"
+      - name: Refresh live layers (fast)
+        if: github.event_name == 'schedule' && github.event.schedule == '*/15 * * * *'
+        working-directory: backend
+        # No secrets here: this step decodes third-party data every 15 minutes.
+        run: uv run --locked python scripts/refresh_live.py
+      - name: Refresh live layers (hourly, and on every push / manual run)
+        if: github.event_name != 'schedule' || github.event.schedule == '7 * * * *'
+        working-directory: backend
+        run: uv run --locked python scripts/refresh_live.py --hourly
+      - name: Refresh Windy webcams (only step that sees the key)
+        if: github.event_name != 'schedule' || github.event.schedule == '7 * * * *'
+        working-directory: backend
+        env:
+          # Optional; the Windy layer stays "needs API key" without it.
+          CAM_WINDY_API_KEY: ${{ secrets.WINDY_API_KEY }}
+        run: uv run --locked python scripts/refresh_live.py --only windy-webcams
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22

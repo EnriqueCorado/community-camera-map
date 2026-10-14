@@ -49,6 +49,11 @@ export const OVERLAY_COLOR: Record<string, string> = {
   dams: "#0e7490",
   "fire-cameras": "#ea580c",
   "river-cameras": "#0284c7",
+  "windy-webcams": "#db2777",
+  "smoke-haze": "#78716c",
+  flights: "#3b82f6",
+  "rain-radar": "#22c55e",
+  satellite: "#0f766e",
 };
 
 // CalEnviroScreen overall percentile ramp (green = low burden, red = high).

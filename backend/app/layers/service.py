@@ -25,7 +25,7 @@ import httpx
 
 from ..core.config import Settings
 from ..core.http import fetch_capped
-from . import arcgis, census, transforms
+from . import arcgis, census, haze, transforms
 
 logger = logging.getLogger(__name__)
 
@@ -48,6 +48,8 @@ class Layer:
     requires_key: bool = False
     # per-layer cache TTL; None => settings.overlay_ttl_seconds (for live feeds)
     ttl: int | None = None
+    # tiles drawn straight from a public tile server in the browser (no GeoJSON)
+    client_side: bool = False
 
 
 # County bounding box (WGS84) for spatially filtering large statewide/national layers.
@@ -109,6 +111,40 @@ def _json_transform(url: str, transform: Callable[[object], dict]) -> Loader:
         return transform(json.loads(body))
 
     return load
+
+
+WINDY_URL = "https://api.windy.com/webcams/api/v3/webcams"
+WINDY_RADIUS_KM = 150  # around Modesto
+WINDY_MAX_PAGES = 10  # 50 per page
+
+
+async def _windy(client: httpx.AsyncClient, s: Settings) -> dict:
+    """Windy public webcams near Modesto (needs a free key, sent as a header)."""
+    if not s.windy_api_key:
+        raise census.CensusKeyMissing("Set CAM_WINDY_API_KEY (free: https://api.windy.com/keys)")
+    rows: list = []
+    for page in range(WINDY_MAX_PAGES):
+        body, _ = await fetch_capped(
+            client,
+            WINDY_URL,
+            max_bytes=4 * 1024 * 1024,
+            params={
+                "nearby": f"{haze.CENTER[0]},{haze.CENTER[1]},{WINDY_RADIUS_KM}",
+                "include": "location,urls,player",
+                "limit": 50,
+                "offset": page * 50,
+            },
+            headers={"x-windy-api-key": s.windy_api_key},  # header only: never in URLs/logs
+        )
+        payload = json.loads(body)
+        batch = payload.get("webcams", []) if isinstance(payload, dict) else []
+        rows.extend(batch)
+        total = payload.get("total") if isinstance(payload, dict) else None
+        if len(batch) < 50 or (isinstance(total, int) and len(rows) >= total):
+            break
+    return transforms.windy_webcams({"webcams": rows})
+
+
 
 
 async def _airnow(client: httpx.AsyncClient, s: Settings) -> dict:
@@ -440,6 +476,52 @@ LAYERS: dict[str, Layer] = {
         ),
         ttl=24 * 3600,
     ),
+    "windy-webcams": Layer(
+        name="windy-webcams",
+        title="Windy webcams",
+        description="Public webcams within 150 km of Modesto listed on Windy.com.",
+        category="webcam",
+        loader=_windy,
+        requires_key=True,
+        ttl=24 * 3600,
+    ),
+    "smoke-haze": Layer(
+        name="smoke-haze",
+        title="Smoke & haze (experimental)",
+        description=(
+            "How washed-out the view is on ALERTCalifornia cameras near Modesto: an "
+            "experimental visibility index (smoke, fog or dust look alike)."
+        ),
+        category="haze",
+        loader=None,  # built in LayerService from the cached fire-cameras layer
+        ttl=3600,
+    ),
+    # --- Live & imagery ---
+    "flights": Layer(
+        name="flights",
+        title="Flights overhead",
+        description="Aircraft broadcasting ADS-B within ~80 nautical miles of Modesto (adsb.fi).",
+        category="flight",
+        loader=_json_transform(
+            "https://opendata.adsb.fi/api/v2/lat/37.64/lon/-120.99/dist/80",
+            transforms.adsb_flights,
+        ),
+        ttl=15,
+    ),
+    "rain-radar": Layer(
+        name="rain-radar",
+        title="Rain radar",
+        description="Latest precipitation radar (RainViewer).",
+        category="raster",
+        client_side=True,
+    ),
+    "satellite": Layer(
+        name="satellite",
+        title="Satellite (yesterday)",
+        description="True-color satellite imagery from NASA GIBS (VIIRS), previous day.",
+        category="raster",
+        client_side=True,
+    ),
     "river-cameras": Layer(
         name="river-cameras",
         title="River cameras",
@@ -471,6 +553,8 @@ class LayerService:
         return list(LAYERS.values())
 
     def is_available(self, layer: Layer) -> bool:
+        if layer.client_side:
+            return True
         if layer.file is not None:
             return (DATA_DIR / layer.file).is_file()
         if layer.requires_key:
@@ -478,6 +562,8 @@ class LayerService:
                 return bool(self.settings.census_api_key)
             if layer.name == "air-quality":
                 return bool(self.settings.airnow_api_key)
+            if layer.name == "windy-webcams":
+                return bool(self.settings.windy_api_key)
             return False
         return True
 
@@ -493,6 +579,8 @@ class LayerService:
         if layer is None:
             raise KeyError(name)
 
+        if layer.client_side:
+            raise KeyError(name)  # tiles come straight from the tile server; no GeoJSON
         if layer.file is not None:
             return self._file_bytes(name, layer.file)
 
@@ -506,9 +594,13 @@ class LayerService:
             entry = self._cache.get(name)
             if entry and (time.monotonic() - entry.fetched_at < ttl):
                 return entry.body
-            assert layer.loader is not None
             try:
-                data = await layer.loader(self.client, self.settings)
+                if name == "smoke-haze":  # reuse the cached camera list
+                    fire = json.loads(await self.get_bytes("fire-cameras"))
+                    data = await haze.build(self.client, fire)
+                else:
+                    assert layer.loader is not None
+                    data = await layer.loader(self.client, self.settings)
             except Exception as exc:
                 # Log only the exception TYPE, never the exception message: for
                 # keyed upstreams (AirNow/Census) httpx embeds the full request

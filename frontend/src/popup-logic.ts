@@ -54,6 +54,8 @@ export const WEBCAM_PAGE_HOSTS = [
   "alertwildfire.org",
   "www.alertwildfire.org",
   "apps.usgs.gov",
+  "www.windy.com",
+  "webcams.windy.com",
 ];
 
 /** `u` if it's an https URL on one of `hosts`, else null. Never trust data-supplied URLs. */

@@ -27,6 +27,8 @@ export interface LayerInfo {
 
 export interface Meta {
   baked_at?: string;
+  /** When the scheduled job last refreshed the live layers (flights, fires, …). */
+  live_at?: string;
 }
 
 let alprAccessCache: Promise<AlprAccess> | null = null;

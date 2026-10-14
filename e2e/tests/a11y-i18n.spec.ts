@@ -440,3 +440,38 @@ test("a site with two wildfire cameras shows both, with distinct links", async (
   expect(new Set(names).size).toBe(2);
   await expectNoA11yViolations(page, ".maplibregl-popup");
 });
+
+test("haze popup explains the reading and its limits", async ({ page }) => {
+  await page.goto("/#ov=smoke-haze&v=-121.373489,37.50692,11"); // Mt. Oso
+  await ready(page);
+  await waitForLayer(page, "ov-smoke-haze-circle");
+  expect(await clickFeature(page, "ov-smoke-haze-circle")).toBe(true);
+  const popup = page.locator(".maplibregl-popup");
+  await expect(popup.locator(".popup__kind")).toHaveText(/Smoke & haze/i);
+  await expect(popup.locator(".popup__row dt").first()).toHaveText("Haze");
+  await expect(popup).toContainText("Experimental");
+  await expect(popup.locator("figcaption")).toHaveText("Image: ALERTCalifornia | UC San Diego");
+  await expectNoA11yViolations(page, ".maplibregl-popup");
+});
+
+test("flight popup shows only flight data, in Spanish too", async ({ page }) => {
+  await page.route("**/api/layers/flights", (route) =>
+    route.fulfill({
+      contentType: "application/geo+json",
+      body: JSON.stringify({
+        type: "FeatureCollection",
+        features: [{ type: "Feature", geometry: { type: "Point", coordinates: [-120.99, 37.64] },
+          properties: { callsign: "SWA123", type: "BOEING 737-800", alt_ft: 12000, on_ground: false, speed_kt: 300, track: 45 } }],
+      }),
+    }),
+  );
+  await page.goto("/#lang=es&ov=flights&v=-120.99,37.64,10");
+  await ready(page);
+  await waitForLayer(page, "ov-flights-circle");
+  expect(await clickFeature(page, "ov-flights-circle")).toBe(true);
+  const popup = page.locator(".maplibregl-popup");
+  await expect(popup.locator(".popup__title")).toHaveText("SWA123");
+  await expect(popup).toContainText("12,000 pies"); // es-US groups with commas
+  await expect(popup).toContainText("300 nudos");
+  await expectNoA11yViolations(page, ".maplibregl-popup");
+});

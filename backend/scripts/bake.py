@@ -57,6 +57,11 @@ SOURCES = {
     "transit-stops": "Stanislaus Regional Transit Authority GTFS",
     "dams": "https://nid.sec.usace.army.mil",
     "fire-cameras": "ALERTCalifornia (UC San Diego) / ALERTWildfire, via Cal OES",
+    "smoke-haze": "Computed from ALERTCalifornia | UC San Diego frames",
+    "windy-webcams": "https://www.windy.com/webcams",
+    "flights": "https://adsb.fi (open data, ADS-B Exchange-style feed)",
+    "rain-radar": "https://www.rainviewer.com",
+    "satellite": "NASA EOSDIS GIBS / Worldview (VIIRS true color)",
     "river-cameras": "https://apps.usgs.gov/hivis (USGS)",
 }
 for _k in ("city-limits", "general-plan", "zoning", "annexations", "parks", "schools"):
@@ -67,6 +72,12 @@ for _k in ("zip-codes", "congressional-districts"):
     SOURCES[_k] = "US Census TIGERweb"
 for _k in ("hospitals", "law-enforcement", "airports", "amtrak"):
     SOURCES[_k] = "HIFLD / US DOT (ArcGIS)"
+
+
+# Live-only layers: the committed file is an empty placeholder; the scheduled
+# Pages workflow (scripts/refresh_live.py) writes real data at deploy time.
+LIVE_ONLY = {"flights"}
+EMPTY_FC = '{"type":"FeatureCollection","features":[]}'
 
 
 async def main() -> None:
@@ -100,6 +111,15 @@ async def main() -> None:
                 "source": SOURCES.get(layer.name, ""),
                 "available": False,
             }
+            if layer.client_side:  # browser loads tiles directly; nothing to bake
+                info["available"] = True
+                catalog.append(info)
+                continue
+            if layer.name in LIVE_ONLY:  # never commit live positions; CI fills these in
+                (OUT / "layers" / f"{layer.name}.geojson").write_text(EMPTY_FC)
+                info["available"] = True
+                catalog.append(info)
+                continue
             if not layers.is_available(layer):
                 print(f"  skip {layer.name} (unavailable — key not set)")
                 catalog.append(info)

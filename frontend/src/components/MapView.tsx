@@ -21,6 +21,7 @@ import {
   WEBCAM_PAGE_HOSTS,
 } from "../popup-logic";
 import { attribute, BASIS_KEY, describe, formatRecordDate, type AlprAccess, type Attribution } from "../alpr-access";
+import { deadReckon, gibsSatelliteUrl, RAINVIEWER_URL, radarFrames } from "../live";
 import { CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS } from "../colors";
 
 export interface LayerState {
@@ -433,10 +434,20 @@ export function MapView({
 
     for (const info of overlayInfos) {
       if (info.name === "alpr") continue; // ALPR has its own clustered handling
+      if (info.name === "rain-radar") continue; // animated: its own effect below
       const on = layers.overlays[info.name] ?? false;
       const loaded = overlaysLoadedRef.current.has(info.name);
 
-      if (on && !loaded && info.available) {
+      if (on && !loaded && info.available && info.category === "raster") {
+        overlaysLoadedRef.current.add(info.name);
+        rasterSource(info.name)
+          .then((r) => {
+            if (!r || !mapRef.current) throw new Error("no tiles");
+            addRaster(map, info.name, r);
+            setOverlayVisible(map, info.name, layersRef.current.overlays[info.name] ?? false);
+          })
+          .catch(() => overlaysLoadedRef.current.delete(info.name));
+      } else if (on && !loaded && info.available) {
         overlaysLoadedRef.current.add(info.name);
         fetch(api.layerUrl(info.name))
           .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
@@ -450,6 +461,124 @@ export function MapView({
       }
     }
   }, [layers.overlays, overlayInfos, ready]);
+
+  // --- Live flights: keep the dots moving while the layer is on. The dev API
+  // refreshes every 15 s; the static site's file is rebuilt every 15 min. ---
+  const flightsOn = layers.overlays["flights"] ?? false;
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready || !flightsOn) return;
+    let base: Parameters<typeof deadReckon>[0] | null = null;
+    const poll = () => {
+      if (document.hidden) return;
+      // Cache-bust in static mode: GitHub Pages serves data with a 10-minute max-age.
+      const url = `${api.layerUrl("flights")}${api.static ? `?t=${Math.floor(Date.now() / 60_000)}` : ""}`;
+      fetch(url)
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+        .then((data: Parameters<typeof deadReckon>[0]) => {
+          base = data;
+          (map.getSource("ov-flights") as GeoJSONSource | undefined)?.setData(deadReckon(data, Date.now() / 1000));
+        })
+        .catch(() => {}); // keep the last good positions
+    };
+    poll();
+    const fetchId = window.setInterval(poll, api.static ? 5 * 60_000 : 15_000);
+    const onVisible = () => !document.hidden && poll(); // catch up after a background tab
+    document.addEventListener("visibilitychange", onVisible);
+    // Glide dots along their heading between updates (fresh data only; the
+    // static snapshot is minutes old, so it isn't animated).
+    const moveId =
+      prefersReducedMotion() || api.static
+        ? undefined
+        : window.setInterval(() => {
+            const src = map.getSource("ov-flights") as GeoJSONSource | undefined;
+            if (!base || !src || document.hidden) return;
+            const next = deadReckon(base, Date.now() / 1000);
+            if (next !== base) src.setData(next);
+          }, 1000);
+    return () => {
+      window.clearInterval(fetchId);
+      document.removeEventListener("visibilitychange", onVisible);
+      if (moveId !== undefined) window.clearInterval(moveId);
+    };
+  }, [flightsOn, ready]);
+
+  // --- Rain radar: loop the last hour of RainViewer frames; refresh every
+  // 10 minutes so it stays current. Reduced motion shows only the latest. ---
+  const rainOn = layers.overlays["rain-radar"] ?? false;
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready) return;
+    const frameIds = () => (map.getStyle().layers ?? []).map((l) => l.id).filter((id) => id.startsWith("ov-rain-radar-f"));
+    const clear = () => {
+      try {
+        for (const id of frameIds()) {
+          map.removeLayer(id);
+          if (map.getSource(id)) map.removeSource(id);
+        }
+      } catch {
+        /* map already torn down (unmount) */
+      }
+    };
+    if (!rainOn) {
+      clear();
+      return;
+    }
+    let ids: string[] = [];
+    let i = 0;
+    let cancelled = false;
+    const show = (k: number, on: boolean) => {
+      const id = ids[k];
+      if (id && map.getLayer(id)) map.setPaintProperty(id, "raster-opacity", on ? 0.7 : 0);
+    };
+    const load = async () => {
+      try {
+        const r = await fetch(RAINVIEWER_URL);
+        const frames = radarFrames(r.ok ? await r.json() : null, prefersReducedMotion() ? 1 : 7);
+        if (cancelled || !frames.length || !mapRef.current) return;
+        clear();
+        const beforeId = map.getLayer("cam-clusters") ? "cam-clusters" : undefined;
+        ids = frames.map((f, k) => {
+          const id = `ov-rain-radar-f${k}`;
+          map.addSource(id, {
+            type: "raster",
+            tiles: [f.tiles],
+            tileSize: 256,
+            maxzoom: 7, // free tier; MapLibre scales tiles up beyond this
+            // Credit once (every frame source is "in use", so each would be listed).
+            ...(k === frames.length - 1
+              ? { attribution: '<a href="https://www.rainviewer.com/" target="_blank" rel="noopener noreferrer">RainViewer</a>' }
+              : {}),
+          });
+          map.addLayer(
+            { id, type: "raster", source: id, paint: { "raster-opacity": 0, "raster-fade-duration": 0 } },
+            beforeId,
+          );
+          return id;
+        });
+        i = ids.length - 1;
+        show(i, true);
+      } catch {
+        /* keep whatever frames we had */
+      }
+    };
+    void load();
+    const refreshId = window.setInterval(() => void load(), 10 * 60_000);
+    const stepId = prefersReducedMotion()
+      ? undefined
+      : window.setInterval(() => {
+          if (!ids.length || document.hidden) return;
+          show(i, false);
+          i = (i + 1) % ids.length;
+          show(i, true);
+        }, 700);
+    return () => {
+      cancelled = true;
+      window.clearInterval(refreshId);
+      if (stepId !== undefined) window.clearInterval(stepId);
+      clear();
+    };
+  }, [rainOn, ready]);
 
   // --- Coverage mode: crosshair cursor on, and clear markers when switched off. ---
   useEffect(() => {
@@ -551,7 +680,51 @@ function applyVisibility(map: maplibregl.Map, layers: LayerState) {
 
 // Add an overlay's source + layers, inserted beneath the camera points so dots
 // stay on top. Polygons render as a faint fill + outline; census is a choropleth.
-const OVERLAY_SUFFIXES = ["-fill", "-line", "-circle"];
+const OVERLAY_SUFFIXES = ["-fill", "-line", "-circle", "-label", "-raster"];
+
+/** Haze level -> dot color (green = clear … red = very hazy). */
+const HAZE_COLORS: [string, string][] = [
+  ["clear", "#16a34a"],
+  ["slightly-hazy", "#ca8a04"],
+  ["hazy", "#ea580c"],
+  ["very-hazy", "#b91c1c"],
+  ["night", "#475569"],
+];
+
+interface RasterSpec {
+  tiles: string[];
+  maxzoom: number;
+  attribution: string;
+  /** Satellite sits under the basemap's labels; radar sits over everything but cameras. */
+  under: "labels" | "cameras";
+  opacity: number;
+}
+
+/** Tile URL for a client-side raster layer (fetched from public tile servers). */
+export async function rasterSource(name: string, now = new Date()): Promise<RasterSpec | null> {
+  if (name === "satellite") {
+    return {
+      tiles: [gibsSatelliteUrl(now)],
+      maxzoom: 9,
+      attribution: '<a href="https://earthdata.nasa.gov/gibs" target="_blank" rel="noopener noreferrer">NASA EOSDIS GIBS</a>',
+      under: "labels",
+      opacity: 1,
+    };
+  }
+  return null;
+}
+
+function addRaster(map: maplibregl.Map, name: string, r: RasterSpec) {
+  const src = `ov-${name}`;
+  if (map.getSource(src)) return;
+  map.addSource(src, { type: "raster", tiles: r.tiles, tileSize: 256, maxzoom: r.maxzoom, attribution: r.attribution });
+  const firstSymbol = map.getStyle().layers.find((l) => l.type === "symbol")?.id;
+  const beforeId = r.under === "labels" ? firstSymbol : map.getLayer("cam-clusters") ? "cam-clusters" : undefined;
+  map.addLayer(
+    { id: `${src}-raster`, type: "raster", source: src, paint: { "raster-opacity": r.opacity }, layout: { visibility: "none" } },
+    beforeId,
+  );
+}
 
 function firstGeometryType(data: GeoJSON.FeatureCollection): string {
   return data.features.find((f) => f.geometry)?.geometry?.type ?? "Polygon";
@@ -571,7 +744,8 @@ function addOverlay(
   const beforeId = map.getLayer("cam-clusters") ? "cam-clusters" : undefined;
   const accent = OVERLAY_COLOR[info.name] ?? "#64748b";
   const geomType = firstGeometryType(data);
-  const isPoint = geomType.includes("Point");
+  // Live point layers can legitimately be empty (e.g. no flights right now).
+  const isPoint = geomType.includes("Point") || ["flight", "haze", "webcam"].includes(info.category);
 
   const bindPopup = (layerId: string) => {
     map.on("click", layerId, (e: LayerMouseEvent) => {
@@ -591,13 +765,24 @@ function addOverlay(
       info.category === "quake"
         ? ["interpolate", ["linear"], ["coalesce", ["get", "mag"], 1], 1, 3, 6, 16]
         : 6;
+    const color: maplibregl.ExpressionSpecification | string =
+      info.category === "haze"
+        ? (["match", ["get", "level"], ...HAZE_COLORS.flat(), "#94a3b8"] as unknown as maplibregl.ExpressionSpecification)
+        : info.category === "flight"
+          ? [
+              "case",
+              ["==", ["get", "on_ground"], true],
+              "#94a3b8",
+              ["interpolate", ["linear"], ["coalesce", ["get", "alt_ft"], 0], 0, "#06b6d4", 10000, "#3b82f6", 35000, "#7c3aed"],
+            ]
+          : accent;
     map.addLayer(
       {
         id: `${src}-circle`,
         type: "circle",
         source: src,
         paint: {
-          "circle-color": accent,
+          "circle-color": color,
           "circle-radius": radius,
           "circle-opacity": 0.85,
           "circle-stroke-width": 1.5,
@@ -608,6 +793,26 @@ function addOverlay(
       beforeId,
     );
     bindPopup(`${src}-circle`);
+    if (info.category === "flight") {
+      map.addLayer(
+        {
+          id: `${src}-label`,
+          type: "symbol",
+          source: src,
+          minzoom: 9,
+          layout: {
+            visibility: "none",
+            "text-field": ["get", "callsign"],
+            "text-font": LABEL_FONT,
+            "text-size": 11,
+            "text-offset": [0, 1.1],
+            "text-anchor": "top",
+          },
+          paint: { "text-color": "#1e3a8a", "text-halo-color": "#fff", "text-halo-width": 1.5 },
+        },
+        beforeId,
+      );
+    }
     return;
   }
 
@@ -886,6 +1091,14 @@ function facing(dir: unknown, t: TFn): string {
     .join(", ");
 }
 
+const HAZE_KEYS: Record<string, Parameters<TFn>[0]> = {
+  clear: "hazeClear",
+  "slightly-hazy": "hazeSlight",
+  hazy: "hazeHazy",
+  "very-hazy": "hazeVery",
+  night: "hazeNight",
+};
+
 function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nState): PopupSpec {
   const { t, lang, locale } = i18n;
   const kind = layerTitle(lang, info.name, info.title);
@@ -904,6 +1117,44 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
   const base = { kind, color };
 
   switch (info.category) {
+    case "flight": {
+      const onGround = p.on_ground === true;
+      return {
+        ...base,
+        title: str(p.callsign) || t("unknownCallsign"),
+        rows: [
+          [t("rowType"), str(p.type)],
+          [t("rowAltitude"), onGround ? t("onGround") : num(p.alt_ft) != null ? t("feet", { n: fmt(p.alt_ft) }) : ""],
+          [t("rowSpeed"), num(p.speed_kt) != null ? t("knots", { n: fmt(p.speed_kt) }) : ""],
+          [t("rowHeading"), num(p.track) != null ? `${fmt(p.track)}°` : ""],
+        ],
+      };
+    }
+    case "haze": {
+      const name = str(p.name) || kind;
+      const level = String(p.level ?? "unknown");
+      const levelKey = HAZE_KEYS[level] ?? "hazeUnknown";
+      return {
+        ...base,
+        title: name,
+        cameras: [
+          {
+            name,
+            src: typeof p.image === "string" ? p.image : undefined,
+            alt: t("webcamAlt", { name }),
+            credit: t("creditAlertCA"),
+            href: typeof p.page === "string" ? p.page : undefined,
+            linkLabel: t("openLiveView"),
+            newTab: t("opensNewTab"),
+          },
+        ],
+        rows: [
+          [t("rowHaze"), t(levelKey)],
+          [t("rowVisibility"), num(p.score) != null ? `${fmt(p.score)}/100` : ""],
+          [t("rowNote"), t("hazeNote")],
+        ],
+      };
+    }
     case "census":
       return {
         ...base,

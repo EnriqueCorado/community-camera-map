@@ -123,6 +123,33 @@ the viewer's IP when a popup opens):
   webcam layer.
 - **River cameras**: USGS HIVIS (public domain), via `api.waterdata.usgs.gov/nims/cameras`.
 
+Live & imagery layers:
+
+- **Flights overhead**: ADS-B positions from [adsb.fi](https://adsb.fi) open data (non-commercial).
+  We keep only callsign, type, altitude, speed and heading. Owner and registration are dropped.
+- **Smoke & haze (experimental)**: `backend/app/layers/haze.py` scores how washed-out each
+  ALERTCalifornia frame within 70 km of Modesto is (contrast in the frame's middle band). It
+  can't tell smoke from fog or dust. It's refreshed hourly and gentle on their servers (one
+  camera per site, at most 30).
+- **Rain radar** ([RainViewer](https://www.rainviewer.com), free tier, tiles at zoom 7 and
+  below) and **Satellite** (NASA GIBS VIIRS true color, previous day) are tiles the browser
+  loads directly (`client_side` layers). There's no GeoJSON to bake.
+- **Windy webcams** need a free key (see below). Free-tier image links expire after 10 min, so
+  popups link to Windy's live view instead of showing a stale still.
+
+**Keeping the public site live:** `.github/workflows/pages.yml` runs every 15 minutes. It calls
+`backend/scripts/refresh_live.py`, which re-fetches the keyless live layers (flights, fires,
+quakes, alerts, closures, signs, gauges; plus haze and webcam lists hourly) and then rebuilds
+and deploys. A layer whose fetch fails keeps its last committed file. Nothing is committed back.
+
+**Windy key (optional):** create a free account and key at https://api.windy.com/keys (choose
+"Webcams API"). Then:
+
+```bash
+echo 'CAM_WINDY_API_KEY=<key>' >> backend/.env          # local dev
+gh secret set WINDY_API_KEY                             # public site (prompts for the value)
+```
+
 Sources checked and **not** usable: Modesto's ~50 city traffic cameras (police real-time crime
 center only), red-light cameras, FAA WeatherCams (API needs credentials), Windy webcams (needs a
 key; its Modesto entries mirror Caltrans). Unsecured private IP cameras (Shodan/Insecam-style)

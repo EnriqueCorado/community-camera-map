@@ -21,9 +21,13 @@ async def fetch_capped(
     *,
     max_bytes: int,
     follow_redirects: bool = True,
+    params: dict | None = None,
+    headers: dict | None = None,
 ) -> tuple[bytes, str]:
     """GET `url`, returning (body, content_type), aborting past `max_bytes`."""
-    async with client.stream("GET", url, follow_redirects=follow_redirects) as resp:
+    async with client.stream(
+        "GET", url, params=params, headers=headers, follow_redirects=follow_redirects
+    ) as resp:
         resp.raise_for_status()
         content_type = resp.headers.get("content-type", "")
         declared = resp.headers.get("content-length")
