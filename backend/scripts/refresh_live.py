@@ -83,10 +83,36 @@ async def main(names: tuple[str, ...]) -> int:
     return 0
 
 
+def adopt(name: str) -> int:
+    """Mark `name` available if a valid FeatureCollection was dropped in place
+    (the Windy list is built in an isolated CI job and handed over as data)."""
+    path = OUT / "layers" / f"{name}.geojson"
+    try:
+        fc = json.loads(path.read_text())
+        ok = fc.get("type") == "FeatureCollection" and isinstance(fc.get("features"), list)
+    except (OSError, ValueError, AttributeError):
+        ok = False
+    if not ok:
+        path.unlink(missing_ok=True)
+        print(f"  no valid {name} artifact; left unavailable")
+        return 0
+    catalog_path = OUT / "layers.json"
+    catalog = json.loads(catalog_path.read_text())
+    for c in catalog:
+        if c["name"] == name:
+            c["available"] = True
+    catalog_path.write_text(json.dumps(catalog, separators=(",", ":")))
+    print(f"  adopted {name}: {len(fc['features'])} features")
+    return 0
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--hourly", action="store_true", help="also refresh slower/heavier layers")
     ap.add_argument("--only", help="comma-separated layer names (e.g. windy-webcams)")
+    ap.add_argument("--adopt", help="mark an already-present layer file available (CI artifact)")
     args = ap.parse_args()
+    if args.adopt:
+        raise SystemExit(adopt(args.adopt))
     chosen = tuple(args.only.split(",")) if args.only else FAST + (HOURLY if args.hourly else ())
     raise SystemExit(asyncio.run(main(chosen)))
