@@ -631,10 +631,19 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>): string {
         return title(`AQI ${p.aqi}`, escapeHtml(String(pick(["category", "parameter", "area"]) ?? "")));
       }
       if (p.streamflow_cfs != null || p.gage_height_ft != null) {
-        const parts = [
-          p.streamflow_cfs != null ? `${p.streamflow_cfs} cfs` : null,
-          p.gage_height_ft != null ? `${p.gage_height_ft} ft` : null,
-        ].filter(Boolean);
+        // Coerce to finite numbers before interpolating into popup HTML — never
+        // trust the data file's types.
+        // (null/""/booleans coerce to 0/1 via Number(), so reject them first.)
+        const num = (v: unknown) =>
+          (typeof v === "number" || (typeof v === "string" && v.trim() !== "")) &&
+          Number.isFinite(Number(v))
+            ? Number(v).toLocaleString()
+            : null;
+        const cfs = num(p.streamflow_cfs);
+        const ft = num(p.gage_height_ft);
+        const parts = [cfs != null ? `${cfs} cfs` : null, ft != null ? `${ft} ft` : null].filter(
+          Boolean,
+        );
         return title(String(p.name ?? "River gauge"), parts.join(" · "));
       }
       const label =

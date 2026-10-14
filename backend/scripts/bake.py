@@ -15,6 +15,7 @@ from __future__ import annotations
 import asyncio
 import datetime as dt
 import json
+import logging
 import sys
 from pathlib import Path
 
@@ -26,6 +27,11 @@ import httpx
 from app.cameras.service import CameraService
 from app.core.config import get_settings
 from app.layers.service import LayerService
+
+# httpx logs full request URLs (incl. Census/AirNow keys) at INFO — keep it quiet
+# even if logging is configured verbosely here later.
+for _noisy in ("httpx", "httpcore"):
+    logging.getLogger(_noisy).setLevel(logging.WARNING)
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 OUT = ROOT / "frontend" / "public" / "data"

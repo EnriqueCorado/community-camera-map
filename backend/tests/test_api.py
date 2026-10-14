@@ -81,3 +81,36 @@ def test_file_layer_served_as_geojson(client):
 def test_layer_name_cannot_traverse_paths(client):
     # Layer names are registry lookups, never filesystem paths.
     assert client.get("/api/layers/..%2F..%2Fetc%2Fpasswd").status_code == 404
+
+
+class SnapshotService(FakeCameraService):
+    def __init__(self, body: bytes, ctype: str) -> None:
+        self._body, self._ctype = body, ctype
+
+    async def fetch_snapshot(self, camera_id: str):
+        return (self._body, self._ctype) if camera_id == CAM.id else None
+
+
+@pytest.mark.parametrize(
+    ("upstream_type", "served_type"),
+    [
+        ("image/jpeg", "image/jpeg"),
+        ("image/png; charset=binary", "image/png"),
+        ("image/svg+xml", "image/jpeg"),  # SVG can carry script — never pass through
+        ("text/html", "image/jpeg"),
+    ],
+)
+def test_snapshot_only_serves_raster_types(client, upstream_type, served_type):
+    app.state.camera_service = SnapshotService(b"\x89PNG", upstream_type)
+    r = client.get(f"/api/cameras/{CAM.id}/snapshot")
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith(served_type)
+    assert r.headers["x-content-type-options"] == "nosniff"
+
+
+def test_http_client_loggers_never_log_request_urls():
+    # httpx logs full request URLs (incl. API-key query params) at INFO.
+    import logging
+
+    assert logging.getLogger("httpx").getEffectiveLevel() >= logging.WARNING
+    assert logging.getLogger("httpcore").getEffectiveLevel() >= logging.WARNING

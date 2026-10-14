@@ -11,6 +11,8 @@ from .service import CameraService
 
 router = APIRouter(prefix="/api/cameras", tags=["cameras"])
 
+_RASTER_TYPES = frozenset({"image/jpeg", "image/png", "image/gif", "image/webp"})
+
 
 def get_service(request: Request) -> CameraService:
     """Pull the singleton service created during app startup (see main.py)."""
@@ -50,9 +52,19 @@ async def get_snapshot(camera_id: str, service: CameraService = Depends(get_serv
     # Only ever serve this as an image, and tell the browser not to sniff — so a
     # tampered upstream can't get HTML rendered from our origin. Cache-Control
     # matches the upstream ~2 min refresh so browsers don't over-fetch.
-    safe_type = content_type if content_type.startswith("image/") else "image/jpeg"
+    # Allowlist raster types only: "image/svg+xml" is an image/* type that can carry
+    # script, so a prefix check would let a compromised upstream serve active
+    # content from our origin.
+    base_type = content_type.split(";", 1)[0].strip().lower()
+    safe_type = base_type if base_type in _RASTER_TYPES else "image/jpeg"
     return Response(
         content=content,
         media_type=safe_type,
-        headers={"Cache-Control": "max-age=120", "X-Content-Type-Options": "nosniff"},
+        headers={
+            "Cache-Control": "max-age=120",
+            "X-Content-Type-Options": "nosniff",
+            # Belt-and-braces: even if a browser ever renders this as a document,
+            # nothing in it may load or execute.
+            "Content-Security-Policy": "default-src 'none'; sandbox",
+        },
     )
