@@ -393,3 +393,50 @@ test("if the access data fails to load the popup still shows the basis and the p
   await page.keyboard.press("Escape");
   await expect(dialog).toHaveCount(0);
 });
+
+// ---------------- Public webcams ----------------
+
+test("wildfire-camera popup shows the live frame, credit and official link", async ({ page }) => {
+  // Mt. Oso (ALERTCalifornia), the fire camera inside Stanislaus County.
+  await page.goto("/#ov=fire-cameras&v=-121.373489,37.50692,12");
+  await ready(page);
+  await waitForLayer(page, "ov-fire-cameras-circle");
+  expect(await clickFeature(page, "ov-fire-cameras-circle", { network: "ALERTCalifornia" })).toBe(true);
+  const popup = page.locator(".maplibregl-popup");
+  await expect(popup.locator(".popup__kind")).toHaveText(/Wildfire cameras/i);
+  const img = popup.locator(".popup__image img");
+  await expect(img).toHaveAttribute("src", /^https:\/\/cameras\.alertcalifornia\.org\/.+latest-frame\.jpg\?t=\d+$/);
+  await expect(img).toHaveAttribute("alt", /Latest image from/);
+  await expect(popup.locator("figcaption").first()).toContainText("Image: ALERTCalifornia | UC San Diego");
+  const link = popup.getByRole("link", { name: /live view/ }).first();
+  await expect(link).toHaveAttribute("href", /^https:\/\/cameras\.alertcalifornia\.org\//);
+  await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  await expectNoA11yViolations(page, ".maplibregl-popup");
+});
+
+test("river-camera popup links to USGS", async ({ page }) => {
+  await page.goto("/#lang=es&ov=river-cameras&v=-121.6889444,38.14904444,13"); // Sacramento R. at Rio Vista
+  await ready(page);
+  await waitForLayer(page, "ov-river-cameras-circle");
+  expect(await clickFeature(page, "ov-river-cameras-circle")).toBe(true);
+  const popup = page.locator(".maplibregl-popup");
+  await expect(popup.locator(".popup__kind")).toHaveText(/Cámaras de ríos/i);
+  await expect(popup.locator("figcaption").first()).toHaveText("Imagen: Servicio Geológico de EE. UU.");
+  await expect(popup.getByRole("link", { name: /vista en vivo oficial/ })).toHaveAttribute(
+    "href",
+    /^https:\/\/apps\.usgs\.gov\/hivis\/camera\//,
+  );
+});
+
+test("a site with two wildfire cameras shows both, with distinct links", async ({ page }) => {
+  // Atlas Peak (Napa) has "Atlas Peak 1" and "Atlas Peak 2" at the same point.
+  await page.goto("/#ov=fire-cameras&v=-122.26678,38.45283,12");
+  await ready(page);
+  await waitForLayer(page, "ov-fire-cameras-circle");
+  expect(await clickFeature(page, "ov-fire-cameras-circle")).toBe(true);
+  const popup = page.locator(".maplibregl-popup");
+  await expect(popup.locator(".popup__cam")).toHaveCount(2);
+  const names = await popup.getByRole("link").evaluateAll((as) => as.map((a) => a.textContent));
+  expect(new Set(names).size).toBe(2);
+  await expectNoA11yViolations(page, ".maplibregl-popup");
+});

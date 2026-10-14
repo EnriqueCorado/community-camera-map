@@ -40,7 +40,8 @@ class Layer:
     name: str
     title: str
     description: str
-    category: str  # frontend rendering hint: alpr|boundary|landuse|census|fire|weather|quake|point
+    # frontend rendering hint: alpr|boundary|landuse|census|fire|weather|quake|point|webcam|…
+    category: str
     file: str | None = None
     loader: Loader | None = None
     # advisory flag so the frontend can show "needs setup" instead of an error
@@ -85,6 +86,17 @@ def _geojson(url: str) -> Loader:
     async def load(client: httpx.AsyncClient, _s: Settings) -> dict:
         body, _ = await fetch_capped(client, url, max_bytes=arcgis.MAX_BYTES)
         return json.loads(body)
+
+    return load
+
+
+def _arcgis_transform(
+    service_url: str, transform: Callable[[object], dict], where: str = "1=1"
+) -> Loader:
+    """An ArcGIS layer whose GeoJSON is then cleaned/filtered by `transform`."""
+
+    async def load(client: httpx.AsyncClient, _s: Settings) -> dict:
+        return transform(await arcgis.fetch_layer(client, service_url, where=where))
 
     return load
 
@@ -410,6 +422,33 @@ LAYERS: dict[str, Layer] = {
             "https://nid.sec.usace.army.mil/api/query?sy=@stateKey:CA", transforms.nid_dams
         ),
         ttl=24 * 3600,
+    ),
+    # --- Public webcams ---
+    "fire-cameras": Layer(
+        name="fire-cameras",
+        title="Wildfire cameras",
+        description=(
+            "ALERTCalifornia (UC San Diego) and ALERTWildfire mountaintop cameras in "
+            "California, via Cal OES's consolidated webcam layer."
+        ),
+        category="webcam",
+        loader=_arcgis_transform(
+            "https://services.arcgis.com/BLN4oKB0N1YSgvY8/arcgis/rest/services/"
+            "CalOES_California_Webcams/FeatureServer/0",
+            transforms.fire_cameras,
+            where="Source IN ('Alert California','Alert Wildfire')",
+        ),
+        ttl=24 * 3600,
+    ),
+    "river-cameras": Layer(
+        name="river-cameras",
+        title="River cameras",
+        description="USGS streamgage webcams in California (HIVIS).",
+        category="webcam",
+        loader=_json_transform(
+            "https://api.waterdata.usgs.gov/nims/cameras", transforms.usgs_cameras
+        ),
+        ttl=24 * 3600,  # the catalog; images are always fetched live
     ),
 }
 

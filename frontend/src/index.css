@@ -918,6 +918,37 @@ fieldset.subfilter {
   overflow-wrap: anywhere;
 }
 
+/* Webcam still + credit (ALERTCalifornia requires attribution). */
+.popup__image {
+  margin: 10px 0 0;
+}
+.popup__image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  /* contain, never crop: ALERTCalifornia requires its info bar to stay visible. */
+  object-fit: contain;
+  border-radius: 8px;
+  background: #000;
+}
+.popup__image figcaption {
+  margin-top: 4px;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.popup__link {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--accent);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.popup__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* ---------- "Who can search it" (ALPR popup section + panel) ---------- */
 .popup__section {
   margin-top: 10px;

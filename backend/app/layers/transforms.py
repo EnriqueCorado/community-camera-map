@@ -6,6 +6,10 @@ without network access.
 
 from __future__ import annotations
 
+import math
+import re
+from urllib.parse import urlparse, urlunparse
+
 
 def _fc(features: list[dict]) -> dict:
     return {"type": "FeatureCollection", "features": features}
@@ -20,10 +24,12 @@ def _pt(lon: float, lat: float, props: dict) -> dict:
 
 
 def _num(v: object) -> float | None:
+    """Finite float, or None (NaN/inf would serialize to JSON the browser can't parse)."""
     try:
-        return float(v)  # type: ignore[arg-type]
+        f = float(v)  # type: ignore[arg-type]
     except (TypeError, ValueError):
         return None
+    return f if math.isfinite(f) else None
 
 
 def _records(payload: object) -> list:
@@ -137,6 +143,112 @@ def nid_dams(payload: object) -> dict:
                     "name": d.get("name", ""),
                     "hazard": d.get("hazardPotential") or d.get("publicHazardId", ""),
                     "height_ft": d.get("nidHeight"),
+                },
+            )
+        )
+    return _fc(feats)
+
+
+# ---------- public webcams ----------
+
+# Image hosts we'll hand to the browser. Anything else (or non-https) is dropped:
+# the page is served over https, and we only link to official camera operators.
+# Mirrored in frontend/src/popup-logic.ts (which re-checks before rendering).
+WEBCAM_IMAGE_HOSTS = ("cameras.alertcalifornia.org", "usgs-nims-images.s3.amazonaws.com")
+WEBCAM_PAGE_HOSTS = (
+    "cameras.alertcalifornia.org",
+    "www.alertwildfire.org",
+    "alertwildfire.org",
+    "apps.usgs.gov",
+)
+
+
+def _https_on(url: object, hosts: tuple[str, ...]) -> str:
+    """A normalized https URL on an allowlisted host, else "".
+
+    Rejects anything Python and browsers might parse differently (backslashes,
+    whitespace/control chars, userinfo, explicit ports), and returns a URL
+    rebuilt from its parsed parts rather than the raw string.
+    """
+    u = str(url or "").strip()
+    if not u or re.search(r"[\\\s\x00-\x1f]", u):
+        return ""
+    try:
+        p = urlparse(u)
+        ok = (
+            p.scheme == "https"
+            and p.hostname in hosts
+            and p.username is None
+            and p.password is None
+            and p.port is None
+        )
+    except ValueError:  # e.g. malformed bracketed host
+        return ""
+    return urlunparse(("https", p.hostname, p.path, "", p.query, "")) if ok else ""
+
+
+def fire_cameras(fc: object) -> dict:
+    """Cal OES consolidated webcams (GeoJSON) -> California wildfire cameras only.
+
+    Keeps ALERTCalifornia / ALERTWildfire cameras in California (Caltrans
+    cameras in the same layer are already on the map), with a cleaned set of
+    properties.
+    """
+    networks = {"Alert California": "ALERTCalifornia", "Alert Wildfire": "ALERTWildfire"}
+    feats = []
+    for f in fc.get("features", []) if isinstance(fc, dict) else []:
+        if not isinstance(f, dict):
+            continue
+        p = f.get("properties") or {}
+        geom = f.get("geometry") or {}
+        network = networks.get(str(p.get("Source") or "").strip())
+        state = str(p.get("State") or "").strip().upper()
+        coords = geom.get("coordinates")
+        if not network or state not in ("CA", "CALIFORNIA") or geom.get("type") != "Point":
+            continue
+        if not isinstance(coords, list) or len(coords) < 2:
+            continue
+        lon, lat = _num(coords[0]), _num(coords[1])
+        if lon is None or lat is None:
+            continue
+        feats.append(
+            _pt(
+                lon,
+                lat,
+                {
+                    "name": str(p.get("Location") or "").strip(),
+                    "network": network,
+                    "county": str(p.get("County") or "").strip().title(),
+                    "image": _https_on(p.get("Thumbnail_Url"), WEBCAM_IMAGE_HOSTS),
+                    "page": _https_on(p.get("Webcam_URL"), WEBCAM_PAGE_HOSTS),
+                },
+            )
+        )
+    return _fc(feats)
+
+
+def usgs_cameras(payload: object) -> dict:
+    """USGS HIVIS camera catalog (api.waterdata.usgs.gov/nims/cameras) -> CA points."""
+    feats = []
+    for c in payload if isinstance(payload, list) else []:
+        if not isinstance(c, dict) or c.get("stateAbrv") != "CA" or c.get("hideCam"):
+            continue
+        cam_id = str(c.get("camId") or "")
+        lat, lon = _num(c.get("lat")), _num(c.get("lng"))
+        # Must contain a letter, so ids like ".." can't form odd paths.
+        if not re.fullmatch(r"(?=.*[A-Za-z])[A-Za-z0-9_.-]+", cam_id) or lat is None or lon is None:
+            continue
+        small = _https_on(c.get("smallDir"), WEBCAM_IMAGE_HOSTS)
+        feats.append(
+            _pt(
+                lon,
+                lat,
+                {
+                    "name": str(c.get("camName") or cam_id).strip(),
+                    "network": "USGS",
+                    "image": f"{small}{cam_id}_newest.jpg" if small else "",
+                    "page": f"https://apps.usgs.gov/hivis/camera/{cam_id}",
+                    "gage": str(c.get("nwisId") or ""),
                 },
             )
         )

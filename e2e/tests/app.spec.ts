@@ -132,6 +132,8 @@ const OVERLAYS = [
   "Airports",
   "Amtrak stations",
   "Dams",
+  "Wildfire cameras",
+  "River cameras",
 ];
 
 for (const label of OVERLAYS) {
@@ -170,6 +172,8 @@ for (const label of OVERLAYS) {
       Airports: "airports",
       "Amtrak stations": "amtrak",
       Dams: "dams",
+      "Wildfire cameras": "fire-cameras",
+      "River cameras": "river-cameras",
     }[label]!;
 
     const resp = page.waitForResponse(

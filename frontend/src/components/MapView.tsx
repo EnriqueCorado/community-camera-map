@@ -11,7 +11,15 @@ type LayerMouseEvent = MapMouseEvent & {
 import { api, type LayerInfo } from "../api/client";
 import { useI18n, layerTitle, ordinal, translateDirection, type TFn, type Lang } from "../i18n";
 import { prefersReducedMotion } from "../motion";
-import { floodRiskKey, isMissing, tidy } from "../popup-logic";
+import {
+  floodRiskKey,
+  freshImage,
+  isMissing,
+  safeUrl,
+  tidy,
+  WEBCAM_IMAGE_HOSTS,
+  WEBCAM_PAGE_HOSTS,
+} from "../popup-logic";
 import { attribute, BASIS_KEY, describe, formatRecordDate, type AlprAccess, type Attribution } from "../alpr-access";
 import { CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS } from "../colors";
 
@@ -568,12 +576,10 @@ function addOverlay(
   const bindPopup = (layerId: string) => {
     map.on("click", layerId, (e: LayerMouseEvent) => {
       const i18n = getI18n();
-      openPopup(
-        map,
-        e.lngLat,
-        popupHtml(overlayPopup(info, e.features?.[0]?.properties ?? {}, i18n)),
-        i18n.t,
-      );
+      const feats = (e.features ?? []).map((f) => f.properties ?? {});
+      const spec =
+        info.category === "webcam" ? webcamPopup(info, feats, i18n) : overlayPopup(info, feats[0] ?? {}, i18n);
+      openPopup(map, e.lngLat, popupHtml(spec), i18n.t);
     });
     map.on("mouseenter", layerId, () => (map.getCanvas().style.cursor = "pointer"));
     map.on("mouseleave", layerId, () => (map.getCanvas().style.cursor = ""));
@@ -723,6 +729,18 @@ interface PopupSpec {
   title: string;
   /** [label, value] rows; empty values are dropped. */
   rows?: [string, string][];
+  /** Public webcams at this spot: latest still + link to the operator's viewer.
+   *  Both URLs are re-validated against the host allowlists when rendered. */
+  cameras?: {
+    name: string;
+    src?: string;
+    alt: string;
+    credit: string;
+    href?: string;
+    linkLabel: string;
+    /** Screen-reader note that the link opens a new tab. */
+    newTab: string;
+  }[];
   /** Extra block under the rows, e.g. "Who can search it". All plain text. */
   section?: {
     heading: string;
@@ -751,10 +769,75 @@ function popupHtml(s: PopupSpec): string {
     `<div class="popup">` +
     `<div class="popup__kind">${color ? `<span class="popup__dot" style="background:${color}"></span>` : ""}${escapeHtml(s.kind)}</div>` +
     `<div class="popup__title">${escapeHtml(s.title)}</div>` +
+    (s.cameras ?? []).map(cameraHtml).join("") +
     (rows ? `<dl class="popup__rows">${rows}</dl>` : "") +
     (s.section ? sectionHtml(s.section) : "") +
     `</div>`
   );
+}
+
+function cameraHtml(c: NonNullable<PopupSpec["cameras"]>[number]): string {
+  const src = safeUrl(c.src, WEBCAM_IMAGE_HOSTS);
+  const href = safeUrl(c.href, WEBCAM_PAGE_HOSTS);
+  return (
+    `<div class="popup__cam">` +
+    (src
+      ? `<figure class="popup__image">` +
+        `<img src="${escapeHtml(freshImage(src))}" alt="${escapeHtml(c.alt)}" loading="lazy" referrerpolicy="no-referrer" />` +
+        `<figcaption>${escapeHtml(c.credit)}</figcaption>` +
+        `</figure>`
+      : "") +
+    (href
+      ? `<a class="popup__link" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">` +
+        `${escapeHtml(c.linkLabel)} <span aria-hidden="true">↗</span>` +
+        `<span class="sr-only"> ${escapeHtml(c.newTab)}</span></a>`
+      : "") +
+    `</div>`
+  );
+}
+
+/** One popup for every webcam under the click (sites often have 2+ cameras
+ *  at identical coordinates, which a single-feature popup would hide). */
+function webcamPopup(info: LayerInfo, list: Record<string, unknown>[], i18n: I18nState): PopupSpec {
+  const { t, lang } = i18n;
+  const seen = new Set<string>();
+  const cams = list.filter((p) => {
+    const key = `${String(p.page ?? "")}|${String(p.name ?? "")}`;
+    return !seen.has(key) && (seen.add(key), true);
+  });
+  const first = cams[0] ?? {};
+  const network = String(first.network ?? "");
+  const credit =
+    network === "ALERTCalifornia"
+      ? t("creditAlertCA")
+      : network === "USGS"
+        ? t("creditUSGS")
+        : t("creditNetwork", { network });
+  const nameOf = (p: Record<string, unknown>) => tidy(String(p.name ?? "")) || layerTitle(lang, info.name, info.title);
+  const multi = cams.length > 1;
+  return {
+    kind: layerTitle(lang, info.name, info.title),
+    color: OVERLAY_COLOR[info.name],
+    // "Atlas Peak 1" + "Atlas Peak 2" -> "Atlas Peak"
+    title: multi ? nameOf(first).replace(/\s+\d+$/, "") : nameOf(first),
+    cameras: cams.map((p) => {
+      const name = nameOf(p);
+      return {
+        name,
+        src: typeof p.image === "string" ? p.image : undefined,
+        alt: t("webcamAlt", { name }),
+        credit: multi ? `${name} · ${credit}` : credit,
+        href: typeof p.page === "string" ? p.page : undefined,
+        // Distinct accessible names when there are several links.
+        linkLabel: multi ? t("openLiveViewOf", { name }) : t("openLiveView"),
+        newTab: t("opensNewTab"),
+      };
+    }),
+    rows: [
+      [t("rowNetwork"), network],
+      [t("rowCounty"), tidy(String(first.county ?? ""))],
+    ],
+  };
 }
 
 function sectionHtml(x: NonNullable<PopupSpec["section"]>): string {

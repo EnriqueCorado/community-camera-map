@@ -2,7 +2,15 @@
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { floodRiskKey, isMissing, tidy } from "../../frontend/src/popup-logic";
+import {
+  floodRiskKey,
+  freshImage,
+  isMissing,
+  safeUrl,
+  tidy,
+  WEBCAM_IMAGE_HOSTS,
+  WEBCAM_PAGE_HOSTS,
+} from "../../frontend/src/popup-logic";
 
 test.describe("floodRiskKey", () => {
   const cases: [string, string, string][] = [
@@ -64,5 +72,51 @@ test.describe("tidy", () => {
   ];
   for (const [input, want] of cases) {
     test(`${input} -> ${want}`, () => expect(tidy(input)).toBe(want));
+  }
+});
+
+test.describe("safeUrl", () => {
+  const ok = "https://cameras.alertcalifornia.org/public-camera-data/Axis-Oso/latest-frame.jpg";
+  test("accepts https on an allowlisted host", () => {
+    expect(safeUrl(ok, WEBCAM_IMAGE_HOSTS)).toBe(ok);
+    expect(safeUrl("  https://apps.usgs.gov/hivis/camera/CA_X  ", WEBCAM_PAGE_HOSTS)).toBe(
+      "https://apps.usgs.gov/hivis/camera/CA_X",
+    );
+  });
+  for (const bad of [
+    "http://cameras.alertcalifornia.org/x.jpg", // not https
+    "javascript:alert(1)",
+    "https://cameras.alertcalifornia.org.evil.example/x.jpg", // look-alike host
+    "https://evil.example/?u=https://cameras.alertcalifornia.org/",
+    "//cameras.alertcalifornia.org/x.jpg",
+    "https://u:p@cameras.alertcalifornia.org/x.jpg", // credentials in the URL
+    "not a url",
+    "",
+  ]) {
+    test(`rejects ${JSON.stringify(bad)}`, () => {
+      expect(safeUrl(bad, WEBCAM_IMAGE_HOSTS)).toBeNull();
+    });
+  }
+  test("rejects non-strings", () => {
+    expect(safeUrl(42, WEBCAM_IMAGE_HOSTS)).toBeNull();
+    expect(safeUrl(null, WEBCAM_IMAGE_HOSTS)).toBeNull();
+  });
+});
+
+test("freshImage adds a per-minute cache-buster without dropping the path", () => {
+  const u = freshImage("https://usgs-nims-images.s3.amazonaws.com/720/CA_X/CA_X_newest.jpg", 120_000);
+  expect(u).toBe("https://usgs-nims-images.s3.amazonaws.com/720/CA_X/CA_X_newest.jpg?t=2");
+});
+
+test("every shipped webcam URL passes the frontend allowlist (backend/frontend lists in sync)", () => {
+  for (const name of ["fire-cameras", "river-cameras"]) {
+    const fc = JSON.parse(
+      readFileSync(join(__dirname, `../../frontend/public/data/layers/${name}.geojson`), "utf8"),
+    );
+    expect(fc.features.length).toBeGreaterThan(0);
+    for (const { properties: p } of fc.features) {
+      if (p.image) expect(safeUrl(p.image, WEBCAM_IMAGE_HOSTS), p.image).toBe(p.image);
+      if (p.page) expect(safeUrl(p.page, WEBCAM_PAGE_HOSTS), p.page).not.toBeNull();
+    }
   }
 });

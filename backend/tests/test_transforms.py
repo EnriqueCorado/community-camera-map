@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import pytest
+
 from app.layers import transforms
 
 
@@ -167,3 +169,107 @@ def test_arcgis_strips_editor_fields():
 
     props = asyncio.run(run())["features"][0]["properties"]
     assert props == {"GP": "AG"}
+
+
+# ---------- public webcams ----------
+
+
+def _cal_oes(source, state="CA", thumb="https://cameras.alertcalifornia.org/public-camera-data/Axis-Oso/latest-frame.jpg",
+             page="https://cameras.alertcalifornia.org/?id=Axis-Oso\n", geom=(-121.5, 37.5)):
+    return {
+        "type": "Feature",
+        "geometry": {"type": "Point", "coordinates": list(geom)} if geom else None,
+        "properties": {"Source": source, "State": state, "Location": " Mt. Oso ", "County": "stanislaus",
+                       "Thumbnail_Url": thumb, "Webcam_URL": page, "Creator_1": "someone"},
+    }
+
+
+def test_fire_cameras_keeps_only_california_fire_cams_with_clean_fields():
+    fc = {"features": [
+        _cal_oes("Alert California"),
+        _cal_oes("CalTrans"),  # already on the map from the Caltrans feed
+        _cal_oes("Alert Wildfire", state="NV"),  # out of state
+        _cal_oes("Alert Wildfire", state="California", thumb="http://api.nvseismolab.org/camera/Axis-X",
+                 page="https://alertwildfire.org/?currentFirecam=ca-x-1"),
+        _cal_oes("Alert California", geom=None),
+    ]}
+    out = transforms.fire_cameras(fc)["features"]
+    assert len(out) == 2
+    a, w = (f["properties"] for f in out)
+    assert a == {
+        "name": "Mt. Oso", "network": "ALERTCalifornia", "county": "Stanislaus",
+        "image": "https://cameras.alertcalifornia.org/public-camera-data/Axis-Oso/latest-frame.jpg",
+        "page": "https://cameras.alertcalifornia.org/?id=Axis-Oso",  # trailing newline stripped
+    }
+    assert w["network"] == "ALERTWildfire"
+    assert w["image"] == ""  # plain-http image would be blocked on an https page
+    assert w["page"] == "https://alertwildfire.org/?currentFirecam=ca-x-1"
+
+
+def test_fire_cameras_drops_urls_on_unexpected_hosts():
+    f = _cal_oes("Alert California", thumb="https://evil.example/x.jpg", page="javascript:alert(1)")
+    p = transforms.fire_cameras({"features": [f]})["features"][0]["properties"]
+    assert p["image"] == "" and p["page"] == ""
+
+
+def test_fire_cameras_tolerates_garbage():
+    assert transforms.fire_cameras(None) == {"type": "FeatureCollection", "features": []}
+    assert transforms.fire_cameras({"features": [{}]})["features"] == []
+
+
+def test_usgs_cameras_ca_only_visible_and_safe_ids():
+    s3 = "https://usgs-nims-images.s3.amazonaws.com/720/"
+    rows = [
+        {"camId": "CA_Good", "stateAbrv": "CA", "lat": "38.1", "lng": "-121.6", "camName": "Good",
+         "smallDir": s3 + "CA_Good/", "newestImageDT": "2026-10-14T21:30:04.000Z", "nwisId": "123"},
+        {"camId": "CA_Hidden", "stateAbrv": "CA", "lat": "38", "lng": "-121", "hideCam": True},
+        {"camId": "IL_Other", "stateAbrv": "IL", "lat": "39", "lng": "-89"},
+        {"camId": "CA_bad/../id", "stateAbrv": "CA", "lat": "38", "lng": "-121"},
+        {"camId": "CA_NoCoords", "stateAbrv": "CA", "lat": "", "lng": None},
+        {"camId": "CA_OddHost", "stateAbrv": "CA", "lat": "38", "lng": "-121", "smallDir": "https://evil.example/"},
+    ]
+    out = transforms.usgs_cameras(rows)["features"]
+    assert [f["properties"]["name"] for f in out] == ["Good", "CA_OddHost"]
+    good, odd = (f["properties"] for f in out)
+    assert good["image"] == s3 + "CA_Good/CA_Good_newest.jpg"
+    assert good["page"] == "https://apps.usgs.gov/hivis/camera/CA_Good"
+    assert odd["image"] == ""  # untrusted image host dropped
+    assert transforms.usgs_cameras({"not": "a list"})["features"] == []
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://evil.com\\@cameras.alertcalifornia.org/x.jpg",  # browsers read host as evil.com
+        "https://u:p@cameras.alertcalifornia.org/x.jpg",
+        "https://[::1]@cameras.alertcalifornia.org/",  # urlparse raises on this
+        "https://[x/",
+        "https://cameras.alertcalifornia.org:8443/x.jpg",
+        "https://ca\nmeras.alertcalifornia.org/x.jpg",
+        "https://cameras.alertcalifornia.org/x.jpg\x00",
+    ],
+)
+def test_webcam_urls_that_parsers_disagree_on_are_dropped(url):
+    f = _cal_oes("Alert California", thumb=url)
+    p = transforms.fire_cameras({"features": [f]})["features"][0]["properties"]
+    assert p["image"] == ""
+
+
+def test_webcam_urls_are_normalized():
+    f = _cal_oes("Alert California", thumb="HTTPS://Cameras.AlertCalifornia.org/p/x.jpg?a=1#frag")
+    p = transforms.fire_cameras({"features": [f]})["features"][0]["properties"]
+    assert p["image"] == "https://cameras.alertcalifornia.org/p/x.jpg?a=1"
+
+
+def test_one_bad_record_never_breaks_the_layer():
+    fc = {"features": [
+        "not a feature",
+        {"geometry": {"type": "Point", "coordinates": [1]}, "properties": {"Source": "Alert California", "State": "CA"}},
+        _cal_oes("Alert California", geom=("NaN", 37)),
+        _cal_oes("Alert California", geom=(-121, "inf")),
+        _cal_oes("Alert California"),
+    ]}
+    assert len(transforms.fire_cameras(fc)["features"]) == 1
+    rows = [{"camId": "..", "stateAbrv": "CA", "lat": "38", "lng": "-121"},
+            {"camId": "CA_Nan", "stateAbrv": "CA", "lat": "nan", "lng": "-121"}]
+    assert transforms.usgs_cameras(rows)["features"] == []

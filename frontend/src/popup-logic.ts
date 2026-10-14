@@ -46,3 +46,31 @@ export function tidy(s: string): string {
     .join("");
 }
 
+
+/** Hosts whose camera images / viewer pages popups may show (mirrors the backend allowlist). */
+export const WEBCAM_IMAGE_HOSTS = ["cameras.alertcalifornia.org", "usgs-nims-images.s3.amazonaws.com"];
+export const WEBCAM_PAGE_HOSTS = [
+  "cameras.alertcalifornia.org",
+  "alertwildfire.org",
+  "www.alertwildfire.org",
+  "apps.usgs.gov",
+];
+
+/** `u` if it's an https URL on one of `hosts`, else null. Never trust data-supplied URLs. */
+export function safeUrl(u: unknown, hosts: readonly string[]): string | null {
+  if (typeof u !== "string") return null;
+  try {
+    const url = new URL(u.trim());
+    const ok = url.protocol === "https:" && hosts.includes(url.hostname) && !url.username && !url.password;
+    return ok ? url.href : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Add a per-minute cache-buster so a "latest frame" URL isn't served stale. */
+export function freshImage(src: string, now = Date.now()): string {
+  const url = new URL(src);
+  url.searchParams.set("t", String(Math.floor(now / 60000)));
+  return url.href;
+}

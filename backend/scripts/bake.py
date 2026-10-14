@@ -56,6 +56,8 @@ SOURCES = {
     "transit-routes": "Stanislaus Regional Transit Authority GTFS",
     "transit-stops": "Stanislaus Regional Transit Authority GTFS",
     "dams": "https://nid.sec.usace.army.mil",
+    "fire-cameras": "ALERTCalifornia (UC San Diego) / ALERTWildfire, via Cal OES",
+    "river-cameras": "https://apps.usgs.gov/hivis (USGS)",
 }
 for _k in ("city-limits", "general-plan", "zoning", "annexations", "parks", "schools"):
     SOURCES[_k] = "Stanislaus County GIS (ArcGIS Hub)"

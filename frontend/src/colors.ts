@@ -47,6 +47,8 @@ export const OVERLAY_COLOR: Record<string, string> = {
   airports: "#475569",
   amtrak: "#1d4ed8",
   dams: "#0e7490",
+  "fire-cameras": "#ea580c",
+  "river-cameras": "#0284c7",
 };
 
 // CalEnviroScreen overall percentile ramp (green = low burden, red = high).

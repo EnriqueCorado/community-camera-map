@@ -114,6 +114,20 @@ Keep inference **off the request path** — serve cached results, compute async.
 Caltrans District 10 CCTV: `https://cwwp2.dot.ca.gov/data/d10/cctv/cctvStatusD10.json`.
 Map tiles © OpenStreetMap contributors. Camera imagery courtesy of Caltrans.
 
+Public webcams (popups load images straight from the operator's servers, so those servers see
+the viewer's IP when a popup opens):
+
+- **Wildfire cameras**: ALERTCalifornia | UC San Diego (live frames free for non-commercial
+  use *with credit*; never crop the info bar, so images are letterboxed) and ALERTWildfire
+  (link only, since its image host is http). The camera list comes from Cal OES's consolidated
+  webcam layer.
+- **River cameras**: USGS HIVIS (public domain), via `api.waterdata.usgs.gov/nims/cameras`.
+
+Sources checked and **not** usable: Modesto's ~50 city traffic cameras (police real-time crime
+center only), red-light cameras, FAA WeatherCams (API needs credentials), Windy webcams (needs a
+key; its Modesto entries mirror Caltrans). Unsecured private IP cameras (Shodan/Insecam-style)
+are deliberately excluded: viewing a camera its owner didn't publish isn't "public".
+
 ## Who can search each plate reader
 
 Each plate-reader popup has a **Who can search it** section, and a *Sources & details* panel
