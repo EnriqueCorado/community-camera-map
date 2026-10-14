@@ -540,7 +540,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--muted);
+  /* The player is black in both themes, so don't follow the theme's --muted
+     (dark gray in light mode fails contrast on black). */
+  color: #b8c2cc;
   font-size: 13px;
   padding: 16px;
   text-align: center;
