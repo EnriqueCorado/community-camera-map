@@ -1,0 +1,394 @@
+{
+ "as_of": "2026-10-14",
+ "sources": {
+  "mpd-sharing": {
+   "label": {
+    "en": "Modesto PD — Vigilant data-sharing report, Sept 24, 2026 (public records request 26-1053)",
+    "es": "Policía de Modesto — informe de intercambio de datos de Vigilant, 24 de septiembre de 2026 (solicitud de registros públicos 26-1053)"
+   },
+   "url": "https://cityofmodestoca.nextrequest.com/requests/26-1053"
+  },
+  "mpd-queries": {
+   "label": {
+    "en": "Modesto PD — log of searches by outside agencies, August 2026 (public records request 26-1053)",
+    "es": "Policía de Modesto — registro de búsquedas de agencias externas, agosto de 2026 (solicitud de registros públicos 26-1053)"
+   },
+   "url": "https://cityofmodestoca.nextrequest.com/requests/26-1053"
+  },
+  "cbs-2026": {
+   "label": {
+    "en": "CBS Sacramento, Mar 16, 2026",
+    "es": "CBS Sacramento, 16 de marzo de 2026 (en inglés)"
+   },
+   "url": "https://www.cbsnews.com/sacramento/news/modesto-license-plate-readers-shared-data-federal-agencies/"
+  },
+  "turlock-packet": {
+   "label": {
+    "en": "Turlock City Council agenda packet, Jan 28, 2025 (Flock agreement, order form and staff report)",
+    "es": "Paquete de la agenda del Concejo Municipal de Turlock, 28 de enero de 2025 (contrato y orden de Flock, informe del personal)"
+   },
+   "url": "https://turlockca.api.civicclerk.com/v1/Meetings/GetMeetingFileStream(fileId=171,plainText=false)"
+  },
+  "flock-ca": {
+   "label": {
+    "en": "Flock Safety notice to California agencies (posted by Palo Alto Police, Feb 2026)",
+    "es": "Aviso de Flock Safety a agencias de California (publicado por la policía de Palo Alto, feb. 2026)"
+   },
+   "url": "https://www.paloalto.gov/Departments/Police/Public-Information-Portal/Update-to-California-Agencies-from-Flock-Safety"
+  },
+  "stanco-bos": {
+   "label": {
+    "en": "Stanislaus County Board of Supervisors, June 10, 2025, item 5.B.25",
+    "es": "Junta de Supervisores del Condado de Stanislaus, 10 de junio de 2025, punto 5.B.25"
+   },
+   "url": "https://www.stancounty.com/bos/agenda/2025/20250610/B25.pdf"
+  },
+  "govtech-2019": {
+   "label": {
+    "en": "GovTech / Fresno Bee, 2019 (documents obtained by the ACLU of Northern California)",
+    "es": "GovTech / Fresno Bee, 2019 (documentos obtenidos por la ACLU del Norte de California; en inglés)"
+   },
+   "url": "https://www.govtech.com/public-safety/ACLU-Takes-Issue-with-Police-License-Plate-Data-Sharing.html"
+  },
+  "404-2025": {
+   "label": {
+    "en": "404 Media, Aug 6, 2025",
+    "es": "404 Media, 6 de agosto de 2025 (en inglés)"
+   },
+   "url": "https://www.404media.co/home-depot-and-lowes-share-data-from-hundreds-of-ai-cameras-with-cops/"
+  },
+  "ag-sb34": {
+   "label": {
+    "en": "California Attorney General, Information Bulletin 2023-DLE-06 (SB 34 guidance)",
+    "es": "Procurador General de California, Boletín Informativo 2023-DLE-06 (guía sobre la SB 34; en inglés)"
+   },
+   "url": "https://oag.ca.gov/system/files/media/2023-dle-06.pdf"
+  }
+ },
+ "profiles": {
+  "modesto-pd": {
+   "name": {
+    "en": "Modesto Police Department",
+    "es": "Departamento de Policía de Modesto"
+   },
+   "system": "Motorola Solutions / Vigilant",
+   "summary": {
+    "en": "Shared with 99 California agencies — none federal or out of state.",
+    "es": "Compartido con 99 agencias de California; ninguna federal ni de otro estado."
+   },
+   "facts": [
+    {
+     "date": "2026-09-24",
+     "source": "mpd-sharing",
+     "text": {
+      "en": "Modesto PD shares its plate-reader data with 99 agencies, all in California: 72 police departments, 13 sheriff's offices, 6 state agencies and 8 others. None are federal.",
+      "es": "La policía de Modesto comparte los datos de sus lectores de placas con 99 agencias, todas de California: 72 departamentos de policía, 13 oficinas del sheriff, 6 agencias estatales y 8 más. Ninguna es federal."
+     }
+    },
+    {
+     "date": "2026-08",
+     "source": "mpd-queries",
+     "text": {
+      "en": "In August 2026, 77 outside agencies searched Modesto's plate data 46,892 times.",
+      "es": "En agosto de 2026, 77 agencias externas hicieron 46,892 búsquedas en los datos de placas de Modesto."
+     }
+    },
+    {
+     "date": "2026-03-16",
+     "source": "cbs-2026",
+     "text": {
+      "en": "In March 2026, Modesto PD said its system had been improperly connected to several federal agencies, including the U.S. Marshals Service, IRS Criminal Investigation and Border Patrol's San Diego Sector. It cut those connections; it's unclear how long they existed or whether those agencies searched the data.",
+      "es": "En marzo de 2026, la policía de Modesto dijo que su sistema había estado conectado indebidamente a varias agencias federales, entre ellas el Servicio de Alguaciles de EE. UU., la división de Investigación Criminal del IRS y el sector San Diego de la Patrulla Fronteriza. Cortó esas conexiones; no está claro cuánto tiempo existieron ni si esas agencias consultaron los datos."
+     }
+    }
+   ],
+   "shares_with": [
+    "Alhambra Police Department (CA)",
+    "Anaheim Police Department",
+    "Arroyo Grande Police Department-CA",
+    "Azusa Police Department (CA)",
+    "Bakersfield Police Department",
+    "Beverly Hills Police Department",
+    "Brea Police Department",
+    "Butte County Sheriffs Department (CA)",
+    "CA Parole Apprehension Team (CA)",
+    "CAL FIRE",
+    "California Department Of Insurance (CA)",
+    "California Department of Motor Vehicles (CA)",
+    "California Highway Patrol (CA)",
+    "Carlsbad Police Department",
+    "Ceres Police Department (CA)",
+    "Citrus Heights Police Department",
+    "Clovis Police Department",
+    "Coalinga Police Department (CA)",
+    "Colton Police Department",
+    "Concord Police Department (CA)",
+    "Corona Police Department",
+    "Cypress Police Department",
+    "Dublin Police Department CA",
+    "El Dorado County District Attorneys Office (CA)",
+    "El Dorado County Sheriff",
+    "El Segundo Police Department (CA)",
+    "Folsom Police Department",
+    "Fontana Police Department",
+    "Fountain Valley Police Department",
+    "Fresno County District Attorney (CA)",
+    "Fresno County Sheriffs Office (CA)",
+    "Fresno Police Department",
+    "Gardena Police Department",
+    "Grass Valley Police Department (CA)",
+    "Huntington Beach Police Department",
+    "Inglewood Police Department (CA)",
+    "Inyo County Sheriffs Department (CA)",
+    "Irvine Police Department (CA)",
+    "Kings County District Attorneys Office",
+    "La Habra Police Department",
+    "La Mesa Police Department (CA)",
+    "LA Port Police",
+    "Laguna Beach Police Department",
+    "Lathrop Police Department (CA)",
+    "Livermore Police Department",
+    "Los Angeles County District Attorneys Office (CA)",
+    "Los Angeles County Sheriff",
+    "Los Banos Police Department (CA)",
+    "Manhattan Beach Police Department",
+    "Marin County Sheriffs Office",
+    "Martinez Police Department CA",
+    "Merced Police Department CA",
+    "Morro Bay Police Department (CA)",
+    "Newport Beach Police Department",
+    "Oakdale Police Department (CA)",
+    "Oceanside Police Department (CA)",
+    "Ontario Police Department",
+    "Pinole Police Department (CA)",
+    "Pismo Beach Police Department (CA)",
+    "Pittsburg Police Department CA",
+    "Placentia Police Department",
+    "Red Bluff Police Department",
+    "Redding Police Department (CA)",
+    "Redondo Beach Police Department",
+    "Ripon Police Department (CA)",
+    "Riverside County Sheriffs Department (CA)",
+    "Sacramento County District Attorneys Office (CA)",
+    "Sacramento County Sheriffs Office",
+    "Sacramento Police Department",
+    "Salinas Police Department CA",
+    "San Bernardino County Fire Dept",
+    "San Bernardino County Sheriffs",
+    "San Bernardino Police Department",
+    "San Diego County District Attorney (CA)",
+    "San Diego County Sheriff",
+    "San Joaquin County District Attorney (CA)",
+    "San Luis Obispo County District Attorneys Office (CA)",
+    "San Luis Obispo Police Department (CA)",
+    "San Luis Obispo Sheriffs Office",
+    "San Pablo Police Department CA",
+    "Santa Ana Police Department",
+    "Seal Beach Police Department",
+    "Signal Hill Police Department",
+    "South Gate Police Department (CA)",
+    "Stanislaus County Auto Theft Task Force",
+    "Stanislaus County District Attorneys Office (CA)",
+    "Stanislaus County Sheriffs Department",
+    "Stockton Police Department",
+    "Sycuan Tribal Police Department (CA)",
+    "Torrance Police Department",
+    "Tracy Police Department CA",
+    "Tulare Police Department",
+    "Turlock Police Department (CA)",
+    "UC Irvine Police Department",
+    "Upland Police Department (CA)",
+    "Vacaville Police Department (CA)",
+    "Ventura County District Attorneys Office (CA)",
+    "West Covina Police Department",
+    "Woodland Police Department"
+   ],
+   "shares_with_source": "mpd-sharing",
+   "top_searchers": [
+    {
+     "agency": "Stanislaus County Sheriffs Department",
+     "searches": 11178
+    },
+    {
+     "agency": "Sacramento County Sheriffs Office",
+     "searches": 5140
+    },
+    {
+     "agency": "San Bernardino County Sheriffs",
+     "searches": 4988
+    },
+    {
+     "agency": "Fontana Police Department",
+     "searches": 4650
+    },
+    {
+     "agency": "California Highway Patrol (CA)",
+     "searches": 4442
+    }
+   ],
+   "top_searchers_period": "2026-08",
+   "top_searchers_source": "mpd-queries"
+  },
+  "turlock-pd": {
+   "name": {
+    "en": "Turlock Police Department",
+    "es": "Departamento de Policía de Turlock"
+   },
+   "system": "Flock Safety",
+   "summary": {
+    "en": "Flock system. Its sharing list isn't public; Flock says California agencies can no longer share with federal or out-of-state agencies.",
+    "es": "Sistema Flock. Su lista de intercambio no es pública; Flock dice que las agencias de California ya no pueden compartir datos con agencias federales ni de otros estados."
+   },
+   "facts": [
+    {
+     "date": "2025-01-28",
+     "source": "turlock-packet",
+     "text": {
+      "en": "Turlock's council agenda included a five-year, $1,133,550 agreement with Flock Safety for 52 Falcon plate-reader cameras and 13 PTZ video cameras.",
+      "es": "La agenda del concejo de Turlock incluyó un contrato de cinco años por $1,133,550 con Flock Safety para 52 cámaras lectoras de placas Falcon y 13 cámaras de video PTZ."
+     }
+    },
+    {
+     "date": "2025-01-28",
+     "source": "turlock-packet",
+     "text": {
+      "en": "The order form sets a 90-day retention period, adds extended retention of up to one year for all 52 cameras, and lists Flock's statewide and nationwide network lookup features.",
+      "es": "La orden de compra fija un periodo de retención de 90 días, agrega retención extendida de hasta un año para las 52 cámaras e incluye las funciones de búsqueda en la red estatal y nacional de Flock."
+     }
+    },
+    {
+     "date": "2026-02",
+     "source": "flock-ca",
+     "text": {
+      "en": "Flock says it disabled nationwide lookup for all California agencies in March 2025 and blocked sharing with out-of-state agencies in June 2025.",
+      "es": "Flock dice que desactivó la búsqueda nacional para todas las agencias de California en marzo de 2025 y bloqueó el intercambio con agencias de otros estados en junio de 2025."
+     }
+    },
+    {
+     "date": "2025-01-28",
+     "source": "turlock-packet",
+     "text": {
+      "en": "Turlock's staff report says the Epic iO cameras across Stanislaus County form a network in which participating law-enforcement agencies share plate-reader data.",
+      "es": "El informe del personal de Turlock dice que las cámaras Epic iO del condado de Stanislaus forman una red en la que las agencias policiales participantes comparten datos de lectores de placas."
+     }
+    }
+   ]
+  },
+  "stanislaus-sheriff": {
+   "name": {
+    "en": "Stanislaus County Sheriff's Office",
+    "es": "Oficina del Sheriff del Condado de Stanislaus"
+   },
+   "system": "Epic iO",
+   "summary": {
+    "en": "Epic iO cameras on a shared county database. Its sharing list isn't public.",
+    "es": "Cámaras Epic iO en una base de datos compartida del condado. Su lista de intercambio no es pública."
+   },
+   "facts": [
+    {
+     "date": "2025-06-10",
+     "source": "stanco-bos",
+     "text": {
+      "en": "The Board of Supervisors approved Epic iO plate-reader agreements for Patterson, Waterford, Hughson and the unincorporated county, with a shared database and live-feed access for the Sheriff's Threat Assessment Center.",
+      "es": "La Junta de Supervisores aprobó contratos de lectores de placas Epic iO para Patterson, Waterford, Hughson y las zonas no incorporadas del condado, con una base de datos compartida y acceso en vivo para el Centro de Evaluación de Amenazas del Sheriff."
+     }
+    },
+    {
+     "date": "2019",
+     "source": "govtech-2019",
+     "text": {
+      "en": "In 2019, documents obtained by the ACLU of Northern California listed the Sheriff's Department among about 80 agencies nationwide that had agreed to share plate-reader data with ICE. The department did not return calls for comment at the time.",
+      "es": "En 2019, documentos obtenidos por la ACLU del Norte de California incluyeron al Departamento del Sheriff entre unas 80 agencias del país que habían aceptado compartir datos de lectores de placas con ICE. El departamento no respondió a las llamadas para comentar en ese momento."
+     }
+    }
+   ]
+  },
+  "epic-io-network": {
+   "name": {
+    "en": "Epic iO network (Stanislaus County)",
+    "es": "Red Epic iO (condado de Stanislaus)"
+   },
+   "system": "Epic iO",
+   "summary": {
+    "en": "Part of a county-wide network in which participating agencies share data. Which agency runs this camera isn't recorded.",
+    "es": "Parte de una red de todo el condado en la que las agencias participantes comparten datos. No consta qué agencia opera esta cámara."
+   },
+   "facts": [
+    {
+     "date": "2025-01-28",
+     "source": "turlock-packet",
+     "text": {
+      "en": "Turlock's staff report says the Epic iO cameras across Stanislaus County form a network in which participating law-enforcement agencies share plate-reader data.",
+      "es": "El informe del personal de Turlock dice que las cámaras Epic iO del condado de Stanislaus forman una red en la que las agencias policiales participantes comparten datos de lectores de placas."
+     }
+    },
+    {
+     "date": "2025-06-10",
+     "source": "stanco-bos",
+     "text": {
+      "en": "The Board of Supervisors approved Epic iO plate-reader agreements for Patterson, Waterford, Hughson and the unincorporated county, with a shared database and live-feed access for the Sheriff's Threat Assessment Center.",
+      "es": "La Junta de Supervisores aprobó contratos de lectores de placas Epic iO para Patterson, Waterford, Hughson y las zonas no incorporadas del condado, con una base de datos compartida y acceso en vivo para el Centro de Evaluación de Amenazas del Sheriff."
+     }
+    }
+   ]
+  },
+  "retail-home-depot": {
+   "name": {
+    "en": "The Home Depot",
+    "es": "The Home Depot"
+   },
+   "system": "Flock Safety",
+   "summary": {
+    "en": "A business-run Flock camera. Police in Texas could search some Home Depot cameras; whether this one is shared, and with whom, isn't public.",
+    "es": "Una cámara Flock operada por una empresa. La policía de Texas podía consultar algunas cámaras de Home Depot; no es público si esta se comparte ni con quién."
+   },
+   "facts": [
+    {
+     "date": "2025-08-06",
+     "source": "404-2025",
+     "text": {
+      "en": "404 Media reported that records showed a Texas sheriff's office could tap into Flock cameras at dozens of Home Depot stores in Texas. Whether this store's cameras are shared, and with whom, isn't public.",
+      "es": "404 Media informó que, según registros, una oficina del sheriff de Texas podía acceder a cámaras Flock de docenas de tiendas Home Depot en Texas. No es público si las cámaras de esta tienda se comparten ni con quién."
+     }
+    }
+   ]
+  },
+  "retail-lowes": {
+   "name": {
+    "en": "Lowe's",
+    "es": "Lowe's"
+   },
+   "system": "Flock Safety",
+   "summary": {
+    "en": "A business-run Flock camera. A Texas sheriff could search Lowe's cameras nationwide; whether this one is shared, and with whom, isn't public.",
+    "es": "Una cámara Flock operada por una empresa. Un sheriff de Texas podía consultar cámaras de Lowe's en todo el país; no es público si esta se comparte ni con quién."
+   },
+   "facts": [
+    {
+     "date": "2025-08-06",
+     "source": "404-2025",
+     "text": {
+      "en": "404 Media reported that records showed a Texas sheriff's office could tap into Flock cameras at 173 Lowe's stores across the U.S. Whether this store's cameras are shared, and with whom, isn't public.",
+      "es": "404 Media informó que, según registros, una oficina del sheriff de Texas podía acceder a cámaras Flock de 173 tiendas Lowe's en todo EE. UU. No es público si las cámaras de esta tienda se comparten ni con quién."
+     }
+    }
+   ]
+  }
+ },
+ "default": {
+  "summary": {
+   "en": "California law limits who can search plate-reader data, but which agencies can search this camera isn't public.",
+   "es": "La ley de California limita quién puede consultar los datos de lectores de placas, pero no es público qué agencias pueden consultar esta cámara."
+  },
+  "facts": [
+   {
+    "date": "2023",
+    "source": "ag-sb34",
+    "text": {
+     "en": "California's SB 34 lets agencies share plate-reader data only with other California public agencies — not federal or out-of-state agencies.",
+     "es": "La ley SB 34 de California permite compartir datos de lectores de placas solo con otras agencias públicas de California, no con agencias federales ni de otros estados."
+    }
+   }
+  ]
+ }
+}

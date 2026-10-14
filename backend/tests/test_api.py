@@ -114,3 +114,10 @@ def test_http_client_loggers_never_log_request_urls():
 
     assert logging.getLogger("httpx").getEffectiveLevel() >= logging.WARNING
     assert logging.getLogger("httpcore").getEffectiveLevel() >= logging.WARNING
+
+
+def test_alpr_access_profiles_served(client):
+    r = client.get("/api/layers/alpr/access")
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith("application/json")
+    assert "modesto-pd" in r.json()["profiles"]

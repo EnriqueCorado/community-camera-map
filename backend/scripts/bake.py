@@ -4,6 +4,7 @@ Runs the same CameraService / LayerService used by the live API, once, and write
   frontend/public/data/cameras.json      the /api/cameras payload
   frontend/public/data/layers.json       the layer catalog (+ source URLs)
   frontend/public/data/layers/<name>.geojson   each available layer
+  frontend/public/data/alpr_access.json  who can search each plate reader
   frontend/public/data/meta.json         { baked_at }
 
 Keys (Census / AirNow) are read from the backend's .env and used ONLY here —
@@ -16,6 +17,7 @@ import asyncio
 import datetime as dt
 import json
 import logging
+import shutil
 import sys
 from pathlib import Path
 
@@ -26,6 +28,7 @@ import httpx
 
 from app.cameras.service import CameraService
 from app.core.config import get_settings
+from app.layers.alpr_access import ALPR_ACCESS_FILE
 from app.layers.service import LayerService
 
 # httpx logs full request URLs (incl. Census/AirNow keys) at INFO — keep it quiet
@@ -118,6 +121,7 @@ async def main() -> None:
             n = len(json.loads(body).get("features", []))
             print(f"  {layer.name}: {n} features")
 
+        shutil.copyfile(ALPR_ACCESS_FILE, OUT / "alpr_access.json")
         (OUT / "layers.json").write_text(json.dumps(catalog, separators=(",", ":")))
         (OUT / "meta.json").write_text(
             json.dumps({"baked_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds")})

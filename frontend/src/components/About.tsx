@@ -55,9 +55,11 @@ const COPY: Record<
     record: "On the record",
     recordItems: [
       <>
-        In March 2026, Modesto PD disclosed that seven federal agencies (including Border Patrol’s
-        San Diego Sector and the U.S. Marshals) had live access to its plate-reader data — which
-        California’s SB&nbsp;34 prohibits. It cut the access after a Modesto Bee records request.{" "}
+        In March 2026, Modesto PD said its plate-reader system had been connected to several federal
+        agencies, including the U.S. Marshals Service, IRS Criminal Investigation and Border Patrol’s San
+        Diego Sector. California’s SB&nbsp;34 prohibits sharing this data with federal agencies. Modesto PD
+        cut the connections; how long they existed, and whether those agencies searched the data, is
+        unclear.{" "}
         <a href={CBS_URL} target="_blank" rel="noopener noreferrer">
           CBS Sacramento
         </a>
@@ -108,10 +110,12 @@ const COPY: Record<
     record: "Lo que consta en los registros",
     recordItems: [
       <>
-        En marzo de 2026, la policía de Modesto reveló que siete agencias federales (entre ellas el
-        sector San Diego de la Patrulla Fronteriza y el Servicio de Alguaciles de EE. UU.) tenían acceso
-        en vivo a sus datos de lectores de placas, algo que la ley SB&nbsp;34 de California prohíbe.
-        Cortó ese acceso después de una solicitud de registros públicos del Modesto Bee.{" "}
+        En marzo de 2026, la policía de Modesto dijo que su sistema de lectores de placas había estado
+        conectado a varias agencias federales, entre ellas el Servicio de Alguaciles de EE. UU., la
+        división de Investigación Criminal del IRS y el sector San Diego de la Patrulla Fronteriza. La ley
+        SB&nbsp;34 de California prohíbe compartir estos datos con agencias federales. La policía de Modesto
+        cortó esas conexiones; no está claro cuánto tiempo existieron ni si esas agencias consultaron los
+        datos.{" "}
         <a href={CBS_URL} target="_blank" rel="noopener noreferrer" hrefLang="en">
           CBS Sacramento (en inglés)
         </a>

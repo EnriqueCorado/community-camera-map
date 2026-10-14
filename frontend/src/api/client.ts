@@ -1,4 +1,5 @@
 import type { CameraList } from "../types";
+import type { AlprAccess } from "../alpr-access";
 
 // Two modes:
 //  - dev/server: talk to the FastAPI backend ("/api/...", proxied by Vite).
@@ -28,6 +29,8 @@ export interface Meta {
   baked_at?: string;
 }
 
+let alprAccessCache: Promise<AlprAccess> | null = null;
+
 export const api = {
   static: STATIC,
   listCameras: () => getJSON<CameraList>(STATIC ? "data/cameras.json" : `${API_BASE}/api/cameras`),
@@ -35,6 +38,20 @@ export const api = {
   /** Overlay layer GeoJSON. */
   layerUrl: (name: string) =>
     STATIC ? `data/layers/${name}.geojson` : `${API_BASE}/api/layers/${name}`,
+  /** Sourced "who can search this plate reader" profiles. Fetched once per page
+   *  load; a failure clears the cache so the next call retries. */
+  alprAccess: (): Promise<AlprAccess> => {
+    const p =
+      alprAccessCache ??
+      getJSON<AlprAccess>(
+        STATIC ? "data/alpr_access.json" : `${API_BASE}/api/layers/alpr/access`,
+      ).catch((err: unknown) => {
+        alprAccessCache = null;
+        throw err;
+      });
+    alprAccessCache = p;
+    return p;
+  },
   /** Build-time metadata (static mode only). */
   meta: () =>
     STATIC

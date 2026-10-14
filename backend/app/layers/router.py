@@ -6,8 +6,10 @@ from __future__ import annotations
 
 import httpx
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
+from .alpr_access import ALPR_ACCESS_FILE
 from .census import CensusKeyMissing
 from .service import LayerService
 
@@ -40,6 +42,13 @@ async def list_layers(service: LayerService = Depends(get_service)) -> list[Laye
         )
         for layer in service.list_layers()
     ]
+
+
+@router.get("/alpr/access", summary="Who can search each plate reader (sourced profiles)")
+async def alpr_access() -> FileResponse:
+    return FileResponse(
+        ALPR_ACCESS_FILE, media_type="application/json", headers={"Cache-Control": "max-age=3600"}
+    )
 
 
 @router.get("/{name}", summary="Fetch one overlay layer as GeoJSON")

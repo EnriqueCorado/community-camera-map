@@ -9,6 +9,7 @@
   --accent-ink: #052016;
   --marker: #35c08b;
   --marker-active: #ffd23f;
+  --danger: #ff7b72; /* 6.8:1 on --panel */
   --radius: 10px;
   --sidebar-w: 340px;
   color-scheme: dark;
@@ -27,6 +28,7 @@
     --accent-ink: #ffffff;
     --marker: #0f9d63;
     --marker-active: #e08a00;
+    --danger: #b42318; /* 6.6:1 on white */
     color-scheme: light;
   }
 }
@@ -821,4 +823,150 @@ fieldset.subfilter {
   font-size: 13.5px;
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
+}
+
+/* ---------- "Who can search it" (ALPR popup section + panel) ---------- */
+.popup__section {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 4px;
+}
+
+.popup__heading {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.popup__basis {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.popup__name {
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.popup__text {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.popup__foot {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.popup__action {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.popup__action:hover {
+  border-color: var(--accent);
+}
+.popup__action:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.access__basis {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.access__name {
+  margin: 2px 0 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.access__system {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.access__summary {
+  margin-top: 10px;
+}
+
+.access__note,
+.access__how {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.access__error {
+  color: var(--danger);
+}
+
+.access__date {
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.access__src {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.access__src a,
+.access__facts a {
+  color: var(--accent);
+}
+
+.access__top {
+  margin: 0;
+  padding-left: 1.4em;
+  font-size: 14px;
+  display: grid;
+  gap: 4px;
+}
+
+.access__top li span + span {
+  margin-left: 8px;
+}
+
+.access__count {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.access__list {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.access__list summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.access__list summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.access__list ul {
+  margin-top: 8px;
+  columns: 2 220px;
+  display: block;
+  font-size: 13px;
 }

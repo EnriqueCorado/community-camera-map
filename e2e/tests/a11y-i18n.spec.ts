@@ -215,19 +215,21 @@ test("i18n: overlay popups are in Spanish", async ({ page }) => {
 
 // ---------------- Popups ----------------
 
-/** Click the first rendered feature of a layer that's comfortably on screen. */
-async function clickFeature(page: Page, layer: string): Promise<boolean> {
-  const pt = await page.evaluate((l) => {
+/** Click the first rendered feature of a layer that's comfortably on screen.
+ *  `where` filters on properties; a `null` value means "property absent". */
+async function clickFeature(page: Page, layer: string, where: Record<string, unknown> = {}): Promise<boolean> {
+  const pt = await page.evaluate(([l, w]) => {
     const m = (window as unknown as { __map?: any }).__map;
     if (!m) return null;
     const c = m.getCanvas();
     for (const f of m.queryRenderedFeatures({ layers: [l] })) {
       if (f.geometry.type !== "Point") continue;
+      if (!Object.entries(w).every(([k, v]) => (v === null ? f.properties[k] == null : f.properties[k] === v))) continue;
       const p = m.project(f.geometry.coordinates);
       if (p.x > 80 && p.y > 120 && p.x < c.clientWidth - 80 && p.y < c.clientHeight - 80) return { x: p.x, y: p.y };
     }
     return null;
-  }, layer);
+  }, [layer, where] as const);
   if (!pt) return false;
   await page.locator("canvas.maplibregl-canvas").click({ position: pt });
   return true;
@@ -245,7 +247,7 @@ for (const scheme of ["dark", "light"] as const) {
       const popup = page.locator(".maplibregl-popup");
       await expect(popup).toBeVisible();
       await expect(popup.locator(".popup__kind")).toHaveText(/License plate reader/i);
-      await expect(popup.locator(".popup__row dt").first()).toHaveText("Operator");
+      await expect(popup.locator(".popup__heading")).toHaveText("Who can search it");
       await expect(popup.locator(".maplibregl-popup-close-button")).toHaveAttribute("aria-label", "Close popup");
       // The original bug: light text on a white popup in dark mode. axe checks contrast.
       await expectNoA11yViolations(page, ".maplibregl-popup");
@@ -281,4 +283,113 @@ test("flood popup explains risk in plain language", async ({ page }) => {
   const popup = page.locator(".maplibregl-popup");
   await expect(popup).toBeVisible();
   await expect(popup.locator(".popup__title")).toHaveText(/flood risk/i);
+});
+
+// ---------------- Who can search each plate reader ----------------
+
+// A Motorola/Vigilant reader inside Modesto city limits, not tagged with an operator.
+const MODESTO_READER = "/#alpr=1&v=-120.975599,37.667166,17";
+
+test("plate-reader popup says who can search it, with sourced details", async ({ page }) => {
+  await page.goto(MODESTO_READER);
+  await ready(page);
+  await waitForLayer(page, "alpr-points");
+  expect(await clickFeature(page, "alpr-points", { agency: "modesto-pd", agency_basis: "inferred" })).toBe(true);
+  const section = page.locator(".maplibregl-popup .popup__section");
+  await expect(section).toContainText("Possible operator");
+  await expect(section.locator(".popup__name")).toHaveText("Modesto Police Department");
+  await expect(section.locator(".popup__text")).toContainText(/Shared with \d+ California agencies/);
+  await expect(section.locator(".popup__foot")).toContainText("Checked against public records on");
+
+  const opener = section.getByRole("button", { name: "Sources & details" });
+  await opener.click();
+  const dialog = page.getByRole("dialog", { name: "Who can search this plate reader?" });
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText("U.S. Marshals Service");
+  await expect(dialog).toContainText(/could belong to someone else/);
+  // Every source opens safely in a new tab.
+  const links = dialog.locator("a[href^='https://']");
+  expect(await links.count()).toBeGreaterThan(2);
+  for (const rel of await links.evaluateAll((as) => as.map((a) => a.getAttribute("rel")))) {
+    expect(rel).toContain("noopener");
+  }
+  // The full sharing list is behind a disclosure.
+  await dialog.locator("summary").click();
+  expect(await dialog.locator(".access__list li").count()).toBeGreaterThan(50);
+  await expectNoA11yViolations(page, ".about__card");
+
+  // Escape closes the panel only; focus returns to the button that opened it.
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(opener).toBeFocused();
+  await expect(page.locator(".maplibregl-popup")).toBeVisible();
+});
+
+test("who-can-search is in Spanish", async ({ page }) => {
+  await page.goto(MODESTO_READER.replace("/#", "/#lang=es&"));
+  await ready(page);
+  await waitForLayer(page, "alpr-points");
+  expect(await clickFeature(page, "alpr-points", { agency: "modesto-pd" })).toBe(true);
+  const section = page.locator(".maplibregl-popup .popup__section");
+  await expect(section.locator(".popup__heading")).toHaveText("Quién puede consultarla");
+  await expect(section.locator(".popup__name")).toHaveText("Departamento de Policía de Modesto");
+  await section.getByRole("button", { name: "Fuentes y detalles" }).click();
+  const dialog = page.getByRole("dialog", { name: "¿Quién puede consultar este lector de placas?" });
+  await expect(dialog).toContainText("Lo que dicen los registros");
+  await expect(dialog).toContainText(/agosto de 2026/);
+});
+
+test("an unattributed reader says the operator is unknown instead of guessing", async ({ page }) => {
+  await page.goto("/#alpr=1&v=-118.2437,34.0522,13"); // Los Angeles: outside the curated county
+  await ready(page);
+  await waitForLayer(page, "alpr-points");
+  expect(await clickFeature(page, "alpr-points", { agency: null, operator: null })).toBe(true);
+  const section = page.locator(".maplibregl-popup .popup__section");
+  await expect(section.locator(".popup__basis")).toHaveText("Operator unknown");
+  await expect(section.locator(".popup__name")).toHaveCount(0);
+  await expect(section.locator(".popup__text")).toContainText("California law limits who can search");
+});
+
+// A reader whose OSM operator tag names someone we hold no records for.
+const UNTRACKED_READER = "/#alpr=1&v=-122.152597,37.61797,17";
+
+test("a reader tagged with an operator we have no records for is 'untracked'", async ({ page }) => {
+  await page.goto(UNTRACKED_READER);
+  await ready(page);
+  await waitForLayer(page, "alpr-points");
+  expect(await clickFeature(page, "alpr-points", { operator: "Bay Area Toll Authority" })).toBe(true);
+  const section = page.locator(".maplibregl-popup .popup__section");
+  await expect(section.locator(".popup__name")).toHaveText("Bay Area Toll Authority");
+  await expect(section.locator(".popup__basis")).toHaveText("Operator listed in OpenStreetMap");
+  await expect(section.locator(".popup__text")).toContainText(/We don.t have public records/);
+
+  await section.getByRole("button", { name: "Sources & details" }).click();
+  const dialog = page.getByRole("dialog", { name: "Who can search this plate reader?" });
+  await expect(dialog.locator(".access__basis--untracked")).toBeVisible();
+  await expect(dialog.locator(".access__name")).toHaveText("Bay Area Toll Authority");
+  await expect(dialog.locator(".access__summary")).toContainText(/We don.t have public records/);
+  await expect(dialog.locator(".access__system")).toHaveCount(0); // no profile, so no vendor/system line
+  await expect(dialog.locator(".access__note")).toHaveCount(0); // "likely" caveat is only for inferred
+});
+
+test("if the access data fails to load the popup still shows the basis and the panel shows an error", async ({ page }) => {
+  await page.route("**/alpr/access*", (route) => route.fulfill({ status: 500, body: "boom" }));
+  await page.goto(MODESTO_READER);
+  await ready(page);
+  await waitForLayer(page, "alpr-points");
+  expect(await clickFeature(page, "alpr-points", { agency: "modesto-pd", agency_basis: "inferred" })).toBe(true);
+  const section = page.locator(".maplibregl-popup .popup__section");
+  await expect(section).toContainText("Possible operator");
+  await expect(section.locator(".popup__name")).toHaveCount(0); // profile name unavailable
+  await expect(section.locator(".popup__foot")).toHaveCount(0); // no "as of" without data
+
+  await section.getByRole("button", { name: "Sources & details" }).click();
+  const dialog = page.getByRole("dialog", { name: "Who can search this plate reader?" });
+  await expect(dialog.getByRole("alert")).toContainText(/Couldn.t load the records/);
+  await expect(dialog.getByRole("status")).toHaveCount(0); // not stuck on "loading"
+  await expect(dialog.locator(".access__facts")).toHaveCount(0);
+  await expect(dialog.locator(".access__basis--inferred")).toBeVisible();
+  // Closing still works.
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
 });

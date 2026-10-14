@@ -5,6 +5,8 @@ import { Sidebar, type Place } from "./components/Sidebar";
 import { MapView, type LayerState } from "./components/MapView";
 import { CameraDetail } from "./components/CameraDetail";
 import { About } from "./components/About";
+import { AlprAccessPanel } from "./components/AlprAccessPanel";
+import type { Attribution } from "./alpr-access";
 import { api } from "./api/client";
 import { decodeState, encodeState } from "./urlstate";
 import { useI18n } from "./i18n";
@@ -40,6 +42,7 @@ export default function App() {
   // Bumped to ask the map to run "what can see me?" at its center (keyboard path).
   const [coverageCenterTick, setCoverageCenterTick] = useState(0);
   const [showAbout, setShowAbout] = useState(false);
+  const [accessFor, setAccessFor] = useState<Attribution | null>(null);
   const [bakedAt, setBakedAt] = useState<string | null>(null);
 
   useEffect(() => {
@@ -119,8 +122,10 @@ export default function App() {
           coverage={coverage}
           onCoverageResult={setCoverageHits}
           coverageCenterTick={coverageCenterTick}
+          onAlprAccess={setAccessFor}
         />
         {selected && <CameraDetail camera={selected} onClose={() => setSelectedId(null)} />}
+        {accessFor && <AlprAccessPanel attribution={accessFor} onClose={() => setAccessFor(null)} />}
         {showAbout && (
           <About layers={overlayInfos} bakedAt={bakedAt} onClose={() => setShowAbout(false)} />
         )}

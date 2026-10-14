@@ -28,3 +28,10 @@ blob-report/
 
 # TypeScript incremental build info
 *.tsbuildinfo
+
+# Raw public-records files (e.g. ALPR query audits list officer usernames/IPs).
+# Only derived, agency-level data belongs in the repo.
+records/
+*.xlsx
+*.xls
+*.csv

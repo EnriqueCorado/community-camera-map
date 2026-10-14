@@ -114,6 +114,36 @@ Keep inference **off the request path** — serve cached results, compute async.
 Caltrans District 10 CCTV: `https://cwwp2.dot.ca.gov/data/d10/cctv/cctvStatusD10.json`.
 Map tiles © OpenStreetMap contributors. Camera imagery courtesy of Caltrans.
 
+## Who can search each plate reader
+
+Each plate-reader popup has a **Who can search it** section, and a *Sources & details* panel
+with dated, linked public records. Two rules keep it honest:
+
+- **Every claim has a source.** Profiles live in `backend/app/cameras/data/alpr_access.json`
+  (EN/ES), and each fact carries a date and a source link. The data-integrity tests fail if
+  a fact has no source.
+- **Uncertainty is labeled.** `backend/app/layers/alpr_access.py` attributes each camera
+  conservatively. It returns `tagged` when the OSM operator names it (this rule applies
+  statewide), `inferred` when it's in Stanislaus County and both the vendor and the
+  jurisdiction match a documented agency system (shown as "possible", not confirmed), and
+  `network` for the shared county Epic iO network. Anything else stays **unknown**: we don't
+  guess.
+
+Regenerating:
+
+```bash
+cd backend
+# 1. Profiles. Inputs are the spreadsheets from Modesto records request 26-1053
+#    (cityofmodestoca.nextrequest.com/requests/26-1053). Keep them OUT of the repo:
+#    the query audit lists officers' usernames and IPs. Only agency-level counts are kept.
+uv run --with openpyxl python scripts/build_alpr_access.py \
+    <sharing.xlsx> <external-queries.xlsx> app/cameras/data/alpr_access.json
+# 2. Tag the ALPR layer (Overpass + county city limits). Re-run after refreshing alpr_ca.geojson.
+uv run python scripts/enrich_alpr.py
+# 3. Re-bake the static site (copies alpr_access.json to frontend/public/data/).
+uv run python scripts/bake.py
+```
+
 ## Overlay catalog (verified endpoints, ready to wire)
 
 Each becomes a toggleable layer. Add a static dataset by dropping a `.geojson`

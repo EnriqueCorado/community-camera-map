@@ -12,6 +12,7 @@ import { api, type LayerInfo } from "../api/client";
 import { useI18n, layerTitle, ordinal, translateDirection, type TFn, type Lang } from "../i18n";
 import { prefersReducedMotion } from "../motion";
 import { floodRiskKey, isMissing, tidy } from "../popup-logic";
+import { attribute, BASIS_KEY, describe, formatRecordDate, type AlprAccess, type Attribution } from "../alpr-access";
 import { CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS } from "../colors";
 
 export interface LayerState {
@@ -35,6 +36,8 @@ interface Props {
   onCoverageResult: (hits: number | null) => void;
   /** Incremented to run "what can see me?" at the map center (keyboard path). */
   coverageCenterTick: number;
+  /** Open the sourced "who can search this plate reader?" panel. */
+  onAlprAccess: (a: Attribution) => void;
 }
 
 /** Shared camera text filter — keep in sync with the Sidebar list. */
@@ -80,6 +83,7 @@ export function MapView({
   coverage,
   onCoverageResult,
   coverageCenterTick,
+  onAlprAccess,
 }: Props) {
   const { t, lang, locale } = useI18n();
   const i18nRef = useRef<I18nState>({ t, lang, locale });
@@ -102,6 +106,15 @@ export function MapView({
   const onCoverageResultRef = useRef(onCoverageResult);
   onCoverageResultRef.current = onCoverageResult;
   const alprDataRef = useRef<GeoJSON.FeatureCollection | null>(null);
+  const onAlprAccessRef = useRef(onAlprAccess);
+  onAlprAccessRef.current = onAlprAccess;
+  // "Who can search it" profiles, for synchronous popup rendering.
+  const alprAccessRef = useRef<AlprAccess | null>(null);
+  const warmAlprAccess = () =>
+    void api.alprAccess().then(
+      (a) => (alprAccessRef.current = a),
+      () => {}, // popups degrade to the basis line; the next click retries
+    );
   const initialViewRef = useRef(initialView); // read once at map creation
 
   // --- Create the map + all sources/layers once. ---
@@ -282,6 +295,8 @@ export function MapView({
 
     if (layers.alpr && !alprLoadedRef.current) {
       alprLoadedRef.current = true;
+      warmAlprAccess();
+
       fetch(api.layerUrl("alpr"))
         .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
         .then((data: GeoJSON.FeatureCollection) => {
@@ -352,7 +367,13 @@ export function MapView({
           map.on("click", "alpr-clusters", (e: LayerMouseEvent) => zoomCluster(map, "alpr", e));
           map.on("click", "alpr-points", (e: LayerMouseEvent) => {
             const p = e.features?.[0]?.properties ?? {};
-            const { t: tt } = i18nRef.current;
+            // Render from whatever's loaded — never wait on the network here.
+            // If it isn't loaded yet (or failed), the section shows its basis
+            // line and we retry in the background for the next click.
+            const access = alprAccessRef.current;
+            if (!access) warmAlprAccess();
+            const attr = attribute(p, access);
+            const { t: tt, lang: lng, locale: loc } = i18nRef.current;
             const vendor = String(p.vendor ?? "");
             const vendorColor =
               vendor === "Flock Safety"
@@ -368,12 +389,13 @@ export function MapView({
                 color: vendorColor,
                 title: vendor === "Other / unknown" || !vendor ? tt("vendorOtherUnknown") : vendor,
                 rows: [
-                  [tt("operator"), p.operator ? String(p.operator) : tt("notTagged")],
                   [tt("rowFacing"), facing(p.direction, tt)],
                   ["OpenStreetMap", p.osm_id != null ? `#${p.osm_id}` : ""],
                 ],
+                section: accessSection(attr, access, tt, lng, loc),
               }),
               tt,
+              () => onAlprAccessRef.current(attr),
             );
           });
           for (const l of ["alpr-clusters", "alpr-points"]) {
@@ -664,7 +686,14 @@ interface I18nState {
 const OPEN_POPUPS = new Set<maplibregl.Popup>();
 
 /** Open a themed popup whose close button is labeled in the current language. */
-function openPopup(map: maplibregl.Map, lngLat: maplibregl.LngLat, html: string, t: TFn) {
+function openPopup(
+  map: maplibregl.Map,
+  lngLat: maplibregl.LngLat,
+  html: string,
+  t: TFn,
+  /** Called by the popup's action button (see PopupSpec.section.action). */
+  onAction?: () => void,
+) {
   const popup = new maplibregl.Popup({
     closeButton: true,
     maxWidth: "320px",
@@ -681,6 +710,9 @@ function openPopup(map: maplibregl.Map, lngLat: maplibregl.LngLat, html: string,
     close.setAttribute("aria-label", t("closePopup"));
     close.title = t("closePopup");
   }
+  if (onAction) {
+    popup.getElement()?.querySelector("[data-popup-action]")?.addEventListener("click", onAction);
+  }
 }
 
 interface PopupSpec {
@@ -691,6 +723,16 @@ interface PopupSpec {
   title: string;
   /** [label, value] rows; empty values are dropped. */
   rows?: [string, string][];
+  /** Extra block under the rows, e.g. "Who can search it". All plain text. */
+  section?: {
+    heading: string;
+    label: string;
+    name?: string;
+    text?: string;
+    foot?: string;
+    /** Button label; the click is wired by openPopup's `onAction`. */
+    action?: string;
+  };
 }
 
 
@@ -710,8 +752,45 @@ function popupHtml(s: PopupSpec): string {
     `<div class="popup__kind">${color ? `<span class="popup__dot" style="background:${color}"></span>` : ""}${escapeHtml(s.kind)}</div>` +
     `<div class="popup__title">${escapeHtml(s.title)}</div>` +
     (rows ? `<dl class="popup__rows">${rows}</dl>` : "") +
+    (s.section ? sectionHtml(s.section) : "") +
     `</div>`
   );
+}
+
+function sectionHtml(x: NonNullable<PopupSpec["section"]>): string {
+  const opt = (cls: string, v?: string, tag = "div") =>
+    v ? `<${tag} class="${cls}">${escapeHtml(v)}</${tag}>` : "";
+  return (
+    `<section class="popup__section" aria-label="${escapeHtml(x.heading)}">` +
+    `<div class="popup__heading">${escapeHtml(x.heading)}</div>` +
+    opt("popup__basis", x.label) +
+    opt("popup__name", x.name) +
+    opt("popup__text", x.text, "p") +
+    opt("popup__foot", x.foot) +
+    (x.action
+      ? `<button type="button" class="popup__action" data-popup-action>${escapeHtml(x.action)}</button>`
+      : "") +
+    `</section>`
+  );
+}
+
+/** "Who can search it" block for an ALPR popup. `access` may still be loading. */
+function accessSection(
+  a: Attribution,
+  access: AlprAccess | null,
+  t: TFn,
+  lang: Lang,
+  locale: string,
+): NonNullable<PopupSpec["section"]> {
+  const { name, summary } = describe(a, access, lang, t("accessNoRecords"));
+  return {
+    heading: t("whoCanSearch"),
+    label: t(BASIS_KEY[a.basis]),
+    name,
+    text: summary,
+    foot: access ? t("accessAsOf", { date: formatRecordDate(access.as_of, locale) }) : undefined,
+    action: t("accessDetails"),
+  };
 }
 
 function facing(dir: unknown, t: TFn): string {

@@ -28,6 +28,12 @@ select = ["E", "F", "I", "UP", "B", "ASYNC"]
 # FastAPI pattern, not a bug.
 ignore = ["B008"]
 
+[tool.ruff.lint.per-file-ignores]
+# Test data tables (parametrize cases, fixtures) read better unwrapped.
+"tests/*" = ["E501"]
+# Mostly curated bilingual prose (sourced facts) that reads better unwrapped.
+"scripts/build_alpr_access.py" = ["E501"]
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
