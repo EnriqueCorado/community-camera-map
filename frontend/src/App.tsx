@@ -7,6 +7,7 @@ import { CameraDetail } from "./components/CameraDetail";
 import { About } from "./components/About";
 import { api } from "./api/client";
 import { decodeState, encodeState } from "./urlstate";
+import { useI18n } from "./i18n";
 
 const INITIAL_LAYERS: LayerState = {
   cameras: true,
@@ -22,6 +23,7 @@ const INITIAL_LAYERS: LayerState = {
 type View = { center: [number, number]; zoom: number } | null;
 
 export default function App() {
+  const { t, lang } = useI18n();
   const state = useCameras();
   const overlayInfos = useLayers();
 
@@ -35,6 +37,8 @@ export default function App() {
   const [flyTo, setFlyTo] = useState<View>(null);
   const [coverage, setCoverage] = useState({ active: false, radiusM: 300 });
   const [coverageHits, setCoverageHits] = useState<number | null>(null);
+  // Bumped to ask the map to run "what can see me?" at its center (keyboard path).
+  const [coverageCenterTick, setCoverageCenterTick] = useState(0);
   const [showAbout, setShowAbout] = useState(false);
   const [bakedAt, setBakedAt] = useState<string | null>(null);
 
@@ -44,22 +48,26 @@ export default function App() {
 
   // Keep the URL hash in sync so the current view is shareable.
   useEffect(() => {
-    const hash = encodeState({ layers, query, view });
+    const hash = encodeState({ layers, query, view, lang });
     const next = hash ? `#${hash}` : "";
     if (next !== window.location.hash) {
       window.history.replaceState(null, "", next || window.location.pathname);
     }
-  }, [layers, query, view]);
+  }, [layers, query, view, lang]);
 
   if (state.status === "loading") {
-    return <div className="screen">Loading statewide cameras…</div>;
+    return (
+      <div className="screen" role="status">
+        {t("loading")}
+      </div>
+    );
   }
   if (state.status === "error") {
     return (
-      <div className="screen screen--error">
-        <p>Couldn’t reach the API.</p>
+      <div className="screen screen--error" role="alert">
+        <p>{t("apiError")}</p>
         <code>{state.error}</code>
-        <p className="screen__hint">Is the backend running on port 8000?</p>
+        <p className="screen__hint">{t("apiHint")}</p>
       </div>
     );
   }
@@ -69,6 +77,17 @@ export default function App() {
 
   return (
     <div className="app">
+      {/* Moves focus without touching location.hash (which holds the shareable view). */}
+      <a
+        className="skip-link"
+        href="#camera-search"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById("camera-search")?.focus();
+        }}
+      >
+        {t("skipToSearch")}
+      </a>
       <Sidebar
         cameras={state.cameras}
         selectedId={selectedId}
@@ -81,6 +100,7 @@ export default function App() {
         onJump={jump}
         coverage={coverage}
         onCoverageChange={setCoverage}
+        onCoverageCenter={() => setCoverageCenterTick((n) => n + 1)}
         coverageHits={coverageHits}
         bakedAt={bakedAt}
         onAbout={() => setShowAbout(true)}
@@ -98,6 +118,7 @@ export default function App() {
           onView={setView}
           coverage={coverage}
           onCoverageResult={setCoverageHits}
+          coverageCenterTick={coverageCenterTick}
         />
         {selected && <CameraDetail camera={selected} onClose={() => setSelectedId(null)} />}
         {showAbout && (

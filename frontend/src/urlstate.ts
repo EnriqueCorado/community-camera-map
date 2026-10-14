@@ -2,15 +2,19 @@
 // linked: active overlays, ALPR + disabled vendors, the search filter, and the
 // camera viewport. Kept tiny and defensive — bad hashes decode to defaults.
 import type { LayerState } from "./components/MapView";
+import type { Lang } from "./i18n";
 
 export interface ShareState {
   layers: LayerState;
   query: string;
   view: { center: [number, number]; zoom: number } | null;
+  /** UI language; only non-default ("es") is written to the URL. */
+  lang?: Lang;
 }
 
 export function encodeState(s: ShareState): string {
   const p = new URLSearchParams();
+  if (s.lang === "es") p.set("lang", "es");
   const overlays = Object.entries(s.layers.overlays)
     .filter(([, on]) => on)
     .map(([k]) => k);

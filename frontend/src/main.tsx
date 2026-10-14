@@ -5,6 +5,7 @@ import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&ur
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./index.css";
 import App from "./App";
+import { I18nProvider, detectLang } from "./i18n";
 
 // maplibre v6 resolves its worker via a runtime string that bundlers can't see,
 // so it 404s in a production build. Point it at the worker Vite bundles for us
@@ -16,6 +17,8 @@ if (!root) throw new Error("Missing #root element");
 
 createRoot(root).render(
   <StrictMode>
-    <App />
+    <I18nProvider initial={detectLang(window.location.hash)}>
+      <App />
+    </I18nProvider>
   </StrictMode>,
 );

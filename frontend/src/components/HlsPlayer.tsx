@@ -1,18 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
+import { useI18n, type Key } from "../i18n";
+import { prefersReducedMotion } from "../motion";
 
 interface Props {
   src: string;
   poster?: string;
+  /** Accessible name for the video element. */
+  label: string;
 }
+
 
 /**
  * Plays an HLS (.m3u8) stream. Safari plays HLS natively; everywhere else we
- * use hls.js. The element is muted + autoplay so browsers allow it to start.
+ * use hls.js. Muted so browsers allow autoplay — but no autoplay for users who
+ * ask for reduced motion (they can press play).
  */
-export function HlsPlayer({ src, poster }: Props) {
+export function HlsPlayer({ src, poster, label }: Props) {
+  const { t } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [error, setError] = useState<string | null>(null);
+  // Store a message *key* so the text follows the current language.
+  const [error, setError] = useState<Key | null>(null);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -26,7 +34,7 @@ export function HlsPlayer({ src, poster }: Props) {
     }
 
     if (!Hls.isSupported()) {
-      setError("HLS is not supported in this browser.");
+      setError("hlsUnsupported");
       return;
     }
 
@@ -39,7 +47,7 @@ export function HlsPlayer({ src, poster }: Props) {
         // re-render (src is unchanged), so without this it keeps fetching
         // segments against a detached <video>.
         hls.destroy();
-        setError("Stream unavailable. Caltrans feeds drop out intermittently.");
+        setError("streamUnavailable");
       }
     });
 
@@ -47,7 +55,11 @@ export function HlsPlayer({ src, poster }: Props) {
   }, [src]);
 
   if (error) {
-    return <div className="player player--error">{error}</div>;
+    return (
+      <div className="player player--error" role="status">
+        {t(error)}
+      </div>
+    );
   }
 
   return (
@@ -55,8 +67,9 @@ export function HlsPlayer({ src, poster }: Props) {
       ref={videoRef}
       className="player"
       poster={poster}
+      aria-label={label}
       muted
-      autoPlay
+      autoPlay={!prefersReducedMotion()}
       playsInline
       controls
     />

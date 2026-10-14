@@ -1,0 +1,284 @@
+import { test, expect, type Page } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
+
+const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
+
+async function ready(page: Page) {
+  await expect(page.locator("canvas.maplibregl-canvas")).toBeVisible();
+  await page.waitForTimeout(1500);
+}
+
+/** Wait until a map layer has actually rendered features (no fixed sleeps). */
+async function waitForLayer(page: Page, layer: string) {
+  await expect
+    .poll(
+      () =>
+        page.evaluate((l) => {
+          const m = (window as unknown as { __map?: any }).__map;
+          return m && m.getLayer(l) ? m.queryRenderedFeatures({ layers: [l] }).length : 0;
+        }, layer),
+      { timeout: 20000 },
+    )
+    .toBeGreaterThan(0);
+}
+
+/** Click a screen point where `layer` is rendered and no camera dot sits on top. */
+async function clickLayer(page: Page, layer: string): Promise<boolean> {
+  await waitForLayer(page, layer);
+  const pt = await page.evaluate((l) => {
+    const m = (window as unknown as { __map?: any }).__map;
+    const c = m.getCanvas();
+    const W = c.clientWidth, H = c.clientHeight;
+    for (let y = 140; y < H - 80; y += 23) {
+      for (let x = 80; x < W - 80; x += 29) {
+        const hit = m.queryRenderedFeatures([x, y], { layers: [l] }).length > 0;
+        const cam = m.queryRenderedFeatures([x, y], { layers: ["cam-points", "cam-clusters"] }).length > 0;
+        if (hit && !cam) return { x, y };
+      }
+    }
+    return null;
+  }, layer);
+  if (!pt) return false;
+  await page.locator("canvas.maplibregl-canvas").click({ position: pt });
+  return true;
+}
+
+/** Run axe and fail with a readable list of violations. */
+async function expectNoA11yViolations(page: Page, include?: string) {
+  let builder = new AxeBuilder({ page }).withTags(WCAG);
+  if (include) builder = builder.include(include);
+  const { violations } = await builder.analyze();
+  const summary = violations.map(
+    (v) => `${v.impact} ${v.id}: ${v.help} — ${v.nodes.map((n) => n.target.join(" ")).slice(0, 3).join(" | ")}`,
+  );
+  expect(summary, summary.join("\n")).toEqual([]);
+}
+
+// ---------------- Accessibility (axe, WCAG 2.1 AA) ----------------
+
+test("a11y: main page (English) has no WCAG 2.1 AA violations", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  await expectNoA11yViolations(page);
+});
+
+test("a11y: main page (Spanish) has no WCAG 2.1 AA violations", async ({ page }) => {
+  await page.goto("/#lang=es");
+  await ready(page);
+  await expectNoA11yViolations(page);
+});
+
+test("a11y: About dialog has no violations and is a labeled modal", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  await page.getByRole("button", { name: /About & sources/i }).click();
+  const dialog = page.getByRole("dialog", { name: /About this map/i });
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toHaveAttribute("aria-modal", "true");
+  await expectNoA11yViolations(page, ".about");
+});
+
+test("a11y: camera viewer has no violations and a labeled video", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  await page.getByPlaceholder(/Filter cameras/i).fill("Briggsmore");
+  await page.locator(".camlist__item").first().click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.locator(".detail video")).toHaveAttribute("aria-label", /Live video/);
+  await expectNoA11yViolations(page, ".detail");
+});
+
+// ---------------- Keyboard ----------------
+
+test("keyboard: Escape closes About and focus returns to the opener", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  const opener = page.getByRole("button", { name: /About & sources/i });
+  await opener.click();
+  // Focus moved into the dialog.
+  await expect(page.locator(".about__card :focus")).toHaveCount(1);
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".about")).toHaveCount(0);
+  await expect(opener).toBeFocused();
+});
+
+test("keyboard: Tab stays trapped inside the About dialog", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  await page.getByRole("button", { name: /About & sources/i }).click();
+  for (let i = 0; i < 12; i++) {
+    await page.keyboard.press("Tab");
+    expect(await page.evaluate(() => !!document.activeElement?.closest(".about__card"))).toBe(true);
+  }
+});
+
+test("keyboard: Shift+Tab can't escape the About dialog, even from its text", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  await page.getByRole("button", { name: /About & sources/i }).click();
+  await page.locator(".about__body p").first().click(); // focus lands on the dialog surface
+  for (let i = 0; i < 12; i++) {
+    await page.keyboard.press("Shift+Tab");
+    expect(await page.evaluate(() => !!document.activeElement?.closest(".about__card"))).toBe(true);
+  }
+});
+
+test("keyboard: skip link jumps to camera search without changing the URL", async ({ page }) => {
+  await page.goto("/#ov=zoning");
+  await ready(page);
+  await page.keyboard.press("Tab");
+  const skip = page.getByRole("link", { name: /Skip to camera search/i });
+  await expect(skip).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#camera-search")).toBeFocused();
+  expect(await page.evaluate(() => location.hash)).toContain("ov=zoning");
+});
+
+test('keyboard: "what can see me?" works without a mouse (map center)', async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  await page.getByRole("button", { name: /Find plate readers near a point/i }).click();
+  await page.getByRole("button", { name: /Check the map’s center/i }).click();
+  await expect(page.getByRole("status").filter({ hasText: /plate reader/i })).toBeVisible({ timeout: 25000 });
+});
+
+test("screen readers: search results are announced in a live region", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  await page.getByPlaceholder(/Filter cameras/i).fill("modesto");
+  await expect(page.locator("#search-status")).toHaveText(/\d+ cameras match\./);
+  await page.getByPlaceholder(/Filter cameras/i).fill("zzzznotacamera");
+  await expect(page.locator("#search-status")).toHaveText(/No cameras match\./);
+});
+
+// ---------------- Spanish ----------------
+
+test("i18n: switching to Spanish translates the UI, sets <html lang>, and goes in the URL", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  await page.getByRole("button", { name: "Ver en español" }).click();
+  await expect(page.locator("h1")).toContainText("Mapa de cámaras");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es");
+  await expect(page.getByText("Capas", { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Buscar lectores de placas cerca de un punto" })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => location.hash)).toContain("lang=es");
+});
+
+test("i18n: the language choice persists across reloads", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  await page.getByRole("button", { name: "Ver en español" }).click();
+  await page.goto("/"); // no hash: must come from the saved preference
+  await ready(page);
+  await expect(page.locator("h1")).toContainText("Mapa de cámaras");
+});
+
+test("i18n: a shared #lang=es link opens in Spanish", async ({ page }) => {
+  await page.goto("/#lang=es");
+  await ready(page);
+  await expect(page.locator("h1")).toContainText("Mapa de cámaras");
+});
+
+test("i18n: every layer name is translated to Spanish", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  const english = await page.locator(".layerrow .toggle > span:last-child").allInnerTexts();
+  await page.getByRole("button", { name: "Ver en español" }).click();
+  const spanish = await page.locator(".layerrow .toggle > span:last-child").allInnerTexts();
+  expect(spanish.length).toBe(english.length);
+  const untranslated = spanish.filter((s, i) => s === english[i]);
+  expect(untranslated, `still in English: ${untranslated.join(", ")}`).toEqual([]);
+});
+
+test("i18n: About page and camera viewer are in Spanish", async ({ page }) => {
+  await page.goto("/#lang=es");
+  await ready(page);
+  await page.getByRole("button", { name: "Acerca del mapa y fuentes" }).click();
+  await expect(page.getByRole("dialog", { name: "Acerca de este mapa" })).toContainText(
+    "infraestructura pública, no personas",
+  );
+  await page.keyboard.press("Escape");
+  await page.getByPlaceholder(/Filtrar cámaras/).fill("Briggsmore");
+  await page.locator(".camlist__item").first().click();
+  await expect(page.locator(".detail")).toContainText("Latitud");
+  await expect(page.locator(".detail video")).toHaveAttribute("aria-label", /Video en vivo/);
+});
+
+test("i18n: overlay popups are in Spanish", async ({ page }) => {
+  await page.goto("/#lang=es&ov=census&v=-120.997,37.639,11");
+  await ready(page);
+  expect(await clickLayer(page, "ov-census-fill")).toBe(true);
+  const popup = page.locator(".maplibregl-popup");
+  await expect(popup).toContainText(/ingreso medio|población/i);
+  await expect(popup.locator(".maplibregl-popup-close-button")).toHaveAttribute("aria-label", "Cerrar ventana");
+});
+
+// ---------------- Popups ----------------
+
+/** Click the first rendered feature of a layer that's comfortably on screen. */
+async function clickFeature(page: Page, layer: string): Promise<boolean> {
+  const pt = await page.evaluate((l) => {
+    const m = (window as unknown as { __map?: any }).__map;
+    if (!m) return null;
+    const c = m.getCanvas();
+    for (const f of m.queryRenderedFeatures({ layers: [l] })) {
+      if (f.geometry.type !== "Point") continue;
+      const p = m.project(f.geometry.coordinates);
+      if (p.x > 80 && p.y > 120 && p.x < c.clientWidth - 80 && p.y < c.clientHeight - 80) return { x: p.x, y: p.y };
+    }
+    return null;
+  }, layer);
+  if (!pt) return false;
+  await page.locator("canvas.maplibregl-canvas").click({ position: pt });
+  return true;
+}
+
+for (const scheme of ["dark", "light"] as const) {
+  test.describe(`popups (${scheme} mode)`, () => {
+    test.use({ colorScheme: scheme });
+
+    test(`plate-reader popup is readable and labeled (${scheme})`, async ({ page }) => {
+      await page.goto("/#alpr=1&v=-120.9968,37.6391,15");
+      await ready(page);
+      await waitForLayer(page, "alpr-points");
+      expect(await clickFeature(page, "alpr-points")).toBe(true);
+      const popup = page.locator(".maplibregl-popup");
+      await expect(popup).toBeVisible();
+      await expect(popup.locator(".popup__kind")).toHaveText(/License plate reader/i);
+      await expect(popup.locator(".popup__row dt").first()).toHaveText("Operator");
+      await expect(popup.locator(".maplibregl-popup-close-button")).toHaveAttribute("aria-label", "Close popup");
+      // The original bug: light text on a white popup in dark mode. axe checks contrast.
+      await expectNoA11yViolations(page, ".maplibregl-popup");
+    });
+
+    test(`facility popup hides placeholder values (${scheme})`, async ({ page }) => {
+      await page.goto("/#ov=hospitals&v=-120.9968,37.6391,12");
+      await ready(page);
+      await waitForLayer(page, "ov-hospitals-circle");
+      expect(await clickFeature(page, "ov-hospitals-circle")).toBe(true);
+      const popup = page.locator(".maplibregl-popup");
+      await expect(popup).toBeVisible();
+      await expect(popup).not.toContainText(/NOT AVAILABLE/i);
+      await expectNoA11yViolations(page, ".maplibregl-popup");
+    });
+  });
+}
+
+test("popups close with Escape", async ({ page }) => {
+  await page.goto("/#alpr=1&v=-120.9968,37.6391,15");
+  await ready(page);
+  await waitForLayer(page, "alpr-points");
+  expect(await clickFeature(page, "alpr-points")).toBe(true);
+  await expect(page.locator(".maplibregl-popup")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".maplibregl-popup")).toHaveCount(0);
+});
+
+test("flood popup explains risk in plain language", async ({ page }) => {
+  await page.goto("/#ov=flood&v=-120.9968,37.6391,12");
+  await ready(page);
+  expect(await clickLayer(page, "ov-flood-fill")).toBe(true);
+  const popup = page.locator(".maplibregl-popup");
+  await expect(popup).toBeVisible();
+  await expect(popup.locator(".popup__title")).toHaveText(/flood risk/i);
+});

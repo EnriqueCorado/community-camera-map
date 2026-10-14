@@ -43,7 +43,7 @@ test("jump to Oakdale then Modesto keeps the map stable", async ({ page }) => {
   const errors = trackErrors(page);
   await page.goto("/");
   await waitForMap(page);
-  for (const place of ["Oakdale", "Modesto", "All of CA"]) {
+  for (const place of ["Oakdale", "Modesto", "All of California"]) {
     await page.getByRole("button", { name: place, exact: true }).click();
     await page.waitForTimeout(700);
   }

@@ -23,7 +23,7 @@
     --line: #dde3e9;
     --ink: #16202b;
     --muted: #5e6b78;
-    --accent: #0f9d63;
+    --accent: #0b7a4c; /* 5.4:1 on white (WCAG AA); was #0f9d63 at 3.5:1 */
     --accent-ink: #ffffff;
     --marker: #0f9d63;
     --marker-active: #e08a00;
@@ -622,4 +622,201 @@ body {
   .detail {
     width: calc(100% - 32px);
   }
+}
+
+/* ---------- Accessibility & i18n ---------- */
+
+/* Visually hidden, still announced by screen readers. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link: hidden until focused by keyboard. */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  background: var(--panel);
+  color: var(--ink);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+.sidebar__titlerow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.langbtn {
+  flex: none;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.langbtn:hover {
+  border-color: var(--accent);
+}
+
+/* Lists and fieldsets used for semantics, not looks. */
+ul.legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+fieldset.subfilter {
+  min-width: 0;
+  margin-inline: 6px 0;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+
+.langbtn:focus-visible,
+.skip-link:focus-visible,
+.chip:focus-visible,
+.detail:focus-visible,
+.about__card:focus-visible,
+.maplibregl-canvas:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Map popups (themed; MapLibre defaults are white + 12px) ---------- */
+.scm-popup .maplibregl-popup-content {
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  padding: 12px 42px 12px 14px; /* right padding clears the close button */
+  min-width: 210px;
+  font: 14px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Tip arrow matches the panel color for every anchor position. */
+.scm-popup.maplibregl-popup-anchor-bottom .maplibregl-popup-tip,
+.scm-popup.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip,
+.scm-popup.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip {
+  border-top-color: var(--panel);
+}
+.scm-popup.maplibregl-popup-anchor-top .maplibregl-popup-tip,
+.scm-popup.maplibregl-popup-anchor-top-left .maplibregl-popup-tip,
+.scm-popup.maplibregl-popup-anchor-top-right .maplibregl-popup-tip {
+  border-bottom-color: var(--panel);
+}
+.scm-popup.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+  border-right-color: var(--panel);
+}
+.scm-popup.maplibregl-popup-anchor-right .maplibregl-popup-tip {
+  border-left-color: var(--panel);
+}
+
+.scm-popup .maplibregl-popup-close-button {
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--muted);
+  background: transparent;
+}
+.scm-popup .maplibregl-popup-close-button:hover {
+  background: var(--panel-2);
+  color: var(--ink);
+}
+.scm-popup .maplibregl-popup-close-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.popup__kind {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.popup__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
+  box-shadow: 0 0 0 2px var(--panel), 0 0 0 3px var(--line);
+}
+
+.popup__title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.popup__rows {
+  margin: 10px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 6px;
+}
+
+.popup__row {
+  display: grid;
+  grid-template-columns: minmax(84px, max-content) 1fr;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.popup__row dt {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.popup__row dd {
+  margin: 0;
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
 }

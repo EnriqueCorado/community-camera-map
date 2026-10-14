@@ -9,6 +9,9 @@ type LayerMouseEvent = MapMouseEvent & {
   features?: Array<{ properties: Record<string, unknown> | null; geometry: GeoJSON.Geometry }>;
 };
 import { api, type LayerInfo } from "../api/client";
+import { useI18n, layerTitle, ordinal, translateDirection, type TFn, type Lang } from "../i18n";
+import { prefersReducedMotion } from "../motion";
+import { floodRiskKey, isMissing, tidy } from "../popup-logic";
 import { CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS } from "../colors";
 
 export interface LayerState {
@@ -30,6 +33,8 @@ interface Props {
   onView: (v: { center: [number, number]; zoom: number }) => void;
   coverage: { active: boolean; radiusM: number };
   onCoverageResult: (hits: number | null) => void;
+  /** Incremented to run "what can see me?" at the map center (keyboard path). */
+  coverageCenterTick: number;
 }
 
 /** Shared camera text filter — keep in sync with the Sidebar list. */
@@ -74,7 +79,11 @@ export function MapView({
   onView,
   coverage,
   onCoverageResult,
+  coverageCenterTick,
 }: Props) {
+  const { t, lang, locale } = useI18n();
+  const i18nRef = useRef<I18nState>({ t, lang, locale });
+  i18nRef.current = { t, lang, locale };
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const readyRef = useRef(false);
@@ -240,6 +249,7 @@ export function MapView({
 
     return () => {
       ro.disconnect();
+      for (const p of [...OPEN_POPUPS]) p.remove();
       map.remove();
       mapRef.current = null;
       readyRef.current = false;
@@ -342,14 +352,29 @@ export function MapView({
           map.on("click", "alpr-clusters", (e: LayerMouseEvent) => zoomCluster(map, "alpr", e));
           map.on("click", "alpr-points", (e: LayerMouseEvent) => {
             const p = e.features?.[0]?.properties ?? {};
-            new maplibregl.Popup({ closeButton: true })
-              .setLngLat(e.lngLat)
-              .setHTML(
-                `<strong>${escapeHtml(String(p.vendor ?? "ALPR camera"))}</strong><br/>` +
-                  `<span style="color:#888">operator</span> ${escapeHtml(String(p.operator ?? "not tagged"))}<br/>` +
-                  `<span style="color:#888">OSM</span> ${escapeHtml(String(p.osm_id ?? ""))}`,
-              )
-              .addTo(map);
+            const { t: tt } = i18nRef.current;
+            const vendor = String(p.vendor ?? "");
+            const vendorColor =
+              vendor === "Flock Safety"
+                ? VENDOR_COLORS.flock
+                : vendor === "Motorola / Vigilant"
+                  ? VENDOR_COLORS.motorola
+                  : VENDOR_COLORS.other;
+            openPopup(
+              map,
+              e.lngLat,
+              popupHtml({
+                kind: tt("alprCamera"),
+                color: vendorColor,
+                title: vendor === "Other / unknown" || !vendor ? tt("vendorOtherUnknown") : vendor,
+                rows: [
+                  [tt("operator"), p.operator ? String(p.operator) : tt("notTagged")],
+                  [tt("rowFacing"), facing(p.direction, tt)],
+                  ["OpenStreetMap", p.osm_id != null ? `#${p.osm_id}` : ""],
+                ],
+              }),
+              tt,
+            );
           });
           for (const l of ["alpr-clusters", "alpr-points"]) {
             map.on("mouseenter", l, () => (map.getCanvas().style.cursor = "pointer"));
@@ -386,7 +411,7 @@ export function MapView({
         fetch(api.layerUrl(info.name))
           .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
           .then((data: GeoJSON.FeatureCollection) => {
-            if (mapRef.current) addOverlay(map, info, data);
+            if (mapRef.current) addOverlay(map, info, data, () => i18nRef.current);
             setOverlayVisible(map, info.name, layersRef.current.overlays[info.name] ?? false);
           })
           .catch(() => overlaysLoadedRef.current.delete(info.name));
@@ -417,7 +442,13 @@ export function MapView({
     map.setFilter("cam-selected", ["==", ["get", "id"], selectedId ?? "__none__"]);
     if (selectedId) {
       const cam = cameras.find((c) => c.id === selectedId);
-      if (cam) map.easeTo({ center: [cam.longitude, cam.latitude], zoom: Math.max(map.getZoom(), 13) });
+      if (cam) {
+        map.easeTo({
+          center: [cam.longitude, cam.latitude],
+          zoom: Math.max(map.getZoom(), 13),
+          ...(prefersReducedMotion() ? { duration: 0 } : {}),
+        });
+      }
     }
   }, [selectedId, cameras]);
 
@@ -425,8 +456,41 @@ export function MapView({
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !flyTo) return;
-    map.flyTo({ center: flyTo.center, zoom: flyTo.zoom, duration: 900 });
+    map.flyTo({ center: flyTo.center, zoom: flyTo.zoom, duration: prefersReducedMotion() ? 0 : 900 });
   }, [flyTo]);
+
+  // --- Escape closes any open map popup (keyboard users can't "click away"). ---
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" || OPEN_POPUPS.size === 0) return;
+      for (const p of [...OPEN_POPUPS]) p.remove();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
+  // --- Localize the map's accessible name and the zoom buttons. ---
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready) return;
+    map.getCanvas().setAttribute("aria-label", t("mapLabel"));
+    const label = (sel: string, text: string) => {
+      const btn = containerRef.current?.querySelector<HTMLButtonElement>(sel);
+      if (btn) {
+        btn.title = text;
+        btn.setAttribute("aria-label", text);
+      }
+    };
+    label(".maplibregl-ctrl-zoom-in", t("zoomIn"));
+    label(".maplibregl-ctrl-zoom-out", t("zoomOut"));
+  }, [t, ready]);
+
+  // --- Keyboard path for "what can see me?": run it at the map's center. ---
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready || coverageCenterTick === 0) return;
+    void runCoverage(map, map.getCenter(), alprDataRef, coverageRef.current.radiusM, onCoverageResultRef.current);
+  }, [coverageCenterTick, ready]);
 
   return <div ref={containerRef} className="map" />;
 }
@@ -465,7 +529,12 @@ function firstGeometryType(data: GeoJSON.FeatureCollection): string {
 
 // Overlays render beneath camera points. Polygons -> fill + outline (census is a
 // choropleth); point layers (parks, schools, wildfire, quakes) -> circles.
-function addOverlay(map: maplibregl.Map, info: LayerInfo, data: GeoJSON.FeatureCollection) {
+function addOverlay(
+  map: maplibregl.Map,
+  info: LayerInfo,
+  data: GeoJSON.FeatureCollection,
+  getI18n: () => I18nState,
+) {
   const src = `ov-${info.name}`;
   if (map.getSource(src)) return;
   map.addSource(src, { type: "geojson", data });
@@ -476,10 +545,13 @@ function addOverlay(map: maplibregl.Map, info: LayerInfo, data: GeoJSON.FeatureC
 
   const bindPopup = (layerId: string) => {
     map.on("click", layerId, (e: LayerMouseEvent) => {
-      new maplibregl.Popup({ closeButton: true })
-        .setLngLat(e.lngLat)
-        .setHTML(overlayPopup(info, e.features?.[0]?.properties ?? {}))
-        .addTo(map);
+      const i18n = getI18n();
+      openPopup(
+        map,
+        e.lngLat,
+        popupHtml(overlayPopup(info, e.features?.[0]?.properties ?? {}, i18n)),
+        i18n.t,
+      );
     });
     map.on("mouseenter", layerId, () => (map.getCanvas().style.cursor = "pointer"));
     map.on("mouseleave", layerId, () => (map.getCanvas().style.cursor = ""));
@@ -582,76 +654,211 @@ function setOverlayVisible(map: maplibregl.Map, name: string, on: boolean) {
   }
 }
 
-function overlayPopup(info: LayerInfo, p: Record<string, unknown>): string {
+interface I18nState {
+  t: TFn;
+  lang: Lang;
+  locale: string;
+}
+
+/** Popups currently open, so Escape can close them. */
+const OPEN_POPUPS = new Set<maplibregl.Popup>();
+
+/** Open a themed popup whose close button is labeled in the current language. */
+function openPopup(map: maplibregl.Map, lngLat: maplibregl.LngLat, html: string, t: TFn) {
+  const popup = new maplibregl.Popup({
+    closeButton: true,
+    maxWidth: "320px",
+    offset: 14,
+    className: "scm-popup",
+  })
+    .setLngLat(lngLat)
+    .setHTML(html)
+    .addTo(map);
+  OPEN_POPUPS.add(popup);
+  popup.on("close", () => OPEN_POPUPS.delete(popup));
+  const close = popup.getElement()?.querySelector<HTMLButtonElement>(".maplibregl-popup-close-button");
+  if (close) {
+    close.setAttribute("aria-label", t("closePopup"));
+    close.title = t("closePopup");
+  }
+}
+
+interface PopupSpec {
+  /** What was clicked, e.g. "License plate reader" / layer name. */
+  kind: string;
+  /** Layer color for the header dot (from our own palette). */
+  color?: string;
+  title: string;
+  /** [label, value] rows; empty values are dropped. */
+  rows?: [string, string][];
+}
+
+
+/** Render a popup. EVERY string is escaped here — callers pass plain text. */
+function popupHtml(s: PopupSpec): string {
+  const color = s.color && /^#[0-9a-f]{3,8}$/i.test(s.color) ? s.color : null;
+  const rows = (s.rows ?? [])
+    // Drop empty values and the placeholders government datasets use for "missing".
+    .filter(([, v]) => !isMissing(v))
+    .map(
+      ([k, v]) =>
+        `<div class="popup__row"><dt>${escapeHtml(k)}</dt><dd>${escapeHtml(String(v))}</dd></div>`,
+    )
+    .join("");
+  return (
+    `<div class="popup">` +
+    `<div class="popup__kind">${color ? `<span class="popup__dot" style="background:${color}"></span>` : ""}${escapeHtml(s.kind)}</div>` +
+    `<div class="popup__title">${escapeHtml(s.title)}</div>` +
+    (rows ? `<dl class="popup__rows">${rows}</dl>` : "") +
+    `</div>`
+  );
+}
+
+function facing(dir: unknown, t: TFn): string {
+  const d = String(dir ?? "").trim();
+  if (!d) return "";
+  // OSM direction can be "160", "130;310", or a compass word.
+  return d
+    .split(";")
+    .map((x) => (/^\d+(\.\d+)?$/.test(x.trim()) ? `${Math.round(Number(x))}°` : translateDirection(t, x.trim())))
+    .join(", ");
+}
+
+function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nState): PopupSpec {
+  const { t, lang, locale } = i18n;
+  const kind = layerTitle(lang, info.name, info.title);
+  const color = OVERLAY_COLOR[info.name];
+  const str = (v: unknown) => (v == null ? "" : tidy(String(v)));
   const pick = (keys: string[]) => keys.map((k) => p[k]).find((v) => v != null && v !== "");
-  const title = (t: string, body: string) => `<strong>${escapeHtml(t)}</strong><br/>${body}`;
+  // Numbers only — rejects null/""/booleans that Number() would coerce to 0/1.
+  const num = (v: unknown): number | null =>
+    (typeof v === "number" || (typeof v === "string" && v.trim() !== "")) && Number.isFinite(Number(v))
+      ? Number(v)
+      : null;
+  const fmt = (v: unknown) => {
+    const n = num(v);
+    return n == null ? "" : n.toLocaleString(locale);
+  };
+  const base = { kind, color };
 
   switch (info.category) {
-    case "census": {
-      const inc = p.median_income as number | null;
-      return title(
-        String(p.name ?? "Census tract"),
-        `median income ${inc != null ? "$" + Number(inc).toLocaleString() : "n/a"}<br/>` +
-          `population ${p.population != null ? Number(p.population).toLocaleString() : "n/a"}`,
-      );
-    }
+    case "census":
+      return {
+        ...base,
+        // "Census Tract 18; Stanislaus County; California" -> "Census Tract 18"
+        title: str(p.name).split(";")[0]!.trim() || t("censusTract"),
+        rows: [
+          [t("medianIncome"), num(p.median_income) != null ? `$${fmt(p.median_income)}` : ""],
+          [t("population"), fmt(p.population)],
+        ],
+      };
     case "quake": {
-      const mag = p.mag != null ? `M ${p.mag}` : "quake";
-      return title(mag, escapeHtml(String(p.place ?? "")));
+      const mag = num(p.mag);
+      const time = num(p.time);
+      return {
+        ...base,
+        title: mag != null ? `M ${mag.toFixed(1)}` : t("earthquake"),
+        rows: [
+          [t("rowLocation"), str(p.place)],
+          [t("rowTime"), time != null ? new Date(time).toLocaleString(locale) : ""],
+        ],
+      };
     }
     case "fire": {
-      const name = pick(["IncidentName", "poly_IncidentName", "name"]) ?? "Wildfire";
       const acres = pick(["DailyAcres", "GISAcres", "IncidentSize"]);
-      return title(String(name), acres != null ? `${Number(acres).toLocaleString()} acres` : "active");
+      const pct = num(pick(["PercentContained", "poly_PercentContained"]));
+      return {
+        ...base,
+        title: str(pick(["IncidentName", "poly_IncidentName", "name"])) || t("wildfire"),
+        rows: [
+          [t("rowSize"), num(acres) != null ? t("acres", { n: fmt(acres) }) : t("active")],
+          [t("rowContained"), pct != null ? `${Math.round(pct)}%` : ""],
+        ],
+      };
     }
-    case "weather": {
-      const event = pick(["event", "headline"]) ?? "Alert";
-      return title(String(event), escapeHtml(String(pick(["areaDesc", "headline"]) ?? "")));
-    }
+    case "weather":
+      return {
+        ...base,
+        title: str(pick(["event", "headline"])) || t("alert"),
+        rows: [
+          [t("rowArea"), str(p.areaDesc)],
+          [t("rowSeverity"), str(p.severity)],
+        ],
+      };
     case "enviroscreen": {
-      const p75 = p.CIscoreP;
-      return title(
-        "Pollution burden",
-        p75 != null ? `CalEnviroScreen ${Number(p75).toFixed(0)}th percentile` : "n/a",
-      );
+      const pct = num(p.CIscoreP);
+      return {
+        ...base,
+        title: pct != null ? t("enviroPct", { n: ordinal(lang, Math.round(pct)) }) : kind,
+        rows: [[t("censusTract"), str(p.tract)]],
+      };
     }
     case "hazard": {
-      const label = pick(["FLD_ZONE", "FHSZ_Description", "ZONE_SUBTY", "FHSZ"]) ?? "zone";
-      return title(info.title, escapeHtml(String(label)));
+      if (info.name === "flood") {
+        const zone = String(p.FLD_ZONE ?? "").toUpperCase();
+        const sub = String(p.ZONE_SUBTY ?? "");
+        const risk = t(floodRiskKey(zone, sub));
+        return { ...base, title: risk, rows: [[t("rowZone"), zone], [t("rowSubtype"), str(sub)]] };
+      }
+      const raw = String(p.FHSZ_Description ?? "").toLowerCase();
+      const level = raw.includes("very")
+        ? t("fireVeryHigh")
+        : raw.includes("high")
+          ? t("fireHigh")
+          : raw.includes("moderate")
+            ? t("fireModerate")
+            : "";
+      return { ...base, title: level ? t("fireLevel", { level }) : kind };
     }
-    case "roadops": {
-      return title(
-        String(pick(["route"]) ?? info.title),
-        escapeHtml(String(pick(["type"]) ?? "closure")),
-      );
-    }
+    case "roadops":
+      return {
+        ...base,
+        title: str(pick(["route"])) || kind,
+        rows: [[t("rowType"), str(pick(["type"])) || t("closure")]],
+      };
     default: {
-      // Richer point categories (air quality, river gauges, transit, dams).
       if (p.aqi != null) {
-        return title(`AQI ${p.aqi}`, escapeHtml(String(pick(["category", "parameter", "area"]) ?? "")));
+        return {
+          ...base,
+          title: t("aqi", { n: str(p.aqi) }),
+          rows: [
+            [t("rowCategory"), str(p.category)],
+            [t("rowPollutant"), str(p.parameter)],
+            [t("rowArea"), str(p.area)],
+          ],
+        };
       }
       if (p.streamflow_cfs != null || p.gage_height_ft != null) {
-        // Coerce to finite numbers before interpolating into popup HTML — never
-        // trust the data file's types.
-        // (null/""/booleans coerce to 0/1 via Number(), so reject them first.)
-        const num = (v: unknown) =>
-          (typeof v === "number" || (typeof v === "string" && v.trim() !== "")) &&
-          Number.isFinite(Number(v))
-            ? Number(v).toLocaleString()
-            : null;
-        const cfs = num(p.streamflow_cfs);
-        const ft = num(p.gage_height_ft);
-        const parts = [cfs != null ? `${cfs} cfs` : null, ft != null ? `${ft} ft` : null].filter(
-          Boolean,
-        );
-        return title(String(p.name ?? "River gauge"), parts.join(" · "));
+        return {
+          ...base,
+          title: str(p.name) || t("riverGauge"),
+          rows: [
+            [t("rowFlow"), num(p.streamflow_cfs) != null ? `${fmt(p.streamflow_cfs)} cfs` : ""],
+            [t("rowGaugeHeight"), num(p.gage_height_ft) != null ? `${fmt(p.gage_height_ft)} ft` : ""],
+          ],
+        };
       }
-      const label =
-        pick([
-          "name", "stop_name", "GP_Descr", "GP", "Zone_Descr", "Zone_Label",
-          "Name", "ARPT_NAME", "CITY", "City", "descr", "School", "hazard",
-        ]) ?? info.title;
-      return title(info.title, escapeHtml(String(label)));
+      const title =
+        str(
+          pick([
+            "name", "NAME", "stop_name", "GP_Descr", "GP", "Zone_Descr", "Zone_Label",
+            "Name", "ARPT_NAME", "School", "SCHOOL", "school", "descr",
+          ]),
+        ) || kind;
+      const address = str(pick(["ADDRESS", "Address", "address", "STREET", "street", "Situs_Address"]));
+      const height = num(p.height_ft);
+      return {
+        ...base,
+        title,
+        rows: [
+          // Some federal datasets put the facility name in ADDRESS — skip duplicates.
+          [t("rowAddress"), address.toLowerCase() === title.toLowerCase() ? "" : address],
+          [t("rowCity"), str(pick(["CITY", "City", "city", "Situs_City"]))],
+          [t("rowType"), str(pick(["TYPE", "Type"]))],
+          [t("rowPhone"), String(pick(["TELEPHONE", "Phone", "phone"]) ?? "")],
+          [t("rowHeight"), height != null ? `${fmt(height)} ft` : ""],
+        ],
+      };
     }
   }
 }
@@ -666,7 +873,7 @@ function zoomCluster(map: maplibregl.Map, source: string, e: LayerMouseEvent) {
     .then((zoom) => {
       const geom = feature?.geometry;
       if (geom?.type === "Point") {
-        map.easeTo({ center: geom.coordinates as [number, number], zoom });
+        map.easeTo({ center: geom.coordinates as [number, number], zoom, ...(prefersReducedMotion() ? { duration: 0 } : {}) });
       }
     })
     .catch(() => {
