@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import type { Camera } from "../types";
 import type { LayerInfo } from "../api/client";
 import { matchCamera, type LayerState } from "./MapView";
@@ -25,6 +25,55 @@ export const PLACES: Place[] = [
   { label: "Stanislaus", center: [-120.95, 37.6], zoom: 10 },
   { label: "All of California", labelKey: "allOfCA", center: [-119.4, 37.2], zoom: 5.4 },
 ];
+
+// Which sidebar sections the viewer collapsed (per-browser convenience only).
+const COLLAPSED_KEY = "scm-collapsed";
+
+function readCollapsed(): Set<string> {
+  try {
+    const v: unknown = JSON.parse(localStorage.getItem(COLLAPSED_KEY) ?? "[]");
+    return new Set(Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : []);
+  } catch {
+    return new Set();
+  }
+}
+
+/** A sidebar panel whose heading is a disclosure button (WAI-ARIA pattern). */
+function Section({
+  id,
+  title,
+  as: Tag = "section",
+  collapsed,
+  onToggle,
+  children,
+}: {
+  id: string;
+  title: string;
+  as?: "section" | "nav";
+  collapsed: boolean;
+  onToggle: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <Tag className="panel" aria-labelledby={`${id}-title`}>
+      <h2 id={`${id}-title`} className="panel__title">
+        <button
+          type="button"
+          className="panel__toggle"
+          aria-expanded={!collapsed}
+          aria-controls={`${id}-body`}
+          onClick={onToggle}
+        >
+          <span className="panel__chev" aria-hidden="true" />
+          {title}
+        </button>
+      </h2>
+      <div id={`${id}-body`} className="panel__body" hidden={collapsed}>
+        {children}
+      </div>
+    </Tag>
+  );
+}
 
 /** Vendor id -> label (brand names stay as-is; generic labels are translated). */
 const VENDORS: { id: string; label?: string; labelKey?: Key }[] = [
@@ -72,6 +121,24 @@ export function Sidebar({
 }: Props) {
   const { lang, setLang, t, locale } = useI18n();
   const fmt = (n: number) => n.toLocaleString(locale);
+  const [collapsed, setCollapsed] = useState(readCollapsed);
+  const toggle = (id: string) => {
+    const next = new Set(collapsed);
+    if (!next.delete(id)) next.add(id);
+    setCollapsed(next);
+    // Collapsing "What can see me?" also ends that mode, so it's never active
+    // with its results (and their live-region announcements) hidden. Its start
+    // button lives inside the section, so it can't be re-activated while collapsed.
+    if (id === "coverage" && next.has(id) && coverage.active) {
+      onCoverageChange({ ...coverage, active: false });
+    }
+    try {
+      localStorage.setItem(COLLAPSED_KEY, JSON.stringify([...next]));
+    } catch {
+      /* storage blocked (private mode): just don't remember */
+    }
+  };
+  const section = (id: string) => ({ id, collapsed: collapsed.has(id), onToggle: () => toggle(id) });
 
   const allMatches = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -123,10 +190,7 @@ export function Sidebar({
         </div>
       </div>
 
-      <nav className="panel" aria-labelledby="jump-title">
-        <h2 id="jump-title" className="panel__title">
-          {t("jumpTo")}
-        </h2>
+      <Section {...section("jump")} as="nav" title={t("jumpTo")}>
         <div className="chips">
           {PLACES.map((p) => (
             <button key={p.label} type="button" className="chip" onClick={() => onJump(p)}>
@@ -134,13 +198,9 @@ export function Sidebar({
             </button>
           ))}
         </div>
-      </nav>
+      </Section>
 
-      <section className="panel" aria-labelledby="layers-title">
-        <h2 id="layers-title" className="panel__title">
-          {t("layers")}
-        </h2>
-
+      <Section {...section("layers")} title={t("layers")}>
         <label className="toggle">
           <input
             type="checkbox"
@@ -247,12 +307,9 @@ export function Sidebar({
             </ul>
           </div>
         )}
-      </section>
+      </Section>
 
-      <section className="panel" aria-labelledby="coverage-title">
-        <h2 id="coverage-title" className="panel__title">
-          {t("whatCanSeeMe")}
-        </h2>
+      <Section {...section("coverage")} title={t("whatCanSeeMe")}>
         <button
           type="button"
           className={`chip ${coverage.active ? "chip--on" : ""}`}
@@ -288,7 +345,7 @@ export function Sidebar({
           )}
         </div>
         <p className="panel__note">{t("coverageNote")}</p>
-      </section>
+      </Section>
 
       <section className="panel panel--grow" aria-labelledby="find-title">
         <div className="panel__titlerow">
