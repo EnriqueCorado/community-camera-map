@@ -17,7 +17,11 @@ def test_prune_drops_old_and_bad_days(tmp_path):
     edge = (today - dt.timedelta(days=KEEP_DAYS)).isoformat()
     for d in (old, edge, "2026-10-15"):
         (tmp_path / d).mkdir()
-    out = prune({"days": {old: ["quakes"], edge: ["quakes"], "2026-10-15": ["quakes"], "junk": []}}, today, tmp_path)
+    out = prune(
+        {"days": {old: ["quakes"], edge: ["quakes"], "2026-10-15": ["quakes"], "junk": []}},
+        today,
+        tmp_path,
+    )
     assert list(out["days"]) == [edge, "2026-10-15"]
     assert not (tmp_path / old).exists() and (tmp_path / edge).exists()
 

@@ -59,3 +59,10 @@ def test_ci_cache_carries_every_hourly_and_daily_layer():
     cached = re.findall(r"frontend/public/data/layers/([\w-]+)\.geojson", workflow)
     for name in (*HOURLY, *DAILY):
         assert cached.count(name) >= 2, f"{name}: add it to both cache path lists in pages.yml"
+
+
+def test_alpr_tiles_are_cached_between_ci_runs():
+    from pathlib import Path
+
+    workflow = (Path(__file__).resolve().parents[2] / ".github/workflows/pages.yml").read_text()
+    assert workflow.count("frontend/public/data/alpr\n") == 2  # restore + save

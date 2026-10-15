@@ -181,6 +181,31 @@ Checked and skipped: county evacuation zones (empty or stale; stale evacuation d
 the county "weather webcams" (they're Caltrans re-lists), the sheriff-flights layer (last updated
 11 months ago), and crop fields (274k polygons).
 
+**Nationwide.** 47 layers work anywhere in the US. Each nationwide layer has a `View` spec in
+the backend registry (a national ArcGIS service, a field allowlist and a minimum zoom), published
+in `layers.json`. The browser loads the area on screen straight from that service
+(`frontend/src/view-sources.ts`). Inside the home county, and when zoomed out, it uses the
+baked copy. Other nationwide sources:
+- **OpenStreetMap places:** one union query to public Overpass servers per view, at city zoom
+  (`osm-sources.ts`, best effort). EV chargers, libraries and clinics use official national lists
+  instead.
+- **Plate readers:** 145k readers from DeFlock's OpenStreetMap export, cut into 5° tiles plus an
+  overview by `backend/scripts/build_alpr_usa.py`. The build runs daily in CI, is carried in the
+  Actions cache (not committed) and refuses partial downloads.
+- **Flights:** the relay's 3° grid cells.
+
+Layers without a national source show "California only" or "Stanislaus County only" when you
+look elsewhere.
+
+**What's near an address?** Searches with OpenStreetMap Nominatim (cached, at most 1 request a
+second), then asks the national services about that point: city, ZIP, districts, flood and fire
+zones, drought, heat risk, tract income, poverty and health, and the nearest services. Each
+service gets only the precision its question needs, and the address is never put in the page link.
+
+**History.** A daily job snapshots quakes, fires, smoke, outages and alerts to the `history`
+branch (90 days; flights are never archived). The job that writes to the repo runs no project
+code. Every build copies the branch in for the History slider.
+
 **Real-time flights on the public site** come from `relay/`, a small Vercel Function (free Hobby
 plan), because GitHub Pages can't call adsb.fi directly (no CORS). `GET /api/flights` returns
 privacy-filtered GeoJSON: the same filter as the backend (no FAA LADD or PIA aircraft, no owner or

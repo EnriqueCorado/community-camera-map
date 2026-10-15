@@ -96,12 +96,16 @@ class Layer:
     # where it has data (see COVERAGES); `view` makes it load anywhere in the US
     coverage: str = "stanislaus"
     view: View | None = None
+    # OpenStreetMap place layer: its Overpass selector, so the browser can load
+    # any city in the US (the baked copy covers the home region)
+    osm: str | None = None
 
     def catalog_extras(self) -> dict:
         """Catalog fields the frontend needs beyond name/title/category."""
         return {
-            "coverage": "usa" if self.view else self.coverage,
+            "coverage": "usa" if self.view or self.osm else self.coverage,
             "view": self.view.as_json() if self.view else None,
+            "osm": self.osm,
         }
 
 
@@ -197,6 +201,43 @@ OSM_PLACES = {  # layer -> (title, description noun, Overpass selector)
         '["amenity"="community_centre"]',
     ),
     "farmers-markets": ("Markets", "Farmers' and public markets", '["amenity"="marketplace"]'),
+}
+
+
+# Official national lists for some place layers: steadier than public
+# Overpass servers, so outside the home region the browser uses these.
+POI_VIEWS: dict[str, View] = {
+    "ev-chargers": View(
+        "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/Alternative_Fueling_Stations/FeatureServer/0",
+        {
+            "station_name": "name",
+            "street_address": "address",
+            "access_days_time": "hours",
+            "ev_connector_types": "sockets",
+            "ev_network": "network",
+        },
+        "point",
+        min_zoom=10,
+        where="fuel_type_code='ELEC' AND status_code='E'",
+        refresh_s=24 * 3600,
+        home_complete=True,
+    ),
+    "libraries": View(
+        "https://services8.arcgis.com/DlJzJLOZpPXmMpWi/arcgis/rest/services/Public_Library_Outlet_Data_File/FeatureServer/0",
+        {"LIBNAME": "name", "ADDRESS": "address"},
+        "point",
+        min_zoom=9,
+        refresh_s=24 * 3600,
+        home_complete=True,
+    ),
+    "clinics": View(
+        "https://gisportal.hrsa.gov/server/rest/services/HealthCareFacilities/HealthCareFacilities/MapServer/18",
+        {"SITE_NM": "name", "SITE_ADDRESS": "address"},
+        "point",
+        min_zoom=9,
+        refresh_s=24 * 3600,
+        home_complete=True,
+    ),
 }
 
 
@@ -585,7 +626,7 @@ LAYERS: dict[str, Layer] = {
         name="alpr",
         title="License plate readers",
         description=(
-            "Automated license plate readers (Flock, Vigilant, others) "
+            "Automated license plate readers (Flock, Vigilant, others) across the US, "
             "from OpenStreetMap / DeFlock."
         ),
         category="alpr",
@@ -1419,12 +1460,14 @@ LAYERS: dict[str, Layer] = {
         name: Layer(
             name=name,
             title=title,
-            description=f"{noun} in the Stanislaus region, from OpenStreetMap.",
+            description=f"{noun} anywhere in the US (zoom in to a city), from OpenStreetMap.",
             category="poi",
             loader=_overpass(name),
             ttl=24 * 3600,
+            osm=selector,
+            view=POI_VIEWS.get(name),
         )
-        for name, (title, noun, _selector) in OSM_PLACES.items()
+        for name, (title, noun, selector) in OSM_PLACES.items()
     },
     # --- Public webcams ---
     "fire-cameras": Layer(

@@ -10,6 +10,7 @@ import {
 import { downloadLayer, downloadCameras } from "../download";
 import { LIVE_SOURCES } from "../live-sources";
 import { covers } from "../view-logic";
+import { OSM_MIN_ZOOM } from "../osm-sources";
 import { NearMe, type NearPoint } from "./NearMe";
 import { HistoryPicker } from "./HistoryPicker";
 import { HISTORY_LAYERS } from "../history";
@@ -228,7 +229,9 @@ export function Sidebar({
   }, []);
   // Outside the home county (and zoomed in), nationwide layers come straight
   // from the national source, not the baked copy the labels below describe.
-  const fromSource = (l: LayerInfo) => !!l.view && !covers("stanislaus", center) && zoom >= l.view.min_zoom;
+  const minZoomOf = (l: LayerInfo) => l.view?.min_zoom ?? (l.osm ? OSM_MIN_ZOOM : null);
+  const fromSource = (l: LayerInfo) =>
+    minZoomOf(l) != null && !covers("stanislaus", center) && zoom >= minZoomOf(l)!;
   // Flights cover the US only through the relay (the snapshot is home-only).
   const coverageOf = (l: LayerInfo) =>
     l.name === "flights" && !(api.static && api.flightsRelay) ? "stanislaus" : l.coverage;
@@ -332,7 +335,7 @@ export function Sidebar({
                 {l.available && (layers.overlays[l.name] ?? false) && zoom < (LIVE_SOURCES[l.name]?.minZoom ?? 0) && (
                   <span className="panel__note"> — {t("zoomInToSee")}</span>
                 )}
-                {(layers.overlays[l.name] ?? false) && l.view && !covers("stanislaus", center) && zoom < l.view.min_zoom && (
+                {(layers.overlays[l.name] ?? false) && minZoomOf(l) != null && !covers("stanislaus", center) && zoom < minZoomOf(l)! && (
                   <span className="panel__note"> — {t("zoomInToSee")}</span>
                 )}
                 {(layers.overlays[l.name] ?? false) && !covers(coverageOf(l), center) && (

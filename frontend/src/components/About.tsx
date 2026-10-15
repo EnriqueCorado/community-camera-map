@@ -46,7 +46,8 @@ const COPY: Record<
         <strong>Traffic cameras</strong> are live public Caltrans feeds.
       </>,
       <>
-        <strong>License plate readers (ALPR)</strong> are crowdsourced from OpenStreetMap / DeFlock.
+        <strong>License plate readers (ALPR)</strong> across the US are crowdsourced from OpenStreetMap / DeFlock
+        (© OpenStreetMap contributors, ODbL).
         Treat them as a <strong>floor, not a full count</strong> — a camera appears only once someone
         has spotted and logged it.
       </>,
@@ -102,7 +103,7 @@ const COPY: Record<
       </>,
       <>
         Los <strong>lectores automáticos de placas (ALPR)</strong> los registran voluntarios en
-        OpenStreetMap / DeFlock. Considérelos <strong>un mínimo, no un conteo completo</strong>: una
+        OpenStreetMap / DeFlock (© colaboradores de OpenStreetMap, ODbL), en todo EE. UU. Considérelos <strong>un mínimo, no un conteo completo</strong>: una
         cámara aparece solo después de que alguien la ve y la registra.
       </>,
       <>Todo lo demás proviene de las fuentes gubernamentales que se indican abajo.</>,

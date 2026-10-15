@@ -7,7 +7,7 @@
 // and fire zones, city, ZIP, districts), ~100 m for census-tract numbers,
 // ~1 km for drought/heat grids and the "nearest" searches (the distance
 // itself is computed here, in the browser). Nothing is stored by this site.
-import { home } from "./view-sources";
+import { home } from "./baked";
 import type { Key } from "./i18n";
 import { featureAt, floodRisk, nearest, type LonLat } from "./near-me-logic";
 import { HOME_BBOX } from "./view-logic";

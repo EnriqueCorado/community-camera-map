@@ -128,6 +128,7 @@ jobs:
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
+            frontend/public/data/alpr
             frontend/public/data/layers/reservoirs.geojson
             frontend/public/data/layers/drought.geojson
             frontend/public/data/layers/voting.geojson
@@ -163,11 +164,23 @@ jobs:
         if: github.event.schedule == '37 11 * * *' || github.event_name == 'workflow_dispatch'
         working-directory: backend
         run: uv run --locked python scripts/refresh_live.py --daily
+      # Nationwide plate readers (DeFlock / OpenStreetMap), cut into tiles.
+      # Daily, or whenever the cache doesn't have them yet.
+      - name: Build nationwide plate-reader tiles
+        # (the cache-miss case skips 15-minute runs, which don't save the cache)
+        if: >-
+          github.event.schedule == '37 11 * * *' || github.event_name == 'workflow_dispatch' ||
+          (hashFiles('frontend/public/data/alpr/index.json') == '' && github.event.schedule != '*/15 * * * *')
+        working-directory: backend
+        timeout-minutes: 10
+        continue-on-error: true # the California file stays as the fallback
+        run: uv run --locked python scripts/build_alpr_usa.py
       - name: Save hourly/daily layers
         if: github.event_name != 'schedule' || github.event.schedule != '*/15 * * * *'
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
+            frontend/public/data/alpr
             frontend/public/data/layers/reservoirs.geojson
             frontend/public/data/layers/drought.geojson
             frontend/public/data/layers/voting.geojson

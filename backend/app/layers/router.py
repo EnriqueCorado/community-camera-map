@@ -30,6 +30,7 @@ class LayerInfo(BaseModel):
     same_data_as: str | None = None
     coverage: str = "stanislaus"
     view: dict | None = None
+    osm: str | None = None
 
 
 @router.get("", summary="List available overlay layers")

@@ -28,8 +28,16 @@ def test_caltrans_cms_builds_points_with_message():
 
 
 def test_caltrans_cms_blank_message():
-    payload = {"data": [{"cms": {"location": {"latitude": "37.6", "longitude": "-121.0"},
-                                  "message": {"display": "Blank"}}}]}
+    payload = {
+        "data": [
+            {
+                "cms": {
+                    "location": {"latitude": "37.6", "longitude": "-121.0"},
+                    "message": {"display": "Blank"},
+                }
+            }
+        ]
+    }
     assert transforms.caltrans_cms(payload)["features"][0]["properties"]["message"] == "Blank"
 
 
@@ -59,7 +67,11 @@ def test_caltrans_lcs_line_from_begin_end():
 
 def test_caltrans_lcs_point_when_no_end():
     begin = {"beginLatitude": "37.6", "beginLongitude": "-121.0"}
-    payload = {"data": [{"lcs": {"location": {"begin": begin}, "closure": {"code1097": {"isCode1097": "true"}}}}]}
+    payload = {
+        "data": [
+            {"lcs": {"location": {"begin": begin}, "closure": {"code1097": {"isCode1097": "true"}}}}
+        ]
+    }
     f = transforms.caltrans_lcs(payload)["features"][0]
     assert f["geometry"]["type"] == "Point"
 
@@ -174,30 +186,50 @@ def test_arcgis_strips_editor_fields():
 # ---------- public webcams ----------
 
 
-def _cal_oes(source, state="CA", thumb="https://cameras.alertcalifornia.org/public-camera-data/Axis-Oso/latest-frame.jpg",
-             page="https://cameras.alertcalifornia.org/?id=Axis-Oso\n", geom=(-121.5, 37.5)):
+def _cal_oes(
+    source,
+    state="CA",
+    thumb="https://cameras.alertcalifornia.org/public-camera-data/Axis-Oso/latest-frame.jpg",
+    page="https://cameras.alertcalifornia.org/?id=Axis-Oso\n",
+    geom=(-121.5, 37.5),
+):
     return {
         "type": "Feature",
         "geometry": {"type": "Point", "coordinates": list(geom)} if geom else None,
-        "properties": {"Source": source, "State": state, "Location": " Mt. Oso ", "County": "stanislaus",
-                       "Thumbnail_Url": thumb, "Webcam_URL": page, "Creator_1": "someone"},
+        "properties": {
+            "Source": source,
+            "State": state,
+            "Location": " Mt. Oso ",
+            "County": "stanislaus",
+            "Thumbnail_Url": thumb,
+            "Webcam_URL": page,
+            "Creator_1": "someone",
+        },
     }
 
 
 def test_fire_cameras_keeps_only_california_fire_cams_with_clean_fields():
-    fc = {"features": [
-        _cal_oes("Alert California"),
-        _cal_oes("CalTrans"),  # already on the map from the Caltrans feed
-        _cal_oes("Alert Wildfire", state="NV"),  # out of state
-        _cal_oes("Alert Wildfire", state="California", thumb="http://api.nvseismolab.org/camera/Axis-X",
-                 page="https://alertwildfire.org/?currentFirecam=ca-x-1"),
-        _cal_oes("Alert California", geom=None),
-    ]}
+    fc = {
+        "features": [
+            _cal_oes("Alert California"),
+            _cal_oes("CalTrans"),  # already on the map from the Caltrans feed
+            _cal_oes("Alert Wildfire", state="NV"),  # out of state
+            _cal_oes(
+                "Alert Wildfire",
+                state="California",
+                thumb="http://api.nvseismolab.org/camera/Axis-X",
+                page="https://alertwildfire.org/?currentFirecam=ca-x-1",
+            ),
+            _cal_oes("Alert California", geom=None),
+        ]
+    }
     out = transforms.fire_cameras(fc)["features"]
     assert len(out) == 2
     a, w = (f["properties"] for f in out)
     assert a == {
-        "name": "Mt. Oso", "network": "ALERTCalifornia", "county": "Stanislaus",
+        "name": "Mt. Oso",
+        "network": "ALERTCalifornia",
+        "county": "Stanislaus",
         "image": "https://cameras.alertcalifornia.org/public-camera-data/Axis-Oso/latest-frame.jpg",
         "page": "https://cameras.alertcalifornia.org/?id=Axis-Oso",  # trailing newline stripped
     }
@@ -220,13 +252,27 @@ def test_fire_cameras_tolerates_garbage():
 def test_usgs_cameras_ca_only_visible_and_safe_ids():
     s3 = "https://usgs-nims-images.s3.amazonaws.com/720/"
     rows = [
-        {"camId": "CA_Good", "stateAbrv": "CA", "lat": "38.1", "lng": "-121.6", "camName": "Good",
-         "smallDir": s3 + "CA_Good/", "newestImageDT": "2026-10-14T21:30:04.000Z", "nwisId": "123"},
+        {
+            "camId": "CA_Good",
+            "stateAbrv": "CA",
+            "lat": "38.1",
+            "lng": "-121.6",
+            "camName": "Good",
+            "smallDir": s3 + "CA_Good/",
+            "newestImageDT": "2026-10-14T21:30:04.000Z",
+            "nwisId": "123",
+        },
         {"camId": "CA_Hidden", "stateAbrv": "CA", "lat": "38", "lng": "-121", "hideCam": True},
         {"camId": "IL_Other", "stateAbrv": "IL", "lat": "39", "lng": "-89"},
         {"camId": "CA_bad/../id", "stateAbrv": "CA", "lat": "38", "lng": "-121"},
         {"camId": "CA_NoCoords", "stateAbrv": "CA", "lat": "", "lng": None},
-        {"camId": "CA_OddHost", "stateAbrv": "CA", "lat": "38", "lng": "-121", "smallDir": "https://evil.example/"},
+        {
+            "camId": "CA_OddHost",
+            "stateAbrv": "CA",
+            "lat": "38",
+            "lng": "-121",
+            "smallDir": "https://evil.example/",
+        },
     ]
     out = transforms.usgs_cameras(rows)["features"]
     assert [f["properties"]["name"] for f in out] == ["Good", "CA_OddHost"]
@@ -262,16 +308,23 @@ def test_webcam_urls_are_normalized():
 
 
 def test_one_bad_record_never_breaks_the_layer():
-    fc = {"features": [
-        "not a feature",
-        {"geometry": {"type": "Point", "coordinates": [1]}, "properties": {"Source": "Alert California", "State": "CA"}},
-        _cal_oes("Alert California", geom=("NaN", 37)),
-        _cal_oes("Alert California", geom=(-121, "inf")),
-        _cal_oes("Alert California"),
-    ]}
+    fc = {
+        "features": [
+            "not a feature",
+            {
+                "geometry": {"type": "Point", "coordinates": [1]},
+                "properties": {"Source": "Alert California", "State": "CA"},
+            },
+            _cal_oes("Alert California", geom=("NaN", 37)),
+            _cal_oes("Alert California", geom=(-121, "inf")),
+            _cal_oes("Alert California"),
+        ]
+    }
     assert len(transforms.fire_cameras(fc)["features"]) == 1
-    rows = [{"camId": "..", "stateAbrv": "CA", "lat": "38", "lng": "-121"},
-            {"camId": "CA_Nan", "stateAbrv": "CA", "lat": "nan", "lng": "-121"}]
+    rows = [
+        {"camId": "..", "stateAbrv": "CA", "lat": "38", "lng": "-121"},
+        {"camId": "CA_Nan", "stateAbrv": "CA", "lat": "nan", "lng": "-121"},
+    ]
     assert transforms.usgs_cameras(rows)["features"] == []
 
 
@@ -281,11 +334,15 @@ async def test_arcgis_error_payload_raises_instead_of_returning_empty():
     from app.layers import arcgis
 
     def handler(request):
-        return httpx.Response(200, json={"error": {"code": 400, "message": "Invalid or missing input parameters."}})
+        return httpx.Response(
+            200, json={"error": {"code": 400, "message": "Invalid or missing input parameters."}}
+        )
 
     async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
         with pytest.raises(arcgis.ArcGISError):
-            await arcgis.fetch_layer(client, "https://example.test/arcgis/rest/services/x/MapServer/28")
+            await arcgis.fetch_layer(
+                client, "https://example.test/arcgis/rest/services/x/MapServer/28"
+            )
 
 
 # ---------- Caltrans road weather / chain controls / lane closures ----------
@@ -299,18 +356,27 @@ def test_caltrans_json_repairs_missing_commas_between_repeated_keys():
 
 
 def _rwis(temp="227", wind="16", gust="18", rh="23", service="true", lat="37.06"):
-    return {"rwis": {
-        "inService": service,
-        "location": {"locationName": "SR-152 : San Luis Reservoir", "latitude": lat, "longitude": "-121.06", "elevation": "272"},
-        "rwisData": {
-            "windData": {"essAvgWindSpeed": wind, "essMaxWindGustSpeed": gust},
-            "temperatureData": {"essTemperatureSensorTable": [
-                {"essTemperatureSensorEntry": {"essAirTemperature": ""}},
-                {"essTemperatureSensorEntry": {"essAirTemperature": temp}},
-            ]},
-            "humidityPrecipData": {"essRelativeHumidity": rh},
-        },
-    }}
+    return {
+        "rwis": {
+            "inService": service,
+            "location": {
+                "locationName": "SR-152 : San Luis Reservoir",
+                "latitude": lat,
+                "longitude": "-121.06",
+                "elevation": "272",
+            },
+            "rwisData": {
+                "windData": {"essAvgWindSpeed": wind, "essMaxWindGustSpeed": gust},
+                "temperatureData": {
+                    "essTemperatureSensorTable": [
+                        {"essTemperatureSensorEntry": {"essAirTemperature": ""}},
+                        {"essTemperatureSensorEntry": {"essAirTemperature": temp}},
+                    ]
+                },
+                "humidityPrecipData": {"essRelativeHumidity": rh},
+            },
+        }
+    }
 
 
 def test_rwis_converts_ntcip_units_and_treats_sentinels_as_missing():
@@ -320,43 +386,84 @@ def test_rwis_converts_ntcip_units_and_treats_sentinels_as_missing():
     assert p["gust_mph"] == 4 and p["humidity"] == 23
     m = transforms.caltrans_rwis({"data": [_rwis(temp="65535", wind="65535", gust="", rh="101")]})
     q = m["features"][0]["properties"]
-    assert q["temp_f"] is None and q["wind_mph"] is None and q["gust_mph"] is None and q["humidity"] is None
-    assert transforms.caltrans_rwis({"data": [_rwis(service="false"), _rwis(lat="")]})["features"] == []
+    assert (
+        q["temp_f"] is None
+        and q["wind_mph"] is None
+        and q["gust_mph"] is None
+        and q["humidity"] is None
+    )
+    assert (
+        transforms.caltrans_rwis({"data": [_rwis(service="false"), _rwis(lat="")]})["features"]
+        == []
+    )
 
 
 def test_chain_controls_keep_only_known_status_codes():
     def cc(status):
-        return {"cc": {"inService": "true", "location": {"locationName": "Bear Valley", "route": "SR-4", "latitude": "38.46", "longitude": "-120.04"},
-                       "statusData": {"status": status, "statusDescription": " Chains required "}}}
+        return {
+            "cc": {
+                "inService": "true",
+                "location": {
+                    "locationName": "Bear Valley",
+                    "route": "SR-4",
+                    "latitude": "38.46",
+                    "longitude": "-120.04",
+                },
+                "statusData": {"status": status, "statusDescription": " Chains required "},
+            }
+        }
+
     feats = transforms.caltrans_chain({"data": [cc("R-2"), cc("<script>")]})["features"]
-    assert feats[0]["properties"] == {"name": "Bear Valley", "route": "SR-4", "status": "R-2", "detail": "Chains required"}
+    assert feats[0]["properties"] == {
+        "name": "Bear Valley",
+        "route": "SR-4",
+        "status": "R-2",
+        "detail": "Chains required",
+    }
     assert feats[1]["properties"]["status"] == ""
 
 
 def _lcs(start, end, c1097="false", c1098="false", indefinite="false"):
-    return {"lcs": {
-        "location": {"begin": {"beginLongitude": "-121", "beginLatitude": "37.6", "beginRoute": "SR-99"},
-                     "end": {"endLongitude": "-121.01", "endLatitude": "37.61"}},
-        "closure": {"closureTimestamp": {"closureStartEpoch": str(start), "closureEndEpoch": str(end),
-                                         "isClosureEndIndefinite": indefinite},
-                    "typeOfClosure": "Lane", "typeOfWork": "Paving", "lanesClosed": "2",
-                    "code1097": {"isCode1097": c1097}, "code1098": {"isCode1098": c1098}},
-    }}
+    return {
+        "lcs": {
+            "location": {
+                "begin": {"beginLongitude": "-121", "beginLatitude": "37.6", "beginRoute": "SR-99"},
+                "end": {"endLongitude": "-121.01", "endLatitude": "37.61"},
+            },
+            "closure": {
+                "closureTimestamp": {
+                    "closureStartEpoch": str(start),
+                    "closureEndEpoch": str(end),
+                    "isClosureEndIndefinite": indefinite,
+                },
+                "typeOfClosure": "Lane",
+                "typeOfWork": "Paving",
+                "lanesClosed": "2",
+                "code1097": {"isCode1097": c1097},
+                "code1098": {"isCode1098": c1098},
+            },
+        }
+    }
 
 
 def test_lane_closures_only_in_effect_now():
     now = 1_000_000
     rows = [
-        _lcs(now - 10, now + 10),                  # in its window
-        _lcs(now + 3600, now + 7200),              # scheduled later: skipped
+        _lcs(now - 10, now + 10),  # in its window
+        _lcs(now + 3600, now + 7200),  # scheduled later: skipped
         _lcs(now + 3600, now + 7200, c1097="true"),  # crew already on scene
-        _lcs(now - 10, now + 10, c1098="true"),    # picked up early
-        _lcs(now - 99, 0, indefinite="true"),      # open-ended
-        _lcs(now - 99, now - 1),                   # already over
+        _lcs(now - 10, now + 10, c1098="true"),  # picked up early
+        _lcs(now - 99, 0, indefinite="true"),  # open-ended
+        _lcs(now - 99, now - 1),  # already over
     ]
     feats = transforms.caltrans_lcs({"data": rows}, now=now)["features"]
     assert len(feats) == 3
-    assert feats[0]["properties"] == {"route": "SR-99", "type": "Lane", "work": "Paving", "lanes": "2"}
+    assert feats[0]["properties"] == {
+        "route": "SR-99",
+        "type": "Lane",
+        "work": "Paving",
+        "lanes": "2",
+    }
 
 
 async def test_caltrans_loader_survives_some_districts_failing():
@@ -383,50 +490,104 @@ async def test_caltrans_loader_survives_some_districts_failing():
 
 
 def test_select_props_ships_only_mapped_fields():
-    fc = {"features": [
-        {"geometry": {"type": "Point", "coordinates": [0, 0]}, "properties": {"NAME": "POUST", "MAX_VOLTAG": 115, "PHONE": "555", "Creator": "someone"}},
-        {"geometry": None, "properties": {"NAME": "no geometry"}},
-    ]}
+    fc = {
+        "features": [
+            {
+                "geometry": {"type": "Point", "coordinates": [0, 0]},
+                "properties": {
+                    "NAME": "POUST",
+                    "MAX_VOLTAG": 115,
+                    "PHONE": "555",
+                    "Creator": "someone",
+                },
+            },
+            {"geometry": None, "properties": {"NAME": "no geometry"}},
+        ]
+    }
     out = transforms.select_props(fc, {"NAME": "name", "MAX_VOLTAG": "max_kv"})["features"]
     assert [f["properties"] for f in out] == [{"name": "POUST", "max_kv": 115}]
 
 
 def test_superfund_extracts_only_the_epa_profile_link():
     def site(profile):
-        return {"geometry": {"type": "Point", "coordinates": [-120.8, 37.5]},
-                "properties": {"Site_Name": "Valley Wood Preserving, Inc.", "City": "Turlock", "Status": "NPL Site",
-                               "Site_Progress_Profile": profile}}
+        return {
+            "geometry": {"type": "Point", "coordinates": [-120.8, 37.5]},
+            "properties": {
+                "Site_Name": "Valley Wood Preserving, Inc.",
+                "City": "Turlock",
+                "Status": "NPL Site",
+                "Site_Progress_Profile": profile,
+            },
+        }
+
     good = '<a href="https://cumulis.epa.gov/supercpad/cursites/csitinfo.cfm?id=0901490" target="_blank">x</a>'
     bad = '<a href="javascript:alert(1)">x</a>'
     out = transforms.superfund_sites({"features": [site(good), site(bad)]})["features"]
-    assert out[0]["properties"]["page"] == "https://cumulis.epa.gov/supercpad/cursites/csitinfo.cfm?id=0901490"
+    assert (
+        out[0]["properties"]["page"]
+        == "https://cumulis.epa.gov/supercpad/cursites/csitinfo.cfm?id=0901490"
+    )
     assert out[1]["properties"]["page"] == ""
     assert "_profile" not in out[0]["properties"]
 
 
 def test_historic_places_keep_only_national_archives_links():
     def place(url):
-        return {"geometry": {"type": "Point", "coordinates": [-120.9, 37.6]},
-                "properties": {"RESNAME": "McHenry Mansion", "ResType": "building", "Address": "906 15th St", "City": "Modesto",
-                               "CertDate": "1978-05-", "NARA_URL": url, "SRC_COORD": "noise"}}
-    out = transforms.historic_places({"features": [place("https://catalog.archives.gov/id/123"), place("https://evil.example/id/1")]})["features"]
-    assert out[0]["properties"] == {"name": "McHenry Mansion", "kind": "building", "address": "906 15th St", "city": "Modesto",
-                                    "listed": "1978-05", "page": "https://catalog.archives.gov/id/123"}
+        return {
+            "geometry": {"type": "Point", "coordinates": [-120.9, 37.6]},
+            "properties": {
+                "RESNAME": "McHenry Mansion",
+                "ResType": "building",
+                "Address": "906 15th St",
+                "City": "Modesto",
+                "CertDate": "1978-05-",
+                "NARA_URL": url,
+                "SRC_COORD": "noise",
+            },
+        }
+
+    out = transforms.historic_places(
+        {
+            "features": [
+                place("https://catalog.archives.gov/id/123"),
+                place("https://evil.example/id/1"),
+            ]
+        }
+    )["features"]
+    assert out[0]["properties"] == {
+        "name": "McHenry Mansion",
+        "kind": "building",
+        "address": "906 15th St",
+        "city": "Modesto",
+        "listed": "1978-05",
+        "page": "https://catalog.archives.gov/id/123",
+    }
     assert out[1]["properties"]["page"] == ""
 
 
 def test_historical_markers_upgrade_hmdb_links_to_https_only():
     def m(link):
-        return {"geometry": {"type": "Point", "coordinates": [-120.4, 37.9]},
-                "properties": {"Title": "Chinese Camp", "Year_Erected": 1949, "Link": link}}
-    out = transforms.historical_markers({"features": [m("http://www.hmdb.org/m.asp?m=906"), m("http://evil.example/?m=1")]})["features"]
+        return {
+            "geometry": {"type": "Point", "coordinates": [-120.4, 37.9]},
+            "properties": {"Title": "Chinese Camp", "Year_Erected": 1949, "Link": link},
+        }
+
+    out = transforms.historical_markers(
+        {"features": [m("http://www.hmdb.org/m.asp?m=906"), m("http://evil.example/?m=1")]}
+    )["features"]
     assert out[0]["properties"]["page"] == "https://www.hmdb.org/m.asp?m=906"
     assert out[1]["properties"]["page"] == ""
 
 
 def test_historical_markers_strip_markup_from_text():
-    f = {"geometry": {"type": "Point", "coordinates": [-121, 37.6]},
-         "properties": {"Title": "Graffiti Cruise Route", "Add_l_Subtitle": '<i>"The Modesto music scene"</i> &amp; more', "Link": ""}}
+    f = {
+        "geometry": {"type": "Point", "coordinates": [-121, 37.6]},
+        "properties": {
+            "Title": "Graffiti Cruise Route",
+            "Add_l_Subtitle": '<i>"The Modesto music scene"</i> &amp; more',
+            "Link": "",
+        },
+    }
     p = transforms.historical_markers({"features": [f]})["features"][0]["properties"]
     assert p["subtitle"] == '"The Modesto music scene" & more'
 

@@ -32,6 +32,8 @@ export interface LayerInfo {
   source?: string;
   /** Where the layer has data: stanislaus | california | usa | world. */
   coverage?: string;
+  /** OpenStreetMap place layer: its Overpass selector (see osm-sources.ts). */
+  osm?: string | null;
   /** Loads any area in view from a national service (see view-sources.ts). */
   view?: ViewSpec | null;
 }

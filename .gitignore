@@ -36,3 +36,4 @@ records/
 *.xls
 *.csv
 frontend/public/data/history/
+frontend/public/data/alpr/

@@ -85,3 +85,14 @@ test("mergeFlights drops duplicates from overlapping cells", () => {
   ]);
   expect(m.features.map((f) => f.properties!.callsign)).toEqual(["UAL1", "", "DAL2"]);
 });
+
+import { alprCells, mergeTiles } from "../../frontend/src/alpr-tiles";
+test("alpr tiles: cells in view that exist, nearest the center first", () => {
+  const ix = { cell_deg: 5, total: 3, cells: { "35_-125": 10, "35_-120": 5, "40_-90": 7 } };
+  expect(alprCells(ix, [-122, 36, -119, 38])).toEqual(["35_-125", "35_-120"]); // nearest center first
+  expect(alprCells(ix, [-88, 41, -87, 42])).toEqual(["40_-90"]);
+  expect(alprCells(ix, [2, 48, 3, 49])).toEqual([]); // nothing there
+  expect(alprCells(ix, [-130, 30, -80, 45], 1)).toHaveLength(1);
+  const pt = (id: number) => ({ type: "Feature" as const, geometry: { type: "Point" as const, coordinates: [0, 0] }, properties: { id } });
+  expect(mergeTiles([{ type: "FeatureCollection", features: [pt(1)] }, { type: "FeatureCollection", features: [pt(2)] }]).features).toHaveLength(2);
+});

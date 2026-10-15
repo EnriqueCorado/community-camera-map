@@ -480,7 +480,8 @@ test("flight popup shows only flight data, in Spanish too", async ({ page }) => 
 for (const [layer, ov, view, en, es] of [
   ["ov-voting-circle", "voting", "-120.99,37.64,11", /Ballot drop box|Vote center|Outdoor drop box|Curbside/, /Buzón|Centro de votación|acera/],
   ["ov-reservoirs-circle", "reservoirs", "-120.6,37.9,8", /Full/, /Lleno/],
-  ["ov-fatal-crashes-circle", "fatal-crashes", "-120.99,37.6,9", /Fatal crash/, /Choque mortal/],
+  // (zoom 7.5: below min_zoom, so the local file loads, not the network)
+  ["ov-fatal-crashes-circle", "fatal-crashes", "-120.99,37.6,7.5", /Fatal crash/, /Choque mortal/],
   ["ov-health-diabetes-fill", "health-diabetes", "-120.99,37.64,11", /% of adults/, /% de los adultos/],
 ] as const) {
   for (const lang of ["en", "es"] as const) {

@@ -3,27 +3,13 @@
 // (all verified to send CORS headers). Inside the home county — and when
 // zoomed out past the spec's min_zoom — the baked copy is used instead, so
 // the home view stays fast and works even if a federal server is down.
-import { api, type LayerInfo, type ViewSpec } from "./api/client";
+import type { LayerInfo, ViewSpec } from "./api/client";
 import { LIVE_SOURCES, type LiveSource } from "./live-sources";
 import { applyFields, arcgisQueryUrl, chooseSource } from "./view-logic";
+import { home } from "./baked";
+import { osmSource } from "./osm-sources";
 
 type FC = GeoJSON.FeatureCollection;
-
-// One baked-file fetch per file (the census layers all share census.geojson).
-const homeFiles = new Map<string, Promise<FC>>();
-export function home(file: string): Promise<FC> {
-  let p = homeFiles.get(file);
-  if (!p) {
-    p = fetch(api.layerUrl(file))
-      .then((r) => (r.ok ? (r.json() as Promise<FC>) : Promise.reject(new Error(String(r.status)))))
-      .catch((err: unknown) => {
-        homeFiles.delete(file); // retry next time
-        throw err;
-      });
-    homeFiles.set(file, p);
-  }
-  return p;
-}
 
 function viewSource(info: LayerInfo, spec: ViewSpec): LiveSource {
   return {
@@ -49,7 +35,8 @@ function viewSource(info: LayerInfo, spec: ViewSpec): LiveSource {
 const EMPTY: FC = { type: "FeatureCollection", features: [] };
 
 /** Hosts a catalog `view` may query (defense in depth: the catalog is ours). */
-const VIEW_HOSTS = /^https:\/\/(services\d*\.arcgis\.com|tigerweb\.geo\.census\.gov|hazards\.fema\.gov|mapservices\.nps\.gov)\//;
+const VIEW_HOSTS =
+  /^https:\/\/(services\d*\.arcgis\.com|tigerweb\.geo\.census\.gov|hazards\.fema\.gov|mapservices\.nps\.gov|gisportal\.hrsa\.gov)\//;
 
 const viewCache = new Map<string, LiveSource>();
 
@@ -58,7 +45,8 @@ const viewCache = new Map<string, LiveSource>();
 export function liveSourceFor(info: LayerInfo): LiveSource | undefined {
   const hand = LIVE_SOURCES[info.name];
   if (hand) return hand;
-  if (!info.view || !VIEW_HOSTS.test(info.view.url)) return undefined;
+  // A national official list beats public Overpass servers when there is one.
+  if (!info.view || !VIEW_HOSTS.test(info.view.url)) return info.osm ? osmSource(info) : undefined;
   let s = viewCache.get(info.name);
   if (!s) viewCache.set(info.name, (s = viewSource(info, info.view)));
   return s;

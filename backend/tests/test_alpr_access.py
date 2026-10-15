@@ -23,8 +23,16 @@ SQUARE_WITH_HOLE = {
     ("tags", "city", "expected"),
     [
         # Operator tags win and are "tagged".
-        ({"operator": "Modesto Police Department", "manufacturer": "Flock Safety"}, "MODESTO", ("modesto-pd", "tagged")),
-        ({"operator": "The Home Depot", "manufacturer": "Flock Safety"}, "MODESTO", ("retail-home-depot", "tagged")),
+        (
+            {"operator": "Modesto Police Department", "manufacturer": "Flock Safety"},
+            "MODESTO",
+            ("modesto-pd", "tagged"),
+        ),
+        (
+            {"operator": "The Home Depot", "manufacturer": "Flock Safety"},
+            "MODESTO",
+            ("retail-home-depot", "tagged"),
+        ),
         ({"operator": "Lowe's"}, "CERES", ("retail-lowes", "tagged")),
         # An operator we have no records for is left unknown, never re-inferred.
         ({"operator": "Some HOA", "manufacturer": "Motorola Solutions"}, "MODESTO", (None, None)),
@@ -42,7 +50,11 @@ SQUARE_WITH_HOLE = {
         # Vendor may come from `brand` when `manufacturer` is absent.
         ({"brand": "Motorola Solutions"}, "MODESTO", ("modesto-pd", "inferred")),
         ({"brand": "Flock Safety"}, "TURLOCK", ("turlock-pd", "inferred")),
-        ({"manufacturer": "Rekor", "brand": "Flock Safety"}, "TURLOCK", (None, None)),  # manufacturer wins
+        (
+            {"manufacturer": "Rekor", "brand": "Flock Safety"},
+            "TURLOCK",
+            (None, None),
+        ),  # manufacturer wins
         # Both spellings of the Epic iO / IntelliSite vendor are recognised.
         ({"manufacturer": "IntelliSite"}, "HUGHSON", ("stanislaus-sheriff", "inferred")),
         ({"brand": "Epic iQ"}, "WATERFORD", ("stanislaus-sheriff", "inferred")),
@@ -78,7 +90,13 @@ def test_point_in_geometry_ignores_non_polygon_types():
 
 
 def test_multipolygon():
-    multi = {"type": "MultiPolygon", "coordinates": [SQUARE["coordinates"], [[[20, 20], [30, 20], [30, 30], [20, 30], [20, 20]]]]}
+    multi = {
+        "type": "MultiPolygon",
+        "coordinates": [
+            SQUARE["coordinates"],
+            [[[20, 20], [30, 20], [30, 30], [20, 30], [20, 20]]],
+        ],
+    }
     assert point_in_geometry(25, 25, multi)
     assert not point_in_geometry(15, 15, multi)
 
@@ -86,7 +104,13 @@ def test_multipolygon():
 def test_county_island_beats_surrounding_city():
     cities = [
         {"properties": {"name": "MODESTO"}, "geometry": SQUARE},
-        {"properties": {"name": "COUNTY"}, "geometry": {"type": "Polygon", "coordinates": [[[4, 4], [6, 4], [6, 6], [4, 6], [4, 4]]]}},
+        {
+            "properties": {"name": "COUNTY"},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[4, 4], [6, 4], [6, 6], [4, 6], [4, 4]]],
+            },
+        },
     ]
     assert city_for(2, 2, cities) == "MODESTO"
     assert city_for(5, 5, cities) is None  # unincorporated island inside Modesto
@@ -99,10 +123,16 @@ def test_enrich_only_touches_county_cameras_and_clears_stale_fields():
             {"geometry": {"type": "Point", "coordinates": [2, 2]}, "properties": {"osm_id": 1}},
             {"geometry": {"type": "Point", "coordinates": [2, 2]}, "properties": {"osm_id": 2}},
             # Outside the county: not in raw map; stale fields must be removed.
-            {"geometry": {"type": "Point", "coordinates": [2, 2]}, "properties": {"osm_id": 3, "agency": "x"}},
+            {
+                "geometry": {"type": "Point", "coordinates": [2, 2]},
+                "properties": {"osm_id": 3, "agency": "x"},
+            },
         ]
     }
-    raw = {1: {"tags": {"manufacturer": "Motorola Solutions"}}, 2: {"tags": {"manufacturer": "Rekor"}}}
+    raw = {
+        1: {"tags": {"manufacturer": "Motorola Solutions"}},
+        2: {"tags": {"manufacturer": "Rekor"}},
+    }
     cities = [{"properties": {"name": "MODESTO"}, "geometry": SQUARE}]
     counts = enrich(fc, raw, cities)
     p = [f["properties"] for f in fc["features"]]
@@ -115,11 +145,17 @@ def test_enrich_only_touches_county_cameras_and_clears_stale_fields():
 def test_enrich_skips_non_point_geometry():
     fc = {
         "features": [
-            {"geometry": {"type": "Polygon", "coordinates": SQUARE["coordinates"]}, "properties": {"osm_id": 1, "agency": "stale"}},
+            {
+                "geometry": {"type": "Polygon", "coordinates": SQUARE["coordinates"]},
+                "properties": {"osm_id": 1, "agency": "stale"},
+            },
             {"geometry": None, "properties": {"osm_id": 2}},
         ]
     }
-    raw = {1: {"tags": {"manufacturer": "Motorola Solutions"}}, 2: {"tags": {"manufacturer": "Motorola Solutions"}}}
+    raw = {
+        1: {"tags": {"manufacturer": "Motorola Solutions"}},
+        2: {"tags": {"manufacturer": "Motorola Solutions"}},
+    }
     cities = [{"properties": {"name": "MODESTO"}, "geometry": SQUARE}]
     assert enrich(fc, raw, cities) == {}
     assert "agency" not in fc["features"][0]["properties"]  # stale value still cleared
@@ -139,7 +175,9 @@ def _bilingual(d: dict) -> bool:
 def test_every_tagged_camera_points_at_a_real_profile():
     fc = json.loads((DATA / "alpr_ca.geojson").read_text())
     used = {f["properties"]["agency"] for f in fc["features"] if "agency" in f["properties"]}
-    bases = {f["properties"].get("agency_basis") for f in fc["features"] if "agency" in f["properties"]}
+    bases = {
+        f["properties"].get("agency_basis") for f in fc["features"] if "agency" in f["properties"]
+    }
     assert used, "enrich_alpr.py has not been run"
     assert used <= ACCESS["profiles"].keys()
     assert bases <= {"tagged", "inferred", "network"}
@@ -174,10 +212,19 @@ def test_outside_the_county_only_the_operator_rule_applies():
     fc = {
         "features": [
             # Not in the county's raw map: a tagged chain store elsewhere in CA.
-            {"geometry": {"type": "Point", "coordinates": [50, 50]}, "properties": {"osm_id": 7, "operator": "The Home Depot"}},
-            {"geometry": {"type": "Point", "coordinates": [50, 50]}, "properties": {"osm_id": 8, "operator": "Lowe’s"}},
+            {
+                "geometry": {"type": "Point", "coordinates": [50, 50]},
+                "properties": {"osm_id": 7, "operator": "The Home Depot"},
+            },
+            {
+                "geometry": {"type": "Point", "coordinates": [50, 50]},
+                "properties": {"osm_id": 8, "operator": "Lowe’s"},
+            },
             # Vendor + location rules must never fire outside the county.
-            {"geometry": {"type": "Point", "coordinates": [50, 50]}, "properties": {"osm_id": 9, "vendor": "EPIC IO Technologies"}},
+            {
+                "geometry": {"type": "Point", "coordinates": [50, 50]},
+                "properties": {"osm_id": 9, "vendor": "EPIC IO Technologies"},
+            },
         ]
     }
     counts = enrich(fc, {}, [])

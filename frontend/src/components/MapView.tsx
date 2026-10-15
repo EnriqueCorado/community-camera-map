@@ -27,6 +27,7 @@ import { LIVE_SOURCES, type LiveCtx } from "../live-sources";
 import { liveSourceFor } from "../view-sources";
 import { HOME_BBOX, within, wrapLon } from "../view-logic";
 import { HISTORY_LAYERS } from "../history";
+import { ALPR_TILE_ZOOM, alprCells, alprIndex, alprNear, alprTile, evictAlprTile, mergeTiles, type AlprIndex } from "../alpr-tiles";
 import { VOTING_KEYS } from "../colors";
 import {
   CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
@@ -132,6 +133,7 @@ export function MapView({
   const onCoverageResultRef = useRef(onCoverageResult);
   onCoverageResultRef.current = onCoverageResult;
   const alprDataRef = useRef<GeoJSON.FeatureCollection | null>(null);
+  const alprIndexRef = useRef<AlprIndex | null>(null);
   // Running browser-live layers -> their stop() functions.
   const liveRef = useRef(new Map<string, () => void>());
   const onAlprAccessRef = useRef(onAlprAccess);
@@ -333,8 +335,15 @@ export function MapView({
       alprLoadedRef.current = true;
       warmAlprAccess();
 
-      fetch(api.layerUrl("alpr"))
-        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      // Nationwide tiles when published (data/alpr/), else the California file.
+      alprIndex()
+        .then(async (index) => {
+          alprIndexRef.current = index;
+          if (alprIndexRef.current) return EMPTY_FC; // tiles load for the view below
+          const r = await fetch(api.layerUrl("alpr"));
+          if (!r.ok) throw new Error(String(r.status));
+          return (await r.json()) as GeoJSON.FeatureCollection;
+        })
         .then((data: GeoJSON.FeatureCollection) => {
           if (!mapRef.current) return;
           alprDataRef.current = data; // share with "what can see me?" to avoid a 2nd fetch
@@ -438,6 +447,7 @@ export function MapView({
             map.on("mouseenter", l, () => (map.getCanvas().style.cursor = "pointer"));
             map.on("mouseleave", l, () => (map.getCanvas().style.cursor = ""));
           }
+          if (alprIndexRef.current) addAlprTiles(map, alprIndexRef.current, alprDataRef, underCameras);
           applyVisibility(map, layersRef.current);
         })
         .catch(() => {
@@ -837,6 +847,93 @@ export function MapView({
 
 // --- helpers ---
 
+const ALPR_ATTRIBUTION =
+  'Plate readers © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors (ODbL) via <a href="https://deflock.me" target="_blank" rel="noopener noreferrer">DeFlock</a>';
+
+/** Nationwide readers: an overview (counts per 0.5° cell) when zoomed out,
+ *  and the clustered points fed from the 5° tiles in view once zoomed in. */
+function addAlprTiles(
+  map: maplibregl.Map,
+  index: AlprIndex,
+  dataRef: { current: GeoJSON.FeatureCollection | null },
+  beforeId: string | undefined,
+) {
+  for (const id of ["alpr-clusters", "alpr-cluster-count", "alpr-points"]) map.setLayerZoomRange(id, ALPR_TILE_ZOOM, 24);
+  map.addSource("alpr-overview", { type: "geojson", data: "data/alpr/overview.geojson", attribution: ALPR_ATTRIBUTION });
+  map.addLayer(
+    {
+      id: "alpr-overview",
+      type: "circle",
+      source: "alpr-overview",
+      maxzoom: ALPR_TILE_ZOOM,
+      paint: {
+        "circle-color": ALPR_CLUSTER,
+        "circle-opacity": 0.75,
+        "circle-radius": ["interpolate", ["linear"], ["sqrt", ["get", "count"]], 1, 4, 10, 10, 40, 22],
+        "circle-stroke-width": 1,
+        "circle-stroke-color": "#fff",
+      },
+    },
+    beforeId,
+  );
+  map.addLayer(
+    {
+      id: "alpr-overview-count",
+      type: "symbol",
+      source: "alpr-overview",
+      maxzoom: ALPR_TILE_ZOOM,
+      filter: [">=", ["get", "count"], 25],
+      layout: { "text-field": ["to-string", ["get", "count"]], "text-font": LABEL_FONT, "text-size": 10 },
+      paint: { "text-color": "#fff" },
+    },
+    beforeId,
+  );
+  // Click a count: zoom in to see the readers there.
+  map.on("click", "alpr-overview", (e: LayerMouseEvent) =>
+    map.easeTo({ center: e.lngLat, zoom: ALPR_TILE_ZOOM + 1, ...(prefersReducedMotion() ? { duration: 0 } : {}) }),
+  );
+  map.on("mouseenter", "alpr-overview", () => (map.getCanvas().style.cursor = "pointer"));
+  map.on("mouseleave", "alpr-overview", () => (map.getCanvas().style.cursor = ""));
+
+  const tiles = new Map<string, GeoJSON.FeatureCollection>();
+  const pending = new Set<string>();
+  const load = () => {
+    if (map.getZoom() < ALPR_TILE_ZOOM) return;
+    const b = map.getBounds();
+    const w = wrapLon(b.getWest()), e = wrapLon(b.getEast());
+    // Across the antimeridian (western Aleutians): both sides of it.
+    const want =
+      e < w
+        ? [...alprCells(index, [w, b.getSouth(), 180, b.getNorth()], 4), ...alprCells(index, [-180, b.getSouth(), e, b.getNorth()], 4)]
+        : alprCells(index, [w, b.getSouth(), e, b.getNorth()]);
+    const missing = want.filter((k) => !tiles.has(k) && !pending.has(k));
+    if (!missing.length) return;
+    missing.forEach((k) => pending.add(k));
+    void Promise.all(
+      missing.map((k) =>
+        alprTile(k).then((fc) => {
+          pending.delete(k);
+          if (fc) tiles.set(k, fc);
+        }),
+      ),
+    ).then(() => {
+      // Keep memory bounded: drop far-away tiles once many are loaded.
+      if (tiles.size > 8) {
+        for (const k of [...tiles.keys()]) {
+          if (want.includes(k)) continue;
+          tiles.delete(k);
+          evictAlprTile(k); // free it for real, not just from the map
+        }
+      }
+      const data = mergeTiles(tiles.values());
+      dataRef.current = data;
+      (map.getSource("alpr") as GeoJSONSource | undefined)?.setData(data);
+    });
+  };
+  map.on("moveend", load);
+  load();
+}
+
 function applyVisibility(map: maplibregl.Map, layers: LayerState) {
   const set = (id: string, on: boolean) => {
     if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none");
@@ -844,7 +941,9 @@ function applyVisibility(map: maplibregl.Map, layers: LayerState) {
   for (const id of ["cam-clusters", "cam-cluster-count", "cam-points", "cam-selected"]) {
     set(id, layers.cameras);
   }
-  for (const id of ["alpr-clusters", "alpr-cluster-count", "alpr-points"]) set(id, layers.alpr);
+  for (const id of ["alpr-clusters", "alpr-cluster-count", "alpr-points", "alpr-overview", "alpr-overview-count"]) {
+    set(id, layers.alpr);
+  }
 
   // Vendor filter on the unclustered ALPR points.
   if (map.getLayer("alpr-points")) {
@@ -1776,9 +1875,10 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
     case "poi":
       return {
         ...base,
-        title: raw(p.name) || t(POI_KEYS[info.name] ?? "unavailable"),
+        title: str(p.name) || t(POI_KEYS[info.name] ?? "unavailable"),
         rows: [
           [t("rowType"), p.name ? t(POI_KEYS[info.name] ?? "unavailable") : ""],
+          [t("rowAddress"), str(p.address)],
           [t("rowAccess"), yn(p.access)],
           [t("rowHours"), raw(p.hours)],
           [t("rowFee"), yn(p.fee)],
@@ -2150,7 +2250,17 @@ async function runCoverage(
   radiusM: number,
   onResult: (n: number | null) => void,
 ) {
-  if (!dataRef.current) {
+  // Nationwide: the tiles around the pin, whatever the zoom or what's drawn.
+  lngLat = lngLat.wrap(); // a click on a repeated copy of the world
+  let near: GeoJSON.FeatureCollection | null;
+  try {
+    near = await alprNear(lngLat.lng, lngLat.lat, radiusM);
+  } catch {
+    onResult(null); // shows an error — never a false "nothing can see you"
+    return;
+  }
+  if (near) dataRef = { current: near };
+  else if (!dataRef.current) {
     try {
       const r = await fetch(api.layerUrl("alpr"));
       if (!r.ok) throw new Error(String(r.status));

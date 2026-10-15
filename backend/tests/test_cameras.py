@@ -83,9 +83,7 @@ def test_media_url_on_untrusted_host_is_dropped():
 
 def test_record_without_coords_is_dropped():
     assert (
-        caltrans.normalize(
-            {"cctv": {"index": "1", "location": {}, "imageData": {"static": {}}}}
-        )
+        caltrans.normalize({"cctv": {"index": "1", "location": {}, "imageData": {"static": {}}}})
         is None
     )
 
