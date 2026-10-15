@@ -8,6 +8,9 @@ import type { AlprAccess } from "../alpr-access";
 //    AirNow) are used only at bake time and never shipped to the browser.
 const STATIC = import.meta.env.VITE_STATIC === "1";
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
+// Real-time flights relay (Cloudflare Worker, see relay/). When set, the
+// static site gets live flights instead of the 15-minute snapshot.
+const FLIGHTS_RELAY: string = import.meta.env.VITE_FLIGHTS_URL ?? "";
 
 async function getJSON<T>(path: string): Promise<T> {
   const res = await fetch(path);
@@ -39,6 +42,8 @@ let alprAccessCache: Promise<AlprAccess> | null = null;
 
 export const api = {
   static: STATIC,
+  /** Live flights URL: the relay if configured, else the layer file/API. */
+  flightsRelay: FLIGHTS_RELAY,
   listCameras: () => getJSON<CameraList>(STATIC ? "data/cameras.json" : `${API_BASE}/api/cameras`),
   listLayers: () => getJSON<LayerInfo[]>(STATIC ? "data/layers.json" : `${API_BASE}/api/layers`),
   /** Overlay layer GeoJSON. */

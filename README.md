@@ -181,6 +181,23 @@ Checked and skipped: county evacuation zones (empty or stale; stale evacuation d
 the county "weather webcams" (they're Caltrans re-lists), the sheriff-flights layer (last updated
 11 months ago), and crop fields (274k polygons).
 
+**Real-time flights on the public site** come from `relay/`, a small Cloudflare Worker (free plan),
+because GitHub Pages can't call adsb.fi directly (no CORS). `GET /flights` returns privacy-filtered
+GeoJSON: the same filter as the backend (no FAA LADD or PIA aircraft, no owner or registration).
+It protects the upstream:
+- each Worker instance reuses a result for 10 s and shares one in-flight request;
+- failures back off and honor `Retry-After`, serving the last good data for up to 5 minutes;
+- a per-client rate limit (30 requests a minute) stops it being used as an amplifier;
+- CORS allows only this site and local dev.
+
+The map polls the relay every 15 s and glides planes between updates. If the relay is down, it
+falls back to the 15-minute snapshot. Visitors' browsers contact Cloudflare for this.
+
+```bash
+cd relay && npm ci && npx wrangler login && npm run deploy   # prints the workers.dev URL
+gh variable set FLIGHTS_RELAY_URL --body "https://stanislaus-flights.<subdomain>.workers.dev/flights"
+```
+
 **Keeping the public site live:** `.github/workflows/pages.yml` runs every 15 minutes. It calls
 `backend/scripts/refresh_live.py`, which re-fetches the keyless live layers (flights, fires,
 quakes, alerts, closures, signs, gauges; plus haze and webcam lists hourly) and then rebuilds

@@ -493,26 +493,49 @@ export function MapView({
     const map = mapRef.current;
     if (!map || !ready || !flightsOn) return;
     let base: Parameters<typeof deadReckon>[0] | null = null;
+    // Static site: the relay (real-time) when configured, else the 15-minute
+    // snapshot file. If the relay fails, fall back to the snapshot.
+    const relay = api.static ? api.flightsRelay : "";
+    const snapshotUrl = () =>
+      `${api.layerUrl("flights")}${api.static ? `?t=${Math.floor(Date.now() / 60_000)}` : ""}`; // Pages caches 10 min
+    const getJSON = (u: string) => fetch(u).then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))));
+    // After a relay failure, use the snapshot (which changes every ~15 min)
+    // and only try the relay again a minute later — no 15 s hammering.
+    let relayDownUntil = 0;
+    let lastSnapshotAt = 0;
+    const load = async (): Promise<unknown> => {
+      if (relay && Date.now() >= relayDownUntil) {
+        try {
+          return await getJSON(relay);
+        } catch {
+          relayDownUntil = Date.now() + 60_000;
+        }
+      }
+      if (relay && Date.now() - lastSnapshotAt < 5 * 60_000) return null; // snapshot is recent enough
+      lastSnapshotAt = Date.now();
+      return getJSON(snapshotUrl());
+    };
     const poll = () => {
       if (document.hidden) return;
-      // Cache-bust in static mode: GitHub Pages serves data with a 10-minute max-age.
-      const url = `${api.layerUrl("flights")}${api.static ? `?t=${Math.floor(Date.now() / 60_000)}` : ""}`;
-      fetch(url)
-        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
-        .then((data: Parameters<typeof deadReckon>[0]) => {
-          base = data;
-          (map.getSource("ov-flights") as GeoJSONSource | undefined)?.setData(deadReckon(data, Date.now() / 1000));
+      load()
+        .then((data) => {
+          const fc = data as Parameters<typeof deadReckon>[0] | null;
+          if (!fc || !Array.isArray(fc.features)) return; // ignore anything malformed
+          base = fc;
+          (map.getSource("ov-flights") as GeoJSONSource | undefined)?.setData(deadReckon(fc, Date.now() / 1000));
         })
         .catch(() => {}); // keep the last good positions
     };
     poll();
-    const fetchId = window.setInterval(poll, api.static ? 5 * 60_000 : 15_000);
+    // Relay: every 15 s (the relay itself refreshes at most every 10 s);
+    // snapshot-only static site: every 5 min; dev API: every 15 s.
+    const fetchId = window.setInterval(poll, api.static && !relay ? 5 * 60_000 : 15_000);
     const onVisible = () => !document.hidden && poll(); // catch up after a background tab
     document.addEventListener("visibilitychange", onVisible);
-    // Glide dots along their heading between updates (fresh data only; the
-    // static snapshot is minutes old, so it isn't animated).
+    // Glide dots along their heading between updates (fresh data only: the
+    // 15-minute static snapshot isn't animated, the relay is).
     const moveId =
-      prefersReducedMotion() || api.static
+      prefersReducedMotion() || (api.static && !relay)
         ? undefined
         : window.setInterval(() => {
             const src = map.getSource("ov-flights") as GeoJSONSource | undefined;

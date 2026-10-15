@@ -1,0 +1,13 @@
+# Cloudflare Worker that relays live flights to the static map (GitHub Pages
+# can't call adsb.fi directly: no CORS). Deploy: `npm run deploy`.
+name = "stanislaus-flights"
+main = "src/index.ts"
+compatibility_date = "2026-09-15"
+workers_dev = true
+
+# Per-client limit: a map tab polls every 15 s (4/min); 30/min leaves headroom
+# while stopping anyone from using the relay as an amplifier against adsb.fi.
+[[ratelimits]]
+name = "FLIGHTS_LIMITER"
+namespace_id = "1001"
+simple = { limit = 30, period = 60 }
