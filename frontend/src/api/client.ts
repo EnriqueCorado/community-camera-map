@@ -8,7 +8,7 @@ import type { AlprAccess } from "../alpr-access";
 //    AirNow) are used only at bake time and never shipped to the browser.
 const STATIC = import.meta.env.VITE_STATIC === "1";
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
-// Real-time flights relay (Cloudflare Worker, see relay/). When set, the
+// Real-time flights relay (Vercel Function, see relay/). When set, the
 // static site gets live flights instead of the 15-minute snapshot.
 const FLIGHTS_RELAY: string = import.meta.env.VITE_FLIGHTS_URL ?? "";
 

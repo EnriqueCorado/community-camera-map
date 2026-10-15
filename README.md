@@ -181,21 +181,27 @@ Checked and skipped: county evacuation zones (empty or stale; stale evacuation d
 the county "weather webcams" (they're Caltrans re-lists), the sheriff-flights layer (last updated
 11 months ago), and crop fields (274k polygons).
 
-**Real-time flights on the public site** come from `relay/`, a small Cloudflare Worker (free plan),
-because GitHub Pages can't call adsb.fi directly (no CORS). `GET /flights` returns privacy-filtered
-GeoJSON: the same filter as the backend (no FAA LADD or PIA aircraft, no owner or registration).
-It protects the upstream:
-- each Worker instance reuses a result for 10 s and shares one in-flight request;
-- failures back off and honor `Retry-After`, serving the last good data for up to 5 minutes;
-- a per-client rate limit (30 requests a minute) stops it being used as an amplifier;
-- CORS allows only this site and local dev.
+**Real-time flights on the public site** come from `relay/`, a small Vercel Function (free Hobby
+plan), because GitHub Pages can't call adsb.fi directly (no CORS). `GET /api/flights` returns
+privacy-filtered GeoJSON: the same filter as the backend (no FAA LADD or PIA aircraft, no owner or
+registration). Sources are adsb.fi, then adsb.lol. It runs on Vercel's Node.js runtime in `sfo1`
+(AWS): both feeds refuse Cloudflare's network, which rules out Cloudflare Workers and Vercel's Edge
+runtime. It protects the upstream:
+- Vercel's CDN caches each good response for 10 s (`s-maxage`), so most requests never run the
+  function;
+- behind that, each instance reuses a result for 10 s and shares one in-flight request;
+- a provider that answers 429 is skipped until its `Retry-After` passes; if every provider fails,
+  the relay backs off and serves the last good data for up to 5 minutes;
+- any query string, and anything but GET, is refused, so the cache can't be bypassed;
+- CORS allows only this site (so a local `vite preview` build with `VITE_FLIGHTS_URL` set falls
+  back to the snapshot).
 
 The map polls the relay every 15 s and glides planes between updates. If the relay is down, it
-falls back to the 15-minute snapshot. Visitors' browsers contact Cloudflare for this.
+falls back to the 15-minute snapshot. Visitors' browsers contact Vercel for this.
 
 ```bash
-cd relay && npm ci && npx wrangler login && npm run deploy   # prints the workers.dev URL
-gh variable set FLIGHTS_RELAY_URL --body "https://stanislaus-flights.<subdomain>.workers.dev/flights"
+cd relay && npm ci && vercel login && npm run deploy   # project: stanislaus-flights
+gh variable set FLIGHTS_RELAY_URL --body "https://stanislaus-flights.vercel.app/api/flights"
 ```
 
 **Keeping the public site live:** `.github/workflows/pages.yml` runs every 15 minutes. It calls

@@ -1,0 +1,9 @@
+# Upload only what the function needs (never .env files or anything new by accident).
+/*
+!api
+!src
+!package.json
+!package-lock.json
+!tsconfig.json
+!vercel.json
+!.npmrc

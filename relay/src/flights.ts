@@ -1,4 +1,4 @@
-// Pure transform (no Worker APIs): adsb.fi / readsb JSON -> privacy-filtered
+// Pure transform (no platform APIs): adsb.fi / readsb JSON -> privacy-filtered
 // GeoJSON. Mirrors backend/app/layers/transforms.py `adsb_flights` — keep them
 // in sync (both are unit-tested).
 
@@ -27,8 +27,8 @@ export interface FlightFC {
 /** Keep only what an aircraft broadcasts about its flight; owner/registration
  *  are dropped, and aircraft whose owners opted out of tracking are excluded. */
 export function adsbFlights(payload: unknown): FlightFC {
-  // readsb-based feeds: adsb.fi uses `aircraft` + seconds; adsb.lol and
-  // airplanes.live use `ac` + milliseconds.
+  // readsb-based feeds: adsb.fi uses `aircraft` + seconds; adsb.lol uses
+  // `ac` + milliseconds.
   const p = (payload ?? {}) as { aircraft?: unknown; ac?: unknown; now?: unknown };
   const rows = Array.isArray(p.aircraft) ? p.aircraft : Array.isArray(p.ac) ? p.ac : [];
   const features: FlightFC["features"] = [];
