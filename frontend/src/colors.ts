@@ -21,6 +21,8 @@ export const VENDOR_SWATCH: Record<string, string> = {
 
 export const OVERLAY_COLOR: Record<string, string> = {
   voting: "#1d4ed8",
+  buses: "#0f766e",
+  wastewater: "#7c3aed",
   "power-outages": "#dc2626",
   "outage-areas": "#f97316",
   "health-asthma": "#0e7490",
@@ -182,6 +184,24 @@ export const RESERVOIR_STOPS: [number, string][] = [
   [50, "#eab308"],
   [80, "#0284c7"],
 ];
+
+/** CDC wastewater viral activity level -> dot color (green low ... red very high). */
+export const WVAL_COLORS: [string, string][] = [
+  ["Very Low", "#16a34a"],
+  ["Low", "#84cc16"],
+  ["Moderate", "#eab308"],
+  ["High", "#f97316"],
+  ["Very High", "#dc2626"],
+];
+
+/** Wastewater levels -> label keys (en/es in i18n.tsx). */
+export const WVAL_KEYS: Record<string, "wvalVeryLow" | "wvalLow" | "wvalModerate" | "wvalHigh" | "wvalVeryHigh"> = {
+  "Very Low": "wvalVeryLow",
+  Low: "wvalLow",
+  Moderate: "wvalModerate",
+  High: "wvalHigh",
+  "Very High": "wvalVeryHigh",
+};
 
 /** Outage type (normalized by the backend) -> dot color. */
 export const OUTAGE_COLORS: [string, string][] = [

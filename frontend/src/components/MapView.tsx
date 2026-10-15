@@ -31,7 +31,7 @@ import { ALPR_TILE_ZOOM, alprCells, alprIndex, alprNear, alprTile, evictAlprTile
 import { VOTING_KEYS } from "../colors";
 import {
   CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
-  HEALTH_STOPS, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS,
+  HEALTH_STOPS, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, WVAL_COLORS, WVAL_KEYS,
 } from "../colors";
 
 export interface LayerState {
@@ -987,7 +987,8 @@ const HAS_TRACK: maplibregl.ExpressionSpecification = ["==", ["typeof", ["get", 
 /** Categories always drawn as points, even when the data is momentarily empty. */
 const POINT_CATEGORIES = new Set([
   "flight", "haze", "webcam", "space", "train", "nature", "wiki", "weather-now", "poi", "hotspot",
-  "roadweather", "chain", "superfund", "power", "aqi", "voting", "outage", "crash", "reservoir", "quake",
+  "roadweather", "chain", "superfund", "power", "aqi", "voting", "outage", "crash", "reservoir", "quake", "bus",
+  "wastewater",
 ]);
 /** …and these as lines (lane closures can be momentarily empty). */
 const LINE_CATEGORIES = new Set(["roadops", "fault"]);
@@ -999,6 +1000,7 @@ const LABELS: Record<string, { field: string | maplibregl.ExpressionSpecificatio
   aqi: { field: "label", minzoom: 0 },
   space: { field: "label", minzoom: 4 },
   train: { field: "label", minzoom: 8 },
+  bus: { field: "label", minzoom: 11 },
   reservoir: { field: "label", minzoom: 7 },
   roadweather: {
     field: ["case", ["==", ["typeof", ["get", "temp_f"]], "number"], ["concat", ["to-string", ["get", "temp_f"]], "°"], ""],
@@ -1220,7 +1222,7 @@ function addOverlay(
                 ? ["interpolate", ["linear"], ["coalesce", ["get", "customers"], 1], 1, 4, 100, 7, 5000, 14]
                 : info.category === "crash"
                   ? ["interpolate", ["linear"], ["coalesce", ["get", "fatalities"], 1], 1, 5, 4, 10]
-                  : info.category === "voting" || info.category === "reservoir"
+                  : info.category === "voting" || info.category === "reservoir" || info.category === "wastewater"
                     ? 8
                     : 6;
     const color: maplibregl.ExpressionSpecification | string =
@@ -1241,6 +1243,8 @@ function addOverlay(
                 ? (["match", ["get", "category"], ...AQI_COLORS, "#64748b"] as unknown as maplibregl.ExpressionSpecification)
                 : info.category === "voting"
                   ? (["match", ["get", "kind"], ...VOTING_COLORS.flat(), accent] as unknown as maplibregl.ExpressionSpecification)
+                  : info.category === "wastewater"
+                    ? (["match", ["get", "worst"], ...WVAL_COLORS.flat(), "#94a3b8"] as unknown as maplibregl.ExpressionSpecification)
                   : info.category === "outage"
                     ? (["match", ["get", "type"], ...OUTAGE_COLORS.flat(), "#64748b"] as unknown as maplibregl.ExpressionSpecification)
                     : info.category === "reservoir"
@@ -1251,14 +1255,15 @@ function addOverlay(
                           "#94a3b8",
                         ] as unknown as maplibregl.ExpressionSpecification)
                       : accent;
-    const flight = info.category === "flight";
+    // Moving things with a heading (planes, buses) are drawn as arrows.
+    const hasHeading = info.category === "flight" || info.category === "bus";
     map.addLayer(
       {
         id: `${src}-circle`,
         type: "circle",
         source: src,
-        // Flights with a known heading are drawn as arrows instead (below).
-        ...(flight ? { filter: ["!", HAS_TRACK] as maplibregl.FilterSpecification } : {}),
+        // Things with a known heading are drawn as arrows instead (below).
+        ...(hasHeading ? { filter: ["!", HAS_TRACK] as maplibregl.FilterSpecification } : {}),
         paint: {
           "circle-color": color,
           "circle-radius": radius,
@@ -1271,7 +1276,7 @@ function addOverlay(
       beforeId,
     );
     bindPopup(`${src}-circle`);
-    if (flight) {
+    if (hasHeading) {
       ensureArrowIcon(map);
       map.addLayer(
         {
@@ -1684,6 +1689,11 @@ const INFO_FIELDS: Record<string, { rows: InfoRow[]; titleFrom?: string; link?: 
 };
 const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
+/** An alert's end time (ISO string or epoch ms) in the reader's locale. */
+function untilText(v: unknown, locale: string): string {
+  const d = typeof v === "number" ? new Date(v) : typeof v === "string" && v.trim() ? new Date(v) : null;
+  return d && !Number.isNaN(d.getTime()) ? d.toLocaleString(locale, { dateStyle: "medium", timeStyle: "short" }) : "";
+}
 const UTILITY_NAMES: Record<string, string> = { PGE: "PG&E", SCE: "SCE", SDGE: "SDG&E", SMUD: "SMUD" };
 /** Spanish for the most common FARS light/weather values (else shown as-is). */
 const FARS_ES: Record<string, string> = {
@@ -1981,6 +1991,35 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
         ],
       };
     }
+    case "wastewater": {
+      const lvl = (v: unknown) => (WVAL_KEYS[raw(v)] ? t(WVAL_KEYS[raw(v)]!) : "");
+      const wk = raw(p.week);
+      return {
+        ...base,
+        title: raw(p.county) || kind,
+        rows: [
+          ["COVID-19", lvl(p.covid)],
+          [t("rowFlu"), lvl(p.flu)],
+          [t("rowRsv"), lvl(p.rsv)],
+          [t("rowPlants"), fmt(p.sites)],
+          [t("rowWeekOf"), wk ? new Date(`${wk}T12:00:00`).toLocaleDateString(locale, { month: "long", day: "numeric" }) : ""],
+        ],
+        link: { href: "https://www.cdc.gov/nwss/rv/", label: t("wastewaterMore") },
+      };
+    }
+    case "bus": {
+      const upd = num(p.updated);
+      return {
+        ...base,
+        title: raw(p.route) ? t("busRoute", { route: raw(p.route) }) : kind,
+        rows: [
+          [t("rowSpeed"), num(p.speed_mph) != null ? t("mph", { n: fmt(p.speed_mph) }) : ""],
+          [t("rowVehicle"), raw(p.vehicle)],
+          [t("rowTime"), upd != null ? new Date(upd).toLocaleTimeString(locale, { timeStyle: "short" }) : ""],
+        ],
+        link: { href: "https://www.stanrta.org/", label: t("busSchedules") },
+      };
+    }
     case "outage":
     case "outage-area": {
       const when = (v: unknown) => (num(v) != null ? new Date(num(v)!).toLocaleString(locale, { dateStyle: "medium", timeStyle: "short" }) : "");
@@ -2049,6 +2088,7 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
         rows: [
           [t("rowArea"), str(p.areaDesc)],
           [t("rowSeverity"), str(p.severity)],
+          [t("rowUntil"), untilText(p.ends, locale)],
         ],
       };
     case "enviroscreen": {

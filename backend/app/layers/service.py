@@ -14,8 +14,10 @@ pick it up automatically.
 from __future__ import annotations
 
 import asyncio
+import datetime as dt
 import json
 import logging
+import re
 import time
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
@@ -358,6 +360,12 @@ BROWSER_LIVE = (
     ),
     ("trains", "Amtrak trains", "Live Amtrak train positions (via Amtraker).", "train"),
     (
+        "buses",
+        "StanRTA buses (live)",
+        "Live positions of Stanislaus Regional Transit buses (StanRTA's real-time feed).",
+        "bus",
+    ),
+    (
         "wildlife",
         "Wildlife sightings",
         "Recent iNaturalist observations where you're looking.",
@@ -470,6 +478,62 @@ def _health_layer(name: str, title: str, what: str, measure: str) -> Layer:
             refresh_s=24 * 3600,
         ),
     )
+
+
+CDC_WVAL = "https://data.cdc.gov/resource/atcp-73re.json"
+TW_STATE_COUNTY = (
+    "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer"
+)
+
+
+async def _wastewater(client: httpx.AsyncClient, _s: Settings) -> dict:
+    """CDC's latest week of wastewater viral activity, placed at county centers."""
+
+    async def get(url: str, params: dict) -> object:
+        body, _ = await fetch_capped(client, url, max_bytes=arcgis.MAX_BYTES, params=params)
+        return json.loads(body)
+
+    latest = await get(CDC_WVAL, {"$select": "max(week_end)"})
+    week = str((latest[0] if isinstance(latest, list) and latest else {}).get("max_week_end", ""))[
+        :10
+    ]
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", week):  # it goes into a SoQL filter
+        raise ValueError("no CDC wastewater week")
+    # The newest week is still filling in: take three and keep each plant's
+    # newest reading (the popup shows which week it is).
+    since = (dt.date.fromisoformat(week) - dt.timedelta(days=14)).isoformat()
+    rows, counties, states = await asyncio.gather(
+        get(
+            CDC_WVAL,
+            {
+                "$select": (
+                    "state_territory,counties_served,site,site_wval_category,pathogen_target,week_end"
+                ),
+                "$where": f"week_end>='{since}'",
+                "$limit": "20000",
+            },
+        ),
+        get(
+            f"{TW_STATE_COUNTY}/1/query",
+            {
+                "where": "1=1",
+                "outFields": "NAME,BASENAME,STATE,CENTLAT,CENTLON",
+                "returnGeometry": "false",
+                "f": "json",
+            },
+        ),
+        get(
+            f"{TW_STATE_COUNTY}/0/query",
+            {"where": "1=1", "outFields": "NAME,STATE", "returnGeometry": "false", "f": "json"},
+        ),
+    )
+    for name, page in (("counties", counties), ("states", states)):
+        if not isinstance(page, dict) or "error" in page or not page.get("features"):
+            raise ValueError(f"TIGERweb {name} query failed")  # never publish an empty layer
+    fc = transforms.wastewater_counties(rows, counties["features"], states["features"])
+    if rows and not fc["features"]:
+        raise ValueError("no wastewater rows matched a county")
+    return fc
 
 
 def _json_transform(url: str, transform: Callable[[object], dict]) -> Loader:
@@ -892,11 +956,21 @@ LAYERS: dict[str, Layer] = {
     "weather-alerts": Layer(
         name="weather-alerts",
         title="Weather alerts",
-        description="Active National Weather Service alerts for California.",
+        description="Active National Weather Service watches, warnings and advisories.",
         category="weather",
         loader=_geojson("https://api.weather.gov/alerts/active?area=CA"),
         ttl=120,
-        coverage="california",
+        # Nationwide: NOAA's map of current watches/warnings/advisories (the
+        # NWS API's own alerts mostly point at zones, without shapes).
+        view=View(
+            "https://mapservices.weather.noaa.gov/eventdriven/rest/services/WWA/watch_warn_adv/MapServer/1",
+            {"prod_type": "event", "ends": "ends"},
+            "polygon",
+            min_zoom=3,
+            simplify=True,
+            refresh_s=300,
+            home_complete=True,
+        ),
     ),
     "quakes": Layer(
         name="quakes",
@@ -1676,6 +1750,18 @@ LAYERS: dict[str, Layer] = {
             home_complete=True,
         ),
     ),
+    "wastewater": Layer(
+        name="wastewater",
+        title="Wastewater virus levels",
+        description=(
+            "COVID, flu A and RSV levels in sewage, latest week (CDC NWSS), by county: an "
+            "early warning that doesn't depend on who gets tested."
+        ),
+        category="wastewater",
+        loader=_wastewater,
+        ttl=12 * 3600,
+        coverage="usa",
+    ),
     "heat-risk": Layer(
         name="heat-risk",
         title="Heat risk (today)",
@@ -1693,7 +1779,7 @@ LAYERS: dict[str, Layer] = {
             description=desc,
             category=cat,
             client_side=True,
-            coverage="usa" if name == "trains" else "world",
+            coverage={"trains": "usa", "buses": "stanislaus"}.get(name, "world"),
         )
         for name, title, desc, cat in BROWSER_LIVE
     },

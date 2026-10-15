@@ -221,3 +221,36 @@ export function parseAirQuality(json: unknown): FC {
   }
   return fc(feats);
 }
+
+/** Availtec InfoPoint GTFS-realtime vehicle positions (`?debug=true` JSON,
+ *  used by StanRTA) -> bus points with heading. */
+export function parseAvailtecVehicles(json: unknown): FC {
+  const ents = (json as { Entities?: unknown } | null)?.Entities;
+  // A changed feed format should fail loudly (keep the last positions), not
+  // silently show an empty map.
+  if (!Array.isArray(ents)) throw new Error("unexpected StanRTA feed format");
+  const feats: FC["features"] = [];
+  for (const e of ents as Props[]) {
+    const v = (e?.Vehicle ?? null) as Props | null;
+    const pos = (v?.Position ?? null) as Props | null;
+    const lat = num(pos?.Latitude), lon = num(pos?.Longitude);
+    if (!v || !ok(lat, lon) || (lat === 0 && lon === 0)) continue;
+    const trip = (v.Trip ?? {}) as Props;
+    const veh = (v.Vehicle ?? {}) as Props;
+    const id = (v: unknown) => (typeof v === "string" || typeof v === "number" ? String(v).trim() : "");
+    const route = id(trip.RouteId);
+    const speed = num(pos?.Speed); // m/s
+    const ts = num(v.Timestamp);
+    feats.push(
+      pt(lon!, lat, {
+        route,
+        vehicle: id(veh.Label) || id(veh.Id),
+        track: num(pos?.Bearing),
+        speed_mph: speed != null ? Math.round(speed * 2.237) : null,
+        updated: ts != null ? ts * 1000 : null,
+        label: route,
+      }),
+    );
+  }
+  return fc(feats);
+}

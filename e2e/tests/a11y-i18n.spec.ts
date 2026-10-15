@@ -483,6 +483,7 @@ for (const [layer, ov, view, en, es] of [
   // (zoom 7.5: below min_zoom, so the local file loads, not the network)
   ["ov-fatal-crashes-circle", "fatal-crashes", "-120.99,37.6,7.5", /Fatal crash/, /Choque mortal/],
   ["ov-health-diabetes-fill", "health-diabetes", "-120.99,37.64,11", /% of adults/, /% de los adultos/],
+  ["ov-wastewater-circle", "wastewater", "-120.99,37.56,8", /COVID-19.*(Very low|Low|Moderate|High|Very high)/s, /Influenza A/],
 ] as const) {
   for (const lang of ["en", "es"] as const) {
     test(`${ov} popup (${lang})`, async ({ page }) => {
@@ -525,4 +526,19 @@ test("near-me: search -> report, and the address never reaches the page link", a
   expect(page.url()).not.toMatch(/-120\.98|37\.65/);
   await page.getByRole("button", { name: "Clear" }).click();
   await expect(report).toHaveCount(0);
+});
+
+test("live buses: route popup, Spanish too", async ({ page }) => {
+  await page.route("https://max.availtec.com/**", (r) =>
+    r.fulfill({ contentType: "application/json", body: JSON.stringify({ Entities: [
+      { Id: "944", Vehicle: { Trip: { RouteId: "47" }, Vehicle: { Label: "20944" }, Position: { Latitude: 37.64, Longitude: -120.99, Bearing: 90, Speed: 10 }, Timestamp: 1792103573 } },
+    ] }) }),
+  );
+  await page.goto("/#lang=es&ov=buses&v=-120.99,37.64,13");
+  await ready(page);
+  await waitForLayer(page, "ov-buses-arrow");
+  expect(await clickFeature(page, "ov-buses-arrow")).toBe(true);
+  const popup = page.locator(".maplibregl-popup");
+  await expect(popup.locator(".popup__title")).toHaveText("Ruta 47");
+  await expect(popup).toContainText("22 mph");
 });

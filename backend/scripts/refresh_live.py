@@ -53,6 +53,7 @@ FAST = (
 DAILY = (
     "drought",  # the Drought Monitor updates weekly (Thursdays)
     "voting",  # empties itself once the election is over
+    "wastewater",  # CDC updates weekly
     "aed",
     "drinking-water",
     "restrooms",

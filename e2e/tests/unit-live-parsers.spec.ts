@@ -119,3 +119,17 @@ test("air quality: EPA categories at their boundaries, and grid parsing", () => 
   expect(fc.features).toHaveLength(1);
   expect(fc.features[0]!.properties).toMatchObject({ aqi: 57, category: "moderate", pm2_5: 12.3, ozone: 62, label: "57" });
 });
+
+import { parseAvailtecVehicles } from "../../frontend/src/live-parsers";
+test("StanRTA vehicles: route, heading, mph; junk skipped", () => {
+  const fc = parseAvailtecVehicles({ Entities: [
+    { Id: "944", Vehicle: { Trip: { RouteId: "47" }, Vehicle: { Id: "944", Label: "20944" }, Position: { Latitude: 37.60921, Longitude: -120.967026, Bearing: 90, Speed: 10 }, Timestamp: 1792103573 } },
+    { Id: "x", Vehicle: { Position: { Latitude: 0, Longitude: 0 } } },
+    { Id: "y", Vehicle: null, TripUpdate: {} },
+    "junk",
+  ] });
+  expect(fc.features).toHaveLength(1);
+  expect(fc.features[0]!.properties).toMatchObject({ route: "47", vehicle: "20944", track: 90, speed_mph: 22, updated: 1792103573000 });
+  expect(() => parseAvailtecVehicles(null)).toThrow(); // format change: loud, not empty
+  expect(parseAvailtecVehicles({ Entities: [] }).features).toEqual([]); // night: no buses
+});

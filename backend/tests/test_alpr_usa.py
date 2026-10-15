@@ -57,3 +57,31 @@ def test_build_tiles_overview_index_and_enrichment(tmp_path):
 def test_tiles_needed_cover_alaska_and_hawaii():
     keys = tiles_needed(20)
     assert "20/-160" in keys and "60/-160" in keys and "20/-100" in keys
+
+
+def test_failed_cells_keep_last_builds_tile(tmp_path):
+    out = tmp_path / "alpr"
+    first = [
+        {"id": 1, "lat": 37.6, "lon": -121.0, "tags": {}},
+        {"id": 2, "lat": 41.9, "lon": -87.6, "tags": {}},
+    ]
+    build(first, {}, out)
+    # Next day the Chicago cell (40/-90) fails: its tile is carried over.
+    ix = build([{"id": 1, "lat": 37.6, "lon": -121.0, "tags": {}}], {}, out, keep_cells=("40/-90",))
+    assert ix["total"] == 2 and ix["cells"] == {"35_-125": 1, "40_-90": 1}
+
+
+def test_refuses_when_most_populated_cells_failed(tmp_path):
+    import pytest
+
+    out = tmp_path / "alpr"
+    nodes = [
+        {"id": 1, "lat": 37.6, "lon": -121.0, "tags": {}},
+        {"id": 2, "lat": 41.9, "lon": -87.6, "tags": {}},
+        {"id": 3, "lat": 33.7, "lon": -84.4, "tags": {}},
+    ]
+    build(nodes, {}, out)
+    with pytest.raises(SystemExit):  # 2 of 3 populated cells "failed"
+        build(nodes[:1], {}, out, keep_cells=("40/-90", "30/-85"))
+    ix = build(nodes[:2], {}, out, keep_cells=("30/-85",))  # 1 of 3: fine, recorded
+    assert ix["stale_cells"] == ["30_-85"] and ix["total"] == 3

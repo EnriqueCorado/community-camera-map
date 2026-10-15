@@ -14,6 +14,7 @@ import json
 import math
 import re
 import time
+import unicodedata
 from urllib.parse import urlparse, urlunparse
 
 
@@ -758,3 +759,94 @@ def reservoirs(fc: object) -> dict:
             p[k] = _num(p[k])
         p["label"] = f"{p['pct_full']:.0f}%" if p["pct_full"] is not None else ""
     return out
+
+
+WVAL_LEVELS = ("Very Low", "Low", "Moderate", "High", "Very High")
+WVAL_PATHOGENS = {"SARS-CoV-2": "covid", "Influenza A virus": "flu", "RSV": "rsv"}
+
+
+# CDC still lists Connecticut's eight old counties; TIGER now has planning
+# regions instead, so those get fixed centers (approximate county centroids).
+CT_OLD_COUNTIES = {
+    "fairfield": (-73.39, 41.27),
+    "hartford": (-72.73, 41.81),
+    "litchfield": (-73.25, 41.79),
+    "middlesex": (-72.52, 41.43),
+    "new haven": (-72.90, 41.35),
+    "new london": (-72.10, 41.47),
+    "tolland": (-72.34, 41.86),
+    "windham": (-71.99, 41.83),
+}
+
+
+def county_key(name: object) -> str:
+    """'Saint Louis City' / 'St. Louis city' / 'Doña Ana' / 'Du Page' -> one key."""
+    s = unicodedata.normalize("NFKD", str(name or "")).encode("ascii", "ignore").decode().lower()
+    s = re.sub(r"\bsaint\b", "st", s)
+    s = re.sub(r"\s+(county|parish|borough|census area|municipality)$", "", s.strip())
+    return re.sub(r"[.'\s-]", "", s)
+
+
+def wastewater_counties(rows: object, counties: object, states: object) -> dict:
+    """CDC wastewater viral activity (one row per site and virus, naming the
+    counties each plant serves) -> one point per county at its center, with the
+    worst current level per virus among the plants serving it. A plant whose
+    list names a county outside its own state (e.g. Kansas City, MO listing
+    Johnson and Wyandotte, KS) is skipped rather than misplaced."""
+    state_fips = {}
+    for s in states if isinstance(states, list) else []:
+        a = (s or {}).get("attributes") or {}
+        if a.get("NAME") and a.get("STATE"):
+            state_fips[str(a["NAME"]).strip().lower()] = str(a["STATE"])
+    centers: dict[tuple[str, str], tuple[float, float, str]] = {}
+    for c in counties if isinstance(counties, list) else []:
+        a = (c or {}).get("attributes") or {}
+        lat, lon = _num(a.get("CENTLAT")), _num(a.get("CENTLON"))
+        if not (a.get("STATE") and a.get("BASENAME")) or lat is None or lon is None:
+            continue
+        st, name = str(a["STATE"]), str(a.get("NAME") or a["BASENAME"])
+        # Index by full name ("Alexandria city") and by base name ("Alexandria");
+        # on a base-name clash (Baltimore city / County) the county wins.
+        centers[(st, county_key(name))] = (lon, lat, name)
+        base = (st, county_key(a["BASENAME"]))
+        if base not in centers or "city" not in name.lower():
+            centers[base] = (lon, lat, name)
+    for name, (lon, lat) in CT_OLD_COUNTIES.items():
+        centers.setdefault(("09", county_key(name)), (lon, lat, f"{name.title()} County"))
+    latest: dict[tuple[str, str], dict] = {}  # newest row per (site, virus)
+    for r in rows if isinstance(rows, list) else []:
+        if not isinstance(r, dict):
+            continue
+        k = (str(r.get("site", "")), str(r.get("pathogen_target", "")))
+        if k not in latest or str(r.get("week_end", "")) > str(latest[k].get("week_end", "")):
+            latest[k] = r
+    worst: dict[tuple[str, str], dict] = {}
+    for r in latest.values():
+        key = WVAL_PATHOGENS.get(str(r.get("pathogen_target", "")))
+        level = str(r.get("site_wval_category", ""))
+        fips = state_fips.get(str(r.get("state_territory", "")).strip().lower())
+        if not key or level not in WVAL_LEVELS or not fips:
+            continue
+        names = [n for n in str(r.get("counties_served", "")).split(",") if n.strip()]
+        keys = [(fips, county_key(n)) for n in names]
+        if not keys or any(ck not in centers for ck in keys):
+            continue  # a cross-state plant, or a name we can't place: don't guess
+        for ck in keys:
+            w = worst.setdefault(ck, {"sites": set(), "week": ""})
+            w["sites"].add(str(r.get("site", "")))
+            w["week"] = max(w["week"], str(r.get("week_end", ""))[:10])
+            if key not in w or WVAL_LEVELS.index(level) > WVAL_LEVELS.index(w[key]):
+                w[key] = level
+    feats = []
+    for ck, w in worst.items():
+        lon, lat, name = centers[ck]
+        props = {"county": name or "", "sites": len(w["sites"]), "week": w["week"]}
+        for key in WVAL_PATHOGENS.values():
+            props[key] = w.get(key, "")
+        props["worst"] = max(
+            (w[k] for k in WVAL_PATHOGENS.values() if k in w),
+            key=WVAL_LEVELS.index,
+            default="",
+        )
+        feats.append(_pt(lon, lat, props))
+    return _fc(feats)

@@ -6,6 +6,7 @@ import {
   parseAirQuality,
   latestKp,
   parseAmtrak,
+  parseAvailtecVehicles,
   parseINat,
   parseIss,
   parseOpenMeteo,
@@ -103,6 +104,12 @@ export const LIVE_SOURCES: Record<string, LiveSource> = {
       return satLib.satellitePositions(sats, new Date());
     },
     tick: () => (satLib && sats.length ? satLib.satellitePositions(sats, new Date()) : null),
+  },
+  buses: {
+    // StanRTA's own real-time feed (JSON form); positions update every ~15 s.
+    refreshMs: 15_000,
+    load: async ({ signal }) =>
+      parseAvailtecVehicles(await getJSON("https://max.availtec.com/InfoPoint/GTFS-Realtime.ashx?Type=VehiclePosition&debug=true", signal)),
   },
   trains: {
     refreshMs: 60_000,

@@ -36,7 +36,7 @@ const EMPTY: FC = { type: "FeatureCollection", features: [] };
 
 /** Hosts a catalog `view` may query (defense in depth: the catalog is ours). */
 const VIEW_HOSTS =
-  /^https:\/\/(services\d*\.arcgis\.com|tigerweb\.geo\.census\.gov|hazards\.fema\.gov|mapservices\.nps\.gov|gisportal\.hrsa\.gov)\//;
+  /^https:\/\/(services\d*\.arcgis\.com|tigerweb\.geo\.census\.gov|hazards\.fema\.gov|mapservices\.nps\.gov|gisportal\.hrsa\.gov|mapservices\.weather\.noaa\.gov)\//;
 
 const viewCache = new Map<string, LiveSource>();
 

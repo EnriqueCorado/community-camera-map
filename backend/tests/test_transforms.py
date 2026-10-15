@@ -624,3 +624,151 @@ def test_num_strips_thousands_separators_but_rejects_nan():
     assert transforms._num("1,655,887") == 1655887.0
     assert transforms._num(float("nan")) is None
     assert transforms._num("") is None
+
+
+def test_wastewater_takes_the_worst_level_per_county_and_virus():
+    states = [{"attributes": {"NAME": "California", "STATE": "06"}}]
+    counties = [
+        {
+            "attributes": {
+                "NAME": "Stanislaus County",
+                "BASENAME": "Stanislaus",
+                "STATE": "06",
+                "CENTLAT": "37.56",
+                "CENTLON": "-121.0",
+            }
+        },
+        {
+            "attributes": {
+                "NAME": "Merced County",
+                "BASENAME": "Merced",
+                "STATE": "06",
+                "CENTLAT": "37.19",
+                "CENTLON": "-120.7",
+            }
+        },
+    ]
+    row = {"state_territory": "California", "week_end": "2026-10-03T00:00:00"}
+    rows = [
+        {
+            **row,
+            "site": "1",
+            "counties_served": "Stanislaus",
+            "pathogen_target": "SARS-CoV-2",
+            "site_wval_category": "Low",
+        },
+        {
+            **row,
+            "site": "2",
+            "counties_served": "Stanislaus, Merced",
+            "pathogen_target": "SARS-CoV-2",
+            "site_wval_category": "High",
+        },
+        {
+            **row,
+            "site": "2",
+            "counties_served": "Stanislaus, Merced",
+            "pathogen_target": "RSV",
+            "site_wval_category": "Very Low",
+        },
+        {
+            **row,
+            "site": "3",
+            "counties_served": "Nowhere",
+            "pathogen_target": "RSV",
+            "site_wval_category": "High",
+        },
+        {
+            **row,
+            "site": "4",
+            "counties_served": "Stanislaus",
+            "pathogen_target": "Mpox",
+            "site_wval_category": "High",
+        },
+    ]
+    fc = transforms.wastewater_counties(rows, counties, states)
+    by = {f["properties"]["county"]: f["properties"] for f in fc["features"]}
+    assert set(by) == {"Stanislaus County", "Merced County"}
+    assert by["Stanislaus County"] == {
+        "county": "Stanislaus County",
+        "sites": 2,
+        "week": "2026-10-03",
+        "covid": "High",
+        "flu": "",
+        "rsv": "Very Low",
+        "worst": "High",
+    }
+    assert transforms.wastewater_counties(None, None, None)["features"] == []
+
+
+def test_wastewater_county_names_match_tiger_spellings():
+    states = [
+        {"attributes": {"NAME": "Missouri", "STATE": "29"}},
+        {"attributes": {"NAME": "Illinois", "STATE": "17"}},
+        {"attributes": {"NAME": "New Mexico", "STATE": "35"}},
+        {"attributes": {"NAME": "Connecticut", "STATE": "09"}},
+    ]
+    c = lambda st, name, base, lat: {  # noqa: E731
+        "attributes": {"STATE": st, "NAME": name, "BASENAME": base, "CENTLAT": lat, "CENTLON": -90}
+    }
+    counties = [
+        c("29", "St. Louis city", "St. Louis", 38.6),
+        c("29", "St. Louis County", "St. Louis", 38.7),
+        c("29", "Jackson County", "Jackson", 39.0),
+        c("29", "Johnson County", "Johnson", 38.7),
+        c("17", "DuPage County", "DuPage", 41.8),
+        c("35", "Doña Ana County", "Doña Ana", 32.3),
+    ]
+    row = {"week_end": "2026-10-03", "pathogen_target": "SARS-CoV-2", "site_wval_category": "Low"}
+    rows = [
+        {**row, "site": "1", "state_territory": "Missouri", "counties_served": "Saint Louis City"},
+        {**row, "site": "2", "state_territory": "Missouri", "counties_served": "Saint Louis"},
+        {**row, "site": "3", "state_territory": "Illinois", "counties_served": "Du Page"},
+        {**row, "site": "4", "state_territory": "New Mexico", "counties_served": "Dona Ana"},
+        {**row, "site": "5", "state_territory": "Connecticut", "counties_served": "New Haven"},
+        # Kansas City, MO plant listing Kansas counties: skipped, not misplaced.
+        {
+            **row,
+            "site": "6",
+            "state_territory": "Missouri",
+            "counties_served": "Jackson, Johnson, Wyandotte",
+        },
+    ]
+    names = sorted(
+        f["properties"]["county"]
+        for f in transforms.wastewater_counties(rows, counties, states)["features"]
+    )
+    assert names == [
+        "Doña Ana County",
+        "DuPage County",
+        "New Haven County",
+        "St. Louis County",
+        "St. Louis city",
+    ]
+
+
+def test_wastewater_keeps_each_plants_newest_week():
+    states = [{"attributes": {"NAME": "California", "STATE": "06"}}]
+    counties = [
+        {
+            "attributes": {
+                "NAME": "Stanislaus County",
+                "BASENAME": "Stanislaus",
+                "STATE": "06",
+                "CENTLAT": 37.5,
+                "CENTLON": -121,
+            }
+        }
+    ]
+    base = {
+        "site": "1",
+        "state_territory": "California",
+        "counties_served": "Stanislaus",
+        "pathogen_target": "RSV",
+    }
+    rows = [
+        {**base, "week_end": "2026-09-19", "site_wval_category": "Very High"},  # older: superseded
+        {**base, "week_end": "2026-09-26", "site_wval_category": "Low"},
+    ]
+    p = transforms.wastewater_counties(rows, counties, states)["features"][0]["properties"]
+    assert p["rsv"] == "Low" and p["week"] == "2026-09-26"

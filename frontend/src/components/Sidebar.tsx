@@ -5,7 +5,8 @@ import { ago } from "../freshness";
 import { matchCamera, type LayerState } from "./MapView";
 import {
   CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
-  HEALTH_STOPS, DROUGHT_COLORS, HEAT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, VOTING_KEYS,
+  HEALTH_STOPS, DROUGHT_COLORS, HEAT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, VOTING_KEYS, WVAL_COLORS,
+  WVAL_KEYS,
 } from "../colors";
 import { downloadLayer, downloadCameras } from "../download";
 import { LIVE_SOURCES } from "../live-sources";
@@ -108,7 +109,7 @@ const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
   (
     [
       ["cameras", ["fire-cameras", "river-cameras", "windy-webcams"]],
-      ["live", ["flights", "iss", "satellites", "trains"]],
+      ["live", ["flights", "buses", "iss", "satellites", "trains"]],
       ["weather", ["weather-now", "air-now", "rain-radar", "satellite", "weather-alerts", "air-quality", "road-weather", "smoke-haze"]],
       ["hazards", ["heat-risk", "drought", "reservoirs", "fatal-crashes", "wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
       ["roads", ["lane-closures", "message-signs", "chain-controls", "transit-routes", "transit-stops", "amtrak", "airports", "railroads"]],
@@ -116,7 +117,7 @@ const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
       ["nature", ["wildlife", "wikipedia", "historic-places", "historical-markers", "rivers", "streamflow"]],
       ["planning", ["city-limits", "county-islands", "general-plan", "zoning", "annexations", "census", "census-spanish", "census-foreign-born", "census-poverty", "census-renters", "supervisor-districts", "elementary-districts", "high-school-districts", "fire-districts", "mosquito-districts", "zip-codes", "congressional-districts"]],
       ["infra", ["power-plants", "substations", "bridges", "power-outages", "outage-areas"]],
-      ["civic", ["voting", "health-asthma", "health-diabetes", "health-uninsured", "food-insecurity", "snap-stores"]],
+      ["civic", ["voting", "wastewater", "health-asthma", "health-diabetes", "health-uninsured", "food-insecurity", "snap-stores"]],
     ] as [Group, string[]][]
   ).flatMap(([g, names]) => names.map((n) => [n, g])),
 );
@@ -295,6 +296,7 @@ export function Sidebar({
   const heatOn = layers.overlays["heat-risk"] ?? false;
   const reservoirsOn = layers.overlays["reservoirs"] ?? false;
   const votingOn = layers.overlays["voting"] ?? false;
+  const wastewaterOn = layers.overlays["wastewater"] ?? false;
   const outagesOn = layers.overlays["power-outages"] ?? false;
   const other = lang === "en" ? "es" : "en";
 
@@ -549,6 +551,13 @@ export function Sidebar({
         )}
         {heatOn && (
           <Legend id="heat-legend" title={t("heatLegend")} items={HEAT_COLORS.map(([v, c]) => [c, t(`heat${v}` as Key)])} />
+        )}
+        {wastewaterOn && (
+          <Legend
+            id="wval-legend"
+            title={t("wvalLegend")}
+            items={WVAL_COLORS.map(([k, c]) => [c, t(WVAL_KEYS[k]!)])}
+          />
         )}
         {votingOn && (
           <Legend

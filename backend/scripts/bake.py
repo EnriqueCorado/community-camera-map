@@ -42,6 +42,8 @@ OUT = ROOT / "frontend" / "public" / "data"
 # Public source URL shown in the UI / About page for provenance.
 SOURCES = {
     "alpr": "https://openstreetmap.org (DeFlock)",
+    "buses": "StanRTA real-time feed (Availtec InfoPoint)",
+    "wastewater": "CDC National Wastewater Surveillance System (viral activity levels)",
     "voting": "Stanislaus County Registrar of Voters (stanvote.gov voting flier, 2026-09-28)",
     "power-outages": "Cal OES statewide power outages (from utility outage maps)",
     "outage-areas": "Cal OES statewide power outages (PG&E outage areas)",

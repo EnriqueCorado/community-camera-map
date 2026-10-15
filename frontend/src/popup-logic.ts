@@ -74,6 +74,8 @@ export const WEBCAM_PAGE_HOSTS = [
   "catalog.archives.gov",
   "www.hmdb.org",
   "www.stanvote.gov",
+  "www.stanrta.org",
+  "www.cdc.gov",
   "droughtmonitor.unl.edu",
 ];
 
