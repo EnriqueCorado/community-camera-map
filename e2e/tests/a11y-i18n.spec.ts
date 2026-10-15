@@ -475,3 +475,53 @@ test("flight popup shows only flight data, in Spanish too", async ({ page }) => 
   await expect(popup).toContainText("300 nudos");
   await expectNoA11yViolations(page, ".maplibregl-popup");
 });
+
+// New civic layers: real data from the dev API, popups in both languages.
+for (const [layer, ov, view, en, es] of [
+  ["ov-voting-circle", "voting", "-120.99,37.64,11", /Ballot drop box|Vote center|Outdoor drop box|Curbside/, /Buzón|Centro de votación|acera/],
+  ["ov-reservoirs-circle", "reservoirs", "-120.6,37.9,8", /Full/, /Lleno/],
+  ["ov-fatal-crashes-circle", "fatal-crashes", "-120.99,37.6,9", /Fatal crash/, /Choque mortal/],
+  ["ov-health-diabetes-fill", "health-diabetes", "-120.99,37.64,11", /% of adults/, /% de los adultos/],
+] as const) {
+  for (const lang of ["en", "es"] as const) {
+    test(`${ov} popup (${lang})`, async ({ page }) => {
+      await page.goto(`/#lang=${lang}&ov=${ov}&v=${view}`);
+      await ready(page);
+      await waitForLayer(page, layer);
+      if (layer.endsWith("-fill")) {
+        // Tracts cover the whole view: the center of the map is inside one.
+        const box = (await page.locator("canvas.maplibregl-canvas").boundingBox())!;
+        await page.locator("canvas.maplibregl-canvas").click({ position: { x: box.width / 2, y: box.height / 2 } });
+      } else {
+        expect(await clickFeature(page, layer)).toBe(true);
+      }
+      await expect(page.locator(".maplibregl-popup")).toContainText(lang === "en" ? en : es);
+    });
+  }
+}
+
+test("near-me: search -> report, and the address never reaches the page link", async ({ page }) => {
+  await page.route("https://nominatim.openstreetmap.org/**", (r) =>
+    r.fulfill({ contentType: "application/json", body: JSON.stringify([{ lat: "37.6543", lon: "-120.9876", display_name: "123 Test St, Modesto, California, 95354, United States" }]) }),
+  );
+  const attrs = { NAME: "Testville", ZCTA5: "95354", FLD_ZONE: "AE", ZONE_SUBTY: "", SFHA_TF: "T", B19049_001E: 50000, DM: 1, FHSZ_Description: "Moderate" };
+  await page.route(/\/query\?/, (r) =>
+    r.request().url().includes("f=geojson")
+      ? r.fulfill({ contentType: "application/json", body: JSON.stringify({ type: "FeatureCollection", features: [] }) })
+      : r.fulfill({ contentType: "application/json", body: JSON.stringify({ features: [{ attributes: attrs }] }) }),
+  );
+  await page.route(/ImageServer\/identify/, (r) => r.fulfill({ contentType: "application/json", body: JSON.stringify({ value: "2" }) }));
+  await page.goto("/");
+  await ready(page);
+  await page.locator(".nearme input").fill("123 Test St, Modesto");
+  await page.locator(".nearme form button").click();
+  const report = page.locator(".nearme__report");
+  await expect(report).toContainText("123 Test St");
+  await expect(report).toContainText("High risk (zone AE)");
+  await expect(report).toContainText("Testville");
+  await expect(report).toContainText("D1: moderate drought");
+  await page.waitForTimeout(1500); // the map flies to the address
+  expect(page.url()).not.toMatch(/-120\.98|37\.65/);
+  await page.getByRole("button", { name: "Clear" }).click();
+  await expect(report).toHaveCount(0);
+});

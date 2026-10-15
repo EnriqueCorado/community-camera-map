@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useDeferredValue } from "react";
+import type { NearPoint } from "./components/NearMe";
 import { useCameras } from "./hooks/useCameras";
 import { useLayers } from "./hooks/useLayers";
 import { Sidebar, type Place } from "./components/Sidebar";
@@ -35,7 +36,7 @@ function readPanelOpen(): boolean {
 }
 
 export default function App() {
-  const { t, lang } = useI18n();
+  const { t, lang, locale } = useI18n();
   const state = useCameras();
   const overlayInfos = useLayers();
 
@@ -47,6 +48,22 @@ export default function App() {
   const deferredQuery = useDeferredValue(query);
   const [view, setView] = useState<View>(initial.view);
   const [flyTo, setFlyTo] = useState<View>(null);
+  const [nearPoint, setNearPoint] = useState<NearPoint | null>(null);
+  const [historyDate, setHistoryDate] = useState<string | null>(null);
+  // The view before an address search: while a searched place is shown, the
+  // URL keeps this one, so a shared link never carries someone's address.
+  const preNearView = useRef<View>(null);
+  const pickNear = (p: NearPoint | null) => {
+    if (p && !nearPoint) preNearView.current = view;
+    setNearPoint(p);
+    if (p) setFlyTo({ center: p.center, zoom: 14 });
+    else if (preNearView.current) {
+      // "Clear": go back, and treat that as the current view right away so the
+      // link can't pick up the searched area while the map flies back.
+      setView(preNearView.current);
+      setFlyTo(preNearView.current);
+    }
+  };
   const [panelOpen, setPanelOpen] = useState(readPanelOpen);
   const panelToggled = useRef(false);
   const togglePanel = (open: boolean) => {
@@ -81,12 +98,12 @@ export default function App() {
 
   // Keep the URL hash in sync so the current view is shareable.
   useEffect(() => {
-    const hash = encodeState({ layers, query, view, lang });
+    const hash = encodeState({ layers, query, view: nearPoint ? preNearView.current : view, lang });
     const next = hash ? `#${hash}` : "";
     if (next !== window.location.hash) {
       window.history.replaceState(null, "", next || window.location.pathname);
     }
-  }, [layers, query, view, lang]);
+  }, [layers, query, view, lang, nearPoint]);
 
   if (state.status === "loading") {
     return (
@@ -147,9 +164,23 @@ export default function App() {
         open={panelOpen}
         zoom={view?.zoom ?? initial.view?.zoom ?? 5.4}
         center={view?.center ?? initial.view?.center ?? [-120.99, 37.64]}
+        nearPoint={nearPoint}
+        onNearPoint={pickNear}
+        historyDate={historyDate}
+        onHistoryDate={setHistoryDate}
         onHide={() => togglePanel(false)}
       />
       <main className="stage">
+        {historyDate && (
+          <div className="historybanner" role="status">
+            {t("historyBanner", {
+              day: new Date(`${historyDate}T12:00:00`).toLocaleDateString(locale, { weekday: "long", month: "long", day: "numeric", year: "numeric" }),
+            })}
+            <button type="button" className="chip" onClick={() => setHistoryDate(null)}>
+              {t("historyBack")}
+            </button>
+          </div>
+        )}
         {!panelOpen && (
           <button
             type="button"
@@ -170,6 +201,8 @@ export default function App() {
           overlayInfos={overlayInfos}
           query={deferredQuery}
           flyTo={flyTo}
+          nearPoint={nearPoint}
+          historyDate={historyDate}
           initialView={initial.view}
           onView={setView}
           coverage={coverage}

@@ -1226,3 +1226,39 @@ fieldset.subfilter {
   font-weight: 650;
   color: var(--muted);
 }
+
+/* "What's near an address?" */
+.nearme__form { display: flex; gap: 6px; }
+.nearme__form .search { flex: 1; min-width: 0; }
+.nearme__actions { display: flex; gap: 6px; margin: 6px 0; flex-wrap: wrap; }
+.nearme__matches { list-style: none; margin: 4px 0; padding: 0; display: grid; gap: 4px; }
+.nearme__place { font-weight: 600; margin: 8px 0 4px; }
+.nearme__h { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted, #64748b); margin: 10px 0 4px; }
+.nearme__row { display: grid; grid-template-columns: minmax(7.5em, 40%) 1fr; gap: 8px; padding: 3px 0; border-bottom: 1px solid var(--line, #e5e7eb); }
+.nearme__row dt { color: var(--muted, #64748b); }
+.nearme__row dd { margin: 0; overflow-wrap: anywhere; }
+.nearme__dist { color: var(--muted, #64748b); white-space: nowrap; }
+.nearme dl { margin: 0; }
+.nearpin {
+  width: 22px; height: 30px;
+  background: #dc2626;
+  border: 2px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 40%);
+}
+
+/* History */
+.history__row { display: flex; align-items: center; gap: 6px; }
+.history__row input[type="range"] { flex: 1; min-width: 0; }
+.history__label { font-weight: 600; margin: 6px 0 2px; }
+.historybanner {
+  position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 3;
+  display: flex; align-items: center; gap: 10px;
+  background: #1e3a8a; color: #fff; padding: 6px 8px 6px 14px; border-radius: 999px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 30%); font-weight: 600; max-width: calc(100% - 32px);
+}
+.historybanner .chip { background: #fff; color: #1e3a8a; }
+@media (max-width: 560px) {
+  .historybanner { top: 60px; } /* clear of the "Layers & search" button */
+}

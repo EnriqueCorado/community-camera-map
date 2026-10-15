@@ -73,6 +73,8 @@ export const WEBCAM_PAGE_HOSTS = [
   "cumulis.epa.gov",
   "catalog.archives.gov",
   "www.hmdb.org",
+  "www.stanvote.gov",
+  "droughtmonitor.unl.edu",
 ];
 
 /** `u` if it's an https URL on one of `hosts`, else null. Never trust data-supplied URLs. */

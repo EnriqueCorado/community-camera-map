@@ -20,6 +20,18 @@ export const VENDOR_SWATCH: Record<string, string> = {
 };
 
 export const OVERLAY_COLOR: Record<string, string> = {
+  voting: "#1d4ed8",
+  "power-outages": "#dc2626",
+  "outage-areas": "#f97316",
+  "health-asthma": "#0e7490",
+  "health-diabetes": "#be185d",
+  "health-uninsured": "#7c3aed",
+  "food-insecurity": "#c2410c",
+  "snap-stores": "#15803d",
+  "fatal-crashes": "#7f1d1d",
+  reservoirs: "#0284c7",
+  drought: "#ca8a04",
+  "heat-risk": "#e11d48",
   "city-limits": "#3b82f6",
   annexations: "#f59e0b",
   "general-plan": "#14b8a6",
@@ -135,4 +147,60 @@ export const CENSUS_STOPS: [number, string][] = [
   [80000, "#74a9cf"],
   [110000, "#2b8cbe"],
   [150000, "#045a8d"],
+];
+
+/** CDC PLACES prevalence (% of adults) per layer, light -> dark. Breaks
+ *  roughly span the national tract range for each measure. */
+export const HEALTH_STOPS: Record<string, [number, string][]> = {
+  "health-asthma": [[7, "#ecfeff"], [9, "#a5f3fc"], [11, "#22d3ee"], [13, "#0891b2"], [15, "#155e75"]],
+  "health-diabetes": [[5, "#fdf2f8"], [9, "#fbcfe8"], [13, "#f472b6"], [17, "#db2777"], [22, "#831843"]],
+  "health-uninsured": [[3, "#f5f3ff"], [8, "#ddd6fe"], [15, "#a78bfa"], [25, "#7c3aed"], [35, "#4c1d95"]],
+  "food-insecurity": [[5, "#fff7ed"], [12, "#fed7aa"], [20, "#fb923c"], [30, "#ea580c"], [40, "#7c2d12"]],
+};
+
+/** U.S. Drought Monitor categories D0-D4 (the USDM's own palette). */
+export const DROUGHT_COLORS: [number, string][] = [
+  [0, "#ffff00"],
+  [1, "#fcd37f"],
+  [2, "#ffaa00"],
+  [3, "#e60000"],
+  [4, "#730000"],
+];
+
+/** NWS HeatRisk levels 0-4 (the NWS palette, as drawn by its image service). */
+export const HEAT_COLORS: [number, string][] = [
+  [0, "#c7e9c0"],
+  [1, "#f4ec4c"],
+  [2, "#f19637"],
+  [3, "#d7191c"],
+  [4, "#b01aa0"],
+];
+
+/** Reservoir % full -> dot color (red = low, blue = full). */
+export const RESERVOIR_STOPS: [number, string][] = [
+  [20, "#dc2626"],
+  [50, "#eab308"],
+  [80, "#0284c7"],
+];
+
+/** Outage type (normalized by the backend) -> dot color. */
+export const OUTAGE_COLORS: [string, string][] = [
+  ["unplanned", "#dc2626"],
+  ["planned", "#f59e0b"],
+];
+
+/** Voting location kinds -> label keys (en/es in i18n.tsx). */
+export const VOTING_KEYS: Record<string, "votingCenter" | "votingDropBox" | "votingOutdoorBox" | "votingCurbside"> = {
+  "vote-center": "votingCenter",
+  "drop-box": "votingDropBox",
+  "outdoor-drop-box": "votingOutdoorBox",
+  curbside: "votingCurbside",
+};
+
+/** Voting location kinds -> dot color. */
+export const VOTING_COLORS: [string, string][] = [
+  ["vote-center", "#1d4ed8"],
+  ["drop-box", "#0f766e"],
+  ["outdoor-drop-box", "#0891b2"],
+  ["curbside", "#7c3aed"],
 ];

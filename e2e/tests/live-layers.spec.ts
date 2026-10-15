@@ -55,6 +55,9 @@ const CASES: [string, string, RegExp[]][] = [
 for (const [name, view, expected] of CASES) {
   test(`live layer renders and explains itself: ${name}`, async ({ page }) => {
     await stubAll(page);
+    // Satellite positions come from orbit math at "now": pin the clock near the
+    // fixture's epoch so the ISS lands at the same, in-view spot every run.
+    if (name === "satellites") await page.clock.setFixedTime(new Date("2026-10-13T20:00:00Z"));
     await page.goto(`/#ov=${name}&${view}`);
     await ready(page);
     const popup = await clickLayer(page, `ov-${name}-circle`);

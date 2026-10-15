@@ -429,3 +429,37 @@ def test_historical_markers_strip_markup_from_text():
          "properties": {"Title": "Graffiti Cruise Route", "Add_l_Subtitle": '<i>"The Modesto music scene"</i> &amp; more', "Link": ""}}
     p = transforms.historical_markers({"features": [f]})["features"][0]["properties"]
     assert p["subtitle"] == '"The Modesto music scene" & more'
+
+
+def test_voting_locations_expire_after_the_election():
+    import datetime as dt
+
+    payload = {
+        "election": "2026-11-03",
+        "locations": [
+            {"kind": "vote-center", "name": "A", "lat": 37.6, "lon": -121.0, "hours": "x"},
+            {"kind": "bogus", "name": "B", "lat": 37.6, "lon": -121.0},
+            {"kind": "drop-box", "name": "C"},  # not geocoded
+        ],
+    }
+    live = transforms.voting_locations(payload, today=dt.date(2026, 11, 3))
+    assert [f["properties"]["name"] for f in live["features"]] == ["A"]
+    assert transforms.voting_locations(payload, today=dt.date(2026, 11, 4))["features"] == []
+    assert transforms.voting_locations({"election": "garbage"})["features"] == []
+
+
+def test_outage_types_fold_into_three():
+    fc = {
+        "features": [
+            {"geometry": {"type": "Point", "coordinates": [0, 0]}, "properties": {"OutageType": t}}
+            for t in ("Not Planned", "Planned", "Planned maintenance", "Unplanned", "Unknown", None)
+        ]
+    }
+    got = [f["properties"]["type"] for f in transforms.power_outages(fc)["features"]]
+    assert got == ["unplanned", "planned", "planned", "unplanned", "unknown", "unknown"]
+
+
+def test_num_strips_thousands_separators_but_rejects_nan():
+    assert transforms._num("1,655,887") == 1655887.0
+    assert transforms._num(float("nan")) is None
+    assert transforms._num("") is None

@@ -26,7 +26,12 @@ import { auroraChance, isAirlineCallsign, parseRoute, type FlightRoute } from ".
 import { LIVE_SOURCES, type LiveCtx } from "../live-sources";
 import { liveSourceFor } from "../view-sources";
 import { HOME_BBOX, within, wrapLon } from "../view-logic";
-import { CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS } from "../colors";
+import { HISTORY_LAYERS } from "../history";
+import { VOTING_KEYS } from "../colors";
+import {
+  CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
+  HEALTH_STOPS, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS,
+} from "../colors";
 
 export interface LayerState {
   cameras: boolean;
@@ -43,6 +48,10 @@ interface Props {
   overlayInfos: LayerInfo[];
   query: string;
   flyTo: { center: [number, number]; zoom: number } | null;
+  /** A past day (YYYY-MM-DD) to show for the history layers; null = live. */
+  historyDate?: string | null;
+  /** "What's near an address?" pin. */
+  nearPoint?: { center: [number, number]; label: string } | null;
   initialView: { center: [number, number]; zoom: number } | null;
   onView: (v: { center: [number, number]; zoom: number }) => void;
   coverage: { active: boolean; radiusM: number };
@@ -91,6 +100,8 @@ export function MapView({
   overlayInfos,
   query,
   flyTo,
+  nearPoint,
+  historyDate = null,
   initialView,
   onView,
   coverage,
@@ -110,6 +121,8 @@ export function MapView({
   const [ready, setReady] = useState(false);
   const alprLoadedRef = useRef(false);
   const overlaysLoadedRef = useRef<Set<string>>(new Set());
+  // History layers currently showing a past day: name -> that day.
+  const historyShownRef = useRef<Map<string, string>>(new Map());
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
   const onViewRef = useRef(onView);
@@ -449,6 +462,34 @@ export function MapView({
     for (const info of overlayInfos) {
       if (info.name === "alpr") continue; // ALPR has its own clustered handling
       if (info.name === "rain-radar") continue; // animated: its own effect below
+      if (historyDate && HISTORY_LAYERS.has(info.name)) {
+        // A past day: stop any live loader and show that day's snapshot.
+        const on = layers.overlays[info.name] ?? false;
+        liveRef.current.get(info.name)?.();
+        liveRef.current.delete(info.name);
+        if (on && historyShownRef.current.get(info.name) !== historyDate) {
+          const day = historyDate;
+          historyShownRef.current.set(info.name, day);
+          fetch(api.historyUrl(day, info.name))
+            .then((r) => (r.ok ? (r.json() as Promise<GeoJSON.FeatureCollection>) : EMPTY_FC)) // no snapshot that day
+            .catch(() => EMPTY_FC)
+            .then((data) => {
+              if (!mapRef.current || historyShownRef.current.get(info.name) !== day) return;
+              const s = map.getSource(`ov-${info.name}`) as GeoJSONSource | undefined;
+              if (s) s.setData(data);
+              else addOverlay(map, info, data, () => i18nRef.current);
+              setOverlayVisible(map, info.name, layersRef.current.overlays[info.name] ?? false);
+            });
+        } else setOverlayVisible(map, info.name, on);
+        continue;
+      }
+      if (historyShownRef.current.has(info.name)) {
+        // Back to live: forget the snapshot and reload the current data.
+        historyShownRef.current.delete(info.name);
+        overlaysLoadedRef.current.delete(info.name);
+        // Never show the old day as "live" while (or if) the reload runs.
+        (map.getSource(`ov-${info.name}`) as GeoJSONSource | undefined)?.setData(EMPTY_FC);
+      }
       if (liveSourceFor(info)) {
         const on = layers.overlays[info.name] ?? false;
         const running = liveRef.current.get(info.name);
@@ -478,7 +519,10 @@ export function MapView({
         fetch(api.layerUrl(info.same_data_as ?? info.name))
           .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
           .then((data: GeoJSON.FeatureCollection) => {
-            if (mapRef.current) addOverlay(map, info, data, () => i18nRef.current);
+            if (!mapRef.current || historyShownRef.current.has(info.name)) return; // a past day took over
+            const s = map.getSource(`ov-${info.name}`) as GeoJSONSource | undefined;
+            if (s) s.setData(data); // reloading (e.g. back from a past day)
+            else addOverlay(map, info, data, () => i18nRef.current);
             setOverlayVisible(map, info.name, layersRef.current.overlays[info.name] ?? false);
           })
           .catch(() => overlaysLoadedRef.current.delete(info.name));
@@ -486,7 +530,7 @@ export function MapView({
         setOverlayVisible(map, info.name, on);
       }
     }
-  }, [layers.overlays, overlayInfos, ready]);
+  }, [layers.overlays, overlayInfos, ready, historyDate]);
 
   // --- Live flights: keep the dots moving while the layer is on. The dev API
   // refreshes every 15 s; the static site's file is rebuilt every 15 min. ---
@@ -743,6 +787,18 @@ export function MapView({
     map.flyTo({ center: flyTo.center, zoom: flyTo.zoom, duration: prefersReducedMotion() ? 0 : 900 });
   }, [flyTo]);
 
+  // --- "What's near an address?" pin ---
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready || !nearPoint) return;
+    const el = document.createElement("div");
+    el.className = "nearpin";
+    el.setAttribute("role", "img");
+    el.setAttribute("aria-label", `${i18nRef.current.t("nearPinLabel")}: ${nearPoint.label}`);
+    const marker = new maplibregl.Marker({ element: el, anchor: "bottom" }).setLngLat(nearPoint.center).addTo(map);
+    return () => void marker.remove();
+  }, [nearPoint, ready, lang]);
+
   // --- Escape closes any open map popup (keyboard users can't "click away"). ---
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -832,7 +888,7 @@ const HAS_TRACK: maplibregl.ExpressionSpecification = ["==", ["typeof", ["get", 
 /** Categories always drawn as points, even when the data is momentarily empty. */
 const POINT_CATEGORIES = new Set([
   "flight", "haze", "webcam", "space", "train", "nature", "wiki", "weather-now", "poi", "hotspot",
-  "roadweather", "chain", "superfund", "power", "aqi",
+  "roadweather", "chain", "superfund", "power", "aqi", "voting", "outage", "crash", "reservoir", "quake",
 ]);
 /** …and these as lines (lane closures can be momentarily empty). */
 const LINE_CATEGORIES = new Set(["roadops", "fault"]);
@@ -844,6 +900,7 @@ const LABELS: Record<string, { field: string | maplibregl.ExpressionSpecificatio
   aqi: { field: "label", minzoom: 0 },
   space: { field: "label", minzoom: 4 },
   train: { field: "label", minzoom: 8 },
+  reservoir: { field: "label", minzoom: 7 },
   roadweather: {
     field: ["case", ["==", ["typeof", ["get", "temp_f"]], "number"], ["concat", ["to-string", ["get", "temp_f"]], "°"], ""],
     minzoom: 8,
@@ -875,6 +932,27 @@ interface RasterSpec {
 
 /** Tile URL for a client-side raster layer (fetched from public tile servers). */
 export async function rasterSource(name: string, now = new Date()): Promise<RasterSpec | null> {
+  if (name === "heat-risk") {
+    // NWS HeatRisk image service, today's grid ("HeatRisk_1"), in its own colors.
+    const base = "https://mapservices.weather.noaa.gov/experimental/rest/services/NWS_HeatRisk/ImageServer/exportImage";
+    const q = new URLSearchParams({
+      bboxSR: "3857",
+      imageSR: "3857",
+      size: "256,256",
+      format: "png32",
+      transparent: "true",
+      f: "image",
+      renderingRule: JSON.stringify({ rasterFunction: "heatrisk.rft" }),
+      mosaicRule: JSON.stringify({ mosaicMethod: "esriMosaicAttribute", where: "name='HeatRisk_1_Mercator'" }),
+    });
+    return {
+      tiles: [`${base}?bbox={bbox-epsg-3857}&${q}`],
+      maxzoom: 10,
+      attribution: '<a href="https://www.wpc.ncep.noaa.gov/heatrisk/" target="_blank" rel="noopener noreferrer">NWS HeatRisk</a>',
+      under: "labels",
+      opacity: 0.6,
+    };
+  }
   if (name === "satellite") {
     return {
       tiles: [gibsSatelliteUrl(now)],
@@ -1016,7 +1094,11 @@ function addOverlay(
       const i18n = getI18n();
       const feats = (e.features ?? []).map((f) => f.properties ?? {});
       const spec =
-        info.category === "webcam" ? webcamPopup(info, feats, i18n) : overlayPopup(info, feats[0] ?? {}, i18n);
+        info.category === "webcam"
+          ? webcamPopup(info, feats, i18n)
+          : info.category === "voting"
+            ? votingPopup(info, feats, i18n)
+            : overlayPopup(info, feats[0] ?? {}, i18n);
       const popup = openPopup(map, e.lngLat, popupHtml(spec), i18n.t);
       if (info.category === "flight") void addFlightRoute(popup, String(feats[0]?.callsign ?? ""), i18n.t);
     });
@@ -1035,7 +1117,13 @@ function addOverlay(
             ? ["interpolate", ["linear"], ["coalesce", ["get", "frp_mw"], 1], 1, 4, 100, 12]
             : info.category === "weather-now" || info.category === "aqi"
               ? 10
-              : 6;
+              : info.category === "outage"
+                ? ["interpolate", ["linear"], ["coalesce", ["get", "customers"], 1], 1, 4, 100, 7, 5000, 14]
+                : info.category === "crash"
+                  ? ["interpolate", ["linear"], ["coalesce", ["get", "fatalities"], 1], 1, 5, 4, 10]
+                  : info.category === "voting" || info.category === "reservoir"
+                    ? 8
+                    : 6;
     const color: maplibregl.ExpressionSpecification | string =
       info.category === "haze"
         ? (["match", ["get", "level"], ...HAZE_COLORS.flat(), "#94a3b8"] as unknown as maplibregl.ExpressionSpecification)
@@ -1052,7 +1140,18 @@ function addOverlay(
               ? (["match", ["get", "status"], ...CHAIN_COLORS, "#64748b"] as unknown as maplibregl.ExpressionSpecification)
               : info.category === "aqi"
                 ? (["match", ["get", "category"], ...AQI_COLORS, "#64748b"] as unknown as maplibregl.ExpressionSpecification)
-                : accent;
+                : info.category === "voting"
+                  ? (["match", ["get", "kind"], ...VOTING_COLORS.flat(), accent] as unknown as maplibregl.ExpressionSpecification)
+                  : info.category === "outage"
+                    ? (["match", ["get", "type"], ...OUTAGE_COLORS.flat(), "#64748b"] as unknown as maplibregl.ExpressionSpecification)
+                    : info.category === "reservoir"
+                      ? ([
+                          "case",
+                          ["==", ["typeof", ["get", "pct_full"]], "number"],
+                          ["interpolate", ["linear"], ["get", "pct_full"], ...RESERVOIR_STOPS.flat()],
+                          "#94a3b8",
+                        ] as unknown as maplibregl.ExpressionSpecification)
+                      : accent;
     const flight = info.category === "flight";
     map.addLayer(
       {
@@ -1158,12 +1257,19 @@ function addOverlay(
         : choropleth("median_income", CENSUS_STOPS)
       : info.category === "enviroscreen"
         ? choropleth("CIscoreP", ENVIRO_STOPS)
-        : {
+        : info.category === "health"
+          ? choropleth("pct", HEALTH_STOPS[info.name] ?? PCT_STOPS)
+          : info.category === "drought"
+            ? ({
+                "fill-color": ["match", ["get", "dm"], ...DROUGHT_COLORS.flat(), "#cccccc"] as unknown as maplibregl.ExpressionSpecification,
+                "fill-opacity": 0.45,
+              } as const)
+            : {
             "fill-color": accent,
             "fill-opacity":
-              info.category === "landuse" ? 0.22 : info.category === "perimeter" ? 0.3 : info.category === "weather" ? 0.18 : 0.14,
-          };
-  const choroplethCat = info.category === "census" || info.category === "enviroscreen";
+                info.category === "landuse" ? 0.22 : info.category === "perimeter" || info.category === "outage-area" ? 0.3 : info.category === "weather" ? 0.18 : 0.14,
+            };
+  const choroplethCat = ["census", "enviroscreen", "health", "drought"].includes(info.category);
 
   map.addLayer(
     { id: `${src}-fill`, type: "fill", source: src, paint: fillPaint, layout: { visibility: "none" } },
@@ -1479,6 +1585,64 @@ const INFO_FIELDS: Record<string, { rows: InfoRow[]; titleFrom?: string; link?: 
 };
 const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
+const UTILITY_NAMES: Record<string, string> = { PGE: "PG&E", SCE: "SCE", SDGE: "SDG&E", SMUD: "SMUD" };
+/** Spanish for the most common FARS light/weather values (else shown as-is). */
+const FARS_ES: Record<string, string> = {
+  Daylight: "De día",
+  "Dark - Not Lighted": "De noche, sin alumbrado",
+  "Dark - Lighted": "De noche, con alumbrado",
+  "Dark - Unknown Lighting": "De noche, alumbrado desconocido",
+  Dawn: "Amanecer",
+  Dusk: "Anochecer",
+  Clear: "Despejado",
+  Cloudy: "Nublado",
+  Rain: "Lluvia",
+  "Fog, Smog, Smoke": "Niebla, smog o humo",
+  Snow: "Nieve",
+  "Severe Crosswinds": "Vientos cruzados fuertes",
+  "Blowing Sand, Soil, Dirt": "Arena o tierra en el aire",
+  "Freezing Rain or Drizzle": "Lluvia o llovizna helada",
+  "Sleet or Hail": "Aguanieve o granizo",
+  "Not Reported": "Sin dato",
+  Unknown: "Desconocido",
+  "Reported as Unknown": "Desconocido",
+};
+
+/** Voting hours text is English ("Mon-Fri 9:00 a.m.-7:00 p.m."); swap the words. */
+function hoursEs(s: string): string {
+  const words: [RegExp, string][] = [
+    [/\bElection Day\b/g, "Día de las Elecciones"], [/\bDaily\b/g, "Todos los días"], [/\b24 hours\b/g, "24 horas"],
+    [/\bfrom\b/g, "desde el"], [/\band\b/g, "y"], [/\bNov\b/g, "nov."], [/\bSat\b/g, "sáb"], [/\bSun\b/g, "dom"],
+    [/\bMon\b/g, "lun"], [/\bTue\b/g, "mar"], [/\bWed\b/g, "mié"], [/\bThu\b/g, "jue"], [/\bFri\b/g, "vie"],
+  ];
+  return words.reduce((acc, [re, es]) => acc.replace(re, es), s);
+}
+
+/** Every voting location at the clicked spot (a library can be a vote center
+ *  and a drop box): one title, then type + hours for each. */
+function votingPopup(info: LayerInfo, feats: Record<string, unknown>[], i18n: I18nState): PopupSpec {
+  const { t, lang, locale } = i18n;
+  const s = (v: unknown) => (v == null ? "" : String(v).trim());
+  const first = feats[0] ?? {};
+  const rows: [string, string][] = [];
+  // Overlapping dots can be different sites: only the clicked one's address.
+  for (const p of feats.filter((x) => s(x.address) === s(first.address)).slice(0, 4)) {
+    const opens = s(p.opens)
+      ? `${t("rowOpens")} ${new Date(`${s(p.opens)}T12:00:00`).toLocaleDateString(locale, { month: "long", day: "numeric" })}. `
+      : "";
+    rows.push([t(VOTING_KEYS[s(p.kind)] ?? "votingDropBox"), opens + (lang === "es" ? hoursEs(s(p.hours)) : s(p.hours))]);
+  }
+  rows.push([t("rowAddress"), [s(first.address), s(first.city)].filter(Boolean).join(", ")]);
+  return {
+    kind: layerTitle(lang, info.name, info.title),
+    color: OVERLAY_COLOR[info.name],
+    title: s(first.name).replace(/\s*\(.*\)$/, "") || t("votingDropBox"),
+    rows,
+    link: { href: "https://www.stanvote.gov/", label: t("votingMore") },
+  };
+}
+const DROUGHT_KEYS: Parameters<TFn>[0][] = ["droughtD0", "droughtD1", "droughtD2", "droughtD3", "droughtD4"];
+
 const CHAIN_KEYS: Record<string, Parameters<TFn>[0]> = {
   "R-0": "chainR0",
   "R-1": "chainR1",
@@ -1717,6 +1881,67 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
         ],
       };
     }
+    case "outage":
+    case "outage-area": {
+      const when = (v: unknown) => (num(v) != null ? new Date(num(v)!).toLocaleString(locale, { dateStyle: "medium", timeStyle: "short" }) : "");
+      const type = str(p.type).toLowerCase();
+      return {
+        ...base,
+        title: t("outageTitle", { utility: UTILITY_NAMES[str(p.utility).toUpperCase()] ?? raw(p.utility) }),
+        rows: [
+          [t("rowCustomers"), fmt(p.customers)],
+          [t("rowType"), type === "planned" ? t("outagePlanned") : type === "unplanned" ? t("outageUnplanned") : ""],
+          [t("rowCause"), raw(p.cause)],
+          [t("rowStarted"), when(p.started)],
+          [t("rowRestoreEta"), when(p.restore_eta)],
+        ],
+      };
+    }
+    case "health":
+      return {
+        ...base,
+        title: num(p.pct) != null ? t("pctOfAdults", { n: fmt(p.pct) }) : kind,
+        rows: [
+          [t("rowTract"), raw(p.tract)],
+          [t("rowCounty"), raw(p.county)],
+          [t("rowSource"), "CDC PLACES"],
+        ],
+      };
+    case "crash": {
+      const m = num(p.month), y = num(p.year);
+      const es = lang === "es";
+      return {
+        ...base,
+        title: num(p.fatalities) != null ? t("crashTitle", { n: fmt(p.fatalities) }) : kind,
+        rows: [
+          [t("rowWhen"), m != null && m >= 1 && m <= 12 && y != null ? new Date(y, m - 1, 15).toLocaleDateString(locale, { month: "long", year: "numeric" }) : ""],
+          [t("rowTime"), raw(p.hour)],
+          [t("rowRoad"), str(p.road)],
+          [t("rowPedestrians"), num(p.pedestrians) ? fmt(p.pedestrians) : ""],
+          [t("rowLight"), (es && FARS_ES[raw(p.light)]) || raw(p.light)],
+          [t("rowWeather"), (es && FARS_ES[raw(p.weather)]) || raw(p.weather)],
+        ],
+      };
+    }
+    case "reservoir":
+      return {
+        ...base,
+        title: tidy(raw(p.name)) || kind,
+        rows: [
+          [t("rowFull"), num(p.pct_full) != null ? `${fmt(p.pct_full)}%` : ""],
+          [t("rowOfAverage"), num(p.pct_avg) != null ? `${fmt(p.pct_avg)}%` : ""],
+          [t("rowStorage"), num(p.storage_af) != null ? t("acreFeet", { n: fmt(p.storage_af), cap: fmt(p.capacity_af) }) : ""],
+          [t("rowOperator"), raw(p.operator)],
+          [t("rowAsOf"), raw(p.as_of)],
+        ],
+      };
+    case "drought":
+      return {
+        ...base,
+        title: DROUGHT_KEYS[num(p.dm) ?? -1] ? t(DROUGHT_KEYS[num(p.dm)!]!) : kind,
+        rows: [[t("rowSource"), "U.S. Drought Monitor"]],
+        link: { href: "https://droughtmonitor.unl.edu/", label: t("droughtMore") },
+      };
     case "weather":
       return {
         ...base,

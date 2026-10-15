@@ -35,3 +35,4 @@ records/
 *.xlsx
 *.xls
 *.csv
+frontend/public/data/history/

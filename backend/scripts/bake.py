@@ -42,6 +42,18 @@ OUT = ROOT / "frontend" / "public" / "data"
 # Public source URL shown in the UI / About page for provenance.
 SOURCES = {
     "alpr": "https://openstreetmap.org (DeFlock)",
+    "voting": "Stanislaus County Registrar of Voters (stanvote.gov voting flier, 2026-09-28)",
+    "power-outages": "Cal OES statewide power outages (from utility outage maps)",
+    "outage-areas": "Cal OES statewide power outages (PG&E outage areas)",
+    "health-asthma": "CDC PLACES: Local Data for Better Health",
+    "health-diabetes": "CDC PLACES: Local Data for Better Health",
+    "health-uninsured": "CDC PLACES: Local Data for Better Health",
+    "food-insecurity": "CDC PLACES: Local Data for Better Health",
+    "snap-stores": "USDA SNAP Retailer Locator data",
+    "fatal-crashes": "NHTSA Fatality Analysis Reporting System (via USDOT NTAD)",
+    "reservoirs": "California DWR / CDEC reservoir storage (via Cal OES)",
+    "drought": "U.S. Drought Monitor (NDMC / USDA / NOAA)",
+    "heat-risk": "NWS HeatRisk (experimental, NOAA)",
     "census": "https://api.census.gov (ACS 5-year)",
     "census-spanish": "https://api.census.gov (ACS 5-year)",
     "census-poverty": "https://api.census.gov (ACS 5-year)",

@@ -353,6 +353,84 @@ def _text_transform(url: str, transform: Callable[[str], dict]) -> Loader:
     return load
 
 
+def _local_json(path: Path, transform: Callable[[object], dict]) -> Loader:
+    """A curated JSON file in the repo (e.g. transcribed county lists)."""
+
+    async def load(_client: httpx.AsyncClient, _s: Settings) -> dict:
+        return transform(json.loads(path.read_text()))
+
+    return load
+
+
+LAYER_DATA = Path(__file__).resolve().parent / "data"
+OUTAGES = "https://services.arcgis.com/BLN4oKB0N1YSgvY8/arcgis/rest/services/Power_Outages_(View)/FeatureServer"
+PLACES_TRACTS = (
+    "https://services3.arcgis.com/ZvidGQkLaDJxRSJ2/arcgis/rest/services/"
+    "PLACES_LocalData_for_BetterHealth/FeatureServer/3"
+)
+SNAP_STORES = (
+    "https://services1.arcgis.com/RLQu0rK7h4kbsBq5/arcgis/rest/services/"
+    "snap_retailer_location_data/FeatureServer/0"
+)
+FARS_2024 = (
+    "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/"
+    "NTAD_Fatality_Analysis_Reporting_System_InitialRelease_Accidents/FeatureServer/0"
+)
+USDM = "https://services5.arcgis.com/0OTVzJS4K09zlixn/arcgis/rest/services/USDM_current/FeatureServer/0"
+DWR_RESERVOIRS = (
+    "https://services.arcgis.com/BLN4oKB0N1YSgvY8/arcgis/rest/services/"
+    "DWR_Reservoir_Storage_View/FeatureServer/0"
+)
+SNAP_FIELDS = {
+    "Store_Name": "NAME",
+    "Store_Street_Address": "ADDRESS",
+    "City": "CITY",
+    "Store_Type": "TYPE",
+}
+FARS_FIELDS = {
+    "FATALS": "fatalities",
+    "PEDS": "pedestrians",
+    "MONTH": "month",
+    "YEAR": "year",
+    "HOURNAME": "hour",
+    "TWAY_ID": "road",
+    "CITYNAME": "city",
+    "LGT_CONDNAME": "light",
+    "WEATHERNAME": "weather",
+}
+
+
+def _health(measure: str) -> dict[str, str]:
+    """CDC PLACES tract fields for one measure (crude prevalence, % of adults)."""
+    return {"TractFIPS": "tract", "CountyName": "county", f"{measure}_CrudePrev": "pct"}
+
+
+def _health_layer(name: str, title: str, what: str, measure: str) -> Layer:
+    return Layer(
+        name=name,
+        title=title,
+        description=f"CDC PLACES model estimate: {what}, by census tract.",
+        category="health",
+        loader=_arcgis_select(
+            PLACES_TRACTS,
+            lambda fc: transforms.select_props(fc, _health(measure)),
+            where="StateAbbr='CA' AND CountyName='Stanislaus'",
+            bbox=None,
+            simplify=0.0002,
+        ),
+        ttl=7 * 24 * 3600,
+        view=View(
+            PLACES_TRACTS,
+            _health(measure),
+            "polygon",
+            min_zoom=9,
+            max_features=1500,
+            simplify=True,
+            refresh_s=24 * 3600,
+        ),
+    )
+
+
 def _json_transform(url: str, transform: Callable[[object], dict]) -> Loader:
     """A non-GeoJSON JSON source normalized to GeoJSON (Caltrans, USGS, NID)."""
 
@@ -1428,6 +1506,140 @@ LAYERS: dict[str, Layer] = {
         ),
         ttl=3600,
         coverage="california",
+    ),
+    # --- Elections ---
+    "voting": Layer(
+        name="voting",
+        title="Vote centers & ballot drop boxes",
+        description=(
+            "Where to vote or drop off a ballot for the November 3, 2026 general "
+            "election (Stanislaus County Registrar of Voters)."
+        ),
+        category="voting",
+        loader=_local_json(
+            LAYER_DATA / "voting_locations_20261103.json", transforms.voting_locations
+        ),
+        ttl=3600,
+    ),
+    # --- Power ---
+    "power-outages": Layer(
+        name="power-outages",
+        title="Power outages",
+        description=(
+            "Current outages reported by PG&E, SCE, SDG&E and SMUD (Cal OES, every "
+            "15 minutes). Modesto and Turlock Irrigation District customers aren't included."
+        ),
+        category="outage",
+        loader=_arcgis_select(
+            f"{OUTAGES}/0",
+            transforms.power_outages,
+            where="OutageStatus='Active'",
+            bbox=None,
+        ),
+        ttl=600,
+        coverage="california",
+    ),
+    "outage-areas": Layer(
+        name="outage-areas",
+        title="Power outage areas (PG&E)",
+        description="Approximate areas of current PG&E outages (Cal OES).",
+        category="outage-area",
+        loader=_arcgis_select(
+            f"{OUTAGES}/1",
+            transforms.power_outages,
+            where="OutageStatus='Active'",
+            bbox=None,
+            simplify=0.0005,
+        ),
+        ttl=600,
+        coverage="california",
+    ),
+    # --- Health & food ---
+    "health-asthma": _health_layer(
+        "health-asthma", "Asthma (adults)", "adults with asthma", "CASTHMA"
+    ),
+    "health-diabetes": _health_layer(
+        "health-diabetes", "Diabetes (adults)", "adults with diagnosed diabetes", "DIABETES"
+    ),
+    "health-uninsured": _health_layer(
+        "health-uninsured",
+        "No health insurance",
+        "adults 18-64 without health insurance",
+        "ACCESS2",
+    ),
+    "food-insecurity": _health_layer(
+        "food-insecurity", "Food insecurity", "adults who were food insecure", "FOODINSECU"
+    ),
+    "snap-stores": Layer(
+        name="snap-stores",
+        title="Stores that take CalFresh / EBT",
+        description="Retailers authorized to accept SNAP (CalFresh) benefits (USDA).",
+        category="point",
+        loader=_arcgis_select(
+            SNAP_STORES,
+            lambda fc: transforms.select_props(fc, SNAP_FIELDS),
+            where="State='CA' AND County='STANISLAUS'",
+            bbox=None,
+        ),
+        ttl=7 * 24 * 3600,
+        view=View(SNAP_STORES, SNAP_FIELDS, "point", min_zoom=11, refresh_s=24 * 3600),
+    ),
+    # --- Road safety ---
+    "fatal-crashes": Layer(
+        name="fatal-crashes",
+        title="Fatal crashes (2024)",
+        description="Every crash in 2024 where someone died (NHTSA FARS, initial release).",
+        category="crash",
+        loader=_arcgis_select(
+            FARS_2024,
+            lambda fc: transforms.select_props(fc, FARS_FIELDS),
+            where="STATE=6 AND COUNTY=99 AND YEAR=2024",
+            bbox=None,
+        ),
+        ttl=7 * 24 * 3600,
+        view=View(
+            FARS_2024, FARS_FIELDS, "point", min_zoom=8, where="YEAR=2024", refresh_s=24 * 3600
+        ),
+    ),
+    # --- Water & climate ---
+    "reservoirs": Layer(
+        name="reservoirs",
+        title="Reservoir levels",
+        description="How full California's major reservoirs are today (DWR / CDEC).",
+        category="reservoir",
+        loader=_arcgis_select(DWR_RESERVOIRS, transforms.reservoirs, bbox=None),
+        ttl=3 * 3600,
+        coverage="california",
+    ),
+    "drought": Layer(
+        name="drought",
+        title="Drought monitor",
+        description="This week's U.S. Drought Monitor (D0 abnormally dry to D4 exceptional).",
+        category="drought",
+        loader=_arcgis_select(
+            USDM,
+            lambda fc: transforms.select_props(fc, {"DM": "dm"}),
+            simplify=0.01,
+        ),
+        ttl=24 * 3600,
+        view=View(
+            USDM,
+            {"DM": "dm"},
+            "polygon",
+            min_zoom=3,
+            max_features=10,
+            simplify=True,
+            refresh_s=6 * 3600,
+            home_complete=True,
+        ),
+    ),
+    "heat-risk": Layer(
+        name="heat-risk",
+        title="Heat risk (today)",
+        description="NWS HeatRisk: today's risk of heat-related illness (experimental).",
+        category="raster",
+        client_side=True,
+        coverage="usa",
     ),
     # --- Browser-live layers: fetched straight from public APIs in the browser
     # (see frontend/src/live-sources.ts); nothing to bake. ---

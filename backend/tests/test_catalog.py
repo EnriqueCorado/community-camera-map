@@ -42,3 +42,20 @@ def test_every_registry_coverage_is_known_and_views_are_https_arcgis():
             assert layer.view.url.startswith("https://"), layer.name
             assert layer.view.geometry in ("point", "line", "polygon"), layer.name
             assert layer.view.fields, layer.name
+
+
+def test_ci_cache_carries_every_hourly_and_daily_layer():
+    """Fast CI runs restore hourly/daily layers from the cache: a layer missing
+    from the workflow's cache paths silently reverts to its committed copy."""
+    import re
+    import sys
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[2]
+    sys.path.insert(0, str(root / "backend" / "scripts"))
+    from refresh_live import DAILY, HOURLY
+
+    workflow = (root / ".github/workflows/pages.yml").read_text()
+    cached = re.findall(r"frontend/public/data/layers/([\w-]+)\.geojson", workflow)
+    for name in (*HOURLY, *DAILY):
+        assert cached.count(name) >= 2, f"{name}: add it to both cache path lists in pages.yml"

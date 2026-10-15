@@ -203,6 +203,13 @@ export function About({ layers, bakedAt, onClose }: Props) {
               <dt>{c.baseMap}</dt>
               <dd>OpenFreeMap · © OpenStreetMap contributors</dd>
             </div>
+            <div>
+              <dt>{t("nearTitle")}</dt>
+              <dd>
+                OpenStreetMap Nominatim (address search) · U.S. Census TIGERweb · FEMA NFHL · NOAA NWS HeatRisk · Esri
+                ArcGIS Online (Census ACS, CDC PLACES, USDA SNAP, HIFLD, U.S. Drought Monitor, CAL FIRE)
+              </dd>
+            </div>
           </dl>
 
           <h3>{c.principles}</h3>

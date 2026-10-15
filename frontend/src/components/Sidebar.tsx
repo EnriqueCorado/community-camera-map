@@ -3,10 +3,16 @@ import type { Camera } from "../types";
 import { api, type LayerInfo } from "../api/client";
 import { ago } from "../freshness";
 import { matchCamera, type LayerState } from "./MapView";
-import { CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS } from "../colors";
+import {
+  CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
+  HEALTH_STOPS, DROUGHT_COLORS, HEAT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, VOTING_KEYS,
+} from "../colors";
 import { downloadLayer, downloadCameras } from "../download";
 import { LIVE_SOURCES } from "../live-sources";
 import { covers } from "../view-logic";
+import { NearMe, type NearPoint } from "./NearMe";
+import { HistoryPicker } from "./HistoryPicker";
+import { HISTORY_LAYERS } from "../history";
 import { useI18n, layerTitle, type Key } from "../i18n";
 
 export interface Coverage {
@@ -78,9 +84,9 @@ function Section({
   );
 }
 
-type Group = "cameras" | "live" | "weather" | "hazards" | "roads" | "places" | "nature" | "planning" | "infra" | "other";
+type Group = "cameras" | "live" | "civic" | "weather" | "hazards" | "roads" | "places" | "nature" | "planning" | "infra" | "other";
 
-const GROUP_ORDER: Group[] = ["cameras", "live", "weather", "hazards", "roads", "places", "nature", "planning", "infra", "other"];
+const GROUP_ORDER: Group[] = ["cameras", "live", "civic", "weather", "hazards", "roads", "places", "nature", "planning", "infra", "other"];
 
 const GROUP_KEYS: Record<Group, Key> = {
   cameras: "groupCameras",
@@ -92,6 +98,7 @@ const GROUP_KEYS: Record<Group, Key> = {
   nature: "groupNature",
   planning: "groupPlanning",
   infra: "groupInfra",
+  civic: "groupCivic",
   other: "groupOther",
 };
 
@@ -102,12 +109,13 @@ const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
       ["cameras", ["fire-cameras", "river-cameras", "windy-webcams"]],
       ["live", ["flights", "iss", "satellites", "trains"]],
       ["weather", ["weather-now", "air-now", "rain-radar", "satellite", "weather-alerts", "air-quality", "road-weather", "smoke-haze"]],
-      ["hazards", ["wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
+      ["hazards", ["heat-risk", "drought", "reservoirs", "fatal-crashes", "wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
       ["roads", ["lane-closures", "message-signs", "chain-controls", "transit-routes", "transit-stops", "amtrak", "airports", "railroads"]],
       ["places", ["cooling-centers", "shelters", "sandbags", "mobile-home-parks", "food-banks", "clinics", "hospitals", "pharmacies", "community-centers", "libraries", "farmers-markets", "law-enforcement", "fire-stations", "schools", "parks", "playgrounds", "aed", "drinking-water", "restrooms", "ev-chargers", "free-wifi"]],
       ["nature", ["wildlife", "wikipedia", "historic-places", "historical-markers", "rivers", "streamflow"]],
       ["planning", ["city-limits", "county-islands", "general-plan", "zoning", "annexations", "census", "census-spanish", "census-foreign-born", "census-poverty", "census-renters", "supervisor-districts", "elementary-districts", "high-school-districts", "fire-districts", "mosquito-districts", "zip-codes", "congressional-districts"]],
-      ["infra", ["power-plants", "substations", "bridges"]],
+      ["infra", ["power-plants", "substations", "bridges", "power-outages", "outage-areas"]],
+      ["civic", ["voting", "health-asthma", "health-diabetes", "health-uninsured", "food-insecurity", "snap-stores"]],
     ] as [Group, string[]][]
   ).flatMap(([g, names]) => names.map((n) => [n, g])),
 );
@@ -145,6 +153,31 @@ interface Props {
   zoom: number;
   /** Map center [lon, lat], for "no data here" notes. */
   center: [number, number];
+  /** The "What's near an address?" point, if any. */
+  nearPoint: NearPoint | null;
+  onNearPoint: (p: NearPoint | null) => void;
+  /** Past day shown for the history layers (null = live). */
+  historyDate: string | null;
+  onHistoryDate: (day: string | null) => void;
+}
+
+/** A titled color legend: [color, label] items. */
+function Legend({ id, title, items }: { id: string; title: string; items: [string, string][] }) {
+  return (
+    <div className="subfilter">
+      <span className="panel__note" id={id}>
+        {title}
+      </span>
+      <ul className="legend" aria-labelledby={id}>
+        {items.map(([c, label]) => (
+          <li key={c} className="legend__item">
+            <span className="legend__swatch" style={{ background: c }} aria-hidden="true" />
+            {label}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 /** "No data here" note per coverage. */
@@ -175,6 +208,10 @@ export function Sidebar({
   onHide,
   zoom,
   center,
+  nearPoint,
+  onNearPoint,
+  historyDate,
+  onHistoryDate,
 }: Props) {
   const { lang, setLang, t, locale } = useI18n();
   // When each server-fetched layer was last refreshed (re-read every 5 min).
@@ -196,6 +233,9 @@ export function Sidebar({
   const coverageOf = (l: LayerInfo) =>
     l.name === "flights" && !(api.static && api.flightsRelay) ? "stanislaus" : l.coverage;
   const freshness = (l: LayerInfo): string | null => {
+    if (historyDate && HISTORY_LAYERS.has(l.name)) {
+      return t("historyShown", { day: new Date(`${historyDate}T12:00:00`).toLocaleDateString(locale, { month: "short", day: "numeric" }) });
+    }
     if (LIVE_SOURCES[l.name] || (l.name === "flights" && (!api.static || api.flightsRelay))) return t("live");
     if (fromSource(l)) return null;
     const at = times[l.same_data_as ?? l.name];
@@ -246,6 +286,13 @@ export function Sidebar({
   const censusOn = layers.overlays["census"] ?? false;
   const pctOn = Object.keys(CENSUS_FIELD).some((n) => n !== "census" && (layers.overlays[n] ?? false));
   const enviroOn = layers.overlays["enviroscreen"] ?? false;
+  // The first health layer that's on picks the legend (they share a style).
+  const healthOn = Object.keys(HEALTH_STOPS).find((n) => layers.overlays[n]);
+  const droughtOn = layers.overlays["drought"] ?? false;
+  const heatOn = layers.overlays["heat-risk"] ?? false;
+  const reservoirsOn = layers.overlays["reservoirs"] ?? false;
+  const votingOn = layers.overlays["voting"] ?? false;
+  const outagesOn = layers.overlays["power-outages"] ?? false;
   const other = lang === "en" ? "es" : "en";
 
   // Layers grouped by theme, filterable by name (in the current language).
@@ -370,6 +417,10 @@ export function Sidebar({
         </div>
       </Section>
 
+      <Section {...section("near")} title={t("nearTitle")}>
+        <NearMe point={nearPoint} onPoint={onNearPoint} />
+      </Section>
+
       <Section {...section("layers")} title={t("layers")}>
         <input
           type="search"
@@ -482,6 +533,45 @@ export function Sidebar({
             </ul>
           </div>
         )}
+
+        {healthOn && (
+          <Legend
+            id="health-legend"
+            title={t("healthLegend")}
+            items={(HEALTH_STOPS[healthOn] ?? []).map(([v, c], i, all) => [c, i === all.length - 1 ? `${v}%+` : `${v}%`])}
+          />
+        )}
+        {droughtOn && (
+          <Legend id="drought-legend" title={t("droughtLegend")} items={DROUGHT_COLORS.map(([v, c]) => [c, `D${v}`])} />
+        )}
+        {heatOn && (
+          <Legend id="heat-legend" title={t("heatLegend")} items={HEAT_COLORS.map(([v, c]) => [c, t(`heat${v}` as Key)])} />
+        )}
+        {votingOn && (
+          <Legend
+            id="voting-legend"
+            title={t("votingLegend")}
+            items={VOTING_COLORS.map(([k, c]) => [c, t(VOTING_KEYS[k]!)])}
+          />
+        )}
+        {outagesOn && (
+          <Legend
+            id="outage-legend"
+            title={t("outageLegend")}
+            items={OUTAGE_COLORS.map(([k, c]) => [c, t(k === "planned" ? "outagePlanned" : "outageUnplanned")])}
+          />
+        )}
+        {reservoirsOn && (
+          <Legend
+            id="reservoir-legend"
+            title={t("reservoirLegend")}
+            items={RESERVOIR_STOPS.map(([v, c], i) => [c, i === 0 ? `≤${v}%` : `${v}%+`])}
+          />
+        )}
+      </Section>
+
+      <Section {...section("history")} title={t("historyTitle")}>
+        <HistoryPicker value={historyDate} onChange={onHistoryDate} overlayInfos={overlayInfos} />
       </Section>
 
       <Section {...section("coverage")} title={t("whatCanSeeMe")}>

@@ -7,6 +7,7 @@ without network access.
 from __future__ import annotations
 
 import csv
+import datetime as dt
 import html
 import io
 import json
@@ -29,9 +30,10 @@ def _pt(lon: float, lat: float, props: dict) -> dict:
 
 
 def _num(v: object) -> float | None:
-    """Finite float, or None (NaN/inf would serialize to JSON the browser can't parse)."""
+    """Finite float, or None (NaN/inf would serialize to JSON the browser can't
+    parse). Strings may carry thousands separators ("1,655,887", from DWR)."""
     try:
-        f = float(v)  # type: ignore[arg-type]
+        f = float(v.replace(",", "").strip() if isinstance(v, str) else v)  # type: ignore[arg-type]
     except (TypeError, ValueError):
         return None
     return f if math.isfinite(f) else None
@@ -668,3 +670,91 @@ def osm_points(
             )
         )
     return _fc(feats)
+
+
+VOTING_KINDS = ("drop-box", "outdoor-drop-box", "vote-center", "curbside")
+
+
+def voting_locations(payload: object, today: dt.date | None = None) -> dict:
+    """The curated county voting-locations file -> points (geocoded entries
+    only). Empty once the election is over, so old sites never linger."""
+    if not isinstance(payload, dict):
+        return _fc([])
+    try:
+        election = dt.date.fromisoformat(str(payload.get("election", "")))
+    except ValueError:
+        return _fc([])
+    if (today or dt.date.today()) > election:
+        return _fc([])
+    locs = payload.get("locations", [])
+    feats = []
+    for loc in locs:
+        if not isinstance(loc, dict) or loc.get("kind") not in VOTING_KINDS:
+            continue
+        lat, lon = loc.get("lat"), loc.get("lon")
+        if not isinstance(lat, int | float) or not isinstance(lon, int | float):
+            continue
+        feats.append(
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [lon, lat]},
+                "properties": {
+                    "name": str(loc.get("name", "")),
+                    "kind": loc["kind"],
+                    "address": str(loc.get("address", "")),
+                    "city": str(loc.get("city", "")),
+                    "hours": str(loc.get("hours", "")),
+                    "opens": str(loc.get("opens", "")),
+                },
+            }
+        )
+    return _fc(feats)
+
+
+def power_outages(fc: object) -> dict:
+    """Cal OES outages -> utility / customers / cause / times, with the
+    utilities' many type labels ("Not Planned", "Planned maintenance",
+    "Unknown", ...) folded into planned | unplanned | unknown."""
+    out = select_props(
+        fc,
+        {
+            "UtilityCompany": "utility",
+            "ImpactedCustomers": "customers",
+            "Cause": "cause",
+            "StartDate": "started",
+            "EstimatedRestoreDate": "restore_eta",
+            "OutageType": "type",
+        },
+    )
+    for f in out["features"]:
+        t = str(f["properties"]["type"] or "").strip().lower()
+        f["properties"]["type"] = (
+            "unplanned"
+            if t.startswith(("not planned", "unplanned"))
+            else "planned"
+            if t.startswith("planned")
+            else "unknown"
+        )
+    return out
+
+
+def reservoirs(fc: object) -> dict:
+    """DWR reservoir storage -> name / % full / % of average / storage."""
+    out = select_props(
+        fc,
+        {
+            "Reservoir_Name": "name",
+            "Percent_Capacity": "pct_full",
+            "Water_Percent_of_Average": "pct_avg",
+            "Storage_AF": "storage_af",
+            "Capacity_AF": "capacity_af",
+            "Date_Time": "as_of",
+            "OperatingAgency": "operator",
+        },
+    )
+    for f in out["features"]:
+        p = f["properties"]
+        for k in ("pct_full", "pct_avg", "storage_af", "capacity_af"):
+            p[k] = _num(p[k])
+        p["label"] = f"{p['pct_full']:.0f}%" if p["pct_full"] is not None else ""
+    return out

@@ -11,7 +11,7 @@ type FC = GeoJSON.FeatureCollection;
 
 // One baked-file fetch per file (the census layers all share census.geojson).
 const homeFiles = new Map<string, Promise<FC>>();
-function home(file: string): Promise<FC> {
+export function home(file: string): Promise<FC> {
   let p = homeFiles.get(file);
   if (!p) {
     p = fetch(api.layerUrl(file))

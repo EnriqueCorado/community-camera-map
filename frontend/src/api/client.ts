@@ -89,6 +89,13 @@ export const api = {
     getJSON<Record<string, number>>(
       STATIC ? `data/layer_times.json?t=${Math.floor(Date.now() / 60_000)}` : `${API_BASE}/api/layers/times`,
     ).catch(() => ({}) as Record<string, number>),
+  /** Days with saved snapshots ({days: {"2026-10-15": ["quakes", …]}}). */
+  historyIndex: () =>
+    getJSON<{ days: Record<string, string[]> }>(`data/history/index.json?t=${Math.floor(Date.now() / 3_600_000)}`).catch(
+      () => ({ days: {} }),
+    ),
+  /** One layer's snapshot for one day. */
+  historyUrl: (day: string, name: string) => `data/history/${day}/${name}.geojson`,
   /** Build-time metadata (static mode only). */
   meta: () =>
     STATIC

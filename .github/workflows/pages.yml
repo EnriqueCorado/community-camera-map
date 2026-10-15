@@ -14,6 +14,7 @@ on:
     - cron: "7 * * * *" # hourly: + haze index and webcam lists (its own cron, so a
     #                       delayed fast run can never skip it)
     - cron: "37 11 * * *" # daily: OpenStreetMap places (Overpass servers rate-limit)
+    - cron: "12 20 * * *" # daily history snapshot (around midday Pacific)
   workflow_dispatch:
 
 permissions:
@@ -50,9 +51,40 @@ jobs:
           if-no-files-found: ignore
           retention-days: 1
 
+  # Daily snapshot of the fast-changing layers (quakes, fires, smoke, outages,
+  # alerts) for the map's History slider. The only job that can write to the
+  # repo, and it commits only to the separate `history` data branch.
+  history:
+    if: github.event.schedule == '12 20 * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: history
+          path: history-data
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.21"
+      - name: Snapshot today's layers
+        working-directory: backend
+        run: uv run --locked python scripts/snapshot_history.py ../history-data
+      - name: Commit to the history branch
+        working-directory: history-data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -q -m "History snapshot $(date -u +%F)"
+          git push -q origin HEAD:history
+
   build:
-    needs: windy
-    # Run even when the windy job is skipped (fast 15-minute refreshes).
+    needs: [windy, history]
+    # Run even when the windy/history jobs are skipped (most runs) or fail.
     if: ${{ !cancelled() && needs.windy.result != 'failure' }}
     runs-on: ubuntu-latest
     steps:
@@ -69,6 +101,9 @@ jobs:
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
+            frontend/public/data/layers/reservoirs.geojson
+            frontend/public/data/layers/drought.geojson
+            frontend/public/data/layers/voting.geojson
             frontend/public/data/layers/fire-cameras.geojson
             frontend/public/data/layers/smoke-haze.geojson
             frontend/public/data/layers/river-cameras.geojson
@@ -106,6 +141,9 @@ jobs:
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
+            frontend/public/data/layers/reservoirs.geojson
+            frontend/public/data/layers/drought.geojson
+            frontend/public/data/layers/voting.geojson
             frontend/public/data/layers/fire-cameras.geojson
             frontend/public/data/layers/smoke-haze.geojson
             frontend/public/data/layers/river-cameras.geojson
@@ -136,6 +174,20 @@ jobs:
         if: needs.windy.result == 'success'
         working-directory: backend
         run: uv run --locked python scripts/refresh_live.py --adopt windy-webcams
+      # Saved days for the History slider (read-only checkout of the data branch).
+      - name: Fetch history snapshots
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        continue-on-error: true
+        with:
+          ref: history
+          path: history-data
+          persist-credentials: false
+      - name: Add history to the site
+        run: |
+          mkdir -p frontend/public/data/history
+          if [ -f history-data/index.json ]; then
+            rsync -a --exclude .git --exclude README.md history-data/ frontend/public/data/history/
+          fi
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22

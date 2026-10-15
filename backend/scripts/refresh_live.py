@@ -38,6 +38,8 @@ OUT = Path(__file__).resolve().parent.parent.parent / "frontend" / "public" / "d
 
 FAST = (
     "flights",
+    "power-outages",
+    "outage-areas",
     "wildfire",
     "weather-alerts",
     "quakes",
@@ -49,6 +51,8 @@ FAST = (
 )
 # Slow-changing, and Overpass servers rate-limit: once a day.
 DAILY = (
+    "drought",  # the Drought Monitor updates weekly (Thursdays)
+    "voting",  # empties itself once the election is over
     "aed",
     "drinking-water",
     "restrooms",
@@ -64,6 +68,7 @@ DAILY = (
     "farmers-markets",
 )
 HOURLY = (
+    "reservoirs",
     "fire-cameras",  # before smoke-haze, which reuses it
     "smoke-haze",
     "river-cameras",
@@ -83,6 +88,10 @@ async def main(names: tuple[str, ...]) -> int:
         timeout=60.0, headers={"User-Agent": "stanislaus-cam-map/refresh"}, follow_redirects=True
     ) as client:
         layers = LayerService(settings=settings, client=client, fallback_to_baked=False)
+        # Registry changes (new layers, titles, views) reach the catalog first,
+        # so layers added since the last bake can be marked available below.
+        catalog = sync_catalog(catalog, layers.list_layers(), SOURCES)
+        by_name = {c["name"]: c for c in catalog}
         for name in names:
             layer = next((x for x in layers.list_layers() if x.name == name), None)
             if layer is None or not layers.is_available(layer):
@@ -101,7 +110,6 @@ async def main(names: tuple[str, ...]) -> int:
             ok += 1
             refreshed.append(name)
             print(f"  {name}: {n} features")
-        catalog = sync_catalog(catalog, layers.list_layers(), SOURCES)
     catalog_path.write_text(json.dumps(catalog, separators=(",", ":")))
     record_layer_times(refreshed)
     if ok and "flights" in names:  # only claim "live" when the live layers refreshed
