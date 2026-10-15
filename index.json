@@ -1,0 +1,13 @@
+{
+ "days": {
+  "2026-10-15": [
+   "quakes",
+   "wildfire",
+   "wildfire-perimeters",
+   "fire-hotspots",
+   "smoke-haze",
+   "power-outages",
+   "weather-alerts"
+  ]
+ }
+}
