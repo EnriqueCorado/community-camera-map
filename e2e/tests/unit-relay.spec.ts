@@ -32,3 +32,12 @@ test("missing values stay missing; garbage input is safe", () => {
   expect(adsbFlights(null)).toEqual({ type: "FeatureCollection", features: [] });
   expect(adsbFlights({ aircraft: [{ lat: 999, lon: 0 }] }).features).toEqual([]);
 });
+
+test("handles the `ac` + millisecond format of adsb.lol / airplanes.live", () => {
+  const fc = adsbFlights({ now: 1792070818002, ac: [
+    { flight: "UAL366", lat: 37.6, lon: -121, alt_baro: 30000, gs: 450, track: 90 },
+    { flight: "N304KC", lat: 37.6, lon: -121, dbFlags: 8 },
+  ] });
+  expect(fc.generated_at).toBeCloseTo(1792070818.002, 3);
+  expect(fc.features.map((f) => f.properties.callsign)).toEqual(["UAL366"]);
+});

@@ -14,7 +14,13 @@ interface Env {
   FLIGHTS_LIMITER?: { limit(opts: { key: string }): Promise<{ success: boolean }> };
 }
 
-const UPSTREAM = "https://opendata.adsb.fi/api/v2/lat/37.64/lon/-120.99/dist/80";
+// Open, readsb-based ADS-B feeds, tried in order. (adsb.fi answers 403 to
+// Cloudflare's network, so it's effectively a local-dev source here.)
+const UPSTREAMS = [
+  "https://opendata.adsb.fi/api/v2/lat/37.64/lon/-120.99/dist/80",
+  "https://api.adsb.lol/v2/lat/37.64/lon/-120.99/dist/80",
+  "https://api.airplanes.live/v2/point/37.64/-120.99/80",
+];
 const FRESH_MS = 10_000; // reuse a result this long before asking upstream again
 const STALE_OK_MS = 5 * 60_000; // during upstream trouble, serve data up to this old
 const FAIL_BACKOFF_MS = 30_000; // after a failure, don't retry upstream sooner than this
@@ -29,14 +35,15 @@ let last: { body: string; at: number } | null = null;
 let inflight: Promise<string> | null = null;
 let backoffUntil = 0;
 
-async function fetchUpstream(): Promise<string> {
-  const r = await fetch(UPSTREAM, {
+async function fetchOne(url: string): Promise<string> {
+  const r = await fetch(url, {
     headers: { "User-Agent": "stanislaus-cam-map relay (+https://enriquecorado.github.io/stanislaus-cam-map/)" },
     signal: AbortSignal.timeout(5000),
   });
   if (!r.ok) {
+    console.warn(`upstream ${new URL(url).host} HTTP ${r.status}`); // visible via `wrangler tail`
     const retry = Number(r.headers.get("Retry-After"));
-    backoffUntil = Date.now() + (Number.isFinite(retry) && retry > 0 ? Math.min(retry, 300) * 1000 : FAIL_BACKOFF_MS);
+    if (r.status === 429 && Number.isFinite(retry) && retry > 0) backoffUntil = Date.now() + Math.min(retry, 300) * 1000;
     throw new Error(`upstream ${r.status}`);
   }
   const declared = Number(r.headers.get("Content-Length"));
@@ -44,6 +51,20 @@ async function fetchUpstream(): Promise<string> {
   const text = await r.text();
   if (text.length > MAX_UPSTREAM_BYTES) throw new Error("upstream too large");
   return JSON.stringify(adsbFlights(JSON.parse(text)));
+}
+
+/** First provider that answers wins; all failing -> back off. */
+async function fetchUpstream(): Promise<string> {
+  let lastErr: unknown;
+  for (const url of UPSTREAMS) {
+    try {
+      return await fetchOne(url);
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  backoffUntil = Math.max(backoffUntil, Date.now() + FAIL_BACKOFF_MS);
+  throw lastErr instanceof Error ? lastErr : new Error("all upstreams failed");
 }
 
 /** Fresh-enough data: memo -> shared in-flight request -> stale fallback. */
@@ -61,7 +82,8 @@ async function flights(): Promise<string | null> {
     });
   try {
     return await inflight;
-  } catch {
+  } catch (err) {
+    console.warn(`upstream failed: ${err instanceof Error ? err.message : String(err)}`);
     backoffUntil = Math.max(backoffUntil, Date.now() + FAIL_BACKOFF_MS);
     return last && Date.now() - last.at < STALE_OK_MS ? last.body : null;
   }

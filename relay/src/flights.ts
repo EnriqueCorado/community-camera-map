@@ -27,8 +27,10 @@ export interface FlightFC {
 /** Keep only what an aircraft broadcasts about its flight; owner/registration
  *  are dropped, and aircraft whose owners opted out of tracking are excluded. */
 export function adsbFlights(payload: unknown): FlightFC {
-  const p = (payload ?? {}) as { aircraft?: unknown; now?: unknown };
-  const rows = Array.isArray(p.aircraft) ? p.aircraft : [];
+  // readsb-based feeds: adsb.fi uses `aircraft` + seconds; adsb.lol and
+  // airplanes.live use `ac` + milliseconds.
+  const p = (payload ?? {}) as { aircraft?: unknown; ac?: unknown; now?: unknown };
+  const rows = Array.isArray(p.aircraft) ? p.aircraft : Array.isArray(p.ac) ? p.ac : [];
   const features: FlightFC["features"] = [];
   for (const a of rows as Record<string, unknown>[]) {
     if (!a || typeof a !== "object") continue;
@@ -50,6 +52,7 @@ export function adsbFlights(payload: unknown): FlightFC {
       },
     });
   }
-  const now = num(p.now);
+  const raw = num(p.now);
+  const now = raw != null && raw > 1e11 ? raw / 1000 : raw; // ms -> s
   return { type: "FeatureCollection", ...(now != null ? { generated_at: now } : {}), features };
 }
