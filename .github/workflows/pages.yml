@@ -172,7 +172,7 @@ jobs:
           github.event.schedule == '37 11 * * *' || github.event_name == 'workflow_dispatch' ||
           (hashFiles('frontend/public/data/alpr/index.json') == '' && github.event.schedule != '*/15 * * * *')
         working-directory: backend
-        timeout-minutes: 10
+        timeout-minutes: 25 # the Overpass fallback is ~60 polite queries
         continue-on-error: true # the California file stays as the fallback
         run: uv run --locked python scripts/build_alpr_usa.py
       - name: Save hourly/daily layers

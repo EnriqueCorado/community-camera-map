@@ -1,8 +1,9 @@
 """Nationwide license plate readers, split into tiles the map loads by view.
 
 Source: DeFlock's processed OpenStreetMap export (cdn.deflock.me, the data
-behind deflock.me; OSM data, ODbL). Its CDN only allows deflock.me in
-browsers, so we fetch it here (once a day in CI) and publish our own tiles:
+behind deflock.me; OSM data, ODbL), or, where that CDN refuses the network
+(it blocks CI runners), the same OSM nodes from Overpass. Its CDN only allows
+deflock.me in browsers, so we fetch here (once a day in CI) and publish tiles:
 
   frontend/public/data/alpr/index.json      {cell_deg, cells: {"35_-125": n}, total, updated}
   frontend/public/data/alpr/<lat>_<lon>.geojson   one 5-degree cell (SW corner)
@@ -19,8 +20,10 @@ from __future__ import annotations
 import datetime as dt
 import json
 import math
+import re
 import shutil
 import sys
+import time
 from collections import defaultdict
 from pathlib import Path
 
@@ -174,24 +177,72 @@ def build(nodes: list[dict], extras: dict[int, dict], out: Path, min_readers: in
     return index
 
 
+def from_deflock(client: httpx.Client) -> list[dict]:
+    """DeFlock's processed export (fast: ~10 big files). Raises if any fails."""
+    ix = json.loads(get_capped(client, INDEX))
+    size = int(ix["tile_size_degrees"])
+    template = str(ix["tile_url"])
+    if "{lat}/{lon}" not in template:
+        raise SystemExit(f"unexpected tile URL: {template}")
+    available = set(ix.get("regions", []))
+    nodes: list[dict] = []
+    for key in tiles_needed(size):
+        if key not in available:
+            continue
+        # Any failure aborts: a partial country must never replace good tiles.
+        data = json.loads(get_capped(client, template.replace("{lat}/{lon}", key)))
+        if not isinstance(data, list):
+            raise SystemExit(f"{key}: not a list")
+        nodes.extend(n for n in data if isinstance(n, dict))
+        print(f"  deflock {key}: {len(data)} nodes")
+    return nodes
+
+
+OVERPASS = (
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
+    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+)
+
+
+def from_overpass(client: httpx.Client) -> list[dict]:
+    """The same OpenStreetMap data straight from Overpass, one 5-degree cell at
+    a time, politely spaced (DeFlock's CDN refuses some networks, e.g. CI)."""
+    nodes: list[dict] = []
+    for key in tiles_needed(CELL):
+        s, w = (int(x) for x in key.split("/"))
+        q = (
+            f'[out:json][timeout:180];node["surveillance:type"="ALPR"]'
+            f"({s},{w},{s + CELL},{w + CELL});out tags;"
+        )
+        for attempt in range(len(OVERPASS) * 2):
+            url = OVERPASS[attempt % len(OVERPASS)]
+            try:
+                r = client.post(url, data={"data": q}, timeout=240)
+                body = r.json() if r.status_code == 200 else None
+            except (httpx.HTTPError, ValueError):
+                body = None
+            remark = str((body or {}).get("remark", ""))
+            if body is not None and not re.search(r"error|timed out|runtime", remark, re.I):
+                els = [e for e in body.get("elements", []) if isinstance(e, dict)]
+                nodes.extend(els)
+                if els:
+                    print(f"  overpass {key}: {len(els)} nodes")
+                break
+            time.sleep(10)
+        else:
+            raise SystemExit(f"overpass {key}: every attempt failed")
+        time.sleep(2)  # be polite to the public servers
+    return nodes
+
+
 def main() -> int:
     with httpx.Client(timeout=120, headers={"User-Agent": UA}, follow_redirects=False) as client:
-        ix = json.loads(get_capped(client, INDEX))
-        size = int(ix["tile_size_degrees"])
-        template = str(ix["tile_url"])
-        if "{lat}/{lon}" not in template:
-            raise SystemExit(f"unexpected tile URL: {template}")
-        available = set(ix.get("regions", []))
-        nodes: list[dict] = []
-        for key in tiles_needed(size):
-            if key not in available:
-                continue
-            # Any failure aborts: a partial country must never replace good tiles.
-            data = json.loads(get_capped(client, template.replace("{lat}/{lon}", key)))
-            if not isinstance(data, list):
-                raise SystemExit(f"{key}: not a list")
-            nodes.extend(n for n in data if isinstance(n, dict))
-            print(f"  {key}: {len(data)} nodes")
+        try:
+            nodes = from_deflock(client)
+        except (httpx.HTTPError, SystemExit, ValueError) as exc:
+            print(f"  DeFlock CDN unavailable ({exc}); using Overpass")
+            nodes = from_overpass(client)
     index = build(nodes, ca_extras(), OUT, min_readers=MIN_READERS)
     print(f"alpr: {index['total']} readers in {len(index['cells'])} tiles")
     return 0
