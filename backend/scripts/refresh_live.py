@@ -44,7 +44,12 @@ FAST = (
     "message-signs",
     "streamflow",
 )
-HOURLY = ("fire-cameras", "smoke-haze", "river-cameras")  # haze reuses fire-cameras
+HOURLY = (
+    "fire-cameras",
+    "smoke-haze",
+    "river-cameras",
+    "fire-hotspots",
+)  # haze reuses fire-cameras
 
 
 async def main(names: tuple[str, ...]) -> int:
@@ -56,7 +61,7 @@ async def main(names: tuple[str, ...]) -> int:
     async with httpx.AsyncClient(
         timeout=60.0, headers={"User-Agent": "stanislaus-cam-map/refresh"}, follow_redirects=True
     ) as client:
-        layers = LayerService(settings=settings, client=client)
+        layers = LayerService(settings=settings, client=client, fallback_to_baked=False)
         for name in names:
             layer = next((x for x in layers.list_layers() if x.name == name), None)
             if layer is None or not layers.is_available(layer):

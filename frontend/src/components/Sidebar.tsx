@@ -4,6 +4,7 @@ import type { LayerInfo } from "../api/client";
 import { matchCamera, type LayerState } from "./MapView";
 import { CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS } from "../colors";
 import { downloadLayer, downloadCameras } from "../download";
+import { LIVE_SOURCES } from "../live-sources";
 import { useI18n, layerTitle, type Key } from "../i18n";
 
 export interface Coverage {
@@ -101,6 +102,11 @@ interface Props {
   bakedAt: string | null;
   liveAt: string | null;
   onAbout: () => void;
+  /** Whether the panel is shown; hidden panels stay mounted (scroll, state). */
+  open: boolean;
+  onHide: () => void;
+  /** Current map zoom (for "zoom in to see" hints). */
+  zoom: number;
 }
 
 export function Sidebar({
@@ -120,6 +126,9 @@ export function Sidebar({
   bakedAt,
   liveAt,
   onAbout,
+  open,
+  onHide,
+  zoom,
 }: Props) {
   const { lang, setLang, t, locale } = useI18n();
   const fmt = (n: number) => n.toLocaleString(locale);
@@ -163,21 +172,35 @@ export function Sidebar({
   const other = lang === "en" ? "es" : "en";
 
   return (
-    <aside className="sidebar">
+    <aside className="sidebar" id="sidebar" hidden={!open}>
       <div className="sidebar__head">
         <div className="sidebar__titlerow">
           <h1>
             {t("titleA")} <span>{t("titleB")}</span>
           </h1>
-          <button
-            type="button"
-            className="langbtn"
-            lang={other}
-            aria-label={t("langSwitchLabel")}
-            onClick={() => setLang(other)}
-          >
-            {t("langSwitch")}
-          </button>
+          <div className="sidebar__actions">
+            <button
+              type="button"
+              className="langbtn"
+              lang={other}
+              aria-label={t("langSwitchLabel")}
+              onClick={() => setLang(other)}
+            >
+              {t("langSwitch")}
+            </button>
+            <button
+              type="button"
+              id="panel-hide"
+              className="iconbtn"
+              aria-label={t("hidePanel")}
+              title={t("hidePanel")}
+              aria-controls="sidebar"
+              aria-expanded="true"
+              onClick={onHide}
+            >
+              <span aria-hidden="true">«</span>
+            </button>
+          </div>
         </div>
         <p className="sidebar__sub">{t("camerasStatewide", { n: fmt(cameras.length) })}</p>
         <div className="sidebar__meta">
@@ -266,9 +289,12 @@ export function Sidebar({
                 {!l.available && (
                   <span className="panel__note"> — {l.requires_key ? t("needsKey") : t("unavailable")}</span>
                 )}
+                {l.available && (layers.overlays[l.name] ?? false) && zoom < (LIVE_SOURCES[l.name]?.minZoom ?? 0) && (
+                  <span className="panel__note"> — {t("zoomInToSee")}</span>
+                )}
               </span>
             </label>
-            {(layers.overlays[l.name] ?? false) && l.category !== "raster" && (
+            {(layers.overlays[l.name] ?? false) && l.category !== "raster" && !LIVE_SOURCES[l.name] && (
               <button
                 type="button"
                 className="dl"

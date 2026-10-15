@@ -136,6 +136,8 @@ const OVERLAYS = [
   "River cameras",
   "Smoke & haze (experimental)",
   "Flights overhead",
+  "Satellite fire detections (24h)",
+  "Windy webcams",
 ];
 
 for (const label of OVERLAYS) {
@@ -178,6 +180,8 @@ for (const label of OVERLAYS) {
       "River cameras": "river-cameras",
       "Smoke & haze (experimental)": "smoke-haze",
       "Flights overhead": "flights",
+      "Satellite fire detections (24h)": "fire-hotspots",
+      "Windy webcams": "windy-webcams",
     }[label]!;
 
     const resp = page.waitForResponse(
@@ -307,6 +311,13 @@ test("satellite loads yesterday's NASA GIBS tiles, with attribution and no downl
 });
 
 test("Windy webcams show 'needs API key' until a key is configured", async ({ page }) => {
+  // Simulate a deployment without the key, whatever this machine's .env says.
+  await page.route("**/api/layers", async (route) => {
+    const res = await route.fetch();
+    const list = (await res.json()) as { name: string; available: boolean }[];
+    for (const l of list) if (l.name === "windy-webcams") l.available = false;
+    await route.fulfill({ response: res, json: list });
+  });
   await page.goto("/");
   await waitForMap(page);
   const row = page.locator(".layerrow", { hasText: "Windy webcams" });

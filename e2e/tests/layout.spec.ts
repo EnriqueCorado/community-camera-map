@@ -3,7 +3,7 @@ import { test, expect, type Page } from "@playwright/test";
 
 async function ready(page: Page) {
   await expect(page.locator("canvas.maplibregl-canvas")).toBeVisible({ timeout: 30_000 });
-  await expect(page.locator(".sidebar")).toBeVisible();
+  await expect(page.locator(".sidebar")).toBeAttached(); // may be minimized
 }
 
 const pageScroll = (page: Page) =>
@@ -161,4 +161,50 @@ test("Shift+Tab never leaves the focused control under the sticky header", async
     page.locator(".sidebar__head").evaluate((el) => el.getBoundingClientRect().bottom),
   ]);
   expect(focusTop).toBeGreaterThanOrEqual(headBottom);
+});
+
+test("the left panel can be minimized and brought back, and remembers", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  const mapWidth = () => page.locator("canvas.maplibregl-canvas").evaluate((c) => c.getBoundingClientRect().width);
+  const narrow = await mapWidth();
+
+  await page.getByRole("button", { name: "Hide panel" }).click();
+  await expect(page.locator("#sidebar")).toBeHidden();
+  const show = page.getByRole("button", { name: "Layers & search" });
+  await expect(show).toBeFocused(); // keyboard users land on the way back
+  await expect(show).toHaveAttribute("aria-expanded", "false");
+  await expect.poll(mapWidth).toBeGreaterThan(narrow + 200); // map takes the space
+
+  await page.reload();
+  await ready(page);
+  await expect(page.locator("#sidebar")).toBeHidden();
+
+  await page.getByRole("button", { name: "Layers & search" }).click();
+  await expect(page.locator("#sidebar")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Hide panel" })).toBeFocused();
+  await expect.poll(mapWidth).toBeLessThan(narrow + 5);
+});
+
+test("the skip link reopens a minimized panel and lands in search", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  await page.getByRole("button", { name: "Hide panel" }).click();
+  await page.locator(".skip-link").focus(); // first element in tab order
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#sidebar")).toBeVisible();
+  await expect(page.locator("#camera-search")).toBeFocused();
+});
+
+test.describe("phone, panel minimized", () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test("the map fills the whole screen", async ({ page }) => {
+    await page.goto("/");
+    await ready(page);
+    await page.getByRole("button", { name: "Hide panel" }).click();
+    await expect
+      .poll(() => page.locator("canvas.maplibregl-canvas").evaluate((c) => c.getBoundingClientRect().height))
+      .toBeGreaterThan(800);
+  });
 });

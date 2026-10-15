@@ -59,7 +59,18 @@ SOURCES = {
     "fire-cameras": "ALERTCalifornia (UC San Diego) / ALERTWildfire, via Cal OES",
     "smoke-haze": "Computed from ALERTCalifornia | UC San Diego frames",
     "windy-webcams": "https://www.windy.com/webcams",
-    "flights": "https://adsb.fi (open data, ADS-B Exchange-style feed)",
+    "flights": "https://adsb.fi (open data, ADS-B Exchange-style feed); routes: adsbdb.com",
+    "fire-hotspots": "NASA FIRMS (VIIRS, public 24h file)",
+    "iss": "https://wheretheiss.at; space weather: NOAA SWPC",
+    "satellites": "https://celestrak.org (orbits) + satellite.js",
+    "trains": "https://amtraker.com (Amtrak data)",
+    "wildlife": "https://www.inaturalist.org",
+    "wikipedia": "https://www.wikipedia.org",
+    "weather-now": "https://open-meteo.com",
+    "aed": "OpenStreetMap (Overpass API)",
+    "drinking-water": "OpenStreetMap (Overpass API)",
+    "restrooms": "OpenStreetMap (Overpass API)",
+    "ev-chargers": "OpenStreetMap (Overpass API)",
     "rain-radar": "https://www.rainviewer.com",
     "satellite": "NASA EOSDIS GIBS / Worldview (VIIRS true color)",
     "river-cameras": "https://apps.usgs.gov/hivis (USGS)",
@@ -89,7 +100,7 @@ async def main() -> None:
         follow_redirects=True,
     ) as client:
         cams = CameraService(settings, client)
-        layers = LayerService(settings=settings, client=client)
+        layers = LayerService(settings=settings, client=client, fallback_to_baked=False)
 
         camera_list = await cams.list_cameras()
         payload = {
@@ -135,6 +146,8 @@ async def main() -> None:
                     else:
                         await asyncio.sleep(2)
             if body is None:
+                # Keep the last committed file rather than dropping the layer.
+                info["available"] = (OUT / "layers" / f"{layer.name}.geojson").is_file()
                 catalog.append(info)
                 continue
             (OUT / "layers" / f"{layer.name}.geojson").write_bytes(body)

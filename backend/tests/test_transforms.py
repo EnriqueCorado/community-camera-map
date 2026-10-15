@@ -273,3 +273,16 @@ def test_one_bad_record_never_breaks_the_layer():
     rows = [{"camId": "..", "stateAbrv": "CA", "lat": "38", "lng": "-121"},
             {"camId": "CA_Nan", "stateAbrv": "CA", "lat": "nan", "lng": "-121"}]
     assert transforms.usgs_cameras(rows)["features"] == []
+
+
+async def test_arcgis_error_payload_raises_instead_of_returning_empty():
+    import httpx
+
+    from app.layers import arcgis
+
+    def handler(request):
+        return httpx.Response(200, json={"error": {"code": 400, "message": "Invalid or missing input parameters."}})
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+        with pytest.raises(arcgis.ArcGISError):
+            await arcgis.fetch_layer(client, "https://example.test/arcgis/rest/services/x/MapServer/28")

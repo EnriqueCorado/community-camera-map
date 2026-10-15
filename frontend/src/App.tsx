@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useDeferredValue } from "react";
+import { useEffect, useMemo, useRef, useState, useDeferredValue } from "react";
 import { useCameras } from "./hooks/useCameras";
 import { useLayers } from "./hooks/useLayers";
 import { Sidebar, type Place } from "./components/Sidebar";
@@ -24,6 +24,16 @@ const INITIAL_LAYERS: LayerState = {
 
 type View = { center: [number, number]; zoom: number } | null;
 
+// Whether the left panel is shown (per-browser convenience; default open).
+const PANEL_KEY = "scm-panel";
+function readPanelOpen(): boolean {
+  try {
+    return localStorage.getItem(PANEL_KEY) !== "closed";
+  } catch {
+    return true;
+  }
+}
+
 export default function App() {
   const { t, lang } = useI18n();
   const state = useCameras();
@@ -37,6 +47,22 @@ export default function App() {
   const deferredQuery = useDeferredValue(query);
   const [view, setView] = useState<View>(initial.view);
   const [flyTo, setFlyTo] = useState<View>(null);
+  const [panelOpen, setPanelOpen] = useState(readPanelOpen);
+  const panelToggled = useRef(false);
+  const togglePanel = (open: boolean) => {
+    panelToggled.current = true;
+    setPanelOpen(open);
+    try {
+      localStorage.setItem(PANEL_KEY, open ? "open" : "closed");
+    } catch {
+      /* storage blocked: just don't remember */
+    }
+  };
+  // Keep keyboard focus on the control that brings the panel back (or hides it).
+  useEffect(() => {
+    if (!panelToggled.current) return;
+    document.getElementById(panelOpen ? "panel-hide" : "panel-show")?.focus();
+  }, [panelOpen]);
   const [coverage, setCoverage] = useState({ active: false, radiusM: 300 });
   const [coverageHits, setCoverageHits] = useState<number | null>(null);
   // Bumped to ask the map to run "what can see me?" at its center (keyboard path).
@@ -83,13 +109,19 @@ export default function App() {
   const jump = (p: Place) => setFlyTo({ center: p.center, zoom: p.zoom });
 
   return (
-    <div className="app">
+    <div className={`app${panelOpen ? "" : " app--panel-closed"}`}>
       {/* Moves focus without touching location.hash (which holds the shareable view). */}
       <a
         className="skip-link"
         href="#camera-search"
         onClick={(e) => {
           e.preventDefault();
+          if (!panelOpen) {
+            panelToggled.current = false; // focus goes to the search box instead
+            setPanelOpen(true);
+            window.setTimeout(() => document.getElementById("camera-search")?.focus(), 0);
+            return;
+          }
           document.getElementById("camera-search")?.focus();
         }}
       >
@@ -112,8 +144,23 @@ export default function App() {
         bakedAt={bakedAt}
         liveAt={liveAt}
         onAbout={() => setShowAbout(true)}
+        open={panelOpen}
+        zoom={view?.zoom ?? initial.view?.zoom ?? 5.4}
+        onHide={() => togglePanel(false)}
       />
       <main className="stage">
+        {!panelOpen && (
+          <button
+            type="button"
+            id="panel-show"
+            className="panel-show"
+            aria-controls="sidebar"
+            aria-expanded="false"
+            onClick={() => togglePanel(true)}
+          >
+            <span aria-hidden="true">☰</span> {t("showPanel")}
+          </button>
+        )}
         <MapView
           cameras={state.cameras}
           selectedId={selectedId}

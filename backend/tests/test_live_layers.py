@@ -187,3 +187,94 @@ def test_flight_layer_cache_header_follows_its_ttl():
         app.state.layer_service = Fake()
         assert c.get("/api/layers/flights").headers["cache-control"] == "max-age=15"
         assert c.get("/api/layers/zoning").headers["cache-control"] == "max-age=3600"
+
+
+def test_windy_drops_caltrans_relists():
+    def cam(title, lat, lon):
+        return {"title": title, "status": "active", "location": {"latitude": lat, "longitude": lon},
+                "urls": {"detail": "https://windy.com/webcams/9"}}
+    payload = {"webcams": [
+        cam("Modesto › South: 100 - SB SR 99 5th St", 37.63, -121.0),   # Caltrans title pattern
+        cam("Some overpass", 37.70, -121.10),                           # within 500 m of a known Caltrans cam
+        cam("Mount Hamilton: Lick Observatory", 37.34, -121.64),        # genuinely new
+    ]}
+    out = transforms.windy_webcams(payload, known=[(37.701, -121.101)])["features"]
+    assert [f["properties"]["name"] for f in out] == ["Mount Hamilton: Lick Observatory"]
+    assert out[0]["properties"]["page"] == "https://windy.com/webcams/9"
+
+
+# ---------- FIRMS + browser-live layers ----------
+
+FIRMS_CSV = """latitude,longitude,bright_ti4,scan,track,acq_date,acq_time,satellite,confidence,version,bright_ti5,frp,daynight
+37.5,-120.9,330.1,0.4,0.4,2026-10-13,0942,N,nominal,2.0NRT,290.0,4.65,N
+18.2,-70.4,338.7,0.4,0.37,2026-10-13,1813,N,high,2.0NRT,298.2,3.68,D
+bad,row,,,,,,,,,,,
+"""
+
+
+def test_firms_keeps_only_california_with_clean_fields():
+    from app.layers.service import CALIFORNIA_BBOX
+
+    out = transforms.firms_hotspots(FIRMS_CSV, CALIFORNIA_BBOX)["features"]
+    assert len(out) == 1
+    assert out[0]["properties"] == {
+        "acquired": "2026-10-13T09:42:00Z", "confidence": "nominal", "frp_mw": 4.65, "daynight": "night",
+    }
+
+
+BROWSER_LIVE = ["iss", "satellites", "trains", "wildlife", "wikipedia", "weather-now", "aed", "drinking-water", "restrooms", "ev-chargers"]
+
+
+@pytest.mark.parametrize("name", BROWSER_LIVE)
+async def test_browser_live_layers_are_available_but_serve_no_geojson(name):
+    svc = LayerService(settings=Settings(), client=None)  # type: ignore[arg-type]
+    assert LAYERS[name].client_side and svc.is_available(LAYERS[name])
+    with pytest.raises(KeyError):
+        await svc.get_bytes(name)
+
+
+async def test_failed_upstream_falls_back_to_the_baked_copy(tmp_path, monkeypatch):
+    import app.layers.service as svc_mod
+
+    (tmp_path / "zoning.geojson").write_bytes(b'{"type":"FeatureCollection","features":[{"x":1}]}')
+    monkeypatch.setattr(svc_mod, "BAKED_LAYERS", tmp_path)
+
+    async def boom(_c, _s):
+        raise RuntimeError("upstream down")
+
+    import dataclasses
+
+    monkeypatch.setitem(LAYERS, "zoning", dataclasses.replace(LAYERS["zoning"], loader=boom))
+    svc = LayerService(settings=Settings(), client=None)  # type: ignore[arg-type]
+    assert b'"x":1' in await svc.get_bytes("zoning")
+    # Live-only layers never fall back (their baked file is a placeholder).
+    (tmp_path / "flights.geojson").write_bytes(b'{"type":"FeatureCollection","features":[]}')
+    monkeypatch.setitem(LAYERS, "flights", dataclasses.replace(LAYERS["flights"], loader=boom))
+    with pytest.raises(RuntimeError):
+        await svc.get_bytes("flights")
+
+
+async def test_no_baked_fallback_for_missing_keys_or_when_disabled(tmp_path, monkeypatch):
+    import dataclasses
+
+    import app.layers.service as svc_mod
+    from app.layers.census import CensusKeyMissing
+
+    (tmp_path / "zoning.geojson").write_bytes(b'{"type":"FeatureCollection","features":[]}')
+    (tmp_path / "windy-webcams.geojson").write_bytes(b'{"type":"FeatureCollection","features":[]}')
+    monkeypatch.setattr(svc_mod, "BAKED_LAYERS", tmp_path)
+
+    async def boom(_c, _s):
+        raise RuntimeError("upstream down")
+
+    async def nokey(_c, _s):
+        raise CensusKeyMissing("Set CAM_WINDY_API_KEY")
+
+    monkeypatch.setitem(LAYERS, "zoning", dataclasses.replace(LAYERS["zoning"], loader=boom))
+    monkeypatch.setitem(LAYERS, "windy-webcams", dataclasses.replace(LAYERS["windy-webcams"], loader=nokey))
+    live = LayerService(settings=Settings(), client=None)  # type: ignore[arg-type]
+    with pytest.raises(CensusKeyMissing):
+        await live.get_bytes("windy-webcams")
+    baking = LayerService(settings=Settings(), client=None, fallback_to_baked=False)  # type: ignore[arg-type]
+    with pytest.raises(RuntimeError):
+        await baking.get_bytes("zoning")

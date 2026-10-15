@@ -137,6 +137,24 @@ Live & imagery layers:
 - **Windy webcams** need a free key (see below). Free-tier image links expire after 10 min, so
   popups link to Windy's live view instead of showing a stale still.
 
+**Browser-live layers** (`frontend/src/live-sources.ts`). These fetch straight from public,
+CORS-enabled APIs in the visitor's browser, so they're real-time even on the static site:
+
+| Layer | Source | Refresh |
+|---|---|---|
+| Space station (ISS), plus Kp and aurora odds | wheretheiss.at, NOAA SWPC | 5 s |
+| Satellites overhead (about 150 brightest) | CelesTrak orbits, computed in the browser with satellite.js (SGP4, lazy-loaded) | positions every 2 s |
+| Amtrak trains | Amtraker v3 | 60 s |
+| Wildlife sightings | iNaturalist (open geoprivacy only; photos only when CC-licensed, with credit) | on map move, zoom 9 and in |
+| Wikipedia places | MediaWiki geosearch (EN/ES) | on map move, zoom 10 and in |
+| Temperature & wind (5×5 grid) | Open-Meteo | on map move |
+| Defibrillators, drinking fountains, restrooms, EV chargers | OpenStreetMap via Overpass (retries when busy) | on map move, zoom 12 and in |
+
+Flight popups add **airline, origin and destination** from adsbdb.com, but only for airline
+callsigns (e.g. `UAL366`). Private tail numbers are never looked up. **Satellite fire
+detections** come from NASA FIRMS's public 24-hour VIIRS file and are refreshed hourly by CI.
+Popups say plainly that a detection is not a confirmed fire.
+
 **Keeping the public site live:** `.github/workflows/pages.yml` runs every 15 minutes. It calls
 `backend/scripts/refresh_live.py`, which re-fetches the keyless live layers (flights, fires,
 quakes, alerts, closures, signs, gauges; plus haze and webcam lists hourly) and then rebuilds

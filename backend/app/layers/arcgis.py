@@ -17,6 +17,11 @@ from ..core.http import fetch_capped
 
 logger = logging.getLogger(__name__)
 
+
+class ArcGISError(httpx.HTTPError):
+    """The server answered 200 with an ArcGIS error payload instead of data."""
+
+
 PAGE = 2000
 # ArcGIS editor-tracking fields name the staff who edited a record. The map never
 # needs them, and they can contain a person's work login — strip before serving.
@@ -74,6 +79,12 @@ async def fetch_layer(
         query = urlencode(params)
         body, _ = await fetch_capped(client, f"{service_url}/query?{query}", max_bytes=MAX_BYTES)
         page = json.loads(body)
+        # ArcGIS reports failures as HTTP 200 + {"error": {...}}. Treating that as
+        # "no features" would silently blank a layer (and a bake would ship it).
+        if not isinstance(page, dict) or "error" in page:
+            err = page.get("error") if isinstance(page, dict) else None
+            code = err.get("code", "?") if isinstance(err, dict) else "?"
+            raise ArcGISError(f"ArcGIS error {code}")
         batch = page.get("features", [])
         for feature in batch:
             props = feature.get("properties")

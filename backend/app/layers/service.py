@@ -103,6 +103,53 @@ def _arcgis_transform(
     return load
 
 
+CALIFORNIA_BBOX = (-124.5, 32.5, -114.1, 42.1)
+
+# Browser-live layers: (name, title, description, category).
+BROWSER_LIVE = (
+    ("iss", "Space station (ISS)", "Live position of the International Space Station.", "space"),
+    (
+        "satellites",
+        "Satellites overhead",
+        "The ~150 brightest satellites, computed live from CelesTrak orbits.",
+        "space",
+    ),
+    ("trains", "Amtrak trains", "Live Amtrak train positions (via Amtraker).", "train"),
+    (
+        "wildlife",
+        "Wildlife sightings",
+        "Recent iNaturalist observations where you're looking.",
+        "nature",
+    ),
+    (
+        "wikipedia",
+        "Wikipedia places",
+        "Wikipedia articles about places near the map's center.",
+        "wiki",
+    ),
+    (
+        "weather-now",
+        "Temperature & wind",
+        "Current conditions on a grid across the view (Open-Meteo).",
+        "weather-now",
+    ),
+    ("aed", "Defibrillators (AED)", "Public defibrillators mapped in OpenStreetMap.", "poi"),
+    ("drinking-water", "Drinking fountains", "Drinking water mapped in OpenStreetMap.", "poi"),
+    ("restrooms", "Public restrooms", "Public toilets mapped in OpenStreetMap.", "poi"),
+    ("ev-chargers", "EV chargers", "Electric-vehicle charging stations in OpenStreetMap.", "poi"),
+)
+
+
+def _text_transform(url: str, transform: Callable[[str], dict]) -> Loader:
+    """A text (e.g. CSV) source normalized to GeoJSON."""
+
+    async def load(client: httpx.AsyncClient, _s: Settings) -> dict:
+        body, _ = await fetch_capped(client, url, max_bytes=arcgis.MAX_BYTES)
+        return transform(body.decode("utf-8", errors="replace"))
+
+    return load
+
+
 def _json_transform(url: str, transform: Callable[[object], dict]) -> Loader:
     """A non-GeoJSON JSON source normalized to GeoJSON (Caltrans, USGS, NID)."""
 
@@ -115,7 +162,23 @@ def _json_transform(url: str, transform: Callable[[object], dict]) -> Loader:
 
 WINDY_URL = "https://api.windy.com/webcams/api/v3/webcams"
 WINDY_RADIUS_KM = 150  # around Modesto
-WINDY_MAX_PAGES = 10  # 50 per page
+WINDY_MAX_PAGES = 25  # 50 per page (~970 within 150 km, mostly Caltrans re-lists)
+# The baked Caltrans camera list, used to drop Windy's re-lists of them.
+BAKED_CAMERAS = Path(__file__).resolve().parents[3] / "frontend/public/data/cameras.json"
+
+
+# Baked static copies of each layer (fallback when an upstream is down).
+BAKED_LAYERS = BAKED_CAMERAS.parent / "layers"
+# Never fall back to these: the committed file is an empty placeholder.
+LIVE_ONLY = {"flights"}
+
+
+def _known_cameras() -> list[tuple[float, float]]:
+    try:
+        cams = json.loads(BAKED_CAMERAS.read_text()).get("cameras", [])
+        return [(float(c["latitude"]), float(c["longitude"])) for c in cams]
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return []  # title-pattern dedupe still applies
 
 
 async def _windy(client: httpx.AsyncClient, s: Settings) -> dict:
@@ -142,7 +205,7 @@ async def _windy(client: httpx.AsyncClient, s: Settings) -> dict:
         total = payload.get("total") if isinstance(payload, dict) else None
         if len(batch) < 50 or (isinstance(total, int) and len(rows) >= total):
             break
-    return transforms.windy_webcams({"webcams": rows})
+    return transforms.windy_webcams({"webcams": rows}, known=_known_cameras())
 
 
 
@@ -522,6 +585,24 @@ LAYERS: dict[str, Layer] = {
         category="raster",
         client_side=True,
     ),
+    "fire-hotspots": Layer(
+        name="fire-hotspots",
+        title="Satellite fire detections (24h)",
+        description="NASA FIRMS VIIRS heat detections in California over the last 24 hours.",
+        category="hotspot",
+        loader=_text_transform(
+            "https://firms.modaps.eosdis.nasa.gov/data/active_fire/suomi-npp-viirs-c2/csv/"
+            "SUOMI_VIIRS_C2_USA_contiguous_and_Hawaii_24h.csv",
+            lambda text: transforms.firms_hotspots(text, CALIFORNIA_BBOX),
+        ),
+        ttl=3600,
+    ),
+    # --- Browser-live layers: fetched straight from public APIs in the browser
+    # (see frontend/src/live-sources.ts); nothing to bake. ---
+    **{
+        name: Layer(name=name, title=title, description=desc, category=cat, client_side=True)
+        for name, title, desc, cat in BROWSER_LIVE
+    },
     "river-cameras": Layer(
         name="river-cameras",
         title="River cameras",
@@ -546,6 +627,9 @@ class _Entry:
 class LayerService:
     settings: Settings
     client: httpx.AsyncClient
+    # Serve the last baked copy when an upstream is down (live API only; the
+    # bake/refresh scripts turn this off so failures stay visible to them).
+    fallback_to_baked: bool = True
     _cache: dict[str, _Entry] = field(default_factory=dict)
     _locks: dict[str, asyncio.Lock] = field(default_factory=dict)
 
@@ -601,6 +685,8 @@ class LayerService:
                 else:
                     assert layer.loader is not None
                     data = await layer.loader(self.client, self.settings)
+            except census.CensusKeyMissing:
+                raise  # "needs a key" must stay a 503, never stale data
             except Exception as exc:
                 # Log only the exception TYPE, never the exception message: for
                 # keyed upstreams (AirNow/Census) httpx embeds the full request
@@ -612,6 +698,17 @@ class LayerService:
                         type(exc).__name__,
                     )
                     return entry.body
+                baked = BAKED_LAYERS / f"{name}.geojson"
+                if self.fallback_to_baked and name not in LIVE_ONLY and baked.is_file():
+                    logger.warning(
+                        "Layer %s fetch failed (%s); serving the baked copy",
+                        name,
+                        type(exc).__name__,
+                    )
+                    body = baked.read_bytes()
+                    # Cache briefly so requests don't queue behind a dead upstream.
+                    self._cache[name] = _Entry(body=body, fetched_at=time.monotonic() - ttl + 60)
+                    return body
                 raise
             body = json.dumps(data, separators=(",", ":")).encode()
             self._cache[name] = _Entry(body=body, fetched_at=time.monotonic())

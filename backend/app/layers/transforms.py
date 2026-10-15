@@ -6,6 +6,8 @@ without network access.
 
 from __future__ import annotations
 
+import csv
+import io
 import math
 import re
 from urllib.parse import urlparse, urlunparse
@@ -160,6 +162,7 @@ WEBCAM_PAGE_HOSTS = (
     "www.alertwildfire.org",
     "alertwildfire.org",
     "apps.usgs.gov",
+    "windy.com",
     "www.windy.com",
     "webcams.windy.com",
 )
@@ -257,13 +260,21 @@ def usgs_cameras(payload: object) -> dict:
     return _fc(feats)
 
 
-def windy_webcams(payload: object) -> dict:
+# Windy re-lists most Caltrans cameras ("Modesto › South: 100 - SB SR 99 5th St").
+_CALTRANS_TITLE = re.compile(r":\s*\d+\s*-\s*(NB|SB|EB|WB|[NSEW]/O)\b", re.I)
+_DUP_DEG = 0.005  # ~500 m
+
+
+def windy_webcams(payload: object, known: list[tuple[float, float]] | None = None) -> dict:
     """Windy Webcams API v3 `/webcams` response -> points.
 
     Free-tier image URLs expire after 10 minutes, so we keep only the stable
-    page/player links; the popup links out to Windy's live view.
+    page/player links; the popup links out to Windy's live view. Re-listed
+    Caltrans cameras (by title pattern, or within ~500 m of a `known` camera
+    as (lat, lon)) are dropped — they're already on the map.
     """
     rows = payload.get("webcams", []) if isinstance(payload, dict) else []
+    known = known or []
     feats = []
     for w in rows:
         if not isinstance(w, dict) or str(w.get("status", "active")) != "active":
@@ -271,6 +282,10 @@ def windy_webcams(payload: object) -> dict:
         loc = w.get("location") or {}
         lat, lon = _num(loc.get("latitude")), _num(loc.get("longitude"))
         if lat is None or lon is None:
+            continue
+        if _CALTRANS_TITLE.search(str(w.get("title") or "")) or any(
+            abs(lat - k_lat) < _DUP_DEG and abs(lon - k_lon) < _DUP_DEG for k_lat, k_lon in known
+        ):
             continue
         urls = w.get("urls") or {}
         player = w.get("player") or {}
@@ -347,3 +362,29 @@ def adsb_flights(payload: object) -> dict:
     if now is not None:
         fc["generated_at"] = now
     return fc
+
+
+def firms_hotspots(csv_text: str, bbox: tuple[float, float, float, float]) -> dict:
+    """NASA FIRMS VIIRS active-fire CSV (public 24 h file) -> points in `bbox`
+    (west, south, east, north). These are satellite heat detections, not
+    confirmed fires."""
+    w, s_, e, n = bbox
+    feats = []
+    for row in csv.DictReader(io.StringIO(csv_text)):
+        lat, lon = _num(row.get("latitude")), _num(row.get("longitude"))
+        if lat is None or lon is None or not (w <= lon <= e and s_ <= lat <= n):
+            continue
+        t = str(row.get("acq_time") or "").zfill(4)
+        feats.append(
+            _pt(
+                lon,
+                lat,
+                {
+                    "acquired": f"{row.get('acq_date', '')}T{t[:2]}:{t[2:]}:00Z",
+                    "confidence": str(row.get("confidence") or ""),
+                    "frp_mw": _num(row.get("frp")),
+                    "daynight": "day" if row.get("daynight") == "D" else "night",
+                },
+            )
+        )
+    return _fc(feats)

@@ -47,15 +47,29 @@ export function tidy(s: string): string {
 }
 
 
-/** Hosts whose camera images / viewer pages popups may show (mirrors the backend allowlist). */
-export const WEBCAM_IMAGE_HOSTS = ["cameras.alertcalifornia.org", "usgs-nims-images.s3.amazonaws.com"];
+/** Hosts whose images / pages popups may show. The webcam hosts mirror the
+ *  backend allowlist in transforms.py; the rest are browser-live sources. */
+export const WEBCAM_IMAGE_HOSTS = [
+  "cameras.alertcalifornia.org",
+  "usgs-nims-images.s3.amazonaws.com",
+  "inaturalist-open-data.s3.amazonaws.com",
+  "static.inaturalist.org",
+];
 export const WEBCAM_PAGE_HOSTS = [
   "cameras.alertcalifornia.org",
   "alertwildfire.org",
   "www.alertwildfire.org",
   "apps.usgs.gov",
+  "windy.com",
   "www.windy.com",
   "webcams.windy.com",
+  // Source pages for the other layers' "view on …" links.
+  "spotthestation.nasa.gov",
+  "celestrak.org",
+  "www.inaturalist.org",
+  "en.wikipedia.org",
+  "es.wikipedia.org",
+  "www.openstreetmap.org",
 ];
 
 /** `u` if it's an https URL on one of `hosts`, else null. Never trust data-supplied URLs. */

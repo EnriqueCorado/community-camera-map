@@ -22,6 +22,8 @@ import {
 } from "../popup-logic";
 import { attribute, BASIS_KEY, describe, formatRecordDate, type AlprAccess, type Attribution } from "../alpr-access";
 import { deadReckon, gibsSatelliteUrl, RAINVIEWER_URL, radarFrames } from "../live";
+import { auroraChance, isAirlineCallsign, parseRoute, type FlightRoute } from "../live-parsers";
+import { LIVE_SOURCES, type LiveCtx } from "../live-sources";
 import { CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS } from "../colors";
 
 export interface LayerState {
@@ -115,6 +117,8 @@ export function MapView({
   const onCoverageResultRef = useRef(onCoverageResult);
   onCoverageResultRef.current = onCoverageResult;
   const alprDataRef = useRef<GeoJSON.FeatureCollection | null>(null);
+  // Running browser-live layers -> their stop() functions.
+  const liveRef = useRef(new Map<string, () => void>());
   const onAlprAccessRef = useRef(onAlprAccess);
   onAlprAccessRef.current = onAlprAccess;
   // "Who can search it" profiles, for synchronous popup rendering.
@@ -435,6 +439,18 @@ export function MapView({
     for (const info of overlayInfos) {
       if (info.name === "alpr") continue; // ALPR has its own clustered handling
       if (info.name === "rain-radar") continue; // animated: its own effect below
+      if (LIVE_SOURCES[info.name]) {
+        const on = layers.overlays[info.name] ?? false;
+        const running = liveRef.current.get(info.name);
+        if (on && !running && info.available) {
+          liveRef.current.set(info.name, startLive(map, info, () => i18nRef.current));
+        } else if (!on && running) {
+          running();
+          liveRef.current.delete(info.name);
+          setOverlayVisible(map, info.name, false);
+        }
+        continue;
+      }
       const on = layers.overlays[info.name] ?? false;
       const loaded = overlaysLoadedRef.current.has(info.name);
 
@@ -580,6 +596,28 @@ export function MapView({
     };
   }, [rainOn, ready]);
 
+  // Language-dependent live layers (Wikipedia, iNaturalist) reload on switch.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready) return;
+    for (const info of overlayInfos) {
+      const stop = liveRef.current.get(info.name);
+      if (!stop || !LIVE_SOURCES[info.name]?.langSensitive) continue;
+      stop();
+      liveRef.current.set(info.name, startLive(map, info, () => i18nRef.current));
+    }
+    // Deliberately keyed on language only.
+  }, [lang]);
+
+  // Stop every browser-live layer on unmount.
+  useEffect(() => {
+    const live = liveRef.current;
+    return () => {
+      for (const stop of live.values()) stop();
+      live.clear();
+    };
+  }, []);
+
   // --- Coverage mode: crosshair cursor on, and clear markers when switched off. ---
   useEffect(() => {
     const map = mapRef.current;
@@ -682,6 +720,17 @@ function applyVisibility(map: maplibregl.Map, layers: LayerState) {
 // stay on top. Polygons render as a faint fill + outline; census is a choropleth.
 const OVERLAY_SUFFIXES = ["-fill", "-line", "-circle", "-label", "-raster"];
 
+/** Categories always drawn as points, even when the data is momentarily empty. */
+const POINT_CATEGORIES = new Set(["flight", "haze", "webcam", "space", "train", "nature", "wiki", "weather-now", "poi", "hotspot"]);
+
+/** Map text labels per category: which property, from which zoom. */
+const LABELS: Record<string, { field: string; minzoom: number }> = {
+  flight: { field: "callsign", minzoom: 9 },
+  "weather-now": { field: "label", minzoom: 0 },
+  space: { field: "label", minzoom: 4 },
+  train: { field: "label", minzoom: 8 },
+};
+
 /** Haze level -> dot color (green = clear … red = very hazy). */
 const HAZE_COLORS: [string, string][] = [
   ["clear", "#16a34a"],
@@ -726,6 +775,83 @@ function addRaster(map: maplibregl.Map, name: string, r: RasterSpec) {
   );
 }
 
+const EMPTY_FC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
+
+/** Run a browser-live layer: load now, refresh on its schedule (and when the
+ *  map stops moving, for view-based sources), tick locally if it can. Returns
+ *  stop(). Network failures keep the last good data. */
+function startLive(map: maplibregl.Map, info: LayerInfo, getI18n: () => I18nState): () => void {
+  const source = LIVE_SOURCES[info.name]!;
+  const src = `ov-${info.name}`;
+  let ctrl: AbortController | null = null;
+  let stopped = false;
+  let lastOk = 0;
+  // Re-enabled after being off: show what we had while the reload runs.
+  if (map.getSource(src)) setOverlayVisible(map, info.name, true);
+  const apply = (data: GeoJSON.FeatureCollection) => {
+    if (stopped) return;
+    const s = map.getSource(src) as GeoJSONSource | undefined;
+    if (s) s.setData(data);
+    else addOverlay(map, info, data, getI18n);
+    setOverlayVisible(map, info.name, true);
+  };
+  const run = async () => {
+    if (document.hidden) return;
+    ctrl?.abort();
+    ctrl = new AbortController();
+    const b = map.getBounds();
+    const c = map.getCenter();
+    // Round what we send to third parties (~100 m): enough for "what's here",
+    // without sharing the visitor's exact view.
+    const r3 = (v: number) => Math.round(v * 1000) / 1000;
+    const ctx: LiveCtx = {
+      bbox: [r3(b.getWest()), r3(b.getSouth()), r3(b.getEast()), r3(b.getNorth())],
+      center: [r3(c.lng), r3(c.lat)],
+      zoom: map.getZoom(),
+      lang: getI18n().lang,
+      signal: ctrl.signal,
+    };
+    if (source.minZoom != null && ctx.zoom < source.minZoom) return apply(EMPTY_FC);
+    try {
+      apply(await source.load(ctx));
+      lastOk = Date.now();
+    } catch {
+      /* aborted or upstream hiccup: keep the last good data */
+    }
+  };
+  void run();
+  const timers = [window.setInterval(() => void run(), source.refreshMs)];
+  if (source.tick && source.tickMs) {
+    // Reduced motion: update less often rather than freezing (satellites move fast).
+    const every = prefersReducedMotion() ? Math.max(30_000, source.tickMs) : source.tickMs;
+    timers.push(
+      window.setInterval(() => {
+        const d = !document.hidden && source.tick!();
+        if (d) apply(d);
+      }, every),
+    );
+  }
+  // Started (or left) in a background tab: catch up as soon as it's visible.
+  const onVisible = () => {
+    if (!document.hidden && Date.now() - lastOk > Math.min(source.refreshMs, 60_000)) void run();
+  };
+  document.addEventListener("visibilitychange", onVisible);
+  let debounce: number | undefined;
+  const onMove = () => {
+    window.clearTimeout(debounce);
+    debounce = window.setTimeout(() => void run(), 800);
+  };
+  if (source.byView) map.on("moveend", onMove);
+  return () => {
+    stopped = true;
+    ctrl?.abort();
+    timers.forEach((id) => window.clearInterval(id));
+    window.clearTimeout(debounce);
+    document.removeEventListener("visibilitychange", onVisible);
+    if (source.byView) map.off("moveend", onMove);
+  };
+}
+
 function firstGeometryType(data: GeoJSON.FeatureCollection): string {
   return data.features.find((f) => f.geometry)?.geometry?.type ?? "Polygon";
 }
@@ -745,7 +871,7 @@ function addOverlay(
   const accent = OVERLAY_COLOR[info.name] ?? "#64748b";
   const geomType = firstGeometryType(data);
   // Live point layers can legitimately be empty (e.g. no flights right now).
-  const isPoint = geomType.includes("Point") || ["flight", "haze", "webcam"].includes(info.category);
+  const isPoint = geomType.includes("Point") || POINT_CATEGORIES.has(info.category);
 
   const bindPopup = (layerId: string) => {
     map.on("click", layerId, (e: LayerMouseEvent) => {
@@ -753,7 +879,8 @@ function addOverlay(
       const feats = (e.features ?? []).map((f) => f.properties ?? {});
       const spec =
         info.category === "webcam" ? webcamPopup(info, feats, i18n) : overlayPopup(info, feats[0] ?? {}, i18n);
-      openPopup(map, e.lngLat, popupHtml(spec), i18n.t);
+      const popup = openPopup(map, e.lngLat, popupHtml(spec), i18n.t);
+      if (info.category === "flight") void addFlightRoute(popup, String(feats[0]?.callsign ?? ""), i18n.t);
     });
     map.on("mouseenter", layerId, () => (map.getCanvas().style.cursor = "pointer"));
     map.on("mouseleave", layerId, () => (map.getCanvas().style.cursor = ""));
@@ -764,7 +891,13 @@ function addOverlay(
     const radius: maplibregl.ExpressionSpecification | number =
       info.category === "quake"
         ? ["interpolate", ["linear"], ["coalesce", ["get", "mag"], 1], 1, 3, 6, 16]
-        : 6;
+        : info.name === "iss"
+          ? 9
+          : info.category === "hotspot"
+            ? ["interpolate", ["linear"], ["coalesce", ["get", "frp_mw"], 1], 1, 4, 100, 12]
+            : info.category === "weather-now"
+              ? 10
+              : 6;
     const color: maplibregl.ExpressionSpecification | string =
       info.category === "haze"
         ? (["match", ["get", "level"], ...HAZE_COLORS.flat(), "#94a3b8"] as unknown as maplibregl.ExpressionSpecification)
@@ -775,7 +908,9 @@ function addOverlay(
               "#94a3b8",
               ["interpolate", ["linear"], ["coalesce", ["get", "alt_ft"], 0], 0, "#06b6d4", 10000, "#3b82f6", 35000, "#7c3aed"],
             ]
-          : accent;
+          : info.category === "weather-now"
+            ? ["interpolate", ["linear"], ["coalesce", ["get", "temp_f"], 60], 30, "#2563eb", 60, "#16a34a", 80, "#eab308", 100, "#dc2626"]
+            : accent;
     map.addLayer(
       {
         id: `${src}-circle`,
@@ -793,16 +928,17 @@ function addOverlay(
       beforeId,
     );
     bindPopup(`${src}-circle`);
-    if (info.category === "flight") {
+    const label = LABELS[info.category];
+    if (label) {
       map.addLayer(
         {
           id: `${src}-label`,
           type: "symbol",
           source: src,
-          minzoom: 9,
+          minzoom: label.minzoom,
           layout: {
             visibility: "none",
-            "text-field": ["get", "callsign"],
+            "text-field": ["get", label.field],
             "text-font": LABEL_FONT,
             "text-size": 11,
             "text-offset": [0, 1.1],
@@ -924,6 +1060,45 @@ function openPopup(
   if (onAction) {
     popup.getElement()?.querySelector("[data-popup-action]")?.addEventListener("click", onAction);
   }
+  return popup;
+}
+
+const ROUTES = new Map<string, Promise<FlightRoute | null>>();
+
+/** Add "From → To" to an open flight popup (airline callsigns only — never
+ *  private tail numbers). Text is set via textContent, never as HTML. */
+async function addFlightRoute(popup: maplibregl.Popup, callsign: string, t: TFn) {
+  const cs = callsign.trim().toUpperCase();
+  if (!isAirlineCallsign(cs)) return;
+  if (!ROUTES.has(cs)) {
+    if (ROUTES.size > 300) ROUTES.clear();
+    ROUTES.set(
+      cs,
+      fetch(`https://api.adsbdb.com/v0/callsign/${encodeURIComponent(cs)}`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then(parseRoute)
+        .catch(() => {
+          ROUTES.delete(cs); // a network blip shouldn't disable this route for the session
+          return null;
+        }),
+    );
+  }
+  const route = await ROUTES.get(cs);
+  const rows = popup.getElement()?.querySelector(".popup__rows");
+  if (!route || !rows || !popup.isOpen()) return;
+  const add = (k: string, v: string) => {
+    if (!v) return;
+    const row = document.createElement("div");
+    row.className = "popup__row";
+    const dt = document.createElement("dt");
+    dt.textContent = k;
+    const dd = document.createElement("dd");
+    dd.textContent = v;
+    row.append(dt, dd);
+    rows.prepend(row);
+  };
+  add(t("rowRoute"), `${route.from} → ${route.to}`);
+  add(t("rowAirline"), route.airline);
 }
 
 interface PopupSpec {
@@ -946,6 +1121,8 @@ interface PopupSpec {
     /** Screen-reader note that the link opens a new tab. */
     newTab: string;
   }[];
+  /** Link to the source's own page (re-validated against the allowlist). */
+  link?: { href: string; label: string };
   /** Extra block under the rows, e.g. "Who can search it". All plain text. */
   section?: {
     heading: string;
@@ -976,8 +1153,18 @@ function popupHtml(s: PopupSpec): string {
     `<div class="popup__title">${escapeHtml(s.title)}</div>` +
     (s.cameras ?? []).map(cameraHtml).join("") +
     (rows ? `<dl class="popup__rows">${rows}</dl>` : "") +
+    linkHtml(s.link) +
     (s.section ? sectionHtml(s.section) : "") +
     `</div>`
+  );
+}
+
+function linkHtml(link: PopupSpec["link"]): string {
+  const href = link && safeUrl(link.href, WEBCAM_PAGE_HOSTS);
+  if (!link || !href) return "";
+  return (
+    `<a class="popup__link" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">` +
+    `${escapeHtml(link.label)} <span aria-hidden="true">↗</span></a>`
   );
 }
 
@@ -1091,6 +1278,24 @@ function facing(dir: unknown, t: TFn): string {
     .join(", ");
 }
 
+const POI_KEYS: Record<string, Parameters<TFn>[0]> = {
+  aed: "poiAed",
+  "drinking-water": "poiWater",
+  restrooms: "poiToilets",
+  "ev-chargers": "poiCharger",
+};
+
+const COMPASS_8: Record<Lang, string[]> = {
+  en: ["N", "NE", "E", "SE", "S", "SW", "W", "NW"],
+  es: ["N", "NE", "E", "SE", "S", "SO", "O", "NO"],
+};
+
+/** Degrees -> 8-point compass label ("from" direction for wind). */
+function compass(deg: number | null, lang: Lang): string {
+  if (deg == null) return "";
+  return COMPASS_8[lang][Math.round((((deg % 360) + 360) % 360) / 45) % 8]!;
+}
+
 const HAZE_KEYS: Record<string, Parameters<TFn>[0]> = {
   clear: "hazeClear",
   "slightly-hazy": "hazeSlight",
@@ -1116,7 +1321,108 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
   };
   const base = { kind, color };
 
+  // Live sources are already properly cased ("ISS (ZARYA)", species names):
+  // show them as-is, unlike the ALL-CAPS GIS fields tidy() is for.
+  const raw = (v: unknown) => (v == null ? "" : String(v).trim());
+  const yn = (v: unknown) => (v === "yes" ? t("ynYes") : v === "no" ? t("ynNo") : raw(v));
+  const kmMi = (km: unknown) => (num(km) != null ? t("kmMi", { km: fmt(km), mi: fmt(Math.round(num(km)! * 0.6214)) }) : "");
   switch (info.category) {
+    case "space": {
+      const isIss = info.name === "iss";
+      const kp = num(p.kp);
+      const aurora = auroraChance(kp);
+      return {
+        ...base,
+        title: raw(p.name) || kind,
+        rows: [
+          [t("rowAltitude"), kmMi(p.alt_km)],
+          [t("rowSpeed"), num(p.speed_kmh) != null ? t("kmhMph", { kmh: fmt(p.speed_kmh), mph: fmt(Math.round(num(p.speed_kmh)! * 0.6214)) }) : ""],
+          [t("rowLight"), isIss ? t(p.sunlit === true ? "sunlit" : "inShadow") : ""],
+          [t("rowKp"), kp != null ? t("kpValue", { n: kp.toFixed(1) }) : ""],
+          [t("rowAurora"), aurora ? t(aurora === "possible" ? "auroraPossible" : aurora === "unlikely" ? "auroraUnlikely" : "auroraNone") : ""],
+        ],
+        link: isIss
+          ? { href: "https://spotthestation.nasa.gov/", label: t("spotStation") }
+          : num(p.norad) != null
+            ? { href: `https://celestrak.org/satcat/table-satcat.php?CATNR=${num(p.norad)}`, label: t("satDetails") }
+            : undefined,
+      };
+    }
+    case "train":
+      return {
+        ...base,
+        title: [raw(p.route), raw(p.number)].filter(Boolean).join(" ") || kind,
+        rows: [
+          [t("rowFromTo"), p.from && p.to ? `${raw(p.from)} → ${raw(p.to)}` : ""],
+          [t("rowNextStop"), raw(p.next)],
+          [t("rowSpeed"), num(p.speed_mph) != null ? t("mph", { n: fmt(p.speed_mph) }) : ""],
+          [t("rowStatus"), raw(p.status)],
+        ],
+      };
+    case "nature": {
+      const name = raw(p.name) || kind;
+      return {
+        ...base,
+        title: name,
+        cameras: p.photo
+          ? [{ name, src: String(p.photo), alt: name, credit: raw(p.photo_credit), linkLabel: "", newTab: t("opensNewTab") }]
+          : undefined,
+        rows: [
+          [t("rowScientific"), raw(p.scientific) !== name ? raw(p.scientific) : ""],
+          [t("rowObserved"), raw(p.observed)],
+        ],
+        link: p.page ? { href: String(p.page), label: t("viewINat") } : undefined,
+      };
+    }
+    case "wiki":
+      return {
+        ...base,
+        title: raw(p.name) || kind,
+        rows: [[t("rowDistance"), num(p.dist_m) != null ? t("meters", { n: fmt(Math.round(num(p.dist_m)!)) }) : ""]],
+        link: p.page ? { href: String(p.page), label: t("readWiki") } : undefined,
+      };
+    case "weather-now": {
+      const mph = num(p.wind_mph);
+      return {
+        ...base,
+        title: num(p.temp_f) != null ? t("tempF", { n: fmt(p.temp_f) }) : kind,
+        rows: [
+          [t("rowWind"), mph == null ? "" : mph < 1 ? t("calm") : t("windFrom", { mph: fmt(mph), dir: compass(num(p.wind_from), lang) })],
+          [t("rowHumidity"), num(p.humidity) != null ? `${fmt(p.humidity)}%` : ""],
+        ],
+      };
+    }
+    case "poi":
+      return {
+        ...base,
+        title: raw(p.name) || t(POI_KEYS[info.name] ?? "unavailable"),
+        rows: [
+          [t("rowType"), p.name ? t(POI_KEYS[info.name] ?? "unavailable") : ""],
+          [t("rowAccess"), yn(p.access)],
+          [t("rowHours"), raw(p.hours)],
+          [t("rowFee"), yn(p.fee)],
+          [t("rowWheelchair"), yn(p.wheelchair)],
+          [t("rowIndoor"), p.indoor === true ? t("ynYes") : ""],
+          [t("rowCapacity"), num(p.capacity) != null ? fmt(p.capacity) : ""],
+          [t("rowSockets"), raw(p.sockets)],
+        ],
+        link: p.page ? { href: String(p.page), label: t("viewOSM") } : undefined,
+      };
+    case "hotspot": {
+      const when = typeof p.acquired === "string" ? new Date(p.acquired) : null;
+      const conf = raw(p.confidence);
+      return {
+        ...base,
+        title: t("hotspotTitle"),
+        rows: [
+          [t("rowDetected"), when && !Number.isNaN(when.getTime()) ? when.toLocaleString(locale) : ""],
+          [t("rowConfidence"), conf === "high" ? t("confHigh") : conf === "low" ? t("confLow") : conf ? t("confMedium") : ""],
+          [t("rowPower"), num(p.frp_mw) != null ? t("mw", { n: fmt(p.frp_mw) }) : ""],
+          [t("rowPass"), p.daynight === "night" ? t("passNight") : p.daynight === "day" ? t("passDay") : ""],
+          [t("rowNote"), t("hotspotNote")],
+        ],
+      };
+    }
     case "flight": {
       const onGround = p.on_ground === true;
       return {
