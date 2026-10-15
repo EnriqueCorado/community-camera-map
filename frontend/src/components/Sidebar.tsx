@@ -1,10 +1,12 @@
-import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Camera } from "../types";
-import type { LayerInfo } from "../api/client";
+import { api, type LayerInfo } from "../api/client";
+import { ago } from "../freshness";
 import { matchCamera, type LayerState } from "./MapView";
 import { CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS } from "../colors";
 import { downloadLayer, downloadCameras } from "../download";
 import { LIVE_SOURCES } from "../live-sources";
+import { covers } from "../view-logic";
 import { useI18n, layerTitle, type Key } from "../i18n";
 
 export interface Coverage {
@@ -141,7 +143,16 @@ interface Props {
   onHide: () => void;
   /** Current map zoom (for "zoom in to see" hints). */
   zoom: number;
+  /** Map center [lon, lat], for "no data here" notes. */
+  center: [number, number];
 }
+
+/** "No data here" note per coverage. */
+const ONLY_KEY: Record<string, Key> = {
+  stanislaus: "onlyStanislaus",
+  california: "onlyCalifornia",
+  usa: "onlyUSA",
+};
 
 export function Sidebar({
   cameras,
@@ -163,8 +174,33 @@ export function Sidebar({
   open,
   onHide,
   zoom,
+  center,
 }: Props) {
   const { lang, setLang, t, locale } = useI18n();
+  // When each server-fetched layer was last refreshed (re-read every 5 min).
+  const [times, setTimes] = useState<Record<string, number>>({});
+  useEffect(() => {
+    let alive = true;
+    const load = () => void api.layerTimes().then((t) => alive && setTimes(t));
+    load();
+    const id = window.setInterval(load, 5 * 60_000);
+    return () => {
+      alive = false;
+      window.clearInterval(id);
+    };
+  }, []);
+  // Outside the home county (and zoomed in), nationwide layers come straight
+  // from the national source, not the baked copy the labels below describe.
+  const fromSource = (l: LayerInfo) => !!l.view && !covers("stanislaus", center) && zoom >= l.view.min_zoom;
+  // Flights cover the US only through the relay (the snapshot is home-only).
+  const coverageOf = (l: LayerInfo) =>
+    l.name === "flights" && !(api.static && api.flightsRelay) ? "stanislaus" : l.coverage;
+  const freshness = (l: LayerInfo): string | null => {
+    if (LIVE_SOURCES[l.name] || (l.name === "flights" && (!api.static || api.flightsRelay))) return t("live");
+    if (fromSource(l)) return null;
+    const at = times[l.same_data_as ?? l.name];
+    return at ? t("updatedAgo", { when: ago(at, locale) }) : null;
+  };
   const fmt = (n: number) => n.toLocaleString(locale);
   // A minimized panel slides away but stays mounted (keeps scroll/state);
   // `inert` takes it out of the tab order and the accessibility tree.
@@ -229,7 +265,7 @@ export function Sidebar({
             <label className={`toggle ${l.available ? "" : "toggle--disabled"}`}>
               <input
                 type="checkbox"
-                disabled={!l.available}
+                disabled={!l.available && !l.view}
                 checked={layers.overlays[l.name] ?? false}
                 onChange={(e) => setOverlay(l.name, e.target.checked)}
               />
@@ -239,17 +275,30 @@ export function Sidebar({
                 aria-hidden="true"
               />
               <span>
-                {title(l)}
+                <span>{title(l)}</span>
                 {!l.available && (
                   <span className="panel__note"> — {l.requires_key ? t("needsKey") : t("unavailable")}</span>
                 )}
-                {l.available && l.count === 0 && <span className="panel__note"> — {t("noneMappedYet")}</span>}
+                {l.available && l.count === 0 && !fromSource(l) && (
+                  <span className="panel__note"> — {t("noneMappedYet")}</span>
+                )}
                 {l.available && (layers.overlays[l.name] ?? false) && zoom < (LIVE_SOURCES[l.name]?.minZoom ?? 0) && (
                   <span className="panel__note"> — {t("zoomInToSee")}</span>
                 )}
+                {(layers.overlays[l.name] ?? false) && l.view && !covers("stanislaus", center) && zoom < l.view.min_zoom && (
+                  <span className="panel__note"> — {t("zoomInToSee")}</span>
+                )}
+                {(layers.overlays[l.name] ?? false) && !covers(coverageOf(l), center) && (
+                  <span className="panel__note">
+                    {" "}— {t(ONLY_KEY[coverageOf(l) ?? ""] ?? "onlyStanislaus")}
+                  </span>
+                )}
+                {l.available && (layers.overlays[l.name] ?? false) && freshness(l) && (
+                  <span className="panel__note freshness"> · {freshness(l)}</span>
+                )}
               </span>
             </label>
-            {(layers.overlays[l.name] ?? false) && l.category !== "raster" && !LIVE_SOURCES[l.name] && (
+            {(layers.overlays[l.name] ?? false) && l.category !== "raster" && !LIVE_SOURCES[l.name] && !fromSource(l) && (
               <button
                 type="button"
                 className="dl"

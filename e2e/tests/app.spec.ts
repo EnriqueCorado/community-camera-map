@@ -184,8 +184,12 @@ for (const label of OVERLAYS) {
       "Windy webcams": "windy-webcams",
     }[label]!;
 
+    // Nationwide layers may load straight from their national service
+    // (e.g. TIGERweb) instead of the API, depending on the view.
+    const catalog = (await (await page.request.get("/api/layers")).json()) as { name: string; view?: { url: string } | null }[];
+    const viewUrl = catalog.find((c) => c.name === slug)?.view?.url;
     const resp = page.waitForResponse(
-      (r) => r.url().includes(`/api/layers/${slug}`),
+      (r) => r.url().includes(`/api/layers/${slug}`) || (!!viewUrl && r.url().startsWith(`${viewUrl}/query`)),
       { timeout: 40000 }, // smoke-haze scores ~14 camera frames on a cold cache
     );
     await toggle.click();

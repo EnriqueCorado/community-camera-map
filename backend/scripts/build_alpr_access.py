@@ -40,9 +40,12 @@ assert all(r["Detection sharing"] == "Sharing" for r in share)
 # The published text says "all in California … none federal": prove it from the data.
 assert all(r["State"] == "California" for r in share), "non-CA agency in sharing list"
 FEDERAL = re.compile(
-    r"\b(U\.?S\.?|United States|Federal|FBI|DEA|HSI|ICE|CBP|Border|Marshal|ATF|IRS|Homeland)\b", re.I
+    r"\b(U\.?S\.?|United States|Federal|FBI|DEA|HSI|ICE|CBP|Border|Marshal|ATF|IRS|Homeland)\b",
+    re.I,
 )
-assert not [r["Agency"] for r in share if FEDERAL.search(str(r["Agency"]))], "federal-looking agency"
+assert not [
+    r["Agency"] for r in share if FEDERAL.search(str(r["Agency"]))
+], "federal-looking agency"
 
 
 def clean(name: object) -> str:
@@ -116,7 +119,10 @@ S = {
         "url": "https://www.govtech.com/public-safety/ACLU-Takes-Issue-with-Police-License-Plate-Data-Sharing.html",
     },
     "404-2025": {
-        "label": {"en": "404 Media, Aug 6, 2025", "es": "404 Media, 6 de agosto de 2025 (en inglés)"},
+        "label": {
+            "en": "404 Media, Aug 6, 2025",
+            "es": "404 Media, 6 de agosto de 2025 (en inglés)",
+        },
         "url": "https://www.404media.co/home-depot-and-lowes-share-data-from-hundreds-of-ai-cameras-with-cops/",
     },
     "ag-sb34": {

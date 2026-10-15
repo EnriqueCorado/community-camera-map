@@ -121,3 +121,35 @@ def test_alpr_access_profiles_served(client):
     assert r.status_code == 200
     assert r.headers["content-type"].startswith("application/json")
     assert "modesto-pd" in r.json()["profiles"]
+
+
+def test_layer_times_are_wall_clock(client):
+    import time
+
+    from app.layers.service import _Entry
+
+    svc = app.state.layer_service
+    svc._cache["quakes"] = _Entry(body=b"{}", fetched_at=time.monotonic() - 120)
+    try:
+        r = client.get("/api/layers/times")
+        assert r.status_code == 200
+        assert abs(r.json()["quakes"] - (time.time() - 120)) < 5
+    finally:
+        svc._cache.pop("quakes", None)
+
+
+def test_layer_times_report_the_baked_copy_age_not_the_fallback_time(client):
+    import time
+
+    from app.layers.service import _Entry
+
+    svc = app.state.layer_service
+    svc._cache["quakes"] = _Entry(body=b"{}", fetched_at=time.monotonic(), data_at=1_700_000_000.0)
+    svc._cache["alpr"] = _Entry(body=b"{}", fetched_at=time.monotonic(), etag="123")
+    try:
+        times = client.get("/api/layers/times").json()
+        assert times["quakes"] == 1_700_000_000.0
+        assert "alpr" not in times  # static file: no "updated X ago"
+    finally:
+        svc._cache.pop("quakes", None)
+        svc._cache.pop("alpr", None)

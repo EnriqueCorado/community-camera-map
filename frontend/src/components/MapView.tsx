@@ -21,9 +21,11 @@ import {
   WEBCAM_PAGE_HOSTS,
 } from "../popup-logic";
 import { attribute, BASIS_KEY, describe, formatRecordDate, type AlprAccess, type Attribution } from "../alpr-access";
-import { deadReckon, gibsSatelliteUrl, RAINVIEWER_URL, radarFrames } from "../live";
+import { deadReckon, flightCells, gibsSatelliteUrl, mergeFlights, RAINVIEWER_URL, radarFrames } from "../live";
 import { auroraChance, isAirlineCallsign, parseRoute, type FlightRoute } from "../live-parsers";
 import { LIVE_SOURCES, type LiveCtx } from "../live-sources";
+import { liveSourceFor } from "../view-sources";
+import { HOME_BBOX, within, wrapLon } from "../view-logic";
 import { CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS } from "../colors";
 
 export interface LayerState {
@@ -447,10 +449,10 @@ export function MapView({
     for (const info of overlayInfos) {
       if (info.name === "alpr") continue; // ALPR has its own clustered handling
       if (info.name === "rain-radar") continue; // animated: its own effect below
-      if (LIVE_SOURCES[info.name]) {
+      if (liveSourceFor(info)) {
         const on = layers.overlays[info.name] ?? false;
         const running = liveRef.current.get(info.name);
-        if (on && !running && info.available) {
+        if (on && !running && (info.available || info.view)) {
           liveRef.current.set(info.name, startLive(map, info, () => i18nRef.current));
         } else if (!on && running) {
           running();
@@ -492,39 +494,88 @@ export function MapView({
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready || !flightsOn) return;
-    let base: Parameters<typeof deadReckon>[0] | null = null;
+    type FlightFC = Parameters<typeof deadReckon>[0];
+    // One collection per relay area (overlapping cells are merged for display).
+    let base: FlightFC[] = [];
+    let fresh = false; // new data not yet drawn
+    const render = () => {
+      const src = map.getSource("ov-flights") as GeoJSONSource | undefined;
+      if (!src || !base.length) return;
+      const moved = base.map((fc) => deadReckon(fc, Date.now() / 1000));
+      if (!fresh && moved.every((m, i) => m === base[i])) return; // stale data: nothing to move
+      fresh = false;
+      src.setData(mergeFlights(moved));
+    };
     // Static site: the relay (real-time) when configured, else the 15-minute
     // snapshot file. If the relay fails, fall back to the snapshot.
     const relay = api.static ? api.flightsRelay : "";
     const snapshotUrl = () =>
       `${api.layerUrl("flights")}${api.static ? `?t=${Math.floor(Date.now() / 60_000)}` : ""}`; // Pages caches 10 min
     const getJSON = (u: string) => fetch(u).then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))));
+    const isFC = (d: unknown): d is FlightFC => !!d && Array.isArray((d as FlightFC).features);
+    /** Relay URLs for the view: the home area, or the US grid cells in view
+     *  (zoomed too far out for cells: just the home area). */
+    const relayUrls = (): string[] => {
+      const b = map.getBounds();
+      const w = wrapLon(b.getWest()), e = wrapLon(b.getEast());
+      const bbox: [number, number, number, number] = [w, b.getSouth(), e < w ? 180 : e, b.getNorth()];
+      const cells = within(bbox, HOME_BBOX) ? [] : flightCells(bbox, 4);
+      return cells.length ? cells.map((c) => `${relay}?cell=${c}`) : [relay];
+    };
+    // Per-URL results, so panning only fetches cells that aren't fresh (the
+    // relay's firewall allows ~60 requests/minute per visitor).
+    const cellData = new Map<string, { fc: FlightFC; at: number }>();
+    const inFlight = new Map<string, Promise<FlightFC | null>>(); // overlapping polls share these
+    const abort = new AbortController();
+    const getCell = (u: string): Promise<FlightFC | null> => {
+      const have = cellData.get(u);
+      if (have && Date.now() - have.at < 12_000) return Promise.resolve(have.fc);
+      const pending = inFlight.get(u);
+      if (pending) return pending;
+      // A failed refresh may reuse the last result for a while (deadReckon
+      // stops moving data older than 2 minutes anyway).
+      const fallback = () => (have && Date.now() - have.at < 120_000 ? have.fc : null);
+      const p = fetch(u, { signal: abort.signal })
+        .then((r) => (r.ok ? (r.json() as Promise<unknown>) : null))
+        .then((d) => {
+          if (!isFC(d)) return fallback();
+          cellData.set(u, { fc: d, at: Date.now() });
+          return d;
+        })
+        .catch(fallback)
+        .finally(() => inFlight.delete(u));
+      inFlight.set(u, p);
+      return p;
+    };
+    let pollSeq = 0;
     // After a relay failure, use the snapshot (which changes every ~15 min)
     // and only try the relay again a minute later — no 15 s hammering.
     let relayDownUntil = 0;
     let lastSnapshotAt = 0;
-    const load = async (): Promise<unknown> => {
+    const load = async (): Promise<FlightFC[] | null> => {
       if (relay && Date.now() >= relayDownUntil) {
-        try {
-          return await getJSON(relay);
-        } catch {
-          relayDownUntil = Date.now() + 60_000;
-        }
+        const got = (await Promise.allSettled(relayUrls().map(getCell)))
+          .map((r) => (r.status === "fulfilled" ? r.value : null))
+          .filter(isFC);
+        if (got.length) return got; // a cell or two failing just leaves gaps
+        relayDownUntil = Date.now() + 60_000;
       }
       if (relay && Date.now() - lastSnapshotAt < 5 * 60_000) return null; // snapshot is recent enough
       lastSnapshotAt = Date.now();
-      return getJSON(snapshotUrl());
+      const snap: unknown = await getJSON(snapshotUrl());
+      return isFC(snap) ? [snap] : null;
     };
     const poll = () => {
       if (document.hidden) return;
+      const seq = ++pollSeq;
       load()
-        .then((data) => {
-          const fc = data as Parameters<typeof deadReckon>[0] | null;
-          if (!fc || !Array.isArray(fc.features)) return; // ignore anything malformed
-          base = fc;
-          (map.getSource("ov-flights") as GeoJSONSource | undefined)?.setData(deadReckon(fc, Date.now() / 1000));
+        .then((fcs) => {
+          if (!fcs || seq !== pollSeq) return; // keep the last good positions; drop out-of-order results
+          base = fcs;
+          fresh = true;
+          render();
         })
-        .catch(() => {}); // keep the last good positions
+        .catch(() => {});
     };
     poll();
     // Relay: every 15 s (the relay itself refreshes at most every 10 s);
@@ -532,20 +583,25 @@ export function MapView({
     const fetchId = window.setInterval(poll, api.static && !relay ? 5 * 60_000 : 15_000);
     const onVisible = () => !document.hidden && poll(); // catch up after a background tab
     document.addEventListener("visibilitychange", onVisible);
+    // Moved somewhere else: load that area's cells (debounced).
+    let moveDebounce: number | undefined;
+    const onMove = () => {
+      window.clearTimeout(moveDebounce);
+      moveDebounce = window.setTimeout(poll, 800);
+    };
+    if (relay) map.on("moveend", onMove);
     // Glide dots along their heading between updates (fresh data only: the
     // 15-minute static snapshot isn't animated, the relay is).
     const moveId =
       prefersReducedMotion() || (api.static && !relay)
         ? undefined
-        : window.setInterval(() => {
-            const src = map.getSource("ov-flights") as GeoJSONSource | undefined;
-            if (!base || !src || document.hidden) return;
-            const next = deadReckon(base, Date.now() / 1000);
-            if (next !== base) src.setData(next);
-          }, 1000);
+        : window.setInterval(() => !document.hidden && render(), 1000);
     return () => {
+      abort.abort();
       window.clearInterval(fetchId);
+      window.clearTimeout(moveDebounce);
       document.removeEventListener("visibilitychange", onVisible);
+      if (relay) map.off("moveend", onMove);
       if (moveId !== undefined) window.clearInterval(moveId);
     };
   }, [flightsOn, ready]);
@@ -749,7 +805,29 @@ function applyVisibility(map: maplibregl.Map, layers: LayerState) {
 
 // Add an overlay's source + layers, inserted beneath the camera points so dots
 // stay on top. Polygons render as a faint fill + outline; census is a choropleth.
-const OVERLAY_SUFFIXES = ["-fill", "-line", "-circle", "-label", "-raster"];
+const OVERLAY_SUFFIXES = ["-fill", "-line", "-circle", "-arrow", "-label", "-raster"];
+
+/** Heading arrow for moving things (flights): an SDF image, so it takes any
+ *  color, drawn once per map. Points north; rotated by `track`. */
+const ARROW_ICON = "heading-arrow";
+function ensureArrowIcon(map: maplibregl.Map) {
+  if (map.hasImage(ARROW_ICON)) return;
+  const size = 48; // drawn at 2x for crisp edges (pixelRatio 2)
+  const c = document.createElement("canvas");
+  c.width = c.height = size;
+  const g = c.getContext("2d");
+  if (!g) return;
+  g.fillStyle = "#fff";
+  g.beginPath(); // a navigation arrow: tip at top, notched tail
+  g.moveTo(size / 2, 3);
+  g.lineTo(size - 7, size - 5);
+  g.lineTo(size / 2, size - 15);
+  g.lineTo(7, size - 5);
+  g.closePath();
+  g.fill();
+  map.addImage(ARROW_ICON, g.getImageData(0, 0, size, size), { sdf: true, pixelRatio: 2 });
+}
+const HAS_TRACK: maplibregl.ExpressionSpecification = ["==", ["typeof", ["get", "track"]], "number"];
 
 /** Categories always drawn as points, even when the data is momentarily empty. */
 const POINT_CATEGORIES = new Set([
@@ -827,15 +905,18 @@ const EMPTY_FC: GeoJSON.FeatureCollection = { type: "FeatureCollection", feature
  *  map stops moving, for view-based sources), tick locally if it can. Returns
  *  stop(). Network failures keep the last good data. */
 function startLive(map: maplibregl.Map, info: LayerInfo, getI18n: () => I18nState): () => void {
-  const source = LIVE_SOURCES[info.name]!;
+  const source = liveSourceFor(info)!;
   const src = `ov-${info.name}`;
   let ctrl: AbortController | null = null;
   let stopped = false;
   let lastOk = 0;
+  let lastApplied: GeoJSON.FeatureCollection | null = null;
   // Re-enabled after being off: show what we had while the reload runs.
   if (map.getSource(src)) setOverlayVisible(map, info.name, true);
   const apply = (data: GeoJSON.FeatureCollection) => {
     if (stopped) return;
+    if (data === lastApplied && map.getSource(src)) return setOverlayVisible(map, info.name, true); // same baked copy
+    lastApplied = data;
     const s = map.getSource(src) as GeoJSONSource | undefined;
     if (s) s.setData(data);
     else addOverlay(map, info, data, getI18n);
@@ -846,12 +927,14 @@ function startLive(map: maplibregl.Map, info: LayerInfo, getI18n: () => I18nStat
     ctrl?.abort();
     ctrl = new AbortController();
     const b = map.getBounds();
-    const c = map.getCenter();
+    const c = map.getCenter().wrap();
     // Round what we send to third parties (~100 m): enough for "what's here",
     // without sharing the visitor's exact view.
     const r3 = (v: number) => Math.round(v * 1000) / 1000;
+    // Unwrapped longitudes (after panning across world copies) -> [-180, 180].
+    const w = wrapLon(b.getWest()), e = b.getEast() - b.getWest() >= 360 ? 180 : wrapLon(b.getEast());
     const ctx: LiveCtx = {
-      bbox: [r3(b.getWest()), r3(b.getSouth()), r3(b.getEast()), r3(b.getNorth())],
+      bbox: [r3(e < w ? -180 : w), r3(b.getSouth()), r3(e < w ? 180 : e), r3(b.getNorth())],
       center: [r3(c.lng), r3(c.lat)],
       zoom: map.getZoom(),
       lang: getI18n().lang,
@@ -859,7 +942,9 @@ function startLive(map: maplibregl.Map, info: LayerInfo, getI18n: () => I18nStat
     };
     if (source.minZoom != null && ctx.zoom < source.minZoom) return apply(EMPTY_FC);
     try {
-      apply(await source.load(ctx));
+      const data = await source.load(ctx);
+      if (ctx.signal.aborted) return; // the view moved on: a newer run owns the map
+      apply(data);
       lastOk = Date.now();
     } catch {
       /* aborted or upstream hiccup: keep the last good data */
@@ -898,8 +983,15 @@ function startLive(map: maplibregl.Map, info: LayerInfo, getI18n: () => I18nStat
   };
 }
 
-function firstGeometryType(data: GeoJSON.FeatureCollection): string {
-  return data.features.find((f) => f.geometry)?.geometry?.type ?? "Polygon";
+const VIEW_GEOMETRY = { point: "Point", line: "LineString", polygon: "Polygon" } as const;
+
+/** Geometry of the first feature; for empty data, the layer's declared
+ *  geometry (nationwide views can start empty, e.g. while zoomed out). */
+function firstGeometryType(data: GeoJSON.FeatureCollection, info?: LayerInfo): string {
+  return (
+    data.features.find((f) => f.geometry)?.geometry?.type ??
+    (info?.view ? VIEW_GEOMETRY[info.view.geometry] : "Polygon")
+  );
 }
 
 // Overlays render beneath camera points. Polygons -> fill + outline (census is a
@@ -915,7 +1007,7 @@ function addOverlay(
   map.addSource(src, { type: "geojson", data });
   const beforeId = map.getLayer("cam-clusters") ? "cam-clusters" : undefined;
   const accent = OVERLAY_COLOR[info.name] ?? "#64748b";
-  const geomType = firstGeometryType(data);
+  const geomType = firstGeometryType(data, info);
   // Live point layers can legitimately be empty (e.g. no flights right now).
   const isPoint = geomType.includes("Point") || POINT_CATEGORIES.has(info.category);
 
@@ -961,11 +1053,14 @@ function addOverlay(
               : info.category === "aqi"
                 ? (["match", ["get", "category"], ...AQI_COLORS, "#64748b"] as unknown as maplibregl.ExpressionSpecification)
                 : accent;
+    const flight = info.category === "flight";
     map.addLayer(
       {
         id: `${src}-circle`,
         type: "circle",
         source: src,
+        // Flights with a known heading are drawn as arrows instead (below).
+        ...(flight ? { filter: ["!", HAS_TRACK] as maplibregl.FilterSpecification } : {}),
         paint: {
           "circle-color": color,
           "circle-radius": radius,
@@ -978,6 +1073,29 @@ function addOverlay(
       beforeId,
     );
     bindPopup(`${src}-circle`);
+    if (flight) {
+      ensureArrowIcon(map);
+      map.addLayer(
+        {
+          id: `${src}-arrow`,
+          type: "symbol",
+          source: src,
+          filter: HAS_TRACK as maplibregl.FilterSpecification,
+          layout: {
+            visibility: "none",
+            "icon-image": ARROW_ICON,
+            "icon-rotate": ["get", "track"],
+            "icon-rotation-alignment": "map", // the heading is a compass bearing
+            "icon-size": ["interpolate", ["linear"], ["zoom"], 5, 0.75, 10, 1.15],
+            "icon-allow-overlap": true,
+            "icon-ignore-placement": true,
+          },
+          paint: { "icon-color": color, "icon-halo-color": "#fff", "icon-halo-width": 1.5 },
+        },
+        beforeId,
+      );
+      bindPopup(`${src}-arrow`);
+    }
     const label = LABELS[info.category];
     if (label) {
       map.addLayer(
@@ -1564,7 +1682,8 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
       return {
         ...base,
         // "Census Tract 18; Stanislaus County; California" -> "Census Tract 18"
-        title: str(p.name).split(";")[0]!.trim() || t("censusTract"),
+        // ACS names use ";" (Census API) or "," (Esri): keep "Census Tract 18".
+        title: str(p.name).split(/[;,]/)[0]!.trim() || t("censusTract"),
         rows: [
           [t("medianIncome"), num(p.median_income) != null ? `$${fmt(p.median_income)}` : ""],
           [t("population"), fmt(p.population)],

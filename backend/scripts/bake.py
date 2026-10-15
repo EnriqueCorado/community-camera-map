@@ -158,11 +158,17 @@ async def main() -> None:
                 "same_data_as": layer.same_data_as,
                 "source": SOURCES.get(layer.name, ""),
                 "available": False,
+                **layer.catalog_extras(),
             }
             if layer.same_data_as:  # the browser reuses the source layer's file
                 # Available only if the source actually baked (it's listed first).
                 source = next((c for c in catalog if c["name"] == layer.same_data_as), None)
                 info["available"] = bool(source and source["available"])
+                catalog.append(info)
+                continue
+            if layer.view and not layers.is_available(layer):
+                # e.g. census without a key: the browser still loads it nationally
+                info["available"] = True
                 catalog.append(info)
                 continue
             if layer.client_side:  # browser loads tiles directly; nothing to bake

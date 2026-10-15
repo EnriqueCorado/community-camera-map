@@ -26,9 +26,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import httpx
+from bake import SOURCES  # noqa: E402 - sibling script
 
 from app.core.config import get_settings
-from app.layers.service import LayerService, record_layer_times
+from app.layers.service import LayerService, record_layer_times, sync_catalog
 
 for _noisy in ("httpx", "httpcore"):
     logging.getLogger(_noisy).setLevel(logging.WARNING)
@@ -100,6 +101,7 @@ async def main(names: tuple[str, ...]) -> int:
             ok += 1
             refreshed.append(name)
             print(f"  {name}: {n} features")
+        catalog = sync_catalog(catalog, layers.list_layers(), SOURCES)
     catalog_path.write_text(json.dumps(catalog, separators=(",", ":")))
     record_layer_times(refreshed)
     if ok and "flights" in names:  # only claim "live" when the live layers refreshed

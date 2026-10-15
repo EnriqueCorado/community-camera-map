@@ -28,7 +28,7 @@ function catalogOf(): { name: string; title: string; available: boolean }[] {
 /** A layer's sidebar row, matched on its exact title. */
 const esc = (t: string) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const rowOf = (page: Page, title: string) =>
-  page.locator(".layerrow").filter({ has: page.locator("label > span:last-child", { hasText: new RegExp(`^${esc(title)}( —.*)?$`) }) });
+  page.locator(".layerrow").filter({ has: page.locator("label > span:last-child", { hasText: new RegExp(`^${esc(title)}( [—·].*)?$`) }) });
 
 const MODESTO = "-120.997,37.639";
 // Where each layer has data, and how it renders. Default: county view, vector.

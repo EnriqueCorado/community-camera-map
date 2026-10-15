@@ -467,8 +467,8 @@ test("flight popup shows only flight data, in Spanish too", async ({ page }) => 
   );
   await page.goto("/#lang=es&ov=flights&v=-120.99,37.64,10");
   await ready(page);
-  await waitForLayer(page, "ov-flights-circle");
-  expect(await clickFeature(page, "ov-flights-circle")).toBe(true);
+  await waitForLayer(page, "ov-flights-arrow"); // it has a heading: drawn as an arrow
+  expect(await clickFeature(page, "ov-flights-arrow")).toBe(true);
   const popup = page.locator(".maplibregl-popup");
   await expect(popup.locator(".popup__title")).toHaveText("SWA123");
   await expect(popup).toContainText("12,000 pies"); // es-US groups with commas

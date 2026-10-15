@@ -36,6 +36,47 @@ Loader = Callable[[httpx.AsyncClient, Settings], Awaitable[dict]]
 
 
 @dataclass(frozen=True)
+class View:
+    """How the browser loads a layer for any area in view, straight from a
+    national ArcGIS service (all verified to send CORS headers). Inside the
+    home county, and when zoomed out past `min_zoom`, the baked copy is used.
+    """
+
+    url: str  # ArcGIS FeatureServer/MapServer layer
+    fields: dict[str, str]  # source field -> our property (explicit allowlist)
+    geometry: str  # point | line | polygon (styling before any data arrives)
+    min_zoom: float
+    where: str = "1=1"
+    max_features: int = 2000
+    simplify: bool = False  # polygons: generalize to the zoom level
+    refresh_s: int = 1800
+    post: str | None = None  # a named browser-side cleanup (see view-logic.ts)
+    # The baked copy covers the whole home box (clipped to it, not filtered by
+    # county), so it can stand in for a query there. County-filtered bakes
+    # don't cover neighbors inside the box (Ripon, Livingston): leave False.
+    home_complete: bool = False
+
+    def as_json(self) -> dict:
+        return {
+            "kind": "arcgis",
+            "url": self.url,
+            "fields": self.fields,
+            "geometry": self.geometry,
+            "min_zoom": self.min_zoom,
+            "where": self.where,
+            "max": self.max_features,
+            "simplify": self.simplify,
+            "refresh_s": self.refresh_s,
+            "post": self.post,
+            "home_complete": self.home_complete,
+        }
+
+
+# Where a layer has data: the home county, the state, the US, or everywhere.
+COVERAGES = ("stanislaus", "california", "usa", "world")
+
+
+@dataclass(frozen=True)
 class Layer:
     name: str
     title: str
@@ -52,6 +93,16 @@ class Layer:
     client_side: bool = False
     # serves another layer's data (same features, styled differently in the UI)
     same_data_as: str | None = None
+    # where it has data (see COVERAGES); `view` makes it load anywhere in the US
+    coverage: str = "stanislaus"
+    view: View | None = None
+
+    def catalog_extras(self) -> dict:
+        """Catalog fields the frontend needs beyond name/title/category."""
+        return {
+            "coverage": "usa" if self.view else self.coverage,
+            "view": self.view.as_json() if self.view else None,
+        }
 
 
 # County bounding box (WGS84) for spatially filtering large statewide/national layers.
@@ -338,6 +389,32 @@ def _baked_times() -> dict[str, float]:
         return {}
 
 
+def sync_catalog(catalog: list[dict], layers: list[Layer], sources: dict[str, str]) -> list[dict]:
+    """The static catalog, with registry metadata (titles, coverage, views)
+    brought up to date: layers added to the registry appear (in registry
+    order), removed ones disappear. Availability and counts are kept."""
+    by_name = {c["name"]: c for c in catalog}
+    out = []
+    for layer in layers:
+        c = by_name.get(layer.name) or {
+            "name": layer.name,
+            "available": bool(layer.view or layer.client_side),
+            "source": sources.get(layer.name, ""),
+        }
+        c.update(
+            title=layer.title,
+            description=layer.description,
+            category=layer.category,
+            requires_key=layer.requires_key,
+            same_data_as=layer.same_data_as,
+            **layer.catalog_extras(),
+        )
+        if layer.view:  # loads from the national service even without a baked copy
+            c["available"] = True
+        out.append(c)
+    return out
+
+
 def record_layer_times(names: list[str]) -> None:
     """Note that `names` were just fetched (merging with earlier entries)."""
     times = _baked_times()
@@ -442,6 +519,14 @@ LAYERS: dict[str, Layer] = {
         description="Incorporated city boundaries in Stanislaus County.",
         category="boundary",
         loader=_arcgis("City_Limits_AGOL/FeatureServer/0"),
+        view=View(
+            "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+            {"NAME": "NAME", "BASENAME": "BASENAME", "GEOID": "GEOID"},
+            "polygon",
+            min_zoom=8,
+            simplify=True,
+            refresh_s=24 * 3600,
+        ),
     ),
     "general-plan": Layer(
         name="general-plan",
@@ -477,6 +562,13 @@ LAYERS: dict[str, Layer] = {
         description="Public schools (NCES) in Stanislaus County.",
         category="point",
         loader=_arcgis("Public_School_by_NCES/FeatureServer/0"),
+        view=View(
+            "https://services1.arcgis.com/Ua5sjt3LWTPigjyD/arcgis/rest/services/Public_School_Locations_Current/FeatureServer/0",
+            {"NAME": "NAME", "STREET": "STREET", "CITY": "CITY"},
+            "point",
+            min_zoom=10,
+            refresh_s=24 * 3600,
+        ),
     ),
     "census": Layer(
         name="census",
@@ -485,6 +577,15 @@ LAYERS: dict[str, Layer] = {
         category="census",
         loader=_census,
         requires_key=True,
+        view=View(
+            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Median_Household_Income_View_Boundaries/FeatureServer/2",
+            {"NAME": "name", "B19049_001E": "median_income"},
+            "polygon",
+            min_zoom=9,
+            max_features=1500,
+            simplify=True,
+            refresh_s=24 * 3600,
+        ),
     ),
     "census-spanish": Layer(
         name="census-spanish",
@@ -493,6 +594,15 @@ LAYERS: dict[str, Layer] = {
         category="census",
         requires_key=True,
         same_data_as="census",
+        view=View(
+            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Language_Spoken_at_Home_View_Boundaries/FeatureServer/2",
+            {"NAME": "name", "B16007_calc_pctSpanE": "pct_spanish"},
+            "polygon",
+            min_zoom=9,
+            max_features=1500,
+            simplify=True,
+            refresh_s=24 * 3600,
+        ),
     ),
     "census-poverty": Layer(
         name="census-poverty",
@@ -501,6 +611,15 @@ LAYERS: dict[str, Layer] = {
         category="census",
         requires_key=True,
         same_data_as="census",
+        view=View(
+            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Poverty_Status_View_Boundaries/FeatureServer/2",
+            {"NAME": "name", "B17020_calc_pctPovE": "pct_poverty"},
+            "polygon",
+            min_zoom=9,
+            max_features=1500,
+            simplify=True,
+            refresh_s=24 * 3600,
+        ),
     ),
     "census-renters": Layer(
         name="census-renters",
@@ -509,6 +628,15 @@ LAYERS: dict[str, Layer] = {
         category="census",
         requires_key=True,
         same_data_as="census",
+        view=View(
+            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Housing_Units_Occupancy_View_Boundaries/FeatureServer/2",
+            {"NAME": "name", "B25003_calc_pctRentE": "pct_renters"},
+            "polygon",
+            min_zoom=9,
+            max_features=1500,
+            simplify=True,
+            refresh_s=24 * 3600,
+        ),
     ),
     "census-foreign-born": Layer(
         name="census-foreign-born",
@@ -517,6 +645,15 @@ LAYERS: dict[str, Layer] = {
         category="census",
         requires_key=True,
         same_data_as="census",
+        view=View(
+            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Population_and_Housing_Basics_View_Boundaries/FeatureServer/2",
+            {"NAME": "name", "B05003_calc_pctFBE": "pct_foreign_born"},
+            "polygon",
+            min_zoom=9,
+            max_features=1500,
+            simplify=True,
+            refresh_s=24 * 3600,
+        ),
     ),
     # --- Public safety & hazards ---
     "hospitals": Layer(
@@ -528,6 +665,18 @@ LAYERS: dict[str, Layer] = {
             "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Hospitals_hifld/FeatureServer/0",
             where="COUNTY='STANISLAUS' AND STATE='CA'",
         ),
+        view=View(
+            "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Hospitals_hifld/FeatureServer/0",
+            {
+                "NAME": "NAME",
+                "ADDRESS": "ADDRESS",
+                "CITY": "CITY",
+                "TYPE": "TYPE",
+                "TELEPHONE": "TELEPHONE",
+            },
+            "point",
+            min_zoom=7,
+        ),
     ),
     "law-enforcement": Layer(
         name="law-enforcement",
@@ -537,6 +686,18 @@ LAYERS: dict[str, Layer] = {
         loader=_arcgis_url(
             "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Local_Law_Enforcement_Locations_RAPT/FeatureServer/0",
             where="COUNTY='STANISLAUS'",
+        ),
+        view=View(
+            "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Local_Law_Enforcement_Locations_RAPT/FeatureServer/0",
+            {
+                "NAME": "NAME",
+                "ADDRESS": "ADDRESS",
+                "CITY": "CITY",
+                "TYPE": "TYPE",
+                "TELEPHONE": "TELEPHONE",
+            },
+            "point",
+            min_zoom=8,
         ),
     ),
     "flood": Layer(
@@ -550,6 +711,16 @@ LAYERS: dict[str, Layer] = {
             page_size=500,  # FEMA 500s on larger geometry pages
             simplify=0.0003,  # thin dense flood polygons for a lighter payload
         ),
+        view=View(
+            "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28",
+            {"FLD_ZONE": "FLD_ZONE", "ZONE_SUBTY": "ZONE_SUBTY", "SFHA_TF": "SFHA_TF"},
+            "polygon",
+            min_zoom=12,
+            max_features=500,
+            simplify=True,
+            refresh_s=24 * 3600,
+            home_complete=True,
+        ),
     ),
     "fire-hazard": Layer(
         name="fire-hazard",
@@ -561,6 +732,7 @@ LAYERS: dict[str, Layer] = {
             bbox=STANISLAUS_BBOX,
             simplify=0.0005,  # dense fire-zone polygons — thin for a lighter payload
         ),
+        coverage="california",
     ),
     "enviroscreen": Layer(
         name="enviroscreen",
@@ -571,6 +743,7 @@ LAYERS: dict[str, Layer] = {
             "https://services1.arcgis.com/PCHfdHz4GlDNAhBb/arcgis/rest/services/CalEnviroScreen_4_0_Results_/FeatureServer/0",
             bbox=STANISLAUS_BBOX,
         ),
+        coverage="california",
     ),
     # --- Live feeds (short TTL) ---
     "wildfire": Layer(
@@ -583,6 +756,19 @@ LAYERS: dict[str, Layer] = {
             where="POOState='US-CA'",
         ),
         ttl=300,
+        view=View(
+            f"{NIFC}/WFIGS_Incident_Locations_Current/FeatureServer/0",
+            {
+                "IncidentName": "IncidentName",
+                "DailyAcres": "DailyAcres",
+                "PercentContained": "PercentContained",
+                "IncidentTypeCategory": "IncidentTypeCategory",
+            },
+            "point",
+            min_zoom=3,
+            refresh_s=300,
+            home_complete=True,
+        ),
     ),
     "weather-alerts": Layer(
         name="weather-alerts",
@@ -591,6 +777,7 @@ LAYERS: dict[str, Layer] = {
         category="weather",
         loader=_geojson("https://api.weather.gov/alerts/active?area=CA"),
         ttl=120,
+        coverage="california",
     ),
     "quakes": Layer(
         name="quakes",
@@ -601,6 +788,7 @@ LAYERS: dict[str, Layer] = {
             "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
         ),
         ttl=120,
+        coverage="world",
     ),
     "streamflow": Layer(
         name="streamflow",
@@ -621,6 +809,7 @@ LAYERS: dict[str, Layer] = {
         category="roadops",
         loader=_caltrans("lcs", transforms.caltrans_lcs),
         ttl=180,
+        coverage="california",
     ),
     "message-signs": Layer(
         name="message-signs",
@@ -629,6 +818,7 @@ LAYERS: dict[str, Layer] = {
         category="point",
         loader=_caltrans("cms", transforms.caltrans_cms),
         ttl=180,
+        coverage="california",
     ),
     "air-quality": Layer(
         name="air-quality",
@@ -675,6 +865,15 @@ LAYERS: dict[str, Layer] = {
             simplify=0.0005,
         ),
         ttl=24 * 3600,
+        view=View(
+            "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11",
+            {"BASENAME": "BASENAME", "GEOID": "GEOID", "NAME": "NAME", "ZCTA5": "ZCTA5"},
+            "polygon",
+            min_zoom=9,
+            simplify=True,
+            refresh_s=24 * 3600,
+            home_complete=True,
+        ),
     ),
     "congressional-districts": Layer(
         name="congressional-districts",
@@ -688,6 +887,15 @@ LAYERS: dict[str, Layer] = {
             simplify=0.001,
         ),
         ttl=24 * 3600,
+        view=View(
+            "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0",
+            {"BASENAME": "BASENAME", "GEOID": "GEOID", "NAME": "NAME", "STATE": "STATE"},
+            "polygon",
+            min_zoom=5,
+            simplify=True,
+            refresh_s=24 * 3600,
+            home_complete=True,
+        ),
     ),
     # --- Infrastructure ---
     "airports": Layer(
@@ -700,6 +908,13 @@ LAYERS: dict[str, Layer] = {
             where="COUNTY_NAME='STANISLAUS'",
         ),
         ttl=24 * 3600,
+        view=View(
+            "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_Aviation_Facilities/FeatureServer/0",
+            {"ARPT_NAME": "ARPT_NAME", "CITY": "CITY", "SITE_TYPE_CODE": "SITE_TYPE_CODE"},
+            "point",
+            min_zoom=7,
+            refresh_s=24 * 3600,
+        ),
     ),
     "amtrak": Layer(
         name="amtrak",
@@ -712,6 +927,14 @@ LAYERS: dict[str, Layer] = {
             bbox=STANISLAUS_BBOX,
         ),
         ttl=24 * 3600,
+        view=View(
+            "https://services2.arcgis.com/aIrBD8yn1TDTEXoz/ArcGIS/rest/services/Amtrak/FeatureServer/0",
+            {"Name": "Name", "StationName": "StationName", "City": "City", "State": "State"},
+            "point",
+            min_zoom=6,
+            refresh_s=24 * 3600,
+            home_complete=True,
+        ),
     ),
     "dams": Layer(
         name="dams",
@@ -730,6 +953,7 @@ LAYERS: dict[str, Layer] = {
         category="roadweather",
         loader=_caltrans("rwis", transforms.caltrans_rwis),
         ttl=600,
+        coverage="california",
     ),
     "chain-controls": Layer(
         name="chain-controls",
@@ -738,6 +962,7 @@ LAYERS: dict[str, Layer] = {
         category="chain",
         loader=_caltrans("cc", transforms.caltrans_chain),
         ttl=600,
+        coverage="california",
     ),
     "wildfire-perimeters": Layer(
         name="wildfire-perimeters",
@@ -759,6 +984,19 @@ LAYERS: dict[str, Layer] = {
             simplify=0.0005,
         ),
         ttl=1800,
+        view=View(
+            f"{NIFC}/WFIGS_Interagency_Perimeters_Current/FeatureServer/0",
+            {
+                "poly_IncidentName": "name",
+                "attr_IncidentSize": "acres",
+                "attr_PercentContained": "contained",
+            },
+            "polygon",
+            min_zoom=5,
+            simplify=True,
+            refresh_s=600,
+            home_complete=True,
+        ),
     ),
     "faults": Layer(
         name="faults",
@@ -778,6 +1016,7 @@ LAYERS: dict[str, Layer] = {
             ),
         ),
         ttl=7 * 24 * 3600,
+        coverage="california",
     ),
     "superfund": Layer(
         name="superfund",
@@ -790,6 +1029,22 @@ LAYERS: dict[str, Layer] = {
             transforms.superfund_sites,
         ),
         ttl=7 * 24 * 3600,
+        view=View(
+            "https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/Superfund_National_Priorities_List_(NPL)_Sites_with_Status_Information/FeatureServer/0",
+            {
+                "Site_Name": "name",
+                "City": "city",
+                "Status": "status",
+                "Listing_Date": "listed",
+                "Construction_Completion_Date": "cleanup_built",
+                "Site_Progress_Profile": "_profile",
+            },
+            "point",
+            min_zoom=5,
+            refresh_s=24 * 3600,
+            post="epa",
+            home_complete=True,
+        ),
     ),
     "power-plants": Layer(
         name="power-plants",
@@ -809,6 +1064,19 @@ LAYERS: dict[str, Layer] = {
             ),
         ),
         ttl=7 * 24 * 3600,
+        view=View(
+            "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Power_Plants/FeatureServer/0",
+            {
+                "NAME": "name",
+                "OPERATOR": "operator",
+                "PRIMARY_FU": "fuel",
+                "OPER_CAP": "capacity_mw",
+            },
+            "point",
+            min_zoom=6,
+            refresh_s=24 * 3600,
+            home_complete=True,
+        ),
     ),
     "substations": Layer(
         name="substations",
@@ -820,6 +1088,14 @@ LAYERS: dict[str, Layer] = {
             lambda fc: transforms.select_props(fc, {"NAME": "name", "MAX_VOLTAG": "max_kv"}),
         ),
         ttl=7 * 24 * 3600,
+        view=View(
+            "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Electric_Substations/FeatureServer/0",
+            {"NAME": "name", "MAX_VOLTAG": "max_kv"},
+            "point",
+            min_zoom=9,
+            refresh_s=24 * 3600,
+            home_complete=True,
+        ),
     ),
     "cooling-centers": Layer(
         name="cooling-centers",
@@ -905,6 +1181,19 @@ LAYERS: dict[str, Layer] = {
             ),
         ),
         ttl=6 * 3600,
+        view=View(
+            "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_National_Bridge_Inventory/FeatureServer/0",
+            {
+                "FACILITY_CARRIED_007": "road",
+                "FEATURES_DESC_006A": "crosses",
+                "YEAR_BUILT_027": "built",
+                "STRUCTURE_NUMBER_008": "structure",
+            },
+            "point",
+            min_zoom=11,
+            refresh_s=24 * 3600,
+            post="nbi",
+        ),
     ),
     "rivers": Layer(
         name="rivers",
@@ -927,6 +1216,13 @@ LAYERS: dict[str, Layer] = {
             lambda fc: transforms.select_props(fc, {"name": "name", "type": "kind"}),
         ),
         ttl=6 * 3600,
+        view=View(
+            "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0",
+            {"RROWNER1": "kind"},
+            "line",
+            min_zoom=9,
+            refresh_s=24 * 3600,
+        ),
     ),
     "elementary-districts": Layer(
         name="elementary-districts",
@@ -938,6 +1234,14 @@ LAYERS: dict[str, Layer] = {
             lambda fc: transforms.select_props(fc, {"District": "name"}),
         ),
         ttl=6 * 3600,
+        view=View(
+            "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2",
+            {"NAME": "name"},
+            "polygon",
+            min_zoom=8,
+            simplify=True,
+            refresh_s=24 * 3600,
+        ),
     ),
     "high-school-districts": Layer(
         name="high-school-districts",
@@ -949,6 +1253,14 @@ LAYERS: dict[str, Layer] = {
             lambda fc: transforms.select_props(fc, {"District": "name"}),
         ),
         ttl=6 * 3600,
+        view=View(
+            "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1",
+            {"NAME": "name"},
+            "polygon",
+            min_zoom=8,
+            simplify=True,
+            refresh_s=24 * 3600,
+        ),
     ),
     "county-islands": Layer(
         name="county-islands",
@@ -982,6 +1294,7 @@ LAYERS: dict[str, Layer] = {
             transforms.historical_markers,
         ),
         ttl=7 * 24 * 3600,
+        coverage="california",
     ),
     "mobile-home-parks": Layer(
         name="mobile-home-parks",
@@ -995,6 +1308,7 @@ LAYERS: dict[str, Layer] = {
             ),
         ),
         ttl=7 * 24 * 3600,
+        coverage="california",
     ),
     "historic-places": Layer(
         name="historic-places",
@@ -1006,6 +1320,22 @@ LAYERS: dict[str, Layer] = {
             transforms.historic_places,
         ),
         ttl=7 * 24 * 3600,
+        view=View(
+            "https://mapservices.nps.gov/arcgis/rest/services/cultural_resources/nrhp_locations/MapServer/0",
+            {
+                "RESNAME": "name",
+                "ResType": "kind",
+                "Address": "address",
+                "City": "city",
+                "CertDate": "listed",
+                "NARA_URL": "page",
+            },
+            "point",
+            min_zoom=9,
+            refresh_s=24 * 3600,
+            post="nrhp",
+            home_complete=True,
+        ),
     ),
     **{
         name: Layer(
@@ -1034,6 +1364,7 @@ LAYERS: dict[str, Layer] = {
             where="Source IN ('Alert California','Alert Wildfire')",
         ),
         ttl=24 * 3600,
+        coverage="california",
     ),
     "windy-webcams": Layer(
         name="windy-webcams",
@@ -1054,6 +1385,7 @@ LAYERS: dict[str, Layer] = {
         category="haze",
         loader=None,  # built in LayerService from the cached fire-cameras layer
         ttl=3600,
+        coverage="california",
     ),
     # --- Live & imagery ---
     "flights": Layer(
@@ -1066,6 +1398,7 @@ LAYERS: dict[str, Layer] = {
             transforms.adsb_flights,
         ),
         ttl=15,
+        coverage="usa",  # via the relay; the snapshot-only build is home-only
     ),
     "rain-radar": Layer(
         name="rain-radar",
@@ -1073,6 +1406,7 @@ LAYERS: dict[str, Layer] = {
         description="Latest precipitation radar (RainViewer).",
         category="raster",
         client_side=True,
+        coverage="world",
     ),
     "satellite": Layer(
         name="satellite",
@@ -1080,6 +1414,7 @@ LAYERS: dict[str, Layer] = {
         description="True-color satellite imagery from NASA GIBS (VIIRS), previous day.",
         category="raster",
         client_side=True,
+        coverage="world",
     ),
     "fire-hotspots": Layer(
         name="fire-hotspots",
@@ -1092,11 +1427,19 @@ LAYERS: dict[str, Layer] = {
             lambda text: transforms.firms_hotspots(text, CALIFORNIA_BBOX),
         ),
         ttl=3600,
+        coverage="california",
     ),
     # --- Browser-live layers: fetched straight from public APIs in the browser
     # (see frontend/src/live-sources.ts); nothing to bake. ---
     **{
-        name: Layer(name=name, title=title, description=desc, category=cat, client_side=True)
+        name: Layer(
+            name=name,
+            title=title,
+            description=desc,
+            category=cat,
+            client_side=True,
+            coverage="usa" if name == "trains" else "world",
+        )
         for name, title, desc, cat in BROWSER_LIVE
     },
     "river-cameras": Layer(
@@ -1117,6 +1460,9 @@ class _Entry:
     body: bytes  # serialized GeoJSON, cached so we don't re-parse/re-dump per request
     fetched_at: float
     etag: str | None = None  # for file layers: the file mtime, to detect edits
+    # Wall-clock time the data itself is from, when that isn't the fetch time
+    # (a baked fallback copy); None = fetched_at. Drives "updated X ago".
+    data_at: float | None = None
 
 
 @dataclass
@@ -1128,6 +1474,15 @@ class LayerService:
     fallback_to_baked: bool = True
     _cache: dict[str, _Entry] = field(default_factory=dict)
     _locks: dict[str, asyncio.Lock] = field(default_factory=dict)
+
+    def fetched_times(self) -> dict[str, float]:
+        """Wall-clock fetch time of each cached layer (cache entries use monotonic time)."""
+        offset = time.time() - time.monotonic()
+        return {
+            name: round(e.data_at if e.data_at is not None else e.fetched_at + offset, 1)
+            for name, e in self._cache.items()
+            if e.etag is None  # file layers (static data) have no meaningful age
+        }
 
     def list_layers(self) -> list[Layer]:
         return list(LAYERS.values())
@@ -1224,7 +1579,11 @@ class LayerService:
                     )
                     body = baked.read_bytes()
                     # Cache briefly so requests don't queue behind a dead upstream.
-                    self._cache[name] = _Entry(body=body, fetched_at=time.monotonic() - ttl + 60)
+                    self._cache[name] = _Entry(
+                        body=body,
+                        fetched_at=time.monotonic() - ttl + 60,
+                        data_at=_baked_times().get(name),
+                    )
                     return body
                 raise
             body = json.dumps(data, separators=(",", ":")).encode()

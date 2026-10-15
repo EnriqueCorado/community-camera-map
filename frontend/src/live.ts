@@ -58,3 +58,39 @@ export function deadReckon(fc: FlightFC, nowSec: number, maxSec = 60, staleSec =
     }),
   };
 }
+
+/** The relay's grid: 3-degree cells named by their south-west corner. */
+export const FLIGHT_CELL_DEG = 3;
+
+/** Grid cells ("lat_lon" corners) covering a [w, s, e, n] view, limited to the
+ *  relay's US grid. Empty when the view needs more than `max` cells (too far
+ *  out to poll every cell). */
+export function flightCells([w, s, e, n]: [number, number, number, number], max = 6): string[] {
+  const d = FLIGHT_CELL_DEG;
+  const cells: string[] = [];
+  for (let lat = Math.floor(s / d) * d; lat < n; lat += d) {
+    for (let lon = Math.floor(w / d) * d; lon < e; lon += d) {
+      if (lat >= 15 && lat <= 69 && lon >= -180 && lon <= -66) cells.push(`${lat}_${lon}`);
+      if (cells.length > max) return [];
+    }
+  }
+  return cells;
+}
+
+/** One collection from overlapping cell results: each aircraft once (by
+ *  callsign, or by position for the few without one). */
+export function mergeFlights(fcs: FlightFC[]): FlightFC {
+  const seen = new Set<string>();
+  const features: FlightFC["features"] = [];
+  for (const fc of fcs) {
+    for (const f of fc.features) {
+      const cs = typeof f.properties?.callsign === "string" ? f.properties.callsign : "";
+      const [lon, lat] = f.geometry.coordinates as [number, number];
+      const key = cs || `${lon.toFixed(3)},${lat.toFixed(3)}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      features.push(f);
+    }
+  }
+  return { type: "FeatureCollection", features };
+}

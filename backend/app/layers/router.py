@@ -28,6 +28,8 @@ class LayerInfo(BaseModel):
     available: bool
     requires_key: bool
     same_data_as: str | None = None
+    coverage: str = "stanislaus"
+    view: dict | None = None
 
 
 @router.get("", summary="List available overlay layers")
@@ -41,9 +43,15 @@ async def list_layers(service: LayerService = Depends(get_service)) -> list[Laye
             available=service.is_available(layer),
             requires_key=layer.requires_key,
             same_data_as=layer.same_data_as,
+            **layer.catalog_extras(),
         )
         for layer in service.list_layers()
     ]
+
+
+@router.get("/times", summary="When each cached layer was fetched (epoch seconds)")
+async def layer_times(service: LayerService = Depends(get_service)) -> dict[str, float]:
+    return service.fetched_times()
 
 
 @router.get("/alpr/access", summary="Who can search each plate reader (sourced profiles)")

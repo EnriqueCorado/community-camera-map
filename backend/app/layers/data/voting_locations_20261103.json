@@ -1,0 +1,665 @@
+{
+  "election": "2026-11-03",
+  "source": "Stanislaus County Registrar of Voters, \"Where can I return my vote by mail ballot?\" (https://www.stanvote.gov/pdf/voting-locations.pdf, updated 2026-09-28)",
+  "note": "Transcribed from the county's flier. Hours can change; check stanvote.gov or call 209-525-5200.",
+  "locations": [
+    {
+      "kind": "drop-box",
+      "name": "Ceres Community Center",
+      "address": "2701 4th St",
+      "city": "Ceres",
+      "hours": "Mon-Fri 9:00 a.m.-7:00 p.m.; Sat 8:30 a.m.-5:00 p.m.",
+      "lat": 37.593148,
+      "lon": -120.953434
+    },
+    {
+      "kind": "drop-box",
+      "name": "Save Mart",
+      "address": "2920 E Whitmore Ave",
+      "city": "Ceres",
+      "hours": "Mon-Thu 6:00 a.m.-11:00 p.m.; Fri-Sun 6:00 a.m.-12:00 a.m.",
+      "lat": 37.594667,
+      "lon": -120.940417
+    },
+    {
+      "kind": "drop-box",
+      "name": "Denair Library",
+      "address": "4801 Kersey Rd",
+      "city": "Denair",
+      "hours": "Mon-Thu 10:00 a.m.-6:00 p.m.",
+      "lat": 37.527221,
+      "lon": -120.79388
+    },
+    {
+      "kind": "drop-box",
+      "name": "Garcia's Market",
+      "address": "5013 Yosemite Blvd",
+      "city": "Empire",
+      "hours": "Sun 8:00 a.m.-8:00 p.m.; Mon-Sat 8:00 a.m.-9:00 p.m.",
+      "zip": "95357",
+      "lat": 37.638327,
+      "lon": -120.902198
+    },
+    {
+      "kind": "drop-box",
+      "name": "Hughson City Hall",
+      "address": "7018 Pine St",
+      "city": "Hughson",
+      "hours": "Mon-Fri 8:00 a.m.-5:00 p.m.",
+      "lat": 37.59778,
+      "lon": -120.865186
+    },
+    {
+      "kind": "drop-box",
+      "name": "FoodMaxx",
+      "address": "2020 W Briggsmore Ave",
+      "city": "Modesto",
+      "hours": "Daily 6:00 a.m.-12:00 a.m.",
+      "lat": 37.670612,
+      "lon": -121.029782
+    },
+    {
+      "kind": "drop-box",
+      "name": "MaxxValue",
+      "address": "415 Paradise Rd",
+      "city": "Modesto",
+      "hours": "Daily 7:00 a.m.-10:00 p.m.",
+      "lat": 37.627673,
+      "lon": -121.012078
+    },
+    {
+      "kind": "drop-box",
+      "name": "Modesto Junior College East Campus (Student Center)",
+      "address": "435 College Ave",
+      "city": "Modesto",
+      "hours": "Mon-Fri 8:00 a.m.-5:00 p.m.",
+      "lat": 37.650934,
+      "lon": -121.007516
+    },
+    {
+      "kind": "drop-box",
+      "name": "Postal Connections",
+      "address": "1700 McHenry Ave",
+      "city": "Modesto",
+      "hours": "Mon-Fri 9:00 a.m.-6:00 p.m.; Sat 10:00 a.m.-3:00 p.m.",
+      "lat": 37.668864,
+      "lon": -120.99392
+    },
+    {
+      "kind": "drop-box",
+      "name": "Postal Connections",
+      "address": "3430 Tully Rd",
+      "city": "Modesto",
+      "hours": "Mon-Fri 9:00 a.m.-6:00 p.m.; Sat 10:00 a.m.-3:00 p.m.",
+      "lat": 37.688233,
+      "lon": -121.012402
+    },
+    {
+      "kind": "drop-box",
+      "name": "Save Mart",
+      "address": "801 Oakdale Rd",
+      "city": "Modesto",
+      "hours": "Mon-Thu 6:00 a.m.-11:00 p.m.; Fri-Sun 6:00 a.m.-12:00 a.m.",
+      "lat": 37.653122,
+      "lon": -120.957441
+    },
+    {
+      "kind": "drop-box",
+      "name": "Save Mart",
+      "address": "3401 Oakdale Rd",
+      "city": "Modesto",
+      "hours": "Mon-Thu 6:00 a.m.-11:00 p.m.; Fri-Sun 6:00 a.m.-12:00 a.m.",
+      "lat": 37.68645,
+      "lon": -120.957989
+    },
+    {
+      "kind": "drop-box",
+      "name": "Save Mart",
+      "address": "3601 Pelandale Ave",
+      "city": "Modesto",
+      "hours": "Mon-Thu 6:00 a.m.-11:00 p.m.; Fri-Sun 6:00 a.m.-12:00 a.m.",
+      "lat": 37.700152,
+      "lon": -121.062669
+    },
+    {
+      "kind": "drop-box",
+      "name": "Save Mart",
+      "address": "2100 Standiford Ave",
+      "city": "Modesto",
+      "hours": "Mon-Thu 6:00 a.m.-11:00 p.m.; Fri-Sun 6:00 a.m.-12:00 a.m.",
+      "lat": 37.689618,
+      "lon": -121.031611
+    },
+    {
+      "kind": "drop-box",
+      "name": "Stanislaus Veterans Center",
+      "address": "3500 Coffee Rd",
+      "city": "Modesto",
+      "hours": "Mon-Fri 8:00 a.m.-5:00 p.m.; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.688942,
+      "lon": -120.975999
+    },
+    {
+      "kind": "drop-box",
+      "name": "Yancey Home Center",
+      "address": "1632 N St",
+      "city": "Newman",
+      "hours": "Mon-Fri 7:00 a.m.-6:00 p.m.; Sat 8:00 a.m.-5:00 p.m.; Sun 9:00 a.m.-3:00 p.m.",
+      "lat": 37.312012,
+      "lon": -121.019862
+    },
+    {
+      "kind": "drop-box",
+      "name": "Oakdale Library",
+      "address": "151 S First Ave",
+      "city": "Oakdale",
+      "hours": "Mon, Wed, Thu 10:00 a.m.-6:00 p.m.; Tue 12:00-8:00 p.m.; Sat 10:00 a.m.-5:00 p.m.",
+      "lat": 37.765003,
+      "lon": -120.84913
+    },
+    {
+      "kind": "drop-box",
+      "name": "Save Mart",
+      "address": "1449 E F St",
+      "city": "Oakdale",
+      "hours": "Mon-Thu 6:00 a.m.-11:00 p.m.; Fri-Sun 6:00 a.m.-12:00 a.m.",
+      "lat": 37.7721,
+      "lon": -120.832455
+    },
+    {
+      "kind": "drop-box",
+      "name": "Save Mart",
+      "address": "1035 Sperry Ave",
+      "city": "Patterson",
+      "hours": "Mon-Thu 6:00 a.m.-11:00 p.m.; Fri-Sun 6:00 a.m.-12:00 a.m.",
+      "lat": 37.464419,
+      "lon": -121.14221
+    },
+    {
+      "kind": "drop-box",
+      "name": "Cost Less Foods",
+      "address": "6331 Oakdale Rd",
+      "city": "Riverbank",
+      "hours": "Daily 7:00 a.m.-10:00 p.m.",
+      "lat": 37.732003,
+      "lon": -120.958738
+    },
+    {
+      "kind": "drop-box",
+      "name": "Save Mart",
+      "address": "2237 Claribel Rd",
+      "city": "Riverbank",
+      "hours": "Mon-Thu 6:00 a.m.-11:00 p.m.; Fri-Sun 6:00 a.m.-12:00 a.m.",
+      "lat": 37.711013,
+      "lon": -120.9576
+    },
+    {
+      "kind": "drop-box",
+      "name": "FoodMaxx",
+      "address": "1845 Countryside Dr",
+      "city": "Turlock",
+      "hours": "Daily 6:00 a.m.-12:00 a.m.",
+      "lat": 37.510138,
+      "lon": -120.876533
+    },
+    {
+      "kind": "drop-box",
+      "name": "Save Mart",
+      "address": "2595 Geer Rd",
+      "city": "Turlock",
+      "hours": "Mon-Thu 6:00 a.m.-11:00 p.m.; Fri-Sun 6:00 a.m.-12:00 a.m.",
+      "lat": 37.516255,
+      "lon": -120.848946
+    },
+    {
+      "kind": "drop-box",
+      "name": "Save Mart",
+      "address": "1631 Lander Ave",
+      "city": "Turlock",
+      "hours": "Mon-Thu 6:00 a.m.-11:00 p.m.; Fri-Sun 6:00 a.m.-12:00 a.m.",
+      "lat": 37.477064,
+      "lon": -120.849049
+    },
+    {
+      "kind": "drop-box",
+      "name": "Turlock City Hall",
+      "address": "156 S Broadway",
+      "city": "Turlock",
+      "hours": "Mon-Fri 8:00 a.m.-5:00 p.m.",
+      "lat": 37.492564,
+      "lon": -120.847096
+    },
+    {
+      "kind": "drop-box",
+      "name": "Turlock Library",
+      "address": "550 N Minaret Ave",
+      "city": "Turlock",
+      "hours": "Mon, Tue, Thu 10:00 a.m.-6:00 p.m.; Wed 12:00-8:00 p.m.; Fri-Sat 10:00 a.m.-5:00 p.m.",
+      "lat": 37.496788,
+      "lon": -120.839757
+    },
+    {
+      "kind": "drop-box",
+      "name": "Waterford City Hall",
+      "address": "101 E St",
+      "city": "Waterford",
+      "hours": "Mon-Fri 8:00 a.m.-5:00 p.m.",
+      "lat": 37.638882,
+      "lon": -120.758362
+    },
+    {
+      "kind": "drop-box",
+      "name": "Registrar of Voters (indoor drop box)",
+      "address": "1021 I St",
+      "city": "Modesto",
+      "hours": "Mon-Fri 8:00 a.m.-5:00 p.m.; Sat 10/24 and 10/31, Sun 11/1 8:00 a.m.-4:00 p.m.; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.639765,
+      "lon": -120.998978
+    },
+    {
+      "kind": "outdoor-drop-box",
+      "name": "Bonita Elementary School",
+      "address": "425 Fink Rd",
+      "city": "Crows Landing",
+      "hours": "24 hours",
+      "lat": 37.391403,
+      "lon": -121.07661
+    },
+    {
+      "kind": "outdoor-drop-box",
+      "name": "Burchell Nursery",
+      "address": "12000 Hwy 120",
+      "city": "Oakdale",
+      "hours": "24 hours",
+      "lat": 37.776603,
+      "lon": -120.775061
+    },
+    {
+      "kind": "outdoor-drop-box",
+      "name": "Salida Library",
+      "address": "4835 Sisk Rd",
+      "city": "Salida",
+      "hours": "24 hours",
+      "zip": "95368",
+      "lat": 37.708154,
+      "lon": -121.077656,
+      "geocoder": "osm"
+    },
+    {
+      "kind": "outdoor-drop-box",
+      "name": "California State University, Stanislaus",
+      "address": "1 University Cir",
+      "city": "Turlock",
+      "hours": "24 hours",
+      "lat": 37.522431,
+      "lon": -120.858586
+    },
+    {
+      "kind": "outdoor-drop-box",
+      "name": "Registrar of Voters Office",
+      "address": "1021 I St",
+      "city": "Modesto",
+      "hours": "24 hours",
+      "lat": 37.639765,
+      "lon": -120.998978
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-24",
+      "name": "Stanislaus Veterans Center (Room 114/115)",
+      "address": "3500 Coffee Rd",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/24; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.688942,
+      "lon": -120.975999
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-24",
+      "name": "L.J. Newman Memorial Building",
+      "address": "649 Orestimba Rd",
+      "city": "Newman",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/24; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.325925,
+      "lon": -121.018546
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-24",
+      "name": "Oakdale Community United Methodist Church (Social Hall)",
+      "address": "1480 Poplar St",
+      "city": "Oakdale",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/24; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.765439,
+      "lon": -120.864866
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-24",
+      "name": "Salida Library (Community Room)",
+      "address": "4835 Sisk Rd",
+      "city": "Salida",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/24; Election Day 7:00 a.m.-8:00 p.m.",
+      "zip": "95368",
+      "lat": 37.708154,
+      "lon": -121.077656,
+      "geocoder": "osm"
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-24",
+      "name": "Hampton Inn by Hilton - Turlock (Meeting Room)",
+      "address": "1821 Lander Ave",
+      "city": "Turlock",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/24; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.47576,
+      "lon": -120.849051
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-24",
+      "name": "Waterford Community Center",
+      "address": "540 C St",
+      "city": "Waterford",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/24; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.64606,
+      "lon": -120.760797
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Ceres American Legion Hall",
+      "address": "2609 Lawrence St",
+      "city": "Ceres",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.590195,
+      "lon": -120.947575
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Hanline Elementary School (Multi-Purpose Room)",
+      "address": "4295 Central Ave",
+      "city": "Ceres",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.576082,
+      "lon": -120.957033
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Denair Senior Center",
+      "address": "3756 Alameda Ave",
+      "city": "Denair",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.528254,
+      "lon": -120.794888
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Empire Library (Community Room)",
+      "address": "98 I St",
+      "city": "Empire",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "zip": "95319",
+      "lat": 37.639508,
+      "lon": -120.898494,
+      "geocoder": "osm"
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "United Samaritans Foundation",
+      "address": "2413 3rd St",
+      "city": "Hughson",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.596628,
+      "lon": -120.86669
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Keyes Community Center - Eddie Best Hall",
+      "address": "5506 Jennie Ave",
+      "city": "Keyes",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "zip": "95328",
+      "lat": 37.555472,
+      "lon": -120.909382,
+      "geocoder": "osm"
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Connecting Waters Charter School - Central Valley (Room D105)",
+      "address": "2300 E Briggsmore Ave",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.667351,
+      "lon": -120.954597
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "County Center III (Room 1/4)",
+      "address": "917 Oakdale Rd",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.656427,
+      "lon": -120.957496
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Hope Commons",
+      "address": "300 Trask Ln",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "zip": "95354",
+      "lat": 37.643824,
+      "lon": -120.952713,
+      "geocoder": "osm"
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Mancini Hall Senior Center",
+      "address": "718 Tuolumne Blvd",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.627786,
+      "lon": -121.003446
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Martin G. Petersen Event Center",
+      "address": "720 12th St",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.639302,
+      "lon": -120.995129
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Modesto City-County Airport (Departures Terminal)",
+      "address": "617 Airport Way",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.630371,
+      "lon": -120.957216
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Modesto Junior College West Campus (El Capitan Building)",
+      "address": "2201 Blue Gum Ave",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.660524,
+      "lon": -121.038098
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "North Modesto Church of God",
+      "address": "1918 Sherwood Ave",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.671641,
+      "lon": -120.998525
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "South Modesto Wellness Center",
+      "address": "906 Imperial Ave",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.600927,
+      "lon": -121.005159
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Stanislaus County Agricultural Center (Harvest Hall, Rooms D/E)",
+      "address": "3800 Cornucopia Way",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.583854,
+      "lon": -120.99358
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Stanislaus Union School District (Building C, Rooms 11/13)",
+      "address": "2410 Janna Ave",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.676625,
+      "lon": -121.029043
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Westview Gardens Community Center",
+      "address": "1701 Robertson Rd",
+      "city": "Modesto",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.613366,
+      "lon": -121.016433
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Patterson Library (Large Room)",
+      "address": "46 N Salado Ave",
+      "city": "Patterson",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.471799,
+      "lon": -121.131329
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Riverbank Community Center",
+      "address": "3600 Santa Fe St",
+      "city": "Riverbank",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.735965,
+      "lon": -120.930802
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Riverbank High School (Room 601)",
+      "address": "6200 Claus Rd",
+      "city": "Riverbank",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.729081,
+      "lon": -120.922003
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Assyrian American Civic Club of Turlock",
+      "address": "2618 N Golden State Blvd",
+      "city": "Turlock",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.516308,
+      "lon": -120.870952
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Calvary Baptist Church (Chapel Room)",
+      "address": "700 E Monte Vista Ave",
+      "city": "Turlock",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.521811,
+      "lon": -120.840855
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-10-31",
+      "name": "Turlock Library (Hilmar Cheese Company Community Room)",
+      "address": "550 N Minaret Ave",
+      "city": "Turlock",
+      "hours": "Daily 8:00 a.m.-5:00 p.m. from 10/31; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.496788,
+      "lon": -120.839757
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-11-02",
+      "name": "Gene Bianchi Community Center",
+      "address": "110 S 2nd Ave",
+      "city": "Oakdale",
+      "hours": "Nov 2 8:00 a.m.-5:00 p.m.; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.76535,
+      "lon": -120.848422
+    },
+    {
+      "kind": "vote-center",
+      "opens": "2026-11-02",
+      "name": "Sacred Heart Church, Lopes Orchards De Paul Center (Meeting Room A/B)",
+      "address": "505 M St",
+      "city": "Patterson",
+      "hours": "Nov 2 8:00 a.m.-5:00 p.m.; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.477289,
+      "lon": -121.137669
+    },
+    {
+      "kind": "curbside",
+      "opens": "2026-11-02",
+      "name": "Tenth Street Place",
+      "address": "1010 10th St",
+      "city": "Modesto",
+      "hours": "Nov 2 8:00 a.m.-5:00 p.m.; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.640685,
+      "lon": -121.000425
+    },
+    {
+      "kind": "curbside",
+      "opens": "2026-11-02",
+      "name": "Stanislaus Culinary Arts Institute",
+      "address": "1040 Wakefield Dr",
+      "city": "Oakdale",
+      "hours": "Nov 2 8:00 a.m.-5:00 p.m.; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.754735,
+      "lon": -120.838563
+    },
+    {
+      "kind": "curbside",
+      "opens": "2026-11-02",
+      "name": "California State University, Stanislaus",
+      "address": "1 University Cir",
+      "city": "Turlock",
+      "hours": "Nov 2 8:00 a.m.-5:00 p.m.; Election Day 7:00 a.m.-8:00 p.m.",
+      "lat": 37.522431,
+      "lon": -120.858586
+    }
+  ]
+}

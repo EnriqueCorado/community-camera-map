@@ -2,7 +2,7 @@
 // Mirrors backend/tests/test_live_layers.py flight tests: the two must agree.
 import { test, expect } from "@playwright/test";
 import { adsbFlights } from "../../relay/src/flights";
-import { createRelay, UPSTREAMS, SITE_ORIGIN } from "../../relay/src/relay";
+import { createRelay, parseArea, UPSTREAMS, SITE_ORIGIN } from "../../relay/src/relay";
 
 test("keeps flight data, drops owner/registration, excludes opted-out aircraft", () => {
   const base = { lat: 37.6, lon: -121.0, alt_baro: 3000 };
@@ -81,7 +81,7 @@ test("relay: falls back to the next provider; reuses results for 10 s", async ()
   t += 2_000;
   await Promise.all([relay(req()), relay(req()), relay(req())]);
   expect(calls.length).toBe(4); // one shared refresh (fi 403 -> lol), not three
-  expect(calls[0]).toBe(new URL(UPSTREAMS[0]!).host);
+  expect(calls[0]).toBe(new URL(UPSTREAMS[0]!(0, 0, 1)).host);
 });
 
 test("relay: on failure serves stale data, backs off, then 502 when too old", async () => {
@@ -107,7 +107,7 @@ test("relay: query strings and non-GET are refused without touching upstream", a
   const { f, calls } = stub({ "opendata.adsb.fi": ok });
   const relay = createRelay(f);
   expect((await relay(req("/api/flights?bust=1"))).status).toBe(404);
-  for (const path of ["/api/flights/", "/api/flights.ts", "/api/flights%2F", "/"]) expect((await relay(req(path))).status).toBe(404);
+  for (const path of ["/api/flights/", "/api/flights.ts", "/api/flights%2F", "/", "/api/flights?cell=36_-123&x=1", "/api/flights?cell=37_-123"]) expect((await relay(req(path))).status).toBe(404);
   expect((await relay(req("/api/flights", "POST"))).status).toBe(404);
   expect(calls).toEqual([]);
 });
@@ -143,4 +143,45 @@ test("relay: an oversized upstream body is rejected, then the next provider is u
   const r = await createRelay(f)(req());
   expect(calls).toEqual(["opendata.adsb.fi", "api.adsb.lol"]);
   expect(r.status).toBe(200);
+});
+
+test("relay: cells must be exact 3-degree US grid corners", () => {
+  const u = (q: string) => parseArea(new URL(`https://r.example/api/flights${q}`));
+  expect(u("")).toMatchObject({ key: "home", nm: 80 });
+  expect(u("?cell=36_-123")).toEqual({ key: "36_-123", lat: 37.5, lon: -121.5, nm: 150 });
+  expect(u("?cell=60_-150")).toMatchObject({ key: "60_-150" }); // Alaska
+  for (const bad of ["?cell=37_-123", "?cell=36_-60", "?cell=72_-150", "?cell=36_-123&x", "?cell=036_-123x", "?cell=036_-123", "?cell=18_-066", "?cell=-0_-123", "?cell=", "?x=1", "?cell=1e1_-123"])
+    expect(u(bad), bad).toBeNull();
+});
+
+test("relay: each cell is cached separately; calls to one provider are paced", async () => {
+  let t = 1_000_000;
+  const waits: number[] = [];
+  const urls: string[] = [];
+  const f = (async (input: RequestInfo | URL) => { urls.push(String(input)); return ok(); }) as typeof fetch;
+  const relay = createRelay(f, () => t, async (ms) => { waits.push(ms); t += ms; });
+  await relay(req("/api/flights?cell=36_-123"));
+  await relay(req("/api/flights?cell=39_-123"));
+  await relay(req("/api/flights?cell=36_-123")); // cached
+  expect(urls).toHaveLength(2);
+  expect(urls[0]).toBe("https://api.adsb.lol/v2/lat/37.5/lon/-121.5/dist/150");
+  expect(waits).toEqual([1100]); // the second cell waited for adsb.lol's next slot
+});
+
+test("relay: a full queue refuses grid cells (503, no backoff) but never the home view", async () => {
+  let t = 1_000_000;
+  const hosts: string[] = [];
+  const f = (async (input: RequestInfo | URL) => { hosts.push(new URL(String(input)).host); return ok(); }) as typeof fetch;
+  const relay = createRelay(f, () => t, async () => {}); // frozen clock: slots pile up
+  const codes: number[] = [];
+  for (let lon = -120; lon <= -111; lon += 3) codes.push((await relay(req(`/api/flights?cell=36_${lon}`))).status);
+  // Cells ask adsb.lol first; a slot more than 2 s out is refused (slots at 0 and 1.1 s).
+  expect(hosts).toEqual(["api.adsb.lol", "api.adsb.lol", "opendata.adsb.fi", "opendata.adsb.fi"]);
+  expect(codes).toEqual([200, 200, 200, 200]);
+  const busy = await relay(req("/api/flights?cell=36_-93"));
+  expect(busy.status).toBe(503);
+  expect(busy.headers.get("retry-after")).toBe("2");
+  expect((await relay(req("/api/flights"))).status).toBe(200); // home still served
+  t += 3_000; // the queue drains: the refused cell isn't stuck in a 30 s backoff
+  expect((await relay(req("/api/flights?cell=36_-93"))).status).toBe(200);
 });

@@ -30,6 +30,26 @@ export interface LayerInfo {
   /** Feature count at bake/refresh time (static site only). */
   count?: number;
   source?: string;
+  /** Where the layer has data: stanislaus | california | usa | world. */
+  coverage?: string;
+  /** Loads any area in view from a national service (see view-sources.ts). */
+  view?: ViewSpec | null;
+}
+
+export interface ViewSpec {
+  kind: "arcgis";
+  url: string;
+  /** source field -> our property (an allowlist) */
+  fields: Record<string, string>;
+  geometry: "point" | "line" | "polygon";
+  min_zoom: number;
+  where: string;
+  max: number;
+  simplify: boolean;
+  refresh_s: number;
+  post?: string | null;
+  /** The baked copy covers the whole home box (bbox-clipped, not county-filtered). */
+  home_complete?: boolean;
 }
 
 export interface Meta {
@@ -63,6 +83,12 @@ export const api = {
     alprAccessCache = p;
     return p;
   },
+  /** When each server-fetched layer was last fetched: {name: epoch seconds}.
+   *  Cache-busted per minute (Pages serves data with a 10-minute max-age). */
+  layerTimes: () =>
+    getJSON<Record<string, number>>(
+      STATIC ? `data/layer_times.json?t=${Math.floor(Date.now() / 60_000)}` : `${API_BASE}/api/layers/times`,
+    ).catch(() => ({}) as Record<string, number>),
   /** Build-time metadata (static mode only). */
   meta: () =>
     STATIC

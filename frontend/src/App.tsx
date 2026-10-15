@@ -146,6 +146,7 @@ export default function App() {
         onAbout={() => setShowAbout(true)}
         open={panelOpen}
         zoom={view?.zoom ?? initial.view?.zoom ?? 5.4}
+        center={view?.center ?? initial.view?.center ?? [-120.99, 37.64]}
         onHide={() => togglePanel(false)}
       />
       <main className="stage">
