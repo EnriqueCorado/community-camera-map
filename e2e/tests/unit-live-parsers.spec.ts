@@ -1,7 +1,9 @@
 // Unit tests for the browser-live parsers and satellite propagation (no browser).
 import { test, expect } from "@playwright/test";
 import {
+  aqiCategory,
   auroraChance,
+  parseAirQuality,
   gridPoints,
   isAirlineCallsign,
   latestKp,
@@ -9,7 +11,6 @@ import {
   parseINat,
   parseIss,
   parseOpenMeteo,
-  parseOverpass,
   parseRoute,
   parseWiki,
 } from "../../frontend/src/live-parsers";
@@ -79,17 +80,6 @@ test("Open-Meteo grid + parsing", () => {
   expect(parseOpenMeteo([{ latitude: 1, longitude: 1, current: {} }]).features).toEqual([]);
 });
 
-test("Overpass: nodes and way centers, with OSM links and plug types", () => {
-  const fc = parseOverpass({ elements: [
-    { type: "node", id: 42, lat: 37.6, lon: -121, tags: { amenity: "charging_station", operator: "ChargePoint", "socket:type1": "2", "socket:chademo": "no", capacity: "4" } },
-    { type: "way", id: 7, center: { lat: 37.61, lon: -121.01 }, tags: { amenity: "toilets", access: "yes" } },
-    { type: "node", id: 1, tags: {} },
-  ] });
-  expect(fc.features).toHaveLength(2);
-  expect(props(fc, 0)).toMatchObject({ name: "ChargePoint", sockets: "type1", capacity: 4, page: "https://www.openstreetmap.org/node/42" });
-  expect(props(fc, 1).page).toBe("https://www.openstreetmap.org/way/7");
-});
-
 test("routes are only looked up for airline callsigns, never tail numbers", () => {
   for (const cs of ["UAL366", "SWA1234", "AAL1A", " DAL45 "]) expect(isAirlineCallsign(cs), cs).toBe(true);
   for (const cs of ["N669TW", "N12345", "CGABC", "", "UAL", "ABCD123"]) expect(isAirlineCallsign(cs), cs).toBe(false);
@@ -117,4 +107,15 @@ test("satellites: SGP4 puts the ISS at a sane altitude and speed", () => {
   const [lon, lat] = fc.features[0]!.geometry.coordinates as number[];
   expect(Math.abs(lat!)).toBeLessThanOrEqual(52); // ISS inclination is 51.6°
   expect(Math.abs(lon!)).toBeLessThanOrEqual(180);
+});
+
+test("air quality: EPA categories at their boundaries, and grid parsing", () => {
+  expect([0, 50, 51, 100, 101, 150, 151, 200, 201, 300, 301].map(aqiCategory)).toEqual([
+    "good", "good", "moderate", "moderate", "usg", "usg", "unhealthy", "unhealthy", "very", "very", "hazardous",
+  ]);
+  expect(aqiCategory(null)).toBeNull();
+  const fc = parseAirQuality([{ latitude: 37.6, longitude: -121, current: { us_aqi: 57.4, pm2_5: 12.34, ozone: 61.7 } },
+    { latitude: 37.7, longitude: -121, current: {} }]);
+  expect(fc.features).toHaveLength(1);
+  expect(fc.features[0]!.properties).toMatchObject({ aqi: 57, category: "moderate", pm2_5: 12.3, ozone: 62, label: "57" });
 });

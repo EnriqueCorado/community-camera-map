@@ -46,7 +46,7 @@ def test_caltrans_lcs_line_from_begin_end():
                         },
                         "end": {"endLatitude": "37.7", "endLongitude": "-121.1"},
                     },
-                    "closure": {"typeOfClosure": "Full"},
+                    "closure": {"typeOfClosure": "Full", "code1097": {"isCode1097": "true"}},
                 }
             }
         ]
@@ -59,7 +59,7 @@ def test_caltrans_lcs_line_from_begin_end():
 
 def test_caltrans_lcs_point_when_no_end():
     begin = {"beginLatitude": "37.6", "beginLongitude": "-121.0"}
-    payload = {"data": [{"lcs": {"location": {"begin": begin}}}]}
+    payload = {"data": [{"lcs": {"location": {"begin": begin}, "closure": {"code1097": {"isCode1097": "true"}}}}]}
     f = transforms.caltrans_lcs(payload)["features"][0]
     assert f["geometry"]["type"] == "Point"
 
@@ -286,3 +286,146 @@ async def test_arcgis_error_payload_raises_instead_of_returning_empty():
     async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
         with pytest.raises(arcgis.ArcGISError):
             await arcgis.fetch_layer(client, "https://example.test/arcgis/rest/services/x/MapServer/28")
+
+
+# ---------- Caltrans road weather / chain controls / lane closures ----------
+
+
+def test_caltrans_json_repairs_missing_commas_between_repeated_keys():
+    broken = b'{"data": [{"a": {"x": "1"} "a": {"x": "2"}}]}'
+    assert transforms.parse_caltrans_json(broken) == {"data": [{"a": {"x": "2"}}]}
+    assert transforms.parse_caltrans_json(b'{"data": []}') == {"data": []}
+    assert transforms.parse_caltrans_json(b"[1, 2]") == {}
+
+
+def _rwis(temp="227", wind="16", gust="18", rh="23", service="true", lat="37.06"):
+    return {"rwis": {
+        "inService": service,
+        "location": {"locationName": "SR-152 : San Luis Reservoir", "latitude": lat, "longitude": "-121.06", "elevation": "272"},
+        "rwisData": {
+            "windData": {"essAvgWindSpeed": wind, "essMaxWindGustSpeed": gust},
+            "temperatureData": {"essTemperatureSensorTable": [
+                {"essTemperatureSensorEntry": {"essAirTemperature": ""}},
+                {"essTemperatureSensorEntry": {"essAirTemperature": temp}},
+            ]},
+            "humidityPrecipData": {"essRelativeHumidity": rh},
+        },
+    }}
+
+
+def test_rwis_converts_ntcip_units_and_treats_sentinels_as_missing():
+    p = transforms.caltrans_rwis({"data": [_rwis()]})["features"][0]["properties"]
+    assert p["temp_f"] == 73  # 22.7 °C (tenths) -> 72.9 °F
+    assert p["wind_mph"] == 4  # 1.6 m/s (tenths) -> 3.6 mph
+    assert p["gust_mph"] == 4 and p["humidity"] == 23
+    m = transforms.caltrans_rwis({"data": [_rwis(temp="65535", wind="65535", gust="", rh="101")]})
+    q = m["features"][0]["properties"]
+    assert q["temp_f"] is None and q["wind_mph"] is None and q["gust_mph"] is None and q["humidity"] is None
+    assert transforms.caltrans_rwis({"data": [_rwis(service="false"), _rwis(lat="")]})["features"] == []
+
+
+def test_chain_controls_keep_only_known_status_codes():
+    def cc(status):
+        return {"cc": {"inService": "true", "location": {"locationName": "Bear Valley", "route": "SR-4", "latitude": "38.46", "longitude": "-120.04"},
+                       "statusData": {"status": status, "statusDescription": " Chains required "}}}
+    feats = transforms.caltrans_chain({"data": [cc("R-2"), cc("<script>")]})["features"]
+    assert feats[0]["properties"] == {"name": "Bear Valley", "route": "SR-4", "status": "R-2", "detail": "Chains required"}
+    assert feats[1]["properties"]["status"] == ""
+
+
+def _lcs(start, end, c1097="false", c1098="false", indefinite="false"):
+    return {"lcs": {
+        "location": {"begin": {"beginLongitude": "-121", "beginLatitude": "37.6", "beginRoute": "SR-99"},
+                     "end": {"endLongitude": "-121.01", "endLatitude": "37.61"}},
+        "closure": {"closureTimestamp": {"closureStartEpoch": str(start), "closureEndEpoch": str(end),
+                                         "isClosureEndIndefinite": indefinite},
+                    "typeOfClosure": "Lane", "typeOfWork": "Paving", "lanesClosed": "2",
+                    "code1097": {"isCode1097": c1097}, "code1098": {"isCode1098": c1098}},
+    }}
+
+
+def test_lane_closures_only_in_effect_now():
+    now = 1_000_000
+    rows = [
+        _lcs(now - 10, now + 10),                  # in its window
+        _lcs(now + 3600, now + 7200),              # scheduled later: skipped
+        _lcs(now + 3600, now + 7200, c1097="true"),  # crew already on scene
+        _lcs(now - 10, now + 10, c1098="true"),    # picked up early
+        _lcs(now - 99, 0, indefinite="true"),      # open-ended
+        _lcs(now - 99, now - 1),                   # already over
+    ]
+    feats = transforms.caltrans_lcs({"data": rows}, now=now)["features"]
+    assert len(feats) == 3
+    assert feats[0]["properties"] == {"route": "SR-99", "type": "Lane", "work": "Paving", "lanes": "2"}
+
+
+async def test_caltrans_loader_survives_some_districts_failing():
+    import httpx
+
+    from app.layers.service import _caltrans
+
+    def handler(request):
+        if "/d3/" in str(request.url):
+            return httpx.Response(500)
+        body = b'{"data": [{"cc": {"inService": "true", "location": {"latitude": "38", "longitude": "-120"}, "statusData": {"status": "R-0"}}}]}'
+        return httpx.Response(200, content=body)
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+        fc = await _caltrans("cc", transforms.caltrans_chain)(client, None)
+    assert len(fc["features"]) == 11  # 12 districts, one down
+
+    def all_down(request):
+        return httpx.Response(500)
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(all_down)) as client:
+        with pytest.raises(httpx.HTTPError):
+            await _caltrans("cc", transforms.caltrans_chain)(client, None)
+
+
+def test_select_props_ships_only_mapped_fields():
+    fc = {"features": [
+        {"geometry": {"type": "Point", "coordinates": [0, 0]}, "properties": {"NAME": "POUST", "MAX_VOLTAG": 115, "PHONE": "555", "Creator": "someone"}},
+        {"geometry": None, "properties": {"NAME": "no geometry"}},
+    ]}
+    out = transforms.select_props(fc, {"NAME": "name", "MAX_VOLTAG": "max_kv"})["features"]
+    assert [f["properties"] for f in out] == [{"name": "POUST", "max_kv": 115}]
+
+
+def test_superfund_extracts_only_the_epa_profile_link():
+    def site(profile):
+        return {"geometry": {"type": "Point", "coordinates": [-120.8, 37.5]},
+                "properties": {"Site_Name": "Valley Wood Preserving, Inc.", "City": "Turlock", "Status": "NPL Site",
+                               "Site_Progress_Profile": profile}}
+    good = '<a href="https://cumulis.epa.gov/supercpad/cursites/csitinfo.cfm?id=0901490" target="_blank">x</a>'
+    bad = '<a href="javascript:alert(1)">x</a>'
+    out = transforms.superfund_sites({"features": [site(good), site(bad)]})["features"]
+    assert out[0]["properties"]["page"] == "https://cumulis.epa.gov/supercpad/cursites/csitinfo.cfm?id=0901490"
+    assert out[1]["properties"]["page"] == ""
+    assert "_profile" not in out[0]["properties"]
+
+
+def test_historic_places_keep_only_national_archives_links():
+    def place(url):
+        return {"geometry": {"type": "Point", "coordinates": [-120.9, 37.6]},
+                "properties": {"RESNAME": "McHenry Mansion", "ResType": "building", "Address": "906 15th St", "City": "Modesto",
+                               "CertDate": "1978-05-", "NARA_URL": url, "SRC_COORD": "noise"}}
+    out = transforms.historic_places({"features": [place("https://catalog.archives.gov/id/123"), place("https://evil.example/id/1")]})["features"]
+    assert out[0]["properties"] == {"name": "McHenry Mansion", "kind": "building", "address": "906 15th St", "city": "Modesto",
+                                    "listed": "1978-05", "page": "https://catalog.archives.gov/id/123"}
+    assert out[1]["properties"]["page"] == ""
+
+
+def test_historical_markers_upgrade_hmdb_links_to_https_only():
+    def m(link):
+        return {"geometry": {"type": "Point", "coordinates": [-120.4, 37.9]},
+                "properties": {"Title": "Chinese Camp", "Year_Erected": 1949, "Link": link}}
+    out = transforms.historical_markers({"features": [m("http://www.hmdb.org/m.asp?m=906"), m("http://evil.example/?m=1")]})["features"]
+    assert out[0]["properties"]["page"] == "https://www.hmdb.org/m.asp?m=906"
+    assert out[1]["properties"]["page"] == ""
+
+
+def test_historical_markers_strip_markup_from_text():
+    f = {"geometry": {"type": "Point", "coordinates": [-121, 37.6]},
+         "properties": {"Title": "Graffiti Cruise Route", "Add_l_Subtitle": '<i>"The Modesto music scene"</i> &amp; more', "Link": ""}}
+    p = transforms.historical_markers({"features": [f]})["features"][0]["properties"]
+    assert p["subtitle"] == '"The Modesto music scene" & more'

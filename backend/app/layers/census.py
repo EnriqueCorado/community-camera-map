@@ -29,7 +29,33 @@ VARS = {
     "B01003_001E": "population",
     "B19013_001E": "median_income",
     "B01002_001E": "median_age",
+    # numerator/denominator pairs, turned into percentages below
+    "C16001_001E": "_lang_total",
+    "C16001_003E": "_spanish",
+    "B17001_001E": "_poverty_total",
+    "B17001_002E": "_poverty",
+    "B25003_001E": "_homes_total",
+    "B25003_003E": "_renters",
+    "B05002_001E": "_born_total",
+    "B05002_013E": "_foreign_born",
 }
+
+# output property -> (numerator, denominator)
+PERCENTS = {
+    "pct_spanish": ("_spanish", "_lang_total"),  # Spanish spoken at home, age 5+
+    "pct_poverty": ("_poverty", "_poverty_total"),  # income below the poverty line
+    "pct_renters": ("_renters", "_homes_total"),  # renter-occupied homes
+    "pct_foreign_born": ("_foreign_born", "_born_total"),
+}
+
+
+def _percentages(m: dict) -> dict:
+    """Replace raw count pairs with rounded percentages (None if unknown)."""
+    out = {k: v for k, v in m.items() if not k.startswith("_")}
+    for prop, (num, den) in PERCENTS.items():
+        n, d = m.get(num), m.get(den)
+        out[prop] = round(100 * n / d, 1) if n is not None and d else None
+    return out
 
 
 class CensusKeyMissing(RuntimeError):
@@ -86,7 +112,7 @@ async def _fetch_acs(client: httpx.AsyncClient, s: Settings) -> dict[str, dict]:
     for row in data:
         geoid = row[idx["state"]] + row[idx["county"]] + row[idx["tract"]]
         metrics = {prop: num(row[idx[var]]) for var, prop in VARS.items()}
-        out[geoid] = {"name": row[idx["NAME"]], **metrics}
+        out[geoid] = {"name": row[idx["NAME"]], **_percentages(metrics)}
     return out
 
 

@@ -1,8 +1,8 @@
-import { useMemo, useState, type ReactNode } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Camera } from "../types";
 import type { LayerInfo } from "../api/client";
 import { matchCamera, type LayerState } from "./MapView";
-import { CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS } from "../colors";
+import { CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS } from "../colors";
 import { downloadLayer, downloadCameras } from "../download";
 import { LIVE_SOURCES } from "../live-sources";
 import { useI18n, layerTitle, type Key } from "../i18n";
@@ -76,6 +76,40 @@ function Section({
   );
 }
 
+type Group = "cameras" | "live" | "weather" | "hazards" | "roads" | "places" | "nature" | "planning" | "infra" | "other";
+
+const GROUP_ORDER: Group[] = ["cameras", "live", "weather", "hazards", "roads", "places", "nature", "planning", "infra", "other"];
+
+const GROUP_KEYS: Record<Group, Key> = {
+  cameras: "groupCameras",
+  live: "groupLive",
+  weather: "groupWeather",
+  hazards: "groupHazards",
+  roads: "groupRoads",
+  places: "groupPlaces",
+  nature: "groupNature",
+  planning: "groupPlanning",
+  infra: "groupInfra",
+  other: "groupOther",
+};
+
+/** Which theme each layer sits under (anything unlisted goes to "More"). */
+const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
+  (
+    [
+      ["cameras", ["fire-cameras", "river-cameras", "windy-webcams"]],
+      ["live", ["flights", "iss", "satellites", "trains"]],
+      ["weather", ["weather-now", "air-now", "rain-radar", "satellite", "weather-alerts", "air-quality", "road-weather", "smoke-haze"]],
+      ["hazards", ["wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
+      ["roads", ["lane-closures", "message-signs", "chain-controls", "transit-routes", "transit-stops", "amtrak", "airports", "railroads"]],
+      ["places", ["cooling-centers", "shelters", "sandbags", "mobile-home-parks", "food-banks", "clinics", "hospitals", "pharmacies", "community-centers", "libraries", "farmers-markets", "law-enforcement", "fire-stations", "schools", "parks", "playgrounds", "aed", "drinking-water", "restrooms", "ev-chargers", "free-wifi"]],
+      ["nature", ["wildlife", "wikipedia", "historic-places", "historical-markers", "rivers", "streamflow"]],
+      ["planning", ["city-limits", "county-islands", "general-plan", "zoning", "annexations", "census", "census-spanish", "census-foreign-born", "census-poverty", "census-renters", "supervisor-districts", "elementary-districts", "high-school-districts", "fire-districts", "mosquito-districts", "zip-codes", "congressional-districts"]],
+      ["infra", ["power-plants", "substations", "bridges"]],
+    ] as [Group, string[]][]
+  ).flatMap(([g, names]) => names.map((n) => [n, g])),
+);
+
 /** Vendor id -> label (brand names stay as-is; generic labels are translated). */
 const VENDORS: { id: string; label?: string; labelKey?: Key }[] = [
   { id: "Flock Safety", label: "Flock" },
@@ -132,6 +166,12 @@ export function Sidebar({
 }: Props) {
   const { lang, setLang, t, locale } = useI18n();
   const fmt = (n: number) => n.toLocaleString(locale);
+  // A minimized panel slides away but stays mounted (keeps scroll/state);
+  // `inert` takes it out of the tab order and the accessibility tree.
+  const asideRef = useRef<HTMLElement>(null);
+  useLayoutEffect(() => {
+    if (asideRef.current) asideRef.current.inert = !open; // before paint
+  }, [open]);
   const [collapsed, setCollapsed] = useState(readCollapsed);
   const toggle = (id: string) => {
     const next = new Set(collapsed);
@@ -168,11 +208,63 @@ export function Sidebar({
   const alprInfo = overlayInfos.find((l) => l.name === "alpr");
   const otherOverlays = overlayInfos.filter((l) => l.name !== "alpr");
   const censusOn = layers.overlays["census"] ?? false;
+  const pctOn = Object.keys(CENSUS_FIELD).some((n) => n !== "census" && (layers.overlays[n] ?? false));
   const enviroOn = layers.overlays["enviroscreen"] ?? false;
   const other = lang === "en" ? "es" : "en";
 
+  // Layers grouped by theme, filterable by name (in the current language).
+  const [layerQuery, setLayerQuery] = useState("");
+  const lq = layerQuery.trim().toLowerCase();
+  const matchesQuery = (label: string) => !lq || label.toLowerCase().includes(lq);
+  const showTraffic = matchesQuery(t("trafficCameras"));
+  const showAlpr = !!alprInfo && matchesQuery(title(alprInfo));
+  const groups = GROUP_ORDER.map(
+    (key) =>
+      [key, otherOverlays.filter((l) => (LAYER_GROUP[l.name] ?? "other") === key && matchesQuery(title(l)))] as const,
+  );
+  const anyLayerMatch = showTraffic || showAlpr || groups.some(([, items]) => items.length > 0);
+
+  const overlayRow = (l: LayerInfo) => (
+          <div key={l.name} className="layerrow">
+            <label className={`toggle ${l.available ? "" : "toggle--disabled"}`}>
+              <input
+                type="checkbox"
+                disabled={!l.available}
+                checked={layers.overlays[l.name] ?? false}
+                onChange={(e) => setOverlay(l.name, e.target.checked)}
+              />
+              <span
+                className="toggle__dot"
+                style={{ background: OVERLAY_COLOR[l.name] ?? "#64748b" }}
+                aria-hidden="true"
+              />
+              <span>
+                {title(l)}
+                {!l.available && (
+                  <span className="panel__note"> — {l.requires_key ? t("needsKey") : t("unavailable")}</span>
+                )}
+                {l.available && l.count === 0 && <span className="panel__note"> — {t("noneMappedYet")}</span>}
+                {l.available && (layers.overlays[l.name] ?? false) && zoom < (LIVE_SOURCES[l.name]?.minZoom ?? 0) && (
+                  <span className="panel__note"> — {t("zoomInToSee")}</span>
+                )}
+              </span>
+            </label>
+            {(layers.overlays[l.name] ?? false) && l.category !== "raster" && !LIVE_SOURCES[l.name] && (
+              <button
+                type="button"
+                className="dl"
+                title={t("downloadLayer", { layer: title(l) })}
+                aria-label={t("downloadLayer", { layer: title(l) })}
+                onClick={() => void downloadLayer(l.same_data_as ?? l.name)}
+              >
+                <span aria-hidden="true">⬇</span>
+              </button>
+            )}
+          </div>
+  );
+
   return (
-    <aside className="sidebar" id="sidebar" hidden={!open}>
+    <aside className="sidebar" id="sidebar" ref={asideRef}>
       <div className="sidebar__head">
         <div className="sidebar__titlerow">
           <h1>
@@ -230,83 +322,69 @@ export function Sidebar({
       </Section>
 
       <Section {...section("layers")} title={t("layers")}>
-        <label className="toggle">
-          <input
-            type="checkbox"
-            checked={layers.cameras}
-            onChange={(e) => setLayer({ cameras: e.target.checked })}
-          />
-          <span className="toggle__dot" style={{ background: CAM }} aria-hidden="true" />
-          <span>{t("trafficCameras")}</span>
-        </label>
-
-        {alprInfo && (
-          <>
-            <label className="toggle">
-              <input
-                type="checkbox"
-                checked={layers.alpr}
-                onChange={(e) => setLayer({ alpr: e.target.checked })}
-              />
-              <span className="toggle__dot" style={{ background: VENDOR_COLORS.flock }} aria-hidden="true" />
-              <span>{title(alprInfo)}</span>
-            </label>
-            {layers.alpr && (
-              <fieldset className="subfilter" aria-label={title(alprInfo)}>
-                {VENDORS.map((v) => (
-                  <label key={v.id} className="toggle toggle--sm">
-                    <input
-                      type="checkbox"
-                      checked={layers.alprVendors[v.id] ?? true}
-                      onChange={(e) => setVendor(v.id, e.target.checked)}
-                    />
-                    <span className="toggle__dot" style={{ background: VENDOR_SWATCH[v.id] }} aria-hidden="true" />
-                    <span>{v.labelKey ? t(v.labelKey) : v.label}</span>
-                  </label>
-                ))}
-                <p className="panel__note">{t("alprNote")}</p>
-              </fieldset>
-            )}
-          </>
+        <input
+          type="search"
+          className="search search--sm"
+          placeholder={t("findLayer")}
+          aria-label={t("findLayerLabel")}
+          value={layerQuery}
+          onChange={(e) => setLayerQuery(e.target.value)}
+        />
+        {groups.map(([key, items]) =>
+          items.length || (key === "cameras" && (showTraffic || showAlpr)) ? (
+            <div key={key} className="layergroup" role="group" aria-labelledby={`lg-${key}`}>
+              <h3 id={`lg-${key}`} className="layergroup__title">
+                {t(GROUP_KEYS[key])}
+              </h3>
+              {key === "cameras" && (
+                <>
+                  {showTraffic && (
+                    <label className="toggle">
+                      <input
+                        type="checkbox"
+                        checked={layers.cameras}
+                        onChange={(e) => setLayer({ cameras: e.target.checked })}
+                      />
+                      <span className="toggle__dot" style={{ background: CAM }} aria-hidden="true" />
+                      <span>{t("trafficCameras")}</span>
+                    </label>
+                  )}
+                  {alprInfo && showAlpr && (
+                    <>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={layers.alpr}
+                          onChange={(e) => setLayer({ alpr: e.target.checked })}
+                        />
+                        <span className="toggle__dot" style={{ background: VENDOR_COLORS.flock }} aria-hidden="true" />
+                        <span>{title(alprInfo)}</span>
+                      </label>
+                      {layers.alpr && (
+                        <fieldset className="subfilter" aria-label={title(alprInfo)}>
+                          {VENDORS.map((v) => (
+                            <label key={v.id} className="toggle toggle--sm">
+                              <input
+                                type="checkbox"
+                                checked={layers.alprVendors[v.id] ?? true}
+                                onChange={(e) => setVendor(v.id, e.target.checked)}
+                              />
+                              <span className="toggle__dot" style={{ background: VENDOR_SWATCH[v.id] }} aria-hidden="true" />
+                              <span>{v.labelKey ? t(v.labelKey) : v.label}</span>
+                            </label>
+                          ))}
+                          <p className="panel__note">{t("alprNote")}</p>
+                        </fieldset>
+                      )}
+                    </>
+                  )}
+                </>
+              )}
+              {items.map(overlayRow)}
+            </div>
+          ) : null,
         )}
-
-        {otherOverlays.map((l) => (
-          <div key={l.name} className="layerrow">
-            <label className={`toggle ${l.available ? "" : "toggle--disabled"}`}>
-              <input
-                type="checkbox"
-                disabled={!l.available}
-                checked={layers.overlays[l.name] ?? false}
-                onChange={(e) => setOverlay(l.name, e.target.checked)}
-              />
-              <span
-                className="toggle__dot"
-                style={{ background: OVERLAY_COLOR[l.name] ?? "#64748b" }}
-                aria-hidden="true"
-              />
-              <span>
-                {title(l)}
-                {!l.available && (
-                  <span className="panel__note"> — {l.requires_key ? t("needsKey") : t("unavailable")}</span>
-                )}
-                {l.available && (layers.overlays[l.name] ?? false) && zoom < (LIVE_SOURCES[l.name]?.minZoom ?? 0) && (
-                  <span className="panel__note"> — {t("zoomInToSee")}</span>
-                )}
-              </span>
-            </label>
-            {(layers.overlays[l.name] ?? false) && l.category !== "raster" && !LIVE_SOURCES[l.name] && (
-              <button
-                type="button"
-                className="dl"
-                title={t("downloadLayer", { layer: title(l) })}
-                aria-label={t("downloadLayer", { layer: title(l) })}
-                onClick={() => void downloadLayer(l.name)}
-              >
-                <span aria-hidden="true">⬇</span>
-              </button>
-            )}
-          </div>
-        ))}
+        {!anyLayerMatch && <p className="panel__note">{t("noLayerMatch")}</p>}
 
         {censusOn && (
           <div className="subfilter">
@@ -318,6 +396,22 @@ export function Sidebar({
                 <li key={c} className="legend__item">
                   <span className="legend__swatch" style={{ background: c }} aria-hidden="true" />
                   {i === 0 ? "<$50k" : i === CENSUS_STOPS.length - 1 ? "$150k+" : `$${v / 1000}k`}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {pctOn && (
+          <div className="subfilter">
+            <span className="panel__note" id="pct-legend">
+              {t("pctLegend")}
+            </span>
+            <ul className="legend" aria-labelledby="pct-legend">
+              {PCT_STOPS.map(([v, c], i) => (
+                <li key={c} className="legend__item">
+                  <span className="legend__swatch" style={{ background: c }} aria-hidden="true" />
+                  {i === PCT_STOPS.length - 1 ? `${v}%+` : `${v}%`}
                 </li>
               ))}
             </ul>

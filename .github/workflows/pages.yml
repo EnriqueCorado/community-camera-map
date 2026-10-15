@@ -13,6 +13,7 @@ on:
     - cron: "*/15 * * * *" # fast live layers (flights, fires, quakes, …)
     - cron: "7 * * * *" # hourly: + haze index and webcam lists (its own cron, so a
     #                       delayed fast run can never skip it)
+    - cron: "37 11 * * *" # daily: OpenStreetMap places (Overpass servers rate-limit)
   workflow_dispatch:
 
 permissions:
@@ -61,6 +62,33 @@ jobs:
       - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
         with:
           version: "0.12.21"
+      # Hourly layers and the daily OpenStreetMap places aren't refreshed on
+      # every run; carry the latest copies into every deploy (nothing is
+      # committed back to git).
+      - name: Restore hourly/daily layers
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            frontend/public/data/layers/fire-cameras.geojson
+            frontend/public/data/layers/smoke-haze.geojson
+            frontend/public/data/layers/river-cameras.geojson
+            frontend/public/data/layers/fire-hotspots.geojson
+            frontend/public/data/layers/wildfire-perimeters.geojson
+            frontend/public/data/layers/aed.geojson
+            frontend/public/data/layers/drinking-water.geojson
+            frontend/public/data/layers/restrooms.geojson
+            frontend/public/data/layers/ev-chargers.geojson
+            frontend/public/data/layers/libraries.geojson
+            frontend/public/data/layers/playgrounds.geojson
+            frontend/public/data/layers/pharmacies.geojson
+            frontend/public/data/layers/fire-stations.geojson
+            frontend/public/data/layers/free-wifi.geojson
+            frontend/public/data/layers/food-banks.geojson
+            frontend/public/data/layers/clinics.geojson
+            frontend/public/data/layers/community-centers.geojson
+            frontend/public/data/layers/farmers-markets.geojson
+          key: live-data-${{ github.run_id }}
+          restore-keys: live-data-
       - name: Refresh live layers (fast)
         if: github.event_name == 'schedule' && github.event.schedule == '*/15 * * * *'
         working-directory: backend
@@ -69,6 +97,34 @@ jobs:
         if: github.event_name != 'schedule' || github.event.schedule == '7 * * * *'
         working-directory: backend
         run: uv run --locked python scripts/refresh_live.py --hourly
+      - name: Refresh OpenStreetMap places (daily, and on manual runs)
+        if: github.event.schedule == '37 11 * * *' || github.event_name == 'workflow_dispatch'
+        working-directory: backend
+        run: uv run --locked python scripts/refresh_live.py --daily
+      - name: Save hourly/daily layers
+        if: github.event_name != 'schedule' || github.event.schedule != '*/15 * * * *'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            frontend/public/data/layers/fire-cameras.geojson
+            frontend/public/data/layers/smoke-haze.geojson
+            frontend/public/data/layers/river-cameras.geojson
+            frontend/public/data/layers/fire-hotspots.geojson
+            frontend/public/data/layers/wildfire-perimeters.geojson
+            frontend/public/data/layers/aed.geojson
+            frontend/public/data/layers/drinking-water.geojson
+            frontend/public/data/layers/restrooms.geojson
+            frontend/public/data/layers/ev-chargers.geojson
+            frontend/public/data/layers/libraries.geojson
+            frontend/public/data/layers/playgrounds.geojson
+            frontend/public/data/layers/pharmacies.geojson
+            frontend/public/data/layers/fire-stations.geojson
+            frontend/public/data/layers/free-wifi.geojson
+            frontend/public/data/layers/food-banks.geojson
+            frontend/public/data/layers/clinics.geojson
+            frontend/public/data/layers/community-centers.geojson
+            frontend/public/data/layers/farmers-markets.geojson
+          key: live-data-${{ github.run_id }}
       - name: Fetch Windy list (if the windy job produced one)
         if: needs.windy.result == 'success'
         continue-on-error: true # no artifact when no key is configured

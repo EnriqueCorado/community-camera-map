@@ -7,9 +7,12 @@ without network access.
 from __future__ import annotations
 
 import csv
+import html
 import io
+import json
 import math
 import re
+import time
 from urllib.parse import urlparse, urlunparse
 
 
@@ -54,17 +57,32 @@ def caltrans_cms(payload: object) -> dict:
             for k in ("phase1Line1", "phase1Line2", "phase1Line3")
         ]
         text = " ".join(x for x in lines if x).strip() or (msg.get("display") or "Blank")
-        feats.append(
-            _pt(lon, lat, {"name": loc.get("locationName", ""), "message": text})
-        )
+        feats.append(_pt(lon, lat, {"name": loc.get("locationName", ""), "message": text}))
     return _fc(feats)
 
 
-def caltrans_lcs(payload: object) -> dict:
-    """Lane closures -> line segments from begin->end coordinates."""
+def _lcs_active(closure: dict, now: float) -> bool:
+    """In effect right now: crew on scene (code 10-97) and not yet picked up
+    (10-98), or inside its scheduled window. The feed also lists closures
+    scheduled days ahead; those are skipped."""
+    if str((closure.get("code1098") or {}).get("isCode1098")) == "true":
+        return False
+    if str((closure.get("code1097") or {}).get("isCode1097")) == "true":
+        return True
+    ts = closure.get("closureTimestamp") or {}
+    start, end = _num(ts.get("closureStartEpoch")), _num(ts.get("closureEndEpoch"))
+    indefinite = str(ts.get("isClosureEndIndefinite")) == "true"
+    return start is not None and start <= now and (indefinite or (end is not None and now <= end))
+
+
+def caltrans_lcs(payload: object, now: float | None = None) -> dict:
+    """Lane closures in effect now -> line segments from begin->end coordinates."""
+    now = time.time() if now is None else now
     feats = []
     for rec in _records(payload):
         lcs = rec.get("lcs", {})
+        if not _lcs_active(lcs.get("closure", {}) or {}, now):
+            continue
         loc = lcs.get("location", {})
         begin, end = loc.get("begin", {}), loc.get("end", {})
         blon, blat = _num(begin.get("beginLongitude")), _num(begin.get("beginLatitude"))
@@ -87,6 +105,8 @@ def caltrans_lcs(payload: object) -> dict:
                 "properties": {
                     "route": begin.get("beginRoute", ""),
                     "type": closure.get("typeOfClosure", closure.get("closureType", "")),
+                    "work": closure.get("typeOfWork", ""),
+                    "lanes": closure.get("lanesClosed", ""),
                 },
             }
         )
@@ -384,6 +404,266 @@ def firms_hotspots(csv_text: str, bbox: tuple[float, float, float, float]) -> di
                     "confidence": str(row.get("confidence") or ""),
                     "frp_mw": _num(row.get("frp")),
                     "daynight": "day" if row.get("daynight") == "D" else "night",
+                },
+            )
+        )
+    return _fc(feats)
+
+
+# ---------- Caltrans road weather / chain controls (all districts) ----------
+
+_MISSING_NTCIP = {"", "65535", "255", "-1"}
+
+
+# A JSON string literal, OR a `}` that is directly followed by a string (the
+# missing-comma defect). Linear-time: no nested quantifiers.
+_STRING_OR_BRACE = re.compile(r'"(?:[^"\\]|\\.)*"|\}(?=\s*")')
+
+
+def _add_missing_comma(m: re.Match) -> str:
+    return m.group(0) if m.group(0).startswith('"') else "},"
+
+
+def parse_caltrans_json(body: bytes) -> dict:
+    """Parse a Caltrans cwwp2 feed. Some feeds (RWIS) ship invalid JSON with
+    repeated keys and no comma between them (`} "key"`). The repair walks the
+    text string-aware — string literals are matched first and left untouched —
+    so a `}` inside a value (e.g. sign text) is never altered."""
+    text = body.decode("utf-8", errors="replace")
+    try:
+        data = json.loads(text)
+    except ValueError:
+        data = json.loads(_STRING_OR_BRACE.sub(_add_missing_comma, text))
+    return data if isinstance(data, dict) else {}
+
+
+def _ntcip(v: object) -> float | None:
+    s = str(v if v is not None else "").strip()
+    return None if s in _MISSING_NTCIP else _num(s)
+
+
+def caltrans_rwis(payload: object) -> dict:
+    """Road weather (RWIS) stations -> points. NTCIP units: air temperature in
+    tenths of °C, wind in tenths of m/s."""
+    feats = []
+    for rec in _records(payload):
+        r = rec.get("rwis", {}) if isinstance(rec, dict) else {}
+        loc = r.get("location", {})
+        lat, lon = _num(loc.get("latitude")), _num(loc.get("longitude"))
+        if lat is None or lon is None or str(r.get("inService")) != "true":
+            continue
+        d = r.get("rwisData", {}) or {}
+        temps = ((d.get("temperatureData") or {}).get("essTemperatureSensorTable")) or []
+        t_c = None
+        for entry in temps if isinstance(temps, list) else []:
+            v = _ntcip(
+                ((entry or {}).get("essTemperatureSensorEntry") or {}).get("essAirTemperature")
+            )
+            if v is not None:
+                t_c = v / 10
+                break
+        wind = d.get("windData") or {}
+        hum = d.get("humidityPrecipData") or {}
+        ms = _ntcip(wind.get("essAvgWindSpeed"))
+        gust = _ntcip(wind.get("essMaxWindGustSpeed"))
+        rh = _ntcip(hum.get("essRelativeHumidity"))
+        feats.append(
+            _pt(
+                lon,
+                lat,
+                {
+                    "name": loc.get("locationName", ""),
+                    "temp_f": None if t_c is None else round(t_c * 9 / 5 + 32),
+                    "wind_mph": None if ms is None else round(ms / 10 * 2.237),
+                    "gust_mph": None if gust is None else round(gust / 10 * 2.237),
+                    "humidity": None if rh is None or rh > 100 else round(rh),
+                    "elevation_ft": _num(loc.get("elevation")),
+                },
+            )
+        )
+    return _fc(feats)
+
+
+def caltrans_chain(payload: object) -> dict:
+    """Chain-control checkpoints -> points with status (R-0 none … R-3)."""
+    feats = []
+    for rec in _records(payload):
+        c = rec.get("cc", {}) if isinstance(rec, dict) else {}
+        loc = c.get("location", {})
+        lat, lon = _num(loc.get("latitude")), _num(loc.get("longitude"))
+        if lat is None or lon is None or str(c.get("inService")) != "true":
+            continue
+        st = c.get("statusData", {}) or {}
+        code = str(st.get("status") or "")
+        feats.append(
+            _pt(
+                lon,
+                lat,
+                {
+                    "name": loc.get("locationName", ""),
+                    "route": loc.get("route", ""),
+                    "status": code if re.fullmatch(r"R-[0-3]", code) else "",
+                    "detail": str(st.get("statusDescription") or "").strip(),
+                },
+            )
+        )
+    return _fc(feats)
+
+
+# ---------- ArcGIS field selection ----------
+
+
+def select_props(fc: object, mapping: dict[str, str]) -> dict:
+    """Keep only `mapping`'s fields from an ArcGIS GeoJSON layer, renamed.
+    Unknown/third-party fields (incl. editor or contact fields) never ship."""
+    feats = []
+    for f in fc.get("features", []) if isinstance(fc, dict) else []:
+        if not isinstance(f, dict) or not f.get("geometry"):
+            continue
+        p = f.get("properties") or {}
+        feats.append(
+            {
+                "type": "Feature",
+                "geometry": f["geometry"],
+                "properties": {new: p.get(old) for old, new in mapping.items()},
+            }
+        )
+    return _fc(feats)
+
+
+_EPA_LINK = re.compile(
+    r'href="(https://cumulis\.epa\.gov/supercpad/cursites/csitinfo\.cfm\?id=\d+)"'
+)
+
+
+def superfund_sites(fc: object) -> dict:
+    """EPA NPL sites -> name/city/status/dates + the EPA site-profile link."""
+    out = select_props(
+        fc,
+        {
+            "Site_Name": "name",
+            "City": "city",
+            "Status": "status",
+            "Listing_Date": "listed",
+            "Construction_Completion_Date": "cleanup_built",
+            "Site_Progress_Profile": "_profile",
+        },
+    )
+    for f in out["features"]:
+        p = f["properties"]
+        m = _EPA_LINK.search(str(p.pop("_profile") or ""))
+        p["page"] = m.group(1) if m else ""
+    return out
+
+
+_NARA = re.compile(r"https://catalog\.archives\.gov/id/\d+")
+
+
+def historic_places(fc: object) -> dict:
+    """National Register of Historic Places points -> name/type/address + the
+    National Archives nomination link (only if it's that exact host)."""
+    out = select_props(
+        fc,
+        {
+            "RESNAME": "name",
+            "ResType": "kind",
+            "Address": "address",
+            "City": "city",
+            "CertDate": "listed",
+            "NARA_URL": "page",
+        },
+    )
+    for f in out["features"]:
+        p = f["properties"]
+        p["page"] = p["page"] if isinstance(p["page"], str) and _NARA.fullmatch(p["page"]) else ""
+        p["listed"] = str(p["listed"] or "").rstrip("-")
+    return out
+
+
+_TAG = re.compile(r"<[^<>]{0,200}>")
+
+
+def strip_html(v: object) -> str:
+    """Plain text from a field that sometimes carries markup (e.g. <i>…</i>)."""
+    return re.sub(r"\s+", " ", html.unescape(_TAG.sub("", str(v or "")))).strip()
+
+
+_HMDB = re.compile(r"https?://(?:www\.)?hmdb\.org/m\.asp\?m=(\d+)")
+
+
+def historical_markers(fc: object) -> dict:
+    """HMdb markers -> title/subtitle/year/erected-by/where + an https HMdb link."""
+    out = select_props(
+        fc,
+        {
+            "Title": "name",
+            "Add_l_Subtitle": "subtitle",
+            "Year_Erected": "built",
+            "Erected_By": "erected_by",
+            "Location": "where",
+            "Link": "page",
+        },
+    )
+    for f in out["features"]:
+        p = f["properties"]
+        for k in ("name", "subtitle", "erected_by", "where"):
+            p[k] = strip_html(p.get(k))
+        m = _HMDB.fullmatch(str(p.get("page") or ""))
+        p["page"] = f"https://www.hmdb.org/m.asp?m={m.group(1)}" if m else ""
+    return out
+
+
+# ---------- OpenStreetMap places (Overpass) ----------
+
+
+def osm_points(
+    payload: object,
+    region: tuple[float, float, float, float] | None = None,
+    max_features: int = 5000,
+) -> dict:
+    """Overpass `out center tags` JSON -> points (nodes, and centers of ways),
+    keeping a small set of useful tags and a link to the OSM object. Points
+    outside `region` (south, west, north, east) are dropped and the count is
+    capped — a misbehaving mirror can't plant pins elsewhere or flood the layer."""
+    els = payload.get("elements", []) if isinstance(payload, dict) else []
+    feats = []
+    for el in els:
+        if len(feats) >= max_features:
+            break
+        if not isinstance(el, dict):
+            continue
+        center = el.get("center") or {}
+        lat = _num(el.get("lat")) if el.get("lat") is not None else _num(center.get("lat"))
+        lon = _num(el.get("lon")) if el.get("lon") is not None else _num(center.get("lon"))
+        if lat is None or lon is None:
+            continue
+        if region and not (region[0] <= lat <= region[2] and region[1] <= lon <= region[3]):
+            continue
+        tags = el.get("tags") or {}
+        osm_type, osm_id = str(el.get("type") or ""), el.get("id")
+        sockets = sorted(
+            k[7:].replace("_", " ")
+            for k, v in tags.items()
+            if re.fullmatch(r"socket:[a-z0-9_]+", k) and v != "no"
+        )
+        feats.append(
+            _pt(
+                lon,
+                lat,
+                {
+                    "name": tags.get("name") or tags.get("operator") or tags.get("brand") or "",
+                    "access": tags.get("access", ""),
+                    "hours": tags.get("opening_hours", ""),
+                    "indoor": tags.get("indoor") == "yes" or tags.get("location") == "indoor",
+                    "fee": tags.get("fee", ""),
+                    "wheelchair": tags.get("wheelchair", ""),
+                    "capacity": _num(tags.get("capacity")),
+                    "sockets": ", ".join(sockets),
+                    "page": (
+                        f"https://www.openstreetmap.org/{osm_type}/{int(osm_id)}"
+                        if osm_type in ("node", "way", "relation") and isinstance(osm_id, int)
+                        else ""
+                    ),
                 },
             )
         )

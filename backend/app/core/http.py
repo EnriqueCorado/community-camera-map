@@ -42,3 +42,24 @@ async def fetch_capped(
                 raise ResponseTooLarge(f"Upstream body exceeded cap {max_bytes}")
             chunks.append(chunk)
         return b"".join(chunks), content_type
+
+
+async def post_capped(
+    client: httpx.AsyncClient,
+    url: str,
+    *,
+    data: dict,
+    max_bytes: int,
+    timeout_s: float = 90.0,
+) -> bytes:
+    """POST form `data`, returning the body, aborting past `max_bytes`."""
+    async with client.stream("POST", url, data=data, timeout=timeout_s) as resp:
+        resp.raise_for_status()
+        chunks: list[bytes] = []
+        total = 0
+        async for chunk in resp.aiter_bytes():
+            total += len(chunk)
+            if total > max_bytes:
+                raise ResponseTooLarge(f"Upstream body exceeded cap {max_bytes}")
+            chunks.append(chunk)
+        return b"".join(chunks)

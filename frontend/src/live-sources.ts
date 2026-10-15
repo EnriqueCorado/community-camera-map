@@ -3,12 +3,12 @@
 // to the map. Parsing lives in live-parsers.ts (pure, unit-tested).
 import {
   gridPoints,
+  parseAirQuality,
   latestKp,
   parseAmtrak,
   parseINat,
   parseIss,
   parseOpenMeteo,
-  parseOverpass,
   parseWiki,
 } from "./live-parsers";
 import type { Sat } from "./satellites";
@@ -51,17 +51,6 @@ async function getJSON(url: string, signal: AbortSignal, init?: RequestInit): Pr
   return r.json();
 }
 
-/** Sleep that ends early (rejecting) when `signal` aborts. */
-function sleep(ms: number, signal: AbortSignal): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const id = setTimeout(resolve, ms);
-    signal.addEventListener("abort", () => {
-      clearTimeout(id);
-      reject(new DOMException("aborted", "AbortError"));
-    }, { once: true });
-  });
-}
-
 // CelesTrak asks clients not to re-download a group within its update window
 // (about 2 h). Keep the raw elements in localStorage across reloads/toggles.
 const CELESTRAK_CACHE = "scm-celestrak";
@@ -93,34 +82,6 @@ async function kp(signal: AbortSignal): Promise<number | null> {
 let sats: Sat[] = [];
 // Orbit math (satellite.js) is only downloaded when the layer is first used.
 let satLib: typeof import("./satellites") | null = null;
-
-const OVERPASS = "https://overpass-api.de/api/interpreter";
-function overpass(selector: string): LiveSource {
-  return {
-    refreshMs: 30 * 60_000,
-    byView: true,
-    minZoom: 12,
-    async load({ bbox: [w, s, e, n], signal }) {
-      const q = `[out:json][timeout:25];nwr${selector}(${s},${w},${n},${e});out center 300;`;
-      // Form-encoded POST is a CORS "simple request" (no preflight). The public
-      // server answers 429/504 when busy: back off and retry only those.
-      const init: RequestInit = {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `data=${encodeURIComponent(q)}`,
-      };
-      for (let attempt = 0; ; attempt++) {
-        try {
-          return parseOverpass(await getJSON(OVERPASS, signal, init));
-        } catch (err) {
-          const busy = err instanceof HttpError && (err.status === 429 || err.status === 504);
-          if (!busy || signal.aborted || attempt >= 2) throw err;
-          await sleep(3000 * (attempt + 1), signal);
-        }
-      }
-    },
-  };
-}
 
 export const LIVE_SOURCES: Record<string, LiveSource> = {
   iss: {
@@ -191,8 +152,18 @@ export const LIVE_SOURCES: Record<string, LiveSource> = {
       return parseOpenMeteo(await getJSON(`https://api.open-meteo.com/v1/forecast?${p}`, signal));
     },
   },
-  aed: overpass('["emergency"="defibrillator"]'),
-  "drinking-water": overpass('["amenity"="drinking_water"]'),
-  restrooms: overpass('["amenity"="toilets"]'),
-  "ev-chargers": overpass('["amenity"="charging_station"]'),
+  "air-now": {
+    refreshMs: 15 * 60_000,
+    byView: true,
+    minZoom: 5,
+    async load({ bbox, signal }) {
+      const pts = gridPoints(bbox, 5);
+      const p = new URLSearchParams({
+        latitude: pts.map((x) => x[0]).join(","),
+        longitude: pts.map((x) => x[1]).join(","),
+        current: "us_aqi,pm2_5,ozone",
+      });
+      return parseAirQuality(await getJSON(`https://air-quality-api.open-meteo.com/v1/air-quality?${p}`, signal));
+    },
+  },
 };

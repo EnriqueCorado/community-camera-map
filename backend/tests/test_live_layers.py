@@ -222,7 +222,29 @@ def test_firms_keeps_only_california_with_clean_fields():
     }
 
 
-BROWSER_LIVE = ["iss", "satellites", "trains", "wildlife", "wikipedia", "weather-now", "aed", "drinking-water", "restrooms", "ev-chargers"]
+BROWSER_LIVE = ["iss", "satellites", "trains", "wildlife", "wikipedia", "weather-now", "air-now"]
+
+
+def test_osm_places_are_server_side_layers():
+    from app.layers.service import OSM_PLACES
+
+    for name in OSM_PLACES:
+        assert not LAYERS[name].client_side and LAYERS[name].category == "poi"
+
+
+def test_osm_points_keep_useful_tags_and_link():
+    payload = {"elements": [
+        {"type": "node", "id": 42, "lat": 37.6, "lon": -121, "tags": {"amenity": "charging_station", "operator": "ChargePoint",
+                                                                        "socket:type1": "2", "socket:chademo": "no", "capacity": "4"}},
+        {"type": "way", "id": 7, "center": {"lat": 37.61, "lon": -121.01}, "tags": {"amenity": "toilets", "access": "yes"}},
+        {"type": "node", "id": 1, "tags": {}},
+        "junk",
+    ]}
+    feats = transforms.osm_points(payload)["features"]
+    assert len(feats) == 2
+    assert feats[0]["properties"]["name"] == "ChargePoint" and feats[0]["properties"]["sockets"] == "type1"
+    assert feats[0]["properties"]["page"] == "https://www.openstreetmap.org/node/42"
+    assert feats[1]["properties"]["page"] == "https://www.openstreetmap.org/way/7"
 
 
 @pytest.mark.parametrize("name", BROWSER_LIVE)
@@ -272,9 +294,124 @@ async def test_no_baked_fallback_for_missing_keys_or_when_disabled(tmp_path, mon
 
     monkeypatch.setitem(LAYERS, "zoning", dataclasses.replace(LAYERS["zoning"], loader=boom))
     monkeypatch.setitem(LAYERS, "windy-webcams", dataclasses.replace(LAYERS["windy-webcams"], loader=nokey))
-    live = LayerService(settings=Settings(), client=None)  # type: ignore[arg-type]
+    # No key configured (explicitly: the developer's .env may hold one).
+    live = LayerService(settings=Settings(windy_api_key=""), client=None)  # type: ignore[arg-type]
     with pytest.raises(CensusKeyMissing):
         await live.get_bytes("windy-webcams")
     baking = LayerService(settings=Settings(), client=None, fallback_to_baked=False)  # type: ignore[arg-type]
     with pytest.raises(RuntimeError):
         await baking.get_bytes("zoning")
+
+
+def test_census_percentages_from_count_pairs():
+    from app.layers.census import _percentages
+
+    out = _percentages({"population": 10.0, "_spanish": 804.0, "_lang_total": 5471.0, "_poverty": 0.0, "_poverty_total": 0.0,
+                        "_renters": None, "_homes_total": 100.0, "_foreign_born": 484.0, "_born_total": 5632.0})
+    assert out == {"population": 10.0, "pct_spanish": 14.7, "pct_poverty": None, "pct_renters": None, "pct_foreign_born": 8.6}
+
+
+def test_derived_layers_share_their_source_data():
+    assert LAYERS["census-spanish"].same_data_as == "census"
+    assert LAYERS["census-spanish"].requires_key
+
+
+async def test_cold_start_serves_a_fresh_baked_copy_without_fetching(tmp_path, monkeypatch):
+    import dataclasses
+    import json as _json
+    import os
+    import time as _time
+
+    import app.layers.service as svc_mod
+
+    f = tmp_path / "zoning.geojson"
+    f.write_bytes(b'{"type":"FeatureCollection","features":[{"baked":1}]}')
+    times = tmp_path / "layer_times.json"
+    times.write_text(_json.dumps({"zoning": _time.time()}))
+    monkeypatch.setattr(svc_mod, "BAKED_LAYERS", tmp_path)
+    monkeypatch.setattr(svc_mod, "LAYER_TIMES", times)
+    calls = []
+
+    async def loader(_c, _s):
+        calls.append(1)
+        return {"type": "FeatureCollection", "features": []}
+
+    monkeypatch.setitem(LAYERS, "zoning", dataclasses.replace(LAYERS["zoning"], loader=loader, ttl=3600))
+    svc = LayerService(settings=Settings(), client=None)  # type: ignore[arg-type]
+    assert b'"baked":1' in await svc.get_bytes("zoning") and calls == []
+    # Recorded fetch older than the TTL (file mtime is irrelevant): fetch fresh.
+    times.write_text(_json.dumps({"zoning": _time.time() - 7200}))
+    os.utime(f, None)
+    svc2 = LayerService(settings=Settings(), client=None)  # type: ignore[arg-type]
+    await svc2.get_bytes("zoning")
+    assert calls == [1]
+
+
+def test_caltrans_repair_never_touches_braces_inside_strings():
+    broken = b'{"data": [{"msg": "SEE {B} ", "a": {"x": "1"} "a": {"x": "2"}}]}'
+    out = transforms.parse_caltrans_json(broken)
+    assert out["data"][0]["msg"] == "SEE {B} " and out["data"][0]["a"] == {"x": "2"}
+
+
+def test_osm_points_drop_out_of_region_and_cap():
+    els = [{"type": "node", "id": i, "lat": 37.6, "lon": -121.0, "tags": {}} for i in range(10)]
+    els.append({"type": "node", "id": 99, "lat": 51.5, "lon": -0.1, "tags": {}})  # London
+    region = (37.13, -121.56, 38.08, -120.38)
+    assert len(transforms.osm_points({"elements": els}, region=region)["features"]) == 10
+    assert len(transforms.osm_points({"elements": els}, region=region, max_features=3)["features"]) == 3
+
+
+def test_every_osm_layer_has_a_matcher():
+    from app.layers.service import OSM_MATCH, OSM_PLACES
+
+    assert set(OSM_MATCH) == set(OSM_PLACES)
+
+
+async def test_osm_layers_share_one_union_query_and_reject_remarks(monkeypatch):
+    import httpx
+
+    import app.layers.service as svc_mod
+
+    monkeypatch.setattr(svc_mod, "_osm_union", {})
+    monkeypatch.setattr(svc_mod.asyncio, "sleep", lambda _s: asyncio_noop())
+    calls: list[str] = []
+    elements = [
+        {"type": "node", "id": 1, "lat": 37.6, "lon": -121.0, "tags": {"amenity": "library", "name": "Modesto Library"}},
+        {"type": "node", "id": 2, "lat": 37.6, "lon": -121.0, "tags": {"amenity": "pharmacy"}},
+    ]
+
+    def handler(request):
+        calls.append(str(request.url))
+        return httpx.Response(200, json={"elements": elements})
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+        lib = await svc_mod._overpass("libraries")(client, None)
+        pharm = await svc_mod._overpass("pharmacies")(client, None)
+    assert [f["properties"]["name"] for f in lib["features"]] == ["Modesto Library"]
+    assert len(pharm["features"]) == 1
+    assert len(calls) == 1  # one query served both layers
+
+    # A timeout "remark" (HTTP 200, partial data) must fail, not blank the layer.
+    monkeypatch.setattr(svc_mod, "_osm_union", {})
+
+    def remark(request):
+        return httpx.Response(200, json={"elements": [], "remark": "runtime error: Query timed out"})
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(remark)) as client:
+        with pytest.raises(httpx.HTTPError):
+            await svc_mod._overpass("libraries")(client, None)
+
+
+async def asyncio_noop():
+    return None
+
+
+def test_committed_flights_file_is_an_empty_placeholder():
+    """Real positions only exist in the CI-built site. Running refresh_live.py
+    locally writes them to the working tree — reset before committing:
+    printf '{"type":"FeatureCollection","features":[]}' > frontend/public/data/layers/flights.geojson"""
+    import json
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parents[2] / "frontend/public/data/layers/flights.geojson"
+    assert json.loads(path.read_text())["features"] == []

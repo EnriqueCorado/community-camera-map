@@ -65,6 +65,41 @@ export const OVERLAY_COLOR: Record<string, string> = {
   "drinking-water": "#0284c7",
   restrooms: "#8b5cf6",
   "ev-chargers": "#059669",
+  "road-weather": "#0ea5e9",
+  "chain-controls": "#64748b",
+  "wildfire-perimeters": "#dc2626",
+  faults: "#9f1239",
+  superfund: "#a16207",
+  "power-plants": "#ca8a04",
+  substations: "#57534e",
+  "air-now": "#16a34a",
+  libraries: "#7c3aed",
+  playgrounds: "#db2777",
+  pharmacies: "#0d9488",
+  "fire-stations": "#b91c1c",
+  "free-wifi": "#2563eb",
+  "cooling-centers": "#0891b2",
+  sandbags: "#92400e",
+  shelters: "#be185d",
+  "fire-districts": "#ef4444",
+  bridges: "#475569",
+  rivers: "#0284c7",
+  railroads: "#44403c",
+  "elementary-districts": "#8b5cf6",
+  "high-school-districts": "#6d28d9",
+  "county-islands": "#f97316",
+  "mosquito-districts": "#65a30d",
+  "historic-places": "#a16207",
+  "food-banks": "#ea580c",
+  clinics: "#e11d48",
+  "community-centers": "#0f766e",
+  "farmers-markets": "#4d7c0f",
+  "historical-markers": "#854d0e",
+  "mobile-home-parks": "#c2410c",
+  "census-spanish": "#756bb1",
+  "census-poverty": "#756bb1",
+  "census-renters": "#756bb1",
+  "census-foreign-born": "#756bb1",
 };
 
 // CalEnviroScreen overall percentile ramp (green = low burden, red = high).
@@ -75,6 +110,24 @@ export const ENVIRO_STOPS: [number, string][] = [
   [75, "#fdae61"],
   [100, "#d73027"],
 ];
+
+/** Share-of-residents choropleth (percent), light -> dark purple. */
+export const PCT_STOPS: [number, string][] = [
+  [0, "#f2f0f7"],
+  [15, "#cbc9e2"],
+  [30, "#9e9ac8"],
+  [50, "#756bb1"],
+  [70, "#54278f"],
+];
+
+/** Which census property each census layer colors by. */
+export const CENSUS_FIELD: Record<string, string> = {
+  census: "median_income",
+  "census-spanish": "pct_spanish",
+  "census-poverty": "pct_poverty",
+  "census-renters": "pct_renters",
+  "census-foreign-born": "pct_foreign_born",
+};
 
 export const CENSUS_STOPS: [number, string][] = [
   [0, "#eef3f7"],

@@ -20,8 +20,10 @@ async function stubAll(page: Page) {
   await page.route("https://*.wikipedia.org/**", (r) => r.fulfill(json({ query: { geosearch: [{ title: "Gallo Center for the Arts", lat: 37.64, lon: -120.99, dist: 120 }] } })));
   await page.route("https://api.open-meteo.com/**", (r) => r.fulfill(json([
     { latitude: 37.64, longitude: -120.99, current: { temperature_2m: 78.4, wind_speed_10m: 3.2, wind_direction_10m: 315, relative_humidity_2m: 22 } }])));
-  await page.route("https://overpass-api.de/**", (r) => r.fulfill(json({ elements: [
-    { type: "node", id: 42, lat: 37.64, lon: -120.99, tags: { emergency: "defibrillator", name: "City Hall AED", access: "yes", indoor: "yes" } }] })));
+  // OSM places are server-side layers (fetched daily in CI), not browser-live.
+  await page.route("**/api/layers/aed", (r) => r.fulfill({ contentType: "application/geo+json", body: JSON.stringify({
+    type: "FeatureCollection", features: [{ type: "Feature", geometry: { type: "Point", coordinates: [-120.99, 37.64] },
+      properties: { name: "City Hall AED", access: "yes", indoor: true, page: "https://www.openstreetmap.org/node/42" } }] }) }));
 }
 
 async function ready(page: Page) {

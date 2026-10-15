@@ -542,6 +542,9 @@ body:has(.app) {
 .map {
   position: absolute;
   inset: 0;
+  /* Basemap land color: if a frame is ever drawn before the map repaints,
+     it matches the map instead of flashing the (dark) page behind it. */
+  background: #f2efe9;
 }
 
 .marker {
@@ -700,7 +703,14 @@ body:has(.app) {
     grid-template-rows: 1fr 1fr;
   }
   .app--panel-closed {
-    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0px;
+  }
+  .sidebar {
+    width: auto;
+  }
+  .app--panel-closed .sidebar {
+    transform: translateY(100%);
   }
   .sidebar {
     border-right: 0;
@@ -793,15 +803,48 @@ body:has(.app) {
   outline-offset: 2px;
 }
 
-/* Minimized panel: the map takes the whole window. */
-.sidebar[hidden] {
-  display: none;
+/* Minimized panel: it slides out while the map column eases wider (the map
+   itself follows via its ResizeObserver). Visibility flips after the slide. */
+.app {
+  transition: grid-template-columns 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    grid-template-rows 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.app--panel-closed {
-  grid-template-columns: 1fr;
+.sidebar {
+  position: relative;
+  z-index: 3;
+  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s linear 0s;
+}
+.app--panel-closed .sidebar {
+  visibility: hidden;
+  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s linear 280ms;
+}
+/* Desktop: the panel slides left while its column eases to 0. (Phones: the
+   bottom-sheet rules in the 760px media query.) */
+@media (min-width: 761px) {
+  .sidebar {
+    width: var(--sidebar-w);
+  }
+  .app--panel-closed {
+    grid-template-columns: 0px 1fr;
+  }
+  .app--panel-closed .sidebar {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes panel-show-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .panel-show {
+  animation: panel-show-in 220ms ease-out 120ms both;
   position: absolute;
   top: 12px;
   left: 12px;
@@ -1156,4 +1199,30 @@ fieldset.subfilter {
   columns: 2 220px;
   display: block;
   font-size: 13px;
+}
+
+/* ---------- Layer groups + filter ---------- */
+.search--sm {
+  padding: 7px 10px;
+  font-size: 13px;
+}
+
+.layergroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.layergroup + .layergroup {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+}
+
+.layergroup__title {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 650;
+  color: var(--muted);
 }

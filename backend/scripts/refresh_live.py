@@ -28,7 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import httpx
 
 from app.core.config import get_settings
-from app.layers.service import LayerService
+from app.layers.service import LayerService, record_layer_times
 
 for _noisy in ("httpx", "httpcore"):
     logging.getLogger(_noisy).setLevel(logging.WARNING)
@@ -43,12 +43,31 @@ FAST = (
     "lane-closures",
     "message-signs",
     "streamflow",
+    "road-weather",
+    "chain-controls",
+)
+# Slow-changing, and Overpass servers rate-limit: once a day.
+DAILY = (
+    "aed",
+    "drinking-water",
+    "restrooms",
+    "ev-chargers",
+    "libraries",
+    "playgrounds",
+    "pharmacies",
+    "fire-stations",
+    "free-wifi",
+    "food-banks",
+    "clinics",
+    "community-centers",
+    "farmers-markets",
 )
 HOURLY = (
-    "fire-cameras",
+    "fire-cameras",  # before smoke-haze, which reuses it
     "smoke-haze",
     "river-cameras",
     "fire-hotspots",
+    "wildfire-perimeters",
 )  # haze reuses fire-cameras
 
 
@@ -58,6 +77,7 @@ async def main(names: tuple[str, ...]) -> int:
     catalog = json.loads(catalog_path.read_text())
     by_name = {c["name"]: c for c in catalog}
     ok = 0
+    refreshed: list[str] = []
     async with httpx.AsyncClient(
         timeout=60.0, headers={"User-Agent": "stanislaus-cam-map/refresh"}, follow_redirects=True
     ) as client:
@@ -76,9 +96,12 @@ async def main(names: tuple[str, ...]) -> int:
             (OUT / "layers" / f"{name}.geojson").write_bytes(body)
             if name in by_name:
                 by_name[name]["available"] = True
+                by_name[name]["count"] = n
             ok += 1
+            refreshed.append(name)
             print(f"  {name}: {n} features")
     catalog_path.write_text(json.dumps(catalog, separators=(",", ":")))
+    record_layer_times(refreshed)
     if ok and "flights" in names:  # only claim "live" when the live layers refreshed
         meta_path = OUT / "meta.json"
         meta = json.loads(meta_path.read_text()) if meta_path.exists() else {}
@@ -114,10 +137,17 @@ def adopt(name: str) -> int:
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--hourly", action="store_true", help="also refresh slower/heavier layers")
+    ap.add_argument("--daily", action="store_true", help="refresh the OpenStreetMap places")
     ap.add_argument("--only", help="comma-separated layer names (e.g. windy-webcams)")
     ap.add_argument("--adopt", help="mark an already-present layer file available (CI artifact)")
     args = ap.parse_args()
     if args.adopt:
         raise SystemExit(adopt(args.adopt))
-    chosen = tuple(args.only.split(",")) if args.only else FAST + (HOURLY if args.hourly else ())
+    chosen = (
+        tuple(args.only.split(","))
+        if args.only
+        else DAILY + FAST  # the daily run deploys too: keep live layers fresh
+        if args.daily
+        else FAST + (HOURLY if args.hourly else ())
+    )
     raise SystemExit(asyncio.run(main(chosen)))

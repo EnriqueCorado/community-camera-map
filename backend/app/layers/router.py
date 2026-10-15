@@ -27,6 +27,7 @@ class LayerInfo(BaseModel):
     category: str
     available: bool
     requires_key: bool
+    same_data_as: str | None = None
 
 
 @router.get("", summary="List available overlay layers")
@@ -39,6 +40,7 @@ async def list_layers(service: LayerService = Depends(get_service)) -> list[Laye
             category=layer.category,
             available=service.is_available(layer),
             requires_key=layer.requires_key,
+            same_data_as=layer.same_data_as,
         )
         for layer in service.list_layers()
     ]

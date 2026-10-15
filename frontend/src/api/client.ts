@@ -22,6 +22,10 @@ export interface LayerInfo {
   category: string;
   available: boolean;
   requires_key: boolean;
+  /** Serves another layer's data: same file (cached by the browser), styled differently. */
+  same_data_as?: string | null;
+  /** Feature count at bake/refresh time (static site only). */
+  count?: number;
   source?: string;
 }
 

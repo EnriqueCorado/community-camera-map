@@ -161,38 +161,6 @@ export function gridPoints(bbox: [number, number, number, number], n = 5): [numb
   return out;
 }
 
-/** Overpass `out center` JSON -> points (nodes and the centers of ways). */
-export function parseOverpass(json: unknown): FC {
-  const els = (json as { elements?: unknown } | null)?.elements;
-  if (!Array.isArray(els)) return fc([]);
-  const feats: FC["features"] = [];
-  for (const el of els as Props[]) {
-    const center = (el.center ?? {}) as Props;
-    const lat = num(el.lat) ?? num(center.lat), lon = num(el.lon) ?? num(center.lon);
-    if (!ok(lat, lon)) continue;
-    const tags = (el.tags ?? {}) as Record<string, unknown>;
-    const id = num(el.id), type = str(el.type);
-    feats.push(
-      pt(lon!, lat!, {
-        name: str(tags.name) || str(tags.operator) || str(tags.brand),
-        access: str(tags.access),
-        hours: str(tags.opening_hours),
-        indoor: str(tags.indoor) === "yes" || str(tags.location) === "indoor",
-        level: str(tags.level),
-        fee: str(tags.fee),
-        wheelchair: str(tags.wheelchair),
-        capacity: num(tags.capacity),
-        sockets: Object.keys(tags)
-          .filter((k) => /^socket:[a-z0-9_]+$/.test(k) && tags[k] !== "no")
-          .map((k) => k.slice(7).replace(/_/g, " "))
-          .join(", "),
-        page: id != null && /^(node|way|relation)$/.test(type) ? `https://www.openstreetmap.org/${type}/${id}` : "",
-      }),
-    );
-  }
-  return fc(feats);
-}
-
 /** Airline-style callsign (ICAO airline code + flight number), e.g. "UAL366".
  *  Tail numbers (N123AB) and other private callsigns don't match, so we
  *  never look up routes for private planes. */
@@ -224,4 +192,32 @@ export function parseRoute(json: unknown): FlightRoute | null {
   const from = place(r.origin), to = place(r.destination);
   if (!from || !to) return null;
   return { airline: str(((r.airline ?? {}) as Props).name), from, to };
+}
+
+/** EPA AQI category for a US AQI value. */
+export function aqiCategory(aqi: number | null): "good" | "moderate" | "usg" | "unhealthy" | "very" | "hazardous" | null {
+  if (aqi == null) return null;
+  return aqi <= 50 ? "good" : aqi <= 100 ? "moderate" : aqi <= 150 ? "usg" : aqi <= 200 ? "unhealthy" : aqi <= 300 ? "very" : "hazardous";
+}
+
+/** Open-Meteo air-quality multi-location `current` response -> points. */
+export function parseAirQuality(json: unknown): FC {
+  const rows = Array.isArray(json) ? json : json ? [json] : [];
+  const feats: FC["features"] = [];
+  for (const r of rows as Props[]) {
+    const lat = num(r.latitude), lon = num(r.longitude);
+    const c = (r.current ?? {}) as Props;
+    const aqi = num(c.us_aqi);
+    if (!ok(lat, lon) || aqi == null) continue;
+    feats.push(
+      pt(lon!, lat, {
+        aqi: Math.round(aqi),
+        category: aqiCategory(aqi),
+        pm2_5: num(c.pm2_5) != null ? Math.round(num(c.pm2_5)! * 10) / 10 : null,
+        ozone: num(c.ozone) != null ? Math.round(num(c.ozone)!) : null,
+        label: String(Math.round(aqi)),
+      }),
+    );
+  }
+  return fc(feats);
 }

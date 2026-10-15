@@ -24,7 +24,7 @@ from pathlib import Path
 import httpx
 
 from ..core.config import Settings
-from ..core.http import fetch_capped
+from ..core.http import fetch_capped, post_capped
 from . import arcgis, census, haze, transforms
 
 logger = logging.getLogger(__name__)
@@ -50,6 +50,8 @@ class Layer:
     ttl: int | None = None
     # tiles drawn straight from a public tile server in the browser (no GeoJSON)
     client_side: bool = False
+    # serves another layer's data (same features, styled differently in the UI)
+    same_data_as: str | None = None
 
 
 # County bounding box (WGS84) for spatially filtering large statewide/national layers.
@@ -105,6 +107,154 @@ def _arcgis_transform(
 
 CALIFORNIA_BBOX = (-124.5, 32.5, -114.1, 42.1)
 
+# OpenStreetMap places, fetched server-side for the Stanislaus region (daily in
+# CI). Public Overpass servers rate-limit hard and only one allows browsers, so
+# visitors never query Overpass directly. Mirrors are tried in order.
+OVERPASS_MIRRORS = (  # the OSM community's main instance first; third-party last
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
+    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+)
+OSM_REGION = (37.13, -121.56, 38.08, -120.38)  # south, west, north, east
+OSM_PLACES = {  # layer -> (title, description noun, Overpass selector)
+    "aed": ("Defibrillators (AED)", "Public defibrillators", '["emergency"="defibrillator"]'),
+    "drinking-water": ("Drinking fountains", "Drinking water", '["amenity"="drinking_water"]'),
+    "restrooms": ("Public restrooms", "Public toilets", '["amenity"="toilets"]'),
+    "ev-chargers": (
+        "EV chargers",
+        "Electric-vehicle charging stations",
+        '["amenity"="charging_station"]',
+    ),
+    "libraries": ("Libraries", "Public libraries", '["amenity"="library"]'),
+    "playgrounds": ("Playgrounds", "Playgrounds", '["leisure"="playground"]'),
+    "pharmacies": ("Pharmacies", "Pharmacies", '["amenity"="pharmacy"]'),
+    "fire-stations": ("Fire stations", "Fire stations", '["amenity"="fire_station"]'),
+    "free-wifi": (
+        "Free Wi-Fi",
+        "Free public Wi-Fi hotspots",
+        '["internet_access"~"^(wlan|yes)$"]["internet_access:fee"="no"]',
+    ),
+    "food-banks": (
+        "Food banks & pantries",
+        "Food banks and pantries",
+        '["social_facility"="food_bank"]',
+    ),
+    "clinics": ("Clinics", "Health clinics", '["amenity"="clinic"]'),
+    "community-centers": (
+        "Community centers",
+        "Community centers",
+        '["amenity"="community_centre"]',
+    ),
+    "farmers-markets": ("Markets", "Farmers' and public markets", '["amenity"="marketplace"]'),
+}
+
+
+# Python twins of the Overpass selectors above: one UNION query fetches every
+# category at once, and each layer keeps its own elements by tag.
+OSM_MATCH: dict[str, Callable[[dict], bool]] = {
+    "aed": lambda t: t.get("emergency") == "defibrillator",
+    "drinking-water": lambda t: t.get("amenity") == "drinking_water",
+    "restrooms": lambda t: t.get("amenity") == "toilets",
+    "ev-chargers": lambda t: t.get("amenity") == "charging_station",
+    "libraries": lambda t: t.get("amenity") == "library",
+    "playgrounds": lambda t: t.get("leisure") == "playground",
+    "pharmacies": lambda t: t.get("amenity") == "pharmacy",
+    "fire-stations": lambda t: t.get("amenity") == "fire_station",
+    "free-wifi": lambda t: t.get("internet_access") in ("wlan", "yes")
+    and t.get("internet_access:fee") == "no",
+    "food-banks": lambda t: t.get("social_facility") == "food_bank",
+    "clinics": lambda t: t.get("amenity") == "clinic",
+    "community-centers": lambda t: t.get("amenity") == "community_centre",
+    "farmers-markets": lambda t: t.get("amenity") == "marketplace",
+}
+
+_osm_union: dict = {}  # {"at": monotonic, "elements": [...]}
+_osm_lock = asyncio.Lock()
+OSM_UNION_TTL = 3600
+
+
+async def _osm_elements(client: httpx.AsyncClient) -> list[dict]:
+    """Every OSM place in the region, from ONE union query shared by all OSM
+    layers (cached an hour) — Overpass allows ~2 requests per IP at a time."""
+    async with _osm_lock:
+        if _osm_union and time.monotonic() - _osm_union["at"] < OSM_UNION_TTL:
+            return _osm_union["elements"]
+        s, w, n, e = OSM_REGION
+        union = "".join(f"nwr{sel}({s},{w},{n},{e});" for _t, _n, sel in OSM_PLACES.values())
+        query = f"[out:json][timeout:120];({union});out center tags;"
+        last: Exception | None = None
+        for attempt in range(2):  # two passes over the mirrors, with a pause
+            for url in OVERPASS_MIRRORS:
+                try:
+                    body = await post_capped(
+                        client, url, data={"data": query}, max_bytes=48 * 1024 * 1024, timeout_s=150
+                    )
+                    payload = json.loads(body)
+                    # Overpass reports timeouts/out-of-memory as HTTP 200 + "remark"
+                    # with partial (or no) elements: never treat that as data.
+                    if not isinstance(payload, dict) or payload.get("remark"):
+                        raise ValueError("Overpass returned a remark (partial result)")
+                    elements = payload.get("elements") or []
+                    _osm_union.update(at=time.monotonic(), elements=elements)
+                    return elements
+                except (httpx.HTTPError, ValueError) as exc:
+                    last = exc
+            if attempt == 0:
+                await asyncio.sleep(10)
+        raise httpx.HTTPError(f"all Overpass mirrors failed ({type(last).__name__})")
+
+
+def _overpass(name: str) -> Loader:
+    match = OSM_MATCH[name]
+
+    async def load(client: httpx.AsyncClient, _s: Settings) -> dict:
+        elements = await _osm_elements(client)
+        mine = [el for el in elements if isinstance(el, dict) and match(el.get("tags") or {})]
+        return transforms.osm_points({"elements": mine}, region=OSM_REGION)
+
+    return load
+
+
+def _caltrans(kind: str, transform: Callable[[object], dict]) -> Loader:
+    """A Caltrans cwwp2 feed (lcs, cms, rwis, cc…) for all 12 districts.
+    URL quirk: the directory is d1…d12, the file is D01…D12. A district that
+    fails is skipped; the layer fails only if every district does."""
+
+    async def load(client: httpx.AsyncClient, _s: Settings) -> dict:
+        async def one(d: int) -> dict:
+            url = f"https://cwwp2.dot.ca.gov/data/d{d}/{kind}/{kind}StatusD{d:02d}.json"
+            body, _ = await fetch_capped(client, url, max_bytes=arcgis.MAX_BYTES)
+            return transforms.parse_caltrans_json(body)
+
+        results = await asyncio.gather(*(one(d) for d in range(1, 13)), return_exceptions=True)
+        ok = [r for r in results if isinstance(r, dict)]
+        if not ok:
+            raise next(r for r in results if isinstance(r, BaseException))
+        if len(ok) < 12:  # partial statewide data gets cached for the TTL: say so
+            logger.warning("Caltrans %s: %d of 12 districts failed", kind, 12 - len(ok))
+        return transform({"data": [row for r in ok for row in r.get("data", [])]})
+
+    return load
+
+
+def _arcgis_select(
+    service_url: str,
+    transform: Callable[[object], dict],
+    where: str = "1=1",
+    bbox: str | None = STANISLAUS_BBOX,
+    simplify: float | None = None,
+) -> Loader:
+    """An ArcGIS layer reduced to a fixed set of fields by `transform`."""
+
+    async def load(client: httpx.AsyncClient, _s: Settings) -> dict:
+        fc = await arcgis.fetch_layer(
+            client, service_url, where=where, bbox=bbox, simplify=simplify
+        )
+        return transform(fc)
+
+    return load
+
+
 # Browser-live layers: (name, title, description, category).
 BROWSER_LIVE = (
     ("iss", "Space station (ISS)", "Live position of the International Space Station.", "space"),
@@ -133,10 +283,12 @@ BROWSER_LIVE = (
         "Current conditions on a grid across the view (Open-Meteo).",
         "weather-now",
     ),
-    ("aed", "Defibrillators (AED)", "Public defibrillators mapped in OpenStreetMap.", "poi"),
-    ("drinking-water", "Drinking fountains", "Drinking water mapped in OpenStreetMap.", "poi"),
-    ("restrooms", "Public restrooms", "Public toilets mapped in OpenStreetMap.", "poi"),
-    ("ev-chargers", "EV chargers", "Electric-vehicle charging stations in OpenStreetMap.", "poi"),
+    (
+        "air-now",
+        "Air quality (live)",
+        "Current US AQI on a grid across the view (Open-Meteo).",
+        "aqi",
+    ),
 )
 
 
@@ -173,6 +325,27 @@ BAKED_LAYERS = BAKED_CAMERAS.parent / "layers"
 LIVE_ONLY = {"flights"}
 
 
+# When each baked layer was actually fetched (written by bake.py/refresh_live.py).
+# File mtimes are useless here: a git checkout resets them all to "now".
+LAYER_TIMES = BAKED_CAMERAS.parent / "layer_times.json"
+
+
+def _baked_times() -> dict[str, float]:
+    try:
+        data = json.loads(LAYER_TIMES.read_text())
+        return {k: float(v) for k, v in data.items()} if isinstance(data, dict) else {}
+    except (OSError, ValueError, TypeError):
+        return {}
+
+
+def record_layer_times(names: list[str]) -> None:
+    """Note that `names` were just fetched (merging with earlier entries)."""
+    times = _baked_times()
+    now = time.time()
+    times.update({n: now for n in names})
+    LAYER_TIMES.write_text(json.dumps(times, sort_keys=True, indent=0))
+
+
 def _known_cameras() -> list[tuple[float, float]]:
     try:
         cams = json.loads(BAKED_CAMERAS.read_text()).get("cameras", [])
@@ -206,8 +379,6 @@ async def _windy(client: httpx.AsyncClient, s: Settings) -> dict:
         if len(batch) < 50 or (isinstance(total, int) and len(rows) >= total):
             break
     return transforms.windy_webcams({"webcams": rows}, known=_known_cameras())
-
-
 
 
 async def _airnow(client: httpx.AsyncClient, s: Settings) -> dict:
@@ -315,6 +486,38 @@ LAYERS: dict[str, Layer] = {
         loader=_census,
         requires_key=True,
     ),
+    "census-spanish": Layer(
+        name="census-spanish",
+        title="Spanish spoken at home",
+        description="Share of residents (5+) who speak Spanish at home, by census tract (ACS).",
+        category="census",
+        requires_key=True,
+        same_data_as="census",
+    ),
+    "census-poverty": Layer(
+        name="census-poverty",
+        title="Below the poverty line",
+        description="Share of residents with income below the poverty line, by census tract (ACS).",
+        category="census",
+        requires_key=True,
+        same_data_as="census",
+    ),
+    "census-renters": Layer(
+        name="census-renters",
+        title="Renters",
+        description="Share of homes that are renter-occupied, by census tract (ACS).",
+        category="census",
+        requires_key=True,
+        same_data_as="census",
+    ),
+    "census-foreign-born": Layer(
+        name="census-foreign-born",
+        title="Born outside the US",
+        description="Share of residents born outside the United States, by census tract (ACS).",
+        category="census",
+        requires_key=True,
+        same_data_as="census",
+    ),
     # --- Public safety & hazards ---
     "hospitals": Layer(
         name="hospitals",
@@ -394,7 +597,9 @@ LAYERS: dict[str, Layer] = {
         title="Earthquakes (24h)",
         description="USGS earthquakes, magnitude 1+, past 24 hours (all US; CA relevant).",
         category="quake",
-        loader=_geojson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"),
+        loader=_geojson(
+            "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
+        ),
         ttl=120,
     ),
     "streamflow": Layer(
@@ -412,26 +617,22 @@ LAYERS: dict[str, Layer] = {
     "lane-closures": Layer(
         name="lane-closures",
         title="Lane closures",
-        description="Caltrans District 10 active lane closures.",
+        description="Caltrans active lane closures, statewide.",
         category="roadops",
-        loader=_json_transform(
-            "https://cwwp2.dot.ca.gov/data/d10/lcs/lcsStatusD10.json", transforms.caltrans_lcs
-        ),
+        loader=_caltrans("lcs", transforms.caltrans_lcs),
         ttl=180,
     ),
     "message-signs": Layer(
         name="message-signs",
         title="Highway message signs",
-        description="Caltrans District 10 changeable message signs and their current text.",
+        description="Caltrans changeable message signs and their current text, statewide.",
         category="point",
-        loader=_json_transform(
-            "https://cwwp2.dot.ca.gov/data/d10/cms/cmsStatusD10.json", transforms.caltrans_cms
-        ),
+        loader=_caltrans("cms", transforms.caltrans_cms),
         ttl=180,
     ),
     "air-quality": Layer(
         name="air-quality",
-        title="Air quality",
+        title="Air quality monitors (AirNow)",
         description="Current AirNow air-quality observations (AQI) across the county.",
         category="point",
         loader=_airnow,
@@ -522,6 +723,301 @@ LAYERS: dict[str, Layer] = {
         ),
         ttl=24 * 3600,
     ),
+    "road-weather": Layer(
+        name="road-weather",
+        title="Road weather stations",
+        description="Caltrans roadside weather stations (temperature, wind, humidity), statewide.",
+        category="roadweather",
+        loader=_caltrans("rwis", transforms.caltrans_rwis),
+        ttl=600,
+    ),
+    "chain-controls": Layer(
+        name="chain-controls",
+        title="Chain controls",
+        description="Caltrans chain-control checkpoints and their current requirement.",
+        category="chain",
+        loader=_caltrans("cc", transforms.caltrans_chain),
+        ttl=600,
+    ),
+    "wildfire-perimeters": Layer(
+        name="wildfire-perimeters",
+        title="Wildfire perimeters",
+        description="Current wildfire perimeters in California (NIFC WFIGS).",
+        category="perimeter",
+        loader=_arcgis_select(
+            f"{NIFC}/WFIGS_Interagency_Perimeters_Current/FeatureServer/0",
+            lambda fc: transforms.select_props(
+                fc,
+                {
+                    "poly_IncidentName": "name",
+                    "attr_IncidentSize": "acres",
+                    "attr_PercentContained": "contained",
+                },
+            ),
+            where="attr_POOState='US-CA'",
+            bbox=None,
+            simplify=0.0005,
+        ),
+        ttl=1800,
+    ),
+    "faults": Layer(
+        name="faults",
+        title="Earthquake faults",
+        description="Quaternary-active fault traces (California Geological Survey).",
+        category="fault",
+        loader=_arcgis_select(
+            "https://gis.conservation.ca.gov/server/rest/services/CGS/FAM_QFaults/FeatureServer/0",
+            lambda fc: transforms.select_props(
+                fc,
+                {
+                    "FLT_NAME": "name",
+                    "ZN_NAME": "zone",
+                    "SECT_NAME": "section",
+                    "LTYPE": "certainty",
+                },
+            ),
+        ),
+        ttl=7 * 24 * 3600,
+    ),
+    "superfund": Layer(
+        name="superfund",
+        title="Superfund sites",
+        description="EPA National Priorities List hazardous-waste cleanup sites.",
+        category="superfund",
+        loader=_arcgis_select(
+            "https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/"
+            "Superfund_National_Priorities_List_(NPL)_Sites_with_Status_Information/FeatureServer/0",
+            transforms.superfund_sites,
+        ),
+        ttl=7 * 24 * 3600,
+    ),
+    "power-plants": Layer(
+        name="power-plants",
+        title="Power plants",
+        description="Power plants and their primary fuel (HIFLD / EIA).",
+        category="power",
+        loader=_arcgis_select(
+            "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Power_Plants/FeatureServer/0",
+            lambda fc: transforms.select_props(
+                fc,
+                {
+                    "NAME": "name",
+                    "OPERATOR": "operator",
+                    "PRIMARY_FU": "fuel",
+                    "OPER_CAP": "capacity_mw",
+                },
+            ),
+        ),
+        ttl=7 * 24 * 3600,
+    ),
+    "substations": Layer(
+        name="substations",
+        title="Electric substations",
+        description="Electric substations (HIFLD).",
+        category="power",
+        loader=_arcgis_select(
+            "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Electric_Substations/FeatureServer/0",
+            lambda fc: transforms.select_props(fc, {"NAME": "name", "MAX_VOLTAG": "max_kv"}),
+        ),
+        ttl=7 * 24 * 3600,
+    ),
+    "cooling-centers": Layer(
+        name="cooling-centers",
+        title="Cooling & warming centers",
+        description="County cooling/warming centers, with hours and status.",
+        category="info",
+        loader=_arcgis_select(
+            f"{ARCGIS_BASE}/Cooling_Warming_Centers_(Public)/FeatureServer/0",
+            lambda fc: transforms.select_props(
+                fc,
+                {
+                    "Name": "name",
+                    "Type": "kind",
+                    "Status": "status",
+                    "Address": "address",
+                    "City": "city",
+                    "Phone": "phone",
+                    "Monday": "mon",
+                    "Tuesday": "tue",
+                    "Wednesday": "wed",
+                    "Thursday": "thu",
+                    "Friday": "fri",
+                    "Saturday": "sat",
+                    "Sunday": "sun",
+                },
+            ),
+        ),
+        ttl=6 * 3600,
+    ),
+    "sandbags": Layer(
+        name="sandbags",
+        title="Sandbag pickup sites",
+        description="Where the county and cities hand out sandbags.",
+        category="info",
+        loader=_arcgis_select(
+            f"{ARCGIS_BASE}/Sandbags_locations_Public/FeatureServer/0",
+            lambda fc: transforms.select_props(
+                fc, {"locations": "address", "city": "city", "notes": "notes", "phone": "phone"}
+            ),
+        ),
+        ttl=6 * 3600,
+    ),
+    "shelters": Layer(
+        name="shelters",
+        title="Emergency shelters",
+        description="Emergency shelters listed by the county.",
+        category="info",
+        loader=_arcgis_select(
+            f"{ARCGIS_BASE}/Shelters/FeatureServer/1",
+            lambda fc: transforms.select_props(
+                fc, {"USER_NAME": "name", "USER_Full_Address": "address", "USER_CITY": "city"}
+            ),
+        ),
+        ttl=6 * 3600,
+    ),
+    "fire-districts": Layer(
+        name="fire-districts",
+        title="Fire districts",
+        description="Fire protection districts and agencies.",
+        category="boundary",
+        loader=_arcgis_select(
+            f"{ARCGIS_BASE}/Fire_Districts/FeatureServer/1",
+            lambda fc: transforms.select_props(fc, {"Name": "name"}),
+        ),
+        ttl=6 * 3600,
+    ),
+    "bridges": Layer(
+        name="bridges",
+        title="County bridges",
+        description="Bridges maintained by Stanislaus County.",
+        category="info",
+        loader=_arcgis_select(
+            f"{ARCGIS_BASE}/Maintained_Bridges/FeatureServer/1",
+            lambda fc: transforms.select_props(
+                fc,
+                {
+                    "bridge_name": "name",
+                    "road_name": "road",
+                    "Feature_Intersected": "crosses",
+                    "year_built": "built",
+                    "structure": "structure",
+                },
+            ),
+        ),
+        ttl=6 * 3600,
+    ),
+    "rivers": Layer(
+        name="rivers",
+        title="Rivers",
+        description="Rivers in Stanislaus County.",
+        category="info",
+        loader=_arcgis_select(
+            f"{ARCGIS_BASE}/Rivers/FeatureServer/5",
+            lambda fc: transforms.select_props(fc, {"name": "name"}),
+        ),
+        ttl=6 * 3600,
+    ),
+    "railroads": Layer(
+        name="railroads",
+        title="Railroads",
+        description="Rail lines in Stanislaus County.",
+        category="info",
+        loader=_arcgis_select(
+            f"{ARCGIS_BASE}/Railroads_AGOL/FeatureServer/0",
+            lambda fc: transforms.select_props(fc, {"name": "name", "type": "kind"}),
+        ),
+        ttl=6 * 3600,
+    ),
+    "elementary-districts": Layer(
+        name="elementary-districts",
+        title="Elementary school districts",
+        description="Elementary and unified school district boundaries.",
+        category="boundary",
+        loader=_arcgis_select(
+            f"{ARCGIS_BASE}/Elementary_School_Districts/FeatureServer/4",
+            lambda fc: transforms.select_props(fc, {"District": "name"}),
+        ),
+        ttl=6 * 3600,
+    ),
+    "high-school-districts": Layer(
+        name="high-school-districts",
+        title="High school districts",
+        description="High school district boundaries.",
+        category="boundary",
+        loader=_arcgis_select(
+            f"{ARCGIS_BASE}/High_School_Districts/FeatureServer/3",
+            lambda fc: transforms.select_props(fc, {"District": "name"}),
+        ),
+        ttl=6 * 3600,
+    ),
+    "county-islands": Layer(
+        name="county-islands",
+        title="County islands",
+        description="Unincorporated pockets surrounded by a city.",
+        category="boundary",
+        loader=_arcgis_select(
+            f"{ARCGIS_BASE}/County_Islands/FeatureServer/0",
+            lambda fc: transforms.select_props(fc, {"NAME": "name", "EST_ACRES": "acres"}),
+        ),
+        ttl=6 * 3600,
+    ),
+    "mosquito-districts": Layer(
+        name="mosquito-districts",
+        title="Mosquito abatement districts",
+        description="Mosquito abatement district boundaries.",
+        category="boundary",
+        loader=_arcgis_select(
+            f"{ARCGIS_BASE}/MosquitoAbatement/FeatureServer/0",
+            lambda fc: transforms.select_props(fc, {"name": "name"}),
+        ),
+        ttl=6 * 3600,
+    ),
+    "historical-markers": Layer(
+        name="historical-markers",
+        title="Historical markers",
+        description="Roadside historical markers (Historical Marker Database, via Cal OES).",
+        category="info",
+        loader=_arcgis_select(
+            "https://services.arcgis.com/BLN4oKB0N1YSgvY8/arcgis/rest/services/Historical_Marker_Database/FeatureServer/0",
+            transforms.historical_markers,
+        ),
+        ttl=7 * 24 * 3600,
+    ),
+    "mobile-home-parks": Layer(
+        name="mobile-home-parks",
+        title="Mobile home parks",
+        description="Licensed mobile home parks (CA Housing & Community Development).",
+        category="info",
+        loader=_arcgis_select(
+            "https://services.arcgis.com/BLN4oKB0N1YSgvY8/arcgis/rest/services/CA_HCD_Mobilehome_Parks_view/FeatureServer/0",
+            lambda fc: transforms.select_props(
+                fc, {"Park_Name": "name", "Park_Address": "address", "MH_Spaces": "spaces"}
+            ),
+        ),
+        ttl=7 * 24 * 3600,
+    ),
+    "historic-places": Layer(
+        name="historic-places",
+        title="Historic places",
+        description="National Register of Historic Places listings (National Park Service).",
+        category="info",
+        loader=_arcgis_select(
+            "https://mapservices.nps.gov/arcgis/rest/services/cultural_resources/nrhp_locations/MapServer/0",
+            transforms.historic_places,
+        ),
+        ttl=7 * 24 * 3600,
+    ),
+    **{
+        name: Layer(
+            name=name,
+            title=title,
+            description=f"{noun} in the Stanislaus region, from OpenStreetMap.",
+            category="poi",
+            loader=_overpass(name),
+            ttl=24 * 3600,
+        )
+        for name, (title, noun, _selector) in OSM_PLACES.items()
+    },
     # --- Public webcams ---
     "fire-cameras": Layer(
         name="fire-cameras",
@@ -637,6 +1133,8 @@ class LayerService:
         return list(LAYERS.values())
 
     def is_available(self, layer: Layer) -> bool:
+        if layer.same_data_as:
+            return self.is_available(LAYERS[layer.same_data_as])
         if layer.client_side:
             return True
         if layer.file is not None:
@@ -665,6 +1163,8 @@ class LayerService:
 
         if layer.client_side:
             raise KeyError(name)  # tiles come straight from the tile server; no GeoJSON
+        if layer.same_data_as:
+            return await self.get_bytes(layer.same_data_as)
         if layer.file is not None:
             return self._file_bytes(name, layer.file)
 
@@ -678,6 +1178,23 @@ class LayerService:
             entry = self._cache.get(name)
             if entry and (time.monotonic() - entry.fetched_at < ttl):
                 return entry.body
+            # Cold start: a baked copy younger than the TTL is as good as a fetch
+            # (and instant — some upstreams take 20 s+). Live API only.
+            baked = BAKED_LAYERS / f"{name}.geojson"
+            fetched_at = _baked_times().get(name)
+            if (
+                entry is None
+                and fetched_at is not None
+                and self.fallback_to_baked
+                and name not in LIVE_ONLY
+                and self.is_available(layer)  # a missing key must stay a 503
+                and baked.is_file()
+            ):
+                age = time.time() - fetched_at
+                if age < ttl:
+                    body = baked.read_bytes()
+                    self._cache[name] = _Entry(body=body, fetched_at=time.monotonic() - age)
+                    return body
             try:
                 if name == "smoke-haze":  # reuse the cached camera list
                     fire = json.loads(await self.get_bytes("fire-cameras"))

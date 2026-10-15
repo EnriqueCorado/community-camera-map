@@ -148,12 +148,38 @@ CORS-enabled APIs in the visitor's browser, so they're real-time even on the sta
 | Wildlife sightings | iNaturalist (open geoprivacy only; photos only when CC-licensed, with credit) | on map move, zoom 9 and in |
 | Wikipedia places | MediaWiki geosearch (EN/ES) | on map move, zoom 10 and in |
 | Temperature & wind (5×5 grid) | Open-Meteo | on map move |
-| Defibrillators, drinking fountains, restrooms, EV chargers | OpenStreetMap via Overpass (retries when busy) | on map move, zoom 12 and in |
+| Air quality (US AQI, PM2.5, ozone; 5×5 grid) | Open-Meteo air-quality API | on map move |
 
 Flight popups add **airline, origin and destination** from adsbdb.com, but only for airline
 callsigns (e.g. `UAL366`). Private tail numbers are never looked up. **Satellite fire
 detections** come from NASA FIRMS's public 24-hour VIIRS file and are refreshed hourly by CI.
 Popups say plainly that a detection is not a confirmed fire.
+
+**OpenStreetMap places** (defibrillators, drinking fountains, restrooms, EV chargers, libraries,
+playgrounds, pharmacies, fire stations, free Wi-Fi, food banks, clinics, community centers, markets)
+are fetched **server-side** for the Stanislaus region, falling back across three Overpass mirrors,
+and refreshed daily in CI. Public Overpass servers rate-limit hard (about 2 requests per IP) and
+only one allows browsers, so visitors never query Overpass directly. This also keeps their map view
+private.
+
+**More layers:**
+- **Caltrans, statewide (12 districts):** road weather stations, chain controls, lane closures in
+  effect now (scheduled ones are filtered out), and message signs. Caltrans' RWIS feed is invalid
+  JSON with missing commas, so `parse_caltrans_json` repairs it.
+- **Fire, hazards and infrastructure:** NIFC wildfire perimeters, CGS faults, EPA Superfund sites,
+  and HIFLD power plants and substations.
+- **Stanislaus County GIS:** cooling and warming centers (with today's hours), sandbag sites,
+  emergency shelters, fire / elementary / high-school / mosquito districts, county islands, bridges,
+  rivers and railroads.
+- **Places and history:** NPS National Register historic places, HMdb historical markers (via
+  Cal OES), and HCD mobile home parks.
+- **Census (ACS 5-year), per tract:** % Spanish spoken at home, % born outside the US, % below the
+  poverty line and % renters. These are extra choropleths that share the one Census download
+  (`same_data_as`).
+
+Checked and skipped: county evacuation zones (empty or stale; stale evacuation data could do harm),
+the county "weather webcams" (they're Caltrans re-lists), the sheriff-flights layer (last updated
+11 months ago), and crop fields (274k polygons).
 
 **Keeping the public site live:** `.github/workflows/pages.yml` runs every 15 minutes. It calls
 `backend/scripts/refresh_live.py`, which re-fetches the keyless live layers (flights, fires,

@@ -29,7 +29,7 @@ import httpx
 from app.cameras.service import CameraService
 from app.core.config import get_settings
 from app.layers.alpr_access import ALPR_ACCESS_FILE
-from app.layers.service import LayerService
+from app.layers.service import LayerService, record_layer_times
 
 # httpx logs full request URLs (incl. Census/AirNow keys) at INFO — keep it quiet
 # even if logging is configured verbosely here later.
@@ -43,6 +43,10 @@ OUT = ROOT / "frontend" / "public" / "data"
 SOURCES = {
     "alpr": "https://openstreetmap.org (DeFlock)",
     "census": "https://api.census.gov (ACS 5-year)",
+    "census-spanish": "https://api.census.gov (ACS 5-year)",
+    "census-poverty": "https://api.census.gov (ACS 5-year)",
+    "census-renters": "https://api.census.gov (ACS 5-year)",
+    "census-foreign-born": "https://api.census.gov (ACS 5-year)",
     "flood": "https://hazards.fema.gov (FEMA NFHL)",
     "fire-hazard": "https://osfm.fire.ca.gov (CAL FIRE FHSZ)",
     "enviroscreen": "https://oehha.ca.gov/calenviroscreen",
@@ -61,6 +65,37 @@ SOURCES = {
     "windy-webcams": "https://www.windy.com/webcams",
     "flights": "https://adsb.fi (open data, ADS-B Exchange-style feed); routes: adsbdb.com",
     "fire-hotspots": "NASA FIRMS (VIIRS, public 24h file)",
+    "road-weather": "https://cwwp2.dot.ca.gov (Caltrans RWIS)",
+    "chain-controls": "https://cwwp2.dot.ca.gov (Caltrans)",
+    "wildfire-perimeters": "https://nifc.gov (WFIGS current perimeters)",
+    "faults": "California Geological Survey (Quaternary faults)",
+    "superfund": "US EPA (NPL sites)",
+    "power-plants": "HIFLD / US EIA",
+    "substations": "HIFLD",
+    "air-now": "https://open-meteo.com (air quality)",
+    "historic-places": "National Park Service (National Register of Historic Places)",
+    "historical-markers": "Historical Marker Database (hmdb.org), via Cal OES",
+    "mobile-home-parks": "CA Housing & Community Development, via Cal OES",
+    "libraries": "OpenStreetMap (Overpass API)",
+    "playgrounds": "OpenStreetMap (Overpass API)",
+    "pharmacies": "OpenStreetMap (Overpass API)",
+    "fire-stations": "OpenStreetMap (Overpass API)",
+    "free-wifi": "OpenStreetMap (Overpass API)",
+    "food-banks": "OpenStreetMap (Overpass API)",
+    "clinics": "OpenStreetMap (Overpass API)",
+    "community-centers": "OpenStreetMap (Overpass API)",
+    "farmers-markets": "OpenStreetMap (Overpass API)",
+    "cooling-centers": "Stanislaus County GIS (ArcGIS Hub)",
+    "sandbags": "Stanislaus County GIS (ArcGIS Hub)",
+    "shelters": "Stanislaus County GIS (ArcGIS Hub)",
+    "fire-districts": "Stanislaus County GIS (ArcGIS Hub)",
+    "bridges": "Stanislaus County GIS (ArcGIS Hub)",
+    "rivers": "Stanislaus County GIS (ArcGIS Hub)",
+    "railroads": "Stanislaus County GIS (ArcGIS Hub)",
+    "elementary-districts": "Stanislaus County GIS (ArcGIS Hub)",
+    "high-school-districts": "Stanislaus County GIS (ArcGIS Hub)",
+    "county-islands": "Stanislaus County GIS (ArcGIS Hub)",
+    "mosquito-districts": "Stanislaus County GIS (ArcGIS Hub)",
     "iss": "https://wheretheiss.at; space weather: NOAA SWPC",
     "satellites": "https://celestrak.org (orbits) + satellite.js",
     "trains": "https://amtraker.com (Amtrak data)",
@@ -112,6 +147,7 @@ async def main() -> None:
         print(f"cameras.json: {len(camera_list)} cameras")
 
         catalog = []
+        fetched: list[str] = []
         for layer in layers.list_layers():
             info = {
                 "name": layer.name,
@@ -119,9 +155,16 @@ async def main() -> None:
                 "description": layer.description,
                 "category": layer.category,
                 "requires_key": layer.requires_key,
+                "same_data_as": layer.same_data_as,
                 "source": SOURCES.get(layer.name, ""),
                 "available": False,
             }
+            if layer.same_data_as:  # the browser reuses the source layer's file
+                # Available only if the source actually baked (it's listed first).
+                source = next((c for c in catalog if c["name"] == layer.same_data_as), None)
+                info["available"] = bool(source and source["available"])
+                catalog.append(info)
+                continue
             if layer.client_side:  # browser loads tiles directly; nothing to bake
                 info["available"] = True
                 catalog.append(info)
@@ -151,12 +194,15 @@ async def main() -> None:
                 catalog.append(info)
                 continue
             (OUT / "layers" / f"{layer.name}.geojson").write_bytes(body)
+            fetched.append(layer.name)
             info["available"] = True
             catalog.append(info)
             n = len(json.loads(body).get("features", []))
+            info["count"] = n  # lets the UI say "none mapped yet" for empty layers
             print(f"  {layer.name}: {n} features")
 
         shutil.copyfile(ALPR_ACCESS_FILE, OUT / "alpr_access.json")
+        record_layer_times(fetched)
         (OUT / "layers.json").write_text(json.dumps(catalog, separators=(",", ":")))
         (OUT / "meta.json").write_text(
             json.dumps({"baked_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds")})

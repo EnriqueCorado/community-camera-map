@@ -199,12 +199,63 @@ test("the skip link reopens a minimized panel and lands in search", async ({ pag
 test.describe("phone, panel minimized", () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
-  test("the map fills the whole screen", async ({ page }) => {
+  test("the map fills the whole screen, both ways", async ({ page }) => {
     await page.goto("/");
     await ready(page);
+    const box = () => page.locator("canvas.maplibregl-canvas").evaluate((c) => {
+      const r = c.getBoundingClientRect();
+      return { w: Math.round(r.width), h: Math.round(r.height), x: Math.round(r.x) };
+    });
+    // Open: the panel is a full-width bottom sheet, the map the top half.
+    const sheet = await page.locator("#sidebar").evaluate((el) => el.getBoundingClientRect().width);
+    expect(sheet).toBe(390);
     await page.getByRole("button", { name: "Hide panel" }).click();
-    await expect
-      .poll(() => page.locator("canvas.maplibregl-canvas").evaluate((c) => c.getBoundingClientRect().height))
-      .toBeGreaterThan(800);
+    await expect.poll(box).toEqual({ w: 390, h: 844, x: 0 });
+    await expect(page.locator("#sidebar")).toBeHidden();
+    await page.getByRole("button", { name: "Layers & search" }).click();
+    await expect.poll(async () => (await box()).h).toBeLessThan(500);
+    expect((await box()).w).toBe(390);
+  });
+});
+
+test.describe("panel animation, dark mode", () => {
+  test.use({ colorScheme: "dark" });
+
+  test("the map never goes blank while the panel slides (no black flash)", async ({ page }) => {
+    await page.goto("/#v=-120.997,37.639,11");
+    await ready(page);
+    await page.waitForTimeout(3000);
+    // Paint the backdrop behind the canvas magenta: any frame where the canvas
+    // is blank shows up as magenta in a screenshot.
+    await page.addStyleTag({ content: ".map { background: #ff00ff !important; }" });
+    const blankShare = (png: Buffer) =>
+      page.evaluate(async (b64) => {
+        const img = new Image();
+        img.src = "data:image/png;base64," + b64;
+        await img.decode();
+        const c = document.createElement("canvas");
+        c.width = img.width;
+        c.height = img.height;
+        const ctx = c.getContext("2d")!;
+        ctx.drawImage(img, 0, 0);
+        const d = ctx.getImageData(0, 0, c.width, c.height).data;
+        let m = 0;
+        let n = 0;
+        for (let i = 0; i < d.length; i += 64) {
+          n++;
+          if (d[i]! > 230 && d[i + 1]! < 30 && d[i + 2]! > 230) m++;
+        }
+        return m / n;
+      }, png.toString("base64"));
+    for (const name of ["Hide panel", "Layers & search"]) {
+      const click = page.getByRole("button", { name }).click();
+      const t0 = Date.now();
+      while (Date.now() - t0 < 450) {
+        const shot = await page.screenshot({ clip: { x: 360, y: 120, width: 860, height: 560 } });
+        expect(await blankShare(shot), `blank frame during "${name}"`).toBeLessThan(0.02);
+      }
+      await click;
+      await page.waitForTimeout(500);
+    }
   });
 });

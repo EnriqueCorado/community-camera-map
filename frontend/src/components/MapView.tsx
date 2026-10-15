@@ -24,7 +24,7 @@ import { attribute, BASIS_KEY, describe, formatRecordDate, type AlprAccess, type
 import { deadReckon, gibsSatelliteUrl, RAINVIEWER_URL, radarFrames } from "../live";
 import { auroraChance, isAirlineCallsign, parseRoute, type FlightRoute } from "../live-parsers";
 import { LIVE_SOURCES, type LiveCtx } from "../live-sources";
-import { CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS } from "../colors";
+import { CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS } from "../colors";
 
 export interface LayerState {
   cameras: boolean;
@@ -149,7 +149,15 @@ export function MapView({
     // Keep the GL canvas sized to its container. Without this, a container that
     // resizes after init (sidebar layout, tab, split view) leaves the map
     // rendering at a stale size so pans/zooms appear not to update.
-    const ro = new ResizeObserver(() => map.resize());
+    // resize() clears the WebGL canvas and normally repaints on the NEXT frame,
+    // so the page behind it showed through (a black flash in dark mode) while
+    // the panel animated. redraw() paints synchronously in the same frame.
+    // (Guard on the style, not loaded(): that's false while tiles stream in,
+    // which is exactly when the panel animates.)
+    const ro = new ResizeObserver(() => {
+      map.resize();
+      if (map.isStyleLoaded()) map.redraw();
+    });
     ro.observe(containerRef.current);
 
     map.on("load", () => {
@@ -465,7 +473,7 @@ export function MapView({
           .catch(() => overlaysLoadedRef.current.delete(info.name));
       } else if (on && !loaded && info.available) {
         overlaysLoadedRef.current.add(info.name);
-        fetch(api.layerUrl(info.name))
+        fetch(api.layerUrl(info.same_data_as ?? info.name))
           .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
           .then((data: GeoJSON.FeatureCollection) => {
             if (mapRef.current) addOverlay(map, info, data, () => i18nRef.current);
@@ -721,15 +729,30 @@ function applyVisibility(map: maplibregl.Map, layers: LayerState) {
 const OVERLAY_SUFFIXES = ["-fill", "-line", "-circle", "-label", "-raster"];
 
 /** Categories always drawn as points, even when the data is momentarily empty. */
-const POINT_CATEGORIES = new Set(["flight", "haze", "webcam", "space", "train", "nature", "wiki", "weather-now", "poi", "hotspot"]);
+const POINT_CATEGORIES = new Set([
+  "flight", "haze", "webcam", "space", "train", "nature", "wiki", "weather-now", "poi", "hotspot",
+  "roadweather", "chain", "superfund", "power", "aqi",
+]);
+/** …and these as lines (lane closures can be momentarily empty). */
+const LINE_CATEGORIES = new Set(["roadops", "fault"]);
 
-/** Map text labels per category: which property, from which zoom. */
-const LABELS: Record<string, { field: string; minzoom: number }> = {
+/** Map text labels per category: which property (or expression), from which zoom. */
+const LABELS: Record<string, { field: string | maplibregl.ExpressionSpecification; minzoom: number }> = {
   flight: { field: "callsign", minzoom: 9 },
   "weather-now": { field: "label", minzoom: 0 },
+  aqi: { field: "label", minzoom: 0 },
   space: { field: "label", minzoom: 4 },
   train: { field: "label", minzoom: 8 },
+  roadweather: {
+    field: ["case", ["==", ["typeof", ["get", "temp_f"]], "number"], ["concat", ["to-string", ["get", "temp_f"]], "°"], ""],
+    minzoom: 8,
+  },
 };
+
+/** Chain-control requirement -> color (grey = none … red = all vehicles). */
+const CHAIN_COLORS = ["R-0", "#16a34a", "R-1", "#ca8a04", "R-2", "#ea580c", "R-3", "#dc2626"];
+/** EPA AQI category -> color (darkened where needed for contrast with labels). */
+const AQI_COLORS = ["good", "#16a34a", "moderate", "#ca8a04", "usg", "#ea580c", "unhealthy", "#dc2626", "very", "#7e22ce", "hazardous", "#7f1d1d"];
 
 /** Haze level -> dot color (green = clear … red = very hazy). */
 const HAZE_COLORS: [string, string][] = [
@@ -895,7 +918,7 @@ function addOverlay(
           ? 9
           : info.category === "hotspot"
             ? ["interpolate", ["linear"], ["coalesce", ["get", "frp_mw"], 1], 1, 4, 100, 12]
-            : info.category === "weather-now"
+            : info.category === "weather-now" || info.category === "aqi"
               ? 10
               : 6;
     const color: maplibregl.ExpressionSpecification | string =
@@ -908,9 +931,13 @@ function addOverlay(
               "#94a3b8",
               ["interpolate", ["linear"], ["coalesce", ["get", "alt_ft"], 0], 0, "#06b6d4", 10000, "#3b82f6", 35000, "#7c3aed"],
             ]
-          : info.category === "weather-now"
+          : info.category === "weather-now" || info.category === "roadweather"
             ? ["interpolate", ["linear"], ["coalesce", ["get", "temp_f"], 60], 30, "#2563eb", 60, "#16a34a", 80, "#eab308", 100, "#dc2626"]
-            : accent;
+            : info.category === "chain"
+              ? (["match", ["get", "status"], ...CHAIN_COLORS, "#64748b"] as unknown as maplibregl.ExpressionSpecification)
+              : info.category === "aqi"
+                ? (["match", ["get", "category"], ...AQI_COLORS, "#64748b"] as unknown as maplibregl.ExpressionSpecification)
+                : accent;
     map.addLayer(
       {
         id: `${src}-circle`,
@@ -938,7 +965,7 @@ function addOverlay(
           minzoom: label.minzoom,
           layout: {
             visibility: "none",
-            "text-field": ["get", label.field],
+            "text-field": typeof label.field === "string" ? ["get", label.field] : label.field,
             "text-font": LABEL_FONT,
             "text-size": 11,
             "text-offset": [0, 1.1],
@@ -952,7 +979,7 @@ function addOverlay(
     return;
   }
 
-  if (geomType.includes("LineString")) {
+  if (geomType.includes("LineString") || LINE_CATEGORIES.has(info.category)) {
     map.addLayer(
       {
         id: `${src}-line`,
@@ -960,7 +987,7 @@ function addOverlay(
         source: src,
         paint: {
           "line-color": accent,
-          "line-width": info.category === "roadops" ? 3 : 2,
+          "line-width": info.category === "roadops" ? 3 : info.category === "fault" ? 1.5 : 2,
           "line-opacity": 0.9,
           ...(info.category === "roadops" ? { "line-dasharray": [2, 1.5] } : {}),
         },
@@ -985,13 +1012,15 @@ function addOverlay(
 
   const fillPaint =
     info.category === "census"
-      ? choropleth("median_income", CENSUS_STOPS)
+      ? CENSUS_FIELD[info.name]?.startsWith("pct_")
+        ? choropleth(CENSUS_FIELD[info.name]!, PCT_STOPS)
+        : choropleth("median_income", CENSUS_STOPS)
       : info.category === "enviroscreen"
         ? choropleth("CIscoreP", ENVIRO_STOPS)
         : {
             "fill-color": accent,
             "fill-opacity":
-              info.category === "landuse" ? 0.22 : info.category === "weather" ? 0.18 : 0.14,
+              info.category === "landuse" ? 0.22 : info.category === "perimeter" ? 0.3 : info.category === "weather" ? 0.18 : 0.14,
           };
   const choroplethCat = info.category === "census" || info.category === "enviroscreen";
 
@@ -1283,6 +1312,53 @@ const POI_KEYS: Record<string, Parameters<TFn>[0]> = {
   "drinking-water": "poiWater",
   restrooms: "poiToilets",
   "ev-chargers": "poiCharger",
+  libraries: "poiLibrary",
+  playgrounds: "poiPlayground",
+  pharmacies: "poiPharmacy",
+  "fire-stations": "poiFireStation",
+  "free-wifi": "poiWifi",
+  "food-banks": "poiFoodBank",
+  clinics: "poiClinic",
+  "community-centers": "poiCommunity",
+  "farmers-markets": "poiMarket",
+};
+
+type InfoRow = [Parameters<TFn>[0], string];
+/** Simple layers: which properties to show, in order. "_today" = today's hours. */
+const INFO_FIELDS: Record<string, { rows: InfoRow[]; titleFrom?: string; link?: Parameters<TFn>[0] }> = {
+  "cooling-centers": { rows: [["rowType", "kind"], ["rowStatus", "status"], ["rowHoursToday", "_today"], ["rowAddress", "address"], ["rowCity", "city"], ["rowPhone", "phone"]] },
+  sandbags: { titleFrom: "city", rows: [["rowAddress", "address"], ["rowNotes", "notes"], ["rowPhone", "phone"]] },
+  shelters: { rows: [["rowAddress", "address"], ["rowCity", "city"]] },
+  bridges: { rows: [["rowRoad", "road"], ["rowCrosses", "crosses"], ["rowBuilt", "built"], ["rowStructure", "structure"]] },
+  rivers: { rows: [] },
+  railroads: { rows: [["rowType", "kind"]] },
+  "historic-places": { rows: [["rowType", "kind"], ["rowAddress", "address"], ["rowCity", "city"], ["rowListed", "listed"]], link: "viewNara" },
+  "historical-markers": { rows: [["rowSubtitle", "subtitle"], ["rowErected", "built"], ["rowErectedBy", "erected_by"], ["rowWhere", "where"]], link: "viewHmdb" },
+  "mobile-home-parks": { rows: [["rowAddress", "address"], ["rowSpaces", "spaces"]] },
+};
+const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+
+const CHAIN_KEYS: Record<string, Parameters<TFn>[0]> = {
+  "R-0": "chainR0",
+  "R-1": "chainR1",
+  "R-2": "chainR2",
+  "R-3": "chainR3",
+};
+
+const AQI_KEYS: Record<string, Parameters<TFn>[0]> = {
+  good: "aqiGood",
+  moderate: "aqiModerate",
+  usg: "aqiUsg",
+  unhealthy: "aqiUnhealthy",
+  very: "aqiVery",
+  hazardous: "aqiHazardous",
+};
+
+/** EIA primary-fuel codes -> label keys. */
+const FUEL_KEYS: Record<string, Parameters<TFn>[0]> = {
+  WAT: "fuelHydro", NG: "fuelGas", SUN: "fuelSolar", WND: "fuelWind", GEO: "fuelGeo", NUC: "fuelNuclear",
+  BIT: "fuelCoal", SUB: "fuelCoal", LIG: "fuelCoal", DFO: "fuelOil", RFO: "fuelOil", WDS: "fuelBio",
+  LFG: "fuelBio", OBG: "fuelBio", AB: "fuelBio", MSW: "fuelBio", MWH: "fuelBattery",
 };
 
 const COMPASS_8: Record<Lang, string[]> = {
@@ -1469,6 +1545,10 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
         rows: [
           [t("medianIncome"), num(p.median_income) != null ? `$${fmt(p.median_income)}` : ""],
           [t("population"), fmt(p.population)],
+          [t("rowSpanish"), num(p.pct_spanish) != null ? `${fmt(p.pct_spanish)}%` : ""],
+          [t("rowForeignBorn"), num(p.pct_foreign_born) != null ? `${fmt(p.pct_foreign_born)}%` : ""],
+          [t("rowPoverty"), num(p.pct_poverty) != null ? `${fmt(p.pct_poverty)}%` : ""],
+          [t("rowRenters"), num(p.pct_renters) != null ? `${fmt(p.pct_renters)}%` : ""],
         ],
       };
     case "quake": {
@@ -1533,8 +1613,103 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
       return {
         ...base,
         title: str(pick(["route"])) || kind,
-        rows: [[t("rowType"), str(pick(["type"])) || t("closure")]],
+        rows: [
+          [t("rowType"), str(pick(["type"])) || t("closure")],
+          [t("rowWork"), raw(p.work)],
+          [t("rowLanes"), raw(p.lanes)],
+        ],
       };
+    case "info": {
+      const spec = INFO_FIELDS[info.name] ?? { rows: [] };
+      const value = (prop: string) => (prop === "_today" ? str(p[DAY_KEYS[new Date().getDay()]!]) : str(p[prop]));
+      return {
+        ...base,
+        title: str(p[spec.titleFrom ?? "name"]) || kind,
+        rows: spec.rows.map(([k, prop]) => [t(k), value(prop)] as [string, string]),
+        link: spec.link && p.page ? { href: String(p.page), label: t(spec.link) } : undefined,
+      };
+    }
+    case "roadweather": {
+      const wind = num(p.wind_mph), gust = num(p.gust_mph);
+      return {
+        ...base,
+        title: raw(p.name) || kind,
+        rows: [
+          [t("rowTemp"), num(p.temp_f) != null ? t("tempF", { n: fmt(p.temp_f) }) : ""],
+          [t("rowWind"), wind == null ? "" : gust != null && gust > wind ? t("windGust", { mph: fmt(wind), gust: fmt(gust) }) : t("mph", { n: fmt(wind) })],
+          [t("rowHumidity"), num(p.humidity) != null ? `${fmt(p.humidity)}%` : ""],
+          [t("rowElevation"), num(p.elevation_ft) != null ? t("feet", { n: fmt(p.elevation_ft) }) : ""],
+        ],
+      };
+    }
+    case "chain": {
+      const code = raw(p.status);
+      const key = CHAIN_KEYS[code];
+      return {
+        ...base,
+        title: [raw(p.route), str(p.name)].filter(Boolean).join(" · ") || kind,
+        rows: [
+          [t("rowChains"), key ? t(key) : ""],
+          [t("rowDetail"), raw(p.detail)],
+        ],
+      };
+    }
+    case "perimeter":
+      return {
+        ...base,
+        title: str(p.name) || kind,
+        rows: [
+          [t("rowSize"), num(p.acres) != null ? t("acres", { n: fmt(Math.round(num(p.acres)!)) }) : ""],
+          [t("rowContained"), num(p.contained) != null ? `${fmt(p.contained)}%` : ""],
+        ],
+      };
+    case "fault":
+      return {
+        ...base,
+        title: raw(p.name) && raw(p.name) !== "unnamed" ? str(p.name) : str(p.zone) || kind,
+        rows: [
+          [t("rowFaultZone"), str(p.zone)],
+          [t("rowSection"), str(p.section)],
+          [t("rowCertainty"), raw(p.certainty)],
+        ],
+      };
+    case "superfund":
+      return {
+        ...base,
+        title: raw(p.name) || kind,
+        rows: [
+          [t("rowCity"), raw(p.city)],
+          [t("rowStatus"), raw(p.status)],
+          [t("rowListed"), raw(p.listed)],
+          [t("rowCleanupBuilt"), raw(p.cleanup_built)],
+        ],
+        link: p.page ? { href: String(p.page), label: t("viewEpa") } : undefined,
+      };
+    case "power": {
+      const kv = num(p.max_kv);
+      return {
+        ...base,
+        title: str(p.name) || kind,
+        rows: [
+          [t("rowOperator"), str(p.operator)],
+          [t("rowFuel"), p.fuel ? t(FUEL_KEYS[raw(p.fuel)] ?? "fuelOther") : ""],
+          [t("rowCapacityMw"), num(p.capacity_mw) != null ? t("mw", { n: fmt(p.capacity_mw) }) : ""],
+          [t("rowVoltage"), kv != null && kv > 0 ? t("kv", { n: fmt(kv) }) : ""],
+        ],
+      };
+    }
+    case "aqi": {
+      const cat = raw(p.category);
+      return {
+        ...base,
+        title: num(p.aqi) != null ? t("aqi", { n: fmt(p.aqi) }) : kind,
+        rows: [
+          [t("rowCategory"), AQI_KEYS[cat] ? t(AQI_KEYS[cat]!) : ""],
+          [t("rowPm25"), num(p.pm2_5) != null ? t("ugm3", { n: fmt(p.pm2_5) }) : ""],
+          [t("rowOzone"), num(p.ozone) != null ? t("ugm3", { n: fmt(p.ozone) }) : ""],
+        ],
+      };
+    }
     default: {
       if (p.aqi != null) {
         return {
