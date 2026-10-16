@@ -9,6 +9,19 @@ export default defineConfig(() => ({
   // for local dev and root hosts.
   base: process.env.VITE_BASE ?? "/",
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      output: {
+        // Libraries change far less often than the app: separate files stay
+        // cached in visitors' browsers across our deploys.
+        manualChunks(id: string) {
+          if (id.includes("node_modules/maplibre-gl")) return "maplibre";
+          if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) return "react";
+          return undefined;
+        },
+      },
+    },
+  },
   server: {
     port: 5173,
     proxy: {
