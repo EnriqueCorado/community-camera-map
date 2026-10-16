@@ -24,6 +24,10 @@ export const OVERLAY_COLOR: Record<string, string> = {
   buses: "#0f766e",
   wastewater: "#7c3aed",
   groundwater: "#0369a1",
+  "river-gauges": "#0284c7",
+  "storm-reports": "#9333ea",
+  "fire-weather": "#ea580c",
+  "smoke-forecast": "#78716c",
   "power-outages": "#dc2626",
   "outage-areas": "#f97316",
   "health-asthma": "#0e7490",
@@ -212,6 +216,56 @@ export const GROUNDWATER_STOPS: [number, string][] = [
   [100, "#facc15"],
   [200, "#b45309"],
   [400, "#78350f"],
+];
+
+/** NOAA river gauge flood status -> dot color. */
+export const GAUGE_COLORS: [string, string][] = [
+  ["no_flooding", "#16a34a"],
+  ["action", "#eab308"],
+  ["minor", "#f97316"],
+  ["moderate", "#dc2626"],
+  ["major", "#9333ea"],
+];
+
+/** River gauge status -> label keys (en/es in i18n.tsx). */
+export const GAUGE_KEYS: Record<
+  string,
+  "gaugeNone" | "gaugeAction" | "gaugeMinor" | "gaugeModerate" | "gaugeMajor" | "gaugeNotDefined" | "gaugeStale" | "gaugeOut" | "gaugeLow"
+> = {
+  no_flooding: "gaugeNone",
+  action: "gaugeAction",
+  minor: "gaugeMinor",
+  moderate: "gaugeModerate",
+  major: "gaugeMajor",
+  not_defined: "gaugeNotDefined",
+  low_threshold: "gaugeLow",
+  obs_not_current: "gaugeStale",
+  out_of_service: "gaugeOut",
+};
+/** Gray: no flood stages, not current, or out of service. */
+export const GAUGE_OTHER = "#94a3b8";
+
+/** SPC fire weather outlook levels (dn) -> label keys. */
+export const FIREWX_KEYS: Record<number, "firewxElevated" | "firewxCritical" | "firewxExtreme"> = {
+  5: "firewxElevated",
+  8: "firewxCritical",
+  10: "firewxExtreme",
+};
+
+/** NWS storm report kinds (keyword in the report type) -> dot color + label key. */
+export const STORM_KINDS: [string, string, "stormTornado" | "stormHail" | "stormFlood" | "stormWind"][] = [
+  ["Tornado", "#7f1d1d", "stormTornado"],
+  ["Hail", "#0891b2", "stormHail"],
+  ["Flood", "#1d4ed8", "stormFlood"],
+  ["Wind", "#9333ea", "stormWind"],
+  ["Wnd", "#9333ea", "stormWind"],
+];
+
+/** SPC fire weather outlook levels (dn) -> fill color (SPC's palette). */
+export const FIREWX_COLORS: [number, string][] = [
+  [5, "#ffbb66"],
+  [8, "#ff4444"],
+  [10, "#ff00ff"],
 ];
 
 /** Outage type (normalized by the backend) -> dot color. */

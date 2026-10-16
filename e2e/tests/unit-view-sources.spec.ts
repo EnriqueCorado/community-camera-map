@@ -85,3 +85,15 @@ test("wrapLon folds world copies back into [-180, 180]", () => {
   expect(wrapLon(-480)).toBe(-120);
   expect(wrapLon(180)).toBe(-180);
 });
+
+test("post-processors: AirNow AQI band + drop inactive; gauge links", () => {
+  const pt = { type: "Point", coordinates: [0, 0] };
+  const air = applyFields({ features: [
+    { geometry: pt, properties: { A: 72, S: "Active" } },
+    { geometry: pt, properties: { A: 30, S: "Inactive" } },
+  ] }, spec({ fields: { A: "aqi", S: "_status" }, post: "airnow" }));
+  expect(air.features.map((f) => f.properties)).toEqual([{ aqi: 72, category: "moderate", label: "72" }]);
+  const g = applyFields({ features: [{ geometry: pt, properties: { U: "https://evil.example/x" } }] },
+    spec({ fields: { U: "page" }, post: "gauge" }));
+  expect(g.features[0]!.properties).toEqual({ page: "" });
+});

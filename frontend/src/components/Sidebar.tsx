@@ -6,7 +6,7 @@ import { matchCamera, type LayerState } from "./MapView";
 import {
   CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
   HEALTH_STOPS, DROUGHT_COLORS, HEAT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, VOTING_KEYS, WVAL_COLORS,
-  WVAL_KEYS, GROUNDWATER_STOPS,
+  WVAL_KEYS, GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS,
 } from "../colors";
 import { downloadLayer, downloadCameras } from "../download";
 import { LIVE_SOURCES } from "../live-sources";
@@ -111,7 +111,7 @@ const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
       ["cameras", ["fire-cameras", "river-cameras", "windy-webcams"]],
       ["live", ["flights", "buses", "iss", "satellites", "trains"]],
       ["weather", ["weather-now", "air-now", "rain-radar", "satellite", "weather-alerts", "air-quality", "road-weather", "smoke-haze"]],
-      ["hazards", ["heat-risk", "drought", "reservoirs", "groundwater", "fatal-crashes", "wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
+      ["hazards", ["heat-risk", "fire-weather", "smoke-forecast", "storm-reports", "river-gauges", "drought", "reservoirs", "groundwater", "fatal-crashes", "wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
       ["roads", ["lane-closures", "message-signs", "chain-controls", "transit-routes", "transit-stops", "amtrak", "airports", "railroads"]],
       ["places", ["cooling-centers", "shelters", "sandbags", "mobile-home-parks", "food-banks", "clinics", "hospitals", "pharmacies", "community-centers", "libraries", "farmers-markets", "law-enforcement", "fire-stations", "schools", "parks", "playgrounds", "aed", "drinking-water", "restrooms", "ev-chargers", "free-wifi"]],
       ["nature", ["wildlife", "wikipedia", "historic-places", "historical-markers", "rivers", "streamflow"]],
@@ -298,6 +298,9 @@ export function Sidebar({
   const votingOn = layers.overlays["voting"] ?? false;
   const wastewaterOn = layers.overlays["wastewater"] ?? false;
   const groundwaterOn = layers.overlays["groundwater"] ?? false;
+  const gaugesOn = layers.overlays["river-gauges"] ?? false;
+  const firewxOn = layers.overlays["fire-weather"] ?? false;
+  const stormsOn = layers.overlays["storm-reports"] ?? false;
   const outagesOn = layers.overlays["power-outages"] ?? false;
   const other = lang === "en" ? "es" : "en";
 
@@ -552,6 +555,30 @@ export function Sidebar({
         )}
         {heatOn && (
           <Legend id="heat-legend" title={t("heatLegend")} items={HEAT_COLORS.map(([v, c]) => [c, t(`heat${v}` as Key)])} />
+        )}
+        {gaugesOn && (
+          <Legend
+            id="gauge-legend"
+            title={t("gaugeLegend")}
+            items={[...GAUGE_COLORS.map(([k, c]): [string, string] => [c, t(GAUGE_KEYS[k]!)]), [GAUGE_OTHER, t("gaugeNotDefined")]]}
+          />
+        )}
+        {firewxOn && (
+          <Legend
+            id="firewx-legend"
+            title={t("firewxLegend")}
+            items={FIREWX_COLORS.map(([k, c]) => [c, t(FIREWX_KEYS[k]!)])}
+          />
+        )}
+        {stormsOn && (
+          <Legend
+            id="storm-legend"
+            title={t("stormLegend")}
+            items={[
+              ...STORM_KINDS.filter(([kw]) => kw !== "Wnd").map(([, c, key]): [string, string] => [c, t(key)]),
+              ["#64748b", t("stormOther")],
+            ]}
+          />
         )}
         {groundwaterOn && (
           <Legend

@@ -153,3 +153,8 @@ def test_layer_times_report_the_baked_copy_age_not_the_fallback_time(client):
     finally:
         svc._cache.pop("quakes", None)
         svc._cache.pop("alpr", None)
+
+
+def test_air_quality_needs_no_key_any_more(client):
+    layer = next(c for c in client.get("/api/layers").json() if c["name"] == "air-quality")
+    assert layer["requires_key"] is False and layer["available"] is True

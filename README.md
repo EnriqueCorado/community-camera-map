@@ -199,6 +199,9 @@ Other live and daily sources added in this round:
 - **Wastewater virus levels:** CDC NWSS, placed at county centers, daily.
 - **Weather alerts:** nationwide, from NOAA's watch, warning and advisory map.
 - **Groundwater depth:** California DWR wells, read through the CNRA open-data SQL API, daily.
+- **NOAA layers:** river gauges with flood status, storm reports from the last 24 hours, the SPC
+  fire-weather outlook and the hourly smoke forecast. All are nationwide.
+- **EPA AirNow monitors:** from EPA's public ArcGIS service, so the AirNow key is no longer needed.
 
 The plate-reader seed lives on the `alpr-data` branch. Reseed it from a machine that DeFlock's CDN
 allows, by running `build_alpr_usa.py` and committing the output there.
@@ -372,7 +375,7 @@ The public site is a **static build with no backend**: `backend/scripts/bake.py`
 runs the same camera/layer services once and writes everything the map needs to
 `frontend/public/data/` (`cameras.json`, `layers.json`, `layers/<name>.geojson`,
 `meta.json`). The frontend built with `VITE_STATIC=1` reads those files instead of
-`/api/...`. API keys (Census, AirNow) are used **only at bake time** and never ship.
+`/api/...`. API keys (Census) are used **only at bake time** and never ship.
 
 Refresh the data and redeploy:
 ```bash

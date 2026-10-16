@@ -5,7 +5,7 @@ import type { AlprAccess } from "../alpr-access";
 //  - dev/server: talk to the FastAPI backend ("/api/...", proxied by Vite).
 //  - static (VITE_STATIC=1, e.g. GitHub Pages): read pre-baked files under
 //    "data/" relative to the page, so no backend is needed. Keys (Census,
-//    AirNow) are used only at bake time and never shipped to the browser.
+//    no others) are used only at bake time and never shipped to the browser.
 const STATIC = import.meta.env.VITE_STATIC === "1";
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 // Real-time flights relay (Vercel Function, see relay/). When set, the

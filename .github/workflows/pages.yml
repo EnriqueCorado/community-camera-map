@@ -130,6 +130,7 @@ jobs:
           path: |
             frontend/public/data/alpr
             frontend/public/data/layers/reservoirs.geojson
+            frontend/public/data/layers/fire-weather.geojson
             frontend/public/data/layers/drought.geojson
             frontend/public/data/layers/voting.geojson
             frontend/public/data/layers/wastewater.geojson
@@ -193,6 +194,7 @@ jobs:
           path: |
             frontend/public/data/alpr
             frontend/public/data/layers/reservoirs.geojson
+            frontend/public/data/layers/fire-weather.geojson
             frontend/public/data/layers/drought.geojson
             frontend/public/data/layers/voting.geojson
             frontend/public/data/layers/wastewater.geojson

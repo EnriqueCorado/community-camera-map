@@ -7,7 +7,7 @@ Runs the same CameraService / LayerService used by the live API, once, and write
   frontend/public/data/alpr_access.json  who can search each plate reader
   frontend/public/data/meta.json         { baked_at }
 
-Keys (Census / AirNow) are read from the backend's .env and used ONLY here —
+Keys (Census) are read from the backend's .env and used ONLY here —
 they never reach the shipped static site. Run from backend/: `uv run python scripts/bake.py`.
 """
 
@@ -31,7 +31,7 @@ from app.core.config import get_settings
 from app.layers.alpr_access import ALPR_ACCESS_FILE
 from app.layers.service import LayerService, record_layer_times
 
-# httpx logs full request URLs (incl. Census/AirNow keys) at INFO — keep it quiet
+# httpx logs full request URLs (incl. the Census key) at INFO — keep it quiet
 # even if logging is configured verbosely here later.
 for _noisy in ("httpx", "httpcore"):
     logging.getLogger(_noisy).setLevel(logging.WARNING)
@@ -44,6 +44,11 @@ SOURCES = {
     "alpr": "https://openstreetmap.org (DeFlock)",
     "buses": "StanRTA real-time feed (Availtec InfoPoint)",
     "wastewater": "CDC National Wastewater Surveillance System (viral activity levels)",
+    "air-quality": "US EPA AirNow current monitors (public ArcGIS service)",
+    "river-gauges": "NOAA National Water Prediction Service river gauges",
+    "storm-reports": "NWS local storm reports (NOAA)",
+    "fire-weather": "NWS Storm Prediction Center fire weather outlook",
+    "smoke-forecast": "NOAA NDGD smoke forecast (HRRR-Smoke)",
     "groundwater": "California DWR periodic groundwater level measurements (CNRA open data)",
     "voting": "Stanislaus County Registrar of Voters (stanvote.gov voting flier, 2026-09-28)",
     "power-outages": "Cal OES statewide power outages (from utility outage maps)",
@@ -71,7 +76,6 @@ SOURCES = {
     "streamflow": "https://waterservices.usgs.gov",
     "lane-closures": "https://cwwp2.dot.ca.gov (Caltrans)",
     "message-signs": "https://cwwp2.dot.ca.gov (Caltrans)",
-    "air-quality": "https://airnowapi.org",
     "transit-routes": "Stanislaus Regional Transit Authority GTFS",
     "transit-stops": "Stanislaus Regional Transit Authority GTFS",
     "dams": "https://nid.sec.usace.army.mil",

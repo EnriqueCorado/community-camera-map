@@ -38,6 +38,9 @@ OUT = Path(__file__).resolve().parent.parent.parent / "frontend" / "public" / "d
 
 FAST = (
     "flights",
+    "air-quality",
+    "river-gauges",
+    "storm-reports",
     "power-outages",
     "outage-areas",
     "wildfire",
@@ -71,6 +74,7 @@ DAILY = (
 )
 HOURLY = (
     "reservoirs",
+    "fire-weather",
     "fire-cameras",  # before smoke-haze, which reuses it
     "smoke-haze",
     "river-cameras",

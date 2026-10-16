@@ -823,3 +823,116 @@ def test_groundwater_depth_and_change_needs_a_long_enough_gap():
     assert set(by) == {120.5, 30.0}
     assert by[120.5]["change_ft"] == 20.5 and by[120.5]["since"] == "2025-03-01"
     assert by[30.0]["change_ft"] is None
+
+
+def test_new_noaa_and_epa_transforms():
+    pt = {"type": "Point", "coordinates": [-121, 37.6]}
+    air = transforms.airnow_monitors(
+        {
+            "features": [
+                {
+                    "geometry": pt,
+                    "properties": {
+                        "SiteName": "Modesto",
+                        "OZONEPM_AQI": 72,
+                        "PM25": 9.1,
+                        "OZONE": 40,
+                        "Status": "Active",
+                    },
+                },
+                {
+                    "geometry": pt,
+                    "properties": {"SiteName": "Old", "OZONEPM_AQI": 20, "Status": "Inactive"},
+                },
+                {
+                    "geometry": pt,
+                    "properties": {"SiteName": "Bad", "OZONEPM_AQI": -999, "Status": "Active"},
+                },
+            ]
+        }
+    )
+    assert [f["properties"] for f in air["features"]] == [
+        {
+            "name": "Modesto",
+            "pm2_5": 9.1,
+            "ozone_ppb": 40,
+            "aqi": 72,
+            "category": "moderate",
+            "label": "72",
+        }
+    ]
+    g = transforms.river_gauges(
+        {
+            "features": [
+                {
+                    "geometry": pt,
+                    "properties": {
+                        "gaugelid": "MODC1",
+                        "status": "minor",
+                        "url": "https://water.noaa.gov/gauges/modc1",
+                    },
+                },
+                {"geometry": pt, "properties": {"gaugelid": "X", "url": "javascript:alert(1)"}},
+            ]
+        }
+    )
+    assert [f["properties"]["page"] for f in g["features"]] == [
+        "https://water.noaa.gov/gauges/modc1",
+        "",
+    ]
+    fw = transforms.fire_weather(
+        {
+            "features": [
+                {"geometry": pt, "properties": {"dn": 8, "expire": "202610171200"}},
+                {"geometry": pt, "properties": {"dn": 2}},
+            ]
+        }
+    )
+    assert [f["properties"]["level"] for f in fw["features"]] == [8]
+
+
+def test_storm_reports_and_airnow_edge_cases():
+    pt = {"type": "Point", "coordinates": [-100, 40]}
+    s = transforms.storm_reports(
+        {
+            "features": [
+                {
+                    "geometry": pt,
+                    "properties": {
+                        "descript": "Hail",
+                        "magnitude": "1.75",
+                        "units": "INCH",
+                        "lsr_validtime": 1792102800000,
+                        "x": 1,
+                    },
+                },
+            ]
+        }
+    )
+    assert s["features"][0]["properties"] == {
+        "kind": "Hail",
+        "magnitude": "1.75",
+        "units": "INCH",
+        "where": None,
+        "state": None,
+        "time": 1792102800000,
+        "remarks": None,
+    }
+    a = transforms.airnow_monitors(
+        {
+            "features": [
+                {
+                    "geometry": pt,
+                    "properties": {"SiteName": "A", "OZONEPM_AQI": 50.4},
+                },  # no Status: kept
+                {"geometry": pt, "properties": {"SiteName": "B"}},  # no AQI: dropped
+            ]
+        }
+    )
+    assert [(f["properties"]["aqi"], f["properties"]["category"]) for f in a["features"]] == [
+        (50, "good")
+    ]
+    g = transforms.river_gauges(
+        {"features": [{"geometry": pt, "properties": {"gaugelid": "Z", "url": None}}]}
+    )
+    assert g["features"][0]["properties"]["page"] == ""

@@ -890,3 +890,93 @@ def groundwater_wells(recent: object, prior: object) -> dict:
                 props["since"] = old_date
         feats.append(_pt(lon, lat, props))
     return _fc(feats)
+
+
+def aqi_category(aqi: float | None) -> str:
+    """EPA AQI band (same keys as the frontend's aqiCategory)."""
+    if aqi is None:
+        return ""
+    for top, cat in (
+        (50, "good"),
+        (100, "moderate"),
+        (150, "usg"),
+        (200, "unhealthy"),
+        (300, "very"),
+    ):
+        if aqi <= top:
+            return cat
+    return "hazardous"
+
+
+def airnow_monitors(fc: object) -> dict:
+    """EPA AirNow current monitors (public ArcGIS, no key) -> AQI points."""
+    out = select_props(
+        fc,
+        {
+            "SiteName": "name",
+            "OZONEPM_AQI": "aqi",
+            "PM25": "pm2_5",
+            "OZONE": "ozone_ppb",
+            "Status": "_status",
+        },
+    )
+    keep = []
+    for f in out["features"]:
+        p = f["properties"]
+        aqi = _num(p.pop("aqi"))
+        if p.pop("_status") not in (None, "Active") or aqi is None or aqi < 0:
+            continue
+        aqi = round(aqi)  # band and label from the same (rounded) number
+        p.update(aqi=aqi, category=aqi_category(aqi), label=str(aqi))
+        keep.append(f)
+    return _fc(keep)
+
+
+RIVER_FIELDS = {
+    "gaugelid": "gauge",
+    "status": "status",
+    "location": "location",
+    "waterbody": "waterbody",
+    "state": "state",
+    "obstime": "observed_at",
+    "observed": "stage",
+    "units": "units",
+    "action": "action",
+    "flood": "flood",
+    "moderate": "moderate",
+    "major": "major",
+    "url": "page",
+}
+
+
+def river_gauges(fc: object) -> dict:
+    """NOAA river gauges with flood status; links only to water.noaa.gov."""
+    out = select_props(fc, RIVER_FIELDS)
+    for f in out["features"]:
+        p = f["properties"]
+        page = str(p.get("page") or "")
+        p["page"] = page if page.startswith("https://water.noaa.gov/") else ""
+    return out
+
+
+STORM_FIELDS = {
+    "descript": "kind",
+    "magnitude": "magnitude",
+    "units": "units",
+    "loc_desc": "where",
+    "state": "state",
+    "lsr_validtime": "time",
+    "remarks": "remarks",
+}
+
+
+def storm_reports(fc: object) -> dict:
+    """NWS local storm reports (tornado, hail, wind, flooding...) past 24 h."""
+    return select_props(fc, STORM_FIELDS)
+
+
+def fire_weather(fc: object) -> dict:
+    """SPC day-1 fire weather outlook: dn 5 elevated, 8 critical, 10 extreme."""
+    out = select_props(fc, {"dn": "level", "expire": "expires"})
+    out["features"] = [f for f in out["features"] if _num(f["properties"]["level"]) in (5, 8, 10)]
+    return out

@@ -32,7 +32,7 @@ import { VOTING_KEYS } from "../colors";
 import {
   CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
   HEALTH_STOPS, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, WVAL_COLORS, WVAL_KEYS,
-  GROUNDWATER_STOPS,
+  GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS,
 } from "../colors";
 
 export interface LayerState {
@@ -798,6 +798,21 @@ export function MapView({
     map.flyTo({ center: flyTo.center, zoom: flyTo.zoom, duration: prefersReducedMotion() ? 0 : 900 });
   }, [flyTo]);
 
+  // --- Smoke forecast: follow the clock (the tile URL names one hour). ---
+  const smokeOn = layers.overlays["smoke-forecast"] ?? false;
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready || !smokeOn) return;
+    const update = () =>
+      void rasterSource("smoke-forecast").then((r) => {
+        const src = map.getSource("ov-smoke-forecast") as maplibregl.RasterTileSource | undefined;
+        if (r && src) src.setTiles(r.tiles);
+      });
+    update(); // turned back on later: jump to the current hour
+    const id = window.setInterval(update, 10 * 60_000);
+    return () => window.clearInterval(id);
+  }, [smokeOn, ready]);
+
   // --- "What's near an address?" pin ---
   useEffect(() => {
     const map = mapRef.current;
@@ -989,7 +1004,7 @@ const HAS_TRACK: maplibregl.ExpressionSpecification = ["==", ["typeof", ["get", 
 const POINT_CATEGORIES = new Set([
   "flight", "haze", "webcam", "space", "train", "nature", "wiki", "weather-now", "poi", "hotspot",
   "roadweather", "chain", "superfund", "power", "aqi", "voting", "outage", "crash", "reservoir", "quake", "bus",
-  "wastewater", "groundwater",
+  "wastewater", "groundwater", "gauge", "storm",
 ]);
 /** …and these as lines (lane closures can be momentarily empty). */
 const LINE_CATEGORIES = new Set(["roadops", "fault"]);
@@ -1034,6 +1049,28 @@ interface RasterSpec {
 
 /** Tile URL for a client-side raster layer (fetched from public tile servers). */
 export async function rasterSource(name: string, now = new Date()): Promise<RasterSpec | null> {
+  if (name === "smoke-forecast") {
+    // NOAA's near-surface smoke model for the current hour, in NOAA's colors.
+    const base = "https://mapservices.weather.noaa.gov/raster/rest/services/air_quality/ndgd_smoke_sfc_1hr_avg_time/ImageServer/exportImage";
+    const q = new URLSearchParams({
+      bboxSR: "3857",
+      imageSR: "3857",
+      size: "256,256",
+      format: "png32",
+      transparent: "true",
+      f: "image",
+      // Mid-hour, so it can't fall on the boundary between two hourly slices.
+      time: String(Math.floor(now.getTime() / 3_600_000) * 3_600_000 + 1_800_000),
+      renderingRule: JSON.stringify({ rasterFunction: "smoke_don_0921" }),
+    });
+    return {
+      tiles: [`${base}?bbox={bbox-epsg-3857}&${q}`],
+      maxzoom: 9,
+      attribution: '<a href="https://www.weather.gov/" target="_blank" rel="noopener noreferrer">NOAA smoke forecast</a>',
+      under: "labels",
+      opacity: 0.7,
+    };
+  }
   if (name === "heat-risk") {
     // NWS HeatRisk image service, today's grid ("HeatRisk_1"), in its own colors.
     const base = "https://mapservices.weather.noaa.gov/experimental/rest/services/NWS_HeatRisk/ImageServer/exportImage";
@@ -1246,6 +1283,14 @@ function addOverlay(
                   ? (["match", ["get", "kind"], ...VOTING_COLORS.flat(), accent] as unknown as maplibregl.ExpressionSpecification)
                   : info.category === "wastewater"
                     ? (["match", ["get", "worst"], ...WVAL_COLORS.flat(), "#94a3b8"] as unknown as maplibregl.ExpressionSpecification)
+                    : info.category === "gauge"
+                      ? (["match", ["get", "status"], ...GAUGE_COLORS.flat(), GAUGE_OTHER] as unknown as maplibregl.ExpressionSpecification)
+                      : info.category === "storm"
+                        ? ([
+                            "case",
+                            ...STORM_KINDS.flatMap(([kw, c]) => [["in", kw, ["coalesce", ["get", "kind"], ""]], c]),
+                            "#64748b",
+                          ] as unknown as maplibregl.ExpressionSpecification)
                     : info.category === "groundwater"
                       ? (["interpolate", ["linear"], ["coalesce", ["get", "depth_ft"], 0], ...GROUNDWATER_STOPS.flat()] as unknown as maplibregl.ExpressionSpecification)
                   : info.category === "outage"
@@ -1366,6 +1411,11 @@ function addOverlay(
         ? choropleth("CIscoreP", ENVIRO_STOPS)
         : info.category === "health"
           ? choropleth("pct", HEALTH_STOPS[info.name] ?? PCT_STOPS)
+          : info.category === "firewx"
+            ? ({
+                "fill-color": ["match", ["get", "level"], ...FIREWX_COLORS.flat(), "#cccccc"] as unknown as maplibregl.ExpressionSpecification,
+                "fill-opacity": 0.4,
+              } as const)
           : info.category === "drought"
             ? ({
                 "fill-color": ["match", ["get", "dm"], ...DROUGHT_COLORS.flat(), "#cccccc"] as unknown as maplibregl.ExpressionSpecification,
@@ -1376,7 +1426,7 @@ function addOverlay(
             "fill-opacity":
                 info.category === "landuse" ? 0.22 : info.category === "perimeter" || info.category === "outage-area" ? 0.3 : info.category === "weather" ? 0.18 : 0.14,
             };
-  const choroplethCat = ["census", "enviroscreen", "health", "drought"].includes(info.category);
+  const choroplethCat = ["census", "enviroscreen", "health", "drought", "firewx"].includes(info.category);
 
   map.addLayer(
     { id: `${src}-fill`, type: "fill", source: src, paint: fillPaint, layout: { visibility: "none" } },
@@ -1697,6 +1747,25 @@ function untilText(v: unknown, locale: string): string {
   const d = typeof v === "number" ? new Date(v) : typeof v === "string" && v.trim() ? new Date(v) : null;
   return d && !Number.isNaN(d.getTime()) ? d.toLocaleString(locale, { dateStyle: "medium", timeStyle: "short" }) : "";
 }
+/** "Tstm Wnd Gst" -> "Thunderstorm wind gust", etc.; unknown kinds as-is. */
+const STORM_TITLES: Record<string, Parameters<TFn>[0]> = {
+  "Tstm Wnd Gst": "stormTstmGust",
+  "Tstm Wnd Dmg": "stormTstmDamage",
+  "Non-Tstm Wnd Gst": "stormWindGust",
+  "Non-Tstm Wnd Dmg": "stormWindDamage",
+  "Marine Tstm Wind": "stormMarineWind",
+  Hail: "stormHail",
+  Tornado: "stormTornado",
+  "Funnel Cloud": "stormFunnel",
+  "Flash Flood": "stormFlashFlood",
+  Flood: "stormFlood",
+  "Heavy Rain": "stormHeavyRain",
+  Snow: "stormSnow",
+  "Heavy Snow": "stormHeavySnow",
+};
+function stormTitle(kind: string, t: TFn): string {
+  return STORM_TITLES[kind] ? t(STORM_TITLES[kind]!) : kind;
+}
 const UTILITY_NAMES: Record<string, string> = { PGE: "PG&E", SCE: "SCE", SDGE: "SDG&E", SMUD: "SMUD" };
 /** Spanish for the most common FARS light/weather values (else shown as-is). */
 const FARS_ES: Record<string, string> = {
@@ -1994,6 +2063,51 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
         ],
       };
     }
+    case "gauge": {
+      const st = raw(p.status);
+      return {
+        ...base,
+        title: [raw(p.waterbody), raw(p.location)].filter(Boolean).join(" — ") || kind,
+        rows: [
+          [t("rowStatus"), GAUGE_KEYS[st] ? t(GAUGE_KEYS[st]!) : ""],
+          [/cfs/i.test(raw(p.units)) ? t("rowFlow") : t("rowStage"), num(p.stage) != null ? `${fmt(p.stage)} ${raw(p.units)}` : ""],
+          [t("rowFloodStage"), num(p.flood) != null ? `${fmt(p.flood)} ${raw(p.units)}` : ""],
+          [
+            t("rowTime"),
+            /^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}/.test(raw(p.observed_at))
+              ? new Date(`${raw(p.observed_at).replace(" ", "T")}Z`).toLocaleString(locale, { dateStyle: "medium", timeStyle: "short" })
+              : "",
+          ],
+        ],
+        link: raw(p.page) ? { href: raw(p.page), label: t("gaugeMore") } : undefined,
+      };
+    }
+    case "storm": {
+      const tm = num(p.time);
+      return {
+        ...base,
+        title: stormTitle(raw(p.kind), t) || kind,
+        rows: [
+          [t("rowMagnitude"), raw(p.magnitude) ? `${raw(p.magnitude)} ${raw(p.units)}` : ""],
+          [t("rowWhere"), [raw(p.where), raw(p.state)].filter(Boolean).join(", ")],
+          [t("rowTime"), tm != null ? new Date(tm).toLocaleString(locale, { dateStyle: "medium", timeStyle: "short" }) : ""],
+          [t("rowNotes"), raw(p.remarks)],
+        ],
+      };
+    }
+    case "firewx": {
+      const lvl = num(p.level);
+      const ex = raw(p.expires); // "202610171200" (UTC)
+      const exDate = /^\d{12}$/.test(ex)
+        ? new Date(Date.UTC(+ex.slice(0, 4), +ex.slice(4, 6) - 1, +ex.slice(6, 8), +ex.slice(8, 10), +ex.slice(10, 12)))
+        : null;
+      return {
+        ...base,
+        title: t(FIREWX_KEYS[lvl ?? 5] ?? "firewxElevated"),
+        rows: [[t("rowUntil"), exDate ? exDate.toLocaleString(locale, { dateStyle: "medium", timeStyle: "short" }) : ""]],
+        link: { href: "https://www.spc.noaa.gov/products/fire_wx/", label: t("firewxMore") },
+      };
+    }
     case "groundwater": {
       const chg = num(p.change_ft);
       const day = (v: unknown) => (raw(v) ? new Date(`${raw(v)}T12:00:00`).toLocaleDateString(locale, { year: "numeric", month: "short", day: "numeric" }) : "");
@@ -2232,9 +2346,10 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
         ...base,
         title: num(p.aqi) != null ? t("aqi", { n: fmt(p.aqi) }) : kind,
         rows: [
+          [t("rowSite"), raw(p.name)],
           [t("rowCategory"), AQI_KEYS[cat] ? t(AQI_KEYS[cat]!) : ""],
           [t("rowPm25"), num(p.pm2_5) != null ? t("ugm3", { n: fmt(p.pm2_5) }) : ""],
-          [t("rowOzone"), num(p.ozone) != null ? t("ugm3", { n: fmt(p.ozone) }) : ""],
+          [t("rowOzone"), num(p.ozone_ppb) != null ? t("ppb", { n: fmt(p.ozone_ppb) }) : num(p.ozone) != null ? t("ugm3", { n: fmt(p.ozone) }) : ""],
         ],
       };
     }

@@ -53,11 +53,6 @@ class Settings(BaseSettings):
     census_state_fips: str = "06"  # California
     census_county_fips: str = "099"  # Stanislaus
 
-    # --- AirNow air quality (free key: https://docs.airnowapi.org/account/request/).
-    # Set CAM_AIRNOW_API_KEY. ZIPs sampled for current observations across the county.
-    airnow_api_key: str = ""
-    airnow_zips: tuple[str, ...] = ("95354", "95350", "95382", "95307", "95361", "95367")
-
     # --- Windy Webcams API (free key: https://api.windy.com/keys, "Webcams API").
     # Sent as a header, never in URLs/logs. Used server-side/at bake time only.
     windy_api_key: str = ""

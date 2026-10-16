@@ -69,6 +69,11 @@ export function arcgisQueryUrl(spec: ViewSpec, bbox: Bbox, zoom: number): string
   return `${spec.url}/query?${p}`;
 }
 
+/** EPA AQI band (mirrors live-parsers aqiCategory / backend aqi_category). */
+function aqiBand(aqi: number): string {
+  return aqi <= 50 ? "good" : aqi <= 100 ? "moderate" : aqi <= 150 ? "usg" : aqi <= 200 ? "unhealthy" : aqi <= 300 ? "very" : "hazardous";
+}
+
 /** Named cleanups some sources need (mirrors backend transforms). */
 const POST: Record<string, (p: Record<string, unknown>) => void> = {
   // EPA Superfund: the site-profile link is buried in an HTML field.
@@ -81,6 +86,24 @@ const POST: Record<string, (p: Record<string, unknown>) => void> = {
   nrhp: (p) => {
     p.page = typeof p.page === "string" && /^https:\/\/catalog\.archives\.gov\/id\/\d+$/.test(p.page) ? p.page : "";
     p.listed = String(p.listed ?? "").replace(/-+$/, "");
+  },
+  // EPA AirNow monitors: drop inactive ones; AQI band + map label.
+  airnow: (p) => {
+    const aqi = typeof p.aqi === "number" ? p.aqi : Number.NaN;
+    const ok = (p._status == null || p._status === "Active") && Number.isFinite(aqi) && aqi >= 0;
+    delete p._status;
+    if (!ok) {
+      p._drop = true;
+      return;
+    }
+    const r = Math.round(aqi); // band and label from the same number
+    p.aqi = r;
+    p.category = aqiBand(r);
+    p.label = String(r);
+  },
+  // NOAA river gauges: links only to NOAA's own gauge pages.
+  gauge: (p) => {
+    p.page = typeof p.page === "string" && p.page.startsWith("https://water.noaa.gov/") ? p.page : "";
   },
   // National Bridge Inventory text fields come wrapped in single quotes.
   nbi: (p) => {
@@ -102,6 +125,7 @@ export function applyFields(json: unknown, spec: ViewSpec): FC {
     const props: Record<string, unknown> = {};
     for (const [from, to] of Object.entries(spec.fields)) props[to] = src[from] ?? null;
     post?.(props);
+    if (props._drop) continue;
     features.push({ type: "Feature", geometry: f.geometry, properties: props });
   }
   return { type: "FeatureCollection", features };

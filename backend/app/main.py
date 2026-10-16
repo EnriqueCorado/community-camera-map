@@ -20,7 +20,7 @@ from .layers.router import router as layers_router
 from .layers.service import LayerService
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
-# httpx/httpcore log every request URL at INFO — including Census/AirNow URLs whose
+# httpx/httpcore log every request URL at INFO — including Census URLs whose
 # query string carries the API key. Keep them at WARNING so keys never hit logs.
 for _noisy in ("httpx", "httpcore"):
     logging.getLogger(_noisy).setLevel(logging.WARNING)

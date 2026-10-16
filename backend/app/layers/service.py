@@ -536,6 +536,17 @@ async def _wastewater(client: httpx.AsyncClient, _s: Settings) -> dict:
     return fc
 
 
+AIRNOW = (
+    "https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/"
+    "Air_Now_Current_Monitors_Ozone_and_PM/FeatureServer/0"
+)
+RIVER_GAUGES = (
+    "https://mapservices.weather.noaa.gov/eventdriven/rest/services/water/riv_gauges/MapServer/0"
+)
+STORM_REPORTS = "https://mapservices.weather.noaa.gov/vector/rest/services/obs/nws_local_storm_reports/MapServer/0"
+FIRE_WX = (
+    "https://mapservices.weather.noaa.gov/vector/rest/services/fire_weather/SPC_firewx/MapServer/1"
+)
 CNRA_SQL = "https://data.cnra.ca.gov/api/3/action/datastore_search_sql"
 GW_MEASUREMENTS = "bfa9f262-24a1-45bd-8dc8-138bc8107266"  # DWR periodic GWL: measurements
 GW_STATIONS = "af157380-fb42-4abf-b72a-6f9f98868077"  # ... and stations
@@ -680,43 +691,6 @@ async def _windy(client: httpx.AsyncClient, s: Settings) -> dict:
         if len(batch) < 50 or (isinstance(total, int) and len(rows) >= total):
             break
     return transforms.windy_webcams({"webcams": rows}, known=_known_cameras())
-
-
-async def _airnow(client: httpx.AsyncClient, s: Settings) -> dict:
-    """AirNow current air-quality observations near the county (needs a key)."""
-    if not s.airnow_api_key:
-        raise census.CensusKeyMissing(
-            "Set CAM_AIRNOW_API_KEY (free: https://docs.airnowapi.org/account/request/)"
-        )
-    feats = []
-    seen: set[tuple] = set()
-    for zip_code in s.airnow_zips:
-        url = (
-            "https://www.airnowapi.org/aq/observation/zipCode/current/"
-            f"?format=application/json&zipCode={zip_code}&distance=25&API_KEY={s.airnow_api_key}"
-        )
-        body, _ = await fetch_capped(client, url, max_bytes=2 * 1024 * 1024)
-        for obs in json.loads(body):
-            lat, lon = obs.get("Latitude"), obs.get("Longitude")
-            if lat is None or lon is None:
-                continue
-            key = (round(float(lat), 4), round(float(lon), 4), obs.get("ParameterName"))
-            if key in seen:
-                continue
-            seen.add(key)
-            feats.append(
-                {
-                    "type": "Feature",
-                    "geometry": {"type": "Point", "coordinates": [float(lon), float(lat)]},
-                    "properties": {
-                        "parameter": obs.get("ParameterName"),
-                        "aqi": obs.get("AQI"),
-                        "category": (obs.get("Category") or {}).get("Name"),
-                        "area": obs.get("ReportingArea"),
-                    },
-                }
-            )
-    return {"type": "FeatureCollection", "features": feats}
 
 
 async def _census(client: httpx.AsyncClient, settings: Settings) -> dict:
@@ -1057,11 +1031,90 @@ LAYERS: dict[str, Layer] = {
     "air-quality": Layer(
         name="air-quality",
         title="Air quality monitors (AirNow)",
-        description="Current AirNow air-quality observations (AQI) across the county.",
-        category="point",
-        loader=_airnow,
-        requires_key=True,
+        description="Current AQI at EPA AirNow monitors (ozone and PM2.5), across North America.",
+        category="aqi",
+        loader=_arcgis_select(AIRNOW, transforms.airnow_monitors, bbox="-122.6,36.8,-119.4,38.6"),
         ttl=900,
+        view=View(
+            AIRNOW,
+            {
+                "SiteName": "name",
+                "OZONEPM_AQI": "aqi",
+                "PM25": "pm2_5",
+                "OZONE": "ozone_ppb",
+                "Status": "_status",
+            },
+            "point",
+            min_zoom=5,
+            refresh_s=900,
+            post="airnow",
+            home_complete=True,
+        ),
+    ),
+    "river-gauges": Layer(
+        name="river-gauges",
+        title="River levels & flooding",
+        description=(
+            "NOAA river gauges: current level and flood status (action, minor, moderate, major)."
+        ),
+        category="gauge",
+        loader=_arcgis_select(RIVER_GAUGES, transforms.river_gauges),
+        ttl=900,
+        view=View(
+            RIVER_GAUGES,
+            transforms.RIVER_FIELDS,
+            "point",
+            min_zoom=6,
+            refresh_s=900,
+            post="gauge",
+            home_complete=True,
+        ),
+    ),
+    "storm-reports": Layer(
+        name="storm-reports",
+        title="Storm reports (24h)",
+        description=(
+            "Tornadoes, hail, damaging wind and flooding reported to the NWS in the past 24 hours."
+        ),
+        category="storm",
+        loader=_arcgis_select(STORM_REPORTS, transforms.storm_reports),
+        ttl=900,
+        view=View(
+            STORM_REPORTS,
+            transforms.STORM_FIELDS,
+            "point",
+            min_zoom=3,
+            refresh_s=900,
+            home_complete=True,
+        ),
+    ),
+    "fire-weather": Layer(
+        name="fire-weather",
+        title="Fire weather outlook (today)",
+        description=(
+            "NWS Storm Prediction Center day-1 fire weather outlook: elevated, critical, extreme."
+        ),
+        category="firewx",
+        loader=_arcgis_select(FIRE_WX, transforms.fire_weather, simplify=0.005),
+        ttl=1800,
+        view=View(
+            FIRE_WX,
+            {"dn": "level", "expire": "expires"},
+            "polygon",
+            min_zoom=3,
+            where="dn IN (5, 8, 10)",
+            simplify=True,
+            refresh_s=1800,
+            home_complete=True,
+        ),
+    ),
+    "smoke-forecast": Layer(
+        name="smoke-forecast",
+        title="Smoke forecast (this hour)",
+        description="NOAA's model of near-surface wildfire smoke for the current hour.",
+        category="raster",
+        client_side=True,
+        coverage="usa",
     ),
     # --- Transit (static GTFS, converted to GeoJSON) ---
     "transit-routes": Layer(
@@ -1891,8 +1944,6 @@ class LayerService:
         if layer.requires_key:
             if layer.name == "census":
                 return bool(self.settings.census_api_key)
-            if layer.name == "air-quality":
-                return bool(self.settings.airnow_api_key)
             if layer.name == "windy-webcams":
                 return bool(self.settings.windy_api_key)
             return False
@@ -1955,7 +2006,7 @@ class LayerService:
                 raise  # "needs a key" must stay a 503, never stale data
             except Exception as exc:
                 # Log only the exception TYPE, never the exception message: for
-                # keyed upstreams (AirNow/Census) httpx embeds the full request
+                # keyed upstreams (Census) httpx embeds the full request
                 # URL — API key included — in the message.
                 if entry is not None:  # serve stale data over a transient upstream failure
                     logger.warning(
