@@ -14,6 +14,7 @@ import { covers } from "../view-logic";
 import { OSM_MIN_ZOOM } from "../osm-sources";
 import { NearMe, type NearPoint } from "./NearMe";
 import { HistoryPicker } from "./HistoryPicker";
+import { PRESETS, activePreset, applyPreset } from "../presets";
 import { HISTORY_LAYERS } from "../history";
 import { useI18n, layerTitle, type Key } from "../i18n";
 
@@ -279,6 +280,7 @@ export function Sidebar({
   const matches = allMatches.slice(0, MAX_LIST);
 
   const setLayer = (patch: Partial<LayerState>) => onLayersChange({ ...layers, ...patch });
+  const current = activePreset(layers.overlays, overlayInfos.map((l) => l.name));
   const setVendor = (vendor: string, on: boolean) =>
     setLayer({ alprVendors: { ...layers.alprVendors, [vendor]: on } });
   const setOverlay = (name: string, on: boolean) =>
@@ -423,6 +425,27 @@ export function Sidebar({
               {p.labelKey ? t(p.labelKey) : p.label}
             </button>
           ))}
+        </div>
+      </Section>
+
+      <Section {...section("presets")} title={t("presetsTitle")}>
+        <div className="chips" role="group" aria-label={t("presetsTitle")}>
+          {PRESETS.map((p) => (
+            <button
+              key={p.id}
+              type="button"
+              className={`chip ${current === p.id ? "chip--on" : ""}`}
+              aria-pressed={current === p.id}
+              onClick={() => setLayer({ overlays: applyPreset(p, overlayInfos.map((l) => l.name)) })}
+            >
+              {t(p.label)}
+            </button>
+          ))}
+          {Object.values(layers.overlays).some(Boolean) && (
+            <button type="button" className="chip" onClick={() => setLayer({ overlays: {} })}>
+              {t("presetClear")}
+            </button>
+          )}
         </div>
       </Section>
 

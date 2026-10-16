@@ -97,3 +97,14 @@ test("post-processors: AirNow AQI band + drop inactive; gauge links", () => {
     spec({ fields: { U: "page" }, post: "gauge" }));
   expect(g.features[0]!.properties).toEqual({ page: "" });
 });
+
+import { PRESETS, activePreset, applyPreset } from "../../frontend/src/presets";
+test("quick views: apply only known layers; recognize the active one", () => {
+  const known = ["voting", "flood", "river-gauges", "rain-radar"];
+  const flood = PRESETS.find((p) => p.id === "flood")!;
+  expect(applyPreset(flood, known)).toEqual({ flood: true, "river-gauges": true, "rain-radar": true });
+  expect(activePreset({ flood: true, "river-gauges": true, "rain-radar": true }, known)).toBe("flood");
+  expect(activePreset({ flood: true }, known)).toBeNull();
+  expect(activePreset({}, known)).toBeNull();
+  expect(new Set(PRESETS.map((p) => p.id)).size).toBe(PRESETS.length);
+});

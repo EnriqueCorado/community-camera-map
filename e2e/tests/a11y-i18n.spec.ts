@@ -545,3 +545,17 @@ test("live buses: route popup, Spanish too", async ({ page }) => {
   await expect(popup.locator(".popup__title")).toHaveText("Ruta 47");
   await expect(popup).toContainText("22 mph");
 });
+
+test("quick view turns on its layers, and every preset layer exists", async ({ page, request }) => {
+  const names = new Set(((await (await request.get("/api/layers")).json()) as { name: string }[]).map((l) => l.name));
+  const { PRESETS } = await import("../../frontend/src/presets");
+  for (const p of PRESETS) for (const n of p.overlays) expect(names.has(n), `${p.id}: ${n}`).toBe(true);
+  await page.goto("/");
+  await ready(page);
+  await page.getByRole("button", { name: "Election day" }).click();
+  await expect(page.getByRole("button", { name: "Election day" })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("checkbox", { name: "Vote centers & ballot drop boxes" })).toBeChecked();
+  await expect(page).toHaveURL(/ov=voting/);
+  await page.getByRole("button", { name: "Clear all layers" }).click();
+  await expect(page.getByRole("checkbox", { name: "Vote centers & ballot drop boxes" })).not.toBeChecked();
+});
