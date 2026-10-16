@@ -152,6 +152,36 @@ def build(
                 feats.setdefault(pid, f)
     old = previous_index(out)
     previous = int(old.get("total", 0) or 0)
+    # A refreshed cell that suddenly lost most of its readers is far more
+    # likely a bad download than a real change: keep its previous tile.
+    old_counts = old.get("cells", {}) if isinstance(old.get("cells"), dict) else {}
+    new_counts: dict[str, int] = defaultdict(int)
+    for f in feats.values():
+        lon, lat = f["geometry"]["coordinates"]
+        new_counts[f"{math.floor(lat / CELL) * CELL}_{math.floor(lon / CELL) * CELL}"] += 1
+    kept = {k.replace("/", "_") for k in keep_cells}
+    shrunk = [
+        k
+        for k, n in old_counts.items()
+        if k not in kept and isinstance(n, int) and n >= 50 and new_counts.get(k, 0) < n / 2
+    ]
+    for k in shrunk:
+        print(
+            f"  {k}: {old_counts[k]} -> {new_counts.get(k, 0)} readers; keeping the previous tile"
+        )
+        try:
+            prev = json.loads((out / f"{k}.geojson").read_text())
+        except (OSError, ValueError):
+            continue
+        for f in list(feats.values()):  # drop the partial new cell
+            lon, lat = f["geometry"]["coordinates"]
+            if f"{math.floor(lat / CELL) * CELL}_{math.floor(lon / CELL) * CELL}" == k:
+                feats.pop(f["properties"]["osm_id"], None)
+        for f in prev.get("features", []):
+            pid = (f.get("properties") or {}).get("osm_id")
+            if isinstance(pid, int):
+                feats[pid] = f
+    keep_cells = (*keep_cells, *(k.replace("_", "/") for k in shrunk))
     # Carried-over cells mustn't mask a broken source: refuse when most of the
     # cells we tried that had readers last time actually failed.
     old_cells = set(old.get("cells", {}))
@@ -274,7 +304,7 @@ def from_overpass(
         s, w = (int(x) for x in key.split("/"))
         q = (
             f'[out:json][timeout:180];node["surveillance:type"="ALPR"]'
-            f"({s},{w},{s + CELL},{w + CELL});out tags;"
+            f"({s},{w},{s + CELL},{w + CELL});out body;"  # body = coordinates + tags
         )
         for attempt in range(len(OVERPASS) * 2):
             if time.monotonic() > deadline:

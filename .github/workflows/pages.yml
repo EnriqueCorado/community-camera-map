@@ -152,8 +152,8 @@ jobs:
             frontend/public/data/layers/clinics.geojson
             frontend/public/data/layers/community-centers.geojson
             frontend/public/data/layers/farmers-markets.geojson
-          key: live-data-${{ github.run_id }}
-          restore-keys: live-data-
+          key: live-data-v2-${{ github.run_id }}
+          restore-keys: live-data-v2-
       - name: Refresh live layers (fast)
         if: github.event_name == 'schedule' && github.event.schedule == '*/15 * * * *'
         working-directory: backend
@@ -215,7 +215,7 @@ jobs:
             frontend/public/data/layers/clinics.geojson
             frontend/public/data/layers/community-centers.geojson
             frontend/public/data/layers/farmers-markets.geojson
-          key: live-data-${{ github.run_id }}
+          key: live-data-v2-${{ github.run_id }}
       - name: Fetch Windy list (if the windy job produced one)
         if: needs.windy.result == 'success'
         continue-on-error: true # no artifact when no key is configured

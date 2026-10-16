@@ -89,3 +89,22 @@ def test_refuses_when_most_populated_cells_failed(tmp_path):
     ix = build(nodes[:1], {}, out, keep_cells=("40/-90", "30/-85"))
     assert ix["total"] == 3
     assert ix["cell_updated"]["35_-125"] > "" and set(ix["cell_updated"]) >= {"40_-90", "30_-85"}
+
+
+def test_a_cell_that_suddenly_empties_keeps_its_previous_tile(tmp_path):
+    out = tmp_path / "alpr"
+    chicago = [{"id": i, "lat": 41.9, "lon": -87.6 + i * 1e-4, "tags": {}} for i in range(100)]
+    modesto = [{"id": 1000, "lat": 37.6, "lon": -121.0, "tags": {}}]
+    build(chicago + modesto, {}, out)
+    # Chicago "refreshed" with no coordinates (the `out tags` bug): kept.
+    broken = [{"id": i, "tags": {}} for i in range(100)]
+    ix = build(broken + modesto, {}, out)
+    assert ix["cells"]["40_-90"] == 100 and ix["total"] == 101
+
+
+def test_overpass_query_asks_for_coordinates():
+    import inspect
+
+    import build_alpr_usa
+
+    assert "out body;" in inspect.getsource(build_alpr_usa.from_overpass)
