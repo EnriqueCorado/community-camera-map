@@ -54,6 +54,7 @@ DAILY = (
     "drought",  # the Drought Monitor updates weekly (Thursdays)
     "voting",  # empties itself once the election is over
     "wastewater",  # CDC updates weekly
+    "groundwater",  # DWR posts new well readings daily
     "aed",
     "drinking-water",
     "restrooms",

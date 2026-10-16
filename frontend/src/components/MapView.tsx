@@ -32,6 +32,7 @@ import { VOTING_KEYS } from "../colors";
 import {
   CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
   HEALTH_STOPS, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, WVAL_COLORS, WVAL_KEYS,
+  GROUNDWATER_STOPS,
 } from "../colors";
 
 export interface LayerState {
@@ -988,7 +989,7 @@ const HAS_TRACK: maplibregl.ExpressionSpecification = ["==", ["typeof", ["get", 
 const POINT_CATEGORIES = new Set([
   "flight", "haze", "webcam", "space", "train", "nature", "wiki", "weather-now", "poi", "hotspot",
   "roadweather", "chain", "superfund", "power", "aqi", "voting", "outage", "crash", "reservoir", "quake", "bus",
-  "wastewater",
+  "wastewater", "groundwater",
 ]);
 /** …and these as lines (lane closures can be momentarily empty). */
 const LINE_CATEGORIES = new Set(["roadops", "fault"]);
@@ -1245,6 +1246,8 @@ function addOverlay(
                   ? (["match", ["get", "kind"], ...VOTING_COLORS.flat(), accent] as unknown as maplibregl.ExpressionSpecification)
                   : info.category === "wastewater"
                     ? (["match", ["get", "worst"], ...WVAL_COLORS.flat(), "#94a3b8"] as unknown as maplibregl.ExpressionSpecification)
+                    : info.category === "groundwater"
+                      ? (["interpolate", ["linear"], ["coalesce", ["get", "depth_ft"], 0], ...GROUNDWATER_STOPS.flat()] as unknown as maplibregl.ExpressionSpecification)
                   : info.category === "outage"
                     ? (["match", ["get", "type"], ...OUTAGE_COLORS.flat(), "#64748b"] as unknown as maplibregl.ExpressionSpecification)
                     : info.category === "reservoir"
@@ -1988,6 +1991,24 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
         rows: [
           [t("rowSize"), num(acres) != null ? t("acres", { n: fmt(acres) }) : t("active")],
           [t("rowContained"), pct != null ? `${Math.round(pct)}%` : ""],
+        ],
+      };
+    }
+    case "groundwater": {
+      const chg = num(p.change_ft);
+      const day = (v: unknown) => (raw(v) ? new Date(`${raw(v)}T12:00:00`).toLocaleDateString(locale, { year: "numeric", month: "short", day: "numeric" }) : "");
+      return {
+        ...base,
+        title: num(p.depth_ft) != null ? t("gwDepth", { n: fmt(p.depth_ft) }) : kind,
+        rows: [
+          [t("rowMeasured"), day(p.date)],
+          [
+            t("gwChange", { since: day(p.since) }),
+            chg == null ? "" : chg > 0 ? t("gwDeeper", { n: fmt(chg) }) : chg < 0 ? t("gwShallower", { n: fmt(-chg) }) : t("gwSame"),
+          ],
+          [t("rowWellUse"), raw(p.use)],
+          [t("rowWellDepth"), num(p.well_depth_ft) != null ? `${fmt(p.well_depth_ft)} ft` : ""],
+          [t("rowCounty"), raw(p.county)],
         ],
       };
     }

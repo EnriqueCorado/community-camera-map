@@ -850,3 +850,43 @@ def wastewater_counties(rows: object, counties: object, states: object) -> dict:
         )
         feats.append(_pt(lon, lat, props))
     return _fc(feats)
+
+
+def groundwater_wells(recent: object, prior: object) -> dict:
+    """DWR periodic groundwater levels: each well's latest depth to water
+    (feet below ground) and, when there's a reading at least ~10 months
+    earlier, how much deeper (+) or shallower (-) the water is now."""
+    before = {}
+    for r in prior if isinstance(prior, list) else []:
+        if isinstance(r, dict) and r.get("site_code"):
+            before[str(r["site_code"])] = r
+    feats = []
+    for r in recent if isinstance(recent, list) else []:
+        if not isinstance(r, dict):
+            continue
+        lat, lon, depth = _num(r.get("latitude")), _num(r.get("longitude")), _num(r.get("gse_gwe"))
+        if lat is None or lon is None or depth is None or not (-125 < lon < -113 and 32 < lat < 43):
+            continue
+        date = str(r.get("msmt_date", ""))[:10]
+        props = {
+            "depth_ft": round(depth, 1),
+            "date": date,
+            "use": str(r.get("well_use") or ""),
+            "county": str(r.get("county_name") or ""),
+            "well_depth_ft": _num(r.get("well_depth")),
+            "change_ft": None,
+            "since": "",
+        }
+        b = before.get(str(r.get("site_code")))
+        old = _num(b.get("gse_gwe")) if b else None
+        old_date = str(b.get("msmt_date", ""))[:10] if b else ""
+        if old is not None and old_date and date:
+            try:
+                gap = (dt.date.fromisoformat(date) - dt.date.fromisoformat(old_date)).days
+            except ValueError:
+                gap = 0
+            if gap >= 300:
+                props["change_ft"] = round(depth - old, 1)
+                props["since"] = old_date
+        feats.append(_pt(lon, lat, props))
+    return _fc(feats)

@@ -536,6 +536,47 @@ async def _wastewater(client: httpx.AsyncClient, _s: Settings) -> dict:
     return fc
 
 
+CNRA_SQL = "https://data.cnra.ca.gov/api/3/action/datastore_search_sql"
+GW_MEASUREMENTS = "bfa9f262-24a1-45bd-8dc8-138bc8107266"  # DWR periodic GWL: measurements
+GW_STATIONS = "af157380-fb42-4abf-b72a-6f9f98868077"  # ... and stations
+
+
+def _gw_sql(start: dt.date, end: dt.date) -> str:
+    """Latest good reading per well between two dates (dates are ours, not input)."""
+    return (
+        "SELECT DISTINCT ON (m.site_code) m.site_code, m.msmt_date, m.gse_gwe, "
+        "s.latitude, s.longitude, s.well_use, s.county_name, s.well_depth "
+        f'FROM "{GW_MEASUREMENTS}" m JOIN "{GW_STATIONS}" s ON s.site_code = m.site_code '
+        f"WHERE m.msmt_date >= '{start.isoformat()}' AND m.msmt_date < '{end.isoformat()}' "
+        "AND m.gse_gwe IS NOT NULL AND m.wlm_qa_desc = 'Good' "
+        "ORDER BY m.site_code, m.msmt_date DESC"
+    )
+
+
+async def _groundwater(client: httpx.AsyncClient, _s: Settings) -> dict:
+    """California's monitored wells: latest depth to water and change vs. a
+    reading 1-2 years earlier (DWR, via the CNRA open-data portal)."""
+    today = dt.date.today()
+
+    async def rows(start: dt.date, end: dt.date) -> list:
+        body, _ = await fetch_capped(
+            client, CNRA_SQL, max_bytes=arcgis.MAX_BYTES, params={"sql": _gw_sql(start, end)}
+        )
+        j = json.loads(body)
+        if not j.get("success"):
+            raise ValueError("CNRA groundwater query failed")
+        return j["result"]["records"]
+
+    recent, prior = await asyncio.gather(
+        rows(today - dt.timedelta(days=730), today + dt.timedelta(days=1)),
+        rows(today - dt.timedelta(days=1095), today - dt.timedelta(days=365)),
+    )
+    fc = transforms.groundwater_wells(recent, prior)
+    if not fc["features"]:
+        raise ValueError("no groundwater wells")  # never publish an empty layer
+    return fc
+
+
 def _json_transform(url: str, transform: Callable[[object], dict]) -> Loader:
     """A non-GeoJSON JSON source normalized to GeoJSON (Caltrans, USGS, NID)."""
 
@@ -1761,6 +1802,18 @@ LAYERS: dict[str, Layer] = {
         loader=_wastewater,
         ttl=12 * 3600,
         coverage="usa",
+    ),
+    "groundwater": Layer(
+        name="groundwater",
+        title="Groundwater depth",
+        description=(
+            "How far below ground the water is in California's monitored wells, and "
+            "whether it's deeper than a year or two ago (DWR periodic measurements)."
+        ),
+        category="groundwater",
+        loader=_groundwater,
+        ttl=24 * 3600,
+        coverage="california",
     ),
     "heat-risk": Layer(
         name="heat-risk",

@@ -484,6 +484,7 @@ for (const [layer, ov, view, en, es] of [
   ["ov-fatal-crashes-circle", "fatal-crashes", "-120.99,37.6,7.5", /Fatal crash/, /Choque mortal/],
   ["ov-health-diabetes-fill", "health-diabetes", "-120.99,37.64,11", /% of adults/, /% de los adultos/],
   ["ov-wastewater-circle", "wastewater", "-120.99,37.56,8", /COVID-19.*(Very low|Low|Moderate|High|Very high)/s, /Influenza A/],
+  ["ov-groundwater-circle", "groundwater", "-120.99,37.6,10", /ft below ground/, /pies bajo tierra/],
 ] as const) {
   for (const lang of ["en", "es"] as const) {
     test(`${ov} popup (${lang})`, async ({ page }) => {

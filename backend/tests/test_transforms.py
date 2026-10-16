@@ -772,3 +772,54 @@ def test_wastewater_keeps_each_plants_newest_week():
     ]
     p = transforms.wastewater_counties(rows, counties, states)["features"][0]["properties"]
     assert p["rsv"] == "Low" and p["week"] == "2026-09-26"
+
+
+def test_groundwater_depth_and_change_needs_a_long_enough_gap():
+    recent = [
+        {
+            "site_code": "A",
+            "msmt_date": "2026-09-01T00:00:00",
+            "gse_gwe": "120.5",
+            "latitude": "37.6",
+            "longitude": "-121.0",
+            "well_use": "Irrigation",
+            "county_name": "Stanislaus",
+            "well_depth": "400",
+        },
+        {
+            "site_code": "B",
+            "msmt_date": "2026-09-01T00:00:00",
+            "gse_gwe": "30",
+            "latitude": "37.6",
+            "longitude": "-121.0",
+        },
+        {
+            "site_code": "C",
+            "msmt_date": "2026-09-01",
+            "gse_gwe": "x",
+            "latitude": "37.6",
+            "longitude": "-121.0",
+        },
+        {
+            "site_code": "D",
+            "msmt_date": "2026-09-01",
+            "gse_gwe": "5",
+            "latitude": "45",
+            "longitude": "-121.0",
+        },
+    ]
+    prior = [
+        {"site_code": "A", "msmt_date": "2025-03-01T00:00:00", "gse_gwe": "100"},
+        {
+            "site_code": "B",
+            "msmt_date": "2026-01-01T00:00:00",
+            "gse_gwe": "40",
+        },  # too recent to compare
+    ]
+    by = {
+        f["properties"]["depth_ft"]: f["properties"]
+        for f in transforms.groundwater_wells(recent, prior)["features"]
+    }
+    assert set(by) == {120.5, 30.0}
+    assert by[120.5]["change_ft"] == 20.5 and by[120.5]["since"] == "2025-03-01"
+    assert by[30.0]["change_ft"] is None

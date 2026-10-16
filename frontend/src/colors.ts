@@ -23,6 +23,7 @@ export const OVERLAY_COLOR: Record<string, string> = {
   voting: "#1d4ed8",
   buses: "#0f766e",
   wastewater: "#7c3aed",
+  groundwater: "#0369a1",
   "power-outages": "#dc2626",
   "outage-areas": "#f97316",
   "health-asthma": "#0e7490",
@@ -202,6 +203,16 @@ export const WVAL_KEYS: Record<string, "wvalVeryLow" | "wvalLow" | "wvalModerate
   High: "wvalHigh",
   "Very High": "wvalVeryHigh",
 };
+
+/** Depth to groundwater (ft below ground) -> dot color: blue near the
+ *  surface, brown when deep. */
+export const GROUNDWATER_STOPS: [number, string][] = [
+  [10, "#1d4ed8"],
+  [50, "#38bdf8"],
+  [100, "#facc15"],
+  [200, "#b45309"],
+  [400, "#78350f"],
+];
 
 /** Outage type (normalized by the backend) -> dot color. */
 export const OUTAGE_COLORS: [string, string][] = [
