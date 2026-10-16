@@ -129,8 +129,11 @@ def build(
     out: Path,
     min_readers: int = 0,
     keep_cells: tuple[str, ...] = (),
+    failed_cells: tuple[str, ...] = (),
 ) -> dict:
-    """Write the tiles, overview and index from DeFlock nodes."""
+    """Write the tiles, overview and index. `keep_cells` carry over last
+    build's tile (not refreshed this run); `failed_cells` (a subset) are the
+    ones that actually errored, which the safety check counts."""
     feats: dict[int, dict] = {}
     for node in nodes:
         nid = node.get("id")
@@ -147,22 +150,15 @@ def build(
             pid = (f.get("properties") or {}).get("osm_id")
             if isinstance(pid, int):
                 feats.setdefault(pid, f)
-    previous = 0
-    try:
-        previous = int(json.loads((out / "index.json").read_text()).get("total", 0))
-    except (OSError, ValueError, AttributeError):
-        pass
+    old = previous_index(out)
+    previous = int(old.get("total", 0) or 0)
     # Carried-over cells mustn't mask a broken source: refuse when most of the
-    # cells that had readers last time failed.
-    old_cells = set()
-    try:
-        old_cells = set(json.loads((out / "index.json").read_text()).get("cells", {}))
-    except (OSError, ValueError, AttributeError):
-        pass
-    stale = {k.replace("/", "_") for k in keep_cells} & old_cells
-    if old_cells and len(stale) > len(old_cells) / 2:
+    # cells we tried that had readers last time actually failed.
+    old_cells = set(old.get("cells", {}))
+    failed = {k.replace("/", "_") for k in failed_cells} & old_cells
+    if old_cells and len(failed) > len(old_cells) / 2:
         raise SystemExit(
-            f"{len(stale)} of {len(old_cells)} populated cells failed; keeping the old tiles"
+            f"{len(failed)} of {len(old_cells)} populated cells failed; keeping the old tiles"
         )
     if len(feats) < max(min_readers, int(previous * KEEP_FRACTION)):
         raise SystemExit(
@@ -198,12 +194,33 @@ def build(
         "total": len(feats),
         "updated": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
         "source": "DeFlock / OpenStreetMap contributors (ODbL)",
-        "stale_cells": sorted(stale),  # carried over from an earlier build
+        # When each 5-degree cell was last fetched (refreshes go oldest-first).
+        "cell_updated": cell_updated(old, keep_cells),
     }
     (tmp / "index.json").write_text(json.dumps(index, separators=(",", ":")))
     shutil.rmtree(out, ignore_errors=True)
     tmp.rename(out)  # swap in only a complete build
     return index
+
+
+def previous_index(out: Path) -> dict:
+    try:
+        ix = json.loads((out / "index.json").read_text())
+        return ix if isinstance(ix, dict) else {}
+    except (OSError, ValueError):
+        return {}
+
+
+def cell_updated(old: dict, keep_cells: tuple[str, ...]) -> dict[str, str]:
+    """Every cell's last-fetched date: today unless carried over."""
+    today = dt.datetime.now(dt.UTC).date().isoformat()
+    before = old.get("cell_updated") if isinstance(old.get("cell_updated"), dict) else {}
+    kept = {k.replace("/", "_") for k in keep_cells}
+    out = {}
+    for key in tiles_needed(CELL):
+        k = key.replace("/", "_")
+        out[k] = str(before.get(k, "")) if k in kept else today
+    return out
 
 
 def from_deflock(client: httpx.Client) -> list[dict]:
@@ -237,16 +254,22 @@ OVERPASS = (
 OVERPASS_BUDGET_S = 18 * 60  # stay inside the CI step's 25 minutes
 
 
-def from_overpass(client: httpx.Client) -> tuple[list[dict], list[str]]:
+def from_overpass(
+    client: httpx.Client, last: dict[str, str]
+) -> tuple[list[dict], list[str], list[str]]:
     """The same OpenStreetMap data straight from Overpass, one 5-degree cell at
     a time, politely spaced (DeFlock's CDN refuses some networks, e.g. CI).
-    Returns the nodes and the cells that could not be fetched."""
+    Least recently fetched cells go first, so a run that runs out of time still
+    moves every cell forward over a few days. Returns the nodes, the cells that
+    errored, and the cells left for another day."""
     nodes: list[dict] = []
     failed: list[str] = []
+    deferred: list[str] = []
     deadline = time.monotonic() + OVERPASS_BUDGET_S
-    for key in tiles_needed(CELL):  # ~134 cells, many of them empty ocean
+    order = sorted(tiles_needed(CELL), key=lambda k: last.get(k.replace("/", "_"), ""))
+    for key in order:  # ~134 cells, many of them empty ocean
         if time.monotonic() > deadline:
-            failed.append(key)  # out of time: carry the rest over
+            deferred.append(key)  # out of time: carry over, try first tomorrow
             continue
         s, w = (int(x) for x in key.split("/"))
         q = (
@@ -274,18 +297,28 @@ def from_overpass(client: httpx.Client) -> tuple[list[dict], list[str]]:
             print(f"  overpass {key}: every attempt failed; keeping last build's tile")
             failed.append(key)
         time.sleep(2)  # be polite to the public servers
-    return nodes, failed
+    return nodes, failed, deferred
 
 
 def main() -> int:
     with httpx.Client(timeout=120, headers={"User-Agent": UA}, follow_redirects=False) as client:
         failed: list[str] = []
+        deferred: list[str] = []
         try:
             nodes = from_deflock(client)
         except (httpx.HTTPError, SystemExit, ValueError) as exc:
             print(f"  DeFlock CDN unavailable ({exc}); using Overpass")
-            nodes, failed = from_overpass(client)
-    index = build(nodes, ca_extras(), OUT, min_readers=MIN_READERS, keep_cells=tuple(failed))
+            last = previous_index(OUT).get("cell_updated") or {}
+            nodes, failed, deferred = from_overpass(client, last if isinstance(last, dict) else {})
+            print(f"  overpass: {len(failed)} failed, {len(deferred)} left for later")
+    index = build(
+        nodes,
+        ca_extras(),
+        OUT,
+        min_readers=MIN_READERS,
+        keep_cells=tuple(failed + deferred),
+        failed_cells=tuple(failed),
+    )
     print(f"alpr: {index['total']} readers in {len(index['cells'])} tiles")
     return 0
 

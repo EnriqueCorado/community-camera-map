@@ -81,7 +81,11 @@ def test_refuses_when_most_populated_cells_failed(tmp_path):
         {"id": 3, "lat": 33.7, "lon": -84.4, "tags": {}},
     ]
     build(nodes, {}, out)
-    with pytest.raises(SystemExit):  # 2 of 3 populated cells "failed"
-        build(nodes[:1], {}, out, keep_cells=("40/-90", "30/-85"))
-    ix = build(nodes[:2], {}, out, keep_cells=("30/-85",))  # 1 of 3: fine, recorded
-    assert ix["stale_cells"] == ["30_-85"] and ix["total"] == 3
+    with pytest.raises(SystemExit):  # 2 of 3 populated cells actually failed
+        build(
+            nodes[:1], {}, out, keep_cells=("40/-90", "30/-85"), failed_cells=("40/-90", "30/-85")
+        )
+    # Merely deferred (out of time) is fine: carried over with their old date.
+    ix = build(nodes[:1], {}, out, keep_cells=("40/-90", "30/-85"))
+    assert ix["total"] == 3
+    assert ix["cell_updated"]["35_-125"] > "" and set(ix["cell_updated"]) >= {"40_-90", "30_-85"}

@@ -165,13 +165,22 @@ jobs:
         if: github.event.schedule == '37 11 * * *' || github.event_name == 'workflow_dispatch'
         working-directory: backend
         run: uv run --locked python scripts/refresh_live.py --daily
-      # Nationwide plate readers (DeFlock / OpenStreetMap), cut into tiles.
-      # Daily, or whenever the cache doesn't have them yet.
-      - name: Build nationwide plate-reader tiles
-        # (the cache-miss case skips 15-minute runs, which don't save the cache)
-        if: >-
-          github.event.schedule == '37 11 * * *' || github.event_name == 'workflow_dispatch' ||
-          (hashFiles('frontend/public/data/alpr/index.json') == '' && github.event.schedule != '*/15 * * * *')
+      # Nationwide plate readers (OpenStreetMap via DeFlock), cut into tiles.
+      # No cached copy yet: start from the seed on the alpr-data branch.
+      - name: Fetch plate-reader seed
+        if: hashFiles('frontend/public/data/alpr/index.json') == ''
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        continue-on-error: true
+        with:
+          ref: alpr-data
+          path: alpr-seed
+          persist-credentials: false
+      - name: Use plate-reader seed
+        if: hashFiles('frontend/public/data/alpr/index.json') == '' && hashFiles('alpr-seed/index.json') != ''
+        run: rsync -a --exclude .git --exclude README.md alpr-seed/ frontend/public/data/alpr/
+      # Daily refresh: DeFlock if it lets us in, else Overpass, oldest cells first.
+      - name: Refresh nationwide plate-reader tiles
+        if: github.event.schedule == '37 11 * * *' || github.event_name == 'workflow_dispatch'
         working-directory: backend
         timeout-minutes: 25 # Overpass fallback: ~134 cells, 18-minute budget
         continue-on-error: true # the California file stays as the fallback
