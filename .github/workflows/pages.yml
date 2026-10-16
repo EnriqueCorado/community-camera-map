@@ -131,6 +131,7 @@ jobs:
             frontend/public/data/alpr
             frontend/public/data/layers/reservoirs.geojson
             frontend/public/data/layers/fire-weather.geojson
+            frontend/public/data/layers/volcanoes.geojson
             frontend/public/data/layers/drought.geojson
             frontend/public/data/layers/voting.geojson
             frontend/public/data/layers/wastewater.geojson
@@ -195,6 +196,7 @@ jobs:
             frontend/public/data/alpr
             frontend/public/data/layers/reservoirs.geojson
             frontend/public/data/layers/fire-weather.geojson
+            frontend/public/data/layers/volcanoes.geojson
             frontend/public/data/layers/drought.geojson
             frontend/public/data/layers/voting.geojson
             frontend/public/data/layers/wastewater.geojson

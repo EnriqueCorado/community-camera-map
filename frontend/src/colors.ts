@@ -28,6 +28,8 @@ export const OVERLAY_COLOR: Record<string, string> = {
   "storm-reports": "#9333ea",
   "fire-weather": "#ea580c",
   "smoke-forecast": "#78716c",
+  volcanoes: "#b91c1c",
+  "national-parks": "#15803d",
   "power-outages": "#dc2626",
   "outage-areas": "#f97316",
   "health-asthma": "#0e7490",
@@ -259,6 +261,22 @@ export const STORM_KINDS: [string, string, "stormTornado" | "stormHail" | "storm
   ["Flood", "#1d4ed8", "stormFlood"],
   ["Wind", "#9333ea", "stormWind"],
   ["Wnd", "#9333ea", "stormWind"],
+];
+
+/** USGS aviation color codes -> label keys. */
+export const VOLCANO_KEYS: Record<string, "volcanoGreen" | "volcanoYellow" | "volcanoOrange" | "volcanoRed"> = {
+  GREEN: "volcanoGreen",
+  YELLOW: "volcanoYellow",
+  ORANGE: "volcanoOrange",
+  RED: "volcanoRed",
+};
+
+/** USGS aviation color codes -> dot color. */
+export const VOLCANO_COLORS: [string, string][] = [
+  ["GREEN", "#16a34a"],
+  ["YELLOW", "#eab308"],
+  ["ORANGE", "#f97316"],
+  ["RED", "#dc2626"],
 ];
 
 /** SPC fire weather outlook levels (dn) -> fill color (SPC's palette). */

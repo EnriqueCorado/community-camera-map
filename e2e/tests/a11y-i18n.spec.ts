@@ -485,6 +485,8 @@ for (const [layer, ov, view, en, es] of [
   ["ov-health-diabetes-fill", "health-diabetes", "-120.99,37.64,11", /% of adults/, /% de los adultos/],
   ["ov-wastewater-circle", "wastewater", "-120.99,37.56,8", /COVID-19.*(Very low|Low|Moderate|High|Very high)/s, /Influenza A/],
   ["ov-groundwater-circle", "groundwater", "-120.99,37.6,10", /ft below ground/, /pies bajo tierra/],
+  ["ov-volcanoes-circle", "volcanoes", "-176,52,6", /Aviation code/, /Código de aviación/],
+  ["ov-national-parks-fill", "national-parks", "-119.55,37.85,10", /Yosemite/, /Yosemite/],
   ["ov-river-gauges-circle", "river-gauges", "-121.2,37.7,8", /Status.*(flood|stages|current|service)/is, /Estado/],
   ["ov-air-quality-circle", "air-quality", "-120.99,37.64,7.5", /Monitor/, /Estación de monitoreo/],
 ] as const) {

@@ -32,7 +32,7 @@ import { VOTING_KEYS } from "../colors";
 import {
   CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
   HEALTH_STOPS, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, WVAL_COLORS, WVAL_KEYS,
-  GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS,
+  GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS, VOLCANO_COLORS, VOLCANO_KEYS,
 } from "../colors";
 
 export interface LayerState {
@@ -1004,7 +1004,7 @@ const HAS_TRACK: maplibregl.ExpressionSpecification = ["==", ["typeof", ["get", 
 const POINT_CATEGORIES = new Set([
   "flight", "haze", "webcam", "space", "train", "nature", "wiki", "weather-now", "poi", "hotspot",
   "roadweather", "chain", "superfund", "power", "aqi", "voting", "outage", "crash", "reservoir", "quake", "bus",
-  "wastewater", "groundwater", "gauge", "storm",
+  "wastewater", "groundwater", "gauge", "storm", "volcano",
 ]);
 /** …and these as lines (lane closures can be momentarily empty). */
 const LINE_CATEGORIES = new Set(["roadops", "fault"]);
@@ -1260,7 +1260,7 @@ function addOverlay(
                 ? ["interpolate", ["linear"], ["coalesce", ["get", "customers"], 1], 1, 4, 100, 7, 5000, 14]
                 : info.category === "crash"
                   ? ["interpolate", ["linear"], ["coalesce", ["get", "fatalities"], 1], 1, 5, 4, 10]
-                  : info.category === "voting" || info.category === "reservoir" || info.category === "wastewater"
+                  : info.category === "voting" || info.category === "reservoir" || info.category === "wastewater" || info.category === "volcano"
                     ? 8
                     : 6;
     const color: maplibregl.ExpressionSpecification | string =
@@ -1283,6 +1283,8 @@ function addOverlay(
                   ? (["match", ["get", "kind"], ...VOTING_COLORS.flat(), accent] as unknown as maplibregl.ExpressionSpecification)
                   : info.category === "wastewater"
                     ? (["match", ["get", "worst"], ...WVAL_COLORS.flat(), "#94a3b8"] as unknown as maplibregl.ExpressionSpecification)
+                    : info.category === "volcano"
+                      ? (["match", ["get", "color"], ...VOLCANO_COLORS.flat(), "#94a3b8"] as unknown as maplibregl.ExpressionSpecification)
                     : info.category === "gauge"
                       ? (["match", ["get", "status"], ...GAUGE_COLORS.flat(), GAUGE_OTHER] as unknown as maplibregl.ExpressionSpecification)
                       : info.category === "storm"
@@ -1424,7 +1426,7 @@ function addOverlay(
             : {
             "fill-color": accent,
             "fill-opacity":
-                info.category === "landuse" ? 0.22 : info.category === "perimeter" || info.category === "outage-area" ? 0.3 : info.category === "weather" ? 0.18 : 0.14,
+                info.category === "landuse" ? 0.22 : info.category === "perimeter" || info.category === "outage-area" ? 0.3 : info.category === "weather" || info.category === "park" ? 0.18 : 0.14,
             };
   const choroplethCat = ["census", "enviroscreen", "health", "drought", "firewx"].includes(info.category);
 
@@ -2063,6 +2065,29 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
         ],
       };
     }
+    case "volcano": {
+      const c = raw(p.color);
+      return {
+        ...base,
+        title: raw(p.name) || kind,
+        rows: [
+          [t("rowAviationCode"), VOLCANO_KEYS[c] ? t(VOLCANO_KEYS[c]!) : ""],
+          [t("rowAlertLevel"), raw(p.alert)],
+          [t("rowObservatory"), raw(p.observatory)],
+          [t("rowSince"), raw(p.since) ? new Date(`${raw(p.since)}T12:00:00`).toLocaleDateString(locale, { dateStyle: "medium" }) : ""],
+        ],
+        link: raw(p.page) ? { href: raw(p.page), label: t("volcanoMore") } : undefined,
+      };
+    }
+    case "park":
+      return {
+        ...base,
+        title: raw(p.name) || kind,
+        rows: [
+          [t("rowType"), raw(p.kind)],
+          [t("rowState"), raw(p.state)],
+        ],
+      };
     case "gauge": {
       const st = raw(p.status);
       return {

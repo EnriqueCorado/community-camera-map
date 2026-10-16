@@ -547,6 +547,29 @@ STORM_REPORTS = "https://mapservices.weather.noaa.gov/vector/rest/services/obs/n
 FIRE_WX = (
     "https://mapservices.weather.noaa.gov/vector/rest/services/fire_weather/SPC_firewx/MapServer/1"
 )
+NPS_UNITS = (
+    "https://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/"
+    "NPS_Land_Resources_Division_Boundary_and_Tract_Data_Service/FeatureServer/2"
+)
+
+
+async def _volcanoes(client: httpx.AsyncClient, _s: Settings) -> dict:
+    """USGS volcano locations + current alert status (Volcano Hazards Program)."""
+
+    async def get(url: str) -> object:
+        body, _ = await fetch_capped(client, url, max_bytes=arcgis.MAX_BYTES)
+        return json.loads(body)
+
+    locations, monitored = await asyncio.gather(
+        get("https://volcanoes.usgs.gov/vsc/api/volcanoApi/geojson"),
+        get("https://volcanoes.usgs.gov/hans-public/api/volcano/getMonitoredVolcanoes"),
+    )
+    fc = transforms.volcanoes(locations, monitored)
+    if not fc["features"]:
+        raise ValueError("no volcanoes")  # never publish an empty layer
+    return fc
+
+
 CNRA_SQL = "https://data.cnra.ca.gov/api/3/action/datastore_search_sql"
 GW_MEASUREMENTS = "bfa9f262-24a1-45bd-8dc8-138bc8107266"  # DWR periodic GWL: measurements
 GW_STATIONS = "af157380-fb42-4abf-b72a-6f9f98868077"  # ... and stations
@@ -1867,6 +1890,42 @@ LAYERS: dict[str, Layer] = {
         loader=_groundwater,
         ttl=24 * 3600,
         coverage="california",
+    ),
+    "volcanoes": Layer(
+        name="volcanoes",
+        title="Volcano alerts",
+        description=(
+            "USGS-monitored volcanoes and their current alert level and aviation color code."
+        ),
+        category="volcano",
+        loader=_volcanoes,
+        ttl=3600,
+        coverage="usa",
+    ),
+    "national-parks": Layer(
+        name="national-parks",
+        title="National parks",
+        description=(
+            "National Park Service unit boundaries (parks, monuments, seashores, trails...)."
+        ),
+        category="park",
+        loader=_arcgis_select(
+            NPS_UNITS,
+            lambda fc: transforms.select_props(
+                fc, {"UNIT_NAME": "name", "UNIT_TYPE": "kind", "STATE": "state"}
+            ),
+            bbox="-122.6,36.8,-119.0,38.6",
+            simplify=0.002,
+        ),
+        ttl=7 * 24 * 3600,
+        view=View(
+            NPS_UNITS,
+            {"UNIT_NAME": "name", "UNIT_TYPE": "kind", "STATE": "state"},
+            "polygon",
+            min_zoom=5,
+            simplify=True,
+            refresh_s=24 * 3600,
+        ),
     ),
     "heat-risk": Layer(
         name="heat-risk",

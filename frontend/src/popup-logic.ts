@@ -77,6 +77,7 @@ export const WEBCAM_PAGE_HOSTS = [
   "www.stanrta.org",
   "www.cdc.gov",
   "water.noaa.gov",
+  "volcanoes.usgs.gov",
   "www.spc.noaa.gov",
   "droughtmonitor.unl.edu",
 ];

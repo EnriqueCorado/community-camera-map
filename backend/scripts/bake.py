@@ -49,6 +49,8 @@ SOURCES = {
     "storm-reports": "NWS local storm reports (NOAA)",
     "fire-weather": "NWS Storm Prediction Center fire weather outlook",
     "smoke-forecast": "NOAA NDGD smoke forecast (HRRR-Smoke)",
+    "volcanoes": "USGS Volcano Hazards Program (alert levels)",
+    "national-parks": "National Park Service unit boundaries",
     "groundwater": "California DWR periodic groundwater level measurements (CNRA open data)",
     "voting": "Stanislaus County Registrar of Voters (stanvote.gov voting flier, 2026-09-28)",
     "power-outages": "Cal OES statewide power outages (from utility outage maps)",

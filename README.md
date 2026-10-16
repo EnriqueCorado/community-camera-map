@@ -202,6 +202,10 @@ Other live and daily sources added in this round:
 - **NOAA layers:** river gauges with flood status, storm reports from the last 24 hours, the SPC
   fire-weather outlook and the hourly smoke forecast. All are nationwide.
 - **EPA AirNow monitors:** from EPA's public ArcGIS service, so the AirNow key is no longer needed.
+- **USGS volcano alerts:** aviation color codes, refreshed hourly.
+- **National Park Service unit boundaries.**
+- **Quick views:** one-tap layer sets for wildfire, flooding, heat, health, commute and election
+  day.
 
 The plate-reader seed lives on the `alpr-data` branch. Reseed it from a machine that DeFlock's CDN
 allows, by running `build_alpr_usa.py` and committing the output there.

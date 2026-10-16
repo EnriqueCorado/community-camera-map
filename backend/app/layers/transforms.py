@@ -980,3 +980,43 @@ def fire_weather(fc: object) -> dict:
     out = select_props(fc, {"dn": "level", "expire": "expires"})
     out["features"] = [f for f in out["features"] if _num(f["properties"]["level"]) in (5, 8, 10)]
     return out
+
+
+VOLCANO_COLORS = ("GREEN", "YELLOW", "ORANGE", "RED")
+
+
+def volcanoes(locations: object, monitored: object) -> dict:
+    """USGS-monitored volcanoes with their current aviation color code and
+    alert level (joined by volcano number); links only to USGS pages."""
+    status = {}
+    for m in monitored if isinstance(monitored, list) else []:
+        if isinstance(m, dict) and m.get("vnum"):
+            status[str(m["vnum"])] = m
+    feats = []
+    for f in (locations or {}).get("features", []) if isinstance(locations, dict) else []:
+        p = (f or {}).get("properties") or {}
+        geom = (f or {}).get("geometry") or {}
+        m = status.get(str(p.get("vnum", "")))
+        coords = geom.get("coordinates") if geom.get("type") == "Point" else None
+        if not m or not isinstance(coords, list) or len(coords) < 2:
+            continue
+        lon, lat = _num(coords[0]), _num(coords[1])
+        if lon is None or lat is None:
+            continue
+        color = str(m.get("color_code") or "").upper()
+        page = str(m.get("notice_url") or "")
+        feats.append(
+            _pt(
+                lon,
+                lat,
+                {
+                    "name": str(m.get("volcano_name") or p.get("volcanoName") or ""),
+                    "color": color if color in VOLCANO_COLORS else "UNASSIGNED",
+                    "alert": str(m.get("alert_level") or ""),
+                    "observatory": str(m.get("obs_fullname") or ""),
+                    "since": str(m.get("sent_utc") or "")[:10],
+                    "page": page if page.startswith("https://volcanoes.usgs.gov/") else "",
+                },
+            )
+        )
+    return _fc(feats)

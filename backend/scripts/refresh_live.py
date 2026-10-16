@@ -75,6 +75,7 @@ DAILY = (
 HOURLY = (
     "reservoirs",
     "fire-weather",
+    "volcanoes",
     "fire-cameras",  # before smoke-haze, which reuses it
     "smoke-haze",
     "river-cameras",

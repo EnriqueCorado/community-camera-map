@@ -936,3 +936,39 @@ def test_storm_reports_and_airnow_edge_cases():
         {"features": [{"geometry": pt, "properties": {"gaugelid": "Z", "url": None}}]}
     )
     assert g["features"][0]["properties"]["page"] == ""
+
+
+def test_volcanoes_join_status_and_keep_usgs_links():
+    locs = {
+        "features": [
+            {
+                "geometry": {"type": "Point", "coordinates": [-176.1, 52.1]},
+                "properties": {"vnum": "311120", "volcanoName": "Great Sitkin"},
+            },
+            {
+                "geometry": {"type": "Point", "coordinates": [-121.7, 46.9]},
+                "properties": {"vnum": "999"},
+            },  # not monitored
+        ]
+    }
+    mon = [
+        {
+            "vnum": "311120",
+            "volcano_name": "Great Sitkin",
+            "color_code": "orange",
+            "alert_level": "WATCH",
+            "notice_url": "https://volcanoes.usgs.gov/hans-public/notice/X",
+            "sent_utc": "2026-10-16 19:14:32",
+        }
+    ]
+    fc = transforms.volcanoes(locs, mon)
+    assert [f["properties"] for f in fc["features"]] == [
+        {
+            "name": "Great Sitkin",
+            "color": "ORANGE",
+            "alert": "WATCH",
+            "observatory": "",
+            "since": "2026-10-16",
+            "page": "https://volcanoes.usgs.gov/hans-public/notice/X",
+        }
+    ]
