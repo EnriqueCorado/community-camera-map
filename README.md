@@ -194,6 +194,15 @@ baked copy. Other nationwide sources:
   Actions cache (not committed) and refuses partial downloads.
 - **Flights:** the relay's 3° grid cells.
 
+Other live and daily sources added in this round:
+- **StanRTA buses:** live, from StanRTA's real-time feed.
+- **Wastewater virus levels:** CDC NWSS, placed at county centers, daily.
+- **Weather alerts:** nationwide, from NOAA's watch, warning and advisory map.
+- **Groundwater depth:** California DWR wells, read through the CNRA open-data SQL API, daily.
+
+The plate-reader seed lives on the `alpr-data` branch. Reseed it from a machine that DeFlock's CDN
+allows, by running `build_alpr_usa.py` and committing the output there.
+
 Layers without a national source show "California only" or "Stanislaus County only" when you
 look elsewhere.
 
