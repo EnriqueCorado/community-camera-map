@@ -271,6 +271,14 @@ export const VOLCANO_KEYS: Record<string, "volcanoGreen" | "volcanoYellow" | "vo
   RED: "volcanoRed",
 };
 
+/** USGS volcano alert levels -> label keys. */
+export const VOLCANO_ALERT_KEYS: Record<string, "volcAlertNormal" | "volcAlertAdvisory" | "volcAlertWatch" | "volcAlertWarning"> = {
+  NORMAL: "volcAlertNormal",
+  ADVISORY: "volcAlertAdvisory",
+  WATCH: "volcAlertWatch",
+  WARNING: "volcAlertWarning",
+};
+
 /** USGS aviation color codes -> dot color. */
 export const VOLCANO_COLORS: [string, string][] = [
   ["GREEN", "#16a34a"],

@@ -17,6 +17,7 @@ export default defineConfig(() => ({
         manualChunks(id: string) {
           if (id.includes("node_modules/maplibre-gl")) return "maplibre";
           if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) return "react";
+          if (id.includes("node_modules/hls.js")) return "hls"; // only the video player uses it
           return undefined;
         },
       },

@@ -968,7 +968,29 @@ def test_volcanoes_join_status_and_keep_usgs_links():
             "color": "ORANGE",
             "alert": "WATCH",
             "observatory": "",
-            "since": "2026-10-16",
+            "since": "2026-10-16 19:14:32",
             "page": "https://volcanoes.usgs.gov/hans-public/notice/X",
         }
     ]
+
+
+def test_volcanoes_drop_bad_links_unknown_colors_and_region_rows():
+    locs = {
+        "features": [
+            {
+                "geometry": {"type": "Point", "coordinates": [-122.2, 46.2]},
+                "properties": {"vnum": "321050"},
+            }
+        ]
+    }
+    mon = [
+        {
+            "vnum": "321050",
+            "volcano_name": "St. Helens",
+            "color_code": "PURPLE",
+            "notice_url": "http://volcanoes.usgs.gov/x",
+        },
+        {"vnum": None, "volcano_name": "Cascade Range"},  # region row, no location
+    ]
+    p = transforms.volcanoes(locs, mon)["features"][0]["properties"]
+    assert p["color"] == "UNASSIGNED" and p["page"] == ""

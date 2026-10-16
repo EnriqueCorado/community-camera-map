@@ -113,7 +113,7 @@ const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
       ["cameras", ["fire-cameras", "river-cameras", "windy-webcams"]],
       ["live", ["flights", "buses", "iss", "satellites", "trains"]],
       ["weather", ["weather-now", "air-now", "rain-radar", "satellite", "weather-alerts", "air-quality", "road-weather", "smoke-haze"]],
-      ["hazards", ["volcanoes", "heat-risk", "fire-weather", "smoke-forecast", "storm-reports", "river-gauges", "drought", "reservoirs", "groundwater", "fatal-crashes", "wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
+      ["hazards", ["heat-risk", "fire-weather", "smoke-forecast", "storm-reports", "river-gauges", "drought", "reservoirs", "groundwater", "volcanoes", "fatal-crashes", "wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
       ["roads", ["lane-closures", "message-signs", "chain-controls", "transit-routes", "transit-stops", "amtrak", "airports", "railroads"]],
       ["places", ["cooling-centers", "shelters", "sandbags", "mobile-home-parks", "food-banks", "clinics", "hospitals", "pharmacies", "community-centers", "libraries", "farmers-markets", "law-enforcement", "fire-stations", "schools", "parks", "playgrounds", "aed", "drinking-water", "restrooms", "ev-chargers", "free-wifi"]],
       ["nature", ["national-parks", "wildlife", "wikipedia", "historic-places", "historical-markers", "rivers", "streamflow"]],
@@ -281,7 +281,10 @@ export function Sidebar({
   const matches = allMatches.slice(0, MAX_LIST);
 
   const setLayer = (patch: Partial<LayerState>) => onLayersChange({ ...layers, ...patch });
-  const current = activePreset(layers.overlays, overlayInfos.map((l) => l.name));
+  // Only layers that can actually be switched on (a checkbox may be disabled).
+  const presetable = overlayInfos.filter((l) => l.available || l.view).map((l) => l.name);
+  const current = activePreset(layers.overlays, presetable);
+  const anyOverlayOn = Object.values(layers.overlays).some(Boolean);
   const setVendor = (vendor: string, on: boolean) =>
     setLayer({ alprVendors: { ...layers.alprVendors, [vendor]: on } });
   const setOverlay = (name: string, on: boolean) =>
@@ -438,16 +441,17 @@ export function Sidebar({
               type="button"
               className={`chip ${current === p.id ? "chip--on" : ""}`}
               aria-pressed={current === p.id}
-              onClick={() => setLayer({ overlays: applyPreset(p, overlayInfos.map((l) => l.name)) })}
+              disabled={presetable.length === 0} // the layer list hasn't loaded yet
+              // Pressing the active view again turns it off.
+              onClick={() => setLayer({ overlays: current === p.id ? {} : applyPreset(p, presetable) })}
             >
               {t(p.label)}
             </button>
           ))}
-          {Object.values(layers.overlays).some(Boolean) && (
-            <button type="button" className="chip" onClick={() => setLayer({ overlays: {} })}>
-              {t("presetClear")}
-            </button>
-          )}
+          {/* Stays mounted (disabled when nothing is on) so keyboard focus isn't lost. */}
+          <button type="button" className="chip" disabled={!anyOverlayOn} onClick={() => setLayer({ overlays: {} })}>
+            {t("presetClear")}
+          </button>
         </div>
       </Section>
 

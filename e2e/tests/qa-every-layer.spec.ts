@@ -33,6 +33,7 @@ const rowOf = (page: Page, title: string) =>
 const MODESTO = "-120.997,37.639";
 // Where each layer has data, and how it renders. Default: county view, vector.
 const VIEW: Record<string, string> = {
+  volcanoes: "-176,52,6", "national-parks": "-119.55,37.85,9",
   // statewide
   wildfire: "-119.5,37.5,5.5", "wildfire-perimeters": "-119.5,37.5,5.5", "fire-hotspots": "-119.5,37.5,5.5",
   "weather-alerts": "-119.5,37.5,5.5", quakes: "-119.5,37.5,5.5", "fire-cameras": "-120.6,37.6,7.5",

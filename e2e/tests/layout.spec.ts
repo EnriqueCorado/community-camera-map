@@ -56,7 +56,7 @@ test("the camera list gets a usable height of its own", async ({ page }) => {
 test("sections collapse with a keyboard-accessible toggle and stay collapsed", async ({ page }) => {
   await page.goto("/");
   await ready(page);
-  const toggle = page.getByRole("button", { name: "Layers" });
+  const toggle = page.getByRole("button", { name: "Layers", exact: true });
   await expect(toggle).toHaveAttribute("aria-expanded", "true");
   const layerToggle = page.getByText("Traffic cameras", { exact: true });
   await expect(layerToggle).toBeVisible();
@@ -68,9 +68,9 @@ test("sections collapse with a keyboard-accessible toggle and stay collapsed", a
 
   await page.reload();
   await ready(page);
-  await expect(page.getByRole("button", { name: "Layers" })).toHaveAttribute("aria-expanded", "false");
+  await expect(page.getByRole("button", { name: "Layers", exact: true })).toHaveAttribute("aria-expanded", "false");
 
-  await page.getByRole("button", { name: "Layers" }).click();
+  await page.getByRole("button", { name: "Layers", exact: true }).click();
   await expect(page.getByText("Traffic cameras", { exact: true })).toBeVisible();
   // Collapsing only hid the controls; the layer itself was never switched off.
   await expect(
@@ -119,8 +119,8 @@ test("still works when storage is blocked", async ({ page }) => {
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
   await ready(page);
-  await page.getByRole("button", { name: "Layers" }).click();
-  await expect(page.getByRole("button", { name: "Layers" })).toHaveAttribute("aria-expanded", "false");
+  await page.getByRole("button", { name: "Layers", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Layers", exact: true })).toHaveAttribute("aria-expanded", "false");
   expect(errors).toEqual([]);
 });
 

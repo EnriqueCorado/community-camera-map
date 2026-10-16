@@ -529,7 +529,7 @@ test("near-me: search -> report, and the address never reaches the page link", a
   await expect(report).toContainText("D1: moderate drought");
   await page.waitForTimeout(1500); // the map flies to the address
   expect(page.url()).not.toMatch(/-120\.98|37\.65/);
-  await page.getByRole("button", { name: "Clear" }).click();
+  await page.getByRole("button", { name: "Clear", exact: true }).click();
   await expect(report).toHaveCount(0);
 });
 

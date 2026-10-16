@@ -1014,7 +1014,7 @@ def volcanoes(locations: object, monitored: object) -> dict:
                     "color": color if color in VOLCANO_COLORS else "UNASSIGNED",
                     "alert": str(m.get("alert_level") or ""),
                     "observatory": str(m.get("obs_fullname") or ""),
-                    "since": str(m.get("sent_utc") or "")[:10],
+                    "since": str(m.get("sent_utc") or "")[:19],  # last notice (UTC)
                     "page": page if page.startswith("https://volcanoes.usgs.gov/") else "",
                 },
             )

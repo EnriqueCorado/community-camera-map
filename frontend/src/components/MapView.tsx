@@ -32,7 +32,7 @@ import { VOTING_KEYS } from "../colors";
 import {
   CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
   HEALTH_STOPS, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, WVAL_COLORS, WVAL_KEYS,
-  GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS, VOLCANO_COLORS, VOLCANO_KEYS,
+  GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS, VOLCANO_COLORS, VOLCANO_KEYS, VOLCANO_ALERT_KEYS,
 } from "../colors";
 
 export interface LayerState {
@@ -1321,7 +1321,13 @@ function addOverlay(
           "circle-stroke-width": 1.5,
           "circle-stroke-color": "#fff",
         },
-        layout: { visibility: "none" },
+        layout: {
+          visibility: "none",
+          // Volcanoes: elevated alerts draw on top of normal ones.
+          ...(info.category === "volcano"
+            ? { "circle-sort-key": ["match", ["get", "color"], "RED", 4, "ORANGE", 3, "YELLOW", 2, 1] as maplibregl.ExpressionSpecification }
+            : {}),
+        },
       },
       beforeId,
     );
@@ -2072,9 +2078,14 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
         title: raw(p.name) || kind,
         rows: [
           [t("rowAviationCode"), VOLCANO_KEYS[c] ? t(VOLCANO_KEYS[c]!) : ""],
-          [t("rowAlertLevel"), raw(p.alert)],
+          [t("rowAlertLevel"), VOLCANO_ALERT_KEYS[raw(p.alert).toUpperCase()] ? t(VOLCANO_ALERT_KEYS[raw(p.alert).toUpperCase()]!) : raw(p.alert)],
           [t("rowObservatory"), raw(p.observatory)],
-          [t("rowSince"), raw(p.since) ? new Date(`${raw(p.since)}T12:00:00`).toLocaleDateString(locale, { dateStyle: "medium" }) : ""],
+          [
+            t("rowLastNotice"),
+            /^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}/.test(raw(p.since))
+              ? new Date(`${raw(p.since).replace(" ", "T")}Z`).toLocaleString(locale, { dateStyle: "medium", timeStyle: "short" })
+              : "",
+          ],
         ],
         link: raw(p.page) ? { href: raw(p.page), label: t("volcanoMore") } : undefined,
       };
