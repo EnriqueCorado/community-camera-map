@@ -27,7 +27,7 @@ import httpx
 
 from ..core.config import Settings
 from ..core.http import fetch_capped, post_capped
-from . import arcgis, census, haze, transforms
+from . import arcgis, census, development, haze, transforms
 
 logger = logging.getLogger(__name__)
 
@@ -1901,6 +1901,39 @@ LAYERS: dict[str, Layer] = {
         loader=_volcanoes,
         ttl=3600,
         coverage="usa",
+    ),
+    "housing-proposals": Layer(
+        name="housing-proposals",
+        title="Housing projects proposed",
+        description=(
+            "Housing applications Stanislaus County and its cities report to the state "
+            "each year (HCD Annual Progress Report): units, status, and when filed."
+        ),
+        category="dev",
+        loader=development.load_housing_proposals,
+        ttl=24 * 3600,
+    ),
+    "new-homes": Layer(
+        name="new-homes",
+        title="New homes: approved, permitted, built",
+        description=(
+            "Homes approved, given a building permit, or finished in the county's cities "
+            "over the last few years (HCD Annual Progress Report)."
+        ),
+        category="dev",
+        loader=development.load_new_homes,
+        ttl=24 * 3600,
+    ),
+    "ceqa-projects": Layer(
+        name="ceqa-projects",
+        title="Projects under environmental review",
+        description=(
+            "Subdivisions, commercial, road and water projects filed with the State "
+            "Clearinghouse (CEQAnet), with links to their documents."
+        ),
+        category="dev",
+        loader=development.load_ceqa,
+        ttl=24 * 3600,
     ),
     "national-parks": Layer(
         name="national-parks",

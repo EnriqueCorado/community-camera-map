@@ -136,6 +136,9 @@ jobs:
             frontend/public/data/layers/voting.geojson
             frontend/public/data/layers/wastewater.geojson
             frontend/public/data/layers/groundwater.geojson
+            frontend/public/data/layers/housing-proposals.geojson
+            frontend/public/data/layers/new-homes.geojson
+            frontend/public/data/layers/ceqa-projects.geojson
             frontend/public/data/layers/fire-cameras.geojson
             frontend/public/data/layers/smoke-haze.geojson
             frontend/public/data/layers/river-cameras.geojson
@@ -201,6 +204,9 @@ jobs:
             frontend/public/data/layers/voting.geojson
             frontend/public/data/layers/wastewater.geojson
             frontend/public/data/layers/groundwater.geojson
+            frontend/public/data/layers/housing-proposals.geojson
+            frontend/public/data/layers/new-homes.geojson
+            frontend/public/data/layers/ceqa-projects.geojson
             frontend/public/data/layers/fire-cameras.geojson
             frontend/public/data/layers/smoke-haze.geojson
             frontend/public/data/layers/river-cameras.geojson

@@ -4,7 +4,7 @@
 export interface Preset {
   id: string;
   /** i18n key for the chip label */
-  label: "presetWildfire" | "presetFlood" | "presetHeat" | "presetHealth" | "presetCommute" | "presetVoting";
+  label: "presetWildfire" | "presetFlood" | "presetHeat" | "presetHealth" | "presetCommute" | "presetVoting" | "presetGrowth";
   overlays: string[];
 }
 
@@ -15,6 +15,7 @@ export const PRESETS: Preset[] = [
   { id: "health", label: "presetHealth", overlays: ["health-uninsured", "clinics", "hospitals", "pharmacies", "snap-stores", "food-banks", "wastewater"] },
   { id: "commute", label: "presetCommute", overlays: ["lane-closures", "message-signs", "road-weather", "buses", "fatal-crashes"] },
   { id: "voting", label: "presetVoting", overlays: ["voting"] },
+  { id: "growth", label: "presetGrowth", overlays: ["housing-proposals", "new-homes", "ceqa-projects"] },
 ];
 
 /** Overlay state for a preset: exactly its layers on (only ones that exist). */

@@ -7,7 +7,7 @@ import {
   CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
   HEALTH_STOPS, DROUGHT_COLORS, HEAT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, VOTING_KEYS, WVAL_COLORS,
   WVAL_KEYS, GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS,
-  VOLCANO_COLORS, VOLCANO_KEYS,
+  VOLCANO_COLORS, VOLCANO_KEYS, DEV_STAGES,
 } from "../colors";
 import { downloadLayer, downloadCameras } from "../download";
 import { LIVE_SOURCES } from "../live-sources";
@@ -88,9 +88,9 @@ function Section({
   );
 }
 
-type Group = "cameras" | "live" | "civic" | "weather" | "hazards" | "roads" | "places" | "nature" | "planning" | "infra" | "other";
+type Group = "cameras" | "live" | "civic" | "growth" | "weather" | "hazards" | "roads" | "places" | "nature" | "planning" | "infra" | "other";
 
-const GROUP_ORDER: Group[] = ["cameras", "live", "civic", "weather", "hazards", "roads", "places", "nature", "planning", "infra", "other"];
+const GROUP_ORDER: Group[] = ["cameras", "live", "civic", "growth", "weather", "hazards", "roads", "places", "nature", "planning", "infra", "other"];
 
 const GROUP_KEYS: Record<Group, Key> = {
   cameras: "groupCameras",
@@ -103,6 +103,7 @@ const GROUP_KEYS: Record<Group, Key> = {
   planning: "groupPlanning",
   infra: "groupInfra",
   civic: "groupCivic",
+  growth: "groupGrowth",
   other: "groupOther",
 };
 
@@ -117,8 +118,9 @@ const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
       ["roads", ["lane-closures", "message-signs", "chain-controls", "transit-routes", "transit-stops", "amtrak", "airports", "railroads"]],
       ["places", ["cooling-centers", "shelters", "sandbags", "mobile-home-parks", "food-banks", "clinics", "hospitals", "pharmacies", "community-centers", "libraries", "farmers-markets", "law-enforcement", "fire-stations", "schools", "parks", "playgrounds", "aed", "drinking-water", "restrooms", "ev-chargers", "free-wifi"]],
       ["nature", ["national-parks", "wildlife", "wikipedia", "historic-places", "historical-markers", "rivers", "streamflow"]],
-      ["planning", ["city-limits", "county-islands", "general-plan", "zoning", "annexations", "census", "census-spanish", "census-foreign-born", "census-poverty", "census-renters", "supervisor-districts", "elementary-districts", "high-school-districts", "fire-districts", "mosquito-districts", "zip-codes", "congressional-districts"]],
+      ["planning", ["city-limits", "county-islands", "general-plan", "zoning", "census", "census-spanish", "census-foreign-born", "census-poverty", "census-renters", "supervisor-districts", "elementary-districts", "high-school-districts", "fire-districts", "mosquito-districts", "zip-codes", "congressional-districts"]],
       ["infra", ["power-plants", "substations", "bridges", "power-outages", "outage-areas"]],
+      ["growth", ["housing-proposals", "new-homes", "ceqa-projects", "annexations"]],
       ["civic", ["voting", "wastewater", "health-asthma", "health-diabetes", "health-uninsured", "food-insecurity", "snap-stores"]],
     ] as [Group, string[]][]
   ).flatMap(([g, names]) => names.map((n) => [n, g])),
@@ -307,6 +309,7 @@ export function Sidebar({
   const gaugesOn = layers.overlays["river-gauges"] ?? false;
   const firewxOn = layers.overlays["fire-weather"] ?? false;
   const stormsOn = layers.overlays["storm-reports"] ?? false;
+  const devOn = ["housing-proposals", "new-homes", "ceqa-projects"].some((n) => layers.overlays[n]);
   const volcanoesOn = layers.overlays["volcanoes"] ?? false;
   const outagesOn = layers.overlays["power-outages"] ?? false;
   const other = lang === "en" ? "es" : "en";
@@ -598,6 +601,9 @@ export function Sidebar({
             title={t("firewxLegend")}
             items={FIREWX_COLORS.map(([k, c]) => [c, t(FIREWX_KEYS[k]!)])}
           />
+        )}
+        {devOn && (
+          <Legend id="dev-legend" title={t("devLegend")} items={DEV_STAGES.map(([, c, key]) => [c, t(key)])} />
         )}
         {volcanoesOn && (
           <Legend

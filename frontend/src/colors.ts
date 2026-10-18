@@ -29,6 +29,9 @@ export const OVERLAY_COLOR: Record<string, string> = {
   "fire-weather": "#ea580c",
   "smoke-forecast": "#78716c",
   volcanoes: "#b91c1c",
+  "housing-proposals": "#d97706",
+  "new-homes": "#16a34a",
+  "ceqa-projects": "#7c3aed",
   "national-parks": "#15803d",
   "power-outages": "#dc2626",
   "outage-areas": "#f97316",
@@ -261,6 +264,17 @@ export const STORM_KINDS: [string, string, "stormTornado" | "stormHail" | "storm
   ["Flood", "#1d4ed8", "stormFlood"],
   ["Wind", "#9333ea", "stormWind"],
   ["Wnd", "#9333ea", "stormWind"],
+];
+
+/** Development stage (all "Growth & development" layers) -> dot color + label key. */
+export const DEV_STAGES: [string, string, "devProposed" | "devReview" | "devApproved" | "devPermitted" | "devCompleted" | "devDenied" | "devExempt"][] = [
+  ["proposed", "#f59e0b", "devProposed"],
+  ["review", "#a855f7", "devReview"],
+  ["approved", "#2563eb", "devApproved"],
+  ["permitted", "#db2777", "devPermitted"],
+  ["completed", "#16a34a", "devCompleted"],
+  ["denied", "#64748b", "devDenied"],
+  ["exempt", "#94a3b8", "devExempt"],
 ];
 
 /** USGS aviation color codes -> label keys. */

@@ -58,6 +58,9 @@ DAILY = (
     "voting",  # empties itself once the election is over
     "wastewater",  # CDC updates weekly
     "groundwater",  # DWR posts new well readings daily
+    "ceqa-projects",  # filings arrive daily
+    "housing-proposals",  # yearly reports, checked daily (cheap)
+    "new-homes",
     "aed",
     "drinking-water",
     "restrooms",

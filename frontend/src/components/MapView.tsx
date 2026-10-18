@@ -32,7 +32,7 @@ import { VOTING_KEYS } from "../colors";
 import {
   CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
   HEALTH_STOPS, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, WVAL_COLORS, WVAL_KEYS,
-  GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS, VOLCANO_COLORS, VOLCANO_KEYS, VOLCANO_ALERT_KEYS,
+  GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS, VOLCANO_COLORS, VOLCANO_KEYS, VOLCANO_ALERT_KEYS, DEV_STAGES,
 } from "../colors";
 
 export interface LayerState {
@@ -1004,7 +1004,7 @@ const HAS_TRACK: maplibregl.ExpressionSpecification = ["==", ["typeof", ["get", 
 const POINT_CATEGORIES = new Set([
   "flight", "haze", "webcam", "space", "train", "nature", "wiki", "weather-now", "poi", "hotspot",
   "roadweather", "chain", "superfund", "power", "aqi", "voting", "outage", "crash", "reservoir", "quake", "bus",
-  "wastewater", "groundwater", "gauge", "storm", "volcano",
+  "wastewater", "groundwater", "gauge", "storm", "volcano", "dev",
 ]);
 /** …and these as lines (lane closures can be momentarily empty). */
 const LINE_CATEGORIES = new Set(["roadops", "fault"]);
@@ -1260,6 +1260,10 @@ function addOverlay(
                 ? ["interpolate", ["linear"], ["coalesce", ["get", "customers"], 1], 1, 4, 100, 7, 5000, 14]
                 : info.category === "crash"
                   ? ["interpolate", ["linear"], ["coalesce", ["get", "fatalities"], 1], 1, 5, 4, 10]
+                  : info.name === "ceqa-projects"
+                    ? 8
+                    : info.category === "dev"
+                      ? ["interpolate", ["linear"], ["coalesce", ["get", "units"], 1], 1, 5, 20, 8, 100, 12, 500, 18]
                   : info.category === "voting" || info.category === "reservoir" || info.category === "wastewater" || info.category === "volcano"
                     ? 8
                     : 6;
@@ -1285,6 +1289,8 @@ function addOverlay(
                     ? (["match", ["get", "worst"], ...WVAL_COLORS.flat(), "#94a3b8"] as unknown as maplibregl.ExpressionSpecification)
                     : info.category === "volcano"
                       ? (["match", ["get", "color"], ...VOLCANO_COLORS.flat(), "#94a3b8"] as unknown as maplibregl.ExpressionSpecification)
+                    : info.category === "dev"
+                      ? (["match", ["get", "stage"], ...DEV_STAGES.flatMap(([s, c]) => [s, c]), "#94a3b8"] as unknown as maplibregl.ExpressionSpecification)
                     : info.category === "gauge"
                       ? (["match", ["get", "status"], ...GAUGE_COLORS.flat(), GAUGE_OTHER] as unknown as maplibregl.ExpressionSpecification)
                       : info.category === "storm"
@@ -1326,6 +1332,10 @@ function addOverlay(
           // Volcanoes: elevated alerts draw on top of normal ones.
           ...(info.category === "volcano"
             ? { "circle-sort-key": ["match", ["get", "color"], "RED", 4, "ORANGE", 3, "YELLOW", 2, 1] as maplibregl.ExpressionSpecification }
+            : {}),
+          // Development: big projects draw on top of single homes.
+          ...(info.category === "dev"
+            ? { "circle-sort-key": ["coalesce", ["get", "units"], ["get", "acres"], 0] as maplibregl.ExpressionSpecification }
             : {}),
         },
       },
@@ -2088,6 +2098,61 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
           ],
         ],
         link: raw(p.page) ? { href: raw(p.page), label: t("volcanoMore") } : undefined,
+      };
+    }
+    case "dev": {
+      const stage = DEV_STAGES.find(([s]) => s === raw(p.stage));
+      const day = (v: unknown) =>
+        /^\d{4}-\d{2}-\d{2}$/.test(raw(v)) ? new Date(`${raw(v)}T12:00:00`).toLocaleDateString(locale, { dateStyle: "medium" }) : "";
+      const units = num(p.units);
+      if (info.name === "ceqa-projects") {
+        return {
+          ...base,
+          title: raw(p.name) || kind,
+          rows: [
+            [t("rowDevStage"), stage ? t(stage[2]) : ""],
+            [t("rowDocument"), raw(p.doc)],
+            [t("rowLeadAgency"), raw(p.agency)],
+            [t("rowFiled"), day(p.received)],
+            [t("rowDevType"), raw(p.development)],
+            [t("rowLocalAction"), raw(p.action)],
+            [t("rowAcres"), num(p.acres) != null ? fmt(p.acres) : ""],
+            [t("rowAbout"), raw(p.description)],
+          ],
+          link: raw(p.page) ? { href: raw(p.page), label: t("ceqaMore") } : undefined,
+        };
+      }
+      if (p.grouped === true) {
+        // Single homes / ADUs: counted per area, never pinned at an address.
+        const count = (k: string) => (num(p[k]) ? fmt(p[k]) : "");
+        return {
+          ...base,
+          title: info.name === "new-homes" ? t("devHomesHere", { city: raw(p.city) }) : t("devSmallHere", { city: raw(p.city) }),
+          rows: [
+            [t("rowDevStage"), stage ? t(stage[2]) : ""],
+            [t("rowUnits"), units ? fmt(units) : ""],
+            [t("rowProjects"), count("projects")],
+            [t("devCompleted"), count("completed")],
+            [t("devPermitted"), count("permitted")],
+            [t("devApproved"), info.name === "new-homes" ? count("approved") : ""],
+            [t("rowLatest"), day(p.date) || day(p.submitted)],
+            [t("rowNote"), t("devGroupedNote")],
+          ],
+        };
+      }
+      return {
+        ...base,
+        title: raw(p.name) || raw(p.address) || kind,
+        rows: [
+          [t("rowDevStage"), stage ? t(stage[2]) : ""],
+          [t("rowAddress"), [raw(p.address), raw(p.city)].filter(Boolean).join(", ")],
+          [t("rowHousingType"), raw(p.kind)],
+          [t("rowUnits"), units ? fmt(units) : ""],
+          [t("rowApprovedUnits"), num(p.approved_units) ? fmt(p.approved_units) : ""],
+          [t("rowFiled"), day(p.submitted)],
+          [t("rowStageDate"), day(p.date)],
+          [t("rowReportYear"), num(p.year) ? String(p.year) : ""],
+        ],
       };
     }
     case "park":
