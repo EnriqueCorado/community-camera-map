@@ -547,6 +547,31 @@ body:has(.app) {
   background: #f2efe9;
 }
 
+/* Shown in place of the map when the browser has no WebGL 2. */
+.map-unsupported {
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background: var(--bg);
+}
+.map-unsupported-card {
+  max-width: 460px;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--ink);
+  line-height: 1.5;
+}
+.map-unsupported-card h2 {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+}
+.map-unsupported-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
 .marker {
   width: 16px;
   height: 16px;

@@ -147,17 +147,29 @@ export function MapView({
       () => {}, // popups degrade to the basis line; the next click retries
     );
   const initialViewRef = useRef(initialView); // read once at map creation
+  // MapLibre needs WebGL 2. Without it the Map constructor throws, and an
+  // uncaught throw here would blank the whole app, so check first and show a
+  // message in the map area instead (the sidebar keeps working).
+  const [glUnsupported, setGlUnsupported] = useState(() => !hasWebGL2());
 
   // --- Create the map + all sources/layers once. ---
   useEffect(() => {
-    if (!containerRef.current) return;
-    const map = new maplibregl.Map({
-      container: containerRef.current,
-      style: STYLE,
-      center: initialViewRef.current?.center ?? CA_CENTER,
-      zoom: initialViewRef.current?.zoom ?? 5.4,
-      attributionControl: { compact: true },
-    });
+    if (!containerRef.current || glUnsupported) return;
+    let map: maplibregl.Map;
+    try {
+      map = new maplibregl.Map({
+        container: containerRef.current,
+        style: STYLE,
+        center: initialViewRef.current?.center ?? CA_CENTER,
+        zoom: initialViewRef.current?.zoom ?? 5.4,
+        attributionControl: { compact: true },
+      });
+    } catch (err) {
+      // e.g. a GPU blocklist or a context that fails to create despite the check.
+      console.warn("Map could not start:", err instanceof Error ? err.message : err);
+      queueMicrotask(() => setGlUnsupported(true));
+      return;
+    }
     mapRef.current = map;
     if (import.meta.env.DEV) {
       (window as unknown as { __map?: maplibregl.Map }).__map = map; // e2e test handle
@@ -858,7 +870,29 @@ export function MapView({
     void runCoverage(map, map.getCenter(), alprDataRef, coverageRef.current.radiusM, onCoverageResultRef.current);
   }, [coverageCenterTick, ready]);
 
+  if (glUnsupported) {
+    return (
+      <div className="map map-unsupported" role="alert">
+        <div className="map-unsupported-card">
+          <h2>{t("mapUnsupportedTitle")}</h2>
+          <p>{t("mapUnsupportedBody")}</p>
+        </div>
+      </div>
+    );
+  }
   return <div ref={containerRef} className="map" />;
+}
+
+/** True when the browser can create a WebGL 2 context (MapLibre's minimum). */
+function hasWebGL2(): boolean {
+  try {
+    const canvas = document.createElement("canvas");
+    const gl = canvas.getContext("webgl2");
+    gl?.getExtension("WEBGL_lose_context")?.loseContext();
+    return !!gl;
+  } catch {
+    return false;
+  }
 }
 
 // --- helpers ---
