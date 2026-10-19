@@ -15,7 +15,7 @@ test("no WebGL 2: shows a fallback message and the sidebar still works", async (
   });
   const pageErrors: string[] = [];
   page.on("pageerror", (e) => pageErrors.push(e.message));
-  await page.goto("/");
+  await page.goto("./");
   await expect(page.getByRole("alert").filter({ hasText: "can't draw the map" })).toBeVisible();
   await expect(page.getByPlaceholder(/Filter cameras/)).toBeVisible();
   await expect(page.locator("canvas.maplibregl-canvas")).toHaveCount(0);
@@ -26,6 +26,6 @@ test("no WebGL 2: fallback message is translated", async ({ page }) => {
   await page.addInitScript(() => {
     HTMLCanvasElement.prototype.getContext = () => null;
   });
-  await page.goto("/#lang=es");
+  await page.goto("./#lang=es");
   await expect(page.getByRole("alert").filter({ hasText: "no puede mostrar el mapa" })).toBeVisible();
 });
