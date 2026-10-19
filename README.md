@@ -1,16 +1,27 @@
-# California Camera Map
+# Stanislaus Camera Map
 
-An interactive map of **legally-accessible public traffic cameras across
-California**, with toggleable overlay layers. Cameras come from all 12 Caltrans
-district CCTV feeds — ~3,400 in-service cameras statewide, each with a live HLS
-video stream and a still image. An overlay layer maps ~22,000 crowdsourced
-automated license plate readers (ALPR) from OpenStreetMap / DeFlock.
+**Live: https://enriquecorado.github.io/stanislaus-cam-map/** · English / Español
+
+A free, public map of the cameras and civic data around Stanislaus County,
+California, built so anyone can see what's watching the roads and what's
+happening in their neighborhood:
+
+- **Public cameras:** ~3,400 Caltrans traffic cameras statewide with live video,
+  plus ALERTCalifornia wildfire cameras and USGS river cameras.
+- **License-plate readers:** crowdsourced ALPR locations from OpenStreetMap /
+  DeFlock (about 145,000 nationwide), with "what can see me?" coverage and, for
+  Modesto, who can search the data (from public-records releases).
+- **105 overlay layers:** flood and fire hazard zones, air quality, wildfire
+  perimeters, river gauges, schools, transit, cooling centers, housing
+  proposals, census data and more, refreshed throughout the day by GitHub
+  Actions.
 
 > Scope note: the camera feeds are **public roadway cameras published by the
 > State of California**, and the ALPR layer is **public location data from
 > OpenStreetMap**. This project does not access the private or law-enforcement
-> ALPR *systems* themselves (Flock, Vigilant) — only their publicly-mapped
-> locations. The camera *video* is Caltrans' own public stream.
+> ALPR *systems* themselves (Flock, Vigilant), only their publicly-mapped
+> locations. No personal data is collected; the site is static and has no
+> accounts or tracking.
 
 ## Stack
 
@@ -23,7 +34,7 @@ automated license plate readers (ALPR) from OpenStreetMap / DeFlock.
 
 Monorepo: `backend/` and `frontend/` are independent and deploy separately.
 
-**Performance:** both the camera (~3,400) and ALPR (~22,000) datasets render as
+**Performance:** both the camera (~3,400) and ALPR (California: ~22,000; nationwide tiles: ~145,000) datasets render as
 clustered MapLibre GeoJSON sources, not DOM markers. The ALPR layer is fetched
 lazily the first time it's toggled on, so initial load stays light.
 
@@ -82,7 +93,7 @@ frontend/src/
   components/           MapView, Sidebar, CameraDetail, HlsPlayer
 ```
 
-## Roadmap (the future states you asked for)
+## Roadmap
 
 ### 1. Database
 `CameraService` is the only seam that needs to change.
@@ -111,7 +122,7 @@ Keep inference **off the request path** — serve cached results, compute async.
 
 ## Data source & attribution
 
-Caltrans District 10 CCTV: `https://cwwp2.dot.ca.gov/data/d10/cctv/cctvStatusD10.json`.
+Caltrans CCTV, all 12 districts: `https://cwwp2.dot.ca.gov/data/d{1..12}/cctv/cctvStatusD{01..12}.json`.
 Map tiles © OpenStreetMap contributors. Camera imagery courtesy of Caltrans.
 
 Public webcams (popups load images straight from the operator's servers, so those servers see
@@ -400,3 +411,13 @@ Notes:
   Run the local backend for truly live data.
 - maplibre v6's web worker is wired explicitly via `setWorkerUrl` in `src/main.tsx`
   (its default resolution 404s in production builds).
+
+## License
+
+Code: [MIT](LICENSE). Data belongs to its publishers and keeps their terms,
+including: OpenStreetMap / DeFlock data is © OpenStreetMap contributors under the
+[ODbL](https://opendatacommons.org/licenses/odbl/); ALERTCalifornia images are
+free for non-commercial use with credit to "ALERTCalifornia | UC San Diego";
+adsb.fi flight data is for non-commercial use; Caltrans, USGS, NOAA, NWS, FEMA,
+EPA and Census data are U.S. or California public data. See "Data source &
+attribution" above for the full list.
