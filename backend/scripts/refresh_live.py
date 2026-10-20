@@ -61,6 +61,7 @@ DAILY = (
     "ceqa-projects",  # filings arrive daily
     "housing-proposals",  # yearly reports, checked daily (cheap)
     "new-homes",
+    "building-permits",  # Census BPS: yearly, by place, nationwide
     "aed",
     "drinking-water",
     "restrooms",

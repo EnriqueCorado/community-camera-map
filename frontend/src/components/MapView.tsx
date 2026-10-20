@@ -1126,6 +1126,47 @@ export async function rasterSource(name: string, now = new Date()): Promise<Rast
       opacity: 0.6,
     };
   }
+  if (name === "land-cover") {
+    // USGS/MRLC NLCD 2021 (lower 48) from MRLC's WMS, in the standard NLCD colors.
+    const q = new URLSearchParams({
+      service: "WMS",
+      version: "1.1.1",
+      request: "GetMap",
+      layers: "NLCD_2021_Land_Cover_L48",
+      styles: "",
+      srs: "EPSG:3857",
+      width: "256",
+      height: "256",
+      format: "image/png",
+      transparent: "true",
+    });
+    return {
+      tiles: [`https://www.mrlc.gov/geoserver/mrlc_display/wms?${q}&bbox={bbox-epsg-3857}`],
+      maxzoom: 13,
+      attribution: '<a href="https://www.mrlc.gov/" target="_blank" rel="noopener noreferrer">USGS NLCD 2021</a>',
+      under: "labels",
+      opacity: 0.6,
+    };
+  }
+  if (name === "crops") {
+    // USDA NASS Cropland Data Layer (USDA SCINet image service), 2025 season.
+    const q = new URLSearchParams({
+      bboxSR: "3857",
+      imageSR: "3857",
+      size: "256,256",
+      format: "png32",
+      transparent: "true",
+      f: "image",
+      time: String(Date.UTC(2025, 0, 1)),
+    });
+    return {
+      tiles: [`https://pdi.scinet.usda.gov/image/rest/services/CDL_WM/ImageServer/exportImage?bbox={bbox-epsg-3857}&${q}`],
+      maxzoom: 14,
+      attribution: '<a href="https://www.nass.usda.gov/Research_and_Science/Cropland/" target="_blank" rel="noopener noreferrer">USDA NASS Cropland Data Layer</a>',
+      under: "labels",
+      opacity: 0.6,
+    };
+  }
   if (name === "satellite") {
     return {
       tiles: [gibsSatelliteUrl(now)],
@@ -1430,8 +1471,11 @@ function addOverlay(
         type: "line",
         source: src,
         paint: {
-          "line-color": accent,
-          "line-width": info.category === "roadops" ? 3 : info.category === "fault" ? 1.5 : 2,
+          // Catalog-described line metric (e.g. traffic volume): color by value.
+          "line-color": info.metric
+            ? (["interpolate", ["linear"], ["to-number", ["get", info.metric.field], 0], ...metricStops(info.metric).flat()] as unknown as maplibregl.ExpressionSpecification)
+            : accent,
+          "line-width": info.category === "roadops" ? 3 : info.category === "fault" ? 1.5 : info.metric ? 3 : 2,
           "line-opacity": 0.9,
           ...(info.category === "roadops" ? { "line-dasharray": [2, 1.5] } : {}),
         },
@@ -1792,6 +1836,20 @@ const INFO_FIELDS: Record<string, { rows: InfoRow[]; titleFrom?: string; link?: 
   "historic-places": { rows: [["rowType", "kind"], ["rowAddress", "address"], ["rowCity", "city"], ["rowListed", "listed"]], link: "viewNara" },
   "historical-markers": { rows: [["rowSubtitle", "subtitle"], ["rowErected", "built"], ["rowErectedBy", "erected_by"], ["rowWhere", "where"]], link: "viewHmdb" },
   "mobile-home-parks": { rows: [["rowAddress", "address"], ["rowSpaces", "spaces"]] },
+  // Nationwide planning pack ("#prop" = a number, formatted for the locale).
+  "public-lands": { rows: [["rowType", "kind"], ["rowManager", "manager"], ["rowOpenToAll", "access"], ["rowAcres", "#acres"]] },
+  "rivers-usa": { rows: [["rowType", "kind"]] },
+  streams: { rows: [["rowType", "kind"]] },
+  "water-bodies": { rows: [["rowType", "kind"]] },
+  trails: { rows: [["rowType", "kind"], ["rowHiking", "hike"], ["rowBiking", "bike"], ["rowManager", "maintainer"], ["rowMiles", "#miles"]] },
+  "mobile-home-parks-usa": { rows: [["rowAddress", "address"], ["rowCity", "city"], ["rowState", "state"], ["rowSpaces", "#spaces"]] },
+  "transit-stops-usa": { rows: [["rowType", "kind"], ["rowStopCode", "code"], ["rowWheelchair", "wheelchair"]] },
+  "transit-routes-usa": { rows: [["rowRoute", "route"], ["rowType", "kind"]] },
+  "rail-crossings": { titleFrom: "street", rows: [["rowRailroad", "railroad"], ["rowWarning", "warning"], ["rowDayTrains", "#day_trains"], ["rowNightTrains", "#night_trains"], ["rowMaxSpeed", "#max_mph"], ["rowCrossingId", "id"]] },
+  "alt-fuel": { rows: [["rowFuel", "fuel"], ["rowAddress", "address"], ["rowCity", "city"], ["rowNetwork", "network"], ["rowDcFast", "#dc_fast"], ["rowLevel2", "#level2"], ["rowHours", "hours"]] },
+  "truck-parking": { rows: [["rowRoad", "highway"], ["rowMilepost", "milepost"], ["rowCity", "city"], ["rowState", "state"], ["rowSpaces", "#spaces"]] },
+  "poor-bridges": { titleFrom: "road", rows: [["rowCrosses", "crosses"], ["rowBuilt", "built"], ["rowDailyTraffic", "#daily_traffic"], ["rowLowestRating", "lowest_rating"], ["rowDeck", "deck"], ["rowSuperstructure", "superstructure"], ["rowSubstructure", "substructure"], ["rowStructure", "structure"]] },
+  ports: { rows: [["rowRank", "rank"], ["rowTons", "#tons"], ["rowImports", "#imports"], ["rowExports", "#exports"]] },
 };
 const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
@@ -2195,6 +2253,10 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
           [t("rowAddress"), [raw(p.address), raw(p.city)].filter(Boolean).join(", ")],
           [t("rowHousingType"), raw(p.kind)],
           [t("rowUnits"), units ? fmt(units) : ""],
+          // Census building permits: the total split by building size.
+          [t("rowUnits1"), p.units_1 != null ? fmt(p.units_1) : ""],
+          [t("rowUnits2to4"), p.units_2_4 != null ? fmt(p.units_2_4) : ""],
+          [t("rowUnits5plus"), p.units_5plus != null ? fmt(p.units_5plus) : ""],
           [t("rowApprovedUnits"), num(p.approved_units) ? fmt(p.approved_units) : ""],
           [t("rowFiled"), day(p.submitted)],
           [t("rowStageDate"), day(p.date)],
@@ -2411,7 +2473,14 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
       };
     case "info": {
       const spec = INFO_FIELDS[info.name] ?? { rows: [] };
-      const value = (prop: string) => (prop === "_today" ? str(p[DAY_KEYS[new Date().getDay()]!]) : str(p[prop]));
+      const value = (prop: string) =>
+        prop === "_today"
+          ? str(p[DAY_KEYS[new Date().getDay()]!])
+          : prop.startsWith("#")
+            ? fmt(p[prop.slice(1)])
+            : p[prop] === "yes" || p[prop] === "no"
+              ? yn(p[prop])
+              : str(p[prop]);
       return {
         ...base,
         title: str(p[spec.titleFrom ?? "name"]) || kind,

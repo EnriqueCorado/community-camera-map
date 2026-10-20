@@ -142,6 +142,11 @@ for _k in ("zip-codes", "congressional-districts"):
     SOURCES[_k] = "US Census TIGERweb"
 for _k in ("hospitals", "law-enforcement", "airports", "amtrak"):
     SOURCES[_k] = "HIFLD / US DOT (ArcGIS)"
+# Nationwide packs carry their own attribution (imported after service.py,
+# which registers them).
+from app.layers.national.planning import SOURCES as _PLANNING_SOURCES  # noqa: E402
+
+SOURCES.update(_PLANNING_SOURCES)
 
 
 # Live-only layers: the committed file is an empty placeholder; the scheduled

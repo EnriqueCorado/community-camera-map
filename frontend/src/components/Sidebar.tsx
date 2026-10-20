@@ -5,7 +5,7 @@ import { ago } from "../freshness";
 import { matchCamera, type LayerState } from "./MapView";
 import {
   CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
-  HEALTH_STOPS, metricStops, fmtMetric, DROUGHT_COLORS, HEAT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, VOTING_KEYS, WVAL_COLORS,
+  HEALTH_STOPS, metricStops, fmtMetric, DROUGHT_COLORS, HEAT_COLORS, LAND_COVER_CLASSES, CROP_CLASSES, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, VOTING_KEYS, WVAL_COLORS,
   WVAL_KEYS, GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS,
   VOLCANO_COLORS, VOLCANO_KEYS, DEV_STAGES,
 } from "../colors";
@@ -312,6 +312,8 @@ export function Sidebar({
   const metricOn = overlayInfos.find((l) => l.metric && layers.overlays[l.name]);
   const droughtOn = layers.overlays["drought"] ?? false;
   const heatOn = layers.overlays["heat-risk"] ?? false;
+  const landCoverOn = layers.overlays["land-cover"] ?? false;
+  const cropsOn = layers.overlays["crops"] ?? false;
   const reservoirsOn = layers.overlays["reservoirs"] ?? false;
   const votingOn = layers.overlays["voting"] ?? false;
   const wastewaterOn = layers.overlays["wastewater"] ?? false;
@@ -604,6 +606,20 @@ export function Sidebar({
         )}
         {droughtOn && (
           <Legend id="drought-legend" title={t("droughtLegend")} items={DROUGHT_COLORS.map(([v, c]) => [c, `D${v}`])} />
+        )}
+        {landCoverOn && (
+          <Legend
+            id="land-cover-legend"
+            title={layerTitle(lang, "land-cover", "Land cover")}
+            items={LAND_COVER_CLASSES.map(([c, en, es]) => [c, lang === "es" ? es : en])}
+          />
+        )}
+        {cropsOn && (
+          <Legend
+            id="crops-legend"
+            title={layerTitle(lang, "crops", "Crops")}
+            items={CROP_CLASSES.map(([c, en, es]) => [c, lang === "es" ? es : en])}
+          />
         )}
         {heatOn && (
           <Legend id="heat-legend" title={t("heatLegend")} items={HEAT_COLORS.map(([v, c]) => [c, t(`heat${v}` as Key)])} />

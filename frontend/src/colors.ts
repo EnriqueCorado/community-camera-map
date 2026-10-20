@@ -125,6 +125,32 @@ export const OVERLAY_COLOR: Record<string, string> = {
   "census-poverty": "#756bb1",
   "census-renters": "#756bb1",
   "census-foreign-born": "#756bb1",
+  // Nationwide planning pack
+  "state-senate": "#1d4ed8",
+  "state-house": "#7c3aed",
+  counties: "#475569",
+  "county-subdivisions": "#78716c",
+  "census-places": "#ea580c",
+  "tribal-lands": "#b45309",
+  "voting-districts": "#be185d",
+  "public-lands": "#16a34a",
+  "rivers-usa": "#0284c7",
+  streams: "#0ea5e9",
+  "water-bodies": "#0369a1",
+  trails: "#a16207",
+  "land-cover": "#65a30d",
+  crops: "#ca8a04",
+  "mobile-home-parks-usa": "#c2410c",
+  "building-permits": "#db2777",
+  "transit-stops-usa": "#a855f7",
+  "transit-routes-usa": "#9333ea",
+  "rail-crossings": "#dc2626",
+  "traffic-counts": "#f97316",
+  pavement: "#b91c1c",
+  "alt-fuel": "#059669",
+  "truck-parking": "#334155",
+  "poor-bridges": "#b91c1c",
+  ports: "#0e7490",
 };
 
 // CalEnviroScreen overall percentile ramp (green = low burden, red = high).
@@ -339,6 +365,8 @@ export const RAMPS: Record<string, string[]> = {
   orange: ["#feedde", "#fdbe85", "#fd8d3c", "#e6550d", "#a63603"],
   red: ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"],
   teal: ["#ecfeff", "#a5f3fc", "#22d3ee", "#0891b2", "#155e75"],
+  // Lines on a basemap: every step visible (green = light/smooth ... dark red = heavy/rough).
+  traffic: ["#22c55e", "#eab308", "#f97316", "#dc2626", "#7f1d1d"],
 };
 
 /** A metric's legend/paint stops: each break paired with its ramp color. */
@@ -364,3 +392,38 @@ export function fmtMetric(v: number, fmt: MetricSpec["fmt"], locale: string, com
       return n(v, 1);
   }
 }
+
+/** NLCD land-cover classes in MRLC's colors: [color, English, Spanish]. */
+export const LAND_COVER_CLASSES: [string, string, string][] = [
+  ["#466b9f", "Open water", "Agua"],
+  ["#dec5c5", "Developed, open space", "Urbanizado, espacios abiertos"],
+  ["#d99282", "Developed, low intensity", "Urbanizado, baja densidad"],
+  ["#eb0000", "Developed, medium intensity", "Urbanizado, densidad media"],
+  ["#ab0000", "Developed, high intensity", "Urbanizado, alta densidad"],
+  ["#b3ac9f", "Barren land", "Suelo desnudo"],
+  ["#68ab5f", "Deciduous forest", "Bosque caducifolio"],
+  ["#1c5f2c", "Evergreen forest", "Bosque perennifolio"],
+  ["#b5c58f", "Mixed forest", "Bosque mixto"],
+  ["#ccb879", "Shrubland", "Matorral"],
+  ["#dfdfc2", "Grassland", "Pastizal"],
+  ["#dcd939", "Pasture / hay", "Pasto / heno"],
+  ["#ab6c28", "Cultivated crops", "Cultivos"],
+  ["#b8d9eb", "Woody wetlands", "Humedales arbolados"],
+  ["#6c9fb8", "Emergent wetlands", "Humedales herbáceos"],
+];
+
+/** The most common Cropland Data Layer classes in USDA's colors (not all ~130). */
+export const CROP_CLASSES: [string, string, string][] = [
+  ["#ffd300", "Corn", "Maíz"],
+  ["#267000", "Soybeans", "Soya"],
+  ["#a57000", "Winter wheat", "Trigo de invierno"],
+  ["#ff2626", "Cotton", "Algodón"],
+  ["#00a8e2", "Rice", "Arroz"],
+  ["#ffa5e2", "Alfalfa", "Alfalfa"],
+  ["#00a582", "Almonds", "Almendras"],
+  ["#704489", "Grapes", "Uvas"],
+  ["#e8d6af", "Walnuts", "Nueces"],
+  ["#bfbf7a", "Fallow / idle", "En descanso"],
+  ["#e8ffbf", "Grassland / pasture", "Pastizal / pasto"],
+  ["#9c9c9c", "Developed", "Urbanizado"],
+];
