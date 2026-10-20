@@ -1075,7 +1075,59 @@ interface RasterSpec {
   /** Satellite sits under the basemap's labels; radar sits over everything but cameras. */
   under: "labels" | "cameras";
   opacity: number;
+  /** Pixel size of the server's tiles (default 256). */
+  tileSize?: number;
 }
+
+const attrLink = (href: string, label: string) => `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+const ARCGIS_TILES = "https://tiles.arcgis.com/tiles";
+/** Nationwide hazard rasters (backend app/layers/national/hazards.py). */
+const HAZARD_RASTERS: Record<string, RasterSpec> = {
+  // USFS Wildfire Hazard Potential 2023 (classified, ~270 m), already colored.
+  "wildfire-hazard-potential": {
+    tiles: [
+      "https://imagery.geoplatform.gov/iipp/rest/services/Fire_Aviation/USFS_EDW_RMRS_WildfireHazardPotentialClassified/ImageServer/exportImage?bbox={bbox-epsg-3857}&" +
+        new URLSearchParams({
+          bboxSR: "3857",
+          imageSR: "3857",
+          size: "256,256",
+          format: "png32",
+          transparent: "true",
+          f: "image",
+          renderingRule: JSON.stringify({ rasterFunction: "WHP_CLS_2023_8bit" }),
+        }).toString(),
+    ],
+    maxzoom: 12,
+    attribution: attrLink("https://wildfirerisk.org/", "USDA Forest Service WHP"),
+    under: "labels",
+    opacity: 0.6,
+  },
+  // USGS landslide susceptibility: cached 512 px tiles.
+  "landslide-susceptibility": {
+    tiles: [`${ARCGIS_TILES}/v01gqwM5QqNysAAi/arcgis/rest/services/US_Landslide_Susceptibility/MapServer/tile/{z}/{y}/{x}`],
+    maxzoom: 12, // the cache stops at level 12 (z13 tiles 404); MapLibre overzooms
+    attribution: attrLink("https://www.usgs.gov/programs/landslide-hazards", "USGS landslide susceptibility"),
+    under: "labels",
+    opacity: 0.55,
+    tileSize: 512,
+  },
+  // NOAA OCM sea-level rise inundation (3 ft); empty tiles are 404s.
+  "sea-level-rise": {
+    tiles: [`${ARCGIS_TILES}/C8EMgrsFcRFL6LrL/arcgis/rest/services/slr_3ft/MapServer/tile/{z}/{y}/{x}`],
+    maxzoom: 15,
+    attribution: attrLink("https://coast.noaa.gov/slr/", "NOAA Sea Level Rise Viewer"),
+    under: "labels",
+    opacity: 0.6,
+  },
+  // NOAA NHC storm-surge risk, Category 3 (Atlantic & Gulf coasts).
+  "storm-surge": {
+    tiles: [`${ARCGIS_TILES}/C8EMgrsFcRFL6LrL/arcgis/rest/services/Storm_Surge_HazardMaps_Category3_v3/MapServer/tile/{z}/{y}/{x}`],
+    maxzoom: 14,
+    attribution: attrLink("https://www.nhc.noaa.gov/nationalsurge/", "NOAA NHC storm surge risk"),
+    under: "labels",
+    opacity: 0.6,
+  },
+};
 
 /** Tile URL for a client-side raster layer (fetched from public tile servers). */
 export async function rasterSource(name: string, now = new Date()): Promise<RasterSpec | null> {
@@ -1122,6 +1174,7 @@ export async function rasterSource(name: string, now = new Date()): Promise<Rast
       opacity: 0.6,
     };
   }
+  if (Object.prototype.hasOwnProperty.call(HAZARD_RASTERS, name)) return HAZARD_RASTERS[name]!;
   if (name === "satellite") {
     return {
       tiles: [gibsSatelliteUrl(now)],
@@ -1137,7 +1190,7 @@ export async function rasterSource(name: string, now = new Date()): Promise<Rast
 function addRaster(map: maplibregl.Map, name: string, r: RasterSpec) {
   const src = `ov-${name}`;
   if (map.getSource(src)) return;
-  map.addSource(src, { type: "raster", tiles: r.tiles, tileSize: 256, maxzoom: r.maxzoom, attribution: r.attribution });
+  map.addSource(src, { type: "raster", tiles: r.tiles, tileSize: r.tileSize ?? 256, maxzoom: r.maxzoom, attribution: r.attribution });
   const firstSymbol = map.getStyle().layers.find((l) => l.type === "symbol")?.id;
   const beforeId = r.under === "labels" ? firstSymbol : map.getLayer("cam-clusters") ? "cam-clusters" : undefined;
   map.addLayer(
@@ -1788,6 +1841,23 @@ const INFO_FIELDS: Record<string, { rows: InfoRow[]; titleFrom?: string; link?: 
   "historic-places": { rows: [["rowType", "kind"], ["rowAddress", "address"], ["rowCity", "city"], ["rowListed", "listed"]], link: "viewNara" },
   "historical-markers": { rows: [["rowSubtitle", "subtitle"], ["rowErected", "built"], ["rowErectedBy", "erected_by"], ["rowWhere", "where"]], link: "viewHmdb" },
   "mobile-home-parks": { rows: [["rowAddress", "address"], ["rowSpaces", "spaces"]] },
+  // Hazards / environment / water pack (backend national/hazards.py).
+  landslides: { titleFrom: "kind", rows: [["rowSource", "source"]] },
+  "smoke-plumes": { rows: [["rowDensity", "density"], ["rowSource", "satellite"], ["rowStarted", "start"], ["rowUntil", "end"]] },
+  hurricanes: { rows: [["rowType", "kind"], ["rowWind", "wind"], ["rowAsOf", "issued"]] },
+  "disaster-declarations": { rows: [["rowState", "state"], ["rowDeclaration", "declaration"], ["rowPrograms", "programs"], ["rowSince", "posted"]] },
+  "open-shelters": { rows: [["rowStatus", "status"], ["rowAddress", "address"], ["rowCity", "city"], ["rowState", "state"], ["rowCapacity", "capacity"]] },
+  "recovery-centers": { rows: [["rowStatus", "status"], ["rowHoursToday", "_today"], ["rowAddress", "address"], ["rowCity", "city"], ["rowState", "state"], ["rowSince", "opened"]] },
+  "epa-violations": { rows: [["rowCity", "city"], ["rowState", "state"], ["rowStatus", "status"]], link: "viewEcho" },
+  "toxic-releases": { rows: [["rowCity", "city"], ["rowState", "state"], ["rowReleases", "releases"]], link: "viewEcho" },
+  "chemical-plants": { rows: [["rowCity", "city"], ["rowState", "state"]], link: "viewEcho" },
+  "drinking-water-violations": { rows: [["rowCity", "city"], ["rowState", "state"], ["rowType", "kind"], ["rowStatus", "status"]], link: "viewEcho" },
+  "water-systems": { rows: [["rowPeopleServed", "pop"], ["rowBoundary", "method"]], link: "viewEcho" },
+  brownfields: { rows: [["rowCity", "city"], ["rowState", "state"]], link: "viewEpa" },
+  "gas-pipelines": { titleFrom: "operator", rows: [["rowType", "kind"], ["rowStatus", "status"]] },
+  "nuclear-plant-rings": { rows: [["rowRadius", "radius"]] },
+  levees: { rows: [["rowSponsor", "sponsor"], ["rowFemaRating", "fema_rating"], ["rowFloodSource", "river"]] },
+  "leveed-areas": { rows: [["rowFemaRating", "fema_rating"], ["rowSize", "area"]] },
 };
 const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 

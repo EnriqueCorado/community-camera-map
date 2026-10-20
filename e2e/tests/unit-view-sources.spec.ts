@@ -157,3 +157,55 @@ test("metric legends: breaks paired with ramp colors, values formatted by unit",
   expect(fmtMetric(12.34, "pct", "en-US")).toBe("12.3%");
   expect(fmtMetric(1978.4, "year", "en-US")).toBe("1978");
 });
+
+// Hazards / environment / water pack cleanups (frontend/src/view-posts-hazards.ts).
+const onePost = (props: Record<string, unknown>, fields: Record<string, string>, post: string) =>
+  applyFields({ features: [{ geometry: { type: "Point", coordinates: [0, 0] }, properties: props }] }, spec({ fields, post })).features[0]
+    ?.properties ?? null;
+
+test("hazard posts: units, dates, https links, CDC percentiles, radon level", () => {
+  const echo = onePost(
+    { U: "http://echo.epa.gov/detailed-facility-report?fid=1", L: 1234.56, D: Date.UTC(2026, 9, 8), W: 0, R: 10, A: 17.611, P: 49173 },
+    { U: "page", L: "releases_lbs", D: "posted_date", W: "wind_kt", R: "radius_mi", A: "area_sqmi", P: "pop_count" },
+    "fmt",
+  );
+  expect(echo).toEqual({
+    page: "https://echo.epa.gov/detailed-facility-report?fid=1",
+    releases: "1,234.6 lbs",
+    posted: "2026-10-08",
+    wind: "",
+    radius: "10 mi",
+    area: "17.6 sq mi",
+    pop: "49,173",
+  });
+  expect(onePost({ T: Date.UTC(2026, 9, 19, 18, 5) }, { T: "issued_utc" }, "fmt")).toEqual({ issued: "2026-10-19 18:05 UTC" });
+  expect(onePost({ T: null }, { T: "issued_utc" }, "fmt")).toEqual({ issued: "" });
+
+  const eji = onePost({ A: 0.8266, B: -999, N: "Census Tract 2114; Harris County; Texas" }, { A: "eji_pctl", B: "env_pctl", N: "name" }, "pctl");
+  expect(eji).toEqual({ eji_pctl: 82.7, env_pctl: null, name: "Census Tract 2114; Harris County; Texas" });
+
+  expect(onePost({ G: 1 }, { G: "zone" }, "radon")).toEqual({ level: 3 });
+  expect(onePost({ G: 3 }, { G: "zone" }, "radon")).toEqual({ level: 1 });
+  expect(onePost({ G: 9 }, { G: "zone" }, "radon")).toEqual({ level: null });
+});
+
+test("hazard posts: satellite fire times, smoke times, recovery-center hours", () => {
+  const viirs = onePost({ T: 1792392480000, D: "N", F: 1.48 }, { T: "acquired", D: "daynight", F: "frp_mw" }, "hotspot");
+  expect(viirs).toEqual({ acquired: new Date(1792392480000).toISOString(), daynight: "night", frp_mw: 1.48 });
+
+  // Day 292 of 2026 = Oct 19; "905" pads to 09:05.
+  expect(onePost({ Y: 2026292, T: "905" }, { Y: "_yearday", T: "_time" }, "hms")).toEqual({ acquired: "2026-10-19T09:05:00.000Z" });
+  expect(onePost({ Y: null, T: null }, { Y: "_yearday", T: "_time" }, "hms")).toEqual({ acquired: "" });
+  expect(onePost({ Y: 2026292, T: null }, { Y: "_yearday", T: "_time" }, "hms")).toEqual({ acquired: "" }); // no fake midnight
+  expect(onePost({ S: "2026292 1200", E: "garbage" }, { S: "start", E: "end" }, "hms")).toEqual({ start: "2026-10-19 12:00 UTC", end: "" });
+
+  const drc = onePost(
+    { MO: "08:00", MC: "16:00", SO: null, SC: "17:00", O: Date.UTC(2026, 6, 1) },
+    { MO: "_mon_open", MC: "_mon_close", SO: "_sun_open", SC: "_sun_close", O: "opened_date" },
+    "drc",
+  )!;
+  expect(drc.mon).toBe("08:00-16:00");
+  expect(drc.sun).toBe("");
+  expect(drc.opened).toBe("2026-07-01");
+  expect(Object.keys(drc).some((k) => k.startsWith("_"))).toBe(false);
+});

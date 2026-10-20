@@ -145,6 +145,16 @@ for _k in ("zip-codes", "congressional-districts"):
     SOURCES[_k] = "US Census TIGERweb"
 for _k in ("hospitals", "law-enforcement", "airports", "amtrak"):
     SOURCES[_k] = "HIFLD / US DOT (ArcGIS)"
+# Nationwide packs carry their own attribution (imported after service.py,
+# which registers them).
+from app.layers.national.hazards import SOURCES as _HAZARD_SOURCES  # noqa: E402
+
+SOURCES.update(_HAZARD_SOURCES)
+SOURCES["dams"] = "https://nid.sec.usace.army.mil (USACE NID; nationwide via Esri federal copy)"
+SOURCES["streamflow"] = (
+    "https://waterservices.usgs.gov (nationwide: USGS gauges via Esri Live Stream Gauges)"
+)
+SOURCES["shelters"] = "Stanislaus County GIS; nationwide: FEMA National Shelter System"
 
 
 # Live-only layers: the committed file is an empty placeholder; the scheduled

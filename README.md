@@ -281,6 +281,24 @@ Other live and daily sources added in this round:
 - **Quick views:** one-tap layer sets for wildfire, flooding, heat, health, commute and election
   day.
 
+**Hazards, environment and water pack** (`backend/app/layers/national/hazards.py`, 28 layers,
+all nationwide, nothing baked): USFS wildfire hazard potential, USGS landslide susceptibility,
+NOAA sea-level rise (3 ft) and NHC storm surge (Category 3) as raster tiles; CDC/ATSDR
+Environmental Justice Index, extreme heat days and Social Vulnerability Index; USGS/EPA radon
+potential; USGS faults and landslide inventory; satellite fires (VIIRS, NOAA HMS) and HMS smoke
+plumes; hurricane cones; FEMA disaster declarations, open shelters and recovery centers; EPA
+ECHO violations, toxic releases, risk-plan chemical facilities and drinking-water violations; EPA
+water-system service areas and brownfields; gas pipelines, nuclear plants and their 10/50-mile
+rings; USACE levees and leveed areas. Streamflow, dams and shelters also load nationwide now
+(USGS gauges, the NID, FEMA's shelter list). Browser cleanups for these live in
+`frontend/src/view-posts-hazards.ts`.
+
+Not yet nationwide, and why: **work zones** (USDOT WZDx: 26 keyless state feeds, most without
+CORS, so it needs a CI bake; deferred), **reservoir storage** and **groundwater** (USBR RISE /
+USACE CWMS and the USGS OGC API need a bake or a new loader kind), **power outages**, **road
+weather / chain controls / message signs**, **cooling centers, sandbags, mosquito and fire
+districts**, and **tsunami zones** (no public national source).
+
 The plate-reader seed lives on the `alpr-data` branch. Reseed it from a machine that DeFlock's CDN
 allows, by running `build_alpr_usa.py` and committing the output there.
 

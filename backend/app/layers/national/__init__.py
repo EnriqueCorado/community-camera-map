@@ -16,8 +16,15 @@ def register(into: dict[str, Layer]) -> None:
     """Merge every pack's layers into the registry (alphabetical by module;
     a pack may not silently replace an existing layer)."""
     for mod in sorted(m.name for m in pkgutil.iter_modules(__path__)):
+        if mod.startswith("_"):  # private helpers (parsers, posts) aren't packs
+            continue
         pack = importlib.import_module(f"{__name__}.{mod}")
-        for name, layer in getattr(pack, "LAYERS", {}).items():
+        layers = getattr(pack, "LAYERS", None)
+        if not isinstance(layers, dict):
+            # e.g. the pack was imported before service.py (circular import):
+            # fail loudly instead of silently registering nothing
+            raise ImportError(f"layer pack {mod!r} has no LAYERS dict (import service.py first)")
+        for name, layer in layers.items():
             if name in into:
                 raise ValueError(f"layer {name!r} from pack {mod!r} already exists")
             into[name] = layer
