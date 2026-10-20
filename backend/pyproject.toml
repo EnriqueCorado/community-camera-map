@@ -11,7 +11,7 @@ dependencies = [
     "pydantic-settings>=2.6,<3",
     "pillow>=12.3,<13",
     # Pure-Python PDF text extraction for the DOJ EOIR roster bake (no deps).
-    "pypdf==6.19.0",
+    "pypdf>=6.21.0,<7",
 ]
 
 [dependency-groups]

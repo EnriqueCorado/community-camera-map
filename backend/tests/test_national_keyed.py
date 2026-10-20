@@ -225,3 +225,31 @@ def test_settings_collect_only_set_keys(monkeypatch):
     s = Settings(_env_file=None, iteris_key_nv=FAKE_KEY, iteris_key_ga="", ohgo_api_key="")
     # compare key names only, so a failure can never print a real key
     assert sorted(s.iteris_keys) == ["nv"] and s.iteris_keys["nv"] == FAKE_KEY
+
+
+async def test_keyed_sources_never_follow_redirects():
+    # a 30x would forward the Iteris key (query string) to the new Location
+    seen: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(request)
+        return httpx.Response(302, headers={"Location": "http://evil.example/steal"})
+
+    async with httpx.AsyncClient(
+        transport=httpx.MockTransport(handler), follow_redirects=True
+    ) as client:
+        res = await national.fetch_all(
+            client,
+            max_bytes=1 << 20,
+            iteris_keys={"nv": FAKE_KEY},
+            ohgo_key=FAKE_KEY,
+            only=("nv", "oh"),
+        )
+    assert res.cameras == []
+    assert seen and all(r.url.host != "evil.example" for r in seen)
+
+
+def test_tests_never_load_the_developers_real_keys():
+    # conftest's autouse fixture: no backend/.env, no CAM_* variables
+    s = Settings()
+    assert s.iteris_keys == {} and not s.ohgo_api_key

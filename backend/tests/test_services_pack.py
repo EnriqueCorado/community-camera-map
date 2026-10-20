@@ -651,3 +651,21 @@ def test_immigration_offices_need_an_official_source_per_row():
         for r in committed
     )
     assert len(sv.immigration_offices({"offices": committed})["features"]) == len(committed)
+
+
+def _treat_row(name1, street1, name2=""):
+    return {**_row(name1, "SA", street=street1), "name2": name2}
+
+
+def test_treatment_drops_solo_practitioners_listed_under_their_own_name():
+    rows = [
+        _treat_row(name1="Victor H Lopez LSW MSW LCADC CCS", street1="1 Elm St"),
+        _treat_row(name1="Maria Lopez-Garcia, LPC", street1="2 Elm St"),
+        # an organization under the person's listing keeps it (name2 = the org)
+        _treat_row(name1="Jane Doe, LCSW", name2="Hope Counseling Center", street1="3 Elm St"),
+        # incorporated practices and plain organizations stay
+        _treat_row(name1="Lisa B Creef LCSW PC", street1="4 Elm St"),
+        _treat_row(name1="Hope House", street1="5 Elm St"),
+    ]
+    names = [f["properties"]["n"] for f in sp.treatment(rows, mental_health=False)]
+    assert names == ["Jane Doe, LCSW", "Lisa B Creef LCSW PC", "Hope House"]

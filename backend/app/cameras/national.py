@@ -871,6 +871,8 @@ def _iteris(st: str, key: str) -> Fetcher:
                 f"https://{host}/api/v2/get/cameras",
                 params={"key": key, "format": "json"},
                 max_bytes=max_bytes,
+                # a redirect would forward the key (it's in the query string)
+                follow_redirects=False,
             )
         except httpx.HTTPStatusError as exc:
             if exc.response.status_code in (400, 401, 403):
@@ -901,6 +903,7 @@ def _ohgo(key: str) -> Fetcher:
                 params={"page-all": "true"},
                 headers={"Authorization": f"APIKEY {key}"},
                 max_bytes=max_bytes,
+                follow_redirects=False,
             )
         except httpx.HTTPStatusError as exc:
             if exc.response.status_code in (400, 401, 403):

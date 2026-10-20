@@ -538,6 +538,18 @@ def _services(row: dict) -> dict[str, str]:
 
 _NO_COST = re.compile(r"\bsliding fee|\bno charge\b|\bfree of charge\b", re.I)
 
+# "Jane Q. Doe, LCSW" / "John Smith MD": a solo practitioner listed under their
+# own name, whose address may be a home office (like Head Start home providers).
+_PERSON = re.compile(
+    r"^[A-Z][a-z']+(?:-[A-Z][a-z']+)?(?: [A-Z]\.?)?(?: [A-Z][a-z']+(?:-[A-Z][a-z']+)?){1,2},? "
+    r"(?:(?:LCSW|LSW|LMSW|LPC|LMFT|LMHC|LCADC|LADC|LCPC|LISW|LCAS|CASAC|CCS|CAP|"
+    r"PsyD|PhD|MD|DO|NP|PMHNP|APRN|RN|MSW|MA|MS|LPCC|CADC|LCDC)\b[ ,/-]*)+$"
+)
+
+
+def _is_person(name: str) -> bool:
+    return bool(_PERSON.match(name))
+
 
 def treatment(rows: object, mental_health: bool) -> list[dict]:
     """FindTreatment.gov export rows -> mental-health facilities (typeFacility
@@ -547,6 +559,8 @@ def treatment(rows: object, mental_health: bool) -> list[dict]:
     for r in rows if isinstance(rows, list) else []:
         if not isinstance(r, dict) or (clean(r.get("typeFacility")) == "MH") != mental_health:
             continue
+        if _is_person(clean(r.get("name1"))) and not clean(r.get("name2")):
+            continue  # a person's own practice: keep their (home) address off the map
         key = (clean(r.get("name1")), clean(r.get("street1")), clean(r.get("city")))
         if key in seen:  # the export repeats some facilities
             continue
