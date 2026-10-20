@@ -15,6 +15,7 @@ on:
     #                       delayed fast run can never skip it)
     - cron: "37 11 * * *" # daily: OpenStreetMap places (Overpass servers rate-limit)
     - cron: "12 20 * * *" # daily history snapshot (around midday Pacific)
+    - cron: "41 9 * * 1" # weekly (Mondays): nationwide service lists (DOJ, ICE, HHS, DOL)
   workflow_dispatch:
 
 permissions:
@@ -159,6 +160,28 @@ jobs:
             frontend/public/data/layers/farmers-markets.geojson
           key: live-data-v2-${{ github.run_id }}
           restore-keys: live-data-v2-
+      # Weekly service lists (scripts/refresh_live.py --weekly): their own cache,
+      # so the hourly/daily cache above is untouched; without a cached copy the
+      # committed files are used. Bump the key (v1 -> v2) when a committed
+      # fix to these files must go live before the next Monday refresh.
+      - name: Restore weekly service lists
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            frontend/public/data/layers/immigration-legal-help.geojson
+            frontend/public/data/layers/detention-centers.geojson
+            frontend/public/data/layers/health-centers.geojson
+            frontend/public/data/layers/head-start.geojson
+            frontend/public/data/layers/early-head-start.geojson
+            frontend/public/data/layers/job-centers.geojson
+            frontend/public/data/layers/mental-health.geojson
+            frontend/public/data/layers/addiction-treatment.geojson
+            frontend/public/data/layers/housing-counseling.geojson
+            frontend/public/data/layers/public-housing.geojson
+            frontend/public/data/layers/colleges.geojson
+            frontend/public/data/layers/va-facilities.geojson
+          key: services-weekly-v1-${{ github.run_id }}
+          restore-keys: services-weekly-v1-
       - name: Refresh live layers (fast)
         if: github.event_name == 'schedule' && github.event.schedule == '*/15 * * * *'
         working-directory: backend
@@ -167,6 +190,30 @@ jobs:
         if: github.event_name != 'schedule' || github.event.schedule == '7 * * * *'
         working-directory: backend
         run: uv run --locked python scripts/refresh_live.py --hourly
+      - name: Refresh nationwide service lists (weekly; keeps the last good file on failure)
+        if: github.event.schedule == '41 9 * * 1'
+        working-directory: backend
+        timeout-minutes: 20
+        continue-on-error: true # a slow federal server must not block the deploy
+        run: uv run --locked python scripts/refresh_live.py --weekly
+      - name: Save weekly service lists
+        if: github.event.schedule == '41 9 * * 1'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            frontend/public/data/layers/immigration-legal-help.geojson
+            frontend/public/data/layers/detention-centers.geojson
+            frontend/public/data/layers/health-centers.geojson
+            frontend/public/data/layers/head-start.geojson
+            frontend/public/data/layers/early-head-start.geojson
+            frontend/public/data/layers/job-centers.geojson
+            frontend/public/data/layers/mental-health.geojson
+            frontend/public/data/layers/addiction-treatment.geojson
+            frontend/public/data/layers/housing-counseling.geojson
+            frontend/public/data/layers/public-housing.geojson
+            frontend/public/data/layers/colleges.geojson
+            frontend/public/data/layers/va-facilities.geojson
+          key: services-weekly-v1-${{ github.run_id }}
       - name: Refresh OpenStreetMap places (daily, and on manual runs)
         if: github.event.schedule == '37 11 * * *' || github.event_name == 'workflow_dispatch'
         working-directory: backend

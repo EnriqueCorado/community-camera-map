@@ -7,6 +7,7 @@ overwrites a layer's file when the fetch succeeds — on failure the committed
 
     cd backend && uv run python scripts/refresh_live.py            # fast layers
     cd backend && uv run python scripts/refresh_live.py --hourly   # + haze, webcams
+    cd backend && uv run python scripts/refresh_live.py --weekly   # nationwide service lists
 
 Keys: none needed. The Windy list is refreshed separately in CI
 (`--only windy-webcams`) so its key never shares a process with the step that
@@ -29,6 +30,8 @@ import httpx
 from bake import SOURCES  # noqa: E402 - sibling script
 
 from app.core.config import get_settings
+from app.layers import service as _registry  # noqa: F401 - loads every pack before one is imported
+from app.layers.national.services import WEEKLY as SERVICES_WEEKLY
 from app.layers.service import LayerService, record_layer_times, sync_catalog
 
 for _noisy in ("httpx", "httpcore"):
@@ -75,6 +78,9 @@ DAILY = (
     "community-centers",
     "farmers-markets",
 )
+# Nationwide baked lists that change slowly and take minutes to rebuild
+# (PDF/spreadsheet downloads + Census geocoding): once a week, own cache in CI.
+WEEKLY = SERVICES_WEEKLY
 HOURLY = (
     "reservoirs",
     "fire-weather",
@@ -158,6 +164,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--hourly", action="store_true", help="also refresh slower/heavier layers")
     ap.add_argument("--daily", action="store_true", help="refresh the OpenStreetMap places")
+    ap.add_argument("--weekly", action="store_true", help="refresh the nationwide service lists")
     ap.add_argument("--only", help="comma-separated layer names (e.g. windy-webcams)")
     ap.add_argument("--adopt", help="mark an already-present layer file available (CI artifact)")
     args = ap.parse_args()
@@ -166,6 +173,8 @@ if __name__ == "__main__":
     chosen = (
         tuple(args.only.split(","))
         if args.only
+        else WEEKLY + FAST  # the weekly run deploys too
+        if args.weekly
         else DAILY + FAST  # the daily run deploys too: keep live layers fresh
         if args.daily
         else FAST + (HOURLY if args.hourly else ())

@@ -1,0 +1,248 @@
+{
+  "note": "Hand-checked coordinates for ICE detention facilities the U.S. Census geocoder cannot place. Each row: the facility name exactly as in ICE's FY detention-statistics spreadsheet, its official address, the coordinates, and how they were verified (source URL). Never guess: leave a facility out rather than add an unverified point.",
+  "facilities": [
+    {
+      "name": "Alexandria Staging Facility",
+      "lat": 31.31784,
+      "lon": -92.53638,
+      "address": "96 George Thompson Dr, Alexandria, LA 71303",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10006311&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10006311 'Alexandria Staging Facility': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Baker Correctional Institution",
+      "lat": 30.21325,
+      "lon": -82.37451,
+      "address": "20706 Us Highway 90 W, Sanderson, FL 32087",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10000402&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10000402 'Baker Correctional Institution': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Broward County Jail",
+      "lat": 26.11608,
+      "lon": -80.14228,
+      "address": "555 Se 1St Ave, Ft. Lauderdale, FL 33301",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10002189&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10002189 'Broward County Main Jail': centroid of the facility outline; same address (Broward County Main Jail)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Caroline Detention Facility",
+      "lat": 38.1133,
+      "lon": -77.26673,
+      "address": "11093 Sw Lewis Memorial Dr, Bowling Green, VA 22427",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10003260&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10003260 'Caroline Detention Facility': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Chase County Jail",
+      "lat": 38.36705,
+      "lon": -96.53828,
+      "address": "301 S Walnut Street, Cottonwood Falls, KS 66845",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10004848&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10004848 'Chase County Jail': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Clinton County Correctional Facility",
+      "lat": 41.15104,
+      "lon": -77.34961,
+      "address": "58 Pine Mountain Rd, Mcelhattan, PA 17748",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10001487&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10001487 'Clinton County Correctional Facility': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Daviess County Detention",
+      "lat": 37.78708,
+      "lon": -87.07121,
+      "address": "3337 Hwy 144, Owensboro, KY 42303",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10003663&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10003663 'Daviess County Detention Center': centroid of the facility outline; same address (Daviess County Detention Center)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Department Of Corrections Hagatna",
+      "lat": 13.47428,
+      "lon": 144.75004,
+      "address": "203 Aspinall Avenue, Hagatna, GU 96910",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10006540&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10006540 'Hagatna Detention Facility': centroid of the facility outline; same address, 203 Aspinall Ave (Hagatna Detention Facility)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Diamondback Corr Facility",
+      "lat": 35.88232,
+      "lon": -98.39599,
+      "address": "Route 2, Box 336, Watonga, OK 73772",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10001724&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10001724 'Diamondback Correctional Facility': centroid of the facility outline; identical facility name in the same ZIP (HIFLD lists a rural-route address)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Dilley Immigration Processing Center",
+      "lat": 28.65626,
+      "lon": -99.20226,
+      "address": "300 El Rancho Way, Dilley, TX 78017",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10006305&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10006305 'South Texas Family Residential Center': centroid of the facility outline; same address, 300 El Rancho Way (listed as South Texas Family Residential Center)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Dilley Processing Single Adult Female",
+      "lat": 28.65626,
+      "lon": -99.20226,
+      "address": "300 El Rancho Way, Dilley, TX 78017",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10006305&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10006305 'South Texas Family Residential Center': centroid of the facility outline; same address, 300 El Rancho Way (listed as South Texas Family Residential Center)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "East Hidalgo Detention Center",
+      "lat": 26.29662,
+      "lon": -97.91818,
+      "address": "1300 Highway 107, Lavilla, TX 78562",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10006315&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10006315 'East Hidalgo Detention Center': centroid of the facility outline; identical facility name in the same ZIP (HIFLD: 1300 Highway 107)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Folkston D Ray ICE Processing Ctr",
+      "lat": 30.87367,
+      "lon": -81.9791,
+      "address": "3262 Highway 252, Folkston, GA 31537",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10011326&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10011326 'D Ray James Correctional Facility': centroid of the facility outline; same address (D Ray James Correctional Facility)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Hall County Department Of Corrections",
+      "lat": 40.92657,
+      "lon": -98.32881,
+      "address": "110 Public Safety Dr, Grand Island, NE 68801",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10004135&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10004135 'Hall County Department Of Corrections': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Hancock County Public Safety Complex",
+      "lat": 30.30309,
+      "lon": -89.47653,
+      "address": "8450 Highway 90 Bay, St. Louis, MS 39520",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10006815&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10006815 'Hancock County Adult Detention Center': centroid of the facility outline; same address (Hancock County Adult Detention Center)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Imperial Regional Detention Facility",
+      "lat": 32.69158,
+      "lon": -115.39786,
+      "address": "1572 Gateway Road, Calexico, CA 92231",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10006509&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10006509 'Imperial Regional Detention Facility': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "La Salle County Regional Detention Center",
+      "lat": 28.04511,
+      "lon": -99.33612,
+      "address": "832 E Texas 44, Encinal, TX 78019",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10006514&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10006514 'La Salle County Regional Detention Center': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Lewisburg US Penitentiary",
+      "lat": 40.98797,
+      "lon": -76.91496,
+      "address": "2400 Robert F. Miller Dr, Lewisburg, PA 17837",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10003069&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10003069 'Usp Lewisburg': centroid of the facility outline; identical facility (USP Lewisburg) in the same ZIP; ICE lists a P.O. box",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Martin County Jail",
+      "lat": 27.16963,
+      "lon": -80.2424,
+      "address": "800 Se Monterey Rd, Stuart, FL 34994",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10004634&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10004634 'Martin County Jail': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Mccook Detention Center",
+      "lat": 40.22828,
+      "lon": -100.648,
+      "address": "2309 N Hwy 83, Mccook, NE 69001",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10001743&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10001743 'Work Ethic Camp': centroid of the facility outline; same address, 2309 N Hwy 83 (listed as Work Ethic Camp)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Nelson Coleman Correction",
+      "lat": 29.99232,
+      "lon": -90.50257,
+      "address": "5061 State Hwy 3127, Killona, LA 70057",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10001659&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10001659 'Nelson Coleman Correctional Center': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Otay Mesa Detention Center",
+      "lat": 32.57597,
+      "lon": -116.91564,
+      "address": "7488 Calzada De La Fuente, San Diego, CA 92154",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10006510&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10006510 'Otay Mesa Detention Center': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Port Isabel Spc",
+      "lat": 26.15617,
+      "lon": -97.33721,
+      "address": "27991 Buena Vista Blvd, Los Fresnos, TX 78566",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10002949&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10002949 'Port Isabel Detention Center': centroid of the facility outline; same address (Port Isabel Detention Center)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Saipan Department Of Corrections (susupe)",
+      "lat": 15.15769,
+      "lon": 145.70734,
+      "address": "Vincente Taman Seman Building, Susupe, MP 96950",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10006284&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10006284 'Saipan Correctional Facility': centroid of the facility outline; same building, Vicente T. Seman Bldg, Susupe (Saipan Correctional Facility)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "T Don Hutto Detention Center",
+      "lat": 30.56476,
+      "lon": -97.41974,
+      "address": "1001 Welch St, Taylor, TX 76574",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10000219&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10000219 'T Don Hutto Residential Center': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Torrance County Detention Facility",
+      "lat": 34.76743,
+      "lon": -106.01843,
+      "address": "209 E Alan Ayers Rd, Estancia, NM 87016",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10003785&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10003785 'Torrance County Detention Facility': centroid of the facility outline; identical facility name in the same ZIP (HIFLD: 209 E Alan Ayers Rd)",
+      "verified_on": "2026-10-19"
+    },
+    {
+      "name": "Winn Correctional Center",
+      "lat": 31.85068,
+      "lon": -92.7793,
+      "address": "560 Gum Springs Rd, Winnfield, LA 71483",
+      "source": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Prison_Boundaries_RAPT/FeatureServer/1/query?where=FACILITYID%3D10000953&outFields=*&f=html",
+      "method": "HIFLD Prison Boundaries (DHS) record 10000953 'Winn Correctional Center': centroid of the facility outline; same address and name",
+      "verified_on": "2026-10-19"
+    }
+  ]
+}

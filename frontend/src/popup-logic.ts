@@ -1,5 +1,6 @@
 // Pure popup helpers — no React/DOM, so they're unit-tested directly
 // (e2e/tests/unit-popup-logic.spec.ts).
+import { SERVICE_LINK_HOSTS } from "./services-pack";
 
 export type FloodRiskKey = "floodHigh" | "floodModerate" | "floodMinimal" | "floodUndetermined";
 
@@ -81,6 +82,7 @@ export const WEBCAM_PAGE_HOSTS = [
   "ceqanet.lci.ca.gov",
   "www.spc.noaa.gov",
   "droughtmonitor.unl.edu",
+  ...SERVICE_LINK_HOSTS, // community & immigrant services pack (official .gov pages)
 ];
 
 /** `u` if it's an https URL on one of `hosts`, else null. Never trust data-supplied URLs. */

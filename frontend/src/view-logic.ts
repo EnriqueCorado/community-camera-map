@@ -1,6 +1,7 @@
 // Pure helpers for nationwide view layers (no fetching or app imports, so
 // they're unit-tested in isolation). See view-sources.ts.
 import type { ViewSpec } from "./api/client"; // type-only: erased at build
+import { mealsOpen } from "./services-pack";
 
 type FC = GeoJSON.FeatureCollection;
 type Bbox = [number, number, number, number]; // [west, south, east, north]
@@ -139,6 +140,10 @@ const POST: Record<string, (p: Record<string, unknown>) => void> = {
     p.pct = p._a != null && p._b != null && Number.isFinite(a) && Number.isFinite(b) ? Math.round((a + b) * 10) / 10 : null;
     delete p._a;
     delete p._b;
+  },
+  // USDA summer meal sites: never show a site whose season isn't today.
+  meals: (p) => {
+    if (!mealsOpen(p)) p._drop = true;
   },
   // National Bridge Inventory text fields come wrapped in single quotes.
   nbi: (p) => {

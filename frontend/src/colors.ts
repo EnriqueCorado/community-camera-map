@@ -1,4 +1,5 @@
 import type { MetricSpec } from "./api/client";
+import { SERVICE_COLORS } from "./services-pack";
 // Single source of truth for layer colors, shared by the map and the sidebar
 // legend so the dots on the map always match their legend swatch.
 
@@ -21,6 +22,7 @@ export const VENDOR_SWATCH: Record<string, string> = {
 };
 
 export const OVERLAY_COLOR: Record<string, string> = {
+  ...SERVICE_COLORS,
   voting: "#1d4ed8",
   buses: "#0f766e",
   wastewater: "#7c3aed",

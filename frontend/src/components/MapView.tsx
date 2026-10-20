@@ -29,6 +29,7 @@ import { HOME_BBOX, within, wrapLon } from "../view-logic";
 import { HISTORY_LAYERS } from "../history";
 import { ALPR_TILE_ZOOM, alprCells, alprIndex, alprNear, alprTile, evictAlprTile, mergeTiles, type AlprIndex } from "../alpr-tiles";
 import { VOTING_KEYS } from "../colors";
+import { servicePopup } from "../services-pack";
 import {
   CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
   HEALTH_STOPS, metricStops, fmtMetric, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, WVAL_COLORS, WVAL_KEYS,
@@ -1038,7 +1039,7 @@ const HAS_TRACK: maplibregl.ExpressionSpecification = ["==", ["typeof", ["get", 
 const POINT_CATEGORIES = new Set([
   "flight", "haze", "webcam", "space", "train", "nature", "wiki", "weather-now", "poi", "hotspot",
   "roadweather", "chain", "superfund", "power", "aqi", "voting", "outage", "crash", "reservoir", "quake", "bus",
-  "wastewater", "groundwater", "gauge", "storm", "volcano", "dev",
+  "wastewater", "groundwater", "gauge", "storm", "volcano", "dev", "service",
 ]);
 /** …and these as lines (lane closures can be momentarily empty). */
 const LINE_CATEGORIES = new Set(["roadops", "fault"]);
@@ -2018,6 +2019,11 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
           [t("rowHumidity"), num(p.humidity) != null ? `${fmt(p.humidity)}%` : ""],
         ],
       };
+    }
+    case "service": {
+      // Community & immigrant services pack (services-pack.ts).
+      const sp = servicePopup(info.name, p, lang, locale, tidy);
+      return { ...base, ...sp, title: sp.title || kind };
     }
     case "poi":
       return {
