@@ -81,6 +81,8 @@ export const WEBCAM_PAGE_HOSTS = [
   "ceqanet.lci.ca.gov",
   "www.spc.noaa.gov",
   "droughtmonitor.unl.edu",
+  "echo.epa.gov", // EPA ECHO facility reports (hazards pack)
+  "obipublic11.epa.gov", // EPA Cleanups in My Community profiles
 ];
 
 /** `u` if it's an https URL on one of `hosts`, else null. Never trust data-supplied URLs. */

@@ -47,7 +47,7 @@ const MAX_PAGES = 5;
 
 /** Hosts a catalog `view` may query (defense in depth: the catalog is ours). */
 const VIEW_HOSTS =
-  /^https:\/\/(services\d*\.arcgis\.com|tigerweb\.geo\.census\.gov|hazards\.fema\.gov|mapservices\.nps\.gov|gisportal\.hrsa\.gov|mapservices\.weather\.noaa\.gov)\//;
+  /^https:\/\/(services\d*\.arcgis\.com|tigerweb\.geo\.census\.gov|hazards\.fema\.gov|mapservices\.nps\.gov|gisportal\.hrsa\.gov|mapservices\.weather\.noaa\.gov|onemap\.cdc\.gov|gis\.fema\.gov)\//;
 
 const viewCache = new Map<string, LiveSource>();
 

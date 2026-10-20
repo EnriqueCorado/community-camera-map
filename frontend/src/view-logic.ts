@@ -1,6 +1,7 @@
 // Pure helpers for nationwide view layers (no fetching or app imports, so
 // they're unit-tested in isolation). See view-sources.ts.
 import type { ViewSpec } from "./api/client"; // type-only: erased at build
+import { HAZARD_POST } from "./view-posts-hazards";
 
 type FC = GeoJSON.FeatureCollection;
 type Bbox = [number, number, number, number]; // [west, south, east, north]
@@ -97,6 +98,7 @@ function aqiBand(aqi: number): string {
 
 /** Named cleanups some sources need (mirrors backend transforms). */
 const POST: Record<string, (p: Record<string, unknown>) => void> = {
+  ...HAZARD_POST, // hazards / environment / water pack (view-posts-hazards.ts)
   // EPA Superfund: the site-profile link is buried in an HTML field.
   epa: (p) => {
     const m = /href="(https:\/\/cumulis\.epa\.gov\/supercpad\/cursites\/csitinfo\.cfm\?id=\d+)"/.exec(String(p._profile ?? ""));

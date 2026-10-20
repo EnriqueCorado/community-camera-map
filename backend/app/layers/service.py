@@ -1440,6 +1440,16 @@ LAYERS: dict[str, Layer] = {
             transforms.usgs_nwis,
         ),
         ttl=300,
+        # Nationwide: USGS gauges in Esri's live stream-gauge feed (NOAA rows
+        # would duplicate river-gauges).
+        view=View(
+            "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/Live_Stream_Gauges_v1/FeatureServer/0",
+            {"name": "name", "flow_cfs": "streamflow_cfs", "stage_ft": "gage_height_ft"},
+            "point",
+            min_zoom=7,
+            where="org = 'USGS'",
+            refresh_s=900,
+        ),
     ),
     "lane-closures": Layer(
         name="lane-closures",
@@ -1663,6 +1673,14 @@ LAYERS: dict[str, Layer] = {
             "https://nid.sec.usace.army.mil/api/query?sy=@stateKey:CA", transforms.nid_dams
         ),
         ttl=24 * 3600,
+        # Nationwide: the same NID, from Esri's federal copy (refreshed daily).
+        view=View(
+            "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/NID_v1/FeatureServer/0",
+            {"NAME": "name", "HAZARD_POTENTIAL": "hazard", "NID_HEIGHT": "height_ft"},
+            "point",
+            min_zoom=7,
+            refresh_s=24 * 3600,
+        ),
     ),
     "road-weather": Layer(
         name="road-weather",
@@ -1868,6 +1886,15 @@ LAYERS: dict[str, Layer] = {
             ),
         ),
         ttl=6 * 3600,
+        # Nationwide: FEMA National Shelter System pre-identified facilities
+        # (open or not; see open-shelters). No contact fields.
+        view=View(
+            "https://gis.fema.gov/arcgis/rest/services/NSS/FEMA_NSS/FeatureServer/5",
+            {"shelter_name": "name", "address_1": "address", "city": "city"},
+            "point",
+            min_zoom=9,
+            refresh_s=24 * 3600,
+        ),
     ),
     "fire-districts": Layer(
         name="fire-districts",
