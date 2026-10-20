@@ -2402,6 +2402,13 @@ LAYERS: dict[str, Layer] = {
 }
 
 
+# Nationwide packs (app/layers/national/*.py) add their layers here; imported
+# last because they build on the helpers above.
+from .national import register as _register_national  # noqa: E402
+
+_register_national(LAYERS)
+
+
 @dataclass
 class _Entry:
     body: bytes  # serialized GeoJSON, cached so we don't re-parse/re-dump per request
