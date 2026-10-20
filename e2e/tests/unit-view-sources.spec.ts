@@ -245,3 +245,28 @@ test("place and bdc posts: area names from ids; FCC % without 100/20 Mbps", () =
   expect(one({ _den: 100, _served: null }, "bdc")).toEqual({ name: null, pct: null });
   expect(one({ _den: 40, _served: 0 }, "bdc")).toEqual({ name: null, pct: 100 });
 });
+
+test("planning pack post-processors: transit quotes + wheelchair, PAD-US access, trails", () => {
+  const pt = { type: "Point", coordinates: [0, 0] };
+  const run = (properties: Record<string, unknown>, fields: Record<string, string>, post: string) =>
+    applyFields({ features: [{ geometry: pt, properties }] }, spec({ fields, post })).features[0]!.properties!;
+  const stop = { S: "Main St", K: '"Bus"', W: "1" };
+  const stopFields = { S: "name", K: "kind", W: "wheelchair" };
+  expect(run(stop, stopFields, "ntm")).toEqual({ name: "Main St", kind: "Bus", wheelchair: "yes" });
+  expect(run({ ...stop, W: "2" }, stopFields, "ntm").wheelchair).toBe("no");
+  expect(run({ ...stop, W: "0" }, stopFields, "ntm").wheelchair).toBe("");
+  // Routes have no wheelchair field: none is invented.
+  expect(run({ K: '"Light Rail"' }, { K: "kind" }, "ntm")).toEqual({ kind: "Light Rail" });
+  expect(run({ A: "OA" }, { A: "access" }, "padus").access).toBe("yes");
+  expect(run({ A: "RA" }, { A: "access" }, "padus").access).toBe("no");
+  expect(run({ A: "XA" }, { A: "access" }, "padus").access).toBe("");
+  const trail = run({ H: "Yes", B: "No", M: 1.23456 }, { H: "hike", B: "bike", M: "miles" }, "trails");
+  expect(trail).toEqual({ hike: "yes", bike: "no", miles: 1.2 });
+  expect(run({ H: null, M: null }, { H: "hike", M: "miles" }, "trails")).toMatchObject({ hike: "", miles: null });
+});
+
+test("traffic ramp: every step is visible on a basemap (no near-white first color)", () => {
+  const stops = metricStops({ field: "aadt", fmt: "count", breaks: [5000, 20000, 50000, 100000, 200000], ramp: "traffic" });
+  expect(stops.map(([, c]) => c)).toEqual(RAMPS.traffic);
+  expect(fmtMetric(200000, "count", "en-US")).toBe("200,000");
+});

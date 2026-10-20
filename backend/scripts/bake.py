@@ -155,6 +155,9 @@ SOURCES["streamflow"] = (
     "https://waterservices.usgs.gov (nationwide: USGS gauges via Esri Live Stream Gauges)"
 )
 SOURCES["shelters"] = "Stanislaus County GIS; nationwide: FEMA National Shelter System"
+from app.layers.national.planning import SOURCES as _PLANNING_SOURCES  # noqa: E402
+
+SOURCES.update(_PLANNING_SOURCES)
 
 
 # Live-only layers: the committed file is an empty placeholder; the scheduled

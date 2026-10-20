@@ -186,6 +186,22 @@ const POST: Record<string, (p: Record<string, unknown>) => void> = {
   nbi: (p) => {
     for (const k of ["road", "crosses", "structure"]) p[k] = String(p[k] ?? "").replace(/^'+|'+$/g, "").trim();
   },
+  // National Transit Map: type text arrives in literal quotes ("\"Bus\"");
+  // GTFS wheelchair_boarding 1 = accessible, 2 = not, else unknown.
+  ntm: (p) => {
+    p.kind = String(p.kind ?? "").replace(/^"+|"+$/g, "").trim();
+    if ("wheelchair" in p) p.wheelchair = p.wheelchair === "1" || p.wheelchair === 1 ? "yes" : p.wheelchair === "2" || p.wheelchair === 2 ? "no" : "";
+  },
+  // PAD-US: OA = open to everyone, RA = restricted (needs permission).
+  padus: (p) => {
+    p.access = p.access === "OA" ? "yes" : p.access === "RA" ? "no" : "";
+  },
+  // USGS trails: "Yes"/"No" uses, length to a tenth of a mile.
+  trails: (p) => {
+    for (const k of ["hike", "bike"]) p[k] = p[k] === "Yes" ? "yes" : p[k] === "No" ? "no" : "";
+    const mi = Number(p.miles);
+    p.miles = p.miles != null && Number.isFinite(mi) ? Math.round(mi * 10) / 10 : null;
+  },
 };
 
 /** Keep only the spec's fields (renamed; a coarser level's own at `zoom`),
