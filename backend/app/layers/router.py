@@ -31,6 +31,9 @@ class LayerInfo(BaseModel):
     coverage: str = "stanislaus"
     view: dict | None = None
     osm: str | None = None
+    title_es: str | None = None
+    group: str | None = None
+    metric: dict | None = None
 
 
 @router.get("", summary="List available overlay layers")

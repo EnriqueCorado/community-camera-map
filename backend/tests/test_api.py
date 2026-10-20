@@ -65,6 +65,12 @@ def test_layer_catalog_shape(client):
     for layer in layers.values():
         assert {"title", "category", "available", "requires_key"} <= layer.keys()
     assert layers["census"]["requires_key"] is True
+    # self-describing layers keep their catalog extras through the API model
+    hisp = layers["census-hispanic"]
+    assert hisp["available"] is True and hisp["group"] == "people" and hisp["title_es"]
+    assert hisp["metric"]["field"] == "pct_hispanic" and hisp["view"]["baked"] is False
+    # a national-only layer has no file to serve
+    assert client.get("/api/layers/census-hispanic").status_code == 404
 
 
 def test_unknown_layer_is_404(client):
