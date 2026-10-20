@@ -157,7 +157,7 @@ test("i18n: switching to Spanish translates the UI, sets <html lang>, and goes i
   await page.goto("/");
   await ready(page);
   await page.getByRole("button", { name: "Ver en español" }).click();
-  await expect(page.locator("h1")).toContainText("Mapa de cámaras");
+  await expect(page.locator("h1")).toContainText("Mapa comunitario de cámaras");
   await expect(page.locator("html")).toHaveAttribute("lang", "es");
   await expect(page.getByText("Capas", { exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Buscar lectores de placas cerca de un punto" })).toBeVisible();
@@ -170,13 +170,13 @@ test("i18n: the language choice persists across reloads", async ({ page }) => {
   await page.getByRole("button", { name: "Ver en español" }).click();
   await page.goto("/"); // no hash: must come from the saved preference
   await ready(page);
-  await expect(page.locator("h1")).toContainText("Mapa de cámaras");
+  await expect(page.locator("h1")).toContainText("Mapa comunitario de cámaras");
 });
 
 test("i18n: a shared #lang=es link opens in Spanish", async ({ page }) => {
   await page.goto("/#lang=es");
   await ready(page);
-  await expect(page.locator("h1")).toContainText("Mapa de cámaras");
+  await expect(page.locator("h1")).toContainText("Mapa comunitario de cámaras");
 });
 
 test("i18n: every layer name is translated to Spanish", async ({ page }) => {

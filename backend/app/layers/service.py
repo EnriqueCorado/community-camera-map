@@ -2470,7 +2470,7 @@ class LayerService:
         if layer is None:
             raise KeyError(name)
 
-        if layer.client_side or not layer.has_home_copy:
+        if layer.client_side or (layer.view and not layer.has_home_copy):
             raise KeyError(name)  # tiles / national service straight to the browser; no GeoJSON
         if layer.same_data_as:
             return await self.get_bytes(layer.same_data_as)

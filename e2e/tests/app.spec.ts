@@ -34,7 +34,7 @@ test("loads with cameras and a clean console", async ({ page }) => {
   await camResp;
   await waitForMap(page);
 
-  await expect(page.locator("h1")).toContainText(/California/i);
+  await expect(page.locator("h1")).toContainText("Community Camera Map");
   await expect(page.locator(".sidebar__sub")).toContainText(/public Caltrans traffic cameras/i);
   expect(realErrors(errors), realErrors(errors).join("\n")).toEqual([]);
 });
@@ -189,7 +189,8 @@ for (const label of OVERLAYS) {
     const catalog = (await (await page.request.get("/api/layers")).json()) as { name: string; view?: { url: string } | null }[];
     const viewUrl = catalog.find((c) => c.name === slug)?.view?.url;
     const resp = page.waitForResponse(
-      (r) => r.url().includes(`/api/layers/${slug}`) || (!!viewUrl && r.url().startsWith(`${viewUrl}/query`)),
+      // any level of the view's service (states/counties/tracts by zoom)
+      (r) => r.url().includes(`/api/layers/${slug}`) || (!!viewUrl && r.url().startsWith(viewUrl.replace(/\/\d+$/, "/")) && r.url().includes("/query")),
       { timeout: 40000 }, // smoke-haze scores ~14 camera frames on a cold cache
     );
     await toggle.click();

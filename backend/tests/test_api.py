@@ -164,3 +164,11 @@ def test_layer_times_report_the_baked_copy_age_not_the_fallback_time(client):
 def test_air_quality_needs_no_key_any_more(client):
     layer = next(c for c in client.get("/api/layers").json() if c["name"] == "air-quality")
     assert layer["requires_key"] is False and layer["available"] is True
+
+
+def test_computed_layers_without_a_loader_still_serve(client):
+    # smoke-haze is built from the camera list, not a registry loader
+    from app.layers.service import LAYERS
+
+    assert LAYERS["smoke-haze"].loader is None and not LAYERS["smoke-haze"].view
+    assert LAYERS["smoke-haze"].client_side is False
