@@ -1,0 +1,451 @@
+{
+ "checked": "2026-10-19",
+ "source": "Each office checked against its own website and official rosters (DOJ EOIR recognized organizations roster of 2026-10-18, CA Dept. of Social Services provider list, LSC, State Bar). Addresses geocoded with the U.S. Census Geocoder.",
+ "note": "Re-check yearly; offices move. Phone numbers are each organization's own published numbers.",
+ "offices": [
+  {
+   "id": "wr-modesto",
+   "name": "World Relief Modesto (Immigration Legal Services)",
+   "kinds": [
+    "immigration"
+   ],
+   "address": "909 14th Street",
+   "city": "Modesto",
+   "zip": "95354",
+   "lat": 37.64248,
+   "lon": -120.995508,
+   "phone": "(209) 491-2712",
+   "website": "https://worldrelief.org/modesto/",
+   "languages": [],
+   "cost": "varies",
+   "eoir_recognized": true,
+   "note_en": "Immigration legal services from a DOJ-recognized nonprofit. Call first; walk-in hours aren't posted. Scammers pretend to be its staff, so only trust this phone number.",
+   "note_es": "Servicios legales de inmigración de una organización sin fines de lucro reconocida por el DOJ. Llame antes de ir; no publican horario sin cita. Hay estafadores que se hacen pasar por su personal: confíe solo en este número.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.justice.gov/eoir/recognition-accreditation-roster-reports",
+    "https://www.justice.gov/eoir/media/1398081/dl?inline",
+    "https://worldrelief.org/modesto/",
+    "https://www.cdss.ca.gov/inforesources/immigration/contractor-contact-information",
+    "https://tableau.dss.ca.gov/t/IRPB/views/ISBProviderDashExternal_17883706367320/ISBProviderDashExternal.csv"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "ccds-modesto",
+   "name": "Catholic Charities of the Diocese of Stockton – Modesto office (Immigration Legal Services)",
+   "kinds": [
+    "immigration"
+   ],
+   "address": "1506 H Street",
+   "city": "Modesto",
+   "zip": "95354",
+   "lat": 37.642172,
+   "lon": -120.993058,
+   "phone": "(209) 444-5910",
+   "website": "https://www.ccstockton.org/immigration-services",
+   "languages": [],
+   "cost": "varies",
+   "eoir_recognized": true,
+   "note_en": "By appointment. Green cards, citizenship, family petitions, DACA renewals, waivers. Its staff can help with USCIS applications but not in immigration court. They will also tell you if someone claiming to help you is authorized.",
+   "note_es": "Con cita. Residencia, ciudadanía, peticiones familiares, renovación de DACA, perdones. Su personal ayuda con solicitudes ante USCIS, pero no en la corte de inmigración. También le dicen si alguien que dice ayudarle está autorizado.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.justice.gov/eoir/recognition-accreditation-roster-reports",
+    "https://www.justice.gov/eoir/media/1398081/dl?inline",
+    "https://www.ccstockton.org/immigration-services",
+    "https://www.ccstockton.org/contact-us"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "irc-turlock",
+   "name": "International Rescue Committee (IRC) – Turlock",
+   "kinds": [
+    "immigration"
+   ],
+   "address": "3446 N Golden State Blvd, Suite A",
+   "city": "Turlock",
+   "zip": "95382",
+   "lat": 37.524228,
+   "lon": -120.880122,
+   "phone": "(209) 667-2378",
+   "website": "https://www.rescue.org/united-states/turlock-ca",
+   "languages": [],
+   "cost": "low-cost",
+   "eoir_recognized": true,
+   "note_en": "Low-cost immigration help from a DOJ-recognized nonprofit: citizenship, green cards, family reunification, work permits, DACA renewals.",
+   "note_es": "Ayuda de inmigración a bajo costo de una organización reconocida por el DOJ: ciudadanía, residencia, reunificación familiar, permisos de trabajo, renovación de DACA.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.justice.gov/eoir/recognition-accreditation-roster-reports",
+    "https://www.justice.gov/eoir/media/1398081/dl?inline",
+    "https://www.rescue.org/united-states/turlock-ca",
+    "https://www.cdss.ca.gov/inforesources/immigration/contractor-contact-information",
+    "https://tableau.dss.ca.gov/t/IRPB/views/ISBProviderDashExternal_17883706367320/ISBProviderDashExternal.csv"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "ccds-stockton",
+   "name": "Catholic Charities of the Diocese of Stockton – Main office (Immigration Legal Services)",
+   "kinds": [
+    "immigration"
+   ],
+   "address": "6777 Embarcadero Drive",
+   "city": "Stockton",
+   "zip": "95219",
+   "lat": 38.002651,
+   "lon": -121.367364,
+   "phone": "(209) 444-5910",
+   "website": "https://www.ccstockton.org/immigration-services",
+   "languages": [],
+   "cost": "varies",
+   "eoir_recognized": true,
+   "note_en": "Main office, about 32 miles from Modesto. Immigration hours Mon–Fri 8:30–4:30 (closed 12–12:30). Same services as the Modesto office.",
+   "note_es": "Oficina principal, a unos 50 km de Modesto. Horario de inmigración: lunes a viernes de 8:30 a 4:30 (cerrado de 12 a 12:30). Los mismos servicios que la oficina de Modesto.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.justice.gov/eoir/recognition-accreditation-roster-reports",
+    "https://www.justice.gov/eoir/media/1398081/dl?inline",
+    "https://www.ccstockton.org/immigration-services",
+    "https://www.ccstockton.org/contact-us",
+    "https://tableau.dss.ca.gov/t/IRPB/views/ISBProviderDashExternal_17883706367320/ISBProviderDashExternal.csv"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "chdc-lodi",
+   "name": "California Human Development – Immigration & Citizenship (Lodi)",
+   "kinds": [
+    "immigration"
+   ],
+   "address": "100 E. Pine Street",
+   "city": "Lodi",
+   "zip": "95240",
+   "lat": 38.134018,
+   "lon": -121.270187,
+   "phone": "(209) 570-8118",
+   "website": "https://californiahumandevelopment.org/immigration-citizenship/",
+   "languages": [],
+   "cost": "low-cost",
+   "eoir_recognized": true,
+   "note_en": "About 37 miles away. Subsidized immigration help: citizenship, DACA renewal, green cards, work permits. No asylum or U-visa help. Its DOJ recognition is listed as pending renewal.",
+   "note_es": "A unos 60 km. Ayuda de inmigración subsidiada: ciudadanía, renovación de DACA, residencia, permisos de trabajo. No ayuda con asilo ni visa U. Su reconocimiento del DOJ aparece en trámite de renovación.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.justice.gov/eoir/recognition-accreditation-roster-reports",
+    "https://www.justice.gov/eoir/media/1398081/dl?inline",
+    "https://californiahumandevelopment.org/service-areas/",
+    "https://californiahumandevelopment.org/immigration-citizenship/",
+    "https://tableau.dss.ca.gov/t/IRPB/views/ISBProviderDashExternal_17883706367320/ISBProviderDashExternal.csv"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "ccls-merced",
+   "name": "Central California Legal Services – Merced office",
+   "kinds": [
+    "immigration"
+   ],
+   "address": "1640 N Street, Suite 200",
+   "city": "Merced",
+   "zip": "95340",
+   "lat": 37.301924,
+   "lon": -120.486634,
+   "phone": "(209) 386-1696",
+   "website": "https://centralcallegal.org/",
+   "languages": [],
+   "cost": "free",
+   "eoir_recognized": true,
+   "note_en": "About 36 miles away. Free civil legal help for low-income people. Its main service area doesn't include Stanislaus, so call first to ask if you qualify. Advice line (800) 675-8001.",
+   "note_es": "A unos 58 km. Ayuda legal civil gratuita para personas de bajos ingresos. Su zona principal no incluye Stanislaus: llame primero para saber si califica. Línea de consejos (800) 675-8001.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.justice.gov/eoir/recognition-accreditation-roster-reports",
+    "https://www.justice.gov/eoir/media/1398081/dl?inline",
+    "https://centralcallegal.org/",
+    "https://centralcallegal.org/about-us/"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "elconcilio-stockton",
+   "name": "El Concilio California – Protective & Legal Services (Sutter Street)",
+   "kinds": [
+    "immigration",
+    "family",
+    "seniors",
+    "housing"
+   ],
+   "address": "224 South Sutter Street",
+   "city": "Stockton",
+   "zip": "95203",
+   "lat": 37.951301,
+   "lon": -121.285237,
+   "phone": "(209) 337-7505",
+   "website": "https://www.elconcilio.org/departments/protective-legal-services/immigration-naturalization-legal-services/",
+   "languages": [],
+   "cost": "varies",
+   "eoir_recognized": false,
+   "note_en": "Free and low-cost bilingual help led by immigration attorneys: citizenship, residency, DACA, family petitions, U/T visas, VAWA, and an immigration court help desk.",
+   "note_es": "Ayuda bilingüe gratuita o de bajo costo dirigida por abogados de inmigración: ciudadanía, residencia, DACA, peticiones familiares, visas U/T, VAWA y un módulo de ayuda en la corte de inmigración.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.elconcilio.org/departments/protective-legal-services/",
+    "https://www.elconcilio.org/departments/protective-legal-services/immigration-naturalization-legal-services/",
+    "https://www.elconcilio.org/locations/",
+    "https://cdss.ca.gov/Portals/9/Immigration/SFY%202026-27%20ISF%20Award%20Announcement_July%202026_FINAL-ADA.pdf",
+    "https://tableau.dss.ca.gov/t/IRPB/views/ISBProviderDashExternal_17883706367320/ISBProviderDashExternal.csv",
+    "https://www.justice.gov/eoir/media/1398081/dl?inline"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "crla-modesto",
+   "name": "California Rural Legal Assistance (CRLA) – Modesto",
+   "kinds": [
+    "general",
+    "housing",
+    "workers",
+    "immigration"
+   ],
+   "address": "1020 15th Street, Suite 22",
+   "city": "Modesto",
+   "zip": "95354",
+   "lat": 37.644343,
+   "lon": -120.995718,
+   "phone": "(209) 577-3811",
+   "website": "https://crla.org/locations/modesto-headquarters",
+   "languages": [
+    "Any language (free interpreter)"
+   ],
+   "cost": "free",
+   "eoir_recognized": false,
+   "note_en": "Free civil legal help for low-income people: housing and evictions, work and wages, public benefits, family, some immigration. Free interpreter in any language.",
+   "note_es": "Ayuda legal civil gratuita para personas de bajos ingresos: vivienda y desalojos, trabajo y salarios, beneficios públicos, familia y algunos casos de inmigración. Intérprete gratis en cualquier idioma.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://crla.org/locations",
+    "https://crla.org/locations/modesto-headquarters",
+    "https://crla.org/about-crla",
+    "https://crla.org/programs/indigenous",
+    "https://www.lsc.gov/grants/our-grantees",
+    "https://www.calbar.ca.gov/sites/default/files/2026-01/2026%20Legal%20Aid%20Grant%20Recipients.pdf"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "shc-modesto",
+   "name": "Stanislaus Superior Court Self-Help Center & Family Law Facilitator",
+   "kinds": [
+    "court-self-help",
+    "family",
+    "housing"
+   ],
+   "address": "800 11th Street, Room 220 (Main Courthouse, 2nd floor)",
+   "city": "Modesto",
+   "zip": "95354",
+   "lat": 37.63937,
+   "lon": -120.997004,
+   "phone": "(209) 548-6237",
+   "website": "https://www.stanislaus.courts.ca.gov/self-help/self-help-center-info",
+   "languages": [],
+   "cost": "free",
+   "eoir_recognized": false,
+   "note_en": "Free help with court forms for anyone, no income limit: evictions, small claims, custody, divorce, restraining orders. Mon–Fri 8–12 and 1–4. Staff aren't your lawyer. Small claims and landlord-tenant line: (209) 530-3178.",
+   "note_es": "Ayuda gratis con formularios de la corte para cualquier persona, sin límite de ingresos: desalojos, reclamos menores, custodia, divorcio, órdenes de restricción. Lunes a viernes de 8 a 12 y de 1 a 4. El personal no es su abogado. Línea de reclamos menores e inquilinos: (209) 530-3178.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.stanislaus.courts.ca.gov/self-help",
+    "https://www.stanislaus.courts.ca.gov/self-help/self-help-center-info",
+    "https://www.stanislaus.courts.ca.gov/self-help/family-law-facilitator-info",
+    "https://www.stanislaus.courts.ca.gov/general-information/court-hours-holidays/operating-hours",
+    "https://www.stanislaus.courts.ca.gov/locations"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "lawlib-modesto",
+   "name": "Stanislaus County Law Library",
+   "kinds": [
+    "court-self-help",
+    "general"
+   ],
+   "address": "1101 13th Street",
+   "city": "Modesto",
+   "zip": "95354",
+   "lat": 37.643633,
+   "lon": -120.998698,
+   "phone": "(209) 558-7759",
+   "website": "http://www.stanislauslawlibrary.org/",
+   "languages": [],
+   "cost": "varies",
+   "eoir_recognized": false,
+   "note_en": "Public law library: legal books, forms and research help (not legal advice). Mon–Fri 8–5, per the court's website.",
+   "note_es": "Biblioteca legal pública: libros, formularios y ayuda para investigar (no da consejos legales). Lunes a viernes de 8 a 5, según el sitio de la corte.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.stanislaus.courts.ca.gov/general-information/resources-and-related-links",
+    "https://stanislaus-da.org/victim-services/legal-services.shtm"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "ps-modesto",
+   "name": "Project Sentinel – Stanislaus County office (Fair Housing; Tenant-Landlord Counseling & Mediation)",
+   "kinds": [
+    "housing"
+   ],
+   "address": "1231 8th Street, Suite 425",
+   "city": "Modesto",
+   "zip": "95354",
+   "lat": 37.64126,
+   "lon": -121.004905,
+   "phone": "(888) 324-7468",
+   "website": "https://www.housing.org/contact",
+   "languages": [],
+   "cost": "free",
+   "eoir_recognized": false,
+   "note_en": "Free fair-housing help (discrimination complaints) and free tenant–landlord counseling and mediation. Tenant–landlord line (800) 339-6043, by appointment.",
+   "note_es": "Ayuda gratuita de vivienda justa (quejas por discriminación) y orientación y mediación gratuita entre inquilinos y propietarios. Línea de inquilinos (800) 339-6043, con cita.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.housing.org/contact",
+    "https://www.housing.org/fair-housing",
+    "https://www.housing.org/dispute-resolution",
+    "https://www.stancounty.com/aging/legal-assistance.shtm"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "san-modesto",
+   "name": "Senior Advocacy Network – Senior Law Project",
+   "kinds": [
+    "seniors",
+    "housing"
+   ],
+   "address": "1020 15th Street, Suite 20",
+   "city": "Modesto",
+   "zip": "95354",
+   "lat": 37.644343,
+   "lon": -120.995718,
+   "phone": "(209) 577-3814",
+   "website": "https://senioradvocacynetwork.org/",
+   "languages": [],
+   "cost": "varies",
+   "eoir_recognized": false,
+   "note_en": "Legal help for people 60 and older, mostly free with no income limit: landlord-tenant, mobile homes, Medi-Cal and Medicare, elder abuse, powers of attorney. Housing line (209) 497-6226.",
+   "note_es": "Ayuda legal para personas de 60 años o más, casi siempre gratis y sin límite de ingresos: inquilinos, casas móviles, Medi-Cal y Medicare, abuso de mayores, poderes notariales. Línea de vivienda (209) 497-6226.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://senioradvocacynetwork.org/about/",
+    "https://www.stancounty.com/aging/legal-assistance.shtm",
+    "https://www.calbar.ca.gov/sites/default/files/2026-01/2026%20Legal%20Aid%20Grant%20Recipients.pdf"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "haven-modesto",
+   "name": "HAVEN (Haven Women's Center of Stanislaus) – Modesto main office",
+   "kinds": [
+    "family"
+   ],
+   "address": "618 13th Street",
+   "city": "Modesto",
+   "zip": "95354",
+   "lat": 37.639039,
+   "lon": -120.993029,
+   "phone": "(209) 524-4331",
+   "website": "https://www.havenstan.org/",
+   "languages": [],
+   "cost": "free",
+   "eoir_recognized": false,
+   "note_en": "Free help for survivors of domestic violence, sexual assault and trafficking, including restraining-order paperwork. Walk-ins welcome. 24-hour crisis line (209) 577-5980.",
+   "note_es": "Ayuda gratuita para sobrevivientes de violencia doméstica, agresión sexual y trata, incluso papeles para órdenes de restricción. Puede llegar sin cita. Línea de crisis las 24 horas: (209) 577-5980.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.havenstan.org/",
+    "https://www.havenstan.org/main-office",
+    "https://www.havenstan.org/services"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "haven-turlock",
+   "name": "HAVEN – Turlock office",
+   "kinds": [
+    "family"
+   ],
+   "address": "301 Starr Ave.",
+   "city": "Turlock",
+   "zip": "95380",
+   "lat": 37.502447,
+   "lon": -120.845031,
+   "phone": "(209) 524-4331",
+   "website": "https://www.havenstan.org/turlock-office",
+   "languages": [],
+   "cost": "free",
+   "eoir_recognized": false,
+   "note_en": "Free domestic violence services and help with restraining orders. Walk-ins accepted, Mon–Fri 8:30–4:30. 24-hour crisis line (209) 577-5980.",
+   "note_es": "Servicios gratuitos por violencia doméstica y ayuda con órdenes de restricción. Puede llegar sin cita, lunes a viernes de 8:30 a 4:30. Línea de crisis las 24 horas: (209) 577-5980.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.havenstan.org/turlock-office"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "fjc-modesto",
+   "name": "Family Justice Center of Stanislaus",
+   "kinds": [
+    "family"
+   ],
+   "address": "1418 J Street",
+   "city": "Modesto",
+   "zip": "95354",
+   "lat": 37.643491,
+   "lon": -120.99622,
+   "phone": "(209) 525-5130",
+   "website": "https://www.stanislausfamilyjustice.org/",
+   "languages": [
+    "Spanish"
+   ],
+   "cost": "varies",
+   "eoir_recognized": false,
+   "note_en": "One place for victims of domestic violence, sexual assault, child or elder abuse and trafficking: advocates, safety planning and legal help. Spanish spoken. Call before visiting.",
+   "note_es": "Un solo lugar para víctimas de violencia doméstica, agresión sexual, abuso de menores o de mayores y trata: defensores, plan de seguridad y ayuda legal. Se habla español. Llame antes de ir.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.stanislausfamilyjustice.org/"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  },
+  {
+   "id": "lc-lodi",
+   "name": "California Labor Commissioner's Office (DLSE) – Lodi (formerly Stockton) – covers Stanislaus County",
+   "kinds": [
+    "workers"
+   ],
+   "address": "3021 Reynolds Ranch Parkway, Suite 160",
+   "city": "Lodi",
+   "zip": "95240",
+   "lat": 38.095827,
+   "lon": -121.260684,
+   "phone": "(209) 948-7771",
+   "website": "https://www.dir.ca.gov/dlse/districtoffices.htm",
+   "languages": [],
+   "cost": "free",
+   "eoir_recognized": false,
+   "note_en": "The state office for unpaid wages, overtime and final pay for all of Stanislaus County. Filing a wage claim is free. California labor laws protect workers regardless of immigration status.",
+   "note_es": "La oficina estatal para salarios no pagados, horas extra y pago final de todo el condado de Stanislaus. Presentar un reclamo de salario es gratis. Las leyes laborales de California protegen a los trabajadores sin importar su estatus migratorio.",
+   "checked": "2026-10-19",
+   "sources": [
+    "https://www.dir.ca.gov/dlse/districtoffices.htm",
+    "https://www.dir.ca.gov/DLSE/WageClaimOfficeSearch.asp",
+    "https://www.dir.ca.gov/dlse/howtofilewageclaim.htm"
+   ],
+   "geocode": "US Census Geocoder (geocoding.geo.census.gov, benchmark Public_AR_Current) (Exact)"
+  }
+ ]
+}

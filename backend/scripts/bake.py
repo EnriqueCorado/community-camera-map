@@ -56,6 +56,7 @@ SOURCES = {
     "new-homes": "California HCD Housing Element Annual Progress Reports (Table A2)",
     "ceqa-projects": "CEQAnet, Governor's Office of Land Use and Climate Innovation",
     "voting": "Stanislaus County Registrar of Voters (stanvote.gov voting flier, 2026-09-28)",
+    "legal-help": "Each office's own website, the DOJ EOIR recognized-organization roster and CA DSS (checked 2026-10-19)",
     "power-outages": "Cal OES statewide power outages (from utility outage maps)",
     "outage-areas": "Cal OES statewide power outages (PG&E outage areas)",
     "health-asthma": "CDC PLACES: Local Data for Better Health",

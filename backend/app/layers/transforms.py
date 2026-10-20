@@ -712,6 +712,56 @@ def voting_locations(payload: object, today: dt.date | None = None) -> dict:
     return _fc(feats)
 
 
+LEGAL_KINDS = ("immigration", "housing", "general", "seniors", "family", "workers", "court-self-help", "consumer")
+LEGAL_COSTS = ("free", "low-cost", "varies")
+
+
+def legal_help(payload: object) -> dict:
+    """The curated free/low-cost legal help directory -> points. Only entries
+    with a known kind, coordinates and an https source survive, so a half-
+    filled record never puts a pin in the wrong place."""
+    if not isinstance(payload, dict):
+        return _fc([])
+    checked = str(payload.get("checked", ""))
+    feats = []
+    for org in payload.get("offices", []):
+        if not isinstance(org, dict):
+            continue
+        kinds = [k for k in org.get("kinds", []) if k in LEGAL_KINDS]
+        lat, lon = org.get("lat"), org.get("lon")
+        sources = [u for u in org.get("sources", []) if isinstance(u, str) and u.startswith("https://")]
+        if not kinds or not sources:
+            continue
+        if not isinstance(lat, int | float) or not isinstance(lon, int | float):
+            continue
+        website = str(org.get("website", ""))
+        cost = org.get("cost")
+        feats.append(
+            _pt(
+                lon,
+                lat,
+                {
+                    "id": str(org.get("id", "")),
+                    "name": str(org.get("name", "")),
+                    # "|"-joined: MapLibre hands array properties back as JSON text.
+                    "kinds": "|".join(kinds),
+                    "address": str(org.get("address", "")),
+                    "city": str(org.get("city", "")),
+                    "zip": str(org.get("zip", "")),
+                    "phone": str(org.get("phone", "")),
+                    "website": website if website.startswith("https://") else "",
+                    "languages": "|".join(str(x) for x in org.get("languages", [])),
+                    "cost": cost if cost in LEGAL_COSTS else "varies",
+                    "eoir": org.get("eoir_recognized") is True,
+                    "note_en": str(org.get("note_en", "")),
+                    "note_es": str(org.get("note_es", "")),
+                    "checked": str(org.get("checked", checked)),
+                },
+            )
+        )
+    return _fc(feats)
+
+
 def power_outages(fc: object) -> dict:
     """Cal OES outages -> utility / customers / cause / times, with the
     utilities' many type labels ("Not Planned", "Planned maintenance",

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, useDeferredValue } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState, useDeferredValue } from "react";
 import type { NearPoint } from "./components/NearMe";
 import { useCameras } from "./hooks/useCameras";
 import { useLayers } from "./hooks/useLayers";
@@ -11,6 +11,10 @@ import type { Attribution } from "./alpr-access";
 import { api } from "./api/client";
 import { decodeState, encodeState } from "./urlstate";
 import { useI18n } from "./i18n";
+import type { HelpTarget } from "./help/target";
+
+// The Help tools (forms, letters, long copy) load only when first opened.
+const HelpPanel = lazy(() => import("./components/help/HelpPanel"));
 
 const INITIAL_LAYERS: LayerState = {
   cameras: true,
@@ -85,6 +89,7 @@ export default function App() {
   // Bumped to ask the map to run "what can see me?" at its center (keyboard path).
   const [coverageCenterTick, setCoverageCenterTick] = useState(0);
   const [showAbout, setShowAbout] = useState(false);
+  const [help, setHelp] = useState<HelpTarget | null>(initial.help ? { tab: initial.help } : null);
   const [accessFor, setAccessFor] = useState<Attribution | null>(null);
   const [bakedAt, setBakedAt] = useState<string | null>(null);
   const [liveAt, setLiveAt] = useState<string | null>(null);
@@ -98,12 +103,12 @@ export default function App() {
 
   // Keep the URL hash in sync so the current view is shareable.
   useEffect(() => {
-    const hash = encodeState({ layers, query, view: nearPoint ? preNearView.current : view, lang });
+    const hash = encodeState({ layers, query, view: nearPoint ? preNearView.current : view, lang, help: help?.tab });
     const next = hash ? `#${hash}` : "";
     if (next !== window.location.hash) {
       window.history.replaceState(null, "", next || window.location.pathname);
     }
-  }, [layers, query, view, lang, nearPoint]);
+  }, [layers, query, view, lang, nearPoint, help]);
 
   if (state.status === "loading") {
     return (
@@ -161,6 +166,7 @@ export default function App() {
         bakedAt={bakedAt}
         liveAt={liveAt}
         onAbout={() => setShowAbout(true)}
+        onHelp={() => setHelp({ tab: "medical" })}
         open={panelOpen}
         zoom={view?.zoom ?? initial.view?.zoom ?? 5.4}
         center={view?.center ?? initial.view?.center ?? [-120.99, 37.64]}
@@ -209,11 +215,26 @@ export default function App() {
           onCoverageResult={setCoverageHits}
           coverageCenterTick={coverageCenterTick}
           onAlprAccess={setAccessFor}
+          onHelp={setHelp}
         />
         {selected && <CameraDetail camera={selected} onClose={() => setSelectedId(null)} />}
         {accessFor && <AlprAccessPanel attribution={accessFor} onClose={() => setAccessFor(null)} />}
         {showAbout && (
           <About layers={overlayInfos} bakedAt={bakedAt} onClose={() => setShowAbout(false)} />
+        )}
+        {help && (
+          <Suspense fallback={null}>
+            <HelpPanel
+              target={help}
+              onTarget={setHelp}
+              onClose={() => setHelp(null)}
+              onShowOnMap={(layer, center) => {
+                setLayers((l) => ({ ...l, overlays: { ...l.overlays, [layer]: true } }));
+                if (center) setFlyTo({ center, zoom: 15 });
+                setHelp(null);
+              }}
+            />
+          </Suspense>
         )}
       </main>
     </div>

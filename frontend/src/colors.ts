@@ -120,6 +120,7 @@ export const OVERLAY_COLOR: Record<string, string> = {
   "farmers-markets": "#4d7c0f",
   "historical-markers": "#854d0e",
   "mobile-home-parks": "#c2410c",
+  "legal-help": "#7c3aed",
   "census-spanish": "#756bb1",
   "census-poverty": "#756bb1",
   "census-renters": "#756bb1",
