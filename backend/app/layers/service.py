@@ -57,10 +57,11 @@ class View:
     # county), so it can stand in for a query there. County-filtered bakes
     # don't cover neighbors inside the box (Ripon, Livingston): leave False.
     home_complete: bool = False
-    # Coarser versions of the same data (same fields) for zoomed-out views:
-    # (min_zoom, url) pairs, e.g. states from z3 and counties from z6 under a
-    # tract layer at z9, so the whole US reads at every zoom.
-    levels: tuple[tuple[float, str], ...] = ()
+    # Coarser versions of the same data for zoomed-out views: (min_zoom, url)
+    # pairs, e.g. states from z3 and counties from z6 under a tract layer at
+    # z9, so the whole US reads at every zoom. A level whose source names its
+    # fields differently adds its own allowlist: (min_zoom, url, fields).
+    levels: tuple[tuple[float, str] | tuple[float, str, dict[str, str]], ...] = ()
 
     def as_json(self) -> dict:
         return {
@@ -75,7 +76,10 @@ class View:
             "refresh_s": self.refresh_s,
             "post": self.post,
             "home_complete": self.home_complete,
-            "levels": [{"min_zoom": z, "url": u} for z, u in self.levels],
+            "levels": [
+                {"min_zoom": lv[0], "url": lv[1], **({"fields": lv[2]} if len(lv) > 2 else {})}
+                for lv in self.levels
+            ],
         }
 
 
@@ -833,6 +837,8 @@ PLACES_TRACTS = (
     "https://services3.arcgis.com/ZvidGQkLaDJxRSJ2/arcgis/rest/services/"
     "PLACES_LocalData_for_BetterHealth/FeatureServer/3"
 )
+# Same measures by county (no TractFIPS there), for zoomed-out views.
+PLACES_COUNTIES = PLACES_TRACTS.removesuffix("/3") + "/2"
 SNAP_STORES = (
     "https://services1.arcgis.com/RLQu0rK7h4kbsBq5/arcgis/rest/services/"
     "snap_retailer_location_data/FeatureServer/0"
@@ -874,7 +880,7 @@ def _health_layer(name: str, title: str, what: str, measure: str) -> Layer:
     return Layer(
         name=name,
         title=title,
-        description=f"CDC PLACES model estimate: {what}, by census tract.",
+        description=f"CDC PLACES model estimate: {what}, by census tract (county when zoomed out).",
         category="health",
         loader=_arcgis_select(
             PLACES_TRACTS,
@@ -889,9 +895,13 @@ def _health_layer(name: str, title: str, what: str, measure: str) -> Layer:
             _health(measure),
             "polygon",
             min_zoom=9,
+            # no estimate (e.g. food insecurity in TX): blank, not the lowest color
+            where=f"{measure}_CrudePrev IS NOT NULL",
             max_features=1500,
             simplify=True,
             refresh_s=24 * 3600,
+            # counties below z9, so the whole US reads zoomed out
+            levels=((0, PLACES_COUNTIES, {"CountyName": "county", f"{measure}_CrudePrev": "pct"}),),
         ),
     )
 

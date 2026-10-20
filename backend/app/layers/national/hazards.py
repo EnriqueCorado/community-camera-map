@@ -219,7 +219,8 @@ _add(
         simplify=True,
         refresh_s=WEEK,
         post="pctl",
-        levels=((3, f"{SVI}/1"),),
+        # counties from z5: below that the service ignores generalization (~7 MB)
+        levels=((5, f"{SVI}/1"),),
     ),
     group="people",
     metric=Metric("svi_pctl", "pct", (10, 30, 50, 70, 90), "purple"),

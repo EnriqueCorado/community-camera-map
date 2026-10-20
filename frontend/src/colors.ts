@@ -150,6 +150,13 @@ export const OVERLAY_COLOR: Record<string, string> = {
   "nuclear-plant-rings": "#4d7c0f",
   levees: "#4338ca",
   "leveed-areas": "#6366f1",
+  // nationwide flag areas and points (backend national/census_extra.py)
+  "food-deserts": "#c2410c",
+  "opportunity-zones": "#0f766e",
+  "opportunity-zones-2": "#2563eb",
+  "cejst-disadvantaged": "#9333ea",
+  "hud-lihtc": "#0d9488",
+  "hud-public-housing": "#4338ca",
 };
 
 // CalEnviroScreen overall percentile ramp (green = low burden, red = high).
