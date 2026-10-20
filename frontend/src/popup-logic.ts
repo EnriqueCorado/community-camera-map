@@ -83,6 +83,59 @@ export const WEBCAM_PAGE_HOSTS = [
   "droughtmonitor.unl.edu",
 ];
 
+/** Hosts the camera viewer may load stills / HLS from (a host matches itself or
+ *  any subdomain). Mirrors backend app/cameras/national.py HOSTS plus Caltrans;
+ *  backend tests/test_national.py fails if the two lists drift. */
+export const CAMERA_MEDIA_HOSTS = [
+  "dot.ca.gov",
+  "cctv.travelmidwest.com",
+  "www.lakecountypassage.com",
+  "images.wsdot.wa.gov",
+  "www.trimarc.org",
+  "us-east-1.skyvdn.com",
+  "sd.cdn.iteris-atis.com",
+  "mt.cdn.iteris-atis.com",
+  "modot.mo.gov",
+  "sha.maryland.gov",
+  "video.deldot.gov",
+  "api.algotraffic.com",
+  "cdn3.wowza.com",
+  "micamerasimages.net",
+  "avo-volcview.wr.usgs.gov",
+  "www.ndbc.noaa.gov",
+  "511ga.org",
+  "511wi.gov",
+  "cctv1.dot.wi.gov",
+  "www.nvroads.com",
+  "www.drivenc.gov",
+  "www.udottraffic.utah.gov",
+  "511.alaska.gov",
+  "www.511la.org",
+  "511.idaho.gov",
+  "az511.com",
+  "itscameras.dot.state.oh.us",
+];
+
+/** A camera still / stream URL if it's https on a CAMERA_MEDIA_HOSTS host (or a
+ *  subdomain of one), else "" — so the viewer shows nothing rather than an
+ *  off-list or mixed-content URL. */
+export function safeCameraUrl(u: unknown): string {
+  if (typeof u !== "string" || !u) return "";
+  try {
+    const url = new URL(u.trim());
+    const host = url.hostname.toLowerCase();
+    const ok =
+      url.protocol === "https:" &&
+      !url.username &&
+      !url.password &&
+      (url.port === "" || url.port === "443") &&
+      CAMERA_MEDIA_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
+    return ok ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
 /** `u` if it's an https URL on one of `hosts`, else null. Never trust data-supplied URLs. */
 export function safeUrl(u: unknown, hosts: readonly string[]): string | null {
   if (typeof u !== "string") return null;

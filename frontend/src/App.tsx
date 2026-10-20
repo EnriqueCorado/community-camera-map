@@ -210,10 +210,17 @@ export default function App() {
           coverageCenterTick={coverageCenterTick}
           onAlprAccess={setAccessFor}
         />
-        {selected && <CameraDetail camera={selected} onClose={() => setSelectedId(null)} />}
+        {selected && (
+          <CameraDetail key={selected.id} camera={selected} source={state.sources[selected.source]} onClose={() => setSelectedId(null)} />
+        )}
         {accessFor && <AlprAccessPanel attribution={accessFor} onClose={() => setAccessFor(null)} />}
         {showAbout && (
-          <About layers={overlayInfos} bakedAt={bakedAt} onClose={() => setShowAbout(false)} />
+          <About
+            layers={overlayInfos}
+            cameraSources={state.sources}
+            bakedAt={bakedAt}
+            onClose={() => setShowAbout(false)}
+          />
         )}
       </main>
     </div>

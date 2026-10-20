@@ -256,10 +256,11 @@ def fire_cameras(fc: object) -> dict:
 
 
 def usgs_cameras(payload: object) -> dict:
-    """USGS HIVIS camera catalog (api.waterdata.usgs.gov/nims/cameras) -> CA points."""
+    """USGS HIVIS camera catalog (api.waterdata.usgs.gov/nims/cameras) -> points,
+    nationwide (hidden cameras dropped)."""
     feats = []
     for c in payload if isinstance(payload, list) else []:
-        if not isinstance(c, dict) or c.get("stateAbrv") != "CA" or c.get("hideCam"):
+        if not isinstance(c, dict) or c.get("hideCam"):
             continue
         cam_id = str(c.get("camId") or "")
         lat, lon = _num(c.get("lat")), _num(c.get("lng"))
@@ -274,6 +275,7 @@ def usgs_cameras(payload: object) -> dict:
                 {
                     "name": str(c.get("camName") or cam_id).strip(),
                     "network": "USGS",
+                    "state": str(c.get("stateAbrv") or "")[:2],
                     "image": f"{small}{cam_id}_newest.jpg" if small else "",
                     "page": f"https://apps.usgs.gov/hivis/camera/{cam_id}",
                     "gage": str(c.get("nwisId") or ""),

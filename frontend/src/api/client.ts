@@ -1,4 +1,4 @@
-import type { CameraList } from "../types";
+import { withDefaults, type RawCameraList } from "../camera-data";
 import type { AlprAccess } from "../alpr-access";
 
 // Two modes:
@@ -66,7 +66,8 @@ export const api = {
   static: STATIC,
   /** Live flights URL: the relay if configured, else the layer file/API. */
   flightsRelay: FLIGHTS_RELAY,
-  listCameras: () => getJSON<CameraList>(STATIC ? "data/cameras.json" : `${API_BASE}/api/cameras`),
+  listCameras: () =>
+    getJSON<RawCameraList>(STATIC ? "data/cameras.json" : `${API_BASE}/api/cameras`).then(withDefaults),
   listLayers: () => getJSON<LayerInfo[]>(STATIC ? "data/layers.json" : `${API_BASE}/api/layers`),
   /** Overlay layer GeoJSON. */
   layerUrl: (name: string) =>

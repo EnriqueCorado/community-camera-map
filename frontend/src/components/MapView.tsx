@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import * as maplibregl from "maplibre-gl";
 import type { GeoJSONSource, MapMouseEvent } from "maplibre-gl";
 import type { Camera } from "../types";
+import { matchCamera } from "../camera-data";
 
 // maplibre v6 adds `features` to the event only through the layer-listener
 // overload; name that shape for our click handlers.
@@ -64,11 +65,6 @@ interface Props {
   onAlprAccess: (a: Attribution) => void;
 }
 
-/** Shared camera text filter — keep in sync with the Sidebar list. */
-export function matchCamera(c: Camera, q: string): boolean {
-  if (!q) return true;
-  return `${c.name} ${c.nearby_place} ${c.county} ${c.route}`.toLowerCase().includes(q);
-}
 
 
 // OpenFreeMap "liberty" — a free, keyless, unmetered vector basemap (no API key,

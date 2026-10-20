@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     districts: tuple[int, ...] = tuple(range(1, 13))  # all 12 Caltrans districts
     # Restrict served cameras to these counties. Empty tuple = statewide (all).
     counties: tuple[str, ...] = ()
+    # Also load the other public camera sources (state DOTs, USGS volcano cams,
+    # NOAA buoys; see cameras/national.py). CAM_NATIONAL_CAMERAS=false = Caltrans only.
+    national_cameras: bool = True
 
     # --- Caching ---
     # The upstream feed updates image URLs frequently but the camera *inventory*
@@ -56,6 +59,33 @@ class Settings(BaseSettings):
     # --- Windy Webcams API (free key: https://api.windy.com/keys, "Webcams API").
     # Sent as a header, never in URLs/logs. Used server-side/at bake time only.
     windy_api_key: str = ""
+
+    # --- Iteris "511" camera APIs (free per-state keys; request one on each
+    # site's /developers/doc page). Unset = that state is skipped; a key still
+    # pending approval is skipped too (the API answers "Invalid Key"). Keys go in
+    # the query string, so they're only ever used server-side / at bake time.
+    iteris_key_ga: str = ""
+    iteris_key_wi: str = ""
+    iteris_key_nv: str = ""
+    iteris_key_nc: str = ""
+    iteris_key_ut: str = ""
+    iteris_key_ak: str = ""
+    iteris_key_la: str = ""
+    iteris_key_id: str = ""
+    iteris_key_az: str = ""
+
+    # OHGO (Ohio DOT) public API key (free: https://publicapi.ohgo.com/). Sent
+    # as an Authorization header. Unset = Ohio is skipped.
+    ohgo_api_key: str = ""
+
+    @property
+    def iteris_keys(self) -> dict[str, str]:
+        """{"nv": key, ...} for the states that have a key set."""
+        return {
+            name.removeprefix("iteris_key_"): value
+            for name, value in self.model_dump().items()
+            if name.startswith("iteris_key_") and value
+        }
 
     # --- Future state (documented extension points; not yet wired) ---
     # database_url: str = "sqlite+aiosqlite:///./cams.db"

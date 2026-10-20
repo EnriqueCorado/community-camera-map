@@ -6,8 +6,10 @@ A free, public map of the cameras and civic data around Stanislaus County,
 California, built so anyone can see what's watching the roads and what's
 happening in their neighborhood:
 
-- **Public cameras:** ~3,400 Caltrans traffic cameras statewide with live video,
-  plus ALERTCalifornia wildfire cameras and USGS river cameras.
+- **Public cameras:** ~15,800 public cameras nationwide: ~3,400 Caltrans
+  cameras statewide plus 15 other state DOTs, USGS volcano webcams and NOAA buoy
+  cams (live video where the agency allows browser playback, stills elsewhere),
+  plus ALERTCalifornia wildfire cameras and ~1,100 USGS river cameras across the US.
 - **License-plate readers:** crowdsourced ALPR locations from OpenStreetMap /
   DeFlock (about 145,000 nationwide), with "what can see me?" coverage and, for
   Modesto, who can search the data (from public-records releases).
@@ -84,6 +86,8 @@ backend/app/
   core/config.py        env-driven settings (counties, TTL, CORS)
   cameras/
     caltrans.py         fetch + normalize the raw feed  (pure, unit-tested)
+    national.py         other state DOTs, USGS, NOAA, keyed 511 states: one
+                        fetch + pure parse_* per source, each isolated
     schemas.py          public API models (decoupled from upstream JSON)
     service.py          TTL cache + county filter  ← the data-source SEAM
     router.py           thin HTTP layer
@@ -124,6 +128,65 @@ Keep inference **off the request path** — serve cached results, compute async.
 
 Caltrans CCTV, all 12 districts: `https://cwwp2.dot.ca.gov/data/d{1..12}/cctv/cctvStatusD{01..12}.json`.
 Map tiles © OpenStreetMap contributors. Camera imagery courtesy of Caltrans.
+
+### Camera sources (outside Caltrans)
+
+All in `backend/app/cameras/national.py`, fetched concurrently with Caltrans; one
+source failing never blanks the others (only the exception type is logged). Every
+image/stream URL must be https on that source's own hosts (mirrored in
+`frontend/src/popup-logic.ts` `CAMERA_MEDIA_HOSTS`; a test fails on drift). Video
+plays in the browser only where the stream host sends `Access-Control-Allow-Origin: *`
+(checked 2026-10-19); every other camera shows its still, refreshed each minute.
+Counts are from the 2026-10-19 bake.
+
+| Source | Endpoint | Cameras | Media |
+|---|---|---|---|
+| Illinois DOT (CC BY-SA 2.0, credit "Illinois DOT") | ArcGIS `TrafficCamerasTM_Public` | 3,726 | stills (incl. Lake County PASSAGE) |
+| WSDOT | ArcGIS `TravelInfoCamerasWeather` | 1,631 | stills (ODOT-hosted border cams dropped) |
+| OHGO / Ohio DOT (key) | `publicapi.ohgo.com/api/v1/cameras` | 1,116 | stills |
+| DriveNC / NCDOT (Iteris key) | `/api/v2/get/cameras` | 1,025 | stills |
+| SCDOT 511SC | Iteris ATIS CDN GeoJSON | 792 | still + HLS |
+| MDOT MiDrive | `mdotjboss.state.mi.us/MiDrive/camera/list` (HTML in fields, parsed defensively) | 776 | stills |
+| NVRoads / Nevada DOT (Iteris key) | `/api/v2/get/cameras` | 652 | stills |
+| ALDOT ALGO Traffic | `api.algotraffic.com/v4.0/Cameras` (public cameras only) | 603 | still + HLS |
+| MDOT SHA CHART | `getCameraMapDataJSON.do` | 486 | HLS |
+| MoDOT Traveler | `StreamingCams2.json` (MoDOT stream hosts only) | 390 | HLS |
+| DelDOT | `tmc.deldot.gov/json/videocamera.json` | 358 | HLS |
+| KYTC | ArcGIS `trafficCamerasCur_Prd` (https stills only) | 242 | stills |
+| SDDOT SD511 / MDT 511MT | Iteris ATIS CDN cameras + road-weather GeoJSON | 180 / 155 | stills, several views per site |
+| 511 Alaska (Iteris key) | `/api/v2/get/cameras` | 129 | stills, several views per site |
+| USGS volcano webcams | AVO ashcam API (frame within 7 days; FAA-owned cams skipped) | 91 | stills |
+| NOAA NDBC BuoyCAMs | `www.ndbc.noaa.gov/buoycams.php` | 90 | stills |
+
+USGS HIVIS river cameras (~1,140, nationwide) stay a separate overlay layer
+(`river-cameras`). `cameras.json` uses short keys and drops empty fields to stay
+under ~4 MB; rebuild just it with `cd backend && uv run python scripts/bake.py --cameras-only`
+(the Pages workflow's hourly `cameras` job does this with the keys below).
+
+**Keyed sources.** Free per-state keys, used only server-side / at bake time
+(see `backend/.env.example`; GitHub secrets `ITERIS_KEY_<ST>` and `OHGO_API_KEY`):
+Iteris 511 for GA, WI, NV, NC, UT, AK, LA, ID, AZ (`CAM_ITERIS_KEY_<ST>`, one call per
+state per hourly bake: the limit is 10 calls / 60 s per key; only the documented
+`/api/v2/get/cameras` is used, never the robots-disallowed `/map/map*/` internals)
+and OHGO (`CAM_OHGO_API_KEY`, sent as an `Authorization` header). A state whose key
+is missing or still pending approval is skipped quietly and starts working once
+approved (as of 2026-10-19: NV, NC, AK and OH live; GA, WI, UT, LA, ID, AZ pending).
+
+**TODO (not implemented, by design):**
+- Not available: PennDOT 511PA and FL511 (no key path for us), CT (no camera
+  endpoint), New England 511 (separate ne-compass portal).
+- Free keys still to request: ODOT TripCheck (OR), 511NY, NPS webcams (link-out layer).
+- Ask permission first (undocumented site internals): Castle Rock CARS 511 states
+  (MN, IA, IN, KS, NE, MA), TxDOT ITS, NMDOT, ALERTWest western fire cameras,
+  TDOT SmartWay.
+- Hotlink-gated, don't use without written permission: FAA WeatherCams, ALERTWildfire.
+- The site has no Content-Security-Policy yet; camera media is limited by the
+  code allowlists above (one shared list in the browser; the snapshot proxy checks
+  each camera's own source hosts and refuses non-public addresses). A CSP with
+  `img-src` / `media-src` / `connect-src` from `CAMERA_MEDIA_HOSTS` is a follow-up.
+- North Dakota DOT: the camera layer on `gis.dot.nd.gov` is blocked for all
+  crawlers by its robots.txt (`Disallow: /`), so it's skipped. Lexington, KY
+  (streams on an explicit `:1935` port) is skipped too.
 
 Public webcams (popups load images straight from the operator's servers, so those servers see
 the viewer's IP when a popup opens):
@@ -418,6 +481,8 @@ Code: [MIT](LICENSE). Data belongs to its publishers and keeps their terms,
 including: OpenStreetMap / DeFlock data is © OpenStreetMap contributors under the
 [ODbL](https://opendatacommons.org/licenses/odbl/); ALERTCalifornia images are
 free for non-commercial use with credit to "ALERTCalifornia | UC San Diego";
-adsb.fi flight data is for non-commercial use; Caltrans, USGS, NOAA, NWS, FEMA,
-EPA and Census data are U.S. or California public data. See "Data source &
+adsb.fi flight data is for non-commercial use; Illinois DOT camera data is
+[CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/) (credit "Illinois
+DOT"; our reformatted copy in `cameras.json` is shared under the same license);
+Caltrans, USGS, NOAA, NWS, FEMA, EPA and Census data are U.S. or California public data. See "Data source &
 attribution" above for the full list.
