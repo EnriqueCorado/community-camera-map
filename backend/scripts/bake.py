@@ -158,6 +158,35 @@ SOURCES["shelters"] = "Stanislaus County GIS; nationwide: FEMA National Shelter 
 from app.layers.national.planning import SOURCES as _PLANNING_SOURCES  # noqa: E402
 
 SOURCES.update(_PLANNING_SOURCES)
+# Community & immigrant services pack (app/layers/national/services.py).
+_CENSUS_GEO = "geocoded with the U.S. Census Geocoder"
+SOURCES.update(
+    {
+        "immigration-legal-help": (
+            f"U.S. DOJ EOIR, Recognized Organizations roster by state and city ({_CENSUS_GEO})"
+        ),
+        "detention-centers": (
+            f"U.S. ICE detention statistics, facilities sheet ({_CENSUS_GEO}; "
+            "the rest from a hand-checked list sourced to HIFLD prison records)"
+        ),
+        "immigration-offices": (
+            "U.S. DOJ EOIR immigration court pages and ICE field-office list "
+            f"(hand-kept, one source per row; {_CENSUS_GEO})"
+        ),
+        "health-centers": "HRSA health center service delivery sites (gisportal.hrsa.gov)",
+        "head-start": "Office of Head Start center locator (headstart.gov)",
+        "early-head-start": "Office of Head Start center locator (headstart.gov)",
+        "job-centers": f"U.S. DOL CareerOneStop American Job Centers ({_CENSUS_GEO})",
+        "mental-health": "SAMHSA FindTreatment.gov",
+        "addiction-treatment": "SAMHSA FindTreatment.gov",
+        "housing-counseling": "HUD-approved housing counseling agencies (HUD)",
+        "public-housing": "HUD public housing authorities",
+        "colleges": "NCES EDGE postsecondary school locations (IPEDS)",
+        "va-facilities": "Veterans Health Administration facilities (VA)",
+        "border-ports": "BTS / CBP border crossing entry data (NTAD)",
+        "summer-meals": "USDA FNS summer meal site finder",
+    }
+)
 
 
 # Live-only layers: the committed file is an empty placeholder; the scheduled
