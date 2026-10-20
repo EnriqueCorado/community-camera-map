@@ -53,7 +53,7 @@ export interface HelpCopy {
   medTierFree: string;
   medTierDiscount: string;
   medTierOver: string;
-  medPctOfPoverty: Fn<[number]>;
+  medPctOfPoverty: Fn<[string]>;
   medPctExplain: Fn<[string, number, string, number]>;
   medFreeNext: Fn<[number]>;
   medDiscountNext: Fn<[number]>;
@@ -127,7 +127,8 @@ export interface HelpCopy {
   capOverNext: string;
   noticeOk: string;
   noticeShort: string;
-  noticeMath: Fn<[number, number, boolean]>;
+  noticeMath: Fn<[number, number, boolean, boolean]>;
+  noticeAfter: string;
   noticeEarliest: Fn<[string]>;
   capRulesTitle: string;
   capExemptionsTitle: string;
@@ -167,7 +168,7 @@ const pctText = (n: number) => `${n}%`;
 const en: HelpCopy = {
   title: "Free help",
   privacyStrong: "Private:",
-  privacy: "what you type stays on this device. Nothing is saved, and nothing is sent anywhere. Closing this window erases it.",
+  privacy: "what you type stays on this device and is never saved or shared. Closing this window erases it.",
   close: "Close",
   tabMedical: "Medical bills",
   tabRent: "Renters",
@@ -228,7 +229,7 @@ const en: HelpCopy = {
   medBorderline: "You’re close to a cutoff. Hospitals may use a different year’s poverty table or count income differently, so apply anyway.",
   medCallBilling: "Financial assistance:",
   medPageLink: "Hospital’s financial assistance page",
-  medNoSpanish: "",
+  medNoSpanish: "", // shown only in Spanish
   medFreeHelpText: "Need help applying or appealing? Free help:",
   medPolicyLink: "Financial assistance policy",
   medApplicationLink: "Application form",
@@ -264,9 +265,10 @@ const en: HelpCopy = {
   capAffordableHint: "Housing where your income was checked to qualify (not just a Section 8 voucher).",
   capNotice: "Does your lease (or a written notice) say the home is NOT subject to the rent limits of Civil Code §1947.12?",
   capNoticeHint: "Look in your lease for that exact wording. If it isn’t there, answer No.",
-  capCorporate: "Is the owner a corporation, a real estate trust (REIT) or an LLC?",
-  capCorporateMobile: "Is the owner a corporation, REIT, LLC, or the park’s management?",
-  capCorporateHint: "Check who you pay rent to and who signed the lease. A company name often ends in Inc., Corp. or LLC.",
+  capCorporate: "Is the owner a corporation, a real estate trust (REIT), or an LLC that has a corporation as a member?",
+  capCorporateMobile: "Is the owner a corporation, a REIT, an LLC with a corporation as a member, or the park’s management?",
+  capCorporateHint:
+    "Check who you pay rent to and who signed the lease. A company name often ends in Inc. or Corp. An LLC owned only by people (not companies) counts as No; if you don’t know who owns the LLC, answer Not sure.",
   capDuplexOwner: "Did the owner live in the other half when you moved in, and do they still live there?",
   covCovered: "The rent cap most likely covers your home",
   covExempt: "Your home may be exempt from the rent cap",
@@ -295,14 +297,16 @@ const en: HelpCopy = {
     "An owner can’t collect rent above the cap. Talk to free legal help before you decide what to pay, and keep paying what you know you owe. You can also report it to the California Attorney General.",
   noticeOk: "You got enough notice",
   noticeShort: "That’s not enough notice",
-  noticeMath: (given, required, over10) =>
-    `You got ${given} days’ notice. For an increase of ${over10 ? "more than" : "10% or less (over 12 months) or"} ${over10 ? "10%" : "less"}, the law requires at least ${required} days.`,
+  noticeMath: (given, required, over10, mail) =>
+    `You got ${given} days’ notice. For an increase of ${over10 ? "more than 10%" : "10% or less"} (counting the past 12 months), the law requires at least ${required} days${mail ? ", including 5 extra days for mail" : ""}.`,
+  noticeAfter: "The notice date is after the date the new rent starts, so the notice came too late for that date.",
   noticeEarliest: (d) => `With the notice you got, the new rent can’t start before ${d}.`,
   capRulesTitle: "The rules",
   capExemptionsTitle: "Homes the cap doesn’t cover",
   capSunset: (d) => `These state protections are in effect until ${d} unless the Legislature extends them.`,
   lookupTitle: "Look up when your building was built",
-  lookupHint: "Uses the county assessor’s records, stored on this site. Your address is matched on this device and never sent anywhere.",
+  lookupHint:
+    "Uses the county assessor’s records, stored on this site. Your address is matched on this device: only the first two letters of the street name are used to pick which file to load.",
   lookupButton: "Look up",
   lookupBad: "Enter a street address with a house number, like “1234 Main St, Modesto”.",
   lookupNone: "We couldn’t find that address in the county’s records. Check the spelling, or answer the question below yourself.",
@@ -344,7 +348,7 @@ const en: HelpCopy = {
 const es: HelpCopy = {
   title: "Ayuda gratis",
   privacyStrong: "Privado:",
-  privacy: "lo que escriba se queda en este aparato. No se guarda nada ni se envía a ninguna parte. Al cerrar esta ventana se borra.",
+  privacy: "lo que escriba se queda en este aparato y nunca se guarda ni se comparte. Al cerrar esta ventana se borra.",
   close: "Cerrar",
   tabMedical: "Cuentas médicas",
   tabRent: "Inquilinos",
@@ -444,9 +448,10 @@ const es: HelpCopy = {
   capAffordableHint: "Vivienda donde revisaron sus ingresos para que calificara (no solo un vale de la Sección 8).",
   capNotice: "¿Su contrato (o un aviso por escrito) dice que la vivienda NO está sujeta a los límites de renta del Código Civil §1947.12?",
   capNoticeHint: "Busque esas palabras exactas en su contrato. Si no están, conteste No.",
-  capCorporate: "¿El dueño es una corporación, un fideicomiso de bienes raíces (REIT) o una LLC?",
-  capCorporateMobile: "¿El dueño es una corporación, un REIT, una LLC o la administración del parque?",
-  capCorporateHint: "Vea a quién le paga la renta y quién firmó el contrato. El nombre de una empresa suele terminar en Inc., Corp. o LLC.",
+  capCorporate: "¿El dueño es una corporación, un fideicomiso de bienes raíces (REIT) o una LLC que tiene una corporación como socia?",
+  capCorporateMobile: "¿El dueño es una corporación, un REIT, una LLC con una corporación como socia, o la administración del parque?",
+  capCorporateHint:
+    "Vea a quién le paga la renta y quién firmó el contrato. El nombre de una empresa suele terminar en Inc. o Corp. Una LLC cuyos dueños son solo personas (no empresas) cuenta como No; si no sabe quién es dueño de la LLC, conteste No sé.",
   capDuplexOwner: "¿El dueño vivía en la otra mitad cuando usted llegó, y todavía vive ahí?",
   covCovered: "Lo más probable es que el límite cubra su vivienda",
   covExempt: "Su vivienda podría estar exenta del límite",
@@ -477,15 +482,16 @@ const es: HelpCopy = {
     "El dueño no puede cobrar más del límite. Hable con la ayuda legal gratuita antes de decidir cuánto pagar, y siga pagando lo que sabe que debe. También puede reportarlo al Procurador General de California.",
   noticeOk: "Le dieron suficiente aviso",
   noticeShort: "No le dieron suficiente aviso",
-  noticeMath: (given, required, over10) =>
-    `Le avisaron con ${given} días. Para un aumento ${over10 ? "de más del 10%" : "del 10% o menos (en 12 meses)"}, la ley exige al menos ${required} días.`,
+  noticeMath: (given, required, over10, mail) =>
+    `Le avisaron con ${given} días. Para un aumento ${over10 ? "de más del 10%" : "del 10% o menos"} (sumando los últimos 12 meses), la ley exige al menos ${required} días${mail ? ", con 5 días extra por correo" : ""}.`,
+  noticeAfter: "La fecha del aviso es posterior a la fecha en que empieza la renta nueva: el aviso llegó tarde para esa fecha.",
   noticeEarliest: (d) => `Con el aviso que recibió, la renta nueva no puede empezar antes del ${d}.`,
   capRulesTitle: "Las reglas",
   capExemptionsTitle: "Viviendas que el límite no cubre",
   capSunset: (d) => `Estas protecciones estatales están vigentes hasta el ${d}, a menos que la Legislatura las extienda.`,
   lookupTitle: "Busque cuándo se construyó su edificio",
   lookupHint:
-    "Usa los registros del tasador del condado, guardados en este sitio. Su dirección se compara en este aparato y nunca se envía a ninguna parte.",
+    "Usa los registros del tasador del condado, guardados en este sitio. Su dirección se compara en este aparato: solo se usan las dos primeras letras del nombre de la calle para elegir qué archivo cargar.",
   lookupButton: "Buscar",
   lookupBad: "Escriba una dirección con número de casa, como “1234 Main St, Modesto”.",
   lookupNone: "No encontramos esa dirección en los registros del condado. Revise cómo la escribió, o conteste usted la pregunta de abajo.",

@@ -15,6 +15,7 @@ import {
   floodRiskKey,
   freshImage,
   isMissing,
+  LEGAL_SITE_HOSTS,
   safeUrl,
   tidy,
   WEBCAM_IMAGE_HOSTS,
@@ -2433,13 +2434,6 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
     case "legal": {
       const kinds = raw(p.kinds).split("|").map((k) => LEGAL_KIND_KEYS[k]).filter((k): k is Key => !!k);
       const cost = LEGAL_COST_KEYS[raw(p.cost)] ?? "costVaries";
-      const site = raw(p.website);
-      let host = "";
-      try {
-        host = new URL(site).hostname;
-      } catch {
-        /* no website */
-      }
       return {
         ...base,
         title: raw(p.name) || kind,
@@ -2450,7 +2444,7 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
           [t("rowPhone"), raw(p.phone)],
           [t("rowLanguages"), raw(p.languages).split("|").filter(Boolean).join(", ")],
         ],
-        link: host ? { href: site, label: t("legalWebsite"), hosts: [host] } : undefined,
+        link: { href: raw(p.website), label: t("legalWebsite"), hosts: LEGAL_SITE_HOSTS },
       };
     }
     case "info": {

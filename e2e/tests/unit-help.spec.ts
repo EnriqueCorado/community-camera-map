@@ -15,6 +15,7 @@ import { helpFor } from "../../frontend/src/help/popup-help";
 import { LEGAL_FACTS, MEDICAL_FACTS, MOBILE_FACTS, RENT_FACTS, RENT_SOURCES, REPAIR_FACTS, DEPOSIT_FACTS } from "../../frontend/src/help/facts";
 import { COPY } from "../../frontend/src/help/copy";
 import { decodeState, encodeState } from "../../frontend/src/urlstate";
+import { LEGAL_SITE_HOSTS } from "../../frontend/src/popup-logic";
 
 const DATA = join(__dirname, "../../frontend/public/data");
 const G = MEDICAL_FACTS.fpl;
@@ -158,8 +159,8 @@ test.describe("parcel lookup", () => {
     expect(parseAddress("1119 E. Linwood Ave, Turlock CA 95380")).toEqual({ number: "1119", dir: "E", street: "LINWOOD", suffix: "AVE", city: "TURLOCK" });
     expect(parseAddress("1313 celeste dr apt 12 modesto")).toEqual({ number: "1313", dir: "", street: "CELESTE", suffix: "DR", city: "MODESTO" });
     expect(parseAddress("901 Parklawn Avenue")?.suffix).toBe("AVE");
-    expect(parseAddress("Main St")).toBeNull();
-    expect(parseAddress("")).toBeNull();
+    expect(parseAddress("Main St")).toEqual([]);
+    expect(parseAddress("")).toEqual([]);
   });
 
   test("finds real county parcels", () => {
@@ -302,6 +303,14 @@ test.describe("curated facts", () => {
       expect(f.cite, f.id).toBeTruthy();
       expect(f.en.length, f.id).toBeGreaterThan(20);
       expect(f.es.length, f.id).toBeGreaterThan(20);
+    }
+  });
+
+  test("every legal office website is on the popup allowlist", () => {
+    const fc = JSON.parse(readFileSync(join(DATA, "layers/legal-help.geojson"), "utf8"));
+    for (const f of fc.features) {
+      const site = f.properties.website as string;
+      if (site) expect(LEGAL_SITE_HOSTS, site).toContain(new URL(site).hostname);
     }
   });
 

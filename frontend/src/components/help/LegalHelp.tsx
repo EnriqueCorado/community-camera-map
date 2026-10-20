@@ -4,6 +4,7 @@ import type { HelpCopy } from "../../help/copy";
 import { LEGAL_FACTS } from "../../help/facts";
 import { loadOffices, type LegalKind, type LegalOffice } from "../../help/legal-dir";
 import { longDate } from "../../help/dates";
+import { LEGAL_SITE_HOSTS, safeUrl } from "../../popup-logic";
 import { ExtLink, Phone, Result, Sources } from "./ui";
 
 const KIND_KEYS: Record<LegalKind, Key> = {
@@ -101,7 +102,7 @@ export function LegalHelp({ c, onShowOnMap }: { c: HelpCopy; onShowOnMap: (layer
                 )}
                 <div className="hdir__actions">
                   {o.phone && <Phone number={o.phone} />}
-                  {o.website && (
+                  {safeUrl(o.website, LEGAL_SITE_HOSTS) && (
                     <ExtLink href={o.website} newTab={c.newTab}>
                       {c.website}
                     </ExtLink>

@@ -39,6 +39,10 @@ export function LetterBuilder({ def, c, initial }: { def: LetterDef; c: HelpCopy
 
   const print = () => {
     // Print just the letter: a throwaway node that print CSS shows alone.
+    // Cleanup waits for afterprint (phones return from print() before the
+    // preview renders); a leftover from a print that never reported back is
+    // cleared here first.
+    document.querySelectorAll(".letter-print").forEach((n) => n.remove());
     const node = document.createElement("div");
     node.className = "letter-print";
     node.textContent = text;
@@ -47,12 +51,9 @@ export function LetterBuilder({ def, c, initial }: { def: LetterDef; c: HelpCopy
     const done = () => {
       node.remove();
       document.documentElement.classList.remove("printing-letter");
-      window.removeEventListener("afterprint", done);
     };
-    window.addEventListener("afterprint", done);
+    window.addEventListener("afterprint", done, { once: true });
     window.print();
-    // Some browsers return from print() before afterprint; clean up anyway.
-    window.setTimeout(done, 1000);
   };
 
   const download = () => {

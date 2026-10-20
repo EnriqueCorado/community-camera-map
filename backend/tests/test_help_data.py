@@ -27,7 +27,10 @@ def _km(a: tuple[float, float], b: tuple[float, float]) -> float:
     import math
 
     lon1, lat1, lon2, lat2 = map(math.radians, (*a, *b))
-    h = math.sin((lat2 - lat1) / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin((lon2 - lon1) / 2) ** 2
+    h = (
+        math.sin((lat2 - lat1) / 2) ** 2
+        + math.cos(lat1) * math.cos(lat2) * math.sin((lon2 - lon1) / 2) ** 2
+    )
     return 2 * 6371 * math.asin(math.sqrt(h))
 
 
@@ -50,9 +53,21 @@ def test_legal_help_keeps_only_complete_sourced_entries():
                 "languages": ["English", "Spanish"],
                 "sources": ["https://ok.example/contact"],
             },
-            {"id": "no-kind", "kinds": ["bogus"], "lat": 37.6, "lon": -121.0, "sources": ["https://x"]},
+            {
+                "id": "no-kind",
+                "kinds": ["bogus"],
+                "lat": 37.6,
+                "lon": -121.0,
+                "sources": ["https://x"],
+            },
             {"id": "no-geo", "kinds": ["housing"], "sources": ["https://x"]},
-            {"id": "no-source", "kinds": ["housing"], "lat": 37.6, "lon": -121.0, "sources": ["http://x"]},
+            {
+                "id": "no-source",
+                "kinds": ["housing"],
+                "lat": 37.6,
+                "lon": -121.0,
+                "sources": ["http://x"],
+            },
             {
                 "id": "insecure-site",
                 "kinds": ["housing"],
@@ -67,7 +82,9 @@ def test_legal_help_keeps_only_complete_sourced_entries():
     feats = transforms.legal_help(payload)["features"]
     assert [f["properties"]["id"] for f in feats] == ["ok", "insecure-site"]
     ok, bad = (f["properties"] for f in feats)
-    assert ok["kinds"] == "immigration" and ok["eoir"] is True and ok["languages"] == "English|Spanish"
+    assert (
+        ok["kinds"] == "immigration" and ok["eoir"] is True and ok["languages"] == "English|Spanish"
+    )
     assert ok["checked"] == "2026-10-19"
     assert bad["website"] == "" and bad["cost"] == "varies"
     assert transforms.legal_help(None)["features"] == []

@@ -34,7 +34,9 @@ SERVICE = (
     "https://gis.stancounty.com/datastore/rest/services/Hosted/"
     "Public_Assessor_Parcels/FeatureServer/0/query"
 )
-FIELDS = "situs_number,situs_street,situs_suffix,situs_dir,situs_city,yearbuilt,lu_code,neighborhoodcode"
+FIELDS = (
+    "situs_number,situs_street,situs_suffix,situs_dir,situs_city,yearbuilt,lu_code,neighborhoodcode"
+)
 PAGE = 1000
 OUT = Path(__file__).resolve().parents[2] / "frontend" / "public" / "data" / "parcels"
 
@@ -44,12 +46,33 @@ CITY = re.compile(r"\s+(CA\b.*|\d{5}.*)$")
 
 # Assessor use codes -> the classes the rent tool asks about.
 USE = {
-    "101": "sfr", "111": "sfr", "121": "sfr", "161": "sfr",
+    "101": "sfr",
+    "111": "sfr",
+    "121": "sfr",
+    "161": "sfr",
     "131": "condo",
     "141": "mobile",
     "201": "duplex",
-    "221": "multi", "231": "multi", "241": "multi", "261": "multi", "960": "multi",
+    "221": "multi",
+    "231": "multi",
+    "241": "multi",
+    "261": "multi",
+    "960": "multi",
 }
+
+
+# Street suffixes as the browser normalizes what people type (parcels.ts
+# SUFFIXES); assessor spellings like "WY", "LANE", "AVE." fold into these.
+SUFFIX = {
+    "ST": "ST", "STREET": "ST", "AVE": "AVE", "AV": "AVE", "AVENUE": "AVE", "DR": "DR",
+    "DRIVE": "DR", "RD": "RD", "ROAD": "RD", "LN": "LN", "LANE": "LN", "CT": "CT",
+    "COURT": "CT", "WAY": "WAY", "WY": "WAY", "BLVD": "BLVD", "BOULEVARD": "BLVD", "PL": "PL",
+    "PLACE": "PL", "CIR": "CIR", "CR": "CIR", "CIRCLE": "CIR", "PKWY": "PKWY", "PARKWAY": "PKWY",
+    "HWY": "HWY", "HIGHWAY": "HWY", "TER": "TER", "TERR": "TER", "TERRACE": "TER", "TRL": "TRL",
+    "TRAIL": "TRL", "LOOP": "LOOP", "SQ": "SQ", "PLZ": "PLZ", "ALY": "ALY",
+}  # fmt: skip
+DIRS = {"N": "N", "S": "S", "E": "E", "W": "W"}
+DIRS |= {"NORTH": "N", "SOUTH": "S", "EAST": "E", "WEST": "W"}
 
 
 def use_class(lu_code: object, neighborhood: object) -> str:
@@ -84,9 +107,11 @@ def reduce(attrs: dict) -> tuple[str, str, list] | None:
     if not number or not street or not span or not re.fullmatch(r"\d+[A-Z]?", number):
         return None
     city = CITY.sub("", norm(attrs.get("situs_city")))
+    # Unknown or garbled suffixes/directions become "" (matches anything)
+    # rather than a value that would contradict what a person types.
     row = [
-        norm(attrs.get("situs_dir")),
-        norm(attrs.get("situs_suffix")),
+        DIRS.get(norm(attrs.get("situs_dir")), ""),
+        SUFFIX.get(norm(attrs.get("situs_suffix")).replace(".", ""), ""),
         city,
         span[0],
         span[1],

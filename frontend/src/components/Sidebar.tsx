@@ -427,6 +427,9 @@ export function Sidebar({
               : t("dataLive")}
           </span>
         </div>
+      </div>
+      {/* Outside the sticky header, so the header stays short. */}
+      <div className="helpbtn__wrap">
         <button type="button" className="helpbtn" onClick={onHelp} aria-haspopup="dialog">
           <span className="helpbtn__icon" aria-hidden="true">🤝</span>
           <span className="helpbtn__text">

@@ -92,3 +92,11 @@ export function percentOfPoverty(income: number, size: number, g: PovertyGuideli
 export function yearly(amount: number, per: "year" | "month"): number {
   return per === "month" ? amount * 12 : amount;
 }
+
+/** % of poverty for display: whole numbers, but one decimal when rounding
+ *  would put it on the wrong side of a cutoff (400.3% must not read "400%"). */
+export function displayPct(pct: number, policy: CarePolicy): string {
+  const cutoffs = [policy.free, policy.discount, STATE_FLOOR.discount].flatMap((t) => (t ? [t.maxFpl] : []));
+  const whole = Math.round(pct);
+  return cutoffs.some((c) => pct > c !== whole > c) ? pct.toFixed(1) : String(whole);
+}

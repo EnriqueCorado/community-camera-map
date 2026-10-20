@@ -712,7 +712,16 @@ def voting_locations(payload: object, today: dt.date | None = None) -> dict:
     return _fc(feats)
 
 
-LEGAL_KINDS = ("immigration", "housing", "general", "seniors", "family", "workers", "court-self-help", "consumer")
+LEGAL_KINDS = (
+    "immigration",
+    "housing",
+    "general",
+    "seniors",
+    "family",
+    "workers",
+    "court-self-help",
+    "consumer",
+)
 LEGAL_COSTS = ("free", "low-cost", "varies")
 
 
@@ -729,7 +738,9 @@ def legal_help(payload: object) -> dict:
             continue
         kinds = [k for k in org.get("kinds", []) if k in LEGAL_KINDS]
         lat, lon = org.get("lat"), org.get("lon")
-        sources = [u for u in org.get("sources", []) if isinstance(u, str) and u.startswith("https://")]
+        sources = [
+            u for u in org.get("sources", []) if isinstance(u, str) and u.startswith("https://")
+        ]
         if not kinds or not sources:
             continue
         if not isinstance(lat, int | float) or not isinstance(lon, int | float):

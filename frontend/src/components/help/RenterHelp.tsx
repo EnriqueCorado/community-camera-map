@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useI18n } from "../../i18n";
 import type { HelpCopy } from "../../help/copy";
 import { DEPOSIT_FACTS, MOBILE_FACTS, RENT_FACTS, RENT_SOURCES, REPAIR_FACTS, type Contact, type Fact } from "../../help/facts";
@@ -6,7 +6,7 @@ import { checkIncrease, coverage, type CoverageAnswers, type HomeType, type YesN
 import { addDays, longDate } from "../../help/dates";
 import { formatMoney, parseMoney } from "../../help/money";
 import { depositLetter, repairLetter } from "../../help/letters";
-import { builtAge, loadShard, matchParcel, parseAddress, shardKey, type ParcelMatch } from "../../help/parcels";
+import { builtAge, lookupAddress, type ParcelMatch } from "../../help/parcels";
 import { Choice, ExtLink, Field, MoneyInput, Phone, Result, Sources } from "./ui";
 import { LetterBuilder } from "./LetterBuilder";
 
@@ -266,18 +266,22 @@ function RentIncrease({ c, onMobileOwner }: { c: HelpCopy; onMobileOwner: () => 
                 {cov && cov.status !== "covered" && <p>{c.capIfCovered}</p>}
                 {result.overBy > 0 && <p>{c.capOverNext}</p>}
               </Result>
-              {result.noticeGiven != null && (
-                <Result
-                  tone={result.noticeGiven >= result.noticeRequired ? "good" : "bad"}
-                  title={result.noticeGiven >= result.noticeRequired ? c.noticeOk : c.noticeShort}
-                >
-                  <p>{c.noticeMath(result.noticeGiven, result.noticeRequired, result.pct > 10)}</p>
-                  {result.noticeGiven < result.noticeRequired && noticed && (
-                    <p>{c.noticeEarliest(longDate(addDays(noticed, result.noticeRequired) ?? noticed, locale))}</p>
-                  )}
-                </Result>
-              )}
             </>
+          )}
+          {result && result.noticeGiven != null && (
+            <Result
+              tone={result.noticeGiven >= result.noticeRequired ? "good" : "bad"}
+              title={result.noticeGiven >= result.noticeRequired ? c.noticeOk : c.noticeShort}
+            >
+              <p>
+                {result.noticeGiven < 0
+                  ? c.noticeAfter
+                  : c.noticeMath(result.noticeGiven, result.noticeRequired, result.over10, byMail === "yes")}
+              </p>
+              {result.noticeGiven < result.noticeRequired && noticed && (
+                <p>{c.noticeEarliest(longDate(addDays(noticed, result.noticeRequired) ?? noticed, locale))}</p>
+              )}
+            </Result>
           )}
         </div>
       </section>
@@ -297,16 +301,17 @@ function BuiltLookup({ c, onAge }: { c: HelpCopy; onAge: (v: YesNo) => void }) {
   const [q, setQ] = useState("");
   const [state, setState] = useState<"idle" | "busy" | "bad" | "none" | "error" | "done">("idle");
   const [hits, setHits] = useState<ParcelMatch[]>([]);
+  const seq = useRef(0); // only the latest lookup may update the result
   const year = new Date().getFullYear();
 
   const look = (e: React.FormEvent) => {
     e.preventDefault();
-    const parsed = parseAddress(q);
-    if (!parsed) return setState("bad");
     setState("busy");
-    loadShard(shardKey(parsed.street))
-      .then((shard) => {
-        const found = matchParcel(shard, parsed);
+    const mine = ++seq.current;
+    lookupAddress(q)
+      .then((found) => {
+        if (mine !== seq.current) return;
+        if (found == null) return setState("bad");
         setHits(found);
         setState(found.length ? "done" : "none");
         const ages = new Set(found.map((m) => builtAge(m, year)));
@@ -315,7 +320,7 @@ function BuiltLookup({ c, onAge }: { c: HelpCopy; onAge: (v: YesNo) => void }) {
           onAge(age === "new" ? "yes" : age === "old" ? "no" : "unsure");
         }
       })
-      .catch(() => setState("error"));
+      .catch(() => mine === seq.current && setState("error"));
   };
 
   return (

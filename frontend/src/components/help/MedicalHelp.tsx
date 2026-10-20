@@ -3,7 +3,7 @@ import { useI18n } from "../../i18n";
 import type { HelpCopy } from "../../help/copy";
 import { MEDICAL_FACTS } from "../../help/facts";
 import { HOSPITALS, type Hospital } from "../../help/hospitals";
-import { careResult, MAX_HOUSEHOLD, percentOfPoverty, povertyLine, STATE_FLOOR, yearly } from "../../help/fpl";
+import { careResult, displayPct, MAX_HOUSEHOLD, percentOfPoverty, povertyLine, STATE_FLOOR, yearly } from "../../help/fpl";
 import { parseMoney, formatMoney } from "../../help/money";
 import { longDate } from "../../help/dates";
 import { medicalLetter } from "../../help/letters";
@@ -121,7 +121,7 @@ export function MedicalHelp({
               tone={res.tier === "over" ? "info" : "good"}
               title={res.tier === "free" ? c.medTierFree : res.tier === "discount" ? c.medTierDiscount : c.medTierOver}
             >
-              <p className="hstat">{c.medPctOfPoverty(Math.round(pct))}</p>
+              <p className="hstat">{c.medPctOfPoverty(displayPct(pct, policy))}</p>
               <p>{c.medPctExplain(fmt(yearly(amount!, per)), size, fmt(line), g.year)}</p>
               {res.ifHighCosts && <p>{c.medIfHighCosts}</p>}
               <p>

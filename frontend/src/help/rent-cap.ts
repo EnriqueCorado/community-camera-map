@@ -37,6 +37,8 @@ export interface IncreaseResult {
   maxRent: number | null;
   /** Dollars per month above the cap (0 when within it). */
   overBy: number;
+  /** More than 10% over the 12-month low (exact, before rounding). */
+  over10: boolean;
   /** Days of notice the law requires (30 if ≤10% over 12 months, else 90), plus 5 by mail. */
   noticeRequired: number;
   /** Days between the notice and the effective date, if known. */
@@ -53,18 +55,23 @@ export function capPeriodFor(effective: string, periods: CapPeriod[]): CapPeriod
   );
 }
 
-const cents = (v: number) => Math.round(v * 100) / 100;
-
 export function checkIncrease(input: IncreaseInput, periods: CapPeriod[]): IncreaseResult {
   const { lowestRent, newRent, effective, noticed, byMail } = input;
-  const pct = lowestRent > 0 ? cents(((newRent - lowestRent) / lowestRent) * 100) : 0;
+  // Whole cents and tenths of a percent, so float error can't move a cent:
+  // $1,200 at 7.7% is exactly $1,292.40.
+  const low = Math.round(lowestRent * 100);
+  const high = Math.round(newRent * 100);
+  const pct = low > 0 ? Math.round(((high - low) / low) * 10_000) / 100 : 0;
   const period = capPeriodFor(effective, periods);
   // Round the ceiling down so we never call a rent legal that's a cent over.
-  const maxRent = period ? Math.floor(lowestRent * (1 + period.maxPct / 100) * 100) / 100 : null;
-  const overBy = maxRent != null ? Math.max(0, cents(newRent - maxRent)) : 0;
-  const noticeRequired = (pct > 10 ? 90 : 30) + (byMail ? 5 : 0);
+  const maxCents = period ? Math.floor((low * Math.round((100 + period.maxPct) * 10)) / 1000) : null;
+  const maxRent = maxCents != null ? maxCents / 100 : null;
+  const overBy = maxCents != null ? Math.max(0, high - maxCents) / 100 : 0;
+  // §827: more than 10% (exactly, not after rounding) needs 90 days.
+  const over10 = high * 10 > low * 11;
+  const noticeRequired = (over10 ? 90 : 30) + (byMail ? 5 : 0);
   const noticeGiven = noticed ? daysBetween(noticed, effective) : null;
-  return { pct, period, maxRent, overBy, noticeRequired, noticeGiven };
+  return { pct, period, maxRent, overBy, over10, noticeRequired, noticeGiven };
 }
 
 // ---------------------------------------------------------------- coverage

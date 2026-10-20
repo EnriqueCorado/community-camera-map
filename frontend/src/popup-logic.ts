@@ -47,6 +47,24 @@ export function tidy(s: string): string {
 }
 
 
+/** Websites of the curated free legal help offices (legal_help.json); the
+ *  popup and the Help list link only to these. */
+export const LEGAL_SITE_HOSTS = [
+  "californiahumandevelopment.org",
+  "centralcallegal.org",
+  "crla.org",
+  "senioradvocacynetwork.org",
+  "worldrelief.org",
+  "www.ccstockton.org",
+  "www.dir.ca.gov",
+  "www.elconcilio.org",
+  "www.havenstan.org",
+  "www.housing.org",
+  "www.rescue.org",
+  "www.stanislaus.courts.ca.gov",
+  "www.stanislausfamilyjustice.org",
+];
+
 /** Hosts whose images / pages popups may show. The webcam hosts mirror the
  *  backend allowlist in transforms.py; the rest are browser-live sources. */
 export const WEBCAM_IMAGE_HOSTS = [
