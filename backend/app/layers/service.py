@@ -2392,12 +2392,13 @@ LAYERS: dict[str, Layer] = {
     "river-cameras": Layer(
         name="river-cameras",
         title="River cameras",
-        description="USGS streamgage webcams in California (HIVIS).",
+        description="USGS streamgage webcams across the US (HIVIS).",
         category="webcam",
         loader=_json_transform(
             "https://api.waterdata.usgs.gov/nims/cameras", transforms.usgs_cameras
         ),
         ttl=24 * 3600,  # the catalog; images are always fetched live
+        coverage="usa",
     ),
 }
 

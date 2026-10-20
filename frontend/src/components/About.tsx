@@ -1,10 +1,13 @@
 import { useRef, type ReactNode } from "react";
 import type { LayerInfo } from "../api/client";
+import type { SourceInfo } from "../types";
 import { useI18n, layerTitle, type Lang } from "../i18n";
 import { useDialog } from "../hooks/useDialog";
 
 interface Props {
   layers: LayerInfo[];
+  /** Camera publishers, from the camera list ({} while loading). */
+  cameraSources: Record<string, SourceInfo>;
   bakedAt: string | null;
   onClose: () => void;
 }
@@ -29,6 +32,8 @@ const COPY: Record<
     principleItems: ReactNode[];
     asOf: (d: string) => string;
     live: string;
+    cameras: string;
+    shareAlike: string;
   }
 > = {
   en: {
@@ -43,7 +48,7 @@ const COPY: Record<
     howTo: "How to read the data",
     howToItems: [
       <>
-        <strong>Traffic cameras</strong> are live public Caltrans feeds.
+        <strong>Cameras</strong> are live public feeds from Caltrans, other state DOTs, USGS and NOAA (each credited below and in the camera viewer).
       </>,
       <>
         <strong>License plate readers (ALPR)</strong> across the US are crowdsourced from OpenStreetMap / DeFlock
@@ -85,6 +90,8 @@ const COPY: Record<
     ],
     asOf: (d) => `Data as of ${d}.`,
     live: "live (served from the API)",
+    cameras: "Public cameras",
+    shareAlike: "Our reformatted copy of this data (data/cameras.json) is shared under the same license.",
   },
   es: {
     title: "Acerca de este mapa",
@@ -99,7 +106,7 @@ const COPY: Record<
     howTo: "Cómo leer los datos",
     howToItems: [
       <>
-        Las <strong>cámaras de tráfico</strong> son transmisiones públicas en vivo de Caltrans.
+        Las <strong>cámaras</strong> son transmisiones públicas en vivo de Caltrans, otros departamentos de transporte estatales, el USGS y la NOAA (cada fuente se indica abajo y en el visor de cámaras).
       </>,
       <>
         Los <strong>lectores automáticos de placas (ALPR)</strong> los registran voluntarios en
@@ -142,10 +149,12 @@ const COPY: Record<
     ],
     asOf: (d) => `Datos al ${d}.`,
     live: "en vivo (servidos por la API)",
+    cameras: "Cámaras públicas",
+    shareAlike: "Nuestra copia reformateada de estos datos (data/cameras.json) se comparte bajo la misma licencia.",
   },
 };
 
-export function About({ layers, bakedAt, onClose }: Props) {
+export function About({ layers, cameraSources, bakedAt, onClose }: Props) {
   const { lang, t, locale } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
   useDialog(ref, onClose, { modal: true });
@@ -200,6 +209,33 @@ export function About({ layers, bakedAt, onClose }: Props) {
                   <dd>{l.source}</dd>
                 </div>
               ))}
+            {Object.keys(cameraSources).length > 0 && (
+              <div>
+                <dt>{c.cameras}</dt>
+                <dd>
+                  <ul className="about__camsources">
+                    {Object.entries(cameraSources).map(([key, s]) => (
+                      <li key={key}>
+                        {s.credit}
+                        {s.license && (
+                          <>
+                            {" · "}
+                            {s.license_url.startsWith("https://") ? (
+                              <a href={s.license_url} target="_blank" rel="noopener noreferrer license">
+                                {s.license}
+                              </a>
+                            ) : (
+                              s.license
+                            )}
+                            {/BY-SA/.test(s.license) && <> {c.shareAlike}</>}
+                          </>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            )}
             <div>
               <dt>{c.baseMap}</dt>
               <dd>OpenFreeMap · © OpenStreetMap contributors</dd>

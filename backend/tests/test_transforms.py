@@ -249,7 +249,7 @@ def test_fire_cameras_tolerates_garbage():
     assert transforms.fire_cameras({"features": [{}]})["features"] == []
 
 
-def test_usgs_cameras_ca_only_visible_and_safe_ids():
+def test_usgs_cameras_nationwide_visible_and_safe_ids():
     s3 = "https://usgs-nims-images.s3.amazonaws.com/720/"
     rows = [
         {
@@ -275,8 +275,11 @@ def test_usgs_cameras_ca_only_visible_and_safe_ids():
         },
     ]
     out = transforms.usgs_cameras(rows)["features"]
-    assert [f["properties"]["name"] for f in out] == ["Good", "CA_OddHost"]
-    good, odd = (f["properties"] for f in out)
+    # Nationwide: the IL camera stays; hidden, unsafe-id and coordless ones don't.
+    assert [f["properties"]["name"] for f in out] == ["Good", "IL_Other", "CA_OddHost"]
+    good, other, odd = (f["properties"] for f in out)
+    assert (good["state"], other["state"]) == ("CA", "IL")
+    assert other["image"] == ""  # no smallDir
     assert good["image"] == s3 + "CA_Good/CA_Good_newest.jpg"
     assert good["page"] == "https://apps.usgs.gov/hivis/camera/CA_Good"
     assert odd["image"] == ""  # untrusted image host dropped

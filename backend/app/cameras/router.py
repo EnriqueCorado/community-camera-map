@@ -6,6 +6,7 @@ from __future__ import annotations
 import httpx
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 
+from .national import sources_for
 from .schemas import Camera, CameraList
 from .service import CameraService
 
@@ -25,7 +26,7 @@ async def list_cameras(service: CameraService = Depends(get_service)) -> CameraL
         cameras = await service.list_cameras()
     except (httpx.HTTPError, RuntimeError) as exc:  # upstream unreachable / all feeds down
         raise HTTPException(status_code=502, detail="Upstream camera feed unavailable") from exc
-    return CameraList(count=len(cameras), cameras=cameras)
+    return CameraList(count=len(cameras), sources=sources_for(cameras), cameras=cameras)
 
 
 @router.get("/{camera_id}", response_model=Camera, summary="Get one camera")

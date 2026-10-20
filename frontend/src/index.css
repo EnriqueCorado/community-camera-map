@@ -662,6 +662,20 @@ body:has(.app) {
   text-align: center;
 }
 
+/* Stills keep their own shape (buoy cams are wide panoramas). */
+.player--still {
+  object-fit: contain;
+}
+
+.detail__views {
+  padding: 8px 12px 0;
+}
+
+.about__camsources {
+  margin: 0;
+  padding-left: 1.1em;
+}
+
 .detail__facts {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

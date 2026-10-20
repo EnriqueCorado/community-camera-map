@@ -2,7 +2,8 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode }
 import type { Camera } from "../types";
 import { api, type LayerInfo } from "../api/client";
 import { ago } from "../freshness";
-import { matchCamera, type LayerState } from "./MapView";
+import type { LayerState } from "./MapView";
+import { matchCamera } from "../camera-data";
 import {
   CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
   HEALTH_STOPS, metricStops, fmtMetric, DROUGHT_COLORS, HEAT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, VOTING_KEYS, WVAL_COLORS,
@@ -37,6 +38,7 @@ export const PLACES: Place[] = [
   { label: "Modesto", center: [-120.997, 37.639], zoom: 12 },
   { label: "Stanislaus", center: [-120.95, 37.6], zoom: 10 },
   { label: "All of California", labelKey: "allOfCA", center: [-119.4, 37.2], zoom: 5.4 },
+  { label: "All of the US", labelKey: "allOfUS", center: [-98.6, 39.5], zoom: 3.3 },
 ];
 
 // Which sidebar sections the viewer collapsed (per-browser convenience only).
@@ -289,6 +291,7 @@ export function Sidebar({
     return cameras.filter((c) => matchCamera(c, q));
   }, [cameras, query]);
   const matches = allMatches.slice(0, MAX_LIST);
+  const agencyCount = useMemo(() => new Set(cameras.map((c) => c.source)).size, [cameras]);
 
   const setLayer = (patch: Partial<LayerState>) => onLayersChange({ ...layers, ...patch });
   // Only layers that can actually be switched on (a checkbox may be disabled).
@@ -419,7 +422,7 @@ export function Sidebar({
             </button>
           </div>
         </div>
-        <p className="sidebar__sub">{t("camerasStatewide", { n: fmt(cameras.length) })}</p>
+        <p className="sidebar__sub">{t("camerasCount", { n: fmt(cameras.length), k: fmt(agencyCount) })}</p>
         <div className="sidebar__meta">
           <button type="button" className="linkbtn" onClick={onAbout}>
             {t("about")}
@@ -770,7 +773,7 @@ export function Sidebar({
               >
                 <span className="camlist__name">{cam.name}</span>
                 <span className="camlist__meta">
-                  {[cam.route, cam.nearby_place, cam.county].filter(Boolean).join(" · ")}
+                  {[cam.route, cam.nearby_place, cam.county, cam.state].filter(Boolean).join(" · ")}
                 </span>
               </button>
             </li>

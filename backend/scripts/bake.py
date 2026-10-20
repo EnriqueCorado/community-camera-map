@@ -9,6 +9,7 @@ Runs the same CameraService / LayerService used by the live API, once, and write
 
 Keys (Census) are read from the backend's .env and used ONLY here —
 they never reach the shipped static site. Run from backend/: `uv run python scripts/bake.py`.
+`--cameras-only` rebuilds just cameras.json (all camera sources, ~1 minute).
 """
 
 from __future__ import annotations
@@ -26,6 +27,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import httpx
 
+from app.cameras.national import sources_for
+from app.cameras.schemas import Camera
 from app.cameras.service import CameraService
 from app.core.config import get_settings
 from app.layers.alpr_access import ALPR_ACCESS_FILE
@@ -150,25 +153,107 @@ LIVE_ONLY = {"flights"}
 EMPTY_FC = '{"type":"FeatureCollection","features":[]}'
 
 
+# Short keys for the baked camera list (~16k cameras: long keys alone were
+# ~1.5 MB). Shipped in the file as "keys" so the frontend expands them
+# (frontend/src/camera-data.ts `withDefaults`). latitude/longitude keep their names: the Windy
+# layer reads them from this file to drop Caltrans re-lists.
+SHORT_KEYS = {
+    "name": "n",
+    "county": "c",
+    "nearby_place": "p",
+    "route": "r",
+    "direction": "d",
+    "snapshot_url": "s",
+    "stream_url": "v",
+    "in_service": "i",
+    "source": "src",
+    "state": "st",
+    "views": "w",
+}
+
+
+def compact_camera(c: Camera, default_state: str) -> dict:
+    """A camera without its default/empty fields (state too, when it's the
+    source's own), coordinates to ~1 m, under short keys."""
+    d = {
+        k: v
+        for k, v in c.model_dump(exclude_defaults=True).items()
+        if v not in ("", []) and k != "state"
+    }
+    if c.state != default_state:  # e.g. a California buoy from the (stateless) NDBC source
+        d["state"] = c.state
+    for k in ("latitude", "longitude"):
+        d[k] = round(d[k], 5)
+    return {SHORT_KEYS.get(k, k): v for k, v in d.items()}
+
+
+class CameraBakeError(RuntimeError):
+    """The fresh camera list looks broken; keep the previous file instead."""
+
+
+MIN_KEEP = 0.8  # of the previous list's size
+
+
+def check_camera_list(camera_list: list[Camera], previous_count: int, secrets: list[str]) -> None:
+    """Sanity checks before cameras.json is replaced (and, in CI, published and
+    cached): Caltrans must be present, the list mustn't shrink below MIN_KEEP of
+    the last one, and no configured API key may appear anywhere in it."""
+    if not any(c.source == "caltrans" for c in camera_list):
+        raise CameraBakeError("no Caltrans cameras")
+    if previous_count and len(camera_list) < MIN_KEEP * previous_count:
+        raise CameraBakeError(f"only {len(camera_list)} cameras (was {previous_count})")
+    blob = json.dumps([c.model_dump() for c in camera_list])
+    if any(s and s in blob for s in secrets):
+        raise CameraBakeError("an API key appears in the camera list")
+
+
+async def bake_cameras(cams: CameraService) -> None:
+    camera_list = await cams.list_cameras()
+    try:
+        previous = json.loads((OUT / "cameras.json").read_text()).get("count", 0)
+    except (OSError, ValueError, AttributeError):
+        previous = 0
+    s = get_settings()
+    check_camera_list(camera_list, previous, [*s.iteris_keys.values(), s.ohgo_api_key])
+    sources = sources_for(camera_list)
+    payload = {
+        "count": len(camera_list),
+        "source": "Public camera feeds: Caltrans, state DOTs, USGS and NOAA",
+        "sources": {k: v.model_dump() for k, v in sources.items()},
+        "keys": {short: long for long, short in SHORT_KEYS.items()},
+        "cameras": [
+            compact_camera(c, sources[c.source].state if c.source in sources else "CA")
+            for c in camera_list
+        ],
+    }
+    body = json.dumps(payload, separators=(",", ":"))
+    (OUT / "cameras.json").write_text(body)
+    per: dict[str, int] = {}
+    for c in camera_list:
+        per[c.source] = per.get(c.source, 0) + 1
+    print(f"cameras.json: {len(camera_list)} cameras, {len(body) / 1e6:.2f} MB")
+    print("  by source:", ", ".join(f"{k} {n}" for k, n in sorted(per.items())))
+
+
 async def main() -> None:
     settings = get_settings()
     (OUT / "layers").mkdir(parents=True, exist_ok=True)
     async with httpx.AsyncClient(
         timeout=90.0,  # generous: one-time build, some layers (FEMA) page slowly
-        headers={"User-Agent": "stanislaus-cam-map/bake"},
+        headers={
+            "User-Agent": "stanislaus-cam-map/bake (+https://enriquecorado.github.io/stanislaus-cam-map/)"
+        },
         follow_redirects=True,
     ) as client:
         cams = CameraService(settings, client)
+        try:
+            await bake_cameras(cams)
+        except CameraBakeError as exc:
+            # Fail loudly (CI keeps the cached/committed list); never write it.
+            sys.exit(f"cameras.json NOT updated: {exc}")
+        if "--cameras-only" in sys.argv[1:]:
+            return
         layers = LayerService(settings=settings, client=client, fallback_to_baked=False)
-
-        camera_list = await cams.list_cameras()
-        payload = {
-            "count": len(camera_list),
-            "source": "Caltrans public CCTV feeds (all districts)",
-            "cameras": [c.model_dump() for c in camera_list],
-        }
-        (OUT / "cameras.json").write_text(json.dumps(payload, separators=(",", ":")))
-        print(f"cameras.json: {len(camera_list)} cameras")
 
         catalog = []
         fetched: list[str] = []

@@ -35,7 +35,7 @@ test("loads with cameras and a clean console", async ({ page }) => {
   await waitForMap(page);
 
   await expect(page.locator("h1")).toContainText("Community Camera Map");
-  await expect(page.locator(".sidebar__sub")).toContainText(/public Caltrans traffic cameras/i);
+  await expect(page.locator(".sidebar__sub")).toContainText(/public cameras from \d+ agencies/i);
   expect(realErrors(errors), realErrors(errors).join("\n")).toEqual([]);
 });
 
@@ -236,6 +236,34 @@ test('"what can see me?" drops a pin and reports nearby readers', async ({ page 
   await page.locator("canvas.maplibregl-canvas").click({ position: { x: 640, y: 430 } });
   await expect(page.locator(".coverage-result")).toContainText(/plate reader/i, { timeout: 20000 });
   expect(realErrors(errors), realErrors(errors).join("\n")).toEqual([]);
+});
+
+test("an out-of-state still-image camera shows its still and the agency credit", async ({ page }) => {
+  const errors = trackErrors(page);
+  await page.goto("/");
+  await waitForMap(page);
+  // Illinois (CC BY-SA 2.0): the credit must name Illinois DOT and link the license.
+  await page.getByPlaceholder(/Filter cameras/i).fill("illinois");
+  await page.locator(".camlist__item").first().click();
+  const detail = page.locator(".detail");
+  await expect(detail).toBeVisible();
+  await expect(detail.locator("img.player--still")).toHaveAttribute("src", /^https:\/\/[^/]+\/.+[?&]t=\d+$/);
+  await expect(detail.locator(".detail__note")).toContainText("Illinois DOT");
+  await expect(detail.locator('.detail__note a[rel~="license"]')).toHaveText("CC BY-SA 2.0");
+  await expect(detail).toContainText("IL");
+  await page.locator(".detail__close").click();
+
+  // The About page lists every camera publisher.
+  await page.getByRole("button", { name: /About & sources/i }).click();
+  await expect(page.locator(".about__camsources")).toContainText("Illinois DOT");
+  await expect(page.locator(".about__camsources")).toContainText("NOAA National Data Buoy Center");
+  await page.keyboard.press("Escape");
+
+  // Nationwide quick-jump.
+  await page.getByRole("button", { name: "All of the US", exact: true }).click();
+  await page.waitForTimeout(700);
+  // Third-party still images may 404 intermittently; that's the upstream, not us.
+  expect(realErrors(errors).filter((e) => !/Failed to load resource/.test(e))).toEqual([]);
 });
 
 test("export cameras triggers a GeoJSON download", async ({ page }) => {
