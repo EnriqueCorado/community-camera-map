@@ -116,6 +116,9 @@ const en = {
   groupPlanning: "Planning & people",
   groupInfra: "Infrastructure",
   groupOther: "More",
+  groupHousing: "Housing & economy",
+  groupHelp: "Immigrant & legal help",
+  groupPeople: "Census & demographics",
   findLayer: "Find a layer…",
   findLayerLabel: "Filter layers by name",
   noLayerMatch: "No layers match.",
@@ -635,6 +638,9 @@ const es: Record<Key, string> = {
   groupPlanning: "Planeación y población",
   groupInfra: "Infraestructura",
   groupOther: "Más",
+  groupHousing: "Vivienda y economía",
+  groupHelp: "Ayuda legal y para inmigrantes",
+  groupPeople: "Censo y demografía",
   findLayer: "Buscar una capa…",
   findLayerLabel: "Filtrar capas por nombre",
   noLayerMatch: "Ninguna capa coincide.",
@@ -1158,6 +1164,11 @@ export type TFn = (key: Key, vars?: Record<string, string | number>) => string;
 export function translate(lang: Lang, key: Key, vars?: Record<string, string | number>): string {
   const s = DICTS[lang][key] ?? en[key];
   return vars ? s.replace(/\{(\w+)\}/g, (m, k: string) => (k in vars ? String(vars[k]) : m)) : s;
+}
+
+/** Spanish titles that arrive with the catalog (self-describing layers). */
+export function registerLayerTitles(layers: { name: string; title_es?: string | null }[]): void {
+  for (const l of layers) if (l.title_es && !(l.name in LAYER_TITLES_ES)) LAYER_TITLES_ES[l.name] = l.title_es;
 }
 
 export function layerTitle(lang: Lang, name: string, englishTitle: string): string {

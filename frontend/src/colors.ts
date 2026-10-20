@@ -1,3 +1,4 @@
+import type { MetricSpec } from "./api/client";
 // Single source of truth for layer colors, shared by the map and the sidebar
 // legend so the dots on the map always match their legend swatch.
 
@@ -329,3 +330,37 @@ export const VOTING_COLORS: [string, string][] = [
   ["outdoor-drop-box", "#0891b2"],
   ["curbside", "#7c3aed"],
 ];
+
+/** Named 5-step ramps for catalog-described choropleths (light -> dark). */
+export const RAMPS: Record<string, string[]> = {
+  purple: ["#f2f0f7", "#cbc9e2", "#9e9ac8", "#756bb1", "#54278f"],
+  blue: ["#eef3f7", "#b6d2e3", "#74a9cf", "#2b8cbe", "#045a8d"],
+  green: ["#edf8e9", "#bae4b3", "#74c476", "#31a354", "#006d2c"],
+  orange: ["#feedde", "#fdbe85", "#fd8d3c", "#e6550d", "#a63603"],
+  red: ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"],
+  teal: ["#ecfeff", "#a5f3fc", "#22d3ee", "#0891b2", "#155e75"],
+};
+
+/** A metric's legend/paint stops: each break paired with its ramp color. */
+export function metricStops(m: MetricSpec): [number, string][] {
+  const ramp = RAMPS[m.ramp] ?? RAMPS.purple!;
+  return m.breaks.map((b, i) => [b, ramp[Math.min(i, ramp.length - 1)]!]);
+}
+
+/** A metric value for legends and popups ("12%", "$85k", "1978"...). */
+export function fmtMetric(v: number, fmt: MetricSpec["fmt"], locale: string, compact = false): string {
+  const n = (x: number, d = 0) => x.toLocaleString(locale, { maximumFractionDigits: d });
+  switch (fmt) {
+    case "pct":
+      return `${n(v, compact ? 0 : 1)}%`;
+    case "usd":
+      return compact && v >= 1000 ? `$${n(v / 1000, 0)}k` : `$${n(v)}`;
+    case "year":
+      return String(Math.round(v));
+    case "score":
+    case "index":
+      return n(v, 2);
+    default:
+      return n(v, 1);
+  }
+}

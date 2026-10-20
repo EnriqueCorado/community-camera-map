@@ -31,7 +31,7 @@ import { ALPR_TILE_ZOOM, alprCells, alprIndex, alprNear, alprTile, evictAlprTile
 import { VOTING_KEYS } from "../colors";
 import {
   CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
-  HEALTH_STOPS, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, WVAL_COLORS, WVAL_KEYS,
+  HEALTH_STOPS, metricStops, fmtMetric, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, WVAL_COLORS, WVAL_KEYS,
   GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS, VOLCANO_COLORS, VOLCANO_KEYS, VOLCANO_ALERT_KEYS, DEV_STAGES,
 } from "../colors";
 
@@ -1454,8 +1454,9 @@ function addOverlay(
       "fill-opacity": 0.6,
     }) as const;
 
-  const fillPaint =
-    info.category === "census"
+  const fillPaint = info.metric
+    ? choropleth(info.metric.field, metricStops(info.metric))
+    : info.category === "census"
       ? CENSUS_FIELD[info.name]?.startsWith("pct_")
         ? choropleth(CENSUS_FIELD[info.name]!, PCT_STOPS)
         : choropleth("median_income", CENSUS_STOPS)
@@ -1478,7 +1479,7 @@ function addOverlay(
             "fill-opacity":
                 info.category === "landuse" ? 0.22 : info.category === "perimeter" || info.category === "outage-area" ? 0.3 : info.category === "weather" || info.category === "park" ? 0.18 : 0.14,
             };
-  const choroplethCat = ["census", "enviroscreen", "health", "drought", "firewx"].includes(info.category);
+  const choroplethCat = !!info.metric || ["census", "enviroscreen", "health", "drought", "firewx"].includes(info.category);
 
   map.addLayer(
     { id: `${src}-fill`, type: "fill", source: src, paint: fillPaint, layout: { visibility: "none" } },
@@ -1940,6 +1941,18 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
   const raw = (v: unknown) => (v == null ? "" : String(v).trim());
   const yn = (v: unknown) => (v === "yes" ? t("ynYes") : v === "no" ? t("ynNo") : raw(v));
   const kmMi = (km: unknown) => (num(km) != null ? t("kmMi", { km: fmt(km), mi: fmt(Math.round(num(km)! * 0.6214)) }) : "");
+  if (info.metric) {
+    // Catalog-described choropleth: the area's name and its value.
+    const v = num(p[info.metric.field]);
+    return {
+      ...base,
+      title: str(p.name).split(/[;,]/)[0]!.trim() || kind,
+      rows: [
+        [kind, v != null ? fmtMetric(v, info.metric.fmt, locale) : t("na")],
+        [t("rowArea"), str(p.name).split(/[;,]/).slice(1).join(", ").trim()],
+      ],
+    };
+  }
   switch (info.category) {
     case "space": {
       const isIss = info.name === "iss";

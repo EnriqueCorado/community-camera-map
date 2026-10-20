@@ -5,7 +5,7 @@
 // the home view stays fast and works even if a federal server is down.
 import type { LayerInfo, ViewSpec } from "./api/client";
 import { LIVE_SOURCES, type LiveSource } from "./live-sources";
-import { applyFields, arcgisQueryUrl, chooseSource } from "./view-logic";
+import { applyFields, arcgisQueryUrl, chooseSource, exceededLimit, viewCap } from "./view-logic";
 import { home } from "./baked";
 import { osmSource } from "./osm-sources";
 
@@ -16,7 +16,7 @@ function viewSource(info: LayerInfo, spec: ViewSpec): LiveSource {
     refreshMs: spec.refresh_s * 1000,
     byView: true,
     async load({ bbox, zoom, signal }) {
-      const choice = chooseSource(spec, info.available, bbox, zoom);
+      const choice = chooseSource(spec, info.available && spec.baked !== false, bbox, zoom);
       if (choice === "empty") return EMPTY;
       if (choice === "home") {
         try {
@@ -25,14 +25,25 @@ function viewSource(info: LayerInfo, spec: ViewSpec): LiveSource {
           if (zoom < spec.min_zoom) throw err;
         }
       }
-      const r = await fetch(arcgisQueryUrl(spec, bbox, zoom), { signal });
-      if (!r.ok) throw new Error(String(r.status));
-      return applyFields(await r.json(), spec);
+      // Servers cap a page (often at 1,000): follow pages up to the cap.
+      const cap = viewCap(spec, zoom);
+      const features: GeoJSON.Feature[] = [];
+      for (let page = 0, offset = 0; page < MAX_PAGES; page++) {
+        const r = await fetch(arcgisQueryUrl(spec, bbox, zoom, offset), { signal });
+        if (!r.ok) throw new Error(String(r.status));
+        const json = await r.json();
+        features.push(...applyFields(json, spec).features);
+        const got = (json as { features: unknown[] }).features.length;
+        if (!exceededLimit(json) || got === 0 || features.length >= cap) break;
+        offset += got;
+      }
+      return { type: "FeatureCollection", features };
     },
   };
 }
 
 const EMPTY: FC = { type: "FeatureCollection", features: [] };
+const MAX_PAGES = 5;
 
 /** Hosts a catalog `view` may query (defense in depth: the catalog is ours). */
 const VIEW_HOSTS =

@@ -190,7 +190,7 @@ async def main() -> None:
                 info["available"] = bool(source and source["available"])
                 catalog.append(info)
                 continue
-            if layer.view and not layers.is_available(layer):
+            if layer.view and (not layers.is_available(layer) or not layer.has_home_copy):
                 # e.g. census without a key: the browser still loads it nationally
                 info["available"] = True
                 catalog.append(info)

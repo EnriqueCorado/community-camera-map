@@ -66,3 +66,35 @@ def test_alpr_tiles_are_cached_between_ci_runs():
 
     workflow = (Path(__file__).resolve().parents[2] / ".github/workflows/pages.yml").read_text()
     assert workflow.count("frontend/public/data/alpr\n") == 2  # restore + save
+
+
+def test_self_describing_layers_carry_title_group_metric_and_no_baked_copy():
+    from app.layers.service import Metric
+
+    layer = Layer(
+        name="m",
+        title="M",
+        description="d",
+        category="census",
+        view=View(VIEW.url, {"NAME": "name", "X": "x"}, "polygon", 9, levels=((0, "s"), (5, "c"))),
+        title_es="Eme",
+        group="people",
+        metric=Metric("x", "pct", (1, 2, 3)),
+    )
+    (c,) = sync_catalog([], [layer], {})
+    assert c["title_es"] == "Eme" and c["group"] == "people" and c["available"] is True
+    assert c["metric"] == {"field": "x", "fmt": "pct", "breaks": [1, 2, 3], "ramp": "purple"}
+    assert c["view"]["baked"] is False  # browser must not ask for a home file
+    assert c["view"]["levels"] == [{"min_zoom": 0, "url": "s"}, {"min_zoom": 5, "url": "c"}]
+
+
+def test_every_acs_metric_layer_is_nationwide_with_state_and_county_levels():
+    acs = [lay for lay in LAYERS.values() if lay.metric and lay.name.startswith("census-")]
+    assert len(acs) >= 27
+    for lay in acs:
+        assert lay.title_es and lay.group in {"people", "housing"}
+        assert lay.view and lay.view.url.endswith("/FeatureServer/2")
+        assert [u.rsplit("/", 1)[1] for _, u in lay.view.levels] == ["0", "1"]
+        assert not lay.has_home_copy
+        # computed fields land in "pct"; everything else colors by its own field
+        assert lay.metric.field in lay.view.fields.values() or lay.view.post in {"ratio", "sum"}

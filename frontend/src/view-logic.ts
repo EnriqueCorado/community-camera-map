@@ -41,8 +41,28 @@ export function chooseSource(
   bbox: Bbox,
   zoom: number,
 ): "home" | "query" | "empty" {
-  if (zoom < spec.min_zoom) return available ? "home" : "empty";
+  if (zoom < spec.min_zoom) return levelUrl(spec, zoom) ? "query" : available ? "home" : "empty";
   return available && spec.home_complete && within(bbox, HOME_BBOX) ? "home" : "query";
+}
+
+/** The service layer to query at this zoom: the spec's own from min_zoom,
+ *  else its finest coarser level that applies (states, then counties...). */
+export function levelUrl(spec: ViewSpec, zoom: number): string | null {
+  if (zoom >= spec.min_zoom) return spec.url;
+  let best: { min_zoom: number; url: string } | null = null;
+  for (const l of spec.levels ?? []) if (zoom >= l.min_zoom && (!best || l.min_zoom > best.min_zoom)) best = l;
+  return best?.url ?? null;
+}
+
+/** Most features a view loads: the spec's cap, or more for a coarse level
+ *  (all ~3,200 counties fit; they're simplified hard at that zoom). */
+export const viewCap = (spec: ViewSpec, zoom: number) => (zoom < spec.min_zoom ? 4000 : spec.max);
+
+/** Did ArcGIS stop short (more pages to fetch)? It says so at the top level
+ *  for f=json and under `properties` for f=geojson. */
+export function exceededLimit(json: unknown): boolean {
+  const j = json as { exceededTransferLimit?: unknown; properties?: { exceededTransferLimit?: unknown } } | null;
+  return !!j && (j.exceededTransferLimit === true || j.properties?.exceededTransferLimit === true);
 }
 
 /** Longitude in [-180, 180] (MapLibre reports unwrapped values after panning
@@ -50,7 +70,7 @@ export function chooseSource(
 export const wrapLon = (lon: number) => ((((lon + 180) % 360) + 360) % 360) - 180;
 
 /** ArcGIS query for the features of `spec` intersecting `bbox`. */
-export function arcgisQueryUrl(spec: ViewSpec, bbox: Bbox, zoom: number): string {
+export function arcgisQueryUrl(spec: ViewSpec, bbox: Bbox, zoom: number, offset = 0): string {
   const p = new URLSearchParams({
     where: spec.where || "1=1",
     geometry: bbox.join(","),
@@ -61,12 +81,13 @@ export function arcgisQueryUrl(spec: ViewSpec, bbox: Bbox, zoom: number): string
     returnGeometry: "true",
     outSR: "4326",
     geometryPrecision: "5",
-    resultRecordCount: String(spec.max),
+    resultRecordCount: String(viewCap(spec, zoom)),
     f: "geojson",
   });
+  if (offset > 0) p.set("resultOffset", String(offset));
   // Polygons: drop detail finer than ~half a screen pixel at this zoom.
   if (spec.simplify) p.set("maxAllowableOffset", (180 / (512 * 2 ** zoom)).toPrecision(3));
-  return `${spec.url}/query?${p}`;
+  return `${levelUrl(spec, zoom) ?? spec.url}/query?${p}`;
 }
 
 /** EPA AQI band (mirrors live-parsers aqiCategory / backend aqi_category). */
@@ -104,6 +125,20 @@ const POST: Record<string, (p: Record<string, unknown>) => void> = {
   // NOAA river gauges: links only to NOAA's own gauge pages.
   gauge: (p) => {
     p.page = typeof p.page === "string" && p.page.startsWith("https://water.noaa.gov/") ? p.page : "";
+  },
+  // Census: a percentage from a numerator/denominator pair (e.g. non-citizens / population).
+  ratio: (p) => {
+    const n = Number(p._num), d = Number(p._den);
+    p.pct = p._num != null && Number.isFinite(n) && d > 0 ? Math.round((1000 * n) / d) / 10 : null;
+    delete p._num;
+    delete p._den;
+  },
+  // Census: two percentage bands added up (e.g. 60-89 + 90+ minute commutes).
+  sum: (p) => {
+    const a = Number(p._a), b = Number(p._b);
+    p.pct = p._a != null && p._b != null && Number.isFinite(a) && Number.isFinite(b) ? Math.round((a + b) * 10) / 10 : null;
+    delete p._a;
+    delete p._b;
   },
   // National Bridge Inventory text fields come wrapped in single quotes.
   nbi: (p) => {

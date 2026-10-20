@@ -57,6 +57,10 @@ class View:
     # county), so it can stand in for a query there. County-filtered bakes
     # don't cover neighbors inside the box (Ripon, Livingston): leave False.
     home_complete: bool = False
+    # Coarser versions of the same data (same fields) for zoomed-out views:
+    # (min_zoom, url) pairs, e.g. states from z3 and counties from z6 under a
+    # tract layer at z9, so the whole US reads at every zoom.
+    levels: tuple[tuple[float, str], ...] = ()
 
     def as_json(self) -> dict:
         return {
@@ -71,6 +75,27 @@ class View:
             "refresh_s": self.refresh_s,
             "post": self.post,
             "home_complete": self.home_complete,
+            "levels": [{"min_zoom": z, "url": u} for z, u in self.levels],
+        }
+
+
+@dataclass(frozen=True)
+class Metric:
+    """A choropleth: color polygons by one numeric property. `breaks` are the
+    legend stops (low to high) painted with the frontend's named `ramp`
+    (purple | blue | green | orange | red | teal, see colors.ts RAMPS)."""
+
+    field: str
+    fmt: str  # pct | usd | year | years | score | index | count
+    breaks: tuple[float, ...]
+    ramp: str = "purple"
+
+    def as_json(self) -> dict:
+        return {
+            "field": self.field,
+            "fmt": self.fmt,
+            "breaks": list(self.breaks),
+            "ramp": self.ramp,
         }
 
 
@@ -101,14 +126,405 @@ class Layer:
     # OpenStreetMap place layer: its Overpass selector, so the browser can load
     # any city in the US (the baked copy covers the home region)
     osm: str | None = None
+    # Self-describing layers (newer ones): Spanish title, sidebar group and
+    # choropleth spec travel in the catalog, so the frontend needs no edits.
+    title_es: str | None = None
+    group: str | None = None
+    metric: Metric | None = None
+
+    @property
+    def has_home_copy(self) -> bool:
+        """Is there a baked/served home-area file (vs. national service only)?"""
+        return bool(self.loader or self.file or self.same_data_as)
 
     def catalog_extras(self) -> dict:
         """Catalog fields the frontend needs beyond name/title/category."""
         return {
             "coverage": "usa" if self.view or self.osm else self.coverage,
-            "view": self.view.as_json() if self.view else None,
+            "view": {**self.view.as_json(), "baked": self.has_home_copy} if self.view else None,
             "osm": self.osm,
+            "title_es": self.title_es,
+            "group": self.group,
+            "metric": self.metric.as_json() if self.metric else None,
         }
+
+
+ACS_VIEWS = "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services"
+
+
+def _acs_view(service: str, fields: dict[str, str]) -> View:
+    """An Esri Living Atlas ACS view: tracts from z9, counties from z5 and
+    states below that (layers 2/1/0 share the same fields)."""
+    url = f"{ACS_VIEWS}/{service}/FeatureServer"
+    return View(
+        f"{url}/2",
+        fields,
+        "polygon",
+        min_zoom=9,
+        max_features=1500,
+        simplify=True,
+        refresh_s=24 * 3600,
+        levels=((0, f"{url}/0"), (5, f"{url}/1")),
+    )
+
+
+def _acs_metric(
+    name: str,
+    title: str,
+    title_es: str,
+    what: str,
+    service: str,
+    fields: dict[str, str],
+    metric: Metric,
+    group: str = "people",
+    post: str | None = None,
+) -> Layer:
+    """A nationwide ACS choropleth loaded straight from Esri's Living Atlas
+    (state -> county -> tract by zoom; no baked copy needed)."""
+    view = _acs_view(service, {"NAME": "name", **fields})
+    return Layer(
+        name=name,
+        title=title,
+        description=f"{what}, by census tract (county and state when zoomed out). ACS 2020-2024.",
+        category="census",
+        coverage="usa",
+        view=View(**{**view.__dict__, "post": post}),
+        title_es=title_es,
+        group=group,
+        metric=metric,
+    )
+
+
+# name, title, Spanish title, what it measures, ACS view, source field -> our
+# property, legend breaks (national tract spread), format, ramp, group
+_ACS_METRICS: tuple[tuple, ...] = (
+    (
+        "census-median-age",
+        "Median age",
+        "Edad mediana",
+        "Median age of residents",
+        "ACS_Population_and_Housing_Basics_View_Boundaries",
+        {"B01002_001E": "median_age"},
+        (30, 35, 40, 45, 50),
+        "years",
+        "teal",
+        "people",
+    ),
+    (
+        "census-hispanic",
+        "Hispanic or Latino",
+        "Hispanos o latinos",
+        "Share of residents who are Hispanic or Latino",
+        "ACS_Race_and_Hispanic_Origin_View_Boundaries",
+        {"B03002_calc_pctHispLatE": "pct_hispanic"},
+        (2, 5, 10, 25, 55),
+        "pct",
+        "purple",
+        "people",
+    ),
+    (
+        "census-black",
+        "Black",
+        "Afroamericanos",
+        "Share of residents who are Black (non-Hispanic)",
+        "ACS_Race_and_Hispanic_Origin_View_Boundaries",
+        {"B03002_calc_pctBlackE": "pct_black"},
+        (1, 4, 15, 40, 70),
+        "pct",
+        "purple",
+        "people",
+    ),
+    (
+        "census-asian",
+        "Asian",
+        "Asiáticos",
+        "Share of residents who are Asian (non-Hispanic)",
+        "ACS_Race_and_Hispanic_Origin_View_Boundaries",
+        {"B03002_calc_pctAsianE": "pct_asian"},
+        (0.5, 2, 6, 15, 30),
+        "pct",
+        "purple",
+        "people",
+    ),
+    (
+        "census-white-nh",
+        "White (non-Hispanic)",
+        "Blancos (no hispanos)",
+        "Share of residents who are White, not Hispanic",
+        "ACS_Race_and_Hispanic_Origin_View_Boundaries",
+        {"B03002_calc_pctNHWhiteE": "pct_white_nh"},
+        (10, 30, 50, 70, 90),
+        "pct",
+        "purple",
+        "people",
+    ),
+    (
+        "census-limited-english",
+        "Limited English households",
+        "Hogares con inglés limitado",
+        "People 5+ in households where no adult speaks English very well",
+        "ACS_English_Ability_and_Linguistic_Isolation_View_Boundaries",
+        {"B16003_calc_pctLEHE": "pct_limited_english"},
+        (1, 3, 6, 12, 20),
+        "pct",
+        "purple",
+        "people",
+    ),
+    (
+        "census-noncitizen",
+        "Not a U.S. citizen",
+        "No ciudadanos de EE. UU.",
+        "Share of residents who are not U.S. citizens",
+        "ACS_Nativity_and_Citizenship_View_Boundaries",
+        {"B05011_002E": "_num", "B05003_001E": "_den"},
+        (1, 3, 6, 12, 20),
+        "pct",
+        "purple",
+        "people",
+        "ratio",
+    ),
+    (
+        "census-children",
+        "Children (under 18)",
+        "Niños (menores de 18)",
+        "Share of residents under 18",
+        "ACS_Population_and_Housing_Basics_View_Boundaries",
+        {"B01001_calc_pctLT18E": "pct_children"},
+        (12, 17, 21, 26, 30),
+        "pct",
+        "teal",
+        "people",
+    ),
+    (
+        "census-seniors",
+        "Seniors (65+)",
+        "Adultos mayores (65+)",
+        "Share of residents 65 and older",
+        "ACS_Population_and_Housing_Basics_View_Boundaries",
+        {"B01001_calc_pctGE65E": "pct_seniors"},
+        (8, 12, 17, 22, 28),
+        "pct",
+        "teal",
+        "people",
+    ),
+    (
+        "census-veterans",
+        "Veterans",
+        "Veteranos",
+        "Share of adults who are veterans",
+        "ACS_Veteran_Status_View_Boundaries",
+        {"B21001_calc_pctVetsE": "pct_veterans"},
+        (2, 3.5, 6, 8, 11),
+        "pct",
+        "teal",
+        "people",
+    ),
+    (
+        "census-disability",
+        "People with a disability",
+        "Personas con discapacidad",
+        "Share of residents with a disability",
+        "ACS_Disability_Status_View_Boundaries",
+        {"B18101_calc_pctDE": "pct_disability"},
+        (7, 10, 13, 18, 22),
+        "pct",
+        "teal",
+        "people",
+    ),
+    (
+        "census-bachelors",
+        "Bachelor's degree or higher",
+        "Licenciatura o más",
+        "Adults 25+ with a bachelor's degree or higher",
+        "ACS_Educational_Attainment_View_Boundaries",
+        {"B15002_calc_pctGEBAE": "pct_bachelors"},
+        (12, 20, 30, 47, 65),
+        "pct",
+        "green",
+        "people",
+    ),
+    (
+        "census-no-diploma",
+        "No high-school diploma",
+        "Sin diploma de preparatoria",
+        "Adults 25+ without a high-school diploma",
+        "ACS_Educational_Attainment_View_Boundaries",
+        {"B15002_calc_pctLTHSE": "pct_no_diploma"},
+        (2, 4, 8, 15, 24),
+        "pct",
+        "orange",
+        "people",
+    ),
+    (
+        "census-uninsured",
+        "No health insurance (all ages)",
+        "Sin seguro médico (todas las edades)",
+        "Share of residents with no health insurance",
+        "ACS_Health_Insurance_by_Age_by_Race_View_Boundaries",
+        {"B27010_calc_pctNoInsE": "pct_uninsured"},
+        (2, 4, 7, 12, 18),
+        "pct",
+        "orange",
+        "people",
+    ),
+    (
+        "census-unemployment",
+        "Unemployment rate",
+        "Tasa de desempleo",
+        "Share of the labor force that is unemployed (5-year average)",
+        "ACS_Employment_Status_View_Boundaries",
+        {"B23025_calc_pctUnempE": "pct_unemployed"},
+        (1, 2.5, 4.5, 7, 11),
+        "pct",
+        "orange",
+        "housing",
+    ),
+    (
+        "census-home-value",
+        "Median home value",
+        "Valor mediano de la vivienda",
+        "Median value of owner-occupied homes",
+        "ACS_Population_and_Housing_Basics_View_Boundaries",
+        {"B25077_001E": "median_home_value"},
+        (125000, 200000, 300000, 500000, 800000),
+        "usd",
+        "blue",
+        "housing",
+    ),
+    (
+        "census-rent",
+        "Median rent",
+        "Renta mediana",
+        "Median monthly contract rent",
+        "ACS_Population_and_Housing_Basics_View_Boundaries",
+        {"B25058_001E": "median_rent"},
+        (600, 800, 1100, 1650, 2150),
+        "usd",
+        "blue",
+        "housing",
+    ),
+    (
+        "census-rent-burden",
+        "Rent-burdened renters (30%+ of income)",
+        "Inquilinos con carga de renta (30%+)",
+        "Renter households paying 30% or more of income on rent",
+        "ACS_Housing_Costs_View_Boundaries",
+        {"B25070_calc_pctGE30pctE": "pct_rent_burdened"},
+        (20, 30, 45, 55, 65),
+        "pct",
+        "red",
+        "housing",
+    ),
+    (
+        "census-overcrowded",
+        "Overcrowded homes",
+        "Viviendas hacinadas",
+        "Occupied homes with more than one person per room",
+        "ACS_Occupants_per_Room_View_Boundaries",
+        {"B25015_calc_pctTotE": "pct_overcrowded"},
+        (1, 2, 5, 10, 20),
+        "pct",
+        "red",
+        "housing",
+    ),
+    (
+        "census-vacancy",
+        "Vacant homes",
+        "Viviendas desocupadas",
+        "Share of housing units that are vacant",
+        "ACS_Housing_Units_Occupancy_View_Boundaries",
+        {"B25002_calc_pctVacE": "pct_vacant"},
+        (2, 4, 7, 13, 22),
+        "pct",
+        "orange",
+        "housing",
+    ),
+    (
+        "census-housing-age",
+        "Median year built",
+        "Año mediano de construcción",
+        "Median year homes were built",
+        "ACS_Housing_Units_by_Year_Built_View_Boundaries",
+        {"B25035_001E": "median_year_built"},
+        (1950, 1963, 1978, 1990, 2001),
+        "year",
+        "blue",
+        "housing",
+    ),
+    (
+        "census-no-car",
+        "Households without a car",
+        "Hogares sin auto",
+        "Households with no vehicle available",
+        "ACS_Vehicle_Availability_View_Boundaries",
+        {"B08201_calc_pctNoVehE": "pct_no_car"},
+        (1, 2, 5, 10, 20),
+        "pct",
+        "orange",
+        "housing",
+    ),
+    (
+        "census-no-internet",
+        "Households with no internet",
+        "Hogares sin internet",
+        "Households with no internet access",
+        "ACS_Internet_Connectivity_View_Boundaries",
+        {"B28002_calc_pctNoIntE": "pct_no_internet"},
+        (1, 2, 5, 10, 16),
+        "pct",
+        "orange",
+        "housing",
+    ),
+    (
+        "census-broadband",
+        "Broadband subscription",
+        "Suscripción a banda ancha",
+        "Households with a broadband internet subscription",
+        "ACS_Internet_Access_by_Income_View_Boundaries",
+        {"B28004_calc_pctBBE": "pct_broadband"},
+        (80, 86, 92, 96, 98),
+        "pct",
+        "green",
+        "housing",
+    ),
+    (
+        "census-transit",
+        "Commute by public transit",
+        "Viajan en transporte público",
+        "Workers who commute by public transportation",
+        "ACS_Transportation_to_Work_View_Boundaries",
+        {"B08301_calc_pctPublicE": "pct_transit"},
+        (0.5, 2, 5, 10, 25),
+        "pct",
+        "teal",
+        "housing",
+    ),
+    (
+        "census-work-from-home",
+        "Work from home",
+        "Trabajan desde casa",
+        "Workers who work from home",
+        "ACS_Transportation_to_Work_View_Boundaries",
+        {"B08301_calc_pctHomeE": "pct_wfh"},
+        (3.5, 7, 12, 19, 28),
+        "pct",
+        "teal",
+        "housing",
+    ),
+    (
+        "census-long-commute",
+        "Long commutes (60+ min)",
+        "Traslados largos (60+ min)",
+        "Commuters whose trip to work takes an hour or more",
+        "ACS_Travel_Time_To_Work_View_Boundaries",
+        {"B08303_calc_pct60to89E": "_a", "B08303_calc_pctGE90E": "_b"},
+        (3, 6, 10, 15, 25),
+        "pct",
+        "red",
+        "housing",
+        "sum",
+    ),
+)
 
 
 # County bounding box (WGS84) for spatially filtering large statewide/national layers.
@@ -733,6 +1149,7 @@ LAYERS: dict[str, Layer] = {
         ),
         category="alpr",
         file="alpr_ca.geojson",
+        coverage="usa",  # nationwide tiles (alpr/<lat>_<lon>.geojson) load as you pan
     ),
     "city-limits": Layer(
         name="city-limits",
@@ -798,14 +1215,9 @@ LAYERS: dict[str, Layer] = {
         category="census",
         loader=_census,
         requires_key=True,
-        view=View(
-            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Median_Household_Income_View_Boundaries/FeatureServer/2",
+        view=_acs_view(
+            "ACS_Median_Household_Income_View_Boundaries",
             {"NAME": "name", "B19049_001E": "median_income"},
-            "polygon",
-            min_zoom=9,
-            max_features=1500,
-            simplify=True,
-            refresh_s=24 * 3600,
         ),
     ),
     "census-spanish": Layer(
@@ -815,14 +1227,9 @@ LAYERS: dict[str, Layer] = {
         category="census",
         requires_key=True,
         same_data_as="census",
-        view=View(
-            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Language_Spoken_at_Home_View_Boundaries/FeatureServer/2",
+        view=_acs_view(
+            "ACS_Language_Spoken_at_Home_View_Boundaries",
             {"NAME": "name", "B16007_calc_pctSpanE": "pct_spanish"},
-            "polygon",
-            min_zoom=9,
-            max_features=1500,
-            simplify=True,
-            refresh_s=24 * 3600,
         ),
     ),
     "census-poverty": Layer(
@@ -832,14 +1239,9 @@ LAYERS: dict[str, Layer] = {
         category="census",
         requires_key=True,
         same_data_as="census",
-        view=View(
-            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Poverty_Status_View_Boundaries/FeatureServer/2",
+        view=_acs_view(
+            "ACS_Poverty_Status_View_Boundaries",
             {"NAME": "name", "B17020_calc_pctPovE": "pct_poverty"},
-            "polygon",
-            min_zoom=9,
-            max_features=1500,
-            simplify=True,
-            refresh_s=24 * 3600,
         ),
     ),
     "census-renters": Layer(
@@ -849,14 +1251,9 @@ LAYERS: dict[str, Layer] = {
         category="census",
         requires_key=True,
         same_data_as="census",
-        view=View(
-            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Housing_Units_Occupancy_View_Boundaries/FeatureServer/2",
+        view=_acs_view(
+            "ACS_Housing_Units_Occupancy_View_Boundaries",
             {"NAME": "name", "B25003_calc_pctRentE": "pct_renters"},
-            "polygon",
-            min_zoom=9,
-            max_features=1500,
-            simplify=True,
-            refresh_s=24 * 3600,
         ),
     ),
     "census-foreign-born": Layer(
@@ -866,16 +1263,27 @@ LAYERS: dict[str, Layer] = {
         category="census",
         requires_key=True,
         same_data_as="census",
-        view=View(
-            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Population_and_Housing_Basics_View_Boundaries/FeatureServer/2",
+        view=_acs_view(
+            "ACS_Population_and_Housing_Basics_View_Boundaries",
             {"NAME": "name", "B05003_calc_pctFBE": "pct_foreign_born"},
-            "polygon",
-            min_zoom=9,
-            max_features=1500,
-            simplify=True,
-            refresh_s=24 * 3600,
         ),
     ),
+    # --- Census, nationwide (catalog-described choropleths) ---
+    **{
+        row[0]: _acs_metric(
+            row[0],
+            row[1],
+            row[2],
+            row[3],
+            row[4],
+            row[5],
+            # computed fields (post) land in "pct"
+            Metric("pct" if len(row) > 10 else next(iter(row[5].values())), row[7], row[6], row[8]),
+            group=row[9],
+            post=row[10] if len(row) > 10 else None,
+        )
+        for row in _ACS_METRICS
+    },
     # --- Public safety & hazards ---
     "hospitals": Layer(
         name="hospitals",
@@ -2033,6 +2441,8 @@ class LayerService:
             return True
         if layer.file is not None:
             return (DATA_DIR / layer.file).is_file()
+        if layer.view and not layer.has_home_copy:
+            return True  # national service only; the browser loads it
         if layer.requires_key:
             if layer.name == "census":
                 return bool(self.settings.census_api_key)
@@ -2053,8 +2463,8 @@ class LayerService:
         if layer is None:
             raise KeyError(name)
 
-        if layer.client_side:
-            raise KeyError(name)  # tiles come straight from the tile server; no GeoJSON
+        if layer.client_side or not layer.has_home_copy:
+            raise KeyError(name)  # tiles / national service straight to the browser; no GeoJSON
         if layer.same_data_as:
             return await self.get_bytes(layer.same_data_as)
         if layer.file is not None:

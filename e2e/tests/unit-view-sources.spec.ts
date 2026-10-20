@@ -1,7 +1,8 @@
 // Unit tests for nationwide view loading (no browser).
 import { test, expect } from "@playwright/test";
-import { applyFields, arcgisQueryUrl, chooseSource, covers, within, wrapLon, HOME_BBOX } from "../../frontend/src/view-logic";
+import { applyFields, arcgisQueryUrl, chooseSource, covers, exceededLimit, levelUrl, within, wrapLon, HOME_BBOX } from "../../frontend/src/view-logic";
 import type { ViewSpec } from "../../frontend/src/api/client";
+import { RAMPS, fmtMetric, metricStops } from "../../frontend/src/colors";
 
 const spec = (over: Partial<ViewSpec> = {}): ViewSpec => ({
   kind: "arcgis", url: "https://x.example/FeatureServer/0", fields: { NAME: "name", ADDR: "address" },
@@ -79,6 +80,31 @@ test("chooseSource: baked copy, national query, or nothing", () => {
   expect(chooseSource(clipped, true, chicago, 12)).toBe("query");
 });
 
+test("levels: states, then counties, then tracts as you zoom in", () => {
+  const acs = spec({
+    url: "https://x.example/FeatureServer/2", min_zoom: 9, max: 1500, geometry: "polygon",
+    levels: [{ min_zoom: 0, url: "https://x.example/FeatureServer/0" }, { min_zoom: 5, url: "https://x.example/FeatureServer/1" }],
+  });
+  const chicago: [number, number, number, number] = [-88, 41.7, -87.5, 42];
+  expect(levelUrl(acs, 3)).toBe("https://x.example/FeatureServer/0");
+  expect(levelUrl(acs, 6.5)).toBe("https://x.example/FeatureServer/1");
+  expect(levelUrl(acs, 11)).toBe("https://x.example/FeatureServer/2");
+  expect(levelUrl(spec({ min_zoom: 8 }), 5)).toBeNull();
+  expect(chooseSource(acs, true, chicago, 4)).toBe("query"); // zoomed out still shows the whole US
+  const u = new URL(arcgisQueryUrl(acs, chicago, 6, 1000));
+  expect(u.pathname).toBe("/FeatureServer/1/query");
+  expect(u.searchParams.get("resultOffset")).toBe("1000");
+  expect(u.searchParams.get("resultRecordCount")).toBe("4000"); // every county fits
+  expect(new URL(arcgisQueryUrl(acs, chicago, 10)).searchParams.has("resultOffset")).toBe(false);
+});
+
+test("exceededLimit reads both f=json and f=geojson paging flags", () => {
+  expect(exceededLimit({ exceededTransferLimit: true })).toBe(true);
+  expect(exceededLimit({ properties: { exceededTransferLimit: true } })).toBe(true);
+  expect(exceededLimit({ features: [] })).toBe(false);
+  expect(exceededLimit(null)).toBe(false);
+});
+
 test("wrapLon folds world copies back into [-180, 180]", () => {
   expect(wrapLon(-120)).toBe(-120);
   expect(wrapLon(240)).toBe(-120);
@@ -107,4 +133,27 @@ test("quick views: apply only known layers; recognize the active one", () => {
   expect(activePreset({ flood: true }, known)).toBeNull();
   expect(activePreset({}, known)).toBeNull();
   expect(new Set(PRESETS.map((p) => p.id)).size).toBe(PRESETS.length);
+});
+
+test("census posts: ratio and sum compute pct and drop their inputs", () => {
+  const fc = (props: Record<string, unknown>, post: string) =>
+    applyFields({ features: [{ type: "Feature", geometry: { type: "Point", coordinates: [0, 0] }, properties: props }] },
+      spec({ fields: Object.fromEntries(Object.keys(props).map((k) => [k, k])), post })).features[0]!.properties;
+  expect(fc({ NAME: "T", _num: 25, _den: 200 }, "ratio")).toEqual({ NAME: "T", pct: 12.5 });
+  expect(fc({ _num: 5, _den: 0 }, "ratio")).toEqual({ pct: null }); // empty tract: no divide by zero
+  expect(fc({ _num: null, _den: 100 }, "ratio")).toEqual({ pct: null });
+  expect(fc({ _a: 3.2, _b: 1.15 }, "sum")).toEqual({ pct: 4.4 });
+  expect(fc({ _a: 3, _b: null }, "sum")).toEqual({ pct: null });
+});
+
+test("metric legends: breaks paired with ramp colors, values formatted by unit", () => {
+  const m = { field: "x", fmt: "usd" as const, breaks: [600, 800, 1100], ramp: "blue" };
+  const stops = metricStops(m);
+  expect(stops.map(([v]) => v)).toEqual([600, 800, 1100]);
+  expect(stops[0]![1]).toBe(RAMPS.blue![0]);
+  expect(metricStops({ ...m, ramp: "nope" })[0]![1]).toBe(RAMPS.purple![0]); // unknown ramp: default
+  expect(fmtMetric(125000, "usd", "en-US", true)).toBe("$125k");
+  expect(fmtMetric(950, "usd", "en-US", true)).toBe("$950");
+  expect(fmtMetric(12.34, "pct", "en-US")).toBe("12.3%");
+  expect(fmtMetric(1978.4, "year", "en-US")).toBe("1978");
 });

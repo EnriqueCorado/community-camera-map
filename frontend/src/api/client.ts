@@ -36,6 +36,18 @@ export interface LayerInfo {
   osm?: string | null;
   /** Loads any area in view from a national service (see view-sources.ts). */
   view?: ViewSpec | null;
+  /** Self-describing layers: Spanish title, sidebar group, choropleth. */
+  title_es?: string | null;
+  group?: string | null;
+  metric?: MetricSpec | null;
+}
+
+/** Color polygons by one numeric property (see colors.ts metricStops). */
+export interface MetricSpec {
+  field: string;
+  fmt: "pct" | "usd" | "year" | "years" | "score" | "index" | "count";
+  breaks: number[];
+  ramp: string;
 }
 
 export interface ViewSpec {
@@ -52,6 +64,10 @@ export interface ViewSpec {
   post?: string | null;
   /** The baked copy covers the whole home box (bbox-clipped, not county-filtered). */
   home_complete?: boolean;
+  /** False when there's no baked home copy (national-only layer). */
+  baked?: boolean;
+  /** Coarser copies of the same data (same fields) for zoomed-out views. */
+  levels?: { min_zoom: number; url: string }[];
 }
 
 export interface Meta {

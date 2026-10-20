@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api, type LayerInfo } from "../api/client";
+import { registerLayerTitles } from "../i18n";
 
 /** Loads the overlay-layer catalog once. Non-fatal: on error, returns []. */
 export function useLayers(): LayerInfo[] {
@@ -9,6 +10,7 @@ export function useLayers(): LayerInfo[] {
     api
       .listLayers()
       .then((data) => {
+        registerLayerTitles(data);
         if (!cancelled) setLayers(data);
       })
       .catch(() => {

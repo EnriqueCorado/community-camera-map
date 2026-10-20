@@ -5,7 +5,7 @@ import { ago } from "../freshness";
 import { matchCamera, type LayerState } from "./MapView";
 import {
   CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
-  HEALTH_STOPS, DROUGHT_COLORS, HEAT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, VOTING_KEYS, WVAL_COLORS,
+  HEALTH_STOPS, metricStops, fmtMetric, DROUGHT_COLORS, HEAT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, VOTING_KEYS, WVAL_COLORS,
   WVAL_KEYS, GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS,
   VOLCANO_COLORS, VOLCANO_KEYS, DEV_STAGES,
 } from "../colors";
@@ -88,9 +88,9 @@ function Section({
   );
 }
 
-type Group = "cameras" | "live" | "civic" | "growth" | "weather" | "hazards" | "roads" | "places" | "nature" | "planning" | "infra" | "other";
+type Group = "cameras" | "live" | "civic" | "help" | "people" | "housing" | "growth" | "weather" | "hazards" | "roads" | "places" | "nature" | "planning" | "infra" | "other";
 
-const GROUP_ORDER: Group[] = ["cameras", "live", "civic", "growth", "weather", "hazards", "roads", "places", "nature", "planning", "infra", "other"];
+const GROUP_ORDER: Group[] = ["cameras", "live", "civic", "help", "people", "housing", "growth", "weather", "hazards", "roads", "places", "nature", "planning", "infra", "other"];
 
 const GROUP_KEYS: Record<Group, Key> = {
   cameras: "groupCameras",
@@ -103,6 +103,9 @@ const GROUP_KEYS: Record<Group, Key> = {
   planning: "groupPlanning",
   infra: "groupInfra",
   civic: "groupCivic",
+  help: "groupHelp",
+  people: "groupPeople",
+  housing: "groupHousing",
   growth: "groupGrowth",
   other: "groupOther",
 };
@@ -118,13 +121,18 @@ const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
       ["roads", ["lane-closures", "message-signs", "chain-controls", "transit-routes", "transit-stops", "amtrak", "airports", "railroads"]],
       ["places", ["cooling-centers", "shelters", "sandbags", "mobile-home-parks", "food-banks", "clinics", "hospitals", "pharmacies", "community-centers", "libraries", "farmers-markets", "law-enforcement", "fire-stations", "schools", "parks", "playgrounds", "aed", "drinking-water", "restrooms", "ev-chargers", "free-wifi"]],
       ["nature", ["national-parks", "wildlife", "wikipedia", "historic-places", "historical-markers", "rivers", "streamflow"]],
-      ["planning", ["city-limits", "county-islands", "general-plan", "zoning", "census", "census-spanish", "census-foreign-born", "census-poverty", "census-renters", "supervisor-districts", "elementary-districts", "high-school-districts", "fire-districts", "mosquito-districts", "zip-codes", "congressional-districts"]],
+      ["planning", ["city-limits", "county-islands", "general-plan", "zoning", "supervisor-districts", "elementary-districts", "high-school-districts", "fire-districts", "mosquito-districts", "zip-codes", "congressional-districts"]],
       ["infra", ["power-plants", "substations", "bridges", "power-outages", "outage-areas"]],
       ["growth", ["housing-proposals", "new-homes", "ceqa-projects", "annexations"]],
+      ["people", ["census", "census-spanish", "census-foreign-born", "census-poverty", "census-renters"]],
       ["civic", ["voting", "wastewater", "health-asthma", "health-diabetes", "health-uninsured", "food-insecurity", "snap-stores"]],
     ] as [Group, string[]][]
   ).flatMap(([g, names]) => names.map((n) => [n, g])),
 );
+
+/** A layer's theme: the list above, else the group its catalog entry names. */
+const groupOf = (l: LayerInfo): Group =>
+  LAYER_GROUP[l.name] ?? (l.group && l.group in GROUP_KEYS ? (l.group as Group) : "other");
 
 /** Vendor id -> label (brand names stay as-is; generic labels are translated). */
 const VENDORS: { id: string; label?: string; labelKey?: Key }[] = [
@@ -300,6 +308,8 @@ export function Sidebar({
   const enviroOn = layers.overlays["enviroscreen"] ?? false;
   // The first health layer that's on picks the legend (they share a style).
   const healthOn = Object.keys(HEALTH_STOPS).find((n) => layers.overlays[n]);
+  // The first catalog-described choropleth that's on picks the legend.
+  const metricOn = overlayInfos.find((l) => l.metric && layers.overlays[l.name]);
   const droughtOn = layers.overlays["drought"] ?? false;
   const heatOn = layers.overlays["heat-risk"] ?? false;
   const reservoirsOn = layers.overlays["reservoirs"] ?? false;
@@ -322,7 +332,7 @@ export function Sidebar({
   const showAlpr = !!alprInfo && matchesQuery(title(alprInfo));
   const groups = GROUP_ORDER.map(
     (key) =>
-      [key, otherOverlays.filter((l) => (LAYER_GROUP[l.name] ?? "other") === key && matchesQuery(title(l)))] as const,
+      [key, otherOverlays.filter((l) => groupOf(l) === key && matchesQuery(title(l)))] as const,
   );
   const anyLayerMatch = showTraffic || showAlpr || groups.some(([, items]) => items.length > 0);
 
@@ -575,6 +585,16 @@ export function Sidebar({
           </div>
         )}
 
+        {metricOn?.metric && (
+          <Legend
+            id="metric-legend"
+            title={title(metricOn)}
+            items={metricStops(metricOn.metric).map(([v, c], i, all) => [
+              c,
+              `${fmtMetric(v, metricOn.metric!.fmt, locale, true)}${i === all.length - 1 ? "+" : ""}`,
+            ])}
+          />
+        )}
         {healthOn && (
           <Legend
             id="health-legend"
