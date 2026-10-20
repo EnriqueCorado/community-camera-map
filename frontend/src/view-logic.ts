@@ -48,11 +48,21 @@ export function chooseSource(
 /** The service layer to query at this zoom: the spec's own from min_zoom,
  *  else its finest coarser level that applies (states, then counties...). */
 export function levelUrl(spec: ViewSpec, zoom: number): string | null {
-  if (zoom >= spec.min_zoom) return spec.url;
-  let best: { min_zoom: number; url: string } | null = null;
-  for (const l of spec.levels ?? []) if (zoom >= l.min_zoom && (!best || l.min_zoom > best.min_zoom)) best = l;
-  return best?.url ?? null;
+  return zoom >= spec.min_zoom ? spec.url : (levelAt(spec, zoom)?.url ?? null);
 }
+
+/** The coarser level in use below min_zoom (finest that applies), if any. */
+function levelAt(spec: ViewSpec, zoom: number) {
+  if (zoom >= spec.min_zoom) return null;
+  let best: NonNullable<ViewSpec["levels"]>[number] | null = null;
+  for (const l of spec.levels ?? []) if (zoom >= l.min_zoom && (!best || l.min_zoom > best.min_zoom)) best = l;
+  return best;
+}
+
+/** The field allowlist at this zoom: a level's own (its source names fields
+ *  differently, e.g. counties have no tract id), else the spec's. */
+export const fieldsAt = (spec: ViewSpec, zoom: number): Record<string, string> =>
+  levelAt(spec, zoom)?.fields ?? spec.fields;
 
 /** Most features a view loads: the spec's cap, or more for a coarse level
  *  (all ~3,200 counties fit; they're simplified hard at that zoom). */
@@ -77,7 +87,7 @@ export function arcgisQueryUrl(spec: ViewSpec, bbox: Bbox, zoom: number, offset 
     geometryType: "esriGeometryEnvelope",
     inSR: "4326",
     spatialRel: "esriSpatialRelIntersects",
-    outFields: Object.keys(spec.fields).join(","),
+    outFields: Object.keys(fieldsAt(spec, zoom)).join(","),
     returnGeometry: "true",
     outSR: "4326",
     geometryPrecision: "5",
@@ -95,8 +105,38 @@ function aqiBand(aqi: number): string {
   return aqi <= 50 ? "good" : aqi <= 100 ? "moderate" : aqi <= 150 ? "usg" : aqi <= 200 ? "unhealthy" : aqi <= 300 ? "very" : "hazardous";
 }
 
+/** "48201432401" -> "Tract 4324.01"; a 12-digit block group id ->
+ *  "Block group 1, tract 4324.01"; anything else (county/state ids) -> "". */
+export function tractLabel(geoid: unknown): string {
+  const g = typeof geoid === "string" ? geoid.trim() : "";
+  if (!/^\d{11,12}$/.test(g)) return "";
+  const t = g.slice(5, 11);
+  const code = `${Number(t.slice(0, 4))}${t.endsWith("00") ? "" : `.${t.slice(4)}`}`;
+  return g.length === 12 ? `Block group ${g[11]}, tract ${code}` : `Tract ${code}`;
+}
+
+/** One area name for the popup title from its parts (`_geoid`, `_county`,
+ *  `_state`, whichever the level has): "Tract 4324.01, Harris County, TX". */
+function placeName(p: Record<string, unknown>) {
+  const parts = [tractLabel(p._geoid), p._county, p._state].map((v) => (v == null ? "" : String(v).trim()));
+  p.name = parts.filter(Boolean).join(", ") || null;
+  delete p._geoid;
+  delete p._county;
+  delete p._state;
+}
+
 /** Named cleanups some sources need (mirrors backend transforms). */
 const POST: Record<string, (p: Record<string, unknown>) => void> = {
+  // Nationwide area layers: name the tract/county/state for the popup.
+  place: placeName,
+  // FCC broadband: % of locations without 100/20 Mbps (1 - served / total), then the name.
+  bdc: (p) => {
+    const d = Number(p._den), s = Number(p._served);
+    p.pct = p._den != null && p._served != null && d > 0 && Number.isFinite(s) ? Math.round(1000 * (1 - s / d)) / 10 : null;
+    delete p._den;
+    delete p._served;
+    placeName(p);
+  },
   // EPA Superfund: the site-profile link is buried in an HTML field.
   epa: (p) => {
     const m = /href="(https:\/\/cumulis\.epa\.gov\/supercpad\/cursites\/csitinfo\.cfm\?id=\d+)"/.exec(String(p._profile ?? ""));
@@ -146,19 +186,21 @@ const POST: Record<string, (p: Record<string, unknown>) => void> = {
   },
 };
 
-/** Keep only the spec's fields (renamed), then run its cleanup. Anything the
- *  source adds later never reaches the map or popups. */
-export function applyFields(json: unknown, spec: ViewSpec): FC {
+/** Keep only the spec's fields (renamed; a coarser level's own at `zoom`),
+ *  then run its cleanup. Anything the source adds later never reaches the
+ *  map or popups. */
+export function applyFields(json: unknown, spec: ViewSpec, zoom = Infinity): FC {
   const j = json as { features?: unknown; error?: unknown } | null;
   // ArcGIS reports errors with HTTP 200 and an `error` body.
   if (!j || typeof j !== "object" || j.error || !Array.isArray(j.features)) throw new Error("bad ArcGIS response");
   const post = spec.post ? POST[spec.post] : undefined;
+  const fields = fieldsAt(spec, zoom);
   const features: GeoJSON.Feature[] = [];
   for (const f of j.features as GeoJSON.Feature[]) {
     if (!f?.geometry) continue;
     const src = (f.properties ?? {}) as Record<string, unknown>;
     const props: Record<string, unknown> = {};
-    for (const [from, to] of Object.entries(spec.fields)) props[to] = src[from] ?? null;
+    for (const [from, to] of Object.entries(fields)) props[to] = src[from] ?? null;
     post?.(props);
     if (props._drop) continue;
     features.push({ type: "Feature", geometry: f.geometry, properties: props });

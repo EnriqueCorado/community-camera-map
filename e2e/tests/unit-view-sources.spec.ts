@@ -1,6 +1,6 @@
 // Unit tests for nationwide view loading (no browser).
 import { test, expect } from "@playwright/test";
-import { applyFields, arcgisQueryUrl, chooseSource, covers, exceededLimit, levelUrl, within, wrapLon, HOME_BBOX } from "../../frontend/src/view-logic";
+import { applyFields, arcgisQueryUrl, chooseSource, covers, exceededLimit, fieldsAt, levelUrl, tractLabel, within, wrapLon, HOME_BBOX } from "../../frontend/src/view-logic";
 import type { ViewSpec } from "../../frontend/src/api/client";
 import { RAMPS, fmtMetric, metricStops } from "../../frontend/src/colors";
 
@@ -156,4 +156,40 @@ test("metric legends: breaks paired with ramp colors, values formatted by unit",
   expect(fmtMetric(950, "usd", "en-US", true)).toBe("$950");
   expect(fmtMetric(12.34, "pct", "en-US")).toBe("12.3%");
   expect(fmtMetric(1978.4, "year", "en-US")).toBe("1978");
+});
+
+test("levels with their own fields: query and keep the level's allowlist", () => {
+  const health = spec({
+    url: "https://x.example/FeatureServer/3", min_zoom: 9, geometry: "polygon",
+    fields: { TractFIPS: "_geoid", CountyName: "_county", M: "pct" },
+    levels: [{ min_zoom: 0, url: "https://x.example/FeatureServer/2", fields: { CountyName: "_county", M: "pct" } }],
+  });
+  const box: [number, number, number, number] = [-96, 29, -95, 30];
+  expect(new URL(arcgisQueryUrl(health, box, 6)).searchParams.get("outFields")).toBe("CountyName,M");
+  expect(new URL(arcgisQueryUrl(health, box, 10)).searchParams.get("outFields")).toBe("TractFIPS,CountyName,M");
+  expect(fieldsAt(health, 10)).toBe(health.fields);
+  // a level without its own allowlist shares the spec's
+  expect(fieldsAt(spec({ min_zoom: 9, levels: [{ min_zoom: 0, url: "u" }] }), 3)).toEqual({ NAME: "name", ADDR: "address" });
+  const county = { type: "Feature", geometry: { type: "Point", coordinates: [0, 0] }, properties: { CountyName: "Harris", M: 21, TractFIPS: "x" } };
+  expect(applyFields({ features: [county] }, health, 6).features[0]!.properties).toEqual({ _county: "Harris", pct: 21 });
+  expect(applyFields({ features: [county] }, health).features[0]!.properties).toEqual({ _geoid: "x", _county: "Harris", pct: 21 });
+});
+
+test("place and bdc posts: area names from ids; FCC % without 100/20 Mbps", () => {
+  expect(tractLabel("48201432401")).toBe("Tract 4324.01");
+  expect(tractLabel("06099000100")).toBe("Tract 1");
+  expect(tractLabel("482014513014")).toBe("Block group 4, tract 4513.01");
+  expect(tractLabel("48201")).toBe("");
+  expect(tractLabel(48201432401)).toBe(""); // numbers lose leading zeros: not trusted
+  const one = (props: Record<string, unknown>, post: string) =>
+    applyFields({ features: [{ type: "Feature", geometry: { type: "Point", coordinates: [0, 0] }, properties: props }] },
+      spec({ fields: Object.fromEntries(Object.keys(props).map((k) => [k, k])), post })).features[0]!.properties;
+  expect(one({ _geoid: "48201432401", _county: "Harris County", _state: "TX", pct: 3 }, "place"))
+    .toEqual({ name: "Tract 4324.01, Harris County, TX", pct: 3 });
+  expect(one({ _county: "Fort Bend", _state: "TX" }, "place")).toEqual({ name: "Fort Bend, TX" });
+  expect(one({ _geoid: null, _county: null, _state: null }, "place")).toEqual({ name: null });
+  expect(one({ _geoid: "48", _state: "Texas", _den: 1027, _served: 1022 }, "bdc")).toEqual({ name: "Texas", pct: 0.5 });
+  expect(one({ _den: 0, _served: 0 }, "bdc")).toEqual({ name: null, pct: null }); // no locations: no divide by zero
+  expect(one({ _den: 100, _served: null }, "bdc")).toEqual({ name: null, pct: null });
+  expect(one({ _den: 40, _served: 0 }, "bdc")).toEqual({ name: null, pct: 100 });
 });

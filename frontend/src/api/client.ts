@@ -66,8 +66,9 @@ export interface ViewSpec {
   home_complete?: boolean;
   /** False when there's no baked home copy (national-only layer). */
   baked?: boolean;
-  /** Coarser copies of the same data (same fields) for zoomed-out views. */
-  levels?: { min_zoom: number; url: string }[];
+  /** Coarser copies of the same data for zoomed-out views (same fields
+   *  unless the level names its own allowlist). */
+  levels?: { min_zoom: number; url: string; fields?: Record<string, string> }[];
 }
 
 export interface Meta {

@@ -125,6 +125,13 @@ export const OVERLAY_COLOR: Record<string, string> = {
   "census-poverty": "#756bb1",
   "census-renters": "#756bb1",
   "census-foreign-born": "#756bb1",
+  // nationwide flag areas and points (backend national/census_extra.py)
+  "food-deserts": "#c2410c",
+  "opportunity-zones": "#0f766e",
+  "opportunity-zones-2": "#2563eb",
+  "cejst-disadvantaged": "#9333ea",
+  "hud-lihtc": "#0d9488",
+  "hud-public-housing": "#4338ca",
 };
 
 // CalEnviroScreen overall percentile ramp (green = low burden, red = high).

@@ -32,7 +32,7 @@ function viewSource(info: LayerInfo, spec: ViewSpec): LiveSource {
         const r = await fetch(arcgisQueryUrl(spec, bbox, zoom, offset), { signal });
         if (!r.ok) throw new Error(String(r.status));
         const json = await r.json();
-        features.push(...applyFields(json, spec).features);
+        features.push(...applyFields(json, spec, zoom).features);
         const got = (json as { features: unknown[] }).features.length;
         if (!exceededLimit(json) || got === 0 || features.length >= cap) break;
         offset += got;
@@ -47,7 +47,7 @@ const MAX_PAGES = 5;
 
 /** Hosts a catalog `view` may query (defense in depth: the catalog is ours). */
 const VIEW_HOSTS =
-  /^https:\/\/(services\d*\.arcgis\.com|tigerweb\.geo\.census\.gov|hazards\.fema\.gov|mapservices\.nps\.gov|gisportal\.hrsa\.gov|mapservices\.weather\.noaa\.gov)\//;
+  /^https:\/\/(services\d*\.arcgis\.com|tigerweb\.geo\.census\.gov|hazards\.fema\.gov|mapservices\.nps\.gov|gisportal\.hrsa\.gov|mapservices\.weather\.noaa\.gov|gisportal\.ers\.usda\.gov)\//;
 
 const viewCache = new Map<string, LiveSource>();
 
@@ -57,7 +57,9 @@ export function liveSourceFor(info: LayerInfo): LiveSource | undefined {
   const hand = LIVE_SOURCES[info.name];
   if (hand) return hand;
   // A national official list beats public Overpass servers when there is one.
-  if (!info.view || !VIEW_HOSTS.test(info.view.url)) return info.osm ? osmSource(info) : undefined;
+  // Every URL a view can query (its zoomed-out levels too) must be allowlisted.
+  const urls = info.view ? [info.view.url, ...(info.view.levels ?? []).map((l) => l.url)] : [];
+  if (!info.view || !urls.every((u) => VIEW_HOSTS.test(u))) return info.osm ? osmSource(info) : undefined;
   let s = viewCache.get(info.name);
   if (!s) viewCache.set(info.name, (s = viewSource(info, info.view)));
   return s;
