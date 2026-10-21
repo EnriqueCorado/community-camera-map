@@ -12,6 +12,9 @@ dependencies = [
     "pillow>=12.3,<13",
     # Pure-Python PDF text extraction for the DOJ EOIR roster bake (no deps).
     "pypdf>=6.21.0,<7",
+    # CA bundle for the one state server that omits its intermediate cert
+    # (state_bakes.py); already in the tree via httpx, declared since we import it.
+    "certifi>=2024.2",
 ]
 
 [dependency-groups]
