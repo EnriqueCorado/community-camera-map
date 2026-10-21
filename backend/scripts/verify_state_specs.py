@@ -1,0 +1,109 @@
+"""Re-verify researched state-layer specs live before they ship.
+
+    uv run python scripts/verify_state_specs.py IN.json OUT.json
+
+For every spec: passes the loader's validation, the service sends CORS for the
+site's origin, a bbox query (the spec's verified bbox, else the state's center)
+returns GeoJSON, and every allowlisted field exists on the layer. Accepted
+specs are written to OUT (e.g. app/layers/data/state_layers/<region>.json);
+rejects are listed with the reason. Then run scripts/sync_state_specs.py.
+"""
+
+from __future__ import annotations
+
+import asyncio
+import json
+import sys
+from pathlib import Path
+
+import httpx
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from app.layers.service import LAYERS  # noqa: E402  (registers the packs)
+
+# isort: split
+from app.layers.national import states  # noqa: E402
+
+ORIGIN = "https://enriquecorado.github.io"
+UA = "stanislaus-cam-map spec verifier (github.com/EnriqueCorado/stanislaus-cam-map)"
+
+
+def _probe_bbox(spec: dict) -> list[float]:
+    box = (spec.get("verified") or {}).get("bbox")
+    if isinstance(box, list) and len(box) == 4:
+        return box
+    w, s, e, n = states.STATES[spec["state"]]["bbox"]
+    cx, cy = (w + e) / 2, (s + n) / 2
+    return [cx - 0.1, cy - 0.1, cx + 0.1, cy + 0.1]
+
+
+async def check(client: httpx.AsyncClient, spec: dict) -> str | None:
+    """None if the spec is good, else why not."""
+    try:
+        states._check(spec, spec.get("name", "?"))
+    except states.SpecError as exc:
+        return f"invalid: {exc}"
+    if spec["name"] in LAYERS:
+        return "name already used by an existing layer"
+    v = spec["view"]
+    try:
+        meta = (await client.get(v["url"], params={"f": "json"})).json()
+    except (httpx.HTTPError, ValueError) as exc:
+        return f"metadata: {type(exc).__name__}"
+    if "error" in meta:
+        return f"metadata error: {str(meta['error'])[:80]}"
+    have = {f["name"] for f in meta.get("fields") or []}
+    missing = [f for f in v["fields"] if f not in have]
+    if missing:
+        return f"fields not on the layer: {missing}"
+    params = {
+        "where": v.get("where", "1=1"),
+        "geometry": ",".join(map(str, _probe_bbox(spec))),
+        "geometryType": "esriGeometryEnvelope",
+        "inSR": "4326",
+        "outSR": "4326",
+        "spatialRel": "esriSpatialRelIntersects",
+        "outFields": ",".join(v["fields"]),
+        "resultRecordCount": "50",
+        "f": "geojson",
+    }
+    try:
+        r = await client.get(f"{v['url']}/query", params=params, headers={"Origin": ORIGIN})
+        body = r.json()
+    except (httpx.HTTPError, ValueError) as exc:
+        return f"query: {type(exc).__name__}"
+    acao = r.headers.get("access-control-allow-origin", "")
+    if acao not in ("*", ORIGIN):
+        return f"no CORS for {ORIGIN} (got {acao!r})"
+    if body.get("type") != "FeatureCollection" or "error" in body:
+        return f"query did not return GeoJSON: {str(body.get('error', body))[:80]}"
+    spec.setdefault("verified", {})["features_in_probe"] = len(body.get("features") or [])
+    return None
+
+
+async def main(src: Path, dst: Path) -> None:
+    specs = json.loads(src.read_text())
+    sem = asyncio.Semaphore(6)
+    async with httpx.AsyncClient(
+        timeout=60, headers={"User-Agent": UA}, follow_redirects=True
+    ) as c:
+
+        async def one(spec: dict) -> tuple[dict, str | None]:
+            async with sem:
+                return spec, await check(c, spec)
+
+        results = await asyncio.gather(*(one(s) for s in specs))
+    good = [s for s, why in results if why is None]
+    seen: set[str] = set()
+    good = [s for s in good if not (s["name"] in seen or seen.add(s["name"]))]
+    for s, why in results:
+        if why:
+            print(f"REJECT {s.get('name', '?')}: {why}")
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    dst.write_text(json.dumps(good, indent=1, ensure_ascii=False) + "\n")
+    print(f"accepted {len(good)}/{len(specs)} -> {dst}")
+
+
+if __name__ == "__main__":
+    asyncio.run(main(Path(sys.argv[1]), Path(sys.argv[2])))
