@@ -1,6 +1,7 @@
 // Pure helpers for nationwide view layers (no fetching or app imports, so
 // they're unit-tested in isolation). See view-sources.ts.
 import type { ViewSpec } from "./api/client"; // type-only: erased at build
+import STATES from "./state-bboxes.json"; // USPS code -> {name, bbox} (backend scripts/sync_state_specs.py)
 import { HAZARD_POST } from "./view-posts-hazards";
 import { mealsOpen } from "./services-pack";
 
@@ -24,9 +25,23 @@ const COVERAGE_BOXES: Record<string, Bbox[]> = {
 export const within = (inner: Bbox, outer: Bbox) =>
   inner[0] >= outer[0] && inner[1] >= outer[1] && inner[2] <= outer[2] && inner[3] <= outer[3];
 
-/** Does `coverage` include this point? ("world" or unknown: yes.) */
+const STATE_INFO = STATES as unknown as Record<string, { name: string; bbox: Bbox }>;
+
+/** A state/territory's name for a USPS code ("TX" -> "Texas"), if known. */
+export const stateName = (code: string | undefined): string | undefined => (code ? STATE_INFO[code]?.name : undefined);
+
+/** The states whose bounding box holds this point (neighbors' boxes overlap). */
+export function statesAt([lon, lat]: [number, number]): string[] {
+  return Object.entries(STATE_INFO)
+    .filter(([, { bbox: [w, s, e, n] }]) => lon >= w && lon <= e && lat >= s && lat <= n)
+    .map(([code]) => code);
+}
+
+/** Does `coverage` include this point? ("world" or unknown: yes.) A USPS code
+ *  ("TX") means that state's box. */
 export function covers(coverage: string | undefined, [lon, lat]: [number, number]): boolean {
-  const boxes = coverage ? COVERAGE_BOXES[coverage] : undefined;
+  const state = coverage ? STATE_INFO[coverage] : undefined;
+  const boxes = state ? [state.bbox] : coverage ? COVERAGE_BOXES[coverage] : undefined;
   return !boxes || boxes.some(([w, s, e, n]) => lon >= w && lon <= e && lat >= s && lat <= n);
 }
 

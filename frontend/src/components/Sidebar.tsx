@@ -12,7 +12,7 @@ import {
 } from "../colors";
 import { downloadLayer, downloadCameras } from "../download";
 import { LIVE_SOURCES } from "../live-sources";
-import { covers } from "../view-logic";
+import { covers, stateName, statesAt } from "../view-logic";
 import { OSM_MIN_ZOOM } from "../osm-sources";
 import { NearMe, type NearPoint } from "./NearMe";
 import { HistoryPicker } from "./HistoryPicker";
@@ -90,9 +90,9 @@ function Section({
   );
 }
 
-type Group = "cameras" | "live" | "civic" | "help" | "people" | "housing" | "growth" | "weather" | "hazards" | "roads" | "places" | "nature" | "planning" | "infra" | "other";
+type Group = "cameras" | "live" | "state" | "civic" | "help" | "people" | "housing" | "growth" | "weather" | "hazards" | "roads" | "places" | "nature" | "planning" | "infra" | "other";
 
-const GROUP_ORDER: Group[] = ["cameras", "live", "civic", "help", "people", "housing", "growth", "weather", "hazards", "roads", "places", "nature", "planning", "infra", "other"];
+const GROUP_ORDER: Group[] = ["cameras", "live", "state", "civic", "help", "people", "housing", "growth", "weather", "hazards", "roads", "places", "nature", "planning", "infra", "other"];
 
 const GROUP_KEYS: Record<Group, Key> = {
   cameras: "groupCameras",
@@ -105,6 +105,7 @@ const GROUP_KEYS: Record<Group, Key> = {
   planning: "groupPlanning",
   infra: "groupInfra",
   civic: "groupCivic",
+  state: "groupState",
   help: "groupHelp",
   people: "groupPeople",
   housing: "groupHousing",
@@ -135,7 +136,9 @@ const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
 
 /** A layer's theme: the list above, else the group its catalog entry names. */
 const groupOf = (l: LayerInfo): Group =>
-  LAYER_GROUP[l.name] ?? (l.group && l.group in GROUP_KEYS ? (l.group as Group) : "other");
+  stateName(l.coverage)
+    ? "state" // one state's own layers: listed under "This state" when you're there
+    : (LAYER_GROUP[l.name] ?? (l.group && l.group in GROUP_KEYS ? (l.group as Group) : "other"));
 
 /** Vendor id -> label (brand names stay as-is; generic labels are translated). */
 const VENDORS: { id: string; label?: string; labelKey?: Key }[] = [
@@ -352,10 +355,18 @@ export function Sidebar({
   const matchesQuery = (label: string) => !lq || label.toLowerCase().includes(lq);
   const showTraffic = matchesQuery(t("trafficCameras"));
   const showAlpr = !!alprInfo && matchesQuery(title(alprInfo));
+  // "This state": the layers of the state(s) under the map center, plus any
+  // still switched on elsewhere (so they can be turned off after panning away).
+  const here = statesAt(center);
+  const inView = (l: LayerInfo) => groupOf(l) !== "state" || here.includes(l.coverage!) || !!layers.overlays[l.name];
   const groups = GROUP_ORDER.map(
     (key) =>
-      [key, otherOverlays.filter((l) => groupOf(l) === key && matchesQuery(title(l)))] as const,
+      [key, otherOverlays.filter((l) => groupOf(l) === key && inView(l) && matchesQuery(title(l)))] as const,
   );
+  const stateTitle = () => {
+    const names = here.filter((c) => otherOverlays.some((l) => l.coverage === c)).map((c) => stateName(c)!);
+    return t("groupState", { states: names.join(" · ") || t("groupStateNone") });
+  };
   const anyLayerMatch = showTraffic || showAlpr || groups.some(([, items]) => items.length > 0);
 
   const overlayRow = (l: LayerInfo) => (
@@ -388,7 +399,7 @@ export function Sidebar({
                 )}
                 {(layers.overlays[l.name] ?? false) && !covers(coverageOf(l), center) && (
                   <span className="panel__note">
-                    {" "}— {t(ONLY_KEY[coverageOf(l) ?? ""] ?? "onlyStanislaus")}
+                    {" "}— {stateName(coverageOf(l)) ? t("onlyState", { state: stateName(coverageOf(l))! }) : t(ONLY_KEY[coverageOf(l) ?? ""] ?? "onlyStanislaus")}
                   </span>
                 )}
                 {l.available && (layers.overlays[l.name] ?? false) && freshness(l) && (
@@ -517,7 +528,7 @@ export function Sidebar({
           items.length || (key === "cameras" && (showTraffic || showAlpr)) ? (
             <div key={key} className="layergroup" role="group" aria-labelledby={`lg-${key}`}>
               <h3 id={`lg-${key}`} className="layergroup__title">
-                {t(GROUP_KEYS[key])}
+                {key === "state" ? stateTitle() : t(GROUP_KEYS[key])}
               </h3>
               {key === "cameras" && (
                 <>

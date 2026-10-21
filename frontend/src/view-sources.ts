@@ -8,6 +8,7 @@ import { LIVE_SOURCES, type LiveSource } from "./live-sources";
 import { chooseSource, loadPages } from "./view-logic";
 import { home } from "./baked";
 import { osmSource } from "./osm-sources";
+import STATE_HOST_LIST from "./state-hosts.json";
 
 type FC = GeoJSON.FeatureCollection;
 
@@ -42,6 +43,19 @@ async function fetchJson(url: string, signal: AbortSignal): Promise<unknown> {
 const VIEW_HOSTS =
   /^https:\/\/(services\d*\.arcgis\.com|tigerweb\.geo\.census\.gov|hazards\.fema\.gov|mapservices\.nps\.gov|gisportal\.hrsa\.gov|mapservices\.weather\.noaa\.gov|onemap\.cdc\.gov|gis\.fema\.gov|gisportal\.ers\.usda\.gov|carto\.nationalmap\.gov)\//;
 
+/** Exact hosts the state packs' official services live on (generated from the
+ *  verified specs by backend scripts/sync_state_specs.py). */
+const STATE_HOSTS = new Set<string>(STATE_HOST_LIST as string[]);
+const allowedView = (url: string) => {
+  if (VIEW_HOSTS.test(url)) return true;
+  try {
+    const u = new URL(url);
+    return u.protocol === "https:" && !u.username && !u.password && (u.port === "" || u.port === "443") && STATE_HOSTS.has(u.hostname);
+  } catch {
+    return false;
+  }
+};
+
 const viewCache = new Map<string, LiveSource>();
 
 /** The browser-side loader for a layer, if it has one: a hand-written live
@@ -52,7 +66,7 @@ export function liveSourceFor(info: LayerInfo): LiveSource | undefined {
   // A national official list beats public Overpass servers when there is one.
   // Every URL a view can query (its zoomed-out levels too) must be allowlisted.
   const urls = info.view ? [info.view.url, ...(info.view.levels ?? []).map((l) => l.url)] : [];
-  if (!info.view || !urls.every((u) => VIEW_HOSTS.test(u))) return info.osm ? osmSource(info) : undefined;
+  if (!info.view || !urls.every(allowedView)) return info.osm ? osmSource(info) : undefined;
   let s = viewCache.get(info.name);
   if (!s) viewCache.set(info.name, (s = viewSource(info, info.view)));
   return s;

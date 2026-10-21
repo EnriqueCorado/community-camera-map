@@ -1,6 +1,6 @@
 // Unit tests for nationwide view loading (no browser).
 import { test, expect } from "@playwright/test";
-import { applyFields, arcgisQueryUrl, chooseSource, covers, exceededLimit, fieldsAt, levelUrl, tractLabel, within, wrapLon, HOME_BBOX } from "../../frontend/src/view-logic";
+import { applyFields, arcgisQueryUrl, chooseSource, covers, exceededLimit, fieldsAt, levelUrl, tractLabel, within, wrapLon, HOME_BBOX, stateName, statesAt } from "../../frontend/src/view-logic";
 import type { ViewSpec } from "../../frontend/src/api/client";
 import { RAMPS, fmtMetric, metricStops } from "../../frontend/src/colors";
 
@@ -276,4 +276,16 @@ test("metric ramps: short scales spread over the whole ramp (top step darkest)",
   expect(three.map(([, c]) => c)).toEqual([RAMPS.red![0], RAMPS.red![2], RAMPS.red![4]]);
   const five = metricStops({ field: "x", fmt: "pct", breaks: [1, 2, 3, 4, 5], ramp: "red" });
   expect(five.map(([, c]) => c)).toEqual(RAMPS.red);
+});
+
+test("state coverage: names, boxes under a point, and 'no data here' by state", () => {
+  expect(stateName("TX")).toBe("Texas");
+  expect(stateName("PR")).toBe("Puerto Rico");
+  expect(stateName("usa")).toBeUndefined();
+  expect(statesAt([-95.37, 29.76])).toContain("TX"); // Houston
+  expect(statesAt([-120.99, 37.64])).toContain("CA"); // Modesto
+  expect(statesAt([-149.9, 61.2])).toContain("AK"); // Anchorage (box spans the antimeridian side)
+  expect(statesAt([-30, 40])).toEqual([]); // mid-Atlantic
+  expect(covers("TX", [-95.37, 29.76])).toBe(true);
+  expect(covers("TX", [-120.99, 37.64])).toBe(false);
 });

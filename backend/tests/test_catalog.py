@@ -132,3 +132,42 @@ def test_every_polygon_view_is_generalized_to_the_zoom():
         if lay.view and lay.view.geometry == "polygon" and not lay.view.simplify
     ]
     assert raw == []
+
+
+def test_state_pack_frontend_copies_are_in_sync():
+    from scripts.sync_state_specs import outputs
+
+    for path, text in outputs().items():
+        assert path.read_text() == text, f"run scripts/sync_state_specs.py ({path.name} is stale)"
+
+
+def test_state_specs_are_validated_strictly(tmp_path):
+    import json
+
+    import pytest
+
+    from app.layers.national import states
+
+    good = {
+        "name": "tx-parcels", "state": "TX", "title": "Parcels (Texas)", "title_es": "Parcelas (Texas)",
+        "description": "d", "group": "planning", "category": "landuse", "source": "TxGIO",
+        "view": {"url": "https://example.gov/arcgis/rest/services/P/FeatureServer/0",
+                 "fields": {"OWNER_ADDR": "address"}, "geometry": "polygon", "min_zoom": 15},
+    }  # fmt: skip
+    (tmp_path / "a.json").write_text(json.dumps([good]))
+    layers, sources, hosts = states.load(tmp_path)
+    lay = layers["tx-parcels"]
+    assert lay.coverage == "TX" and lay.view.simplify and lay.group == "planning" and lay.title_es
+    assert sources == {"tx-parcels": "TxGIO"} and hosts == {"example.gov"}
+    bad = [
+        {**good, "name": "ok-parcels"},  # prefix must match the state
+        {**good, "view": {**good["view"], "url": "http://example.gov/x/FeatureServer/0"}},
+        {**good, "view": {**good["view"], "url": "https://example.gov/x/query?f=json"}},
+        {**good, "view": {**good["view"], "fields": {"A;DROP": "x"}}},
+        {**good, "group": "secret"},
+        {**good, "title_es": ""},
+    ]
+    for spec in bad:
+        (tmp_path / "a.json").write_text(json.dumps([spec]))
+        with pytest.raises(states.SpecError):
+            states.load(tmp_path)
