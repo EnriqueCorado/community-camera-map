@@ -160,46 +160,6 @@
   }
  },
  {
-  "name": "fl-traffic-cameras",
-  "state": "FL",
-  "title": "FL511 traffic cameras (Florida)",
-  "title_es": "Cámaras de tráfico FL511 (Florida)",
-  "description": "About 4,000 FDOT FL511 cameras with live snapshot links (images refresh every minute or two).",
-  "group": "cameras",
-  "category": "point",
-  "source": "FDOT FL511 via Florida Division of Emergency Management",
-  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
-  "view": {
-   "url": "https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/FL511_Traffic_Cameras/FeatureServer/0",
-   "fields": {
-    "DESCRIPT": "name",
-    "HIGHWAY": "route",
-    "DIRECTION": "direction",
-    "COUNTY": "county",
-    "IMAGE": "image"
-   },
-   "geometry": "point",
-   "min_zoom": 9,
-   "where": "1=1",
-   "max_features": 2000,
-   "simplify": false
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -83.5789,
-    29.2744,
-    -79.7331,
-    31.3896
-   ],
-   "count": 641,
-   "kb": 154.1,
-   "max_record_count": 2000,
-   "features_in_probe": 50
-  }
- },
- {
   "name": "fl-burn-bans",
   "state": "FL",
   "title": "Burn bans by county (Florida)",

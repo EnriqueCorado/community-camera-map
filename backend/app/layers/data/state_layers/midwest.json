@@ -1965,45 +1965,6 @@
   }
  },
  {
-  "name": "ia-traffic-cameras",
-  "state": "IA",
-  "title": "Traffic cameras (Iowa DOT)",
-  "title_es": "Cámaras de tráfico (Iowa DOT)",
-  "description": "Iowa DOT highway camera snapshots (about 1,260 cameras), refreshed every few minutes.",
-  "group": "cameras",
-  "category": "point",
-  "source": "Iowa DOT",
-  "license": "Iowa DOT Open Data (public); attribute Iowa DOT",
-  "view": {
-   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Traffic_Cameras_View/FeatureServer/0",
-   "fields": {
-    "Desc_": "name",
-    "Route": "kind",
-    "ImageURL": "image",
-    "VideoURL": "page",
-    "REGION": "city"
-   },
-   "geometry": "point",
-   "min_zoom": 8,
-   "where": "1=1",
-   "max_features": 2000
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -97.1356,
-    39.9466,
-    -90.1044,
-    43.2334
-   ],
-   "count": 1224,
-   "kb": 373,
-   "max_record_count": 2000,
-   "features_in_probe": 1224
-  }
- },
- {
   "name": "ia-trails",
   "state": "IA",
   "title": "Trails of Iowa",

@@ -1259,44 +1259,6 @@
   }
  },
  {
-  "name": "or-tripcheck-cameras",
-  "state": "OR",
-  "title": "Traffic cameras (Oregon TripCheck)",
-  "title_es": "Cámaras de tráfico (TripCheck de Oregon)",
-  "description": "ODOT TripCheck highway camera locations with a link to each current still image (republished by Oregon OEM).",
-  "group": "cameras",
-  "category": "point",
-  "source": "Oregon Dept. of Transportation TripCheck, via Oregon Office of Emergency Management",
-  "license": "Public; attribution to ODOT TripCheck",
-  "view": {
-   "url": "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/TripCheck_Cameras/FeatureServer/0",
-   "fields": {
-    "attributes_title": "name",
-    "attributes_route": "road",
-    "attributes_filename": "image",
-    "attributes_cameraId": "id"
-   },
-   "geometry": "point",
-   "min_zoom": 6,
-   "where": "1=1",
-   "max_features": 1000
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -124.6,
-    41.9,
-    -116.4,
-    46.3
-   ],
-   "count": 1000,
-   "kb": 288.1,
-   "max_record_count": 1000,
-   "features_in_probe": 1000
-  }
- },
- {
   "name": "or-tsunami-evacuation",
   "state": "OR",
   "title": "Tsunami evacuation zones (Oregon)",
@@ -6715,45 +6677,6 @@
    "kb": 80.2,
    "max_record_count": 2000,
    "features_in_probe": 319
-  }
- },
- {
-  "name": "co-cameras",
-  "state": "CO",
-  "title": "Traffic cameras (Colorado)",
-  "title_es": "Cámaras de tráfico (Colorado)",
-  "description": "CDOT and partner-agency traffic camera still images shown on COtrip (images refresh every few minutes).",
-  "group": "cameras",
-  "category": "point",
-  "source": "Colorado Department of Transportation (CDOT) ATMS / COtrip",
-  "license": "Public (CDOT; credit COtrip / CDOT)",
-  "view": {
-   "url": "https://dtdapps.codot.gov/server/rest/services/ATMS/ATMS/MapServer/7",
-   "fields": {
-    "name": "name",
-    "viewurl": "image",
-    "route": "route",
-    "owner": "kind",
-    "imagetimestamp": "updated"
-   },
-   "geometry": "point",
-   "min_zoom": 6,
-   "where": "public_='TRUE'",
-   "max_features": 2000
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -109.1,
-    36.9,
-    -102.0,
-    41.1
-   ],
-   "count": 521,
-   "kb": 154.6,
-   "max_record_count": 2000,
-   "features_in_probe": 521
   }
  },
  {

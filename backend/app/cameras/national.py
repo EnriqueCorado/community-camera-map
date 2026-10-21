@@ -201,19 +201,11 @@ SOURCES.update(
             license="Public",
             license_url="https://www.arcgis.com/home/item.html?id=1e3fb7169cd74127b9c1707258a6e6e9",
         ),
-        "co": SourceInfo(
-            name="CDOT",
-            state="CO",
-            url="https://www.cotrip.org/",
-            credit="Colorado DOT (some cameras by Douglas County and Colorado Springs)",
-            license="Public data, no license stated",
-            license_url="https://dtdapps.codot.gov/server/rest/services/ATMS/ATMS/MapServer/7",
-        ),
     }
 )
 # Sources added after the others overlapped them at the same spot; their
 # cameras give way to an earlier source's camera there (see dedupe_by_location).
-YIELDING_SOURCES = ("ia", "fl", "or", "co")
+YIELDING_SOURCES = ("ia", "fl", "or")
 
 # HLS kept only where the research verified CORS-open, unauthenticated streams.
 ITERIS_VIDEO_HOSTS: dict[str, tuple[str, ...]] = {"wi": ("cctv1.dot.wi.gov",)}
@@ -246,7 +238,6 @@ HOSTS: dict[str, tuple[str, ...]] = {
     "ia": ("atmsqf.iowadot.gov",),
     "fl": ("images-dis.divas.cloud",),  # FDOT DIVAS video/image system
     "or": ("tripcheck.com",),
-    "co": ("cocam.carsprogram.org", "websvc.coloradosprings.gov"),
 }
 
 
@@ -967,31 +958,6 @@ def parse_or(fc: object) -> list[Camera]:
     return _by_site("or", items)
 
 
-def parse_co(fc: object) -> list[Camera]:
-    """CDOT ATMS cameras (`ATMS/MapServer/7`): public views only, one camera per
-    site (`cpk`), each other view an extra still."""
-    items: list[tuple[object, object, str, dict]] = []
-    for f in _features(fc):
-        p, ll = _props(f), _point(f)
-        if str(p.get("public_") or "").upper() != "TRUE":
-            continue
-        snap = _safe(p.get("viewurl"), HOSTS["co"])
-        site, view = str(p.get("cpk") or ""), str(p.get("cvpk") or "0")
-        if not ll or not snap or not _SITE_ID.fullmatch(site) or not _SITE_ID.fullmatch(view):
-            continue
-        looking = _LOOKING.search(_text(p.get("view_")))
-        fields = {
-            "id": _slug("co", site),
-            "name": _text(p.get("name")) or f"CDOT camera {site}",
-            "route": _route_code(_text(p.get("route"))),
-            "direction": looking.group(1).title() if looking else "",
-            "latitude": ll[0],
-            "longitude": ll[1],
-        }
-        items.append((site, int(view), snap, fields))
-    return _by_site("co", items)
-
-
 def dedupe_by_location(cameras: list[Camera]) -> list[Camera]:
     """Drop a YIELDING_SOURCES camera at the same spot (coordinates rounded to 4
     decimals, ~10 m) as a camera from a different source (an earlier source, or Caltrans, wins), so
@@ -1033,10 +999,6 @@ OHGO_URL = "https://publicapi.ohgo.com/api/v1/cameras"
 IA_URL = "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Traffic_Cameras_View/FeatureServer/0"
 FL_URL = "https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/FL511_Traffic_Cameras/FeatureServer/0"
 OR_URL = "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/TripCheck_Cameras/FeatureServer/0"
-# CDOT's own ArcGIS Server. Its service description reads "For new CDOT ATMS
-# development and testing", so this source may move; it fails soft like the rest.
-CO_URL = "https://dtdapps.codot.gov/server/rest/services/ATMS/ATMS/MapServer/7"
-
 Fetcher = Callable[[httpx.AsyncClient, int], Awaitable[list[Camera]]]
 
 
@@ -1101,7 +1063,6 @@ FETCHERS: dict[str, Fetcher] = {
         parse_or,
         1000,
     ),
-    "co": _arcgis(CO_URL, "cpk,cvpk,name,route,view_,viewurl,public_", parse_co, 2000),
 }
 
 

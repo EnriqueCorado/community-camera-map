@@ -1,5 +1,5 @@
 """Keyless state camera layers added 2026-10-21 (Iowa DOT, FL511 via FDEM,
-ODOT TripCheck via Oregon OEM, CDOT): each normalizer against a small
+ODOT TripCheck via Oregon OEM): each normalizer against a small
 hand-written fixture shaped like the live layer, plus the cross-source
 location dedupe. No network."""
 
@@ -223,75 +223,6 @@ def test_parse_or_encodes_file_names_and_groups_a_site():
     assert national.snapshot_allowed(a)
 
 
-def test_parse_co_public_views_one_camera_per_site():
-    img = "https://cocam.carsprogram.org/Douglas/2_Brdwy-cotrip{}.jpg"
-    site = {
-        "cpk": 417,
-        "name": "Broadway Blvd MP 001.00 NB at Dad Clark Dr",
-        "route": "Broadway Blvd",
-    }
-    fc = {
-        "features": [
-            _pt(
-                -104.986656,
-                39.562679,
-                {
-                    **site,
-                    "cvpk": 1013,
-                    "view_": "Looking North",
-                    "viewurl": img.format("North"),
-                    "public_": "TRUE",
-                },
-            ),
-            _pt(
-                -104.986656,
-                39.562679,
-                {
-                    **site,
-                    "cvpk": 1012,
-                    "view_": "Looking South",
-                    "viewurl": img.format("South"),
-                    "public_": "TRUE",
-                },
-            ),
-            _pt(
-                -104.986656,
-                39.562679,
-                {
-                    **site,
-                    "cvpk": 1014,
-                    "view_": "Looking East",
-                    "viewurl": img.format("East"),
-                    "public_": "FALSE",
-                },
-            ),
-            _pt(
-                -104.83,
-                39.03,
-                {
-                    "cpk": 9,
-                    "cvpk": 1,
-                    "name": "I-25 (mm156) Gleneagle",
-                    "route": "I 25",
-                    "view_": "Road Surface",
-                    "public_": "TRUE",
-                    "viewurl": "https://websvc.coloradosprings.gov/live/TOC/00084_I-25%20%28mm156%29.jpg",
-                },
-            ),
-            _pt(
-                -105,
-                39.5,
-                {"cpk": 10, "cvpk": 2, "public_": "TRUE", "viewurl": "https://cotrip.org/x.jpg"},
-            ),
-        ]
-    }
-    a, b = national.parse_co(fc)
-    assert (a.id, a.route, a.direction, a.state) == ("co-417", "Broadway Blvd", "South", "CO")
-    assert a.snapshot_url == img.format("South") and a.views == [img.format("North")]
-    assert img.format("East") not in (a.snapshot_url, *a.views)  # non-public view dropped
-    assert (b.id, b.route, b.direction) == ("co-9", "I-25", "")
-
-
 def _c(source: str, lat: float, lon: float, cid: str) -> Camera:
     return Camera(
         id=cid,
@@ -313,7 +244,7 @@ def test_dedupe_by_location_only_drops_new_sources_over_another_source():
         _c("fl", 33.00003, -84.00001, "fl-1"),  # same spot as an Iteris camera: dropped
         _c("fl", 27.0, -82.0, "fl-2"),
         _c("fl", 27.0, -82.0, "fl-3"),  # same source, same spot: both kept
-        _c("co", 27.0, -82.0, "co-1"),  # a later new source over FL: dropped
+        _c("ia", 27.0, -82.0, "ia-1"),  # another new source over FL: dropped
         _c("or", 30.0, -85.0, "or-2"),  # under a camera listed after it: still dropped
         _c("il", 30.0, -85.0, "il-1"),  # an established source is never dropped
     ]
@@ -327,7 +258,7 @@ def test_dedupe_by_location_only_drops_new_sources_over_another_source():
 
 
 async def test_service_dedupes_and_survives_new_sources_failing():
-    """Iowa answers; Caltrans, FL, OR, CO and every other source fail, OR
+    """Iowa answers; Caltrans, FL, OR and every other source fail, OR
     error out — Iowa still makes it through on its own."""
     ia = {
         "type": "FeatureCollection",
