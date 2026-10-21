@@ -1,0 +1,2405 @@
+[
+ {
+  "name": "fl-evacuation-zones",
+  "state": "FL",
+  "title": "Hurricane evacuation zones (Florida)",
+  "title_es": "Zonas de evacuación por huracán (Florida)",
+  "description": "Official Know Your Zone storm-surge evacuation zones from the Florida Division of Emergency Management, July 2026 edition.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Florida Division of Emergency Management (FDEM)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/KYZ_ZL_Vector_Enriched_Calculated_20230608/FeatureServer/46",
+   "fields": {
+    "COUNTY_ZON": "name",
+    "EZone": "kind",
+    "County_Nam": "county",
+    "EM_Web": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -82.6174,
+    29.8032,
+    -80.6946,
+    30.8608
+   ],
+   "count": 31,
+   "kb": 365.5,
+   "max_record_count": 2000,
+   "features_in_probe": 31
+  }
+ },
+ {
+  "name": "fl-evacuation-status",
+  "state": "FL",
+  "title": "County evacuation & curfew status (Florida)",
+  "title_es": "Estado de evacuación y toque de queda por condado (Florida)",
+  "description": "Live county-by-county evacuation, curfew and re-entry status reported to the State Emergency Response Team.",
+  "group": "live",
+  "category": "hazard",
+  "source": "Florida Division of Emergency Management (SERT)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/SERT_EvacCurfew2026/FeatureServer/0",
+   "fields": {
+    "agency": "name",
+    "evacuation_status": "status",
+    "evacuation_info": "info",
+    "evacuation_last_update": "updated",
+    "curfew_status": "curfew",
+    "reentry_status": "reentry",
+    "url": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -97.0388,
+    21.8715,
+    -66.2732,
+    38.7925
+   ],
+   "count": 87,
+   "kb": 116.7,
+   "max_record_count": 1000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "fl-evacuation-routes",
+  "state": "FL",
+  "title": "Evacuation routes (Florida)",
+  "title_es": "Rutas de evacuación (Florida)",
+  "description": "State-designated hurricane evacuation routes (FDEM, 2026).",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Florida Division of Emergency Management (FDEM)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/SERT_-_Evacuation_Routes/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "HWY_NUM": "route",
+    "NAMELSAD": "county"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -82.1367,
+    30.0676,
+    -81.1753,
+    30.5964
+   ],
+   "count": 274,
+   "kb": 690.2,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "fl-message-signs",
+  "state": "FL",
+  "title": "Highway message signs (Florida)",
+  "title_es": "Letreros electrónicos en carreteras (Florida)",
+  "description": "What FL511 dynamic message signs are displaying right now (updated every few minutes).",
+  "group": "roads",
+  "category": "roadops",
+  "source": "FDOT FL511 via Florida Division of Emergency Management",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/FL511_Message_Boards/FeatureServer/0",
+   "fields": {
+    "DESCRIPTION": "name",
+    "MESSAGE": "status",
+    "HIGHWAY": "route",
+    "DIRECTION": "direction",
+    "COUNTY": "county",
+    "TIMESTAMP": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.5789,
+    29.2744,
+    -79.7331,
+    31.3896
+   ],
+   "count": 172,
+   "kb": 42.0,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "fl-traffic-cameras",
+  "state": "FL",
+  "title": "FL511 traffic cameras (Florida)",
+  "title_es": "Cámaras de tráfico FL511 (Florida)",
+  "description": "About 4,000 FDOT FL511 cameras with live snapshot links (images refresh every minute or two).",
+  "group": "cameras",
+  "category": "point",
+  "source": "FDOT FL511 via Florida Division of Emergency Management",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/FL511_Traffic_Cameras/FeatureServer/0",
+   "fields": {
+    "DESCRIPT": "name",
+    "HIGHWAY": "route",
+    "DIRECTION": "direction",
+    "COUNTY": "county",
+    "IMAGE": "image"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.5789,
+    29.2744,
+    -79.7331,
+    31.3896
+   ],
+   "count": 641,
+   "kb": 154.1,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "fl-burn-bans",
+  "state": "FL",
+  "title": "Burn bans by county (Florida)",
+  "title_es": "Prohibiciones de quemas por condado (Florida)",
+  "description": "Current county burn-ban and fireworks-ban status from the Florida Forest Service.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Florida Forest Service (FDACS)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services3.arcgis.com/XYg2eF8UuxZVuVmF/arcgis/rest/services/Burn_Ban_Public_View_v2_4118cfe50dba49efa3d6fa7326d5a87f/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "Burn_Ban": "status",
+    "Fireworks_Ban": "fireworks",
+    "DateUpdated": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -97.0388,
+    21.8715,
+    -66.2732,
+    38.7925
+   ],
+   "count": 67,
+   "kb": 112.7,
+   "max_record_count": 1000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "fl-active-wildfires",
+  "state": "FL",
+  "title": "Active wildfires (Florida Forest Service)",
+  "title_es": "Incendios forestales activos (Servicio Forestal de Florida)",
+  "description": "Wildfires the Florida Forest Service is working now, including small fires not in national feeds.",
+  "group": "live",
+  "category": "hazard",
+  "source": "Florida Forest Service (FDACS)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services3.arcgis.com/XYg2eF8UuxZVuVmF/arcgis/rest/services/Florida_Forest_Service_-_Active_Wildfires/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Status": "status",
+    "Size": "acres",
+    "Contained": "contained_pct",
+    "AdminDivision": "county",
+    "StatusUpdatedTimestamp": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 5,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -112.4216,
+    13.4109,
+    -50.8904,
+    47.2531
+   ],
+   "count": 4,
+   "kb": 1.0,
+   "max_record_count": 2000,
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "fl-state-parks",
+  "state": "FL",
+  "title": "State parks & trails (Florida)",
+  "title_es": "Parques y senderos estatales (Florida)",
+  "description": "Florida State Park and State Trail boundaries with address and official page (FDEP; boundaries per its metadata as of 2017, service refreshed 2026).",
+  "group": "nature",
+  "category": "park",
+  "source": "Florida Dept. of Environmental Protection, Division of Recreation and Parks",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/PARKS_BOUNDARIES/MapServer/0",
+   "fields": {
+    "SITE_NAME": "name",
+    "ADDRESS": "address",
+    "URL": "page",
+    "PUBLIC_ACC": "status",
+    "ACREAGE": "acres",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.5789,
+    29.2744,
+    -79.7331,
+    31.3896
+   ],
+   "count": 52,
+   "kb": 117.7,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "fl-state-forests",
+  "state": "FL",
+  "title": "State forests (Florida)",
+  "title_es": "Bosques estatales (Florida)",
+  "description": "Florida Forest Service state forest tracts (June 2026 version) with public-access flag.",
+  "group": "nature",
+  "category": "park",
+  "source": "Florida Forest Service (FDACS)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services3.arcgis.com/XYg2eF8UuxZVuVmF/arcgis/rest/services/FFS_State_Forest_Boundaries/FeatureServer/0",
+   "fields": {
+    "DOF_NAME": "name",
+    "DOF_PARCEL": "tract",
+    "PUBLIC_ACC": "status",
+    "ACRES": "acres",
+    "VERSION": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.5789,
+    29.2744,
+    -79.7331,
+    31.3896
+   ],
+   "count": 336,
+   "kb": 138.2,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "fl-state-forest-trails",
+  "state": "FL",
+  "title": "State forest trails (Florida)",
+  "title_es": "Senderos de bosques estatales (Florida)",
+  "description": "Hiking, biking, equestrian, OHV and paddling trails in Florida state forests.",
+  "group": "nature",
+  "category": "park",
+  "source": "Florida Forest Service (FDACS)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services3.arcgis.com/XYg2eF8UuxZVuVmF/arcgis/rest/services/Recreation_Trails/FeatureServer/7",
+   "fields": {
+    "NAM_NUM": "name",
+    "TrailType": "kind",
+    "DOFNAME": "forest",
+    "Length": "miles",
+    "WEBPAGE_URL": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.8964,
+    30.1998,
+    -81.4156,
+    30.4642
+   ],
+   "count": 3,
+   "kb": 19.3,
+   "max_record_count": 2000,
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "fl-wildlife-management-areas",
+  "state": "FL",
+  "title": "Wildlife management areas (Florida)",
+  "title_es": "Áreas de manejo de vida silvestre (Florida)",
+  "description": "FWC wildlife management areas and wildlife & environmental areas open for hunting, fishing and wildlife viewing.",
+  "group": "nature",
+  "category": "park",
+  "source": "Florida Fish and Wildlife Conservation Commission (FWC)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.myfwc.com/mapping/rest/services/Open_Data/Wildlife_Management_Areas_Florida/MapServer/1",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "UNIT": "unit",
+    "MGT_TYPE": "management",
+    "WEBSITE": "page",
+    "AREA_SQMI": "sq_mi"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.5789,
+    29.2744,
+    -79.7331,
+    31.3896
+   ],
+   "count": 70,
+   "kb": 211.7,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "fl-boat-ramps",
+  "state": "FL",
+  "title": "Public boat ramps (Florida)",
+  "title_es": "Rampas públicas para botes (Florida)",
+  "description": "FWC inventory of public boat ramps: status, fee, lanes, parking and waterbody.",
+  "group": "nature",
+  "category": "point",
+  "source": "Florida Fish and Wildlife Conservation Commission (FWC)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.myfwc.com/mapping/rest/services/Open_Data/FWC_Florida_Boat_Ramp_Inventory/MapServer/4",
+   "fields": {
+    "RampName": "name",
+    "Status": "status",
+    "WaterBodyName": "waterbody",
+    "City": "city",
+    "isFeeRequired": "fee",
+    "TotalLanes": "lanes",
+    "URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -82.6174,
+    29.8032,
+    -80.6946,
+    30.8608
+   ],
+   "count": 167,
+   "kb": 61.9,
+   "max_record_count": 2000,
+   "features_in_probe": 47
+  }
+ },
+ {
+  "name": "fl-conservation-lands",
+  "state": "FL",
+  "title": "Conservation lands (Florida)",
+  "title_es": "Tierras de conservación (Florida)",
+  "description": "Florida Natural Areas Inventory's managed conservation lands (Sept 2026): who manages them and a link to visit.",
+  "group": "nature",
+  "category": "park",
+  "source": "Florida Natural Areas Inventory (FNAI)",
+  "license": "Free; cite Florida Natural Areas Inventory",
+  "view": {
+   "url": "https://services.arcgis.com/9Jk4Zl9KofTtvg3x/arcgis/rest/services/FL_Conservation_Lands_web/FeatureServer/9",
+   "fields": {
+    "MANAME": "name",
+    "MANAGING_A": "manager",
+    "MATYPE2": "kind",
+    "TOTACRES": "acres",
+    "MA_WEBSITE": "page",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -82.6174,
+    29.8032,
+    -80.6946,
+    30.8608
+   ],
+   "count": 261,
+   "kb": 633.2,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "fl-greenway-trails",
+  "state": "FL",
+  "title": "Greenways & trails (Florida)",
+  "title_es": "Vías verdes y senderos (Florida)",
+  "description": "Existing public recreational trails (paved, unpaved, paddling, equestrian) from the Office of Greenways & Trails.",
+  "group": "nature",
+  "category": "park",
+  "source": "Florida DEP Office of Greenways & Trails / UF GeoPlan Center",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/OGT/MapServer/3",
+   "fields": {
+    "TRAIL_NAME": "name",
+    "SEGMENT_NAME": "segment",
+    "TYPE": "kind",
+    "SURFACE": "surface",
+    "MANAGING_AGENCY": "manager",
+    "GIS_MILES": "miles",
+    "URL": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -82.1367,
+    30.0676,
+    -81.1753,
+    30.5964
+   ],
+   "count": 195,
+   "kb": 805.6,
+   "max_record_count": 1000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "fl-child-care-centers",
+  "state": "FL",
+  "title": "Licensed child care centers (Florida)",
+  "title_es": "Guarderías con licencia (Florida)",
+  "description": "DCF-licensed child care facilities (centers only; family day-care homes excluded), August 2025 snapshot.",
+  "group": "help",
+  "category": "point",
+  "source": "Florida Dept. of Children and Families via Florida Dept. of Health",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services1.arcgis.com/CY1LXxl9zlJeBuRZ/arcgis/rest/services/DCF_Statewide_Providers_List_2024/FeatureServer/0",
+   "fields": {
+    "USER_Name": "name",
+    "USER_Physical_Address": "address",
+    "USER_City": "city",
+    "USER_Phone": "phone",
+    "USER_License_Status": "status",
+    "USER_Program_SubType": "kind",
+    "USER_Capacity": "capacity",
+    "USER_Is_VPK": "vpk"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "USER_Program_Type = 'Child Care Facility'",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.8964,
+    30.1998,
+    -81.4156,
+    30.4642
+   ],
+   "count": 558,
+   "kb": 213.5,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "ga-511-events",
+  "state": "GA",
+  "title": "511 road events (Georgia)",
+  "title_es": "Eventos viales 511 (Georgia)",
+  "description": "Live GDOT 511 incidents, closures and work zones (updated every few minutes).",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Georgia DOT 511 via Georgia Emergency Management and Homeland Security Agency (GEMA)",
+  "license": "Georgia public record (O.C.G.A. 50-18-70); attribute the agency",
+  "view": {
+   "url": "https://services1.arcgis.com/2iUE8l8JKrP2tygQ/arcgis/rest/services/GDOT_511_Events_Public_View/FeatureServer/0",
+   "fields": {
+    "Description": "name",
+    "RoadwayName": "route",
+    "EventType": "kind",
+    "IsFullClosure": "full_closure",
+    "LanesAffected": "lanes",
+    "LastUpdated": "updated",
+    "PlannedEndDate": "planned_end"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -88.2337,
+    31.6339,
+    -80.5423,
+    35.8641
+   ],
+   "count": 140,
+   "kb": 48.1,
+   "max_record_count": 1000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "ga-traffic-cameras",
+  "state": "GA",
+  "title": "511GA traffic cameras (Georgia)",
+  "title_es": "Cámaras de tráfico 511GA (Georgia)",
+  "description": "About 3,900 GDOT/511GA cameras; the image link returns the current snapshot.",
+  "group": "cameras",
+  "category": "point",
+  "source": "Georgia DOT 511GA via GEMA",
+  "license": "Georgia public record (O.C.G.A. 50-18-70); attribute the agency",
+  "view": {
+   "url": "https://services1.arcgis.com/2iUE8l8JKrP2tygQ/arcgis/rest/services/Georgia511Cameras_Detailed_/FeatureServer/0",
+   "fields": {
+    "Location": "name",
+    "Roadway": "route",
+    "Direction": "direction",
+    "View_Status": "status",
+    "View_Url": "image"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -85.3494,
+    33.2202,
+    -83.4266,
+    34.2778
+   ],
+   "count": 2000,
+   "kb": 545.4,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "ga-shelters",
+  "state": "GA",
+  "title": "Open emergency shelters (Georgia)",
+  "title_es": "Refugios de emergencia abiertos (Georgia)",
+  "description": "Shelters GEMA reports open during an emergency; empty when nothing is activated.",
+  "group": "help",
+  "category": "point",
+  "source": "Georgia Emergency Management and Homeland Security Agency (GEMA)",
+  "license": "Georgia public record (O.C.G.A. 50-18-70); attribute the agency",
+  "view": {
+   "url": "https://services1.arcgis.com/2iUE8l8JKrP2tygQ/arcgis/rest/services/Shelters_v2_view/FeatureServer/0",
+   "fields": {
+    "label": "name",
+    "address": "address",
+    "county": "county",
+    "status": "status",
+    "shelter_type": "kind",
+    "capacity": "capacity",
+    "occupancy": "occupancy",
+    "entrydate": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -99.7708,
+    25.2885,
+    -69.0052,
+    42.2095
+   ],
+   "count": 0,
+   "kb": 0.1,
+   "max_record_count": 1000,
+   "note": "query OK but 0 features in test viewport (event-driven/live layer)",
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "ga-water-access",
+  "state": "GA",
+  "title": "Boat ramps & water access (Georgia)",
+  "title_es": "Rampas para botes y acceso al agua (Georgia)",
+  "description": "Georgia DNR Wildlife Resources public boat ramps and fishing access with fees, docks and restrooms.",
+  "group": "nature",
+  "category": "point",
+  "source": "Georgia DNR Wildlife Resources Division",
+  "license": "Georgia public record (O.C.G.A. 50-18-70); attribute the agency",
+  "view": {
+   "url": "https://services6.arcgis.com/9QlSLDqa0P1cHLhu/arcgis/rest/services/WRD_Water_Access_Points/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Waterbody": "waterbody",
+    "Status": "status",
+    "Fee": "fee",
+    "Operator2": "operator",
+    "County": "county",
+    "Phone": "phone"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -85.3494,
+    33.2202,
+    -83.4266,
+    34.2778
+   ],
+   "count": 183,
+   "kb": 43.0,
+   "max_record_count": 1000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "ga-dnr-lands",
+  "state": "GA",
+  "title": "State parks, WMAs & DNR lands (Georgia)",
+  "title_es": "Parques estatales y tierras del DNR (Georgia)",
+  "description": "Lands managed by Georgia DNR (state parks, historic sites, wildlife management areas); 2018-era boundary file.",
+  "group": "nature",
+  "category": "park",
+  "source": "Georgia Department of Natural Resources",
+  "license": "Georgia public record (O.C.G.A. 50-18-70); attribute the agency",
+  "view": {
+   "url": "https://services6.arcgis.com/9QlSLDqa0P1cHLhu/arcgis/rest/services/GADNR_Managed_Lands/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "MANAGING_A": "manager"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.3109,
+    32.6914,
+    -82.4651,
+    34.8066
+   ],
+   "count": 311,
+   "kb": 255.7,
+   "max_record_count": 1000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "ga-state-park-facilities",
+  "state": "GA",
+  "title": "State park & DNR facilities (Georgia)",
+  "title_es": "Instalaciones de parques estatales y DNR (Georgia)",
+  "description": "Georgia DNR state parks, historic sites and offices with address and public phone.",
+  "group": "places",
+  "category": "point",
+  "source": "Georgia Department of Natural Resources",
+  "license": "Georgia public record (O.C.G.A. 50-18-70); attribute the agency",
+  "view": {
+   "url": "https://services6.arcgis.com/9QlSLDqa0P1cHLhu/arcgis/rest/services/DNR_Emergency_Facilities/FeatureServer/0",
+   "fields": {
+    "Facility": "name",
+    "Division": "kind",
+    "Address": "address",
+    "Phone": "phone",
+    "County": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -88.2337,
+    31.6339,
+    -80.5423,
+    35.8641
+   ],
+   "count": 161,
+   "kb": 38.5,
+   "max_record_count": 1000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "ga-water-trails",
+  "state": "GA",
+  "title": "Water trails (Georgia)",
+  "title_es": "Rutas acuáticas (Georgia)",
+  "description": "Established and developing paddling water trails (Georgia DNR, 2019).",
+  "group": "nature",
+  "category": "park",
+  "source": "Georgia Department of Natural Resources",
+  "license": "Georgia public record (O.C.G.A. 50-18-70); attribute the agency",
+  "view": {
+   "url": "https://services6.arcgis.com/9QlSLDqa0P1cHLhu/arcgis/rest/services/Georgia_Water_Trails/FeatureServer/0",
+   "fields": {
+    "WT_Name": "name",
+    "Status": "status",
+    "Length_Mi": "miles",
+    "URL": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -84.8687,
+    33.4846,
+    -83.9073,
+    34.0134
+   ],
+   "count": 5,
+   "kb": 710.5,
+   "max_record_count": 1000,
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "sc-evacuation-zones",
+  "state": "SC",
+  "title": "Hurricane evacuation zones (South Carolina)",
+  "title_es": "Zonas de evacuación por huracán (Carolina del Sur)",
+  "description": "SCEMD's 2024 hurricane evacuation zones, the set carried in the 2026 state hurricane plan.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "South Carolina Emergency Management Division (SCEMD)",
+  "license": "South Carolina public record (S.C. FOIA); attribute the agency",
+  "view": {
+   "url": "https://services1.arcgis.com/TXIoeSnCA2m7KVZj/arcgis/rest/services/Final2024EvacuationZones/FeatureServer/0",
+   "fields": {
+    "Zone": "name",
+    "CountyName": "county",
+    "Region": "region",
+    "Population": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.8539,
+    31.7184,
+    -78.0081,
+    33.8336
+   ],
+   "count": 23,
+   "kb": 363.6,
+   "max_record_count": 2000,
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "sc-shelters",
+  "state": "SC",
+  "title": "Emergency shelters (South Carolina)",
+  "title_es": "Refugios de emergencia (Carolina del Sur)",
+  "description": "SCEMD shelter list with open/closed status (status changes during events).",
+  "group": "help",
+  "category": "point",
+  "source": "South Carolina Emergency Management Division (SCEMD)",
+  "license": "South Carolina public record (S.C. FOIA); attribute the agency",
+  "view": {
+   "url": "https://services1.arcgis.com/TXIoeSnCA2m7KVZj/arcgis/rest/services/shelters/FeatureServer/0",
+   "fields": {
+    "pvShelterN": "name",
+    "pvAddress": "address",
+    "pvCity": "city",
+    "pvCounty": "county",
+    "pvStatus": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.7767,
+    30.6609,
+    -76.0853,
+    34.8911
+   ],
+   "count": 580,
+   "kb": 134.3,
+   "max_record_count": 1000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "sc-child-care-centers",
+  "state": "SC",
+  "title": "Licensed child care centers (South Carolina)",
+  "title_es": "Guarderías con licencia (Carolina del Sur)",
+  "description": "SC DSS-licensed child care centers with ABC Quality rating (homes excluded), April 2025 snapshot.",
+  "group": "help",
+  "category": "point",
+  "source": "South Carolina Dept. of Social Services via SCEMD",
+  "license": "South Carolina public record (S.C. FOIA); attribute the agency",
+  "view": {
+   "url": "https://services1.arcgis.com/TXIoeSnCA2m7KVZj/arcgis/rest/services/DSS_Child_Care_Facilities/FeatureServer/0",
+   "fields": {
+    "Provider_Name": "name",
+    "Street": "address",
+    "City": "city",
+    "Phone": "phone",
+    "ABC_Level": "quality",
+    "Capacity": "capacity",
+    "County": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "Facility_Type = 'Child Care Center'",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -80.1714,
+    32.6438,
+    -79.6906,
+    32.9082
+   ],
+   "count": 151,
+   "kb": 41.1,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "sc-water-access",
+  "state": "SC",
+  "title": "Boat ramps & water access (South Carolina)",
+  "title_es": "Rampas para botes y acceso al agua (Carolina del Sur)",
+  "description": "SCDNR public water access: boat ramps, fishing piers and paddle launches.",
+  "group": "nature",
+  "category": "point",
+  "source": "South Carolina Department of Natural Resources (SCDNR)",
+  "license": "South Carolina public record (S.C. FOIA); attribute the agency",
+  "view": {
+   "url": "https://services.arcgis.com/acgZYxoN5Oj8pDLa/arcgis/rest/services/South_Carolina_Public_Water_Access_PUBLIC_VIEW/FeatureServer/0",
+   "fields": {
+    "WaterAccessName": "name",
+    "WaterAccessType": "kind",
+    "Waterbody": "waterbody",
+    "Status": "status",
+    "Address": "address",
+    "County": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -80.8924,
+    32.2472,
+    -78.9696,
+    33.3048
+   ],
+   "count": 168,
+   "kb": 41.1,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "sc-dnr-public-lands",
+  "state": "SC",
+  "title": "WMAs & heritage preserves (South Carolina)",
+  "title_es": "Áreas de manejo y reservas patrimoniales (Carolina del Sur)",
+  "description": "SCDNR public lands (wildlife management areas, heritage preserves) with allowed activities and property page.",
+  "group": "nature",
+  "category": "park",
+  "source": "South Carolina Department of Natural Resources (SCDNR)",
+  "license": "South Carolina public record (S.C. FOIA); attribute the agency",
+  "view": {
+   "url": "https://services.arcgis.com/acgZYxoN5Oj8pDLa/arcgis/rest/services/DEV_-_SCDNR_Public_Lands_Viewer/FeatureServer/4",
+   "fields": {
+    "PropertyName": "name",
+    "PropertyUse": "kind",
+    "PublicAccess": "status",
+    "County": "county",
+    "GIS_PropertyAcres": "acres",
+    "prop_page_url": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.8539,
+    31.7184,
+    -78.0081,
+    33.8336
+   ],
+   "count": 95,
+   "kb": 185.9,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "sc-wildfires",
+  "state": "SC",
+  "title": "Active wildfires (South Carolina Forestry Commission)",
+  "title_es": "Incendios forestales activos (Comisión Forestal de Carolina del Sur)",
+  "description": "Fires the SC Forestry Commission is responding to now.",
+  "group": "live",
+  "category": "hazard",
+  "source": "South Carolina Forestry Commission",
+  "license": "South Carolina public record (S.C. FOIA); attribute the agency",
+  "view": {
+   "url": "https://services9.arcgis.com/MvVEDRWecTZBD2xl/arcgis/rest/services/fiResponse_Incident_Service/FeatureServer/0",
+   "fields": {
+    "Incident_Name": "name",
+    "Incident_Status": "status",
+    "Total_Acres": "acres",
+    "Percent_Contained": "contained_pct",
+    "County": "county",
+    "General_Cause": "cause",
+    "Discovery_Date": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.3138,
+    24.3155,
+    -64.5482,
+    41.2365
+   ],
+   "count": 6,
+   "kb": 1.8,
+   "max_record_count": 2000,
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "sc-fire-drought-index",
+  "state": "SC",
+  "title": "Wildfire drought index (KBDI, South Carolina)",
+  "title_es": "Índice de sequía para incendios (KBDI, Carolina del Sur)",
+  "description": "Daily Keetch-Byram Drought Index bands from the SC Forestry Commission (higher = drier, more fire risk; 0-800).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "South Carolina Forestry Commission",
+  "license": "South Carolina public record (S.C. FOIA); attribute the agency",
+  "view": {
+   "url": "https://services9.arcgis.com/MvVEDRWecTZBD2xl/arcgis/rest/services/KBDI_Interpolation_Polygons/FeatureServer/1",
+   "fields": {
+    "gridcode": "kbdi"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.3138,
+    24.3155,
+    -64.5482,
+    41.2365
+   ],
+   "count": 30,
+   "kb": 22.7,
+   "max_record_count": 2000,
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "sc-groundwater-wells",
+  "state": "SC",
+  "title": "Groundwater monitoring wells (South Carolina)",
+  "title_es": "Pozos de monitoreo de agua subterránea (Carolina del Sur)",
+  "description": "SCDNR groundwater-level monitoring network wells (aquifer, depth, link to data).",
+  "group": "infra",
+  "category": "point",
+  "source": "South Carolina Department of Natural Resources (SCDNR)",
+  "license": "South Carolina public record (S.C. FOIA); attribute the agency",
+  "view": {
+   "url": "https://services.arcgis.com/acgZYxoN5Oj8pDLa/arcgis/rest/services/SCDNR_Groundwater_Data_Public_View/FeatureServer/0",
+   "fields": {
+    "location_name": "name",
+    "well_id": "well_id",
+    "aquifer1": "aquifer",
+    "well_depth": "depth_ft",
+    "ext_url": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.8539,
+    31.7184,
+    -78.0081,
+    33.8336
+   ],
+   "count": 129,
+   "kb": 25.8,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "nc-parcels",
+  "state": "NC",
+  "title": "Parcels (North Carolina)",
+  "title_es": "Parcelas (Carolina del Norte)",
+  "description": "All 100 counties' tax parcels from NC OneMap (2025-26 county updates): site address, land use, value, year built. Owner names left out.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "NC OneMap / NC Center for Geographic Information & Analysis",
+  "license": "North Carolina public record (G.S. 132); credit NC OneMap / source agency",
+  "view": {
+   "url": "https://services.nconemap.gov/secure/rest/services/NC1Map_Parcels/FeatureServer/1",
+   "fields": {
+    "nparno": "parcel_id",
+    "siteadd": "address",
+    "scity": "city",
+    "parusedesc": "land_use",
+    "parval": "value",
+    "structyear": "year_built",
+    "cntyname": "county",
+    "reviseyear": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -80.873,
+    35.2105,
+    -80.813,
+    35.2435
+   ],
+   "count": 1922,
+   "kb": 840.6,
+   "max_record_count": 5000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "nc-address-points",
+  "state": "NC",
+  "title": "Address points (North Carolina)",
+  "title_es": "Puntos de dirección (Carolina del Norte)",
+  "description": "AddressNC statewide 911 address points (no names attached).",
+  "group": "planning",
+  "category": "point",
+  "source": "AddressNC / NC 911 Board / NC OneMap",
+  "license": "North Carolina public record (G.S. 132); credit NC OneMap / source agency",
+  "view": {
+   "url": "https://services.nconemap.gov/secure/rest/services/AddressNC/NC1Map_Addresses/MapServer/0",
+   "fields": {
+    "full_address": "address",
+    "post_comm": "city",
+    "county": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -80.8505,
+    35.2229,
+    -80.8355,
+    35.2311
+   ],
+   "count": 2000,
+   "kb": 412.5,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "nc-underserved-communities",
+  "state": "NC",
+  "title": "Potentially underserved communities (North Carolina)",
+  "title_es": "Comunidades potencialmente desatendidas (Carolina del Norte)",
+  "description": "NC DEQ's environmental-justice screen: block groups flagged for high minority share and/or poverty vs county and state (2024).",
+  "group": "people",
+  "category": "boundary",
+  "source": "NC Department of Environmental Quality",
+  "license": "North Carolina public record (G.S. 132); credit NC OneMap / source agency",
+  "view": {
+   "url": "https://services2.arcgis.com/kCu40SDxsCGcuUWO/arcgis/rest/services/NCDEQ_Potentially_Underserved_Block_Groups_2024/FeatureServer/4",
+   "fields": {
+    "GEOID": "geoid",
+    "COUNTYName": "county",
+    "BGPRace2": "pct_minority",
+    "BGPPoverty": "pct_poverty",
+    "PUBG": "underserved"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "PUBG = 1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -82.7659,
+    34.1694,
+    -78.9201,
+    36.2846
+   ],
+   "count": 1120,
+   "kb": 620.0,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "nc-game-lands",
+  "state": "NC",
+  "title": "Game lands (North Carolina)",
+  "title_es": "Tierras de caza (Carolina del Norte)",
+  "description": "NC Wildlife Resources Commission game lands open for hunting, trapping and fishing, with hunting-day designation.",
+  "group": "nature",
+  "category": "park",
+  "source": "NC Wildlife Resources Commission",
+  "license": "North Carolina public record (G.S. 132); credit NC OneMap / source agency",
+  "view": {
+   "url": "https://services1.arcgis.com/YfqBAUM5nWR3yhGP/arcgis/rest/services/gamelands_detail/FeatureServer/22",
+   "fields": {
+    "GML_HAB": "name",
+    "GML_TRACT": "tract",
+    "GML_DESIG": "kind",
+    "COUNTY": "county",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -82.7659,
+    34.1694,
+    -78.9201,
+    36.2846
+   ],
+   "count": 699,
+   "kb": 509.7,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "nc-boating-access",
+  "state": "NC",
+  "title": "Boating access areas (North Carolina)",
+  "title_es": "Accesos para botes (Carolina del Norte)",
+  "description": "NCWRC public boating access areas with status and waterbody.",
+  "group": "nature",
+  "category": "point",
+  "source": "NC Wildlife Resources Commission",
+  "license": "North Carolina public record (G.S. 132); credit NC OneMap / source agency",
+  "view": {
+   "url": "https://services1.arcgis.com/YfqBAUM5nWR3yhGP/arcgis/rest/services/NCWRC_Boating_Access_Areas_view/FeatureServer/0",
+   "fields": {
+    "BAA_Name": "name",
+    "Water_Access": "waterbody",
+    "Site_Status": "status",
+    "City": "city",
+    "County": "county",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.8044,
+    34.6982,
+    -79.8816,
+    35.7558
+   ],
+   "count": 35,
+   "kb": 9.6,
+   "max_record_count": 2000,
+   "features_in_probe": 35
+  }
+ },
+ {
+  "name": "nc-public-fishing-areas",
+  "state": "NC",
+  "title": "Public fishing areas (North Carolina)",
+  "title_es": "Áreas públicas de pesca (Carolina del Norte)",
+  "description": "NCWRC public fishing areas (piers, banks, ponds) with address and site phone.",
+  "group": "nature",
+  "category": "point",
+  "source": "NC Wildlife Resources Commission",
+  "license": "North Carolina public record (G.S. 132); credit NC OneMap / source agency",
+  "view": {
+   "url": "https://services1.arcgis.com/YfqBAUM5nWR3yhGP/arcgis/rest/services/NCWRC_Public_Fishing_Areas_view/FeatureServer/0",
+   "fields": {
+    "PFA_Name": "name",
+    "Water_Access": "waterbody",
+    "Site_Status": "status",
+    "Street": "address",
+    "City": "city",
+    "Phone": "phone",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.8044,
+    34.6982,
+    -79.8816,
+    35.7558
+   ],
+   "count": 36,
+   "kb": 9.5,
+   "max_record_count": 2000,
+   "features_in_probe": 36
+  }
+ },
+ {
+  "name": "nc-state-parks",
+  "state": "NC",
+  "title": "State parks (North Carolina)",
+  "title_es": "Parques estatales (Carolina del Norte)",
+  "description": "Lands of the NC Division of Parks and Recreation, from the Natural Heritage Program's managed-areas file (July 2026).",
+  "group": "nature",
+  "category": "park",
+  "source": "NC Natural Heritage Program (DNCR)",
+  "license": "North Carolina public record (G.S. 132); credit NC OneMap / source agency",
+  "view": {
+   "url": "https://ncnhde.natureserve.org/arcgis/rest/services/NC_Public/Managed_Areas/MapServer/0",
+   "fields": {
+    "MA_NAME": "name",
+    "CATEGORY": "kind",
+    "ACRES": "acres",
+    "DATA_DATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "OWNER = 'NC DNCR, Division of Parks and Recreation'",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -80.6729,
+    34.6424,
+    -76.8271,
+    36.7576
+   ],
+   "count": 68,
+   "kb": 237.8,
+   "max_record_count": 1000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "nc-state-forests",
+  "state": "NC",
+  "title": "State forests (North Carolina)",
+  "title_es": "Bosques estatales (Carolina del Norte)",
+  "description": "NC Forest Service educational and state forests (Natural Heritage Program managed-areas file).",
+  "group": "nature",
+  "category": "park",
+  "source": "NC Natural Heritage Program (DNCR)",
+  "license": "North Carolina public record (G.S. 132); credit NC OneMap / source agency",
+  "view": {
+   "url": "https://ncnhde.natureserve.org/arcgis/rest/services/NC_Public/Managed_Areas/MapServer/0",
+   "fields": {
+    "MA_NAME": "name",
+    "OWNER": "manager",
+    "ACRES": "acres",
+    "DATA_DATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "OWNER IN ('NC Department of Agriculture, Forest Service', 'NC Forest Service')",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -80.8729,
+    34.5924,
+    -77.0271,
+    36.7076
+   ],
+   "count": 7,
+   "kb": 16.3,
+   "max_record_count": 1000,
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "nc-historic-places",
+  "state": "NC",
+  "title": "National Register places (North Carolina)",
+  "title_es": "Lugares del Registro Nacional (Carolina del Norte)",
+  "description": "Individually listed historic properties from the NC State Historic Preservation Office, with nomination PDF.",
+  "group": "places",
+  "category": "point",
+  "source": "NC State Historic Preservation Office (DNCR)",
+  "license": "North Carolina public record (G.S. 132); credit NC OneMap / source agency",
+  "view": {
+   "url": "https://gis2.ncdcr.gov/dncrgis/rest/services/NCHPO_Public/NCHPO_Historic_Resources/MapServer/1",
+   "fields": {
+    "Site_Name": "name",
+    "Location": "address",
+    "Descriptio": "info",
+    "YearNR": "listed",
+    "Status": "status",
+    "LinkPath": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -80.9632,
+    35.1609,
+    -80.7228,
+    35.2931
+   ],
+   "count": 74,
+   "kb": 25.5,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "nc-historic-districts",
+  "state": "NC",
+  "title": "National Register districts (North Carolina)",
+  "title_es": "Distritos del Registro Nacional (Carolina del Norte)",
+  "description": "National Register historic district boundaries from the NC SHPO, with nomination PDF.",
+  "group": "places",
+  "category": "boundary",
+  "source": "NC State Historic Preservation Office (DNCR)",
+  "license": "North Carolina public record (G.S. 132); credit NC OneMap / source agency",
+  "view": {
+   "url": "https://gis2.ncdcr.gov/dncrgis/rest/services/NCHPO_Public/NCHPO_Historic_Resources/MapServer/2",
+   "fields": {
+    "SITE_NAME": "name",
+    "DESCRIPTIO": "info",
+    "YearListed": "listed",
+    "LinkPath": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.0834,
+    35.0948,
+    -80.6026,
+    35.3592
+   ],
+   "count": 91,
+   "kb": 48.5,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "nc-beach-access",
+  "state": "NC",
+  "title": "Beach & waterfront access (North Carolina)",
+  "title_es": "Acceso a playas y costas (Carolina del Norte)",
+  "description": "NC Division of Coastal Management public beach and waterfront access sites, with parking and accessibility.",
+  "group": "nature",
+  "category": "point",
+  "source": "NC DEQ Division of Coastal Management",
+  "license": "North Carolina public record (G.S. 132); credit NC OneMap / source agency",
+  "view": {
+   "url": "https://services2.arcgis.com/kCu40SDxsCGcuUWO/arcgis/rest/services/DCM_Beach_and_Waterfront_Access/FeatureServer/0",
+   "fields": {
+    "ACCESS_LOC": "name",
+    "PLACE": "city",
+    "ACESS_TYPE": "kind",
+    "PARKING_OPTIONS": "parking",
+    "BeachWheelchair": "beach_wheelchair",
+    "COUNTY": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -78.3707,
+    33.9456,
+    -77.4093,
+    34.4744
+   ],
+   "count": 218,
+   "kb": 55.1,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "nc-voting-precincts",
+  "state": "NC",
+  "title": "Voting precincts (North Carolina)",
+  "title_es": "Precintos electorales (Carolina del Norte)",
+  "description": "Current voting precinct boundaries from the NC State Board of Elections.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "NC State Board of Elections via NC OneMap",
+  "license": "North Carolina public record (G.S. 132); credit NC OneMap / source agency",
+  "view": {
+   "url": "https://services.nconemap.gov/secure/rest/services/NC1Map_Boundaries/MapServer/0",
+   "fields": {
+    "enr_desc": "name",
+    "prec_id": "precinct",
+    "county_nam": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.3237,
+    34.9626,
+    -80.3623,
+    35.4914
+   ],
+   "count": 353,
+   "kb": 441.1,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "va-parcels",
+  "state": "VA",
+  "title": "Parcels (Virginia)",
+  "title_es": "Parcelas (Virginia)",
+  "description": "VGIN statewide parcel outlines with parcel ID and locality (geometry + IDs only; no owner data).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Virginia Geographic Information Network (VGIN, VDEM)",
+  "license": "Virginia public record (Va. Code 2.2-3704); credit VGIN / source agency",
+  "view": {
+   "url": "https://vginmaps.vdem.virginia.gov/arcgis/rest/services/VA_Base_Layers/VA_Parcels/FeatureServer/0",
+   "fields": {
+    "PARCELID": "parcel_id",
+    "LOCALITY": "city",
+    "LASTUPDATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.008,
+    36.8355,
+    -75.948,
+    36.8685
+   ],
+   "count": 2000,
+   "kb": 585.5,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "va-address-points",
+  "state": "VA",
+  "title": "Address points (Virginia)",
+  "title_es": "Puntos de dirección (Virginia)",
+  "description": "VGIN statewide 911 address points (no names attached).",
+  "group": "planning",
+  "category": "point",
+  "source": "Virginia Geographic Information Network (VGIN, VDEM)",
+  "license": "Virginia public record (Va. Code 2.2-3704); credit VGIN / source agency",
+  "view": {
+   "url": "https://vginmaps.vdem.virginia.gov/arcgis/rest/services/VA_Base_Layers/VA_Address_Points/FeatureServer/0",
+   "fields": {
+    "FULLADDR": "address",
+    "PO_NAME": "city",
+    "MUNICIPALITY": "county",
+    "ZIP_5": "zip"
+   },
+   "geometry": "point",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -75.9855,
+    36.8479,
+    -75.9705,
+    36.8561
+   ],
+   "count": 1896,
+   "kb": 380.9,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "va-building-footprints",
+  "state": "VA",
+  "title": "Building footprints (Virginia)",
+  "title_es": "Huellas de edificios (Virginia)",
+  "description": "VGIN statewide building footprints from local governments (heavy: shown only when zoomed in close).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Virginia Geographic Information Network (VGIN, VDEM)",
+  "license": "Virginia public record (Va. Code 2.2-3704); credit VGIN / source agency",
+  "view": {
+   "url": "https://vginmaps.vdem.virginia.gov/arcgis/rest/services/VA_Base_Layers/VA_Building_Footprints/FeatureServer/0",
+   "fields": {
+    "MUNICIPALITY": "county",
+    "NUMSTORIES": "stories",
+    "LASTUPDATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -75.993,
+    36.8437,
+    -75.963,
+    36.8603
+   ],
+   "count": 1891,
+   "kb": 645.0,
+   "max_record_count": 2000,
+   "features_in_probe": 36
+  }
+ },
+ {
+  "name": "va-landmarks",
+  "state": "VA",
+  "title": "Public landmarks (Virginia)",
+  "title_es": "Lugares públicos (Virginia)",
+  "description": "VGIN landmark points: state agencies, schools, public safety, libraries and other public places with phone and link.",
+  "group": "places",
+  "category": "point",
+  "source": "Virginia Geographic Information Network (VGIN, VDEM)",
+  "license": "Virginia public record (Va. Code 2.2-3704); credit VGIN / source agency",
+  "view": {
+   "url": "https://vginmaps.vdem.virginia.gov/arcgis/rest/services/VA_Base_Layers/VA_Landmarks/FeatureServer/1",
+   "fields": {
+    "LandmkName": "name",
+    "PlaceType": "kind",
+    "Address": "address",
+    "City": "city",
+    "Phone": "phone",
+    "URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.0982,
+    36.7859,
+    -75.8578,
+    36.9181
+   ],
+   "count": 86,
+   "kb": 25.8,
+   "max_record_count": 2000,
+   "features_in_probe": 47
+  }
+ },
+ {
+  "name": "va-evacuation-zones",
+  "state": "VA",
+  "title": "Hurricane evacuation zones (Virginia)",
+  "title_es": "Zonas de evacuación por huracán (Virginia)",
+  "description": "VDEM Know Your Zone hurricane evacuation zones for coastal Virginia (2020 study, still the official set; service updated 2025).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Virginia Department of Emergency Management (VDEM)",
+  "license": "Virginia public record (Va. Code 2.2-3704); credit VGIN / source agency",
+  "view": {
+   "url": "https://services3.arcgis.com/qVupYidwzMKkDQzr/arcgis/rest/services/Virginia_Evacuation_Zones_2020/FeatureServer/0",
+   "fields": {
+    "Zone": "name",
+    "Locality": "city",
+    "SubZones": "area"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.9009,
+    35.7944,
+    -74.0551,
+    37.9096
+   ],
+   "count": 74,
+   "kb": 274.4,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "va-evacuation-routes",
+  "state": "VA",
+  "title": "Hurricane evacuation routes (Virginia)",
+  "title_es": "Rutas de evacuación por huracán (Virginia)",
+  "description": "State hurricane evacuation routes, including I-64 contraflow (with official Spanish description).",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Virginia Department of Emergency Management (VDEM)",
+  "license": "Virginia public record (Va. Code 2.2-3704); credit VGIN / source agency",
+  "view": {
+   "url": "https://services3.arcgis.com/qVupYidwzMKkDQzr/arcgis/rest/services/Hurricane_Evacuation_Routes/FeatureServer/0",
+   "fields": {
+    "RT_LABEL": "name",
+    "Descriptio": "info",
+    "SPANISH": "info_es",
+    "CONTRAFLOW": "contraflow"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.9009,
+    35.7944,
+    -74.0551,
+    37.9096
+   ],
+   "count": 15,
+   "kb": 873.7,
+   "max_record_count": 2000,
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "va-ej-communities",
+  "state": "VA",
+  "title": "Environmental justice communities (Virginia)",
+  "title_es": "Comunidades de justicia ambiental (Virginia)",
+  "description": "Block groups that meet the Virginia Environmental Justice Act definition (low-income and/or communities of color), DEQ 2026.",
+  "group": "people",
+  "category": "boundary",
+  "source": "Virginia Department of Environmental Quality",
+  "license": "Virginia public record (Va. Code 2.2-3704); credit VGIN / source agency",
+  "view": {
+   "url": "https://gisdata.deq.virginia.gov/arcgis/rest/services/public/VA_Environmental_Justice_Communities/MapServer/3",
+   "fields": {
+    "GEOID": "geoid",
+    "COUNTYNAME": "county",
+    "EJStatus": "status",
+    "PctPopLI": "pct_low_income",
+    "COc_PctPOC": "pct_people_of_color"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "EJCommunity = 'Yes'",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.9394,
+    36.3232,
+    -75.0166,
+    37.3808
+   ],
+   "count": 1000,
+   "kb": 602.8,
+   "max_record_count": 1000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "va-wildlife-management-areas",
+  "state": "VA",
+  "title": "Wildlife management areas (Virginia)",
+  "title_es": "Áreas de manejo de vida silvestre (Virginia)",
+  "description": "Virginia DWR wildlife management areas open for hunting, fishing and wildlife viewing.",
+  "group": "nature",
+  "category": "park",
+  "source": "Virginia Department of Wildlife Resources (DWR)",
+  "license": "Virginia public record (Va. Code 2.2-3704); credit VGIN / source agency",
+  "view": {
+   "url": "https://services.dwr.virginia.gov/arcgis/rest/services/HUB_Layers/DWR_WMA_Boundaries/FeatureServer/0",
+   "fields": {
+    "WMA_NAME": "name",
+    "Tract_Name": "tract",
+    "ACRES": "acres",
+    "URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.3729,
+    36.9424,
+    -77.5271,
+    39.0576
+   ],
+   "count": 52,
+   "kb": 49.4,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "va-boating-access",
+  "state": "VA",
+  "title": "Boating access sites (Virginia)",
+  "title_es": "Accesos para botes (Virginia)",
+  "description": "Virginia DWR public boat ramps and car-top launches.",
+  "group": "nature",
+  "category": "point",
+  "source": "Virginia Department of Wildlife Resources (DWR)",
+  "license": "Virginia public record (Va. Code 2.2-3704); credit VGIN / source agency",
+  "view": {
+   "url": "https://services.dwr.virginia.gov/arcgis/rest/services/HUB_Layers/DWR_Boating_Access_Locations/FeatureServer/0",
+   "fields": {
+    "SITENAME": "name",
+    "WATERBODY": "waterbody",
+    "Type_of_Ramp": "kind",
+    "LOCATION": "address",
+    "COUNTY": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.9394,
+    36.3232,
+    -75.0166,
+    37.3808
+   ],
+   "count": 19,
+   "kb": 5.0,
+   "max_record_count": 2000,
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "va-serious-crashes",
+  "state": "VA",
+  "title": "Fatal & serious-injury crashes (Virginia)",
+  "title_es": "Choques fatales y con heridos graves (Virginia)",
+  "description": "VDOT crash locations since 2022 where someone was killed (K) or seriously injured (A); no personal details.",
+  "group": "roads",
+  "category": "point",
+  "source": "Virginia Department of Transportation (VDOT)",
+  "license": "Virginia public record (Va. Code 2.2-3704); credit VGIN / source agency",
+  "view": {
+   "url": "https://services.arcgis.com/p5v98VHDX9Atv3l7/arcgis/rest/services/Full_Crash/FeatureServer/0",
+   "fields": {
+    "CRASH_YEAR": "year",
+    "CRASH_SEVERITY": "kind",
+    "ROUTE_OR_STREET_NM": "route",
+    "K_PEOPLE": "killed",
+    "A_PEOPLE": "serious_injuries",
+    "PED_NONPED": "pedestrian",
+    "BIKE_NONBIKE": "bicycle"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "CRASH_YEAR >= '2022' AND CRASH_SEVERITY IN ('K','A')",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.2184,
+    36.7198,
+    -75.7376,
+    36.9842
+   ],
+   "count": 1107,
+   "kb": 262.8,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "wv-parcels",
+  "state": "WV",
+  "title": "Parcels (West Virginia)",
+  "title_es": "Parcelas (Virginia Occidental)",
+  "description": "Statewide county tax parcels (WV Property Tax Division / WV GIS Technical Center): parcel ID, physical address, acres. Owner names left out.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "WV State Tax Dept. Property Tax Division via WV GIS Technical Center",
+  "license": "West Virginia public record (W. Va. Code 29B); credit WV GIS Technical Center / source agency",
+  "view": {
+   "url": "https://services.wvgis.wvu.edu/arcgis/rest/services/Planning_Cadastre/WV_Parcels/MapServer/0",
+   "fields": {
+    "CleanParcelID": "parcel_id",
+    "FullPhysicalAddress": "address",
+    "CALC_ACRE": "acres",
+    "COUNTY": "county_code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.663,
+    38.3335,
+    -81.603,
+    38.3665
+   ],
+   "count": 2000,
+   "kb": 680.4,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "wv-address-points",
+  "state": "WV",
+  "title": "Address points (West Virginia)",
+  "title_es": "Puntos de dirección (Virginia Occidental)",
+  "description": "WV statewide 911 site address points (no names attached).",
+  "group": "planning",
+  "category": "point",
+  "source": "WV GIS Technical Center / WV Emergency Management (WVDHSEM)",
+  "license": "West Virginia public record (W. Va. Code 29B); credit WV GIS Technical Center / source agency",
+  "view": {
+   "url": "https://services.wvgis.wvu.edu/arcgis/rest/services/Planning_Cadastre/WV_Parcels/MapServer/5",
+   "fields": {
+    "FULLADDR": "address",
+    "MUNICIPALITY": "city",
+    "Zip": "zip",
+    "STATUS": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.6405,
+    38.3459,
+    -81.6255,
+    38.3541
+   ],
+   "count": 1042,
+   "kb": 194.7,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "wv-advisory-flood-zones",
+  "state": "WV",
+  "title": "High-risk advisory flood zones (West Virginia)",
+  "title_es": "Zonas de inundación de alto riesgo (Virginia Occidental)",
+  "description": "WV Flood Tool advisory and updated high-risk floodplains that go beyond the effective FEMA maps.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "WV GIS Technical Center / WV Emergency Management (WV Flood Tool)",
+  "license": "West Virginia public record (W. Va. Code 29B); credit WV GIS Technical Center / source agency",
+  "view": {
+   "url": "https://services.wvgis.wvu.edu/arcgis/rest/services/Hazards/floodTool_publicView/MapServer/3",
+   "fields": {
+    "Label_FloodPlainType": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.6931,
+    38.317,
+    -81.5729,
+    38.383
+   ],
+   "count": 7,
+   "kb": 466.0,
+   "max_record_count": 2000,
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "wv-historic-places",
+  "state": "WV",
+  "title": "National Register places (West Virginia)",
+  "title_es": "Lugares del Registro Nacional (Virginia Occidental)",
+  "description": "Listed historic buildings and sites from the WV State Historic Preservation Office (restricted sites excluded).",
+  "group": "places",
+  "category": "point",
+  "source": "WV State Historic Preservation Office",
+  "license": "West Virginia public record (W. Va. Code 29B); credit WV GIS Technical Center / source agency",
+  "view": {
+   "url": "https://services.wvgis.wvu.edu/arcgis/rest/services/Society/wv_SHPO_public/FeatureServer/1",
+   "fields": {
+    "HistName": "name",
+    "Addr": "address",
+    "Town": "city",
+    "ResourceType": "kind",
+    "DateConst": "built",
+    "NR_List_Date": "listed"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "Restricted = 'N'",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.8734,
+    38.2178,
+    -81.3926,
+    38.4822
+   ],
+   "count": 67,
+   "kb": 16.5,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "wv-state-parks",
+  "state": "WV",
+  "title": "State parks (West Virginia)",
+  "title_es": "Parques estatales (Virginia Occidental)",
+  "description": "WV state park boundaries from WVDNR (2025).",
+  "group": "nature",
+  "category": "park",
+  "source": "WV Division of Natural Resources",
+  "license": "West Virginia public record (W. Va. Code 29B); credit WV GIS Technical Center / source agency",
+  "view": {
+   "url": "https://services9.arcgis.com/SQbkdxLkuQJuLGtx/arcgis/rest/services/West_Virginia_State_Parks/FeatureServer/18",
+   "fields": {
+    "Unit_Nm": "name",
+    "Loc_Ds": "kind",
+    "GIS_Acres": "acres",
+    "Pub_Access": "access"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -82.9229,
+    36.9124,
+    -79.0771,
+    39.0276
+   ],
+   "count": 25,
+   "kb": 24.7,
+   "max_record_count": 2000,
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "wv-wildlife-management-areas",
+  "state": "WV",
+  "title": "Wildlife management areas (West Virginia)",
+  "title_es": "Áreas de manejo de vida silvestre (Virginia Occidental)",
+  "description": "WVDNR wildlife management areas with contact office phone.",
+  "group": "nature",
+  "category": "park",
+  "source": "WV Division of Natural Resources",
+  "license": "West Virginia public record (W. Va. Code 29B); credit WV GIS Technical Center / source agency",
+  "view": {
+   "url": "https://services9.arcgis.com/SQbkdxLkuQJuLGtx/arcgis/rest/services/West_Virginia_Wildlife_Management_Areas/FeatureServer/14",
+   "fields": {
+    "Name": "name",
+    "AreaType": "kind",
+    "Contact": "manager",
+    "Telephone": "phone",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -82.9229,
+    36.9124,
+    -79.0771,
+    39.0276
+   ],
+   "count": 66,
+   "kb": 338.3,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "wv-state-forests",
+  "state": "WV",
+  "title": "State forests (West Virginia)",
+  "title_es": "Bosques estatales (Virginia Occidental)",
+  "description": "WV state forests (WVDNR / Division of Forestry).",
+  "group": "nature",
+  "category": "park",
+  "source": "WV Division of Natural Resources",
+  "license": "West Virginia public record (W. Va. Code 29B); credit WV GIS Technical Center / source agency",
+  "view": {
+   "url": "https://services9.arcgis.com/SQbkdxLkuQJuLGtx/arcgis/rest/services/West_Virginia_State_Forests/FeatureServer/16",
+   "fields": {
+    "Name": "name",
+    "AreaType": "kind",
+    "Telephone": "phone",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.5559,
+    37.2924,
+    -79.7101,
+    39.4076
+   ],
+   "count": 7,
+   "kb": 14.1,
+   "max_record_count": 2000,
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "wv-fishing-access",
+  "state": "WV",
+  "title": "Public fishing access (West Virginia)",
+  "title_es": "Acceso público para pesca (Virginia Occidental)",
+  "description": "WVDNR public fishing access sites: ramps, piers, parking and restrooms.",
+  "group": "nature",
+  "category": "point",
+  "source": "WV Division of Natural Resources",
+  "license": "West Virginia public record (W. Va. Code 29B); credit WV GIS Technical Center / source agency",
+  "view": {
+   "url": "https://services9.arcgis.com/SQbkdxLkuQJuLGtx/arcgis/rest/services/West_Virginia_Public_Fishing_Access_Sites/FeatureServer/28",
+   "fields": {
+    "SiteName": "name",
+    "Waterbody": "waterbody",
+    "AccessType": "kind",
+    "LaunchType": "launch",
+    "County": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -82.5944,
+    37.8212,
+    -80.6716,
+    38.8788
+   ],
+   "count": 148,
+   "kb": 31.9,
+   "max_record_count": 2000,
+   "features_in_probe": 50
+  }
+ }
+]

@@ -144,7 +144,13 @@ class Layer:
     def catalog_extras(self) -> dict:
         """Catalog fields the frontend needs beyond name/title/category."""
         return {
-            "coverage": "usa" if self.view or self.osm else self.coverage,
+            # a nationwide view makes a home-baked layer US-wide; a state pack's
+            # view only covers its state (coverage = the USPS code)
+            "coverage": self.coverage
+            if len(self.coverage) == 2
+            else "usa"
+            if self.view or self.osm
+            else self.coverage,
             "view": {**self.view.as_json(), "baked": self.has_home_copy} if self.view else None,
             "osm": self.osm,
             "title_es": self.title_es,

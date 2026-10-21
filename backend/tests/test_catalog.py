@@ -4,6 +4,9 @@ from __future__ import annotations
 
 from app.layers.service import COVERAGES, LAYERS, Layer, View, sync_catalog
 
+# isort: split
+from app.layers.national.states import STATES
+
 VIEW = View("https://x.example/FeatureServer/0", {"NAME": "name"}, "point", min_zoom=8)
 
 
@@ -37,7 +40,8 @@ def test_a_view_makes_a_layer_available_even_if_its_bake_failed():
 
 def test_every_registry_coverage_is_known_and_views_are_https_arcgis():
     for layer in LAYERS.values():
-        assert layer.catalog_extras()["coverage"] in COVERAGES, layer.name
+        cov = layer.catalog_extras()["coverage"]
+        assert cov in COVERAGES or cov in STATES, layer.name  # or one state (USPS code)
         if layer.view:
             assert layer.view.url.startswith("https://"), layer.name
             assert layer.view.geometry in ("point", "line", "polygon"), layer.name
@@ -171,3 +175,9 @@ def test_state_specs_are_validated_strictly(tmp_path):
         (tmp_path / "a.json").write_text(json.dumps([spec]))
         with pytest.raises(states.SpecError):
             states.load(tmp_path)
+
+
+def test_state_layers_keep_their_state_coverage():
+    states = [lay for lay in LAYERS.values() if len(lay.coverage) == 2]
+    for lay in states:
+        assert lay.catalog_extras()["coverage"] == lay.coverage, lay.name

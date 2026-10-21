@@ -166,6 +166,9 @@ from app.layers.national.census_extra import SOURCES as _CENSUS_SOURCES  # noqa:
 from app.layers.service import _ACS_METRICS  # noqa: E402
 
 SOURCES.update(_CENSUS_SOURCES)
+from app.layers.national.states import SOURCES as _STATE_SOURCES  # noqa: E402
+
+SOURCES.update(_STATE_SOURCES)
 for _row in _ACS_METRICS:
     SOURCES[_row[0]] = "U.S. Census Bureau ACS 2020-2024 5-year, via Esri Living Atlas"
 # Community & immigrant services pack (app/layers/national/services.py).
