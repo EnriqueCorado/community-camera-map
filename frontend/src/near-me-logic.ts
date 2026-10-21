@@ -72,3 +72,16 @@ export function formatDistance(m: number, locale: string): string {
   if (us) return m < 300 ? `${n(Math.round(m * 3.281 / 10) * 10, 0)} ft` : `${n(m / 1609.34, 1)} mi`;
   return m < 1000 ? `${n(Math.round(m / 10) * 10, 0)} m` : `${n(m / 1000, 1)} km`;
 }
+
+/** Longest the report waits on any one question. */
+export const JOB_TIMEOUT_MS = 12_000;
+
+/** `p`, or null if it hasn't settled within `ms` (it keeps running; its
+ *  answer is just no longer waited for). */
+export function withTimeout<T>(p: Promise<T>, ms: number): Promise<T | null> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const late = new Promise<null>((resolve) => {
+    timer = setTimeout(() => resolve(null), ms);
+  });
+  return Promise.race([p, late]).finally(() => clearTimeout(timer));
+}

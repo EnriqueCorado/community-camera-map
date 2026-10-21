@@ -9,7 +9,7 @@
 // itself is computed here, in the browser). Nothing is stored by this site.
 import { home } from "./baked";
 import type { Key } from "./i18n";
-import { featureAt, floodRisk, nearest, type LonLat } from "./near-me-logic";
+import { featureAt, floodRisk, JOB_TIMEOUT_MS, nearest, withTimeout, type LonLat } from "./near-me-logic";
 import { HOME_BBOX } from "./view-logic";
 
 type FC = GeoJSON.FeatureCollection;
@@ -246,7 +246,9 @@ export async function report(point: LonLat, signal?: AbortSignal): Promise<Fact[
       homeNear("fire-stations", "nearFireStation"),
     );
   }
-  const settled = await Promise.allSettled(jobs);
+  // One slow upstream (FEMA, Census, a cold home list) must not hold the whole
+  // report: each question gets JOB_TIMEOUT_MS, then it's left out.
+  const settled = await Promise.allSettled(jobs.map((j) => withTimeout(j, JOB_TIMEOUT_MS)));
   return settled.flatMap((s) => (s.status === "fulfilled" && s.value ? (Array.isArray(s.value) ? s.value : [s.value]) : []));
 }
 

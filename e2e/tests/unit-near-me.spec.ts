@@ -48,3 +48,11 @@ test("distances read naturally in each locale", () => {
   expect(formatDistance(2500, "es-ES")).toBe("2,5 km");
   expect(formatDistance(2500, "es-US")).toBe("1.6 mi"); // the app's Spanish locale: US units
 });
+
+test("report questions time out instead of holding the whole report", async () => {
+  const { withTimeout, JOB_TIMEOUT_MS } = await import("../../frontend/src/near-me-logic");
+  expect(JOB_TIMEOUT_MS).toBeGreaterThan(5_000);
+  expect(await withTimeout(Promise.resolve("fast"), 50)).toBe("fast");
+  expect(await withTimeout(new Promise((r) => setTimeout(() => r("slow"), 200)), 20)).toBeNull();
+  await expect(withTimeout(Promise.reject(new Error("x")), 50)).rejects.toThrow("x"); // failures still fail
+});
