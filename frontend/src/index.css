@@ -74,8 +74,9 @@ body:has(.app) {
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
-  /* Keep keyboard-focused controls clear of the sticky header. */
-  scroll-padding-top: 120px;
+  /* Keep keyboard-focused controls clear of the sticky header (its measured
+     height; Sidebar.tsx sets --head-h, since the header wraps with its text). */
+  scroll-padding-top: calc(var(--head-h, 120px) + 8px);
 }
 
 /* Title, language and About stay in view while the panels scroll. */

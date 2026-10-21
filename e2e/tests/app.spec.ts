@@ -124,8 +124,8 @@ const OVERLAYS = [
   "River gauges",
   "Lane closures",
   "Highway message signs",
-  "Transit routes",
-  "Transit stops",
+  "Transit routes (Stanislaus local)",
+  "Transit stops (Stanislaus local)",
   "Supervisor districts",
   "ZIP codes",
   "Congressional districts",
@@ -136,7 +136,7 @@ const OVERLAYS = [
   "River cameras",
   "Smoke & haze (experimental)",
   "Flights overhead",
-  "Satellite fire detections (24h)",
+  "Satellite fire detections, California (24h)",
   "Windy webcams",
 ];
 
@@ -168,8 +168,8 @@ for (const label of OVERLAYS) {
       "River gauges": "streamflow",
       "Lane closures": "lane-closures",
       "Highway message signs": "message-signs",
-      "Transit routes": "transit-routes",
-      "Transit stops": "transit-stops",
+      "Transit routes (Stanislaus local)": "transit-routes",
+      "Transit stops (Stanislaus local)": "transit-stops",
       "Supervisor districts": "supervisor-districts",
       "ZIP codes": "zip-codes",
       "Congressional districts": "congressional-districts",
@@ -180,7 +180,7 @@ for (const label of OVERLAYS) {
       "River cameras": "river-cameras",
       "Smoke & haze (experimental)": "smoke-haze",
       "Flights overhead": "flights",
-      "Satellite fire detections (24h)": "fire-hotspots",
+      "Satellite fire detections, California (24h)": "fire-hotspots",
       "Windy webcams": "windy-webcams",
     }[label]!;
 

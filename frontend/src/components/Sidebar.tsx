@@ -230,6 +230,19 @@ export function Sidebar({
   onHistoryDate,
 }: Props) {
   const { lang, setLang, t, locale } = useI18n();
+  // The sticky header's height (it wraps with the language and camera count)
+  // drives the sidebar's scroll padding, so focus never lands under it.
+  const headRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const head = headRef.current;
+    const bar = head?.closest<HTMLElement>(".sidebar");
+    if (!head || !bar) return;
+    const sync = () => bar.style.setProperty("--head-h", `${Math.ceil(head.getBoundingClientRect().height)}px`);
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(head);
+    return () => ro.disconnect();
+  }, []);
   // When each server-fetched layer was last refreshed (re-read every 5 min).
   const [times, setTimes] = useState<Record<string, number>>({});
   useEffect(() => {
@@ -395,7 +408,7 @@ export function Sidebar({
 
   return (
     <aside className="sidebar" id="sidebar" ref={asideRef}>
-      <div className="sidebar__head">
+      <div className="sidebar__head" ref={headRef}>
         <div className="sidebar__titlerow">
           <h1>
             {t("titleA")} <span>{t("titleB")}</span>

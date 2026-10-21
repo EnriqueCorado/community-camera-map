@@ -527,7 +527,8 @@ test("near-me: search -> report, and the address never reaches the page link", a
   await page.locator(".nearme form button").click();
   const report = page.locator(".nearme__report");
   await expect(report).toContainText("123 Test St");
-  await expect(report).toContainText("High risk (zone AE)");
+  // Dev API: the home-county lists behind the report can be a cold live fetch.
+  await expect(report).toContainText("High risk (zone AE)", { timeout: 45_000 });
   await expect(report).toContainText("Testville");
   await expect(report).toContainText("D1: moderate drought");
   await page.waitForTimeout(1500); // the map flies to the address
