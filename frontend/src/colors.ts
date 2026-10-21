@@ -27,6 +27,9 @@ export const OVERLAY_COLOR: Record<string, string> = {
   buses: "#0f766e",
   wastewater: "#7c3aed",
   groundwater: "#0369a1",
+  // State burn-ban bakes (backend national/state_bakes.py)
+  "tx-burn-bans": "#dc2626",
+  "ar-burn-bans": "#dc2626",
   "river-gauges": "#0284c7",
   "storm-reports": "#9333ea",
   "fire-weather": "#ea580c",

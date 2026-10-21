@@ -31,6 +31,7 @@ from bake import SOURCES  # noqa: E402 - sibling script
 
 from app.core.config import get_settings
 from app.layers import service as _registry  # noqa: F401 - loads every pack before one is imported
+from app.layers.national import state_bakes
 from app.layers.national.services import WEEKLY as SERVICES_WEEKLY
 from app.layers.service import LayerService, record_layer_times, sync_catalog
 
@@ -77,10 +78,15 @@ DAILY = (
     "clinics",
     "community-centers",
     "farmers-markets",
+    *state_bakes.DAILY,  # state feeds (national/state_bakes.py)
 )
 # Nationwide baked lists that change slowly and take minutes to rebuild
 # (PDF/spreadsheet downloads + Census geocoding): once a week, own cache in CI.
-WEEKLY = (*SERVICES_WEEKLY, "building-permits")  # Census BPS: yearly, by place
+WEEKLY = (
+    *SERVICES_WEEKLY,
+    "building-permits",  # Census BPS: yearly, by place
+    *state_bakes.WEEKLY,  # state child-care lists (Texas is geocoded)
+)
 HOURLY = (
     "reservoirs",
     "fire-weather",
@@ -90,6 +96,7 @@ HOURLY = (
     "river-cameras",
     "fire-hotspots",
     "wildfire-perimeters",
+    *state_bakes.HOURLY,
 )  # haze reuses fire-cameras
 
 

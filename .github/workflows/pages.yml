@@ -194,6 +194,8 @@ jobs:
             frontend/public/data/layers/clinics.geojson
             frontend/public/data/layers/community-centers.geojson
             frontend/public/data/layers/farmers-markets.geojson
+            frontend/public/data/layers/ar-burn-bans.geojson
+            frontend/public/data/layers/reservoirs-usa.geojson
           key: live-data-v2-${{ github.run_id }}
           restore-keys: live-data-v2-
       # The camera list is cached on its own (adding it to the list above would
@@ -241,6 +243,9 @@ jobs:
             frontend/public/data/layers/colleges.geojson
             frontend/public/data/layers/va-facilities.geojson
             frontend/public/data/layers/building-permits.geojson
+            frontend/public/data/layers/ny-child-care-centers.geojson
+            frontend/public/data/layers/pa-child-care-centers.geojson
+            frontend/public/data/layers/tx-child-care-centers.geojson
           key: services-weekly-v1-${{ github.run_id }}
           restore-keys: services-weekly-v1-
       - name: Refresh live layers (fast)
@@ -275,6 +280,9 @@ jobs:
             frontend/public/data/layers/colleges.geojson
             frontend/public/data/layers/va-facilities.geojson
             frontend/public/data/layers/building-permits.geojson
+            frontend/public/data/layers/ny-child-care-centers.geojson
+            frontend/public/data/layers/pa-child-care-centers.geojson
+            frontend/public/data/layers/tx-child-care-centers.geojson
           key: services-weekly-v1-${{ github.run_id }}
       - name: Refresh OpenStreetMap places (daily, and on manual runs)
         if: github.event.schedule == '37 11 * * *' || github.event_name == 'workflow_dispatch'
@@ -334,6 +342,8 @@ jobs:
             frontend/public/data/layers/clinics.geojson
             frontend/public/data/layers/community-centers.geojson
             frontend/public/data/layers/farmers-markets.geojson
+            frontend/public/data/layers/ar-burn-bans.geojson
+            frontend/public/data/layers/reservoirs-usa.geojson
           key: live-data-v2-${{ github.run_id }}
       - name: Fetch Windy list (if the windy job produced one)
         if: needs.windy.result == 'success'

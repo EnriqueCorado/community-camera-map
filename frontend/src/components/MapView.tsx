@@ -1951,6 +1951,9 @@ const INFO_FIELDS: Record<string, { rows: InfoRow[]; titleFrom?: string; link?: 
   "nuclear-plant-rings": { rows: [["rowRadius", "radius"]] },
   levees: { rows: [["rowSponsor", "sponsor"], ["rowFemaRating", "fema_rating"], ["rowFloodSource", "river"]] },
   "leveed-areas": { rows: [["rowFemaRating", "fema_rating"], ["rowSize", "area"]] },
+  // State feeds baked in CI (backend national/state_bakes.py).
+  "tx-burn-bans": { rows: [["rowSince", "since"]] },
+  "ar-burn-bans": { rows: [["rowStatus", "status"], ["rowSeverity", "danger"], ["rowAsOf", "as_of"]] },
   // Nationwide planning pack ("#prop" = a number, formatted for the locale).
   "public-lands": { rows: [["rowType", "kind"], ["rowManager", "manager"], ["rowOpenToAll", "access"], ["rowAcres", "#acres"]] },
   "rivers-usa": { rows: [["rowType", "kind"]] },
