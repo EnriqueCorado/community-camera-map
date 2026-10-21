@@ -533,7 +533,7 @@ def test_pack_layers_are_self_describing_national_and_private():
     for name, layer in sv.LAYERS.items():
         assert LAYERS[name] is layer, name  # registered
         assert layer.title_es and layer.title_es != layer.title, name
-        assert layer.group in {"help", "places", "civic"}, name
+        assert layer.group in {"help", "places", "civic", "housing"}, name
         assert layer.coverage == "usa" and layer.category == "service", name
         assert SOURCES.get(name), f"{name}: no attribution in bake.py SOURCES"
         if layer.view:

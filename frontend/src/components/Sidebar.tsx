@@ -121,13 +121,13 @@ const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
       ["weather", ["weather-now", "air-now", "rain-radar", "satellite", "weather-alerts", "air-quality", "road-weather", "smoke-haze"]],
       ["hazards", ["heat-risk", "fire-weather", "smoke-forecast", "storm-reports", "river-gauges", "drought", "reservoirs", "groundwater", "volcanoes", "fatal-crashes", "wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
       ["roads", ["lane-closures", "message-signs", "chain-controls", "transit-routes", "transit-stops", "amtrak", "airports", "railroads"]],
-      ["places", ["cooling-centers", "shelters", "sandbags", "mobile-home-parks", "food-banks", "clinics", "hospitals", "pharmacies", "community-centers", "libraries", "farmers-markets", "law-enforcement", "fire-stations", "schools", "parks", "playgrounds", "aed", "drinking-water", "restrooms", "ev-chargers", "free-wifi"]],
+      ["places", ["cooling-centers", "shelters", "sandbags", "mobile-home-parks", "mobile-home-parks-usa", "food-banks", "clinics", "hospitals", "pharmacies", "community-centers", "libraries", "farmers-markets", "law-enforcement", "fire-stations", "schools", "parks", "playgrounds", "aed", "drinking-water", "restrooms", "ev-chargers", "free-wifi"]],
       ["nature", ["national-parks", "wildlife", "wikipedia", "historic-places", "historical-markers", "rivers", "streamflow"]],
       ["planning", ["city-limits", "county-islands", "general-plan", "zoning", "supervisor-districts", "elementary-districts", "high-school-districts", "fire-districts", "mosquito-districts", "zip-codes", "congressional-districts"]],
       ["infra", ["power-plants", "substations", "bridges", "power-outages", "outage-areas"]],
       ["growth", ["housing-proposals", "new-homes", "ceqa-projects", "annexations"]],
-      ["people", ["census", "census-spanish", "census-foreign-born", "census-poverty", "census-renters"]],
-      ["civic", ["voting", "wastewater", "health-asthma", "health-diabetes", "health-uninsured", "food-insecurity", "snap-stores"]],
+      ["people", ["census", "census-spanish", "census-foreign-born", "census-poverty", "census-renters", "health-asthma", "health-diabetes", "health-uninsured", "food-insecurity"]],
+      ["civic", ["voting", "wastewater", "snap-stores"]],
     ] as [Group, string[]][]
   ).flatMap(([g, names]) => names.map((n) => [n, g])),
 );

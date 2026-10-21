@@ -432,7 +432,7 @@ _add(
         min_zoom=2,
         refresh_s=900,
     ),
-    group="help",
+    group="hazards",
 )
 _add(
     "FEMA Disaster Recovery Centers",
@@ -469,7 +469,7 @@ _add(
         refresh_s=3600,
         post="drc",
     ),
-    group="help",
+    group="hazards",
 )
 
 # --- Pollution & EPA facilities (ECHO: one layer, four filters) ---

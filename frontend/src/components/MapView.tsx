@@ -329,11 +329,23 @@ export function MapView({
 
   // --- Push camera data updates into the source (also on filter change, so the
   // filter applies across the whole map and persists as you pan/zoom). ---
+  // ~16k cameras: re-clustering on every keystroke stutters, so a typed
+  // filter waits for a short pause, and an unchanged filter isn't re-pushed.
+  const pushedRef = useRef<{ cameras: Camera[]; q: string } | null>(null);
   useEffect(() => {
-    const map = mapRef.current;
-    if (!map || !readyRef.current) return;
-    const src = map.getSource("cameras") as GeoJSONSource | undefined;
-    src?.setData(toFeatureCollection(cameras, query));
+    const q = query.trim().toLowerCase();
+    const push = () => {
+      const map = mapRef.current;
+      if (!map || !readyRef.current) return;
+      if (pushedRef.current?.cameras === cameras && pushedRef.current.q === q) return;
+      const src = map.getSource("cameras") as GeoJSONSource | undefined;
+      if (!src) return;
+      src.setData(toFeatureCollection(cameras, q));
+      pushedRef.current = { cameras, q };
+    };
+    if (!q) return push(); // clearing the filter shows everything at once
+    const t = window.setTimeout(push, 200);
+    return () => window.clearTimeout(t);
   }, [cameras, query]);
 
   // --- Lazy-load the ALPR layer the first time it's switched on. ---

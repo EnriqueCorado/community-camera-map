@@ -98,3 +98,37 @@ def test_every_acs_metric_layer_is_nationwide_with_state_and_county_levels():
         assert not lay.has_home_copy
         # computed fields land in "pct"; everything else colors by its own field
         assert lay.metric.field in lay.view.fields.values() or lay.view.post in {"ratio", "sum"}
+
+
+def test_every_layer_credits_its_source():
+    from scripts.bake import SOURCES
+
+    missing = [name for name in LAYERS if not SOURCES.get(name)]
+    assert missing == []
+
+
+def test_workflow_weekly_cache_lists_match_the_weekly_layers():
+    # pages.yml restores/saves the weekly files by path: both lists must name
+    # exactly the layers refresh_live.py --weekly rewrites.
+    import re
+    from pathlib import Path
+
+    from scripts.refresh_live import WEEKLY
+
+    yml = (Path(__file__).resolve().parents[2] / ".github/workflows/pages.yml").read_text()
+    blocks = re.findall(r"key: services-weekly-v\d+-\$\{\{ github\.run_id \}\}", yml)
+    assert len(blocks) == 2
+    for part in yml.split("key: services-weekly-")[:2]:
+        paths = part.rsplit("path: |", 1)[1]
+        names = re.findall(r"layers/([\w-]+)\.geojson", paths)
+        assert sorted(names) == sorted(WEEKLY)
+
+
+def test_every_polygon_view_is_generalized_to_the_zoom():
+    # without maxAllowableOffset one US county query was 13 MB instead of ~150 KB
+    raw = [
+        n
+        for n, lay in LAYERS.items()
+        if lay.view and lay.view.geometry == "polygon" and not lay.view.simplify
+    ]
+    assert raw == []

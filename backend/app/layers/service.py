@@ -1570,14 +1570,14 @@ LAYERS: dict[str, Layer] = {
     # --- Transit (static GTFS, converted to GeoJSON) ---
     "transit-routes": Layer(
         name="transit-routes",
-        title="Transit routes",
+        title="Transit routes (Stanislaus local)",
         description="MOVE Stanislaus / Modesto Area Express bus route shapes.",
         category="line",
         file="transit_routes.geojson",
     ),
     "transit-stops": Layer(
         name="transit-stops",
-        title="Transit stops",
+        title="Transit stops (Stanislaus local)",
         description="MOVE Stanislaus / Modesto Area Express bus stops.",
         category="point",
         file="transit_stops.geojson",
@@ -1746,7 +1746,7 @@ LAYERS: dict[str, Layer] = {
     ),
     "faults": Layer(
         name="faults",
-        title="Earthquake faults",
+        title="Earthquake faults (California, detailed)",
         description="Quaternary-active fault traces (California Geological Survey).",
         category="fault",
         loader=_arcgis_select(
@@ -1886,8 +1886,11 @@ LAYERS: dict[str, Layer] = {
     ),
     "shelters": Layer(
         name="shelters",
-        title="Emergency shelters",
-        description="Emergency shelters listed by the county.",
+        title="Emergency shelter sites (may not be open)",
+        description=(
+            "Places listed as emergency shelters (county list at home; FEMA pre-identified "
+            "sites nationwide). Not necessarily open now: see Open emergency shelters."
+        ),
         category="info",
         loader=_arcgis_select(
             f"{ARCGIS_BASE}/Shelters/FeatureServer/1",
@@ -1952,7 +1955,7 @@ LAYERS: dict[str, Layer] = {
     ),
     "rivers": Layer(
         name="rivers",
-        title="Rivers",
+        title="Rivers (Stanislaus County)",
         description="Rivers in Stanislaus County.",
         category="info",
         loader=_arcgis_select(
@@ -2053,7 +2056,7 @@ LAYERS: dict[str, Layer] = {
     ),
     "mobile-home-parks": Layer(
         name="mobile-home-parks",
-        title="Mobile home parks",
+        title="Mobile home parks (California)",
         description="Licensed mobile home parks (CA Housing & Community Development).",
         category="info",
         loader=_arcgis_select(
@@ -2175,7 +2178,7 @@ LAYERS: dict[str, Layer] = {
     ),
     "fire-hotspots": Layer(
         name="fire-hotspots",
-        title="Satellite fire detections (24h)",
+        title="Satellite fire detections, California (24h)",
         description="NASA FIRMS VIIRS heat detections in California over the last 24 hours.",
         category="hotspot",
         loader=_text_transform(

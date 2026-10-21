@@ -64,7 +64,6 @@ DAILY = (
     "ceqa-projects",  # filings arrive daily
     "housing-proposals",  # yearly reports, checked daily (cheap)
     "new-homes",
-    "building-permits",  # Census BPS: yearly, by place, nationwide
     "aed",
     "drinking-water",
     "restrooms",
@@ -81,7 +80,7 @@ DAILY = (
 )
 # Nationwide baked lists that change slowly and take minutes to rebuild
 # (PDF/spreadsheet downloads + Census geocoding): once a week, own cache in CI.
-WEEKLY = SERVICES_WEEKLY
+WEEKLY = (*SERVICES_WEEKLY, "building-permits")  # Census BPS: yearly, by place
 HOURLY = (
     "reservoirs",
     "fire-weather",

@@ -9,7 +9,7 @@ export interface Preset {
 }
 
 export const PRESETS: Preset[] = [
-  { id: "wildfire", label: "presetWildfire", overlays: ["wildfire", "wildfire-perimeters", "fire-hotspots", "smoke-forecast", "fire-weather", "fire-cameras", "air-quality"] },
+  { id: "wildfire", label: "presetWildfire", overlays: ["wildfire", "wildfire-perimeters", "fire-hotspots-usa", "smoke-forecast", "fire-weather", "fire-cameras", "air-quality"] },
   { id: "flood", label: "presetFlood", overlays: ["flood", "river-gauges", "rain-radar", "weather-alerts", "sandbags", "shelters"] },
   { id: "heat", label: "presetHeat", overlays: ["heat-risk", "cooling-centers", "weather-now", "air-quality"] },
   { id: "health", label: "presetHealth", overlays: ["health-uninsured", "clinics", "hospitals", "pharmacies", "snap-stores", "food-banks", "wastewater"] },

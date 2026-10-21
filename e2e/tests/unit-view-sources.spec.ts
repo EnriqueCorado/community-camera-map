@@ -270,3 +270,10 @@ test("traffic ramp: every step is visible on a basemap (no near-white first colo
   expect(stops.map(([, c]) => c)).toEqual(RAMPS.traffic);
   expect(fmtMetric(200000, "count", "en-US")).toBe("200,000");
 });
+
+test("metric ramps: short scales spread over the whole ramp (top step darkest)", () => {
+  const three = metricStops({ field: "level", fmt: "index", breaks: [1, 2, 3], ramp: "red" });
+  expect(three.map(([, c]) => c)).toEqual([RAMPS.red![0], RAMPS.red![2], RAMPS.red![4]]);
+  const five = metricStops({ field: "x", fmt: "pct", breaks: [1, 2, 3, 4, 5], ramp: "red" });
+  expect(five.map(([, c]) => c)).toEqual(RAMPS.red);
+});

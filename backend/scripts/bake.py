@@ -158,6 +158,12 @@ SOURCES["shelters"] = "Stanislaus County GIS; nationwide: FEMA National Shelter 
 from app.layers.national.planning import SOURCES as _PLANNING_SOURCES  # noqa: E402
 
 SOURCES.update(_PLANNING_SOURCES)
+from app.layers.national.census_extra import SOURCES as _CENSUS_SOURCES  # noqa: E402
+from app.layers.service import _ACS_METRICS  # noqa: E402
+
+SOURCES.update(_CENSUS_SOURCES)
+for _row in _ACS_METRICS:
+    SOURCES[_row[0]] = "U.S. Census Bureau ACS 2020-2024 5-year, via Esri Living Atlas"
 # Community & immigrant services pack (app/layers/national/services.py).
 _CENSUS_GEO = "geocoded with the U.S. Census Geocoder"
 SOURCES.update(

@@ -406,7 +406,10 @@ export const RAMPS: Record<string, string[]> = {
 /** A metric's legend/paint stops: each break paired with its ramp color. */
 export function metricStops(m: MetricSpec): [number, string][] {
   const ramp = RAMPS[m.ramp] ?? RAMPS.purple!;
-  return m.breaks.map((b, i) => [b, ramp[Math.min(i, ramp.length - 1)]!]);
+  // Fewer breaks than colors: spread them over the whole ramp, so the top
+  // step is always the darkest (a 3-level scale uses light / middle / dark).
+  const n = m.breaks.length;
+  return m.breaks.map((b, i) => [b, ramp[n > 1 ? Math.round((i * (ramp.length - 1)) / (n - 1)) : 0]!]);
 }
 
 /** A metric value for legends and popups ("12%", "$85k", "1978"...). */

@@ -137,7 +137,7 @@ _PLACES: tuple[tuple[str, str, str, str, str, tuple[float, ...], str], ...] = (
      (4, 5, 7, 11, 17), "red"),
     ("health-isolation", "Social isolation", "Aislamiento social",
      "adults who feel socially isolated", "ISOLATION", (29, 31, 34, 37, 41), "blue"),
-    ("health-snap", "Received SNAP (food stamps)", "Reciben CalFresh/SNAP",
+    ("health-snap", "Received SNAP (food stamps)", "Reciben SNAP (cupones de alimentos)",
      "adults who received SNAP in the past year", "FOODSTAMP", (5, 7, 12, 19, 31), "orange"),
 )  # fmt: skip
 
@@ -275,8 +275,8 @@ LAYERS: dict[str, Layer] = {
     ),
     "hud-public-housing": _point_layer(
         "hud-public-housing",
-        "Public housing",
-        "Vivienda pública",
+        "Public housing developments",
+        "Desarrollos de vivienda pública",
         "Public housing developments run by local housing authorities (HUD).",
         View(
             f"{HUD}/Public_Housing_Developments/FeatureServer/0",
@@ -405,4 +405,24 @@ LAYERS: dict[str, Layer] = {
         Metric("permits_2022", "count", (20, 80, 300, 1400, 5000), "green"),
         group="housing",
     ),
+}
+
+# Attribution shown in the layer's "source" line (merged by scripts/bake.py).
+SOURCES: dict[str, str] = {
+    **{
+        name: "CDC PLACES (local estimates from BRFSS), tract and county"
+        for name in LAYERS
+        if name.startswith("health-")
+    },
+    "broadband-unserved": "FCC Broadband Data Collection (National Broadband Map), via Esri",
+    "food-deserts": "USDA ERS Food Access Research Atlas (2025)",
+    "nri-risk": "FEMA National Risk Index",
+    "hud-lihtc": "HUD Low-Income Housing Tax Credit database",
+    "hud-public-housing": "HUD public housing developments",
+    "hud-vouchers": "HUD Housing Choice Vouchers by tract",
+    "hud-fmr": "HUD Fair Market Rents (latest published)",
+    "opportunity-zones": "HUD / U.S. Treasury Opportunity Zones",
+    "opportunity-zones-2": "HUD Opportunity Zones 2.0 eligible tracts",
+    "cejst-disadvantaged": "CEQ Climate and Economic Justice Screening Tool v1.0 (archived 2022)",
+    "new-homes-permits": "U.S. Census Bureau Building Permits Survey via HUD (through 2022)",
 }

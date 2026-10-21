@@ -589,7 +589,7 @@ LAYERS: dict[str, Layer] = {
         "Asesores de vivienda de HUD (gratuitos)",
         "HUD-approved housing counseling agencies: renting, buying, avoiding "
         "foreclosure and homelessness (HUD).",
-        "civic",
+        "housing",
         loader=_home(HOUSING_COUNSELING, HOUSING_COUNSELING_FIELDS),
         view=View(
             HOUSING_COUNSELING,
@@ -602,10 +602,10 @@ LAYERS: dict[str, Layer] = {
     ),
     "public-housing": _layer(
         "public-housing",
-        "Public housing authorities",
-        "Autoridades de vivienda pública",
+        "Public housing authorities (where to apply)",
+        "Autoridades de vivienda pública (dónde solicitar)",
         "Where to apply for public housing and Section 8 vouchers (HUD).",
-        "civic",
+        "housing",
         loader=_home(PUBLIC_HOUSING, PUBLIC_HOUSING_FIELDS),
         view=View(
             PUBLIC_HOUSING,
