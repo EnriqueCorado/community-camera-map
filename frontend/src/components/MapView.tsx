@@ -1282,6 +1282,9 @@ function startLive(map: maplibregl.Map, info: LayerInfo, getI18n: () => I18nStat
       lang: getI18n().lang,
       signal: ctrl.signal,
     };
+    ctx.partial = (d) => {
+      if (!ctx.signal.aborted) apply(d);
+    };
     if (source.minZoom != null && ctx.zoom < source.minZoom) return apply(EMPTY_FC);
     try {
       const data = await source.load(ctx);
@@ -1523,7 +1526,12 @@ function addOverlay(
         paint: {
           // Catalog-described line metric (e.g. traffic volume): color by value.
           "line-color": info.metric
-            ? (["interpolate", ["linear"], ["to-number", ["get", info.metric.field], 0], ...metricStops(info.metric).flat()] as unknown as maplibregl.ExpressionSpecification)
+            ? ([
+                "case",
+                ["==", ["typeof", ["get", info.metric.field]], "null"],
+                "#9ca3af", // no count for this segment: neutral grey, not "low traffic"
+                ["interpolate", ["linear"], ["to-number", ["get", info.metric.field], 0], ...metricStops(info.metric).flat()],
+              ] as unknown as maplibregl.ExpressionSpecification)
             : accent,
           "line-width": info.category === "roadops" ? 3 : info.category === "fault" ? 1.5 : info.metric ? 3 : 2,
           "line-opacity": 0.9,
@@ -1537,13 +1545,15 @@ function addOverlay(
     return;
   }
 
+  // No data (null: an empty tract, a 0/0 ratio, a suppressed estimate) stays
+  // unpainted instead of reading as the lowest band; the popup says "n/a".
   const choropleth = (field: string, stops: [number, string][]) =>
     ({
       "fill-color": [
-        "interpolate",
-        ["linear"],
-        ["coalesce", ["get", field], 0],
-        ...stops.flat(),
+        "case",
+        ["==", ["typeof", ["get", field]], "number"],
+        ["interpolate", ["linear"], ["get", field], ...stops.flat()],
+        "rgba(0,0,0,0)",
       ] as unknown as maplibregl.ExpressionSpecification,
       "fill-opacity": 0.6,
     }) as const;

@@ -230,3 +230,34 @@ export function applyFields(json: unknown, spec: ViewSpec, zoom = Infinity): FC 
   }
   return { type: "FeatureCollection", features };
 }
+
+/** Most pages a view follows (ArcGIS caps a page, often at 1,000). */
+export const MAX_PAGES = 5;
+
+/** Query a view's features in this bbox, page by page. Page 1 is handed to
+ *  `partial` at once; the rest (up to the cap) load in parallel, and a failed
+ *  later page keeps what arrived rather than blanking the layer. */
+export async function loadPages(
+  spec: ViewSpec,
+  bbox: Bbox,
+  zoom: number,
+  io: { signal: AbortSignal; fetchJson: (url: string, signal: AbortSignal) => Promise<unknown>; partial?: (fc: FC) => void },
+): Promise<FC> {
+  const cap = viewCap(spec, zoom);
+  const page = async (offset: number) => {
+    const json = await io.fetchJson(arcgisQueryUrl(spec, bbox, zoom, offset), io.signal);
+    return { json, fc: applyFields(json, spec, zoom) };
+  };
+  const first = await page(0);
+  const got = (first.json as { features: unknown[] }).features.length;
+  if (!exceededLimit(first.json) || got === 0 || first.fc.features.length >= cap) {
+    return { type: "FeatureCollection", features: first.fc.features.slice(0, cap) };
+  }
+  io.partial?.(first.fc);
+  const more = Math.min(MAX_PAGES - 1, Math.ceil((cap - got) / got));
+  const rest = await Promise.allSettled(Array.from({ length: more }, (_, i) => page(got * (i + 1))));
+  if (io.signal.aborted) throw new DOMException("aborted", "AbortError");
+  const features = [...first.fc.features];
+  for (const r of rest) if (r.status === "fulfilled") features.push(...r.value.fc.features);
+  return { type: "FeatureCollection", features: features.slice(0, cap) };
+}

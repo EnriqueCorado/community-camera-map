@@ -23,6 +23,8 @@ export interface LiveCtx {
   zoom: number;
   lang: "en" | "es";
   signal: AbortSignal;
+  /** Show what's loaded so far (e.g. page 1 of a paged query) while the rest arrives. */
+  partial?: (data: FC) => void;
 }
 
 export interface LiveSource {
