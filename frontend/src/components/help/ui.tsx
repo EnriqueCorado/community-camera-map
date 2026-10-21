@@ -76,9 +76,13 @@ export function Choice<T extends string>({
 }) {
   const name = useId();
   return (
-    <fieldset className="hchoice">
+    <fieldset className="hchoice" aria-describedby={hint ? `${name}-hint` : undefined}>
       <legend className="hf__label">{legend}</legend>
-      {hint && <p className="hf__hint">{hint}</p>}
+      {hint && (
+        <p className="hf__hint" id={`${name}-hint`}>
+          {hint}
+        </p>
+      )}
       <div className="hchoice__opts">
         {options.map((o) => (
           <label key={o.value} className={`hchoice__opt${value === o.value ? " hchoice__opt--on" : ""}`}>

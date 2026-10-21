@@ -8,7 +8,7 @@ import { careResult, percentOfPoverty, povertyLine, STATE_FLOOR, yearly } from "
 import { capPeriodFor, checkIncrease, coverage, type CoverageAnswers } from "../../frontend/src/help/rent-cap";
 import { addDays, dayNumber, daysBetween } from "../../frontend/src/help/dates";
 import { formatMoney, parseMoney } from "../../frontend/src/help/money";
-import { builtAge, matchParcel, parseAddress, shardKey } from "../../frontend/src/help/parcels";
+import { builtAge, lookupAddress, parseAddress } from "../../frontend/src/help/parcels";
 import { depositLetter, medicalLetter, repairLetter } from "../../frontend/src/help/letters";
 import { HOSPITALS, inCalifornia } from "../../frontend/src/help/hospitals";
 import { helpFor } from "../../frontend/src/help/popup-help";
@@ -124,6 +124,20 @@ test.describe("rent cap", () => {
     expect(r.overBy).toBe(0);
   });
 
+  test("exact cents: $1,200 at 7.7% allows $1,292.40, not a cent less", () => {
+    for (const [rent, max] of [[1200, 1292.4], [600, 646.2], [800, 861.6], [2100, 2261.7]] as const) {
+      const r = checkIncrease({ lowestRent: rent, newRent: max, effective: "2026-03-01" }, RENT_FACTS.periods);
+      expect(r.maxRent, String(rent)).toBe(max);
+      expect(r.overBy, String(rent)).toBe(0);
+    }
+  });
+
+  test("the 30-vs-90-day rule uses the exact increase", () => {
+    const r = checkIncrease({ lowestRent: 1000, newRent: 1100.01, effective: "2026-09-01" }, RENT_FACTS.periods);
+    expect(r.over10).toBe(true);
+    expect(r.noticeRequired).toBe(90);
+  });
+
   test("over 10% needs 90 days; mail adds 5", () => {
     const r = checkIncrease({ lowestRent: 1000, newRent: 1150, effective: "2026-09-01", byMail: true }, RENT_FACTS.periods);
     expect(r.noticeRequired).toBe(95);
@@ -153,28 +167,52 @@ test.describe("coverage screening", () => {
 // --------------------------------------------------------- address lookup
 
 test.describe("parcel lookup", () => {
-  const shard = (street: string) => JSON.parse(readFileSync(join(DATA, "parcels", `${shardKey(street)}.json`), "utf8"));
+  // The real lookup, reading shards from disk instead of fetching them.
+  const load = async (key: string) => JSON.parse(readFileSync(join(DATA, "parcels", `${key}.json`), "utf8"));
+  const look = (q: string) => lookupAddress(q, load);
 
   test("parses addresses the way people type them", () => {
-    expect(parseAddress("1119 E. Linwood Ave, Turlock CA 95380")).toEqual({ number: "1119", dir: "E", street: "LINWOOD", suffix: "AVE", city: "TURLOCK" });
-    expect(parseAddress("1313 celeste dr apt 12 modesto")).toEqual({ number: "1313", dir: "", street: "CELESTE", suffix: "DR", city: "MODESTO" });
-    expect(parseAddress("901 Parklawn Avenue")?.suffix).toBe("AVE");
+    expect(parseAddress("1119 E. Linwood Ave, Turlock CA 95380")[0]).toEqual({ number: "1119", dir: "E", street: "LINWOOD", suffix: "AVE", city: "TURLOCK" });
+    expect(parseAddress("1313 celeste dr apt 12 modesto")).toEqual([{ number: "1313", dir: "", street: "CELESTE", suffix: "DR", city: "MODESTO" }]);
+    expect(parseAddress("1313 Celeste Dr # 4, Modesto")[0]?.street).toBe("CELESTE");
+    expect(parseAddress("1313 Celeste Dr, Apt 4, Modesto")[0]?.city).toBe("MODESTO");
+    expect(parseAddress("901 Parklawn Avenue")[0]?.suffix).toBe("AVE");
     expect(parseAddress("Main St")).toEqual([]);
     expect(parseAddress("")).toEqual([]);
   });
 
-  test("finds real county parcels", () => {
-    const a = parseAddress("1313 Celeste Dr, Modesto")!;
-    const [m] = matchParcel(shard(a.street), a);
-    expect(m).toMatchObject({ city: "MODESTO", minYear: 1971, maxYear: 1979 });
-    expect(builtAge(m!, 2026)).toBe("old");
-    const b = parseAddress("901 Parklawn Ave")!;
-    expect(builtAge(matchParcel(shard(b.street), b)[0]!, 2026)).toBe("new");
+  test("5-digit house numbers aren't mistaken for ZIP codes", () => {
+    expect(parseAddress("12345 Albers Rd, Oakdale, CA 95361")[0]).toMatchObject({ number: "12345", street: "ALBERS", city: "OAKDALE" });
   });
 
-  test("a different city is not a match", () => {
-    const a = parseAddress("1313 Celeste Dr, Turlock")!;
-    expect(matchParcel(shard(a.street), a)).toEqual([]);
+  test("streets named N, North, West Main", () => {
+    expect(parseAddress("1003 N St, Newman")).toEqual([{ number: "1003", dir: "", street: "N", suffix: "ST", city: "NEWMAN" }]);
+    expect(parseAddress("100 North St, Oakdale")[0]?.street).toBe("NORTH");
+    expect(parseAddress("1030 West Main St, Turlock").map((r) => r.street)).toEqual(["MAIN", "WEST MAIN"]);
+  });
+
+  test("finds real county parcels", async () => {
+    const [m] = (await look("1313 Celeste Dr, Modesto"))!;
+    expect(m).toMatchObject({ city: "MODESTO", minYear: 1971, maxYear: 1979 });
+    expect(builtAge(m!, 2026)).toBe("old");
+    expect(builtAge((await look("901 Parklawn Ave"))![0]!, 2026)).toBe("new");
+  });
+
+  test("a different city or a conflicting direction is not a match", async () => {
+    expect(await look("1313 Celeste Dr, Turlock")).toEqual([]);
+    // Only 1030 E Main exists in Turlock: "West Main" must not return it.
+    const west = await look("1030 West Main St, Turlock");
+    expect(west!.every((m) => m.dir !== "E")).toBe(true);
+  });
+
+  test("unparseable input is reported as such", async () => {
+    expect(await look("Main St")).toBeNull();
+  });
+
+  test("the snapshot date shown matches the baked data", () => {
+    const meta = JSON.parse(readFileSync(join(DATA, "parcels/meta.json"), "utf8"));
+    const src = readFileSync(join(__dirname, "../../frontend/src/components/help/RenterHelp.tsx"), "utf8");
+    expect(src).toContain(`PARCEL_AS_OF = "${meta.as_of}"`);
   });
 
   test("15-year line", () => {
@@ -222,6 +260,27 @@ test.describe("letters", () => {
     expect(text).toContain("$1,300");
     expect(text).toContain("It has been 48 days");
     expect(text).toContain("1950.5(m)");
+  });
+
+  test("repair letter mentions photos only when ticked", () => {
+    expect(repairLetter.render({}, "en", today)).not.toContain("photos of the problems");
+    expect(repairLetter.render({ evidence: ["photos"] }, "en", today)).toContain("photos of the problems");
+  });
+
+  test("deposit letter never asks for $0 and 'got nothing' overrides 'dispute'", () => {
+    const zero = depositLetter.render({ deposit: "500", returned: "500" }, "en", today);
+    expect(zero).not.toContain("$0");
+    expect(zero).toContain("[amount owed]");
+    const both = depositLetter.render({ situation: ["nothing", "dispute"] }, "en", today);
+    expect(both).toContain("have not received my deposit");
+    expect(both).not.toContain("I dispute");
+  });
+
+  test("medical letter with only 'hold' ticked has no empty list", () => {
+    const text = medicalLetter.render({ asks: ["hold"] }, "en", today);
+    expect(text).toContain("I am writing about this account.");
+    expect(text).not.toContain("[What are you asking for?]");
+    expect(text).toContain("hold all collection");
   });
 
   test("medical letter asks only for what was ticked", () => {

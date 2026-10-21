@@ -95,6 +95,12 @@ const repairFields: LetterField[] = [
     label: { en: "Did you ask before? When and how? (optional)", es: "¿Ya lo pidió antes? ¿Cuándo y cómo? (opcional)" },
     hint: { en: "Example: “I called on March 3 and texted on March 10.”", es: "Ejemplo: “Llamé el 3 de marzo y mandé un texto el 10 de marzo.”" },
   },
+  {
+    id: "evidence",
+    kind: "checks",
+    label: { en: "Proof (optional)", es: "Pruebas (opcional)" },
+    options: [{ id: "photos", label: { en: "I have dated photos or videos of the problems", es: "Tengo fotos o videos con fecha de los problemas" } }],
+  },
   CONTACT,
 ];
 
@@ -113,6 +119,7 @@ export const repairLetter: LetterDef = {
     const list = items.length ? items.map((i) => `- ${i}`).join("\n") : `- [${f("problems")!.label[lang]}]`;
     const details = String(v.details ?? "").trim();
     const before = String(v.before ?? "").trim();
+    const photos = Array.isArray(v.evidence) && v.evidence.includes("photos");
     if (lang === "es")
       return join([
         longDate(today, LOCALE.es),
@@ -125,7 +132,7 @@ export const repairLetter: LetterDef = {
         "La ley de California exige que los arrendadores mantengan las viviendas en condiciones habitables (Código Civil, secciones 1941 y 1941.1). Le pido que haga estas reparaciones en un plazo razonable y a más tardar 30 días a partir de esta carta, o antes para cualquier problema que afecte la salud o la seguridad.",
         `Puede entrar a hacer las reparaciones avisándome por escrito con tiempo razonable (Código Civil, sección 1954). Puede comunicarse conmigo al ${val(v, f("contact"), lang)}.`,
         "Hago esta solicitud de buena fe. La ley de California prohíbe las represalias contra los inquilinos que piden reparaciones (Código Civil, sección 1942.5).",
-        `${KEEP.es} También tengo fotos de los problemas.`,
+        `${KEEP.es}${photos ? " También tengo fotos de los problemas." : ""}`,
         `${SIGN.es}\n\n\n${val(v, f("you"), lang)}`,
       ]);
     return join([
@@ -139,7 +146,7 @@ export const repairLetter: LetterDef = {
       "California law requires landlords to keep rental homes fit to live in (Civil Code sections 1941 and 1941.1). Please make these repairs within a reasonable time, and no later than 30 days from the date of this letter, or sooner for anything that affects health or safety.",
       `You may enter to make repairs after giving me reasonable written notice (Civil Code section 1954). You can reach me at ${val(v, f("contact"), lang)}.`,
       "I am making this request in good faith. California law prohibits retaliation against tenants who ask for repairs (Civil Code section 1942.5).",
-      `${KEEP.en} I also have photos of the problems.`,
+      `${KEEP.en}${photos ? " I also have photos of the problems." : ""}`,
       `${SIGN.en}\n\n\n${val(v, f("you"), lang)}`,
     ]);
   },
@@ -197,10 +204,14 @@ export const depositLetter: LetterDef = {
   render(v, lang, today) {
     const f = (id: string) => field(depositFields, id);
     const situation = Array.isArray(v.situation) ? v.situation : [];
+    // "Got nothing back" rules out disputing a statement that never came.
+    const nothing = situation.includes("nothing");
+    const dispute = !nothing && situation.includes("dispute");
+    const noReceipts = !nothing && situation.includes("noReceipts");
     const deposit = parseMoney(String(v.deposit ?? ""));
     const returned = parseMoney(String(v.returned ?? "")) ?? 0;
     const owed = deposit != null ? Math.max(0, deposit - returned) : null;
-    const owedText = owed != null ? formatMoney(owed, LOCALE[lang]) : `[${lang === "es" ? "cantidad que le deben" : "amount owed"}]`;
+    const owedText = owed ? formatMoney(owed, LOCALE[lang]) : `[${lang === "es" ? "cantidad que le deben" : "amount owed"}]`;
     const moveOut = String(v.moveOut ?? "");
     const days = moveOut ? daysBetween(moveOut, today) : null;
     const disputed = String(v.disputed ?? "").trim();
@@ -212,11 +223,11 @@ export const depositLetter: LetterDef = {
         `Estimado/a ${val(v, f("landlord"), lang)}:`,
         `Me mudé de ${val(v, f("rental"), lang)} el ${dateOr(v, f("moveOut"), lang)} y entregué las llaves. Pagué un depósito de garantía de ${moneyOr(v, f("deposit"), lang)}${returned ? `, y hasta ahora me han devuelto ${formatMoney(returned, LOCALE.es)}` : ""}.`,
         "Según el Código Civil de California, sección 1950.5(h), usted debe devolverme el depósito, o enviarme una lista detallada de los descuentos junto con el resto, dentro de los 21 días después de que me mudé.",
-        situation.includes("nothing") &&
+        nothing &&
           `${days != null && days > 21 ? `Han pasado ${days} días y` : "Hasta hoy"} no he recibido ni el depósito ni una lista detallada.`,
-        situation.includes("dispute") &&
+        dispute &&
           `Recibí su lista, pero no estoy de acuerdo con los descuentos${disputed ? `: ${disputed}` : "."} Solo se permite descontar renta no pagada, daños más allá del desgaste normal, y la limpieza necesaria para dejar la vivienda tan limpia como estaba al inicio (sección 1950.5(b) y (e)).`,
-        situation.includes("noReceipts") &&
+        noReceipts &&
           "Le pido copias de los recibos o facturas y las fotos de antes y después de cualquier cargo por reparación o limpieza, como exige la sección 1950.5(g) y (h)(2).",
         `Le pido que me pague ${owedText} dentro de los 14 días a partir de la fecha de esta carta, por ${val(v, f("method"), lang)}, a esta dirección:\n${val(v, f("forward"), lang)}`,
         "Si un arrendador retiene un depósito de mala fe, la corte puede ordenarle pagar hasta el doble del depósito, además de la cantidad que debe (sección 1950.5(m)). Si no recibo el pago, pienso presentar una demanda en la corte de reclamos menores del condado de Stanislaus.",
@@ -230,11 +241,11 @@ export const depositLetter: LetterDef = {
       `Dear ${val(v, f("landlord"), lang)}:`,
       `I moved out of ${val(v, f("rental"), lang)} on ${dateOr(v, f("moveOut"), lang)} and returned the keys. I paid a security deposit of ${moneyOr(v, f("deposit"), lang)}${returned ? `, and so far ${formatMoney(returned, LOCALE.en)} has been returned to me` : ""}.`,
       "Under California Civil Code section 1950.5(h), you must return my deposit, or send an itemized statement of deductions with the balance, within 21 days after I moved out.",
-      situation.includes("nothing") &&
+      nothing &&
         `${days != null && days > 21 ? `It has been ${days} days, and I` : "As of today, I"} have not received my deposit or an itemized statement.`,
-      situation.includes("dispute") &&
+      dispute &&
         `I received your statement, but I dispute the deductions${disputed ? `: ${disputed}` : "."} Deductions are allowed only for unpaid rent, damage beyond ordinary wear and tear, and cleaning needed to return the home to the level of cleanliness it had when I moved in (section 1950.5(b) and (e)).`,
-      situation.includes("noReceipts") &&
+      noReceipts &&
         "Please send me copies of the receipts or invoices and the before-and-after photos for any repair or cleaning charge, as section 1950.5(g) and (h)(2) require.",
       `Please pay me ${owedText} within 14 days of the date of this letter, by ${val(v, f("method"), lang)}, at this address:\n${val(v, f("forward"), lang)}`,
       "If a landlord keeps a deposit in bad faith, a court may award up to twice the amount of the deposit in addition to the amount owed (section 1950.5(m)). If I do not receive payment, I plan to file a claim in Stanislaus County small claims court.",
@@ -308,6 +319,10 @@ export const medicalLetter: LetterDef = {
     else if (asks.includes("spanish")) want.push(es ? "su política de asistencia financiera en español" : "your financial assistance policy in Spanish");
     if (asks.includes("plan")) want.push(es ? "un plan de pagos extendido sin intereses" : "an extended, interest-free payment plan");
     const list = want.length ? want.map((w) => `- ${w}`).join("\n") : `- [${f("asks")!.label[lang]}]`;
+    // Only "hold collections" ticked: no list, just say what it's about.
+    const asking = !want.length && asks.includes("hold")
+      ? es ? "Le escribo sobre esta cuenta." : "I am writing about this account."
+      : es ? `Le escribo para pedirle:\n${list}` : `I am writing to ask for:\n${list}`;
     const about = [
       sit.includes("uninsured") && (es ? "No tengo seguro médico." : "I do not have health insurance."),
       sit.includes("high") &&
@@ -322,7 +337,7 @@ export const medicalLetter: LetterDef = {
         `${val(v, f("hospital"), lang)}\nDepartamento de cobros / Asistencia financiera`,
         `Asunto: Cuenta ${val(v, f("account"), lang)}: solicitud de cuenta detallada y asistencia financiera`,
         "A quien corresponda:",
-        `Recibí atención en ${val(v, f("hospital"), lang)} el ${val(v, f("dates"), lang)}. Le escribo para pedirle:\n${list}`,
+        `Recibí atención en ${val(v, f("hospital"), lang)} el ${val(v, f("dates"), lang)}. ${asking}`,
         about,
         "Según la Ley de Precios Justos de Hospitales de California (Código de Salud y Seguridad, secciones 127400 y siguientes), podría calificar para atención gratuita o con descuento.",
         asks.includes("hold") && "Le pido que detenga el cobro de esta cuenta mientras revisa mi solicitud.",
@@ -335,7 +350,7 @@ export const medicalLetter: LetterDef = {
       `${val(v, f("hospital"), lang)}\nPatient Billing / Financial Assistance`,
       `Re: Account ${val(v, f("account"), lang)}: request for an itemized bill and financial assistance`,
       "To whom it may concern:",
-      `I received care at ${val(v, f("hospital"), lang)} on ${val(v, f("dates"), lang)}. I am writing to ask for:\n${list}`,
+      `I received care at ${val(v, f("hospital"), lang)} on ${val(v, f("dates"), lang)}. ${asking}`,
       about,
       "Under California's Hospital Fair Pricing Act (Health and Safety Code section 127400 and following), I may qualify for free or discounted care.",
       asks.includes("hold") && "Please hold all collection activity on this account while my application is reviewed.",

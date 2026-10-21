@@ -31,6 +31,8 @@ import { HISTORY_LAYERS } from "../history";
 import { ALPR_TILE_ZOOM, alprCells, alprIndex, alprNear, alprTile, evictAlprTile, mergeTiles, type AlprIndex } from "../alpr-tiles";
 import { VOTING_KEYS } from "../colors";
 import { helpFor } from "../help/popup-help";
+import { LEGAL_COST_KEYS, LEGAL_KIND_KEYS } from "../help/legal-kinds";
+import type { LegalKind, LegalOffice } from "../help/legal-dir";
 import type { HelpTarget } from "../help/target";
 import {
   CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
@@ -1816,17 +1818,6 @@ const INFO_FIELDS: Record<string, { rows: InfoRow[]; titleFrom?: string; link?: 
   "historical-markers": { rows: [["rowSubtitle", "subtitle"], ["rowErected", "built"], ["rowErectedBy", "erected_by"], ["rowWhere", "where"]], link: "viewHmdb" },
   "mobile-home-parks": { rows: [["rowAddress", "address"], ["rowSpaces", "spaces"]] },
 };
-const LEGAL_KIND_KEYS: Record<string, Key> = {
-  immigration: "kindImmigration",
-  housing: "kindHousing",
-  general: "kindGeneral",
-  seniors: "kindSeniors",
-  family: "kindFamily",
-  workers: "kindWorkers",
-  "court-self-help": "kindCourt",
-  consumer: "kindConsumer",
-};
-const LEGAL_COST_KEYS: Record<string, Key> = { free: "costFree", "low-cost": "costLowCost", varies: "costVaries" };
 const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
 /** An alert's end time (ISO string or epoch ms) in the reader's locale. */
@@ -2432,8 +2423,8 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
         ],
       };
     case "legal": {
-      const kinds = raw(p.kinds).split("|").map((k) => LEGAL_KIND_KEYS[k]).filter((k): k is Key => !!k);
-      const cost = LEGAL_COST_KEYS[raw(p.cost)] ?? "costVaries";
+      const kinds = raw(p.kinds).split("|").map((k) => LEGAL_KIND_KEYS[k as LegalKind]).filter((k): k is Key => !!k);
+      const cost = LEGAL_COST_KEYS[raw(p.cost) as LegalOffice["cost"]] ?? "costVaries";
       return {
         ...base,
         title: raw(p.name) || kind,

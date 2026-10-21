@@ -66,9 +66,13 @@ export function LetterBuilder({ def, c, initial }: { def: LetterDef; c: HelpCopy
       <div className="hletter__form">
         {def.fields.map((f) =>
           f.kind === "checks" ? (
-            <fieldset key={f.id} className="hchoice">
+            <fieldset key={f.id} className="hchoice" aria-describedby={f.hint ? `${previewId}-${f.id}-hint` : undefined}>
               <legend className="hf__label">{f.label[lang]}</legend>
-              {f.hint && <p className="hf__hint">{f.hint[lang]}</p>}
+              {f.hint && (
+                <p className="hf__hint" id={`${previewId}-${f.id}-hint`}>
+                  {f.hint[lang]}
+                </p>
+              )}
               <div className="hchecks">
                 {(f.options ?? []).map((o) => {
                   const on = Array.isArray(values[f.id]) && (values[f.id] as string[]).includes(o.id);

@@ -296,12 +296,13 @@ function RentIncrease({ c, onMobileOwner }: { c: HelpCopy; onMobileOwner: () => 
 }
 
 /** "When was my building built?" from the baked assessor roll, all in-browser. */
-function BuiltLookup({ c, onAge }: { c: HelpCopy; onAge: (v: YesNo) => void }) {
+function BuiltLookup({ c, onAge }: { c: HelpCopy; onAge: (v: YesNo | null) => void }) {
   const { locale } = useI18n();
   const [q, setQ] = useState("");
   const [state, setState] = useState<"idle" | "busy" | "bad" | "none" | "error" | "done">("idle");
   const [hits, setHits] = useState<ParcelMatch[]>([]);
   const seq = useRef(0); // only the latest lookup may update the result
+  const filled = useRef(false); // the age answer below came from a lookup
   const year = new Date().getFullYear();
 
   const look = (e: React.FormEvent) => {
@@ -318,6 +319,11 @@ function BuiltLookup({ c, onAge }: { c: HelpCopy; onAge: (v: YesNo) => void }) {
         if (ages.size === 1) {
           const age = [...ages][0];
           onAge(age === "new" ? "yes" : age === "old" ? "no" : "unsure");
+          filled.current = true;
+        } else if (filled.current) {
+          // A new lookup that can't answer must not leave the last address's answer.
+          onAge(null);
+          filled.current = false;
         }
       })
       .catch(() => mine === seq.current && setState("error"));

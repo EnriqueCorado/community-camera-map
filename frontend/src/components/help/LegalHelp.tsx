@@ -1,23 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { useI18n, type Key } from "../../i18n";
+import { useI18n } from "../../i18n";
+import { LEGAL_COST_KEYS, LEGAL_KIND_KEYS } from "../../help/legal-kinds";
 import type { HelpCopy } from "../../help/copy";
 import { LEGAL_FACTS } from "../../help/facts";
 import { loadOffices, type LegalKind, type LegalOffice } from "../../help/legal-dir";
 import { longDate } from "../../help/dates";
 import { LEGAL_SITE_HOSTS, safeUrl } from "../../popup-logic";
 import { ExtLink, Phone, Result, Sources } from "./ui";
-
-const KIND_KEYS: Record<LegalKind, Key> = {
-  immigration: "kindImmigration",
-  housing: "kindHousing",
-  general: "kindGeneral",
-  seniors: "kindSeniors",
-  family: "kindFamily",
-  workers: "kindWorkers",
-  "court-self-help": "kindCourt",
-  consumer: "kindConsumer",
-};
-const COST_KEYS = { free: "costFree", "low-cost": "costLowCost", varies: "costVaries" } as const;
 
 const KIND_ORDER: LegalKind[] = ["immigration", "housing", "court-self-help", "general", "family", "seniors", "workers", "consumer"];
 
@@ -71,7 +60,7 @@ export function LegalHelp({ c, onShowOnMap }: { c: HelpCopy; onShowOnMap: (layer
                 aria-pressed={kind === k}
                 onClick={() => setKind(k)}
               >
-                {k === "all" ? c.legalAll : t(KIND_KEYS[k])}
+                {k === "all" ? c.legalAll : t(LEGAL_KIND_KEYS[k])}
               </button>
             ))}
           </div>
@@ -83,11 +72,11 @@ export function LegalHelp({ c, onShowOnMap }: { c: HelpCopy; onShowOnMap: (layer
               <article key={o.id} className="hcard hdir__item" aria-labelledby={`legal-${o.id}`}>
                 <h4 id={`legal-${o.id}`}>{o.name}</h4>
                 <div className="hdir__tags">
-                  <span className={`htag${o.cost === "free" ? " htag--free" : ""}`}>{t(COST_KEYS[o.cost])}</span>
+                  <span className={`htag${o.cost === "free" ? " htag--free" : ""}`}>{t(LEGAL_COST_KEYS[o.cost])}</span>
                   {o.eoir && <span className="htag">{t("legalEoir")}</span>}
                   {o.kinds.map((k) => (
                     <span key={k} className="htag">
-                      {t(KIND_KEYS[k])}
+                      {t(LEGAL_KIND_KEYS[k])}
                     </span>
                   ))}
                 </div>
