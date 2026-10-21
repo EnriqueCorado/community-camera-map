@@ -75,7 +75,7 @@ test("renters: apartment over the cap with short notice", async ({ page }) => {
   await dialog.getByRole("group", { name: /last 15 years/ }).getByRole("radio", { name: "No", exact: true }).check();
   await dialog.getByRole("group", { name: /affordable housing/ }).getByRole("radio", { name: "No", exact: true }).check();
   await expect(dialog.getByText("The rent cap most likely covers your home")).toBeVisible();
-  await dialog.getByLabel(/Lowest monthly rent/).fill("1500");
+  await dialog.getByLabel(/Lowest rent/).fill("1500");
   await dialog.getByLabel("New monthly rent").fill("1650");
   await dialog.getByLabel("Date the new rent starts").fill("2026-09-01");
   await dialog.getByLabel(/Date you got the written notice/).fill("2026-08-15");
@@ -167,7 +167,7 @@ test("privacy: nothing typed into the tools is sent anywhere", async ({ page }) 
   await dialog.getByLabel("Look up when your building was built").fill(`${secrets.address} St, Modesto`);
   await dialog.getByRole("button", { name: "Look up" }).click();
   await expect(dialog.getByText(/couldn’t find that address/)).toBeVisible();
-  await dialog.getByLabel(/Lowest monthly rent/).fill(secrets.rent);
+  await dialog.getByLabel(/Lowest rent/).fill(secrets.rent);
   await dialog.getByRole("tab", { name: "Legal help" }).click();
   await expect(dialog.getByText("16 offices")).toBeVisible();
 

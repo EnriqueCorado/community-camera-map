@@ -6,17 +6,20 @@ import { useId, type ReactNode } from "react";
 export function Field({
   label,
   hint,
+  wide,
   children,
 }: {
   label: string;
   hint?: string;
+  /** Span the whole form row (long labels, wide controls). */
+  wide?: boolean;
   /** Render prop: gets the id/aria wiring for the control. */
   children: (ids: { id: string; describedBy?: string }) => ReactNode;
 }) {
   const id = useId();
   const hintId = hint ? `${id}-hint` : undefined;
   return (
-    <div className="hf">
+    <div className={`hf${wide ? " hf--wide" : ""}`}>
       <label className="hf__label" htmlFor={id}>
         {label}
       </label>
@@ -67,16 +70,18 @@ export function Choice<T extends string>({
   value,
   onChange,
   hint,
+  wide,
 }: {
   legend: string;
   options: { value: T; label: string }[];
   value: T | null;
   onChange: (v: T) => void;
   hint?: string;
+  wide?: boolean;
 }) {
   const name = useId();
   return (
-    <fieldset className="hchoice" aria-describedby={hint ? `${name}-hint` : undefined}>
+    <fieldset className={`hchoice${wide ? " hf--wide" : ""}`} aria-describedby={hint ? `${name}-hint` : undefined}>
       <legend className="hf__label">{legend}</legend>
       {hint && (
         <p className="hf__hint" id={`${name}-hint`}>

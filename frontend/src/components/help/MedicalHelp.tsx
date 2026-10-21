@@ -25,7 +25,7 @@ export function MedicalHelp({
   const [size, setSize] = useState(1);
   const [income, setIncome] = useState("");
   const [per, setPer] = useState<"month" | "year">("month");
-  const [pick, setPick] = useState<string>(hospitalId && HOSPITALS.some((h) => h.id === hospitalId) ? hospitalId : OTHER);
+  const [pick, setPick] = useState<string>(hospitalId && HOSPITALS.some((h) => h.id === hospitalId) ? hospitalId : "");
   const hospital: Hospital | null = HOSPITALS.find((h) => h.id === pick) ?? null;
 
   const [insured, setInsured] = useState<"yes" | "no" | null>(null);
@@ -47,9 +47,10 @@ export function MedicalHelp({
       <section className="hcard" aria-labelledby="med-check">
         <h3 id="med-check">{c.medCheckTitle}</h3>
         <div className="hform">
-          <Field label={c.medHospital}>
+          <Field label={c.medHospital} wide>
             {({ id }) => (
               <select id={id} className="hf__input" value={pick} onChange={(e) => setPick(e.target.value)}>
+                <option value="">{c.medChooseHospital}</option>
                 {HOSPITALS.map((h) => (
                   <option key={h.id} value={h.id}>
                     {h.name} ({h.city})
@@ -91,6 +92,7 @@ export function MedicalHelp({
             ]}
           />
           <Choice
+            wide
             legend={c.medInsured}
             value={insured}
             onChange={setInsured}
@@ -101,6 +103,7 @@ export function MedicalHelp({
           />
           {insured === "yes" && (
             <Choice
+              wide
               legend={c.medHighCostsQ}
               hint={c.medHighCostsHint}
               value={highCosts}

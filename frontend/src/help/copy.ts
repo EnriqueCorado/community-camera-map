@@ -41,6 +41,7 @@ export interface HelpCopy {
   medLead: string;
   medCheckTitle: string;
   medHospital: string;
+  medChooseHospital: string;
   medOtherHospital: string;
   medOtherHospitalText: string;
   medHousehold: string;
@@ -201,6 +202,7 @@ const en: HelpCopy = {
     "Every California hospital must offer free or discounted care to patients without insurance, and to insured patients with high medical bills, whose family income is up to 400% of the poverty line (about $132,000 a year for a family of four). You can apply even after you get the bill. Immigration status doesn’t matter.",
   medCheckTitle: "Check if you may qualify",
   medHospital: "Hospital",
+  medChooseHospital: "Choose your hospital…",
   medOtherHospital: "Another California hospital",
   medOtherHospitalText:
     "Every general acute care hospital in California must follow the same state rules shown here. Ask its billing or financial counseling office for its “financial assistance” or “charity care” policy and application.",
@@ -278,8 +280,8 @@ const en: HelpCopy = {
     "If so, the cap doesn’t limit the amount. The notice rules in step 2 still apply to every rental, and so do your rights to repairs and against retaliation.",
   covMaybeNext: "It depends on the item above. Step 2 shows what the cap would allow; free legal help can tell you if it applies.",
   capStep2: "Step 2: Check the increase",
-  capLowest: "Lowest monthly rent you were charged in the last 12 months",
-  capLowestHint: "Usually your rent before this increase. Don’t subtract discounts you were given.",
+  capLowest: "Lowest rent in the last 12 months",
+  capLowestHint: "The lowest monthly rent you were charged in the past year, usually your rent before this increase. Don’t subtract discounts you were given.",
   capNew: "New monthly rent",
   capEffective: "Date the new rent starts",
   capNoticed: "Date you got the written notice",
@@ -382,6 +384,7 @@ const es: HelpCopy = {
     "Todo hospital de California debe ofrecer atención gratis o con descuento a pacientes sin seguro, y a pacientes con seguro que tienen cuentas médicas altas, cuyos ingresos familiares lleguen hasta el 400% de la línea de pobreza (unos $132,000 al año para una familia de cuatro). Puede pedirla incluso después de recibir la cuenta. Su estatus migratorio no importa.",
   medCheckTitle: "Vea si podría calificar",
   medHospital: "Hospital",
+  medChooseHospital: "Elija su hospital…",
   medOtherHospital: "Otro hospital de California",
   medOtherHospitalText:
     "Todos los hospitales generales de California deben seguir las mismas reglas estatales que se muestran aquí. Pida en la oficina de cobros o de asesoría financiera su política de “asistencia financiera” o “atención de caridad” (charity care) y la solicitud.",
@@ -462,8 +465,8 @@ const es: HelpCopy = {
   covMaybeNext:
     "Depende del punto de arriba. El paso 2 muestra lo que permitiría el límite; la ayuda legal gratuita puede decirle si aplica.",
   capStep2: "Paso 2: Revise el aumento",
-  capLowest: "La renta mensual más baja que le cobraron en los últimos 12 meses",
-  capLowestHint: "Normalmente, su renta antes de este aumento. No reste los descuentos que le dieron.",
+  capLowest: "Renta más baja en los últimos 12 meses",
+  capLowestHint: "La renta mensual más baja que le cobraron en el último año, normalmente su renta antes de este aumento. No reste los descuentos que le dieron.",
   capNew: "Renta mensual nueva",
   capEffective: "Fecha en que empieza la renta nueva",
   capNoticed: "Fecha en que recibió el aviso por escrito",
