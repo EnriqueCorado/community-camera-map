@@ -157,10 +157,20 @@ Counts are from the 2026-10-19 bake.
 | 511 Alaska (Iteris key) | `/api/v2/get/cameras` | 129 | stills, several views per site |
 | USGS volcano webcams | AVO ashcam API (frame within 7 days; FAA-owned cams skipped) | 91 | stills |
 | NOAA NDBC BuoyCAMs | `www.ndbc.noaa.gov/buoycams.php` | 90 | stills |
+| FL511 / Florida DOT, via FDEM (no license stated) | ArcGIS `FL511_Traffic_Cameras` (FDEM's republish) | 3,992 | stills (FDOT DIVAS) |
+| ODOT TripCheck, via Oregon Emergency Management ("Public") | ArcGIS `TripCheck_Cameras` (OEM's daily republish) | 1,040 | stills, several views per site |
+| Iowa DOT (CC BY 4.0) | ArcGIS `Traffic_Cameras_View` | 847 | stills, several views per site (HLS is on port 8888, so not used) |
+| CDOT (no license stated) | CDOT ArcGIS Server `ATMS/MapServer/7` (public views only) | 222 | stills, several views per site |
+
+The last four (counts from the 2026-10-21 bake) give way to an earlier source's
+camera at the same spot (coordinates rounded to 4 decimals), so a camera is never
+listed twice. Skipped on purpose: TripCheck's own `cctvinventory.js` and NYC DOT's
+`webcams.nyctmc.org/api/cameras` (undocumented web-app endpoints; the official
+TripCheck and 511NY APIs need keys), and NDDOT's `cameras.json` (undocumented).
 
 USGS HIVIS river cameras (~1,140, nationwide) stay a separate overlay layer
 (`river-cameras`). `cameras.json` uses short keys and drops empty fields to stay
-under ~4 MB; rebuild just it with `cd backend && uv run python scripts/bake.py --cameras-only`
+small (~6.1 MB, ~0.9 MB gzipped, with ~26.9k cameras on 2026-10-21; splitting it by region is the next step if it keeps growing); rebuild just it with `cd backend && uv run python scripts/bake.py --cameras-only`
 (the Pages workflow's hourly `cameras` job does this with the keys below).
 
 **Keyed sources.** Free per-state keys, used only server-side / at bake time

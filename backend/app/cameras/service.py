@@ -91,7 +91,10 @@ class CameraService:
         def keep(c: Camera) -> bool:
             return c.in_service and (not wanted or c.county.casefold() in wanted)
 
-        kept = [c for c in cameras if keep(c)]
+        # A camera from one of national.YIELDING_SOURCES (the state ArcGIS
+        # layers) is dropped where an in-service camera from another source
+        # already sits; every other source always stays.
+        kept = national.dedupe_by_location([c for c in cameras if keep(c)])
 
         if not kept:
             if self._cache:  # total failure: keep serving the last good data

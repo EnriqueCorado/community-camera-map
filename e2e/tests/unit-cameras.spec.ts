@@ -16,6 +16,11 @@ test.describe("safeCameraUrl", () => {
       "https://cwwp2.dot.ca.gov/data/d10/cctv/image/x/x.jpg",
       "https://sfs02-traveler.modot.mo.gov/rtplive/MODOT_CAM_209/playlist.m3u8",
       "https://www.ndbc.noaa.gov/buoycam.php?station=41004",
+      // State ArcGIS layers added 2026-10-21 (TripCheck names arrive percent-encoded).
+      "https://atmsqf.iowadot.gov/SNAPSHOTS/PUBLIC/Metro/ictv29hd.jpeg",
+      "https://images-dis.divas.cloud/DGI/chan-9422_h.jpg",
+      "https://tripcheck.com/RoadCams/cams/OR99W%20at%20Durham%20Rd_pid2107.JPG",
+      "https://cocam.carsprogram.org/Douglas/2_Brdwy_Dad_Clark-cotripNorth-DO-NOT-DELETE.jpg",
     ]) {
       expect(safeCameraUrl(u), u).toBe(u);
     }
