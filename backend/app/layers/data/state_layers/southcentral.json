@@ -1,0 +1,5728 @@
+[
+ {
+  "name": "tx-address-points",
+  "state": "TX",
+  "title": "Address points (Texas)",
+  "title_es": "Puntos de dirección (Texas)",
+  "description": "Official StratMap address points compiled by TxGIO from 911 districts and councils of government.",
+  "group": "planning",
+  "category": "point",
+  "source": "Texas Geographic Information Office (TxGIO) StratMap",
+  "license": "TxGIO public data; credit TxGIO and source 911 districts",
+  "view": {
+   "url": "https://feature.geographic.texas.gov/arcgis/rest/services/Address_Points/stratmap_address_points_48_most_recent/MapServer/0",
+   "fields": {
+    "full_addr": "address",
+    "post_comm": "city",
+    "post_code": "zip",
+    "county": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.372,
+    29.752,
+    -95.362,
+    29.76
+   ],
+   "count": 336,
+   "kb": 67,
+   "max_record_count": 2000,
+   "features_in_probe": 336
+  }
+ },
+ {
+  "name": "tx-harris-parcels",
+  "state": "TX",
+  "title": "Parcels (Harris County)",
+  "title_es": "Parcelas (condado de Harris)",
+  "description": "Harris Central Appraisal District parcels with site address, state land-use class and market value (owner names omitted).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Harris Central Appraisal District via Harris County GIS",
+  "license": "Public appraisal record; credit HCAD/Harris County",
+  "view": {
+   "url": "https://www.gis.hctx.net/arcgis/rest/services/HCAD/Parcels/MapServer/0",
+   "fields": {
+    "HCAD_NUM": "parcel_id",
+    "site_str_num": "number",
+    "site_str_name": "street",
+    "site_city": "city",
+    "site_zip": "zip",
+    "state_class": "kind",
+    "land_use": "land_use",
+    "total_market_val": "market_value",
+    "tax_year": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.37,
+    29.75,
+    -95.364,
+    29.756
+   ],
+   "count": 248,
+   "kb": 98,
+   "max_record_count": 1000,
+   "features_in_probe": 248
+  }
+ },
+ {
+  "name": "tx-austin-zoning",
+  "state": "TX",
+  "title": "Zoning (Austin)",
+  "title_es": "Zonificación (Austin)",
+  "description": "City of Austin base zoning districts.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Austin",
+  "license": "City of Austin open data (public domain)",
+  "view": {
+   "url": "https://services.arcgis.com/0L95CJ0VTaxqcmED/arcgis/rest/services/PLANNINGCADASTRE_zoning_small_map_scale/FeatureServer/0",
+   "fields": {
+    "ZONING_ZTYPE": "name",
+    "ZONING_BASE": "kind",
+    "MODIFIED_DATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -97.755,
+    30.26,
+    -97.735,
+    30.28
+   ],
+   "count": 887,
+   "kb": 257,
+   "max_record_count": 2000,
+   "features_in_probe": 887
+  }
+ },
+ {
+  "name": "tx-dallas-zoning",
+  "state": "TX",
+  "title": "Zoning (Dallas)",
+  "title_es": "Zonificación (Dallas)",
+  "description": "City of Dallas base zoning districts, including planned-development numbers.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Dallas GIS",
+  "license": "City of Dallas open data",
+  "view": {
+   "url": "https://services2.arcgis.com/rwnOSbfKSwyTBcwN/arcgis/rest/services/Dallas_Zoning/FeatureServer/15",
+   "fields": {
+    "LONG_ZONE_DIST": "name",
+    "ZONE_DIST": "kind",
+    "COMMON_NAME": "info",
+    "ORD_NUM": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.81,
+    32.77,
+    -96.79,
+    32.79
+   ],
+   "count": 12,
+   "kb": 18,
+   "max_record_count": 2000,
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "tx-fort-worth-zoning",
+  "state": "TX",
+  "title": "Zoning (Fort Worth)",
+  "title_es": "Zonificación (Fort Worth)",
+  "description": "City of Fort Worth zoning districts.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Fort Worth",
+  "license": "City of Fort Worth open data",
+  "view": {
+   "url": "https://mapit.fortworthtexas.gov/ags/rest/services/CIVIC/OpenData_Boundaries/MapServer/54",
+   "fields": {
+    "ZONING": "name",
+    "BASE_ZONING": "kind",
+    "PD_DESCRIPTION": "info",
+    "HISTORIC": "historic"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -97.34,
+    32.74,
+    -97.32,
+    32.76
+   ],
+   "count": 215,
+   "kb": 82,
+   "max_record_count": 2000,
+   "features_in_probe": 215
+  }
+ },
+ {
+  "name": "tx-school-districts",
+  "state": "TX",
+  "title": "School districts 2025-26 (Texas)",
+  "title_es": "Distritos escolares 2025-26 (Texas)",
+  "description": "Texas Legislative Council school district boundaries for the 2025-26 school year, published by TEA.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Texas Education Agency / Texas Legislative Council",
+  "license": "TEA public data",
+  "view": {
+   "url": "https://services2.arcgis.com/5MVN2jsqIrNZD4tP/arcgis/rest/services/School_Districts__2026/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "DISTRICT": "district_id",
+    "NCES_DISTR": "nces_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "count": 1,
+   "kb": 28,
+   "max_record_count": 2000,
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "tx-water-districts",
+  "state": "TX",
+  "title": "Water & utility districts (Texas)",
+  "title_es": "Distritos de agua y servicios (Texas)",
+  "description": "TCEQ-mapped MUDs, water control, management and other special water districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Texas Commission on Environmental Quality (TCEQ)",
+  "license": "TCEQ public data; acknowledgment requested",
+  "view": {
+   "url": "https://gisweb.tceq.texas.gov/arcgis/rest/services/Public/WaterDistricts/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "STATUS": "status",
+    "COUNTY": "county",
+    "DISTRICT_ID": "district_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "count": 15,
+   "kb": 467,
+   "max_record_count": 3000,
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "tx-water-service-areas",
+  "state": "TX",
+  "title": "Public water system service areas (Texas)",
+  "title_es": "Áreas de servicio de agua potable (Texas)",
+  "description": "Which public water system serves an area, from TWDB's water service boundary viewer.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Texas Water Development Board (TWDB)",
+  "license": "Texas state public information (Tex. Gov't Code ch. 552); attribution requested",
+  "view": {
+   "url": "https://services.twdb.texas.gov/arcgis/rest/services/PWS/Public_Water_Service_Areas/FeatureServer/0",
+   "fields": {
+    "PWSName": "name",
+    "PWSId": "pws_id",
+    "Source": "kind",
+    "LUpDateTime": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.6,
+    29.35,
+    -98.4,
+    29.55
+   ],
+   "count": 6,
+   "kb": 45,
+   "max_record_count": 10000,
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "tx-tfs-wildfires",
+  "state": "TX",
+  "title": "Wildfires, last 30 days (Texas A&M Forest Service)",
+  "title_es": "Incendios forestales, últimos 30 días (Servicio Forestal de Texas A&M)",
+  "description": "Wildfires reported to Texas A&M Forest Service in the last 30 days, including small fires not in national feeds.",
+  "group": "live",
+  "category": "hazard",
+  "source": "Texas A&M Forest Service",
+  "license": "Texas A&M Forest Service public data",
+  "view": {
+   "url": "https://gis.tfs.tamu.edu/arcgis/rest/services/EOC/TAMSFires_Public/FeatureServer/0",
+   "fields": {
+    "FireName": "name",
+    "County": "county",
+    "Acres": "acres",
+    "PercentContained": "contained",
+    "Status": "status",
+    "StartDate": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 5,
+   "where": "StartDate >= CURRENT_TIMESTAMP - 30",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -106.65,
+    25.84,
+    -93.51,
+    36.5
+   ],
+   "count": 135,
+   "kb": 32,
+   "max_record_count": 2000,
+   "features_in_probe": 134
+  }
+ },
+ {
+  "name": "tx-cwpp-areas",
+  "state": "TX",
+  "title": "Community wildfire protection plans (Texas)",
+  "title_es": "Planes comunitarios de protección contra incendios (Texas)",
+  "description": "Areas covered by a Community Wildfire Protection Plan, with plan status, from Texas A&M Forest Service.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Texas A&M Forest Service",
+  "license": "Texas A&M Forest Service public data",
+  "view": {
+   "url": "https://services5.arcgis.com/ELI1iJkCzTIagHkp/arcgis/rest/services/Community_CWPP_Boundaries_PUBLIC/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "County": "county",
+    "Status": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.3,
+    29.9,
+    -97.4,
+    30.7
+   ],
+   "count": 7,
+   "kb": 119,
+   "max_record_count": 2000,
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "tx-flash-flood-hazard",
+  "state": "TX",
+  "title": "Provisional flash flood hazard areas (Texas)",
+  "title_es": "Zonas provisionales de riesgo de inundación repentina (Texas)",
+  "description": "TWDB's provisional flash-flood hazard screening (SB 3, built on the 2024 statewide flood quilt); not a regulatory floodplain.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Texas Water Development Board (TWDB)",
+  "license": "Texas state public information (Tex. Gov't Code ch. 552); attribution requested",
+  "view": {
+   "url": "https://gis1.twdb.texas.gov/server/rest/services/WSC-FSCA-FM/SB3_PFFRA_and_Grid/MapServer/1",
+   "fields": {
+    "Visualization": "kind",
+    "Criteria": "info",
+    "County_Name": "county",
+    "SUBBASIN": "basin",
+    "Status": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -99.16,
+    30.03,
+    -99.1,
+    30.07
+   ],
+   "count": 54,
+   "kb": 63,
+   "max_record_count": 86516,
+   "features_in_probe": 54
+  }
+ },
+ {
+  "name": "tx-campgrounds-floodplain",
+  "state": "TX",
+  "title": "Camps & campgrounds flood screening (Texas)",
+  "title_es": "Campamentos y su ubicación frente a inundaciones (Texas)",
+  "description": "Youth camps, RV parks and public campgrounds compiled by TWDB for SB 3 flood-safety screening, with floodplain flag.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Texas Water Development Board (TWDB)",
+  "license": "Texas state public information (Tex. Gov't Code ch. 552); attribution requested",
+  "view": {
+   "url": "https://gis1.twdb.texas.gov/server/rest/services/WSC-FSCA-FM/Texas_Campgrounds/MapServer/0",
+   "fields": {
+    "Camp_Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Camp_Type": "kind",
+    "Floodplain": "floodplain",
+    "Source": "source"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -99.5,
+    29.9,
+    -98.9,
+    30.2
+   ],
+   "count": 29,
+   "kb": 8,
+   "max_record_count": 2000,
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "tx-hurricane-evac-routes",
+  "state": "TX",
+  "title": "Hurricane evacuation routes (Texas)",
+  "title_es": "Rutas de evacuación por huracán (Texas)",
+  "description": "TxDOT's designated statewide hurricane evacuation routes.",
+  "group": "hazards",
+  "category": "roadops",
+  "source": "Texas Department of Transportation (TxDOT)",
+  "license": "TxDOT Open Data (public)",
+  "view": {
+   "url": "https://services.arcgis.com/KTcxiTD9dsQw4r7Z/ArcGIS/rest/services/TxDOT_Evacuation_Routes/FeatureServer/0",
+   "fields": {
+    "MAP_LABEL": "name",
+    "ROUTE_TYPE": "kind",
+    "RTE_RB_NM": "route"
+   },
+   "geometry": "line",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    29.6,
+    -95.2,
+    29.9
+   ],
+   "count": 6,
+   "kb": 90,
+   "max_record_count": 2000,
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "tx-houston-evac-zones",
+  "state": "TX",
+  "title": "Hurricane evacuation zip-zones (Houston-Galveston)",
+  "title_es": "Zonas de evacuación por huracán por código postal (Houston-Galveston)",
+  "description": "Official Houston-Galveston region zip-zone evacuation map (Coastal, A, B, C), last edited July 2025; follow local officials' orders.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Harris County Flood Control District / Harris County",
+  "license": "Harris County public data",
+  "view": {
+   "url": "https://services.arcgis.com/su8ic9KbA7PYVxPS/arcgis/rest/services/Hurricane_Evac_Zones/FeatureServer/0",
+   "fields": {
+    "Zone": "kind",
+    "Zip5digit": "zip",
+    "Name": "name",
+    "County": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.3,
+    29.5,
+    -94.9,
+    29.8
+   ],
+   "count": 43,
+   "kb": 185,
+   "max_record_count": 2000,
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "tx-air-monitors",
+  "state": "TX",
+  "title": "Air monitoring sites (TCEQ)",
+  "title_es": "Estaciones de monitoreo del aire (TCEQ)",
+  "description": "Active TCEQ and partner air-quality monitoring sites.",
+  "group": "nature",
+  "category": "point",
+  "source": "Texas Commission on Environmental Quality (TCEQ)",
+  "license": "TCEQ public data; acknowledgment requested",
+  "view": {
+   "url": "https://gisweb.tceq.texas.gov/arcgis/rest/services/Public/AQS_Sites/MapServer/0",
+   "fields": {
+    "SITE_NAME": "name",
+    "ADDR_LINE_ONE_TXT": "address",
+    "ADDR_CITY_NAME": "city",
+    "AQS_SITE_CD": "site_id",
+    "ORG_MAINT_NAME": "operator"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    29.6,
+    -95.2,
+    29.9
+   ],
+   "count": 24,
+   "kb": 7,
+   "max_record_count": 1000,
+   "features_in_probe": 24
+  }
+ },
+ {
+  "name": "tx-school-lead-testing",
+  "state": "TX",
+  "title": "Schools in the lead-in-water testing program (Texas)",
+  "title_es": "Escuelas en el programa de análisis de plomo en el agua (Texas)",
+  "description": "Schools enrolled in TCEQ's Lead Testing in School and Child Care Program; results at txleadtesting.org.",
+  "group": "people",
+  "category": "point",
+  "source": "Texas Commission on Environmental Quality (TCEQ)",
+  "license": "TCEQ public data; acknowledgment requested",
+  "view": {
+   "url": "https://gisweb.tceq.texas.gov/arcgis/rest/services/Public/Lead_Testing_in_School_and_Child_Care_Program_Participants/MapServer/0",
+   "fields": {
+    "USER_FACILITY_NAME": "name",
+    "USER_FULL_ADDRESS": "address",
+    "USER_AGE_SERVED": "grades",
+    "USER_NUMBER_OF_INITIAL_OUTLETS": "outlets"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "count": 11,
+   "kb": 3,
+   "max_record_count": 2000,
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "tx-leaking-tanks",
+  "state": "TX",
+  "title": "Leaking petroleum storage tank sites (Texas)",
+  "title_es": "Sitios con tanques de petróleo con fugas (Texas)",
+  "description": "TCEQ leaking petroleum storage tank (LPST) cleanup sites.",
+  "group": "nature",
+  "category": "point",
+  "source": "Texas Commission on Environmental Quality (TCEQ)",
+  "license": "TCEQ public data; acknowledgment requested",
+  "view": {
+   "url": "https://gisweb.tceq.texas.gov/arcgis/rest/services/Public/LPST/MapServer/0",
+   "fields": {
+    "SITE_NAME": "name",
+    "PHYS_ADDR": "address",
+    "CITY": "city",
+    "LPST_ID": "site_id",
+    "REM_PROG": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "count": 345,
+   "kb": 89,
+   "max_record_count": 1000,
+   "features_in_probe": 345
+  }
+ },
+ {
+  "name": "tx-dry-cleaner-sites",
+  "state": "TX",
+  "title": "Dry cleaner cleanup sites (Texas)",
+  "title_es": "Sitios de limpieza de tintorerías (Texas)",
+  "description": "Sites in TCEQ's Dry Cleaner Remediation Program.",
+  "group": "nature",
+  "category": "point",
+  "source": "Texas Commission on Environmental Quality (TCEQ)",
+  "license": "TCEQ public data; acknowledgment requested",
+  "view": {
+   "url": "https://gisweb.tceq.texas.gov/arcgis/rest/services/Public/DryCleaner/MapServer/0",
+   "fields": {
+    "SITE_NAME": "name",
+    "PHYS_ADDR": "address",
+    "CITY": "city",
+    "DCRP_ID": "site_id"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "count": 4,
+   "kb": 1,
+   "max_record_count": 2000,
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "tx-landfills",
+  "state": "TX",
+  "title": "Active landfills (Texas)",
+  "title_es": "Rellenos sanitarios activos (Texas)",
+  "description": "Active municipal solid waste landfills permitted by TCEQ.",
+  "group": "infra",
+  "category": "point",
+  "source": "Texas Commission on Environmental Quality (TCEQ)",
+  "license": "TCEQ public data; acknowledgment requested",
+  "view": {
+   "url": "https://gisweb.tceq.texas.gov/arcgis/rest/services/Public/Landfills/MapServer/0",
+   "fields": {
+    "FACILITY_N": "name",
+    "ADDRESS": "address",
+    "LANDFILL_T": "kind",
+    "PERMIT_NUM": "permit",
+    "COUNTY": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.8,
+    29.4,
+    -95.0,
+    30.2
+   ],
+   "count": 19,
+   "kb": 5,
+   "max_record_count": 2000,
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "tx-groundwater-districts",
+  "state": "TX",
+  "title": "Groundwater conservation districts (Texas)",
+  "title_es": "Distritos de conservación de aguas subterráneas (Texas)",
+  "description": "Groundwater conservation and subsidence districts that regulate well pumping.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Texas Commission on Environmental Quality (TCEQ)",
+  "license": "TCEQ public data; acknowledgment requested",
+  "view": {
+   "url": "https://gisweb.tceq.texas.gov/arcgis/rest/services/Public/GCDs/MapServer/0",
+   "fields": {
+    "DISTNAME": "name",
+    "SHORTNAM": "short_name",
+    "CSTATUS": "status",
+    "TXT_4YR": "established"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "count": 1,
+   "kb": 85,
+   "max_record_count": 1000,
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "tx-groundwater-sensor-wells",
+  "state": "TX",
+  "title": "Groundwater level sensor wells (Texas)",
+  "title_es": "Pozos con sensor de nivel freático (Texas)",
+  "description": "Wells with continuous water-level sensors (TWDB, groundwater districts, utilities); domestic wells and owner names excluded.",
+  "group": "nature",
+  "category": "point",
+  "source": "Texas Water Development Board (TWDB) Groundwater Database",
+  "license": "Texas state public information (Tex. Gov't Code ch. 552); attribution requested",
+  "view": {
+   "url": "https://services.twdb.texas.gov/arcgis/rest/services/Public/TWDB_Groundwater_database/FeatureServer/0",
+   "fields": {
+    "StateWellNumber": "name",
+    "WaterLevelObservationType": "kind",
+    "AquiferCodeName": "aquifer",
+    "WellDepth": "depth_ft",
+    "PrimaryWaterUse": "use",
+    "CountyName": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "WaterLevelObservationType LIKE '%Current Sensor%' AND PrimaryWaterUse <> 'Domestic'",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.8,
+    29.2,
+    -98.2,
+    29.8
+   ],
+   "count": 29,
+   "kb": 10,
+   "max_record_count": 1000,
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "tx-orphan-wells",
+  "state": "TX",
+  "title": "Orphaned oil & gas wells (Texas)",
+  "title_es": "Pozos de petróleo y gas abandonados (Texas)",
+  "description": "Wells on the Railroad Commission's orphan well list (no responsible operator), by API number.",
+  "group": "nature",
+  "category": "point",
+  "source": "Railroad Commission of Texas (RRC)",
+  "license": "RRC public data",
+  "view": {
+   "url": "https://gis.rrc.texas.gov/server/rest/services/rrc_public/RRC_Public_Viewer_Srvs/MapServer/2",
+   "fields": {
+    "API": "name"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.6,
+    28.5,
+    -97.5,
+    29.5
+   ],
+   "count": 303,
+   "kb": 40,
+   "max_record_count": 1000,
+   "features_in_probe": 303
+  }
+ },
+ {
+  "name": "tx-tree-equity",
+  "state": "TX",
+  "title": "Tree equity score (Texas cities)",
+  "title_es": "Índice de equidad de árboles (ciudades de Texas)",
+  "description": "American Forests Tree Equity Score by block group (canopy, heat, income), hosted by Texas A&M Forest Service; 2023 vintage.",
+  "group": "people",
+  "category": "info",
+  "source": "Texas A&M Forest Service / American Forests",
+  "license": "American Forests Tree Equity Score (CC BY 4.0); credit Texas A&M Forest Service",
+  "view": {
+   "url": "https://tfsgis02.tfs.tamu.edu/arcgis/rest/services/TreeAndPeople/TreeEquity/MapServer/0",
+   "fields": {
+    "place": "name",
+    "tes": "score",
+    "treecanopy": "canopy",
+    "tc_gap": "canopy_gap",
+    "temp_diff": "heat_diff",
+    "pctpov": "poverty",
+    "GEOID": "geoid"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "count": 90,
+   "kb": 51,
+   "max_record_count": 2000,
+   "features_in_probe": 90
+  }
+ },
+ {
+  "name": "tx-txdot-projects",
+  "state": "TX",
+  "title": "TxDOT highway projects (Texas)",
+  "title_es": "Proyectos de carreteras de TxDOT (Texas)",
+  "description": "TxDOT Project Tracker: planned and under-construction highway projects with phase and estimated cost.",
+  "group": "growth",
+  "category": "roadops",
+  "source": "Texas Department of Transportation (TxDOT) Project Tracker",
+  "license": "TxDOT Open Data (public)",
+  "view": {
+   "url": "https://services.arcgis.com/KTcxiTD9dsQw4r7Z/ArcGIS/rest/services/TxDOT_Projects_Info/FeatureServer/0",
+   "fields": {
+    "HIGHWAY_NUMBER": "name",
+    "TYPE_OF_WORK": "kind",
+    "PT_PHASE": "status",
+    "LIMITS_FROM": "from",
+    "LIMITS_TO": "to",
+    "EST_CONSTRUCTION_COST": "cost",
+    "CNSTR_PCT_COMPLETE": "pct_complete",
+    "CONTROL_SECT_JOB": "csj",
+    "LAST_PROJ_UPDATE_DT": "updated"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "count": 75,
+   "kb": 187,
+   "max_record_count": 1000,
+   "features_in_probe": 75
+  }
+ },
+ {
+  "name": "tx-congested-roads",
+  "state": "TX",
+  "title": "Top 100 congested roads (Texas)",
+  "title_es": "Las 100 vías más congestionadas (Texas)",
+  "description": "TxDOT's annual list of the 100 most congested road segments, with delay per mile.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Texas Department of Transportation (TxDOT)",
+  "license": "TxDOT Open Data (public)",
+  "view": {
+   "url": "https://services.arcgis.com/KTcxiTD9dsQw4r7Z/ArcGIS/rest/services/TxDOT_Top_100_Congested_Roadways/FeatureServer/0",
+   "fields": {
+    "RD_NM": "name",
+    "RANK": "rank",
+    "DLAY_MILE": "delay_hours_per_mile",
+    "TRK_RANK": "truck_rank",
+    "YR": "year"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    29.6,
+    -95.2,
+    29.9
+   ],
+   "count": 29,
+   "kb": 169,
+   "max_record_count": 1000,
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "tx-crashes-serious",
+  "state": "TX",
+  "title": "Fatal & serious-injury crashes 2020-24 (Texas)",
+  "title_es": "Choques con muertes o heridos graves 2020-24 (Texas)",
+  "description": "TxDOT CRIS crashes with a death or suspected serious injury, 2020-2024; no personal information.",
+  "group": "roads",
+  "category": "point",
+  "source": "Texas Department of Transportation (TxDOT) CRIS",
+  "license": "TxDOT CRIS public data",
+  "view": {
+   "url": "https://services.arcgis.com/KTcxiTD9dsQw4r7Z/ArcGIS/rest/services/TXDOT_Statewide_Bicyclist_Involved_Crashes/FeatureServer/0",
+   "fields": {
+    "crash_date": "updated",
+    "crash_sev_id": "severity",
+    "death_cnt": "deaths",
+    "sus_serious_injry_cnt": "serious_injuries",
+    "rpt_street_name": "name",
+    "bicyclist_involved_fl": "bicyclist",
+    "pedestrian_involved_fl": "pedestrian"
+   },
+   "geometry": "point",
+   "min_zoom": 14,
+   "where": "crash_sev_id IN (1,4)",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.38,
+    29.74,
+    -95.35,
+    29.77
+   ],
+   "count": 348,
+   "kb": 94,
+   "max_record_count": 2000,
+   "features_in_probe": 348
+  }
+ },
+ {
+  "name": "tx-rest-areas",
+  "state": "TX",
+  "title": "Safety rest areas (Texas)",
+  "title_es": "Áreas de descanso (Texas)",
+  "description": "TxDOT safety rest areas and travel information centers.",
+  "group": "roads",
+  "category": "point",
+  "source": "Texas Department of Transportation (TxDOT)",
+  "license": "TxDOT Open Data (public)",
+  "view": {
+   "url": "https://services.arcgis.com/KTcxiTD9dsQw4r7Z/ArcGIS/rest/services/TxDOT_Safety_Rest_Areas/FeatureServer/0",
+   "fields": {
+    "Rest_Area_Name": "name",
+    "RTE_NM": "road",
+    "Location": "address"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -100,
+    29,
+    -95,
+    33
+   ],
+   "count": 28,
+   "kb": 6,
+   "max_record_count": 2000,
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "tx-truck-parking",
+  "state": "TX",
+  "title": "Truck parking (Texas)",
+  "title_es": "Estacionamiento para camiones (Texas)",
+  "description": "TxDOT truck parking inventory: public and private lots, spaces and 24-hour availability.",
+  "group": "roads",
+  "category": "point",
+  "source": "Texas Department of Transportation (TxDOT)",
+  "license": "TxDOT Open Data (public)",
+  "view": {
+   "url": "https://services.arcgis.com/KTcxiTD9dsQw4r7Z/ArcGIS/rest/services/Truck_Parking_Inventory/FeatureServer/0",
+   "fields": {
+    "CITY_NM": "city",
+    "Parking_Inventory": "spaces",
+    "OWNERSHIP": "kind",
+    "NEAREST_IH": "name",
+    "OPENTWNTYFOURHOUR": "open_24h"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    29.6,
+    -95.2,
+    29.9
+   ],
+   "count": 17,
+   "kb": 4,
+   "max_record_count": 2000,
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "tx-austin-traffic-cameras",
+  "state": "TX",
+  "title": "Traffic cameras (Austin)",
+  "title_es": "Cámaras de tráfico (Austin)",
+  "description": "City of Austin Transportation traffic cameras with live still images.",
+  "group": "cameras",
+  "category": "point",
+  "source": "City of Austin Transportation and Public Works",
+  "license": "City of Austin open data (public domain)",
+  "view": {
+   "url": "https://services.arcgis.com/0L95CJ0VTaxqcmED/arcgis/rest/services/TRANSPORTATION_traffic_cameras/FeatureServer/0",
+   "fields": {
+    "LOCATION_NAME": "name",
+    "SCREENSHOT_ADDRESS": "image",
+    "CAMERA_ID": "camera_id",
+    "CAMERA_STATUS": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "CAMERA_STATUS = 'TURNED_ON'",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -97.78,
+    30.24,
+    -97.7,
+    30.32
+   ],
+   "count": 294,
+   "kb": 74,
+   "max_record_count": 1000,
+   "features_in_probe": 294
+  }
+ },
+ {
+  "name": "tx-relief-centers",
+  "state": "TX",
+  "title": "Cooling & warming centers (Texas)",
+  "title_es": "Centros de enfriamiento y calefacción (Texas)",
+  "description": "Seasonal relief (cooling/warming) centers reported to TDEM by local jurisdictions; call ahead to confirm hours.",
+  "group": "help",
+  "category": "point",
+  "source": "Texas Division of Emergency Management (TDEM)",
+  "license": "TDEM public data",
+  "view": {
+   "url": "https://services5.arcgis.com/Rvw11bGpzJNE7apK/arcgis/rest/services/Warming_Centers_Public_View/FeatureServer/7",
+   "fields": {
+    "ShelterName": "name",
+    "Address": "address",
+    "City": "city",
+    "Hours": "hours",
+    "Phone": "phone",
+    "CenterType": "kind",
+    "Status": "status",
+    "Website": "page",
+    "AllowsAnimals": "pets",
+    "EditDate": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "Status = 'Open'",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -106.65,
+    25.84,
+    -93.51,
+    36.5
+   ],
+   "count": 125,
+   "kb": 52,
+   "max_record_count": 2000,
+   "features_in_probe": 125
+  }
+ },
+ {
+  "name": "tx-state-parks",
+  "state": "TX",
+  "title": "State parks (Texas)",
+  "title_es": "Parques estatales (Texas)",
+  "description": "Texas State Park boundaries (general location, not legal survey).",
+  "group": "nature",
+  "category": "park",
+  "source": "Texas Parks and Wildlife Department (TPWD)",
+  "license": "TPWD public data; not a legal description",
+  "view": {
+   "url": "https://services1.arcgis.com/1mtXwieMId59thmg/ArcGIS/rest/services/Texas_State_Parks_Boundaries/FeatureServer/0",
+   "fields": {
+    "ParkName": "name",
+    "PropType": "kind",
+    "County1": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.3,
+    29.9,
+    -97.4,
+    30.7
+   ],
+   "count": 3,
+   "kb": 11,
+   "max_record_count": 2000,
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "tx-state-park-headquarters",
+  "state": "TX",
+  "title": "State park headquarters (Texas)",
+  "title_es": "Oficinas de parques estatales (Texas)",
+  "description": "Texas State Park headquarters with address, phone and park page.",
+  "group": "places",
+  "category": "point",
+  "source": "Texas Parks and Wildlife Department (TPWD)",
+  "license": "TPWD public data",
+  "view": {
+   "url": "https://services1.arcgis.com/1mtXwieMId59thmg/ArcGIS/rest/services/Texas_State_Parks_Public_Areas/FeatureServer/0",
+   "fields": {
+    "ParkName": "name",
+    "Type": "kind",
+    "Street": "address",
+    "City": "city",
+    "Phone": "phone",
+    "URL": "page",
+    "Availability": "status",
+    "UseType": "use"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.3,
+    29.9,
+    -97.4,
+    30.7
+   ],
+   "count": 2,
+   "kb": 1,
+   "max_record_count": 2000,
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "tx-wildlife-management-areas",
+  "state": "TX",
+  "title": "Wildlife management areas (Texas)",
+  "title_es": "Áreas de manejo de vida silvestre (Texas)",
+  "description": "TPWD wildlife management area public boundaries (hunting, birding, fishing).",
+  "group": "nature",
+  "category": "park",
+  "source": "Texas Parks and Wildlife Department (TPWD)",
+  "license": "TPWD public data",
+  "view": {
+   "url": "https://services1.arcgis.com/1mtXwieMId59thmg/ArcGIS/rest/services/WMA_Boundaries_4PublicDistribution/FeatureServer/0",
+   "fields": {
+    "LoName": "name",
+    "BndryType": "kind",
+    "County1": "county",
+    "Updated": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96,
+    29.4,
+    -94.5,
+    30.5
+   ],
+   "count": 3,
+   "kb": 56,
+   "max_record_count": 1000,
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "tx-public-hunting-lands",
+  "state": "TX",
+  "title": "Public hunting lands (Texas)",
+  "title_es": "Tierras públicas para cacería (Texas)",
+  "description": "TPWD Public Hunting Program units (requires an Annual Public Hunting Permit).",
+  "group": "nature",
+  "category": "point",
+  "source": "Texas Parks and Wildlife Department (TPWD)",
+  "license": "TPWD public data",
+  "view": {
+   "url": "https://services1.arcgis.com/1mtXwieMId59thmg/ArcGIS/rest/services/PublicHunt_Names_Units/FeatureServer/0",
+   "fields": {
+    "LoName": "name",
+    "NameAcres": "info",
+    "Active": "status",
+    "Unit_Num": "unit"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96,
+    29.4,
+    -94.5,
+    31.5
+   ],
+   "count": 5,
+   "kb": 1,
+   "max_record_count": 2000,
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "tx-boat-ramps",
+  "state": "TX",
+  "title": "Public boat ramps (Texas)",
+  "title_es": "Rampas públicas para botes (Texas)",
+  "description": "Public-access boat ramps located by TPWD staff (reference only).",
+  "group": "nature",
+  "category": "point",
+  "source": "Texas Parks and Wildlife Department (TPWD)",
+  "license": "TPWD public data; not authoritative",
+  "view": {
+   "url": "https://services1.arcgis.com/1mtXwieMId59thmg/ArcGIS/rest/services/BoatRamps_Public/FeatureServer/0",
+   "fields": {
+    "AccessTypeDescription": "name",
+    "AccessType": "kind",
+    "TPWAID": "site_id"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.3,
+    29.9,
+    -97.4,
+    30.7
+   ],
+   "count": 56,
+   "kb": 11,
+   "max_record_count": 1000,
+   "features_in_probe": 56
+  }
+ },
+ {
+  "name": "tx-paddling-trails",
+  "state": "TX",
+  "title": "Paddling trail access points (Texas)",
+  "title_es": "Accesos a rutas de remo (Texas)",
+  "description": "Put-in and take-out points on TPWD's Texas Paddling Trails.",
+  "group": "nature",
+  "category": "point",
+  "source": "Texas Parks and Wildlife Department (TPWD)",
+  "license": "TPWD public data",
+  "view": {
+   "url": "https://services1.arcgis.com/1mtXwieMId59thmg/ArcGIS/rest/services/Texas_Paddling_Trails_Feature_Layer/FeatureServer/0",
+   "fields": {
+    "PaddlingTrailName": "name",
+    "Water_Body": "water",
+    "Nearest_Town": "city",
+    "County": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.3,
+    29.9,
+    -97.4,
+    30.7
+   ],
+   "count": 9,
+   "kb": 3,
+   "max_record_count": 2000,
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "tx-beach-access",
+  "state": "TX",
+  "title": "Beach & bay access (Texas coast)",
+  "title_es": "Acceso a playas y bahías (costa de Texas)",
+  "description": "GLO coastal public access sites with parking, fees, restrooms and ADA notes.",
+  "group": "places",
+  "category": "point",
+  "source": "Texas General Land Office (GLO)",
+  "license": "Texas GLO public data",
+  "view": {
+   "url": "https://services1.arcgis.com/YWG34dhJxrbxQWdF/arcgis/rest/services/Texas_Beach_and_Bay_Access_%28Public%29/FeatureServer/0",
+   "fields": {
+    "SiteName": "name",
+    "SiteType": "kind",
+    "LocationDescription": "address",
+    "ParkingFee": "parking_fee",
+    "Restrooms": "restrooms",
+    "ADACompliant": "ada",
+    "Pets": "pets",
+    "LastUpdateDate": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.1,
+    29.0,
+    -94.6,
+    29.5
+   ],
+   "count": 125,
+   "kb": 41,
+   "max_record_count": 1000,
+   "features_in_probe": 125
+  }
+ },
+ {
+  "name": "tx-beach-watch",
+  "state": "TX",
+  "title": "Beach water quality (Texas Beach Watch)",
+  "title_es": "Calidad del agua en playas (Texas Beach Watch)",
+  "description": "Latest enterococcus sample and advisory level at Texas Gulf beaches, from the GLO Beach Watch program.",
+  "group": "live",
+  "category": "point",
+  "source": "Texas General Land Office (GLO) Texas Beach Watch",
+  "license": "Texas GLO public data",
+  "view": {
+   "url": "https://gisweb.glo.texas.gov/arcgis/rest/services/BW/BW2025_Summary/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Advisory": "status",
+    "Measurement": "reading",
+    "Date": "updated",
+    "chrCountyName": "county",
+    "StationID": "station_id"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.1,
+    29.0,
+    -94.6,
+    29.5
+   ],
+   "count": 49,
+   "kb": 13,
+   "max_record_count": 2000,
+   "features_in_probe": 49
+  }
+ },
+ {
+  "name": "tx-historical-markers",
+  "state": "TX",
+  "title": "Historical markers (Texas)",
+  "title_es": "Marcadores históricos (Texas)",
+  "description": "Texas Historical Commission official historical markers (Texas Historic Sites Atlas).",
+  "group": "places",
+  "category": "point",
+  "source": "Texas Historical Commission (THC)",
+  "license": "THC public data",
+  "view": {
+   "url": "https://gis.thc.texas.gov/arcgis/rest/services/atlas-open/historical_markers/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "MarkerNum": "marker",
+    "AtlasNum": "atlas_id"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -97.76,
+    30.25,
+    -97.72,
+    30.29
+   ],
+   "count": 264,
+   "kb": 49,
+   "max_record_count": 2000,
+   "features_in_probe": 264
+  }
+ },
+ {
+  "name": "tx-state-historic-sites",
+  "state": "TX",
+  "title": "State historic sites (Texas)",
+  "title_es": "Sitios históricos estatales (Texas)",
+  "description": "Texas Historical Commission state historic sites with hours, phone and website.",
+  "group": "places",
+  "category": "point",
+  "source": "Texas Historical Commission (THC)",
+  "license": "THC public data",
+  "view": {
+   "url": "https://gis.thc.texas.gov/arcgis/rest/services/atlas-open/historic_sites/FeatureServer/0",
+   "fields": {
+    "title": "name",
+    "address": "address",
+    "city": "city",
+    "phoneNumber": "phone",
+    "website": "page",
+    "hoursOpen": "hours",
+    "Admission": "admission"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.3,
+    29.9,
+    -97.4,
+    30.7
+   ],
+   "count": 3,
+   "kb": 2,
+   "max_record_count": 2000,
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "tx-museums",
+  "state": "TX",
+  "title": "Museums (Texas)",
+  "title_es": "Museos (Texas)",
+  "description": "Museums listed in the Texas Historic Sites Atlas.",
+  "group": "places",
+  "category": "point",
+  "source": "Texas Historical Commission (THC)",
+  "license": "THC public data",
+  "view": {
+   "url": "https://gis.thc.texas.gov/arcgis/rest/services/atlas-open/museums/FeatureServer/0",
+   "fields": {
+    "MUSNAME": "name",
+    "STRADDRSS": "address",
+    "CITY": "city",
+    "ZIP": "zip"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -97.78,
+    30.24,
+    -97.7,
+    30.32
+   ],
+   "count": 22,
+   "kb": 5,
+   "max_record_count": 2000,
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "tx-nursing-facilities",
+  "state": "TX",
+  "title": "Nursing facilities (Texas)",
+  "title_es": "Centros de cuidados de enfermería (Texas)",
+  "description": "Licensed nursing facilities from Texas DSHS's authoritative geocoded list (mid-2026).",
+  "group": "help",
+  "category": "point",
+  "source": "Texas Department of State Health Services (DSHS)",
+  "license": "Texas DSHS public data",
+  "view": {
+   "url": "https://services3.arcgis.com/vljlarU2635mITsl/arcgis/rest/services/Authoritative_Nursing_Facilities_Geocoded/FeatureServer/0",
+   "fields": {
+    "USER_Facility_Name": "name",
+    "Match_addr": "address",
+    "City": "city",
+    "Postal": "zip"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    29.6,
+    -95.2,
+    29.9
+   ],
+   "count": 35,
+   "kb": 9,
+   "max_record_count": 2000,
+   "features_in_probe": 35
+  }
+ },
+ {
+  "name": "tx-health-departments",
+  "state": "TX",
+  "title": "Local public health jurisdictions (Texas)",
+  "title_es": "Jurisdicciones de salud pública local (Texas)",
+  "description": "Which local health department (or DSHS regional office) serves each area, May 2025.",
+  "group": "help",
+  "category": "boundary",
+  "source": "Texas Department of State Health Services (DSHS)",
+  "license": "Texas DSHS public data",
+  "view": {
+   "url": "https://services3.arcgis.com/vljlarU2635mITsl/arcgis/rest/services/JurisdictionMerge/FeatureServer/12",
+   "fields": {
+    "Jurisdiction": "name",
+    "Category": "kind",
+    "PHR": "region"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "count": 2,
+   "kb": 164,
+   "max_record_count": 2000,
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "ok-burn-bans",
+  "state": "OK",
+  "title": "County burn bans (Oklahoma)",
+  "title_es": "Prohibiciones de quemas por condado (Oklahoma)",
+  "description": "Live county burn-ban status maintained by Oklahoma Forestry Services.",
+  "group": "live",
+  "category": "hazard",
+  "source": "Oklahoma Forestry Services (Oklahoma Department of Agriculture, Food & Forestry)",
+  "license": "Public, Oklahoma Forestry Services",
+  "view": {
+   "url": "https://services3.arcgis.com/yrIZ0Nv0mSGTWJsH/arcgis/rest/services/OklahomaBurnBan__Data_Layer__v_9_0__View/FeatureServer/0",
+   "fields": {
+    "county_nam": "name",
+    "Burn_Ban_Status": "status",
+    "EditDate": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -103.0,
+    33.6,
+    -94.4,
+    37.0
+   ],
+   "count": 77,
+   "kb": 1305.4,
+   "max_record_count": 1000,
+   "features_in_probe": 77
+  }
+ },
+ {
+  "name": "ok-wildfire-history",
+  "state": "OK",
+  "title": "Wildfires fought by state crews (Oklahoma)",
+  "title_es": "Incendios forestales atendidos por el estado (Oklahoma)",
+  "description": "Historical record of wildfires responded to by Oklahoma Forestry Services, with acres burned (updated through 2026).",
+  "group": "hazards",
+  "category": "point",
+  "source": "Oklahoma Forestry Services",
+  "license": "Public, Oklahoma Forestry Services",
+  "view": {
+   "url": "https://services3.arcgis.com/yrIZ0Nv0mSGTWJsH/arcgis/rest/services/New_Fire_Occurrence_view/FeatureServer/31",
+   "fields": {
+    "FireName": "name",
+    "FireDiscoveryDate": "updated",
+    "CalendarYear": "year",
+    "FinalFireAcreQuantity": "acres",
+    "StatisticalCauseCode": "cause_code"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -98.5,
+    34.5,
+    -96.5,
+    36.5
+   ],
+   "count": 1128,
+   "kb": 259.0,
+   "max_record_count": 2000,
+   "features_in_probe": 1128
+  }
+ },
+ {
+  "name": "ok-state-forests",
+  "state": "OK",
+  "title": "State forest lands (Oklahoma)",
+  "title_es": "Bosques estatales (Oklahoma)",
+  "description": "Forest tracts managed by Oklahoma Forestry Services (mostly southeast Oklahoma).",
+  "group": "nature",
+  "category": "park",
+  "source": "Oklahoma Forestry Services",
+  "license": "Public, Oklahoma Forestry Services",
+  "view": {
+   "url": "https://services3.arcgis.com/yrIZ0Nv0mSGTWJsH/arcgis/rest/services/State_Forest/FeatureServer/4",
+   "fields": {
+    "PropertyNa": "name",
+    "AreaName": "area",
+    "GrossAcres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -95.5,
+    33.6,
+    -94.4,
+    35.0
+   ],
+   "count": 246,
+   "kb": 2266.0,
+   "max_record_count": 2000,
+   "features_in_probe": 246
+  }
+ },
+ {
+  "name": "ok-wildlife-management-areas",
+  "state": "OK",
+  "title": "Wildlife Management Areas (Oklahoma)",
+  "title_es": "Áreas de manejo de vida silvestre (Oklahoma)",
+  "description": "Public hunting and fishing lands managed by the Oklahoma Department of Wildlife Conservation (updated Oct 2026).",
+  "group": "nature",
+  "category": "park",
+  "source": "Oklahoma Department of Wildlife Conservation (ODWC)",
+  "license": "Public, ODWC",
+  "view": {
+   "url": "https://services1.arcgis.com/jRf8jjFwxedITdFe/arcgis/rest/services/Public_WMA_Boundaries/FeatureServer/1",
+   "fields": {
+    "WMANAME": "name",
+    "WMATYPE": "kind",
+    "ACRES": "acres",
+    "OWNERSHIP": "operator"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -98.5,
+    34.5,
+    -96.5,
+    36.5
+   ],
+   "count": 12,
+   "kb": 341.1,
+   "max_record_count": 2000,
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "ok-walk-in-hunting",
+  "state": "OK",
+  "title": "Walk-in hunting & fishing (OLAP, Oklahoma)",
+  "title_es": "Caza y pesca de acceso libre (OLAP, Oklahoma)",
+  "description": "Private lands leased for public walk-in hunting and fishing under ODWC's Oklahoma Land Access Program, with seasons and species.",
+  "group": "nature",
+  "category": "park",
+  "source": "Oklahoma Department of Wildlife Conservation (ODWC)",
+  "license": "Public, ODWC",
+  "view": {
+   "url": "https://services1.arcgis.com/jRf8jjFwxedITdFe/arcgis/rest/services/OLAP_UpdatedLayers_062626_PublicView/FeatureServer/7",
+   "fields": {
+    "WIACAT": "name",
+    "OpenToPublic": "status",
+    "WIASeason": "season",
+    "AccessType": "kind",
+    "Acres": "acres",
+    "Species": "species"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -98.5,
+    34.5,
+    -96.5,
+    36.5
+   ],
+   "count": 4,
+   "kb": 2.3,
+   "max_record_count": 2000,
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ok-state-parks",
+  "state": "OK",
+  "title": "State parks (Oklahoma)",
+  "title_es": "Parques estatales (Oklahoma)",
+  "description": "Oklahoma state park boundaries as mapped by ODOT (2018 vintage).",
+  "group": "nature",
+  "category": "park",
+  "source": "Oklahoma Department of Transportation (ODOT)",
+  "license": "Public, ODOT; credit Oklahoma Department of Transportation",
+  "view": {
+   "url": "https://services6.arcgis.com/RBtoEUQ2lmN0K3GY/arcgis/rest/services/State_Parks/FeatureServer/0",
+   "fields": {
+    "Park_Name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -103.0,
+    33.6,
+    -94.4,
+    37.0
+   ],
+   "count": 49,
+   "kb": 800.5,
+   "max_record_count": 2000,
+   "features_in_probe": 49
+  }
+ },
+ {
+  "name": "ok-rest-areas",
+  "state": "OK",
+  "title": "Rest areas & truck parking (Oklahoma)",
+  "title_es": "Áreas de descanso y estacionamiento de camiones (Oklahoma)",
+  "description": "ODOT rest areas, turnouts and truck parking with space counts and hours (2019 vintage).",
+  "group": "roads",
+  "category": "point",
+  "source": "Oklahoma Department of Transportation (ODOT)",
+  "license": "Public, ODOT; credit Oklahoma Department of Transportation",
+  "view": {
+   "url": "https://services6.arcgis.com/RBtoEUQ2lmN0K3GY/arcgis/rest/services/RestAreaParking/FeatureServer/0",
+   "fields": {
+    "FACILITY_TYPE": "kind",
+    "ROUTE": "name",
+    "DIRECTION": "direction",
+    "MILE_MARKER": "mile_marker",
+    "FACILITIES": "restrooms",
+    "TRUCK_SPACES": "truck_spaces",
+    "HRS_OPER": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -98.5,
+    34.5,
+    -96.5,
+    36.5
+   ],
+   "count": 15,
+   "kb": 3.4,
+   "max_record_count": 16000,
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "ok-i35-injury-crashes",
+  "state": "OK",
+  "title": "Injury crashes on I-35 corridor 2012-2021 (Oklahoma)",
+  "title_es": "Choques con lesionados en el corredor I-35 2012-2021 (Oklahoma)",
+  "description": "ODOT crash points along the I-35 corridor, 2012-2021, limited to crashes with injuries or deaths; no personal data.",
+  "group": "roads",
+  "category": "point",
+  "source": "Oklahoma Department of Transportation (ODOT)",
+  "license": "Public, ODOT; credit Oklahoma Department of Transportation",
+  "view": {
+   "url": "https://services6.arcgis.com/RBtoEUQ2lmN0K3GY/arcgis/rest/services/AllCollisions_2012_2021/FeatureServer/10",
+   "fields": {
+    "Hwy_Name": "name",
+    "SeverityText": "status",
+    "Type_of_Collision__Derived_": "kind",
+    "Date": "updated",
+    "F__Killed": "fatalities",
+    "F_Vis__Injured": "injuries"
+   },
+   "geometry": "point",
+   "min_zoom": 13,
+   "where": "F__Killed > 0 OR F_Vis__Injured > 0",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -97.5,
+    35.3,
+    -97.45,
+    35.34
+   ],
+   "count": 454,
+   "kb": 114.7,
+   "max_record_count": 2000,
+   "features_in_probe": 454
+  }
+ },
+ {
+  "name": "ok-transport-disadvantaged-tracts",
+  "state": "OK",
+  "title": "Transportation-disadvantaged tracts (Oklahoma)",
+  "title_es": "Zonas censales con desventaja de transporte (Oklahoma)",
+  "description": "ODOT's 2022 tract-level index of transportation, health, economic, equity and environmental burden (based on since-withdrawn federal DOT guidance).",
+  "group": "people",
+  "category": "info",
+  "source": "Oklahoma Department of Transportation (ODOT)",
+  "license": "Public, ODOT; credit Oklahoma Department of Transportation",
+  "view": {
+   "url": "https://services6.arcgis.com/RBtoEUQ2lmN0K3GY/arcgis/rest/services/Disadvantaged_Areas/FeatureServer/0",
+   "fields": {
+    "LOCATION": "name",
+    "DOT_Disadv": "status",
+    "SumDis": "burden_count",
+    "Transp_TH": "transport_pct",
+    "Health_TH": "health_pct",
+    "Economy_TH": "economy_pct",
+    "Equity_TH": "equity_pct",
+    "ENVIRO_TH": "environment_pct",
+    "Resilience": "resilience_pct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -97.75,
+    35.35,
+    -97.3,
+    35.65
+   ],
+   "count": 260,
+   "kb": 165.0,
+   "max_record_count": 2000,
+   "features_in_probe": 260
+  }
+ },
+ {
+  "name": "ok-groundwater-wells",
+  "state": "OK",
+  "title": "Real-time groundwater wells (Oklahoma)",
+  "title_es": "Pozos de agua subterránea en tiempo real (Oklahoma)",
+  "description": "OWRB real-time and continuous groundwater-level monitoring wells, each linking to its water-level record.",
+  "group": "nature",
+  "category": "point",
+  "source": "Oklahoma Water Resources Board (OWRB)",
+  "license": "Public, OWRB",
+  "view": {
+   "url": "https://owrb.csa.ou.edu/server/rest/services/Groundwater/Water_Level_Wells/MapServer/2",
+   "fields": {
+    "well_id": "name",
+    "agency": "operator",
+    "use_class": "kind",
+    "well_depth": "depth_ft",
+    "county": "county",
+    "data_url": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -98.5,
+    34.5,
+    -96.5,
+    36.5
+   ],
+   "count": 78,
+   "kb": 21.4,
+   "max_record_count": 2000,
+   "features_in_probe": 78
+  }
+ },
+ {
+  "name": "ok-water-system-areas",
+  "state": "OK",
+  "title": "Public water system areas (Oklahoma)",
+  "title_es": "Áreas de sistemas públicos de agua (Oklahoma)",
+  "description": "Approximate service areas of Oklahoma public water systems, linked to their DEQ drinking-water records.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Oklahoma Water Resources Board (OWRB)",
+  "license": "Public, OWRB",
+  "view": {
+   "url": "https://owrb.csa.ou.edu/server/rest/services/Water_Supply/Water_Systems/MapServer/0",
+   "fields": {
+    "name": "name",
+    "pwsid": "pwsid",
+    "county": "county",
+    "sdwis_link": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -97.75,
+    35.35,
+    -97.3,
+    35.65
+   ],
+   "count": 14,
+   "kb": 58.9,
+   "max_record_count": 2000,
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "ok-solid-waste-facilities",
+  "state": "OK",
+  "title": "Landfills & transfer stations (Oklahoma)",
+  "title_es": "Rellenos sanitarios y estaciones de transferencia (Oklahoma)",
+  "description": "Permitted solid waste facilities (landfills, transfer stations, compost) regulated by Oklahoma DEQ.",
+  "group": "infra",
+  "category": "point",
+  "source": "Oklahoma Department of Environmental Quality (DEQ)",
+  "license": "Public, Oklahoma DEQ",
+  "view": {
+   "url": "https://gis.deq.ok.gov/server/rest/services/LandWeb/MapServer/7",
+   "fields": {
+    "Facility_Name": "name",
+    "Facility_Type": "kind",
+    "Address": "address",
+    "City": "city",
+    "Cty": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -98.5,
+    34.5,
+    -96.5,
+    36.5
+   ],
+   "count": 57,
+   "kb": 14.3,
+   "max_record_count": 2000,
+   "features_in_probe": 57
+  }
+ },
+ {
+  "name": "ok-county-health-departments",
+  "state": "OK",
+  "title": "County health departments (Oklahoma)",
+  "title_es": "Departamentos de salud del condado (Oklahoma)",
+  "description": "Oklahoma State Department of Health county health department sites with hours and phone (2024).",
+  "group": "help",
+  "category": "point",
+  "source": "Oklahoma State Department of Health (OSDH)",
+  "license": "Public, OSDH",
+  "view": {
+   "url": "https://services9.arcgis.com/QeqGrHRDFO8mPwTf/arcgis/rest/services/CountyHealthDepartments2024/FeatureServer/1",
+   "fields": {
+    "SiteName": "name",
+    "Address": "address",
+    "City": "city",
+    "Phone1": "phone",
+    "Hours": "hours",
+    "SiteType": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -97.75,
+    35.35,
+    -97.3,
+    35.65
+   ],
+   "count": 3,
+   "kb": 0.9,
+   "max_record_count": 2000,
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "ok-wic-clinics",
+  "state": "OK",
+  "title": "WIC clinics (Oklahoma)",
+  "title_es": "Clínicas WIC (Oklahoma)",
+  "description": "Women, Infants and Children (WIC) nutrition clinic locations (as of March 2023).",
+  "group": "help",
+  "category": "point",
+  "source": "Oklahoma State Department of Health (OSDH)",
+  "license": "Public, OSDH",
+  "view": {
+   "url": "https://services9.arcgis.com/QeqGrHRDFO8mPwTf/arcgis/rest/services/WIC_Clinics_2023_03_02/FeatureServer/1",
+   "fields": {
+    "ClinicName": "name",
+    "Address": "address",
+    "City": "city",
+    "Phone1": "phone",
+    "Hours": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -97.75,
+    35.35,
+    -97.3,
+    35.65
+   ],
+   "count": 16,
+   "kb": 3.9,
+   "max_record_count": 2000,
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "ok-long-term-care",
+  "state": "OK",
+  "title": "Long-term care facilities (Oklahoma)",
+  "title_es": "Centros de cuidado a largo plazo (Oklahoma)",
+  "description": "Nursing homes and other licensed long-term care facilities with licensed bed counts (2024).",
+  "group": "help",
+  "category": "point",
+  "source": "Oklahoma State Department of Health (OSDH)",
+  "license": "Public, OSDH",
+  "view": {
+   "url": "https://services9.arcgis.com/QeqGrHRDFO8mPwTf/arcgis/rest/services/LongTermCareFacilities_2024/FeatureServer/1",
+   "fields": {
+    "NAME": "name",
+    "FACILITY_TYPE": "kind",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "TELEPHONE": "phone",
+    "BEDLICTOT": "beds"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -97.75,
+    35.35,
+    -97.3,
+    35.65
+   ],
+   "count": 115,
+   "kb": 30.0,
+   "max_record_count": 2000,
+   "features_in_probe": 115
+  }
+ },
+ {
+  "name": "ok-dialysis-centers",
+  "state": "OK",
+  "title": "Dialysis centers (Oklahoma)",
+  "title_es": "Centros de diálisis (Oklahoma)",
+  "description": "Licensed dialysis centers in Oklahoma (2024).",
+  "group": "help",
+  "category": "point",
+  "source": "Oklahoma State Department of Health (OSDH)",
+  "license": "Public, OSDH",
+  "view": {
+   "url": "https://services9.arcgis.com/QeqGrHRDFO8mPwTf/arcgis/rest/services/DialysisCenters2024/FeatureServer/1",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Telephone": "phone"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -97.75,
+    35.35,
+    -97.3,
+    35.65
+   ],
+   "count": 20,
+   "kb": 4.4,
+   "max_record_count": 2000,
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "ok-birthing-hospitals",
+  "state": "OK",
+  "title": "Birthing hospitals (Oklahoma)",
+  "title_es": "Hospitales con servicio de partos (Oklahoma)",
+  "description": "Hospitals that provide labor and delivery services, per OSDH.",
+  "group": "help",
+  "category": "point",
+  "source": "Oklahoma State Department of Health (OSDH)",
+  "license": "Public, OSDH",
+  "view": {
+   "url": "https://services9.arcgis.com/QeqGrHRDFO8mPwTf/arcgis/rest/services/Birthing_Hospitals/FeatureServer/45",
+   "fields": {
+    "Hospital": "name",
+    "Hospital_Address": "address",
+    "Hospital_City": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "*",
+   "bbox": [
+    -98.5,
+    34.5,
+    -96.5,
+    36.5
+   ],
+   "count": 17,
+   "kb": 3.6,
+   "max_record_count": 2000,
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "ar-parcels",
+  "state": "AR",
+  "title": "Parcels (Arkansas)",
+  "title_es": "Parcelas (Arkansas)",
+  "description": "Statewide tax parcel boundaries compiled from county assessor rolls (CAMP program, published Oct 2026); owner names intentionally omitted.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Arkansas GIS Office (Arkansas Spatial Data Infrastructure) / county assessors",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Planning_Cadastre/FeatureServer/6",
+   "fields": {
+    "parcelid": "name",
+    "adrlabel": "address",
+    "adrcity": "city",
+    "parceltype": "kind",
+    "totalvalue": "total_value",
+    "county": "county",
+    "pubdate": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 200,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.29,
+    34.74,
+    -92.28,
+    34.75
+   ],
+   "count": 198,
+   "kb": 83.1,
+   "max_record_count": 200,
+   "features_in_probe": 198
+  }
+ },
+ {
+  "name": "ar-address-points",
+  "state": "AR",
+  "title": "Address points (Arkansas)",
+  "title_es": "Puntos de dirección (Arkansas)",
+  "description": "Official 9-1-1 situs address points maintained by the Arkansas GIS Office (no occupant information).",
+  "group": "planning",
+  "category": "point",
+  "source": "Arkansas GIS Office (Arkansas Spatial Data Infrastructure)",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Location/FeatureServer/14",
+   "fields": {
+    "adr_label": "name",
+    "adr_city": "city",
+    "adr_zip5": "zip",
+    "cnty_name": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 18,
+   "where": "1=1",
+   "max_features": 200
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.29,
+    34.74,
+    -92.28,
+    34.75
+   ],
+   "count": 199,
+   "kb": 37.6,
+   "max_record_count": 200,
+   "features_in_probe": 199
+  }
+ },
+ {
+  "name": "ar-wildlife-management-areas",
+  "state": "AR",
+  "title": "Wildlife Management Areas (Arkansas)",
+  "title_es": "Áreas de manejo de vida silvestre (Arkansas)",
+  "description": "Arkansas Game and Fish Commission wildlife management areas open for hunting, fishing and recreation.",
+  "group": "nature",
+  "category": "park",
+  "source": "Arkansas Game and Fish Commission via Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/37",
+   "fields": {
+    "fname": "name",
+    "wma": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 200,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -93.5,
+    34.0,
+    -91.5,
+    35.5
+   ],
+   "count": 42,
+   "kb": 1369.7,
+   "max_record_count": 200,
+   "features_in_probe": 42
+  }
+ },
+ {
+  "name": "ar-agfc-recreation-facilities",
+  "state": "AR",
+  "title": "Boat ramps & outdoor access (Arkansas)",
+  "title_es": "Rampas para botes y acceso al aire libre (Arkansas)",
+  "description": "AGFC-verified boat ramps, fishing piers, campgrounds, shooting ranges and other outdoor recreation access points.",
+  "group": "nature",
+  "category": "point",
+  "source": "Arkansas Game and Fish Commission via Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Location/FeatureServer/24",
+   "fields": {
+    "fname": "name",
+    "ftype": "kind",
+    "fdescrip": "description",
+    "owner": "operator",
+    "wma": "area",
+    "waterbody": "waterbody"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 200
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -93.5,
+    34.0,
+    -91.5,
+    35.5
+   ],
+   "count": 188,
+   "kb": 45.6,
+   "max_record_count": 200,
+   "features_in_probe": 188
+  }
+ },
+ {
+  "name": "ar-state-trails",
+  "state": "AR",
+  "title": "Trails (Arkansas)",
+  "title_es": "Senderos (Arkansas)",
+  "description": "Hiking, biking and multi-use trails compiled by Arkansas Parks & Tourism and the Natural Heritage Commission.",
+  "group": "nature",
+  "category": "park",
+  "source": "Arkansas Dept. of Parks, Heritage & Tourism / Arkansas Natural Heritage Commission via Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Environment/FeatureServer/22",
+   "fields": {
+    "name": "name",
+    "surface_type": "surface",
+    "accessibility": "accessibility"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 200
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -94.3,
+    36.0,
+    -94.0,
+    36.5
+   ],
+   "count": 16,
+   "kb": 81.7,
+   "max_record_count": 200,
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "ar-natural-areas",
+  "state": "AR",
+  "title": "State natural areas (Arkansas)",
+  "title_es": "Áreas naturales estatales (Arkansas)",
+  "description": "Arkansas Natural Heritage Commission system of state natural areas protecting rare habitats.",
+  "group": "nature",
+  "category": "park",
+  "source": "Arkansas Natural Heritage Commission via Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/21",
+   "fields": {
+    "maname": "name",
+    "countyname": "county",
+    "size": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 200,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -93.5,
+    34.0,
+    -91.5,
+    35.5
+   ],
+   "count": 22,
+   "kb": 29.0,
+   "max_record_count": 200,
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "ar-public-lands",
+  "state": "AR",
+  "title": "Public lands & state parks (Arkansas)",
+  "title_es": "Tierras públicas y parques estatales (Arkansas)",
+  "description": "ARDOT public land boundaries: state parks, city/county parks, Corps of Engineers sites, refuges and WMAs (some boundaries approximate).",
+  "group": "nature",
+  "category": "park",
+  "source": "Arkansas Department of Transportation (ARDOT)",
+  "license": "Public, ARDOT; credit Arkansas Department of Transportation",
+  "view": {
+   "url": "https://gis.ardot.gov/referenced/rest/services/TPP_GISMapping/CORE_BASE_LAYERS/FeatureServer/0",
+   "fields": {
+    "Boundary_N": "name",
+    "Type": "kind",
+    "Type2": "description",
+    "acres": "acres",
+    "County": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.45,
+    34.65,
+    -92.15,
+    34.85
+   ],
+   "count": 124,
+   "kb": 156.2,
+   "max_record_count": 2000,
+   "features_in_probe": 124
+  }
+ },
+ {
+  "name": "ar-serious-crashes",
+  "state": "AR",
+  "title": "Fatal & serious-injury crashes 2021-2025 (Arkansas)",
+  "title_es": "Choques fatales y con lesiones graves 2021-2025 (Arkansas)",
+  "description": "ARDOT crash records 2021-2025 limited to fatal and suspected-serious-injury crashes; ARDOT labels this data 'not for official use'. No case numbers or personal data.",
+  "group": "roads",
+  "category": "point",
+  "source": "Arkansas Department of Transportation (ARDOT) Traffic Safety",
+  "license": "Public, ARDOT; credit Arkansas Department of Transportation; not for official use",
+  "view": {
+   "url": "https://gis.ardot.gov/referenced/rest/services/TPP_TrafficSafety/NotForOfficialUse/FeatureServer/20",
+   "fields": {
+    "CrashDate": "updated",
+    "Year": "year",
+    "CrashSeverity": "status",
+    "CrashManner": "kind",
+    "City": "city",
+    "NumFatalities": "fatalities",
+    "NumSerInj": "serious_injuries",
+    "NonMotoristType": "non_motorist",
+    "LightingConditions": "lighting"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "CrashSeverity IN ('Fatal Injury (K)','Suspected Serious Injury (A)')",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.35,
+    34.7,
+    -92.25,
+    34.78
+   ],
+   "count": 480,
+   "kb": 162.5,
+   "max_record_count": 2000,
+   "features_in_probe": 480
+  }
+ },
+ {
+  "name": "ar-election-precincts",
+  "state": "AR",
+  "title": "Election precincts (Arkansas)",
+  "title_es": "Precintos electorales (Arkansas)",
+  "description": "Voting precinct boundaries as set by each county election commission (edit dates vary by county; confirm with the county clerk).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Arkansas Secretary of State / Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/11",
+   "fields": {
+    "precinct": "name",
+    "county_name": "county",
+    "edit_date": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 200,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.45,
+    34.65,
+    -92.15,
+    34.85
+   ],
+   "count": 115,
+   "kb": 900.2,
+   "max_record_count": 200,
+   "features_in_probe": 115
+  }
+ },
+ {
+  "name": "ar-wet-dry-areas",
+  "state": "AR",
+  "title": "Alcohol wet/dry areas (Arkansas)",
+  "title_es": "Zonas secas y húmedas de alcohol (Arkansas)",
+  "description": "Areas where alcohol sales are allowed (wet), banned (dry) or limited (damp), per county elections and statute.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Arkansas Alcoholic Beverage Control via Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/60",
+   "fields": {
+    "name": "name",
+    "county": "county",
+    "type": "status",
+    "updated": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 200,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.45,
+    34.65,
+    -92.15,
+    34.85
+   ],
+   "count": 7,
+   "kb": 240.9,
+   "max_record_count": 200,
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "ar-fire-districts",
+  "state": "AR",
+  "title": "Fire protection districts (Arkansas)",
+  "title_es": "Distritos de protección contra incendios (Arkansas)",
+  "description": "Fire protection district boundaries maintained for 9-1-1 under A.C.A. 12-10-329.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Arkansas GIS Office / Arkansas 9-1-1 Board",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/59",
+   "fields": {
+    "name": "name",
+    "fire_district_type": "kind",
+    "revision_date": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 200,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.45,
+    34.65,
+    -92.15,
+    34.85
+   ],
+   "count": 18,
+   "kb": 474.2,
+   "max_record_count": 200,
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "ar-fire-stations",
+  "state": "AR",
+  "title": "Fire stations (Arkansas)",
+  "title_es": "Estaciones de bomberos (Arkansas)",
+  "description": "Fire departments and stations validated by the Arkansas GIS Office and ADEM for NG9-1-1.",
+  "group": "infra",
+  "category": "point",
+  "source": "Arkansas GIS Office / Arkansas Division of Emergency Management",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Structure/FeatureServer/53",
+   "fields": {
+    "fire_dept_name": "name",
+    "fire_station_name": "station",
+    "dept_physical_address": "address",
+    "dept_city": "city",
+    "dept_phone": "phone"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 500
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.45,
+    34.65,
+    -92.15,
+    34.85
+   ],
+   "count": 44,
+   "kb": 10.9,
+   "max_record_count": 500,
+   "features_in_probe": 44
+  }
+ },
+ {
+  "name": "ar-historic-districts",
+  "state": "AR",
+  "title": "Historic districts (Arkansas)",
+  "title_es": "Distritos históricos (Arkansas)",
+  "description": "Historic district boundaries designated through the Arkansas Historic Preservation Program.",
+  "group": "places",
+  "category": "landuse",
+  "source": "Arkansas Historic Preservation Program via Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "nrdate": "year_listed"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 200,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.45,
+    34.65,
+    -92.15,
+    34.85
+   ],
+   "count": 28,
+   "kb": 18.8,
+   "max_record_count": 200,
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "ar-national-register",
+  "state": "AR",
+  "title": "National Register properties (Arkansas)",
+  "title_es": "Propiedades del Registro Nacional (Arkansas)",
+  "description": "Arkansas properties listed on the National Register of Historic Places (AHPP).",
+  "group": "places",
+  "category": "point",
+  "source": "Arkansas Historic Preservation Program via Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Society/FeatureServer/1",
+   "fields": {
+    "historic_name": "name",
+    "address": "address",
+    "nearest_town": "city",
+    "construction_year": "year_built"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.45,
+    34.65,
+    -92.15,
+    34.85
+   ],
+   "count": 584,
+   "kb": 126.3,
+   "max_record_count": 1000,
+   "features_in_probe": 584
+  }
+ },
+ {
+  "name": "ar-hospitals",
+  "state": "AR",
+  "title": "Licensed hospitals (Arkansas)",
+  "title_es": "Hospitales con licencia (Arkansas)",
+  "description": "Hospitals licensed by the Arkansas Department of Health, with license type and bed counts (vintage not stated).",
+  "group": "help",
+  "category": "point",
+  "source": "Arkansas Department of Health via Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Health/FeatureServer/3",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "city": "city",
+    "telephone": "phone",
+    "license_type": "kind",
+    "total_beds": "beds"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 200
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.45,
+    34.65,
+    -92.15,
+    34.85
+   ],
+   "count": 16,
+   "kb": 4.6,
+   "max_record_count": 200,
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "ar-long-term-care",
+  "state": "AR",
+  "title": "Long-term care facilities (Arkansas)",
+  "title_es": "Centros de cuidado a largo plazo (Arkansas)",
+  "description": "Nursing homes and other long-term care facilities licensed by the Arkansas Department of Health (last updated 2017).",
+  "group": "help",
+  "category": "point",
+  "source": "Arkansas Department of Health via Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Health/FeatureServer/5",
+   "fields": {
+    "facility_name": "name",
+    "facility_typ": "kind",
+    "locadd": "address",
+    "loccity": "city",
+    "telephone1": "phone",
+    "updated_date": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 200
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.45,
+    34.65,
+    -92.15,
+    34.85
+   ],
+   "count": 45,
+   "kb": 13.1,
+   "max_record_count": 200,
+   "features_in_probe": 45
+  }
+ },
+ {
+  "name": "ar-local-health-units",
+  "state": "AR",
+  "title": "Local health units (Arkansas)",
+  "title_es": "Unidades locales de salud (Arkansas)",
+  "description": "Arkansas Department of Health county health unit offices (clinic services, WIC, immunizations).",
+  "group": "help",
+  "category": "point",
+  "source": "Arkansas Department of Health via Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Health/FeatureServer/4",
+   "fields": {
+    "unit": "name",
+    "address": "address",
+    "city": "city",
+    "phone": "phone",
+    "edit_date": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 200
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.45,
+    34.65,
+    -92.15,
+    34.85
+   ],
+   "count": 4,
+   "kb": 1.0,
+   "max_record_count": 200,
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ar-rural-health-clinics",
+  "state": "AR",
+  "title": "Rural health clinics (Arkansas)",
+  "title_es": "Clínicas de salud rural (Arkansas)",
+  "description": "Certified rural health clinics listed by the Arkansas Department of Health.",
+  "group": "help",
+  "category": "point",
+  "source": "Arkansas Department of Health via Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Health/FeatureServer/6",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "city": "city",
+    "phone": "phone"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 200
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -93.5,
+    34.0,
+    -91.5,
+    35.5
+   ],
+   "count": 15,
+   "kb": 3.2,
+   "max_record_count": 200,
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "ar-dams",
+  "state": "AR",
+  "title": "Dams (Arkansas)",
+  "title_es": "Presas (Arkansas)",
+  "description": "Dams inventoried by the Arkansas Natural Resources Commission, with hazard class where recorded.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Arkansas Natural Resources Commission via Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Structure/FeatureServer/16",
+   "fields": {
+    "dam_name": "name",
+    "hazard": "status",
+    "river_stre": "waterbody",
+    "year_comp": "year_built",
+    "county": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 500
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -93.5,
+    34.0,
+    -91.5,
+    35.5
+   ],
+   "count": 488,
+   "kb": 99.3,
+   "max_record_count": 500,
+   "features_in_probe": 488
+  }
+ },
+ {
+  "name": "ar-public-water-systems",
+  "state": "AR",
+  "title": "Public water system areas (Arkansas)",
+  "title_es": "Áreas de sistemas públicos de agua (Arkansas)",
+  "description": "Approximate service areas of public drinking-water systems.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Arkansas Department of Health / Arkansas GIS Office",
+  "license": "Public record, Arkansas GIS Office; attribute the originating agency",
+  "view": {
+   "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Utilities/FeatureServer/15",
+   "fields": {
+    "pws_name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 500,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "cors_header": "echoes origin",
+   "bbox": [
+    -92.45,
+    34.65,
+    -92.15,
+    34.85
+   ],
+   "count": 4,
+   "kb": 160.1,
+   "max_record_count": 500,
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "la-dotd-traffic-cameras",
+  "state": "LA",
+  "title": "DOTD traffic cameras (Louisiana)",
+  "title_es": "Cámaras de tráfico DOTD (Luisiana)",
+  "description": "Louisiana DOTD highway cameras with public live video streams (HLS); camera list compiled 2020 by GOHSEP, a few may be retired.",
+  "group": "cameras",
+  "category": "point",
+  "source": "Louisiana DOTD / GOHSEP (via 511la.org)",
+  "license": "Public government data; credit LA DOTD",
+  "view": {
+   "url": "https://services1.arcgis.com/fXHQyq63u0UsTeSM/arcgis/rest/services/DOTD_Traffic_Cameras/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "RoadwayName": "road",
+    "Description": "description",
+    "VideoUrl": "video",
+    "Url": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 500
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.2,
+    29.85,
+    -89.9,
+    30.1
+   ],
+   "count": 46,
+   "kb": 16,
+   "max_record_count": 2000,
+   "features_in_probe": 46
+  }
+ },
+ {
+  "name": "la-parish-emergency-declarations",
+  "state": "LA",
+  "title": "Parish emergency declarations (Louisiana)",
+  "title_es": "Declaraciones de emergencia por parroquia (Luisiana)",
+  "description": "Parishes with an active local emergency declaration, as tracked by GOHSEP; empty when none are in effect.",
+  "group": "live",
+  "category": "boundary",
+  "source": "Governor's Office of Homeland Security and Emergency Preparedness (GOHSEP)",
+  "license": "Public government data; credit GOHSEP",
+  "view": {
+   "url": "https://services1.arcgis.com/fXHQyq63u0UsTeSM/arcgis/rest/services/Parish_Emergency_Declarations_Public_View_Layer/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "INCIDENT": "kind",
+    "STATUS": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "STATUS <> 'No Declaration'",
+   "max_features": 100,
+   "simplify": true,
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.2,
+    29.85,
+    -89.9,
+    30.1
+   ],
+   "count": 4,
+   "kb": 13,
+   "max_record_count": 2000,
+   "note": "verified with where=1=1 (filter normally returns 0 outside events)",
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "la-parish-eocs",
+  "state": "LA",
+  "title": "Parish emergency operations centers (Louisiana)",
+  "title_es": "Centros de operaciones de emergencia parroquiales (Luisiana)",
+  "description": "Location of each parish's office of emergency preparedness (GOHSEP list, updated 2023).",
+  "group": "help",
+  "category": "point",
+  "source": "Governor's Office of Homeland Security and Emergency Preparedness (GOHSEP)",
+  "license": "Public government data; credit GOHSEP",
+  "view": {
+   "url": "https://services1.arcgis.com/fXHQyq63u0UsTeSM/arcgis/rest/services/Louisiana_Parish_Emergency_Operation_Centers_view/FeatureServer/0",
+   "fields": {
+    "Parish": "name",
+    "Address": "address",
+    "City": "city",
+    "Region": "region"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 100
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -94.1,
+    28.9,
+    -88.8,
+    33.1
+   ],
+   "count": 65,
+   "kb": 12,
+   "max_record_count": 2000,
+   "features_in_probe": 65
+  }
+ },
+ {
+  "name": "la-wildlife-management-areas",
+  "state": "LA",
+  "title": "Wildlife management areas (Louisiana)",
+  "title_es": "Áreas de manejo de vida silvestre (Luisiana)",
+  "description": "LDWF wildlife management areas, refuges and conservation areas open for hunting, fishing and birding (boundaries edited 2026).",
+  "group": "nature",
+  "category": "park",
+  "source": "Louisiana Department of Wildlife and Fisheries (LDWF)",
+  "license": "Public government data; credit LDWF",
+  "view": {
+   "url": "https://services1.arcgis.com/6euNCaGPCgCzgAVF/arcgis/rest/services/LOE_LDWF_WMAs_09262025_WGS84_WMAS/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "Parish": "parish",
+    "Own_Lease": "kind",
+    "Amenities": "amenities",
+    "Legal_Acre": "acres",
+    "More_Info": "page",
+    "Map": "map_pdf"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 200,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.6,
+    29.7,
+    -89.6,
+    30.4
+   ],
+   "count": 6,
+   "kb": 20,
+   "max_record_count": 2000,
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "la-boat-launches",
+  "state": "LA",
+  "title": "Boat launches (Louisiana)",
+  "title_es": "Rampas para botes (Luisiana)",
+  "description": "Public and private boat launches and marinas listed by LDWF's Louisiana Outdoor Explorer (May 2025 list).",
+  "group": "nature",
+  "category": "point",
+  "source": "Louisiana Department of Wildlife and Fisheries (LDWF)",
+  "license": "Public government data; credit LDWF",
+  "view": {
+   "url": "https://services1.arcgis.com/6euNCaGPCgCzgAVF/arcgis/rest/services/BoatRamps05152025/FeatureServer/0",
+   "fields": {
+    "Boat_Launch": "name",
+    "Waterbody": "waterbody",
+    "Location": "address",
+    "City": "city",
+    "Access": "access",
+    "Ramp_and_Parking": "details",
+    "Fishing_Type": "kind",
+    "Hours": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.6,
+    29.7,
+    -89.6,
+    30.4
+   ],
+   "count": 61,
+   "kb": 21,
+   "max_record_count": 1000,
+   "features_in_probe": 61
+  }
+ },
+ {
+  "name": "la-bank-fishing-piers",
+  "state": "LA",
+  "title": "Bank fishing and piers (Louisiana)",
+  "title_es": "Pesca desde la orilla y muelles (Luisiana)",
+  "description": "LDWF list of public bank-fishing spots and fishing piers (Aug 2025).",
+  "group": "nature",
+  "category": "point",
+  "source": "Louisiana Department of Wildlife and Fisheries (LDWF)",
+  "license": "Public government data; credit LDWF",
+  "view": {
+   "url": "https://services1.arcgis.com/6euNCaGPCgCzgAVF/arcgis/rest/services/LOE_BankandPiers08212025/FeatureServer/0",
+   "fields": {
+    "Site_Name": "name",
+    "Access": "access",
+    "Amenities": "amenities",
+    "Fishing_Ty": "kind",
+    "Hours": "hours",
+    "Regulation": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 500
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.6,
+    29.7,
+    -89.6,
+    30.4
+   ],
+   "count": 13,
+   "kb": 5,
+   "max_record_count": 1000,
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "la-ebr-lots",
+  "state": "LA",
+  "title": "Lots with zoning and land use (East Baton Rouge)",
+  "title_es": "Lotes con zonificación y uso de suelo (East Baton Rouge)",
+  "description": "East Baton Rouge Parish lot polygons with zoning, existing and future land use, and historic district (no owner data).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "East Baton Rouge City-Parish (EBRGIS) / Planning Commission",
+  "license": "Public government data; credit EBRGIS",
+  "view": {
+   "url": "https://maps.brla.gov/gis/rest/services/Cadastral/Lot/MapServer/0",
+   "fields": {
+    "LOT_LOCATION": "city",
+    "ZONING_TYPE": "zoning",
+    "EXISTING_LAND_USE": "land_use",
+    "FUTURE_LAND_USE": "future_land_use",
+    "HISTORIC_DISTRICT": "historic_district",
+    "SUBD_RESTRICTION": "restriction",
+    "AREA_MEAS_ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -91.16,
+    30.44,
+    -91.15,
+    30.45
+   ],
+   "count": 1074,
+   "kb": 391,
+   "max_record_count": 2000,
+   "features_in_probe": 1074
+  }
+ },
+ {
+  "name": "la-ebr-zoning",
+  "state": "LA",
+  "title": "Zoning (East Baton Rouge)",
+  "title_es": "Zonificación (East Baton Rouge)",
+  "description": "Zoning districts for Baton Rouge and East Baton Rouge Parish (Unified Development Code).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "East Baton Rouge City-Parish (EBRGIS) / Planning Commission",
+  "license": "Public government data; credit EBRGIS",
+  "view": {
+   "url": "https://maps.brla.gov/gis/rest/services/Cadastral/Zoning/MapServer/0",
+   "fields": {
+    "ZONING_TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -91.16,
+    30.44,
+    -91.14,
+    30.46
+   ],
+   "count": 514,
+   "kb": 118,
+   "max_record_count": 2000,
+   "features_in_probe": 514
+  }
+ },
+ {
+  "name": "la-ebr-future-land-use",
+  "state": "LA",
+  "title": "Future land use (East Baton Rouge)",
+  "title_es": "Uso de suelo futuro (East Baton Rouge)",
+  "description": "FUTUREBR comprehensive-plan future land use categories for East Baton Rouge Parish.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "East Baton Rouge City-Parish (EBRGIS) / Planning Commission",
+  "license": "Public government data; credit EBRGIS",
+  "view": {
+   "url": "https://maps.brla.gov/gis/rest/services/Cadastral/Future_Land_Use/MapServer/0",
+   "fields": {
+    "FUTURE_LAND_USE": "kind",
+    "FUTURE_LAND_USE_CODE": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -91.16,
+    30.44,
+    -91.14,
+    30.46
+   ],
+   "count": 332,
+   "kb": 91,
+   "max_record_count": 2000,
+   "features_in_probe": 332
+  }
+ },
+ {
+  "name": "la-nola-evacuspots",
+  "state": "LA",
+  "title": "Evacuspots - city-assisted evacuation pickup (New Orleans)",
+  "title_es": "Evacuspots - puntos de recogida para evacuación asistida (Nueva Orleans)",
+  "description": "Permanent pickup points for New Orleans City-Assisted Evacuation (for residents without a ride when a mandatory evacuation is called).",
+  "group": "help",
+  "category": "point",
+  "source": "City of New Orleans (NOLA Ready / OEP)",
+  "license": "Public government data; credit City of New Orleans",
+  "view": {
+   "url": "https://maps.nola.gov/server/rest/services/PublicSafety/Public_Safety_Layers/MapServer/2",
+   "fields": {
+    "FACNAME": "name",
+    "Address": "address",
+    "ACCESSRES": "kind",
+    "Purpose": "description"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 100
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.2,
+    29.85,
+    -89.9,
+    30.1
+   ],
+   "count": 18,
+   "kb": 4,
+   "max_record_count": 2000,
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "la-nola-historic-districts",
+  "state": "LA",
+  "title": "Local historic districts (New Orleans)",
+  "title_es": "Distritos históricos locales (Nueva Orleans)",
+  "description": "Historic District Landmarks Commission and Vieux Carré local historic districts, with level of control.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of New Orleans (HDLC)",
+  "license": "Public government data; credit City of New Orleans",
+  "view": {
+   "url": "https://maps.nola.gov/server/rest/services/Administrative/Historic_Preservation/MapServer/1",
+   "fields": {
+    "NAME": "name",
+    "JURISDICTION": "kind",
+    "CONTROL": "status",
+    "ORDINANCE": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 200,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.2,
+    29.85,
+    -89.9,
+    30.1
+   ],
+   "count": 22,
+   "kb": 17,
+   "max_record_count": 2000,
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "la-nola-public-pools",
+  "state": "LA",
+  "title": "Public pools (New Orleans)",
+  "title_es": "Piscinas públicas (Nueva Orleans)",
+  "description": "NORDC public swimming pools with type and open days (check NORDC for the current season).",
+  "group": "places",
+  "category": "point",
+  "source": "New Orleans Recreation Development Commission (NORDC) / City of New Orleans",
+  "license": "Public government data; credit City of New Orleans",
+  "view": {
+   "url": "https://maps.nola.gov/server/rest/services/Recreation/Water_Recreation/MapServer/0",
+   "fields": {
+    "FacilityName": "name",
+    "Address": "address",
+    "PoolType": "kind",
+    "DaysOpen": "hours",
+    "Phone": "phone",
+    "ManagedBy": "operator"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 100
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.2,
+    29.85,
+    -89.9,
+    30.1
+   ],
+   "count": 16,
+   "kb": 4,
+   "max_record_count": 2000,
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "ms-parcels",
+  "state": "MS",
+  "title": "Parcels (Mississippi)",
+  "title_es": "Parcelas (Misisipi)",
+  "description": "Statewide parcel polygons compiled by MDEQ from county tax assessors (2023 tax year; owner names omitted).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Mississippi Department of Environmental Quality (MDEQ), Office of Geology / county assessors",
+  "license": "Public government data; credit MDEQ and county assessors",
+  "view": {
+   "url": "https://mgis19.mdeq.ms.gov/arcgis/rest/services/GeologyParcelAndFloodGIS/Parcels_Statewide_2023/MapServer/3",
+   "fields": {
+    "PARNO": "parcel_id",
+    "SITEADD": "address",
+    "SCITY": "city",
+    "CNTYNAME": "county",
+    "TAXACRES": "acres",
+    "TAXYEAR": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 1500,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.19,
+    32.295,
+    -90.18,
+    32.3
+   ],
+   "count": 253,
+   "kb": 1237,
+   "max_record_count": 2000,
+   "features_in_probe": 253
+  }
+ },
+ {
+  "name": "ms-county-safe-rooms",
+  "state": "MS",
+  "title": "County storm safe rooms (Mississippi)",
+  "title_es": "Refugios de tormenta del condado (Misisipi)",
+  "description": "County tornado safe rooms and warming sites tracked by MEMA, with open/closed status during events.",
+  "group": "help",
+  "category": "point",
+  "source": "Mississippi Emergency Management Agency (MEMA)",
+  "license": "Public government data; credit MEMA",
+  "view": {
+   "url": "https://services1.arcgis.com/fI7ToVSY6ywRM8Si/arcgis/rest/services/CountySaferoomsView/FeatureServer/0",
+   "fields": {
+    "shelter_name": "name",
+    "address": "address",
+    "county": "county",
+    "status": "status",
+    "type": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 500,
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.6,
+    32.0,
+    -89.8,
+    32.6
+   ],
+   "count": 2,
+   "kb": 1,
+   "max_record_count": 1000,
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "ms-licensed-child-care",
+  "state": "MS",
+  "title": "Licensed child care centers (Mississippi)",
+  "title_es": "Centros de cuidado infantil con licencia (Misisipi)",
+  "description": "Licensed center-based, school-based and Head Start child care facilities (no home providers); MSDH-derived list, about 2022 vintage.",
+  "group": "people",
+  "category": "point",
+  "source": "Mississippi State Department of Health licensing list, published by MS Dept. of Revenue GIS",
+  "license": "Public government data; credit MSDH",
+  "view": {
+   "url": "https://services5.arcgis.com/l6vpz9JtJXISvXyX/arcgis/rest/services/MS_LicensedChildcareFacilities_2023/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "TELEPHONE": "phone",
+    "TYPE": "kind",
+    "STATUS": "status",
+    "POPULATION": "capacity"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "TYPE <> 'FAMILY'",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.3,
+    32.2,
+    -90.1,
+    32.4
+   ],
+   "count": 178,
+   "kb": 47,
+   "max_record_count": 2000,
+   "features_in_probe": 178
+  }
+ },
+ {
+  "name": "ms-dams",
+  "state": "MS",
+  "title": "Dams and hazard class (Mississippi)",
+  "title_es": "Presas y clase de peligro (Misisipi)",
+  "description": "State-inventoried dams with hazard classification (H = high, S = significant, L = low), height and storage.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Mississippi Emergency Management Agency (MEMA) / MDEQ Dam Safety",
+  "license": "Public government data; credit MEMA/MDEQ",
+  "view": {
+   "url": "https://services1.arcgis.com/fI7ToVSY6ywRM8Si/arcgis/rest/services/MS_Dams_with_owner_type/FeatureServer/0",
+   "fields": {
+    "DamName": "name",
+    "HAZRDCLASS": "kind",
+    "Dam_Height": "height_ft",
+    "Max_Store": "max_storage_acre_ft",
+    "CountyName": "county",
+    "OwnerType": "owner_type"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.3,
+    32.2,
+    -90.1,
+    32.4
+   ],
+   "count": 41,
+   "kb": 9,
+   "max_record_count": 2000,
+   "features_in_probe": 41
+  }
+ },
+ {
+  "name": "al-active-wildfires",
+  "state": "AL",
+  "title": "Active wildfires (Alabama)",
+  "title_es": "Incendios forestales activos (Alabama)",
+  "description": "Wildfires the Alabama Forestry Commission currently lists as active (includes small fires NIFC may not show).",
+  "group": "live",
+  "category": "hazard",
+  "source": "Alabama Forestry Commission",
+  "license": "State of Alabama; public record, attribution requested",
+  "view": {
+   "url": "https://gis.forestry.alabama.gov/arcgis/rest/services/AFCEnterprise/OnlyActiveFireForPublic/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "County": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 1000,
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -88.5,
+    30.1,
+    -84.8,
+    35.1
+   ],
+   "count": 4,
+   "kb": 0.6,
+   "max_record_count": 1000,
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "al-state-lands-forestry",
+  "state": "AL",
+  "title": "Forestry Commission state lands (Alabama)",
+  "title_es": "Tierras estatales forestales (Alabama)",
+  "description": "Alabama Forestry Commission state-owned forest properties.",
+  "group": "nature",
+  "category": "park",
+  "source": "Alabama Forestry Commission",
+  "license": "State of Alabama; public record, attribution requested",
+  "view": {
+   "url": "https://gis.forestry.alabama.gov/arcgis/rest/services/AFCEnterprise/StateProperty/MapServer/1",
+   "fields": {
+    "PARCEL_NAM": "name",
+    "AFCCal": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -88.5,
+    30.1,
+    -84.8,
+    35.1
+   ],
+   "count": 16,
+   "kb": 6.8,
+   "max_record_count": 2000,
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "al-state-parks",
+  "state": "AL",
+  "title": "State parks (Alabama)",
+  "title_es": "Parques estatales (Alabama)",
+  "description": "Alabama State Parks boundaries with official park page.",
+  "group": "nature",
+  "category": "park",
+  "source": "Alabama Dept. of Conservation & Natural Resources (ADCNR)",
+  "license": "State of Alabama; public record, attribution requested",
+  "view": {
+   "url": "https://conservationgis.alabama.gov/adcnrweb/rest/services/StateParks/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "Link": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.6,
+    32.9,
+    -86.0,
+    34.2
+   ],
+   "count": 2,
+   "kb": 1.3,
+   "max_record_count": 1000,
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "al-wmas",
+  "state": "AL",
+  "title": "Wildlife management areas (Alabama)",
+  "title_es": "Áreas de manejo de vida silvestre (Alabama)",
+  "description": "ADCNR wildlife management areas, with a link to the current season's WMA map.",
+  "group": "nature",
+  "category": "park",
+  "source": "Alabama Dept. of Conservation & Natural Resources (ADCNR)",
+  "license": "State of Alabama; public record, attribution requested",
+  "view": {
+   "url": "https://conservationgis.alabama.gov/adcnrweb/rest/services/WildlifeManagementAreas/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Acres": "acres",
+    "MapYear": "season",
+    "Link": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.6,
+    32.9,
+    -86.0,
+    34.2
+   ],
+   "count": 6,
+   "kb": 25.5,
+   "max_record_count": 1000,
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "al-boat-ramps",
+  "state": "AL",
+  "title": "Boat ramps (Alabama)",
+  "title_es": "Rampas para botes (Alabama)",
+  "description": "ADCNR-managed public boat ramps with lanes, parking, restrooms and ADA access.",
+  "group": "nature",
+  "category": "point",
+  "source": "Alabama Dept. of Conservation & Natural Resources (ADCNR)",
+  "license": "State of Alabama; public record, attribution requested",
+  "view": {
+   "url": "https://conservationgis.alabama.gov/adcnrweb/rest/services/DCNRBoatRamps/MapServer/0",
+   "fields": {
+    "Access_Are": "name",
+    "Waterbody": "water",
+    "Launch_Lan": "lanes",
+    "Parking_sp": "parking",
+    "Bathrooms": "restroom",
+    "Handicap_A": "ada"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.6,
+    32.9,
+    -86.0,
+    34.2
+   ],
+   "count": 17,
+   "kb": 3.8,
+   "max_record_count": 1000,
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "al-public-fishing-lakes",
+  "state": "AL",
+  "title": "Public fishing lakes (Alabama)",
+  "title_es": "Lagos públicos de pesca (Alabama)",
+  "description": "State public fishing lakes managed by ADCNR.",
+  "group": "nature",
+  "category": "park",
+  "source": "Alabama Dept. of Conservation & Natural Resources (ADCNR)",
+  "license": "State of Alabama; public record, attribution requested",
+  "view": {
+   "url": "https://conservationgis.alabama.gov/adcnrweb/rest/services/PublicFishingLakes/MapServer/1",
+   "fields": {
+    "Name": "name",
+    "Link": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.6,
+    32.9,
+    -86.0,
+    34.2
+   ],
+   "count": 2,
+   "kb": 1.3,
+   "max_record_count": 1000,
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "al-forever-wild",
+  "state": "AL",
+  "title": "Forever Wild lands (Alabama)",
+  "title_es": "Tierras Forever Wild (Alabama)",
+  "description": "Forever Wild Land Trust tracts (nature preserves, recreation areas, WMA additions).",
+  "group": "nature",
+  "category": "park",
+  "source": "Alabama Dept. of Conservation & Natural Resources (ADCNR)",
+  "license": "State of Alabama; public record, attribution requested",
+  "view": {
+   "url": "https://conservationgis.alabama.gov/adcnrweb/rest/services/ForeverWildTracts/MapServer/0",
+   "fields": {
+    "DCNR_Name": "name",
+    "County": "county",
+    "Acres": "acres",
+    "TractInfoL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.6,
+    32.9,
+    -86.0,
+    34.2
+   ],
+   "count": 21,
+   "kb": 32.5,
+   "max_record_count": 1000,
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "al-dcnr-trails",
+  "state": "AL",
+  "title": "State park & Forever Wild trails (Alabama)",
+  "title_es": "Senderos estatales (Alabama)",
+  "description": "Trails on Alabama State Parks and Forever Wild lands.",
+  "group": "nature",
+  "category": "park",
+  "source": "Alabama Dept. of Conservation & Natural Resources (ADCNR)",
+  "license": "State of Alabama; public record, attribution requested",
+  "view": {
+   "url": "https://conservationgis.alabama.gov/adcnrweb/rest/services/DCNRTrails/MapServer/0",
+   "fields": {
+    "TrailName": "name",
+    "TrailType": "kind",
+    "Mileage": "miles",
+    "Tract": "area"
+   },
+   "geometry": "line",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.2,
+    33.2,
+    -86.4,
+    33.8
+   ],
+   "count": 151,
+   "kb": 1910.3,
+   "max_record_count": 1000,
+   "features_in_probe": 151
+  }
+ },
+ {
+  "name": "tn-smartway-events",
+  "state": "TN",
+  "title": "Road incidents & construction (Tennessee)",
+  "title_es": "Incidentes y obras viales (Tennessee)",
+  "description": "TDOT SmartWay events: incidents, lane closures, construction and maintenance on state routes.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Tennessee Department of Transportation (SmartWay)",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://spatial.tdot.tn.gov/arcgis/rest/services/Smartway/Smartway_Events/MapServer/0",
+   "fields": {
+    "EVENT_TYPE": "kind",
+    "EVENT_SUBTYPE": "subtype",
+    "DESCRIPTION": "description",
+    "HAS_CLOSURE": "closure",
+    "START_DATE": "start",
+    "END_DATE": "end",
+    "REVISED_DATE": "updated",
+    "COUNTY_NAME": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "refresh_s": 300
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 8,
+   "kb": 3.8,
+   "max_record_count": 2000,
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "tn-crashes",
+  "state": "TN",
+  "title": "Crashes 2024-present (Tennessee)",
+  "title_es": "Choques 2024-presente (Tennessee)",
+  "description": "Crash locations from TITAN (Tennessee Highway Safety Office), crash-level only, 2024 to present.",
+  "group": "roads",
+  "category": "point",
+  "source": "Tennessee Dept. of Safety & Homeland Security (TITAN) via TNMap",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://tnmap.tn.gov/arcgis/rest/services/SAFETY/MapForDashboards/MapServer/0",
+   "fields": {
+    "Collision_Date": "date",
+    "Crash_Type": "kind",
+    "Fatality": "fatalities",
+    "Injury": "injuries",
+    "Weather": "weather",
+    "Light_Condition": "light",
+    "Pedestrian": "pedestrian",
+    "Pedalcyclist": "cyclist"
+   },
+   "geometry": "point",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.785,
+    36.155,
+    -86.775,
+    36.165
+   ],
+   "count": 268,
+   "kb": 72.5,
+   "max_record_count": 2000,
+   "features_in_probe": 268
+  }
+ },
+ {
+  "name": "tn-polling-places",
+  "state": "TN",
+  "title": "Polling places (Tennessee)",
+  "title_es": "Lugares de votación (Tennessee)",
+  "description": "Active precinct polling locations published on TNMap; confirm with your county election commission before voting.",
+  "group": "civic",
+  "category": "point",
+  "source": "Tennessee Secretary of State, Division of Elections via TNMap",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://tnmap.tn.gov/arcgis/rest/services/COMMUNITY/ELECTIONS_POLLING_PLACES/MapServer/0",
+   "fields": {
+    "Polling_Location": "name",
+    "full_address": "address",
+    "City": "city",
+    "Precinct": "precinct",
+    "CountyName": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "Active_Indicator='A'",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 122,
+   "kb": 29.0,
+   "max_record_count": 2000,
+   "features_in_probe": 122
+  }
+ },
+ {
+  "name": "tn-libraries",
+  "state": "TN",
+  "title": "Public libraries (Tennessee)",
+  "title_es": "Bibliotecas públicas (Tennessee)",
+  "description": "Tennessee State Library & Archives directory of public libraries, with phone and website.",
+  "group": "civic",
+  "category": "point",
+  "source": "Tennessee Secretary of State (TSLA) via TNMap",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://tnmap.tn.gov/arcgis/rest/services/COMMUNITY/SECRETARY_OF_STATE_LIBRARIES/MapServer/0",
+   "fields": {
+    "NAME_1": "name",
+    "PHYSICAL_ADDRESS_1": "address",
+    "PHYSICAL_CITY": "city",
+    "TYPE": "kind",
+    "PHONE_1": "phone",
+    "WEB_SITE_URL": "page",
+    "PUBLIC_INTERNET_ACCESS": "internet"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 19,
+   "kb": 6.4,
+   "max_record_count": 2000,
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "tn-driver-service-centers",
+  "state": "TN",
+  "title": "Driver service centers (Tennessee)",
+  "title_es": "Centros de licencias de conducir (Tennessee)",
+  "description": "TN Dept. of Safety driver license centers with hours, phone and REAL ID availability.",
+  "group": "civic",
+  "category": "point",
+  "source": "Tennessee Dept. of Safety & Homeland Security via TNMap",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://tnmap.tn.gov/arcgis/rest/services/SAFETY/DriverServiceCenters/MapServer/0",
+   "fields": {
+    "USER_Location_Name": "name",
+    "USER_Address": "address",
+    "USER_City": "city",
+    "USER_Hours": "hours",
+    "USER_Listed_Phone": "phone",
+    "USER_Real_ID": "real_id"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 7,
+   "kb": 2.3,
+   "max_record_count": 2000,
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "tn-state-offices",
+  "state": "TN",
+  "title": "State government offices (Tennessee)",
+  "title_es": "Oficinas del gobierno estatal (Tennessee)",
+  "description": "Locations of Tennessee state agency offices (TN.gov portal), with phone.",
+  "group": "civic",
+  "category": "point",
+  "source": "State of Tennessee (TN.gov portal locations) via TNMap",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://tnmap.tn.gov/arcgis/rest/services/COMMUNITY/TN_GOV_PORTAL_LOCATIONS/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "AGENCY": "agency",
+    "TYPE": "kind",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "PHONE": "phone",
+    "URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 136,
+   "kb": 34.8,
+   "max_record_count": 2000,
+   "features_in_probe": 136
+  }
+ },
+ {
+  "name": "tn-historical-markers",
+  "state": "TN",
+  "title": "Historical markers (Tennessee)",
+  "title_es": "Marcadores históricos (Tennessee)",
+  "description": "Tennessee Historical Commission roadside markers with full marker text.",
+  "group": "places",
+  "category": "point",
+  "source": "Tennessee Historical Commission via TNMap",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://tnmap.tn.gov/arcgis/rest/services/HISTORICAL/HISTORICAL_COMMISSION/MapServer/1",
+   "fields": {
+    "Title": "name",
+    "Number": "number",
+    "Location": "location",
+    "Marker_Text": "description",
+    "County": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 154,
+   "kb": 125.0,
+   "max_record_count": 2000,
+   "features_in_probe": 154
+  }
+ },
+ {
+  "name": "tn-national-register",
+  "state": "TN",
+  "title": "National Register historic places (Tennessee)",
+  "title_es": "Lugares históricos del Registro Nacional (Tennessee)",
+  "description": "National Register of Historic Places listings in Tennessee (points), from the TN Historical Commission.",
+  "group": "places",
+  "category": "point",
+  "source": "Tennessee Historical Commission via TNMap",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://tnmap.tn.gov/arcgis/rest/services/HISTORICAL/NATIONAL_REGISTER_TN/MapServer/0",
+   "fields": {
+    "Resource_Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Listed_Date": "listed",
+    "NHL_Date": "landmark"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 177,
+   "kb": 75.2,
+   "max_record_count": 2000,
+   "features_in_probe": 177
+  }
+ },
+ {
+  "name": "tn-school-zones-elementary",
+  "state": "TN",
+  "title": "Elementary school zones (Tennessee)",
+  "title_es": "Zonas escolares de primaria (Tennessee)",
+  "description": "Elementary attendance zones compiled statewide on TNMap; vintage varies by district, confirm with the district.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Tennessee Dept. of Education / STS GIS via TNMap",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://tnmap.tn.gov/arcgis/rest/services/COMMUNITY/EDUCATION_SCHOOL_ZONES/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "DISTRICT": "district",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 56,
+   "kb": 107.3,
+   "max_record_count": 2000,
+   "features_in_probe": 56
+  }
+ },
+ {
+  "name": "tn-school-zones-middle",
+  "state": "TN",
+  "title": "Middle school zones (Tennessee)",
+  "title_es": "Zonas escolares de secundaria (Tennessee)",
+  "description": "Middle school attendance zones compiled statewide on TNMap; vintage varies, confirm with the district.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Tennessee Dept. of Education / STS GIS via TNMap",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://tnmap.tn.gov/arcgis/rest/services/COMMUNITY/EDUCATION_SCHOOL_ZONES/MapServer/1",
+   "fields": {
+    "NAME": "name",
+    "DISTRICT": "district",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 26,
+   "kb": 81.6,
+   "max_record_count": 2000,
+   "features_in_probe": 26
+  }
+ },
+ {
+  "name": "tn-school-zones-high",
+  "state": "TN",
+  "title": "High school zones (Tennessee)",
+  "title_es": "Zonas escolares de preparatoria (Tennessee)",
+  "description": "High school attendance zones compiled statewide on TNMap; vintage varies, confirm with the district.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Tennessee Dept. of Education / STS GIS via TNMap",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://tnmap.tn.gov/arcgis/rest/services/COMMUNITY/EDUCATION_SCHOOL_ZONES/MapServer/2",
+   "fields": {
+    "NAME": "name",
+    "DISTRICT": "district",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 12,
+   "kb": 48.8,
+   "max_record_count": 2000,
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "tn-parcels-land-use",
+  "state": "TN",
+  "title": "Parcels & land use (Tennessee, most counties)",
+  "title_es": "Parcelas y uso de suelo (Tennessee, mayoría de condados)",
+  "description": "Comptroller parcel land-use layer (~2.2M parcels; excludes Davidson, Shelby and other self-mapping counties); no owner names shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Tennessee Comptroller of the Treasury, Office of Local Government via TNMap",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://tnmap.tn.gov/arcgis/rest/services/ENVIRONMENTAL/COMPTROLLER_OLG_LANDUSE/MapServer/2",
+   "fields": {
+    "LU_CLASSIFICATION": "kind",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "COUNTY": "county",
+    "LU_ACRES": "acres",
+    "YRBLT": "year_built",
+    "FLOODPLAIN": "floodplain"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -85.51,
+    36.16,
+    -85.5,
+    36.17
+   ],
+   "count": 418,
+   "kb": 146.6,
+   "max_record_count": 2000,
+   "features_in_probe": 418
+  }
+ },
+ {
+  "name": "tn-address-points",
+  "state": "TN",
+  "title": "Address points (Tennessee)",
+  "title_es": "Puntos de dirección (Tennessee)",
+  "description": "Statewide NG911 address points (shown only at street-level zoom).",
+  "group": "planning",
+  "category": "point",
+  "source": "Tennessee Emergency Communications Board / STS GIS",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://services1.arcgis.com/YuVBSS7Y1of2Qud1/arcgis/rest/services/Tennessee_NG911_Address_Points/FeatureServer/0",
+   "fields": {
+    "Add_Number": "number",
+    "StNam_Full": "street",
+    "Post_City": "city",
+    "Zip_Code": "zip"
+   },
+   "geometry": "point",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.785,
+    36.155,
+    -86.775,
+    36.165
+   ],
+   "count": 2000,
+   "kb": 356.9,
+   "max_record_count": 2000,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "tn-child-care-centers",
+  "state": "TN",
+  "title": "Child care centers (Tennessee)",
+  "title_es": "Guarderías (Tennessee)",
+  "description": "Active licensed child care centers and drop-in centers (family and group home providers excluded).",
+  "group": "help",
+  "category": "point",
+  "source": "Tennessee Dept. of Human Services / STS GIS",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://services1.arcgis.com/YuVBSS7Y1of2Qud1/arcgis/rest/services/Active_ChildCare_Locations/FeatureServer/0",
+   "fields": {
+    "Provider_Name": "name",
+    "Street_Address": "address",
+    "City": "city",
+    "Child_Care_Type": "kind",
+    "Provider_Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "Child_Care_Type IN ('Child Care Center','Drop-in Child Care Center')",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 136,
+   "kb": 35.5,
+   "max_record_count": 2000,
+   "features_in_probe": 136
+  }
+ },
+ {
+  "name": "tn-wildfire-hazard",
+  "state": "TN",
+  "title": "Wildfire hazard potential (Tennessee)",
+  "title_es": "Potencial de peligro de incendios forestales (Tennessee)",
+  "description": "TN Division of Forestry wildfire hazard potential on a hexagon grid (class 1 = non-burnable to 10 = very high).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Tennessee Dept. of Agriculture, Division of Forestry",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://services.arcgis.com/lvPBAGXeSupVUvx2/arcgis/rest/services/Tennessee_Wildfire_Hazard_Potential/FeatureServer/0",
+   "fields": {
+    "ClassCode": "class",
+    "gridcode": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -85.6,
+    35.9,
+    -85.4,
+    36.1
+   ],
+   "count": 20,
+   "kb": 5.1,
+   "max_record_count": 2000,
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "tn-state-forests",
+  "state": "TN",
+  "title": "State forests (Tennessee)",
+  "title_es": "Bosques estatales (Tennessee)",
+  "description": "Tennessee Division of Forestry state forest boundaries.",
+  "group": "nature",
+  "category": "park",
+  "source": "Tennessee Dept. of Agriculture, Division of Forestry",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://services.arcgis.com/lvPBAGXeSupVUvx2/arcgis/rest/services/Tennessee_State_Forest_Boundaries/FeatureServer/0",
+   "fields": {
+    "StateForestName": "name",
+    "County": "county",
+    "Acres": "acres",
+    "Hyperlink": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86,
+    35,
+    -84,
+    37
+   ],
+   "count": 8,
+   "kb": 13.6,
+   "max_record_count": 2000,
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "tn-state-parks",
+  "state": "TN",
+  "title": "State parks (Tennessee)",
+  "title_es": "Parques estatales (Tennessee)",
+  "description": "Tennessee State Parks primary boundaries (TDEC).",
+  "group": "nature",
+  "category": "park",
+  "source": "Tennessee Dept. of Environment & Conservation (TDEC)",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://services5.arcgis.com/bPacKTm9cauMXVfn/arcgis/rest/services/State_Park_Boundaries_Primary_March_2024_view2/FeatureServer/331",
+   "fields": {
+    "PRIMARY_NAME__LONG_": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.2,
+    35.8,
+    -86.4,
+    36.5
+   ],
+   "count": 5,
+   "kb": 5.3,
+   "max_record_count": 2000,
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "tn-state-park-trails",
+  "state": "TN",
+  "title": "State park trails (Tennessee)",
+  "title_es": "Senderos de parques estatales (Tennessee)",
+  "description": "Trails in Tennessee State Parks and natural areas with difficulty, length and allowed uses.",
+  "group": "nature",
+  "category": "park",
+  "source": "Tennessee Dept. of Environment & Conservation (TDEC)",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://services5.arcgis.com/bPacKTm9cauMXVfn/arcgis/rest/services/Tennessee_State_Park_Trails_%28public_view%29/FeatureServer/0",
+   "fields": {
+    "Trail_Name": "name",
+    "Promoted_Mileage": "miles",
+    "Difficulty": "difficulty",
+    "TRSTAT": "status",
+    "Use_Hike": "hiking",
+    "Use_Bike": "biking",
+    "Use_Wheelchair": "wheelchair"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.2,
+    35.8,
+    -86.4,
+    36.5
+   ],
+   "count": 47,
+   "kb": 557.3,
+   "max_record_count": 2000,
+   "features_in_probe": 47
+  }
+ },
+ {
+  "name": "tn-public-access-lands",
+  "state": "TN",
+  "title": "Public access lands (Tennessee)",
+  "title_es": "Tierras de acceso público (Tennessee)",
+  "description": "TDEC compilation of publicly accessible conservation lands (natural areas, historic sites, parks).",
+  "group": "nature",
+  "category": "park",
+  "source": "Tennessee Dept. of Environment & Conservation (TDEC)",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://services5.arcgis.com/bPacKTm9cauMXVfn/arcgis/rest/services/TDEC_Public_Access_Lands/FeatureServer/0",
+   "fields": {
+    "NAME_1": "name",
+    "MANAGE_1": "manager",
+    "USE_TYPE": "kind",
+    "DESIG_1": "designation",
+    "CALC_ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.2,
+    35.8,
+    -86.4,
+    36.5
+   ],
+   "count": 30,
+   "kb": 21.2,
+   "max_record_count": 2000,
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "tn-hunting-lands",
+  "state": "TN",
+  "title": "Hunting-allowed lands (Tennessee)",
+  "title_es": "Tierras donde se permite cazar (Tennessee)",
+  "description": "TWRA wildlife management areas and other lands open to hunting.",
+  "group": "nature",
+  "category": "park",
+  "source": "Tennessee Wildlife Resources Agency (TWRA)",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://services3.arcgis.com/PWXNAH2YKmZY7lBq/arcgis/rest/services/Hunting_Allowed/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "MANAGEMENT": "manager",
+    "ACRES": "acres",
+    "Category": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.2,
+    35.8,
+    -86.4,
+    36.5
+   ],
+   "count": 8,
+   "kb": 74.6,
+   "max_record_count": 2000,
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "tn-boat-launches",
+  "state": "TN",
+  "title": "Boat launches (Tennessee)",
+  "title_es": "Rampas para botes (Tennessee)",
+  "description": "TWRA boat launch sites with ramps, parking, fees and restroom info.",
+  "group": "nature",
+  "category": "point",
+  "source": "Tennessee Wildlife Resources Agency (TWRA)",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://services3.arcgis.com/PWXNAH2YKmZY7lBq/arcgis/rest/services/Boat_Launch_Sites/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Waterway": "water",
+    "Type": "kind",
+    "Ramps": "ramps",
+    "Parking": "parking",
+    "AccessFee": "fee",
+    "Restrooms": "restroom",
+    "HourAccess_24": "open_24h"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "IncludeWeb='Yes'",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 7,
+   "kb": 1.9,
+   "max_record_count": 2000,
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "tn-local-parks",
+  "state": "TN",
+  "title": "Parks & recreation areas (Tennessee)",
+  "title_es": "Parques y áreas recreativas (Tennessee)",
+  "description": "Statewide inventory of local, state and federal parks with amenities (playgrounds, pools, trails).",
+  "group": "nature",
+  "category": "park",
+  "source": "Tennessee Dept. of Environment & Conservation / STS GIS",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://services1.arcgis.com/YuVBSS7Y1of2Qud1/arcgis/rest/services/Tennessee_Statewide_Recreation_Areas_Public/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Managing_Entity_Name": "manager",
+    "City": "city",
+    "Total_Acreage": "acres",
+    "Playground": "playground",
+    "Pool": "pool",
+    "Splashpad": "splashpad",
+    "Trails": "trails"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 175,
+   "kb": 118.3,
+   "max_record_count": 2000,
+   "features_in_probe": 175
+  }
+ },
+ {
+  "name": "tn-trails",
+  "state": "TN",
+  "title": "Trails & greenways (Tennessee)",
+  "title_es": "Senderos y vías verdes (Tennessee)",
+  "description": "Statewide trail and greenway inventory with surface, length, ADA access and use type.",
+  "group": "nature",
+  "category": "park",
+  "source": "Tennessee Dept. of Environment & Conservation / STS GIS",
+  "license": "State of Tennessee (TNMap / STS GIS); public record, attribution requested",
+  "view": {
+   "url": "https://services1.arcgis.com/YuVBSS7Y1of2Qud1/arcgis/rest/services/Tennessee_Statewide_Trails_Lines_Public/FeatureServer/0",
+   "fields": {
+    "Trail_Name": "name",
+    "Managing_Entity_Name": "manager",
+    "Length_Miles": "miles",
+    "Surface": "surface",
+    "ADA_Accessible": "ada",
+    "Primary_Use_Trail_Type": "kind"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.9,
+    36.05,
+    -86.65,
+    36.25
+   ],
+   "count": 130,
+   "kb": 674.2,
+   "max_record_count": 2000,
+   "features_in_probe": 130
+  }
+ },
+ {
+  "name": "ky-road-closures",
+  "state": "KY",
+  "title": "Road closures (Kentucky)",
+  "title_es": "Cierres de carreteras (Kentucky)",
+  "description": "Current full road closures reported by the Kentucky Transportation Cabinet, with direction and expected end.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Kentucky Transportation Cabinet (KYTC Big Data)",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://services2.arcgis.com/CcI36Pduqd0OR4W9/ArcGIS/rest/services/KYTC_Road_Closures/FeatureServer/0",
+   "fields": {
+    "street": "name",
+    "closure_type": "kind",
+    "direction": "direction",
+    "description": "description",
+    "starttime": "start",
+    "endtime": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000,
+   "refresh_s": 300
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -89.6,
+    36.5,
+    -81.9,
+    39.2
+   ],
+   "count": 23,
+   "kb": 23.6,
+   "max_record_count": 2000,
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "ky-traffic-incidents",
+  "state": "KY",
+  "title": "Traffic incidents & work zones (Kentucky)",
+  "title_es": "Incidentes de tráfico y obras (Kentucky)",
+  "description": "KYTC-reported crashes, hazards, lane blockages and work zones from the last 24 hours.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Kentucky Transportation Cabinet (KYTC Big Data)",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://services2.arcgis.com/CcI36Pduqd0OR4W9/ArcGIS/rest/services/kytc_incidents_reports_24hr/FeatureServer/0",
+   "fields": {
+    "KYTC_Type": "kind",
+    "RoadName": "name",
+    "Description": "description",
+    "County": "county",
+    "BeginDate": "start",
+    "EndDate": "end",
+    "updateTS": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "refresh_s": 300
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.0,
+    37.9,
+    -85.4,
+    38.4
+   ],
+   "count": 148,
+   "kb": 48.9,
+   "max_record_count": 1000,
+   "features_in_probe": 151
+  }
+ },
+ {
+  "name": "ky-snow-ice-treatment",
+  "state": "KY",
+  "title": "Snow & ice treatment (Kentucky)",
+  "title_es": "Tratamiento de nieve y hielo (Kentucky)",
+  "description": "When KYTC plows or treats state roads in winter storms, the last plow/treat time per segment; empty outside winter events.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Kentucky Transportation Cabinet (KYTC Big Data)",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://services2.arcgis.com/CcI36Pduqd0OR4W9/ArcGIS/rest/services/SNICTreatedRoads_2020/FeatureServer/0",
+   "fields": {
+    "kytcRdName": "name",
+    "kytcSnwIcePriority": "kind",
+    "PlowedLastDate": "plowed",
+    "TreatmentLastDate": "treated",
+    "PatrolLastDate": "patrolled"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.3
+   ],
+   "count": 1041,
+   "kb": 309.2,
+   "max_record_count": 2000,
+   "features_in_probe": 1041
+  }
+ },
+ {
+  "name": "ky-park-and-ride",
+  "state": "KY",
+  "title": "Park & ride lots (Kentucky)",
+  "title_es": "Estacionamientos park & ride (Kentucky)",
+  "description": "KYTC inventory of park-and-ride commuter lots.",
+  "group": "roads",
+  "category": "point",
+  "source": "Kentucky Transportation Cabinet",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://services2.arcgis.com/CcI36Pduqd0OR4W9/ArcGIS/rest/services/KYTC_Park_and_Ride_Facilities/FeatureServer/0",
+   "fields": {
+    "FacilityName": "name",
+    "City": "city",
+    "ParkingSpaces": "spaces",
+    "SurfaceTypeParkingLot": "surface",
+    "LightingParkingLot": "lighting"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.0,
+    37.9,
+    -85.4,
+    38.4
+   ],
+   "count": 15,
+   "kb": 3.7,
+   "max_record_count": 2000,
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "ky-state-parks",
+  "state": "KY",
+  "title": "State parks (Kentucky)",
+  "title_es": "Parques estatales (Kentucky)",
+  "description": "Kentucky State Parks boundaries with park type, phone and official page.",
+  "group": "nature",
+  "category": "park",
+  "source": "Kentucky Department of Parks via KyGovMaps",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://kygisserver.ky.gov/arcgis/rest/services/WGS84WM_Services/Ky_State_Parks_Features_WGS84WM/MapServer/8",
+   "fields": {
+    "PUBLIC_NAM": "name",
+    "PARK_TYPE": "kind",
+    "HYPERLINK": "page",
+    "PHONE_NUMBER": "phone",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.0,
+    37.5,
+    -84.0,
+    38.5
+   ],
+   "count": 11,
+   "kb": 6.5,
+   "max_record_count": 1000,
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "ky-state-park-trails",
+  "state": "KY",
+  "title": "State park trails (Kentucky)",
+  "title_es": "Senderos de parques estatales (Kentucky)",
+  "description": "Trails inside Kentucky State Parks with surface, length and allowed uses.",
+  "group": "nature",
+  "category": "park",
+  "source": "Kentucky Department of Parks via KyGovMaps",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://kygisserver.ky.gov/arcgis/rest/services/WGS84WM_Services/Ky_State_Parks_Features_WGS84WM/MapServer/9",
+   "fields": {
+    "TRAIL_NAME": "name",
+    "PUBLIC_NAME": "park",
+    "SURFACE": "surface",
+    "TRAIL_MILE": "miles",
+    "HIKING": "hiking",
+    "BIKING": "biking",
+    "HORSE": "horse",
+    "HYPERLINK": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.0,
+    37.5,
+    -84.0,
+    38.5
+   ],
+   "count": 57,
+   "kb": 340.3,
+   "max_record_count": 1000,
+   "features_in_probe": 57
+  }
+ },
+ {
+  "name": "ky-state-forests",
+  "state": "KY",
+  "title": "State forests (Kentucky)",
+  "title_es": "Bosques estatales (Kentucky)",
+  "description": "Kentucky Division of Forestry state forest boundaries.",
+  "group": "nature",
+  "category": "park",
+  "source": "Kentucky Division of Forestry via KyGovMaps",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://kygisserver.ky.gov/arcgis/rest/services/WGS84WM_Services/Ky_StateForests_WGS84WM/MapServer/1",
+   "fields": {
+    "NAME": "name",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -85,
+    37,
+    -83,
+    38.5
+   ],
+   "count": 5,
+   "kb": 1.4,
+   "max_record_count": 1000,
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ky-hunting-areas",
+  "state": "KY",
+  "title": "Public hunting areas (Kentucky)",
+  "title_es": "Áreas públicas de caza (Kentucky)",
+  "description": "KDFWR wildlife management and public hunting areas, with manager and a link to area rules.",
+  "group": "nature",
+  "category": "park",
+  "source": "Kentucky Dept. of Fish & Wildlife Resources via KyGovMaps",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://kygisserver.ky.gov/arcgis/rest/services/WGS84WM_Services/Ky_Public_Hunting_Areas_WGS84WM/MapServer/1",
+   "fields": {
+    "AREANAME": "name",
+    "MANAGER": "kind",
+    "ACRES_CAL": "acres",
+    "AreaOpen": "status",
+    "DETAIL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.0,
+    37.9,
+    -85.4,
+    38.4
+   ],
+   "count": 1,
+   "kb": 3.8,
+   "max_record_count": 1000,
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "ky-boat-access",
+  "state": "KY",
+  "title": "Boat ramps & fishing access (Kentucky)",
+  "title_es": "Rampas y acceso de pesca (Kentucky)",
+  "description": "KDFWR boat ramps and fishing access sites with parking, fee and restroom info.",
+  "group": "nature",
+  "category": "point",
+  "source": "Kentucky Dept. of Fish & Wildlife Resources via KyGovMaps",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://kygisserver.ky.gov/arcgis/rest/services/WGS84WM_Services/Ky_Fish_Wildlife_WGS84WM/MapServer/0",
+   "fields": {
+    "SiteName": "name",
+    "WaterBody": "water",
+    "AccessType": "kind",
+    "Boat_Ramp": "ramp",
+    "Parking": "parking",
+    "Fee": "fee",
+    "Restroom": "restroom",
+    "SiteWeb": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.0,
+    37.9,
+    -85.4,
+    38.4
+   ],
+   "count": 7,
+   "kb": 2.5,
+   "max_record_count": 1000,
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "ky-nature-preserves",
+  "state": "KY",
+  "title": "State nature preserves (Kentucky)",
+  "title_es": "Reservas naturales estatales (Kentucky)",
+  "description": "Kentucky Nature Preserves (Office of Kentucky Nature Preserves) with public-access status.",
+  "group": "nature",
+  "category": "park",
+  "source": "Office of Kentucky Nature Preserves via KyGovMaps",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://kygisserver.ky.gov/arcgis/rest/services/WGS84WM_Services/Ky_KNP_State_Nature_Preserves_WGS84WM/MapServer/0",
+   "fields": {
+    "MANAME": "name",
+    "UNIT_TYPE": "kind",
+    "ACRES": "acres",
+    "PUB_ACCESS": "status",
+    "Webpage": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.0,
+    37.5,
+    -84.0,
+    38.5
+   ],
+   "count": 9,
+   "kb": 4.8,
+   "max_record_count": 1000,
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "ky-multi-use-paths",
+  "state": "KY",
+  "title": "Multi-use paths (Kentucky)",
+  "title_es": "Senderos multiuso (Kentucky)",
+  "description": "KYTC inventory of shared-use paths, greenways and side paths.",
+  "group": "nature",
+  "category": "park",
+  "source": "Kentucky Transportation Cabinet via KyGovMaps",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://kygisserver.ky.gov/arcgis/rest/services/WGS84WM_Services/Ky_MultiUsePaths_WGS84WM/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "PATH_TYPE": "kind",
+    "SURF_TYPE": "surface",
+    "MILEAGE": "miles",
+    "PATH_STATUS": "status",
+    "CITY": "city"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.0,
+    37.9,
+    -85.4,
+    38.4
+   ],
+   "count": 158,
+   "kb": 182.8,
+   "max_record_count": 1000,
+   "features_in_probe": 158
+  }
+ },
+ {
+  "name": "ky-scenic-byways",
+  "state": "KY",
+  "title": "Scenic byways (Kentucky)",
+  "title_es": "Rutas escénicas (Kentucky)",
+  "description": "Kentucky's designated scenic byways.",
+  "group": "places",
+  "category": "info",
+  "source": "Kentucky Transportation Cabinet via KyGovMaps",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://kygisserver.ky.gov/arcgis/rest/services/WGS84WM_Services/Ky_Scenic_Byways_WGS84WM/MapServer/0",
+   "fields": {
+    "ROAD": "name",
+    "DESC_OF_ROUTE": "description",
+    "MILES": "miles",
+    "CNTY_NAME": "county"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.0,
+    37.9,
+    -85.4,
+    38.4
+   ],
+   "count": 2,
+   "kb": 4.4,
+   "max_record_count": 1000,
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "ky-libraries",
+  "state": "KY",
+  "title": "Public libraries (Kentucky)",
+  "title_es": "Bibliotecas públicas (Kentucky)",
+  "description": "Kentucky Dept. for Libraries and Archives public library directory locations.",
+  "group": "civic",
+  "category": "point",
+  "source": "Kentucky Dept. for Libraries & Archives via KyGovMaps",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://kygisserver.ky.gov/arcgis/rest/services/WGS84WM_Services/Ky_Libraries_WGS84WM/MapServer/0",
+   "fields": {
+    "Library_Name": "name",
+    "Mailing_Address": "address",
+    "City": "city",
+    "Type_": "kind",
+    "Link": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.0,
+    37.9,
+    -85.4,
+    38.4
+   ],
+   "count": 23,
+   "kb": 6.7,
+   "max_record_count": 1000,
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "ky-child-care-centers",
+  "state": "KY",
+  "title": "Licensed child care centers (Kentucky)",
+  "title_es": "Guarderías con licencia (Kentucky)",
+  "description": "CHFS-licensed child care centers (capacity over 12; home-based certified providers excluded), with capacity, ages and All-STARS rating.",
+  "group": "help",
+  "category": "point",
+  "source": "Kentucky Cabinet for Health & Family Services via KyGovMaps",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Ky_CHFS_ChildcareProviders_WM/FeatureServer/0",
+   "fields": {
+    "USER_Name": "name",
+    "USER_Location_Address": "address",
+    "USER_Phone": "phone",
+    "USER_Capacity": "capacity",
+    "USER_Age_Range_Of_Service": "ages",
+    "USER_Stars_Rating": "stars"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "USER_Provider_Type='Licensed' AND USER_Capacity>12",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.0,
+    37.9,
+    -85.4,
+    38.4
+   ],
+   "count": 459,
+   "kb": 150.9,
+   "max_record_count": 2000,
+   "features_in_probe": 459
+  }
+ },
+ {
+  "name": "ky-address-points",
+  "state": "KY",
+  "title": "Address points (Kentucky)",
+  "title_es": "Puntos de dirección (Kentucky)",
+  "description": "Statewide 911 site/structure address points (~2.4M statewide; shown only when zoomed in to street level).",
+  "group": "planning",
+  "category": "point",
+  "source": "Kentucky 911 Services Board / DGI via KyGovMaps",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://kygisserver.ky.gov/arcgis/rest/services/WGS84WM_Services/Ky_911_Site_Structure_Address_Points_WGS84WM/MapServer/0",
+   "fields": {
+    "Add_Number": "number",
+    "St_PreDir": "predir",
+    "St_Name": "street",
+    "St_PosTyp": "street_type",
+    "Post_Comm": "city",
+    "Post_Code": "zip"
+   },
+   "geometry": "point",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 3000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -85.76,
+    38.25,
+    -85.75,
+    38.26
+   ],
+   "count": 1437,
+   "kb": 304.6,
+   "max_record_count": 3000,
+   "features_in_probe": 1437
+  }
+ },
+ {
+  "name": "ky-sinkholes",
+  "state": "KY",
+  "title": "Sinkholes (Kentucky)",
+  "title_es": "Dolinas / sumideros (Kentucky)",
+  "description": "Kentucky Geological Survey mapped sinkhole outlines (karst collapse/flood hazard).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Kentucky Geological Survey (University of Kentucky)",
+  "license": "KGS public data; cite Kentucky Geological Survey",
+  "view": {
+   "url": "https://kgs.uky.edu/arcgis/rest/services/KYWater/KYSinkholes/MapServer/0",
+   "fields": {
+    "county_name": "county",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -85.7,
+    38.1,
+    -85.6,
+    38.2
+   ],
+   "count": 60,
+   "kb": 16.7,
+   "max_record_count": 1000,
+   "features_in_probe": 60
+  }
+ },
+ {
+  "name": "ky-electric-utility-areas",
+  "state": "KY",
+  "title": "Electric utility service areas (Kentucky)",
+  "title_es": "Áreas de servicio eléctrico (Kentucky)",
+  "description": "Kentucky PSC electric service territories: which utility serves an area (to know whose outage map to check).",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Kentucky Public Service Commission via KyGovMaps",
+  "license": "Commonwealth of Kentucky (KyGovMaps open data); public record, attribution requested",
+  "view": {
+   "url": "https://kygisserver.ky.gov/arcgis/rest/services/WGS84WM_Services/Ky_Electric_Service_Areas_WGS84WM/MapServer/1",
+   "fields": {
+    "COMPANY_NA": "name",
+    "ELEC_TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.3
+   ],
+   "count": 4,
+   "kb": 54.9,
+   "max_record_count": 1000,
+   "features_in_probe": 4
+  }
+ }
+]
