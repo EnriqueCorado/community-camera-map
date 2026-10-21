@@ -2,7 +2,7 @@
 import { api } from "./api/client";
 import type { Camera } from "./types";
 
-function triggerDownload(filename: string, blob: Blob) {
+export function triggerDownload(filename: string, blob: Blob) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;

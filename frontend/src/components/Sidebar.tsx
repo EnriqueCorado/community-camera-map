@@ -122,6 +122,7 @@ const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
       ["hazards", ["heat-risk", "fire-weather", "smoke-forecast", "storm-reports", "river-gauges", "drought", "reservoirs", "groundwater", "volcanoes", "fatal-crashes", "wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
       ["roads", ["lane-closures", "message-signs", "chain-controls", "transit-routes", "transit-stops", "amtrak", "airports", "railroads"]],
       ["places", ["cooling-centers", "shelters", "sandbags", "mobile-home-parks", "mobile-home-parks-usa", "food-banks", "clinics", "hospitals", "pharmacies", "community-centers", "libraries", "farmers-markets", "law-enforcement", "fire-stations", "schools", "parks", "playgrounds", "aed", "drinking-water", "restrooms", "ev-chargers", "free-wifi"]],
+      ["help", ["legal-help"]],
       ["nature", ["national-parks", "wildlife", "wikipedia", "historic-places", "historical-markers", "rivers", "streamflow"]],
       ["planning", ["city-limits", "county-islands", "general-plan", "zoning", "supervisor-districts", "elementary-districts", "high-school-districts", "fire-districts", "mosquito-districts", "zip-codes", "congressional-districts"]],
       ["infra", ["power-plants", "substations", "bridges", "power-outages", "outage-areas"]],
@@ -162,6 +163,8 @@ interface Props {
   bakedAt: string | null;
   liveAt: string | null;
   onAbout: () => void;
+  /** Opens the free Help tools (medical bills, renters, legal help). */
+  onHelp: () => void;
   /** Whether the panel is shown; hidden panels stay mounted (scroll, state). */
   open: boolean;
   onHide: () => void;
@@ -220,6 +223,7 @@ export function Sidebar({
   bakedAt,
   liveAt,
   onAbout,
+  onHelp,
   open,
   onHide,
   zoom,
@@ -452,6 +456,16 @@ export function Sidebar({
               : t("dataLive")}
           </span>
         </div>
+      </div>
+      {/* Outside the sticky header, so the header stays short. */}
+      <div className="helpbtn__wrap">
+        <button type="button" className="helpbtn" onClick={onHelp} aria-haspopup="dialog">
+          <span className="helpbtn__icon" aria-hidden="true">🤝</span>
+          <span className="helpbtn__text">
+            <span className="helpbtn__title">{t("helpOpen")}</span>
+            <span className="helpbtn__sub">{t("helpOpenSub")}</span>
+          </span>
+        </button>
       </div>
 
       <Section {...section("jump")} as="nav" title={t("jumpTo")}>

@@ -1310,6 +1310,7 @@ LAYERS: dict[str, Layer] = {
                 "NAME": "NAME",
                 "ADDRESS": "ADDRESS",
                 "CITY": "CITY",
+                "STATE": "STATE",
                 "TYPE": "TYPE",
                 "TELEPHONE": "TELEPHONE",
             },
@@ -2201,6 +2202,18 @@ LAYERS: dict[str, Layer] = {
         loader=_local_json(
             LAYER_DATA / "voting_locations_20261103.json", transforms.voting_locations
         ),
+        ttl=3600,
+    ),
+    # --- Help ---
+    "legal-help": Layer(
+        name="legal-help",
+        title="Free legal help",
+        description=(
+            "Free and low-cost legal help: immigration (DOJ-recognized nonprofits), housing, "
+            "court self-help, seniors and more. Each office checked against its own website."
+        ),
+        category="legal",
+        loader=_local_json(LAYER_DATA / "legal_help.json", transforms.legal_help),
         ttl=3600,
     ),
     # --- Power ---

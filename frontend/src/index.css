@@ -596,6 +596,57 @@ body:has(.app) {
   z-index: 2;
 }
 
+/* Sidebar entry point to the free Help tools (the panel's own styles load with it) */
+.helpbtn__wrap {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.helpbtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.helpbtn:hover {
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.helpbtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.helpbtn__icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.helpbtn__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.helpbtn__title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.helpbtn__sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
 /* ---------- Detail drawer ---------- */
 .detail {
   position: absolute;

@@ -385,6 +385,36 @@ uv run python scripts/enrich_alpr.py
 uv run python scripts/bake.py
 ```
 
+## Free help tools (medical bills, renters, legal help)
+
+A bilingual Help panel (sidebar "Free help", popups on hospital / mobile home park / legal-help
+pins, or `#help=medical|rent|legal`). **Nothing typed is stored or sent:** the tools are pure
+functions in `frontend/src/help/` running in the browser, nothing goes to localStorage or the URL
+(only the open tab does), and the only request is the static parcel file named after the street's
+first two letters. `e2e/tests/help.spec.ts` checks this.
+
+| Tool | Logic | Facts & sources |
+|---|---|---|
+| Hospital charity care | `help/fpl.ts` (`careResult`) | `help/hospitals.ts` (each policy as filed with HCAI), `MEDICAL_FACTS` |
+| Rent cap, notice, coverage | `help/rent-cap.ts` | `RENT_FACTS` (Civ. Code §1947.12, §827; DIR CPI; AG chart) |
+| "When was it built?" | `help/parcels.ts` | `frontend/public/data/parcels/` (county assessor roll) |
+| Repair / deposit / hospital letters | `help/letters.ts` | cited inline |
+| Legal help directory + layer | `help/legal-dir.ts` | `backend/app/layers/data/legal_help.json` |
+
+**Yearly upkeep** (tests in `e2e/tests/unit-help.spec.ts` fail when these go stale):
+- **By Aug 1:** add the next rent-cap period to `RENT_FACTS.periods` from DIR's April California
+  CPI (published ~mid-June) and check it against https://oag.ca.gov/rentcaps ("All other counties").
+- **Each January:** update `MEDICAL_FACTS.fpl` from the HHS poverty guidelines.
+- Re-check hospital policies (HCAI), office phone numbers, and the Modesto/Riverbank mobile home rules.
+
+```bash
+cd backend && uv run python scripts/build_parcel_years.py    # re-bake year-built lookups
+cd backend && uv run python scripts/refresh_live.py --only legal-help   # after editing legal_help.json
+```
+
+Not legal advice; the panel says so. Spanish was written alongside the English; a native-speaker
+review is still welcome.
+
 ## Overlay catalog (verified endpoints, ready to wire)
 
 Each becomes a toggleable layer. Add a static dataset by dropping a `.geojson`

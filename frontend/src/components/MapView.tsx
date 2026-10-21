@@ -10,12 +10,13 @@ type LayerMouseEvent = MapMouseEvent & {
   features?: Array<{ properties: Record<string, unknown> | null; geometry: GeoJSON.Geometry }>;
 };
 import { api, type LayerInfo } from "../api/client";
-import { useI18n, layerTitle, ordinal, translateDirection, type TFn, type Lang } from "../i18n";
+import { useI18n, layerTitle, ordinal, translateDirection, type Key, type TFn, type Lang } from "../i18n";
 import { prefersReducedMotion } from "../motion";
 import {
   floodRiskKey,
   freshImage,
   isMissing,
+  LEGAL_SITE_HOSTS,
   safeUrl,
   tidy,
   WEBCAM_IMAGE_HOSTS,
@@ -31,6 +32,10 @@ import { HISTORY_LAYERS } from "../history";
 import { ALPR_TILE_ZOOM, alprCells, alprIndex, alprNear, alprTile, evictAlprTile, mergeTiles, type AlprIndex } from "../alpr-tiles";
 import { VOTING_KEYS } from "../colors";
 import { servicePopup } from "../services-pack";
+import { helpFor } from "../help/popup-help";
+import { LEGAL_COST_KEYS, LEGAL_KIND_KEYS } from "../help/legal-kinds";
+import type { LegalKind, LegalOffice } from "../help/legal-dir";
+import type { HelpTarget } from "../help/target";
 import {
   CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
   HEALTH_STOPS, metricStops, fmtMetric, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, WVAL_COLORS, WVAL_KEYS,
@@ -64,6 +69,8 @@ interface Props {
   coverageCenterTick: number;
   /** Open the sourced "who can search this plate reader?" panel. */
   onAlprAccess: (a: Attribution) => void;
+  /** Open the free Help tools from a popup (e.g. a hospital's charity care). */
+  onHelp: (t: HelpTarget) => void;
 }
 
 
@@ -107,6 +114,7 @@ export function MapView({
   onCoverageResult,
   coverageCenterTick,
   onAlprAccess,
+  onHelp,
 }: Props) {
   const { t, lang, locale } = useI18n();
   const i18nRef = useRef<I18nState>({ t, lang, locale });
@@ -136,6 +144,7 @@ export function MapView({
   const liveRef = useRef(new Map<string, () => void>());
   const onAlprAccessRef = useRef(onAlprAccess);
   onAlprAccessRef.current = onAlprAccess;
+  POPUP_HELP.open = onHelp;
   // "Who can search it" profiles, for synchronous popup rendering.
   const alprAccessRef = useRef<AlprAccess | null>(null);
   const warmAlprAccess = () =>
@@ -1047,7 +1056,7 @@ const HAS_TRACK: maplibregl.ExpressionSpecification = ["==", ["typeof", ["get", 
 const POINT_CATEGORIES = new Set([
   "flight", "haze", "webcam", "space", "train", "nature", "wiki", "weather-now", "poi", "hotspot",
   "roadweather", "chain", "superfund", "power", "aqi", "voting", "outage", "crash", "reservoir", "quake", "bus",
-  "wastewater", "groundwater", "gauge", "storm", "volcano", "dev", "service",
+  "wastewater", "groundwater", "gauge", "storm", "volcano", "dev", "service", "legal",
 ]);
 /** …and these as lines (lane closures can be momentarily empty). */
 const LINE_CATEGORIES = new Set(["roadops", "fault"]);
@@ -1378,7 +1387,11 @@ function addOverlay(
           : info.category === "voting"
             ? votingPopup(info, feats, i18n)
             : overlayPopup(info, feats[0] ?? {}, i18n);
-      const popup = openPopup(map, e.lngLat, popupHtml(spec), i18n.t);
+      const geom = e.features?.[0]?.geometry;
+      const at = geom?.type === "Point" ? (geom.coordinates as [number, number]) : ([e.lngLat.lng, e.lngLat.lat] as [number, number]);
+      const help = helpFor(info.name, feats[0] ?? {}, at);
+      if (help) spec.section = helpSection(help, i18n.t);
+      const popup = openPopup(map, e.lngLat, popupHtml(spec), i18n.t, help ? () => POPUP_HELP.open?.(help) : undefined);
       if (info.category === "flight") void addFlightRoute(popup, String(feats[0]?.callsign ?? ""), i18n.t);
     });
     map.on("mouseenter", layerId, () => (map.getCanvas().style.cursor = "pointer"));
@@ -1633,6 +1646,9 @@ interface I18nState {
 
 /** Popups currently open, so Escape can close them. */
 const OPEN_POPUPS = new Set<maplibregl.Popup>();
+// Popups are plain HTML built outside React: their Help buttons call the
+// current onHelp through this (the map is a single instance).
+const POPUP_HELP: { open: ((t: HelpTarget) => void) | null } = { open: null };
 
 /** Open a themed popup whose close button is labeled in the current language. */
 function openPopup(
@@ -1723,8 +1739,9 @@ interface PopupSpec {
     /** Screen-reader note that the link opens a new tab. */
     newTab: string;
   }[];
-  /** Link to the source's own page (re-validated against the allowlist). */
-  link?: { href: string; label: string };
+  /** Link to the source's own page (re-validated against the allowlist, or
+   *  against `hosts` for curated data that lists its own sites). */
+  link?: { href: string; label: string; hosts?: readonly string[] };
   /** Extra block under the rows, e.g. "Who can search it". All plain text. */
   section?: {
     heading: string;
@@ -1762,7 +1779,7 @@ function popupHtml(s: PopupSpec): string {
 }
 
 function linkHtml(link: PopupSpec["link"]): string {
-  const href = link && safeUrl(link.href, WEBCAM_PAGE_HOSTS);
+  const href = link && safeUrl(link.href, link.hosts ?? WEBCAM_PAGE_HOSTS);
   if (!link || !href) return "";
   return (
     `<a class="popup__link" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">` +
@@ -1849,6 +1866,15 @@ function sectionHtml(x: NonNullable<PopupSpec["section"]>): string {
       : "") +
     `</section>`
   );
+}
+
+/** "Free or discounted care" / "Rent rules" block that opens the Help tools. */
+function helpSection(h: HelpTarget, t: TFn): NonNullable<PopupSpec["section"]> {
+  if (h.tab === "medical")
+    return { heading: t("helpHospitalHeading"), label: "", text: t("helpHospitalText"), action: t("helpHospitalAction") };
+  if (h.mobileHome)
+    return { heading: t("helpMobileHeading"), label: "", text: t("helpMobileText"), action: t("helpMobileAction") };
+  return { heading: t("helpLegalHeading"), label: "", text: t("helpLegalText"), action: t("helpLegalAction") };
 }
 
 /** "Who can search it" block for an ALPR popup. `access` may still be loading. */
@@ -2565,6 +2591,22 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
           [t("rowLanes"), raw(p.lanes)],
         ],
       };
+    case "legal": {
+      const kinds = raw(p.kinds).split("|").map((k) => LEGAL_KIND_KEYS[k as LegalKind]).filter((k): k is Key => !!k);
+      const cost = LEGAL_COST_KEYS[raw(p.cost) as LegalOffice["cost"]] ?? "costVaries";
+      return {
+        ...base,
+        title: raw(p.name) || kind,
+        rows: [
+          [t("rowHelpsWith"), kinds.map((k) => t(k)).join(", ")],
+          [t("rowCost"), t(cost) + (p.eoir === true ? ` · ${t("legalEoir")}` : "")],
+          [t("rowAddress"), [raw(p.address), raw(p.city)].filter(Boolean).join(", ")],
+          [t("rowPhone"), raw(p.phone)],
+          [t("rowLanguages"), raw(p.languages).split("|").filter(Boolean).join(", ")],
+        ],
+        link: { href: raw(p.website), label: t("legalWebsite"), hosts: LEGAL_SITE_HOSTS },
+      };
+    }
     case "info": {
       const spec = INFO_FIELDS[info.name] ?? { rows: [] };
       const value = (prop: string) =>
