@@ -1,4 +1,11 @@
-import { withDefaults, type RawCameraList } from "../camera-data";
+import {
+  withDefaults,
+  type RawCameraCell,
+  type RawCameraIndex,
+  type RawCameraList,
+  type RawCameraSearch,
+} from "../camera-data";
+import type { CameraFiles } from "../camera-store";
 import type { AlprAccess } from "../alpr-access";
 
 // Two modes:
@@ -12,11 +19,15 @@ const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 // static site gets live flights instead of the 15-minute snapshot.
 const FLIGHTS_RELAY: string = import.meta.env.VITE_FLIGHTS_URL ?? "";
 
-async function getJSON<T>(path: string): Promise<T> {
-  const res = await fetch(path);
+async function getJSON<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(path, init);
   if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${path}`);
   return res.json() as Promise<T>;
 }
+
+// Revalidate with the server instead of trusting a cached copy (Pages serves
+// data with a 10-minute max-age).
+const NO_CACHE: RequestInit = { cache: "no-cache" };
 
 export interface LayerInfo {
   name: string;
@@ -83,8 +94,20 @@ export const api = {
   static: STATIC,
   /** Live flights URL: the relay if configured, else the layer file/API. */
   flightsRelay: FLIGHTS_RELAY,
-  listCameras: () =>
-    getJSON<RawCameraList>(STATIC ? "data/cameras.json" : `${API_BASE}/api/cameras`).then(withDefaults),
+  /** The whole camera list from the dev API (one request). */
+  listCameras: () => getJSON<RawCameraList>(`${API_BASE}/api/cameras`).then(withDefaults),
+  /** The static site's split camera list (see camera-store.ts). `v` (the
+   *  layout the index named) keeps the browser from mixing cached bakes. */
+  cameraFiles: {
+    index: (fresh: boolean) => getJSON<RawCameraIndex>("data/cameras/index.json", fresh ? NO_CACHE : undefined),
+    search: (v: string, fresh: boolean) =>
+      getJSON<RawCameraSearch>(`data/cameras/search.json?v=${encodeURIComponent(v)}`, fresh ? NO_CACHE : undefined),
+    cell: (key: string, v: string, fresh: boolean) =>
+      getJSON<RawCameraCell>(
+        `data/cameras/cells/${encodeURIComponent(key)}.json?v=${encodeURIComponent(v)}`,
+        fresh ? NO_CACHE : undefined,
+      ),
+  } satisfies CameraFiles,
   listLayers: () => getJSON<LayerInfo[]>(STATIC ? "data/layers.json" : `${API_BASE}/api/layers`),
   /** Overlay layer GeoJSON. */
   layerUrl: (name: string) =>

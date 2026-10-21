@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState, useDeferredValue } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, useDeferredValue } from "react";
 import type { NearPoint } from "./components/NearMe";
 import { useCameras } from "./hooks/useCameras";
 import { useLayers } from "./hooks/useLayers";
@@ -12,6 +12,9 @@ import { api } from "./api/client";
 import { decodeState, encodeState } from "./urlstate";
 import { useI18n } from "./i18n";
 import type { HelpTarget } from "./help/target";
+import type { Camera } from "./types";
+import { downloadCameras } from "./download";
+import { pointAt, pointRef, type PointRef } from "./camera-data";
 
 // The Help tools (forms, letters, long copy) load only when first opened.
 const HelpPanel = lazy(() => import("./components/help/HelpPanel"));
@@ -46,7 +49,10 @@ export default function App() {
 
   // Decode shareable state from the URL hash once, at startup.
   const initial = useMemo(() => decodeState(window.location.hash, INITIAL_LAYERS), []);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  // The selected camera: its point index (map highlight, list) and, once its
+  // cell's records have loaded, the full camera (detail drawer).
+  const [selectedPos, setSelectedPos] = useState<PointRef | null>(null);
+  const [selected, setSelected] = useState<Camera | null>(null);
   const [layers, setLayers] = useState<LayerState>(initial.layers);
   const [query, setQuery] = useState(initial.query);
   const deferredQuery = useDeferredValue(query);
@@ -110,6 +116,34 @@ export default function App() {
     }
   }, [layers, query, view, lang, nearPoint, help]);
 
+  const store = state.status === "ready" ? state.store : null;
+  const points = state.status === "ready" ? state.points : null;
+  const selectedRef = useRef<PointRef | null>(null);
+  const select = useCallback(
+    (i: number | null) => {
+      const ref = i === null || !store ? null : pointRef(store.points, i);
+      selectedRef.current = ref;
+      setSelectedPos(ref);
+      if (!ref || i === null || !store) return setSelected(null);
+      store.camera(i).then(
+        // Ignore a slow answer for a camera that's no longer the selected one.
+        (cam) => selectedRef.current === ref && setSelected(cam),
+        () => selectedRef.current === ref && setSelected(null),
+      );
+    },
+    [store],
+  );
+  // The selection is kept as a position, so a newer index (hourly redeploy,
+  // which renumbers the points) still finds the same camera.
+  const selectedId = useMemo(() => (points && selectedPos ? pointAt(points, selectedPos) : null), [points, selectedPos]);
+  const wantSearch = useCallback(() => {
+    store?.loadSearch().catch(() => {});
+  }, [store]);
+  const prefetch = useCallback(
+    (w: number, s: number, e: number, n: number) => store?.prefetch(w, s, e, n),
+    [store],
+  );
+
   if (state.status === "loading") {
     return (
       <div className="screen" role="status">
@@ -127,7 +161,6 @@ export default function App() {
     );
   }
 
-  const selected = state.cameras.find((c) => c.id === selectedId) ?? null;
   const jump = (p: Place) => setFlyTo({ center: p.center, zoom: p.zoom });
 
   return (
@@ -150,9 +183,15 @@ export default function App() {
         {t("skipToSearch")}
       </a>
       <Sidebar
-        cameras={state.cameras}
+        cameraCount={state.points.count}
+        agencyCount={state.points.agencies}
+        search={state.search}
+        onSearchWanted={wantSearch}
+        onDownloadCameras={() => {
+          state.store.all().then(downloadCameras, (err: unknown) => console.error("camera export failed", err));
+        }}
         selectedId={selectedId}
-        onSelect={setSelectedId}
+        onSelect={select}
         layers={layers}
         onLayersChange={setLayers}
         overlayInfos={overlayInfos}
@@ -200,9 +239,11 @@ export default function App() {
           </button>
         )}
         <MapView
-          cameras={state.cameras}
+          points={state.points}
+          search={state.search}
           selectedId={selectedId}
-          onSelect={setSelectedId}
+          onSelect={select}
+          onPrefetch={prefetch}
           layers={layers}
           overlayInfos={overlayInfos}
           query={deferredQuery}
@@ -218,13 +259,13 @@ export default function App() {
           onHelp={setHelp}
         />
         {selected && (
-          <CameraDetail key={selected.id} camera={selected} source={state.sources[selected.source]} onClose={() => setSelectedId(null)} />
+          <CameraDetail key={selected.id} camera={selected} source={state.points.sources[selected.source]} onClose={() => select(null)} />
         )}
         {accessFor && <AlprAccessPanel attribution={accessFor} onClose={() => setAccessFor(null)} />}
         {showAbout && (
           <About
             layers={overlayInfos}
-            cameraSources={state.sources}
+            cameraSources={state.points.sources}
             bakedAt={bakedAt}
             onClose={() => setShowAbout(false)}
           />

@@ -169,8 +169,18 @@ listed twice. Skipped on purpose: TripCheck's own `cctvinventory.js` and NYC DOT
 TripCheck and 511NY APIs need keys), and NDDOT's `cameras.json` (undocumented).
 
 USGS HIVIS river cameras (~1,140, nationwide) stay a separate overlay layer
-(`river-cameras`). `cameras.json` uses short keys and drops empty fields to stay
-small (~6.1 MB, ~0.9 MB gzipped, with ~26.9k cameras on 2026-10-21; splitting it by region is the next step if it keeps growing); rebuild just it with `cd backend && uv run python scripts/bake.py --cameras-only`
+(`river-cameras`). The static site's camera list (`frontend/public/data/cameras/`,
+`backend/app/cameras/static_split.py`) is split so a visit loads little: every
+visit loads only `index.json` (each camera's position to ~10 m, delta-coded and
+grouped into 2-degree grid cells: ~190 kB, ~78 kB gzipped for 26.7k cameras,
+vs ~6 MB / ~0.86 MB for the old one-file list), enough to cluster every camera
+and show the counts; `search.json` (names, places, roads, states: ~270 kB
+gzipped) loads when a search starts; `cells/<lat>_<lon>.json` (full records,
+short keys, defaults dropped) loads when a camera there is opened or the cell is
+in view up close (Modesto's cell: ~23 kB gzipped). All three carry a layout
+version so files from two hourly deploys are never mixed up
+(`frontend/src/camera-store.ts`). The dev API still serves the whole list at
+`/api/cameras`. Rebuild just the list with `cd backend && uv run python scripts/bake.py --cameras-only`
 (the Pages workflow's hourly `cameras` job does this with the keys below).
 
 **Keyed sources.** Free per-state keys, used only server-side / at bake time
@@ -509,7 +519,7 @@ AirNow, OpenAQ v3, EPA AQS, PurpleAir (air quality); FCC Broadband Map; NREL EV 
 
 The public site is a **static build with no backend**: `backend/scripts/bake.py`
 runs the same camera/layer services once and writes everything the map needs to
-`frontend/public/data/` (`cameras.json`, `layers.json`, `layers/<name>.geojson`,
+`frontend/public/data/` (`cameras/`, `layers.json`, `layers/<name>.geojson`,
 `meta.json`). The frontend built with `VITE_STATIC=1` reads those files instead of
 `/api/...`. API keys (Census) are used **only at bake time** and never ship.
 
@@ -541,6 +551,6 @@ including: OpenStreetMap / DeFlock data is © OpenStreetMap contributors under t
 free for non-commercial use with credit to "ALERTCalifornia | UC San Diego";
 adsb.fi flight data is for non-commercial use; Illinois DOT camera data is
 [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/) (credit "Illinois
-DOT"; our reformatted copy in `cameras.json` is shared under the same license);
+DOT"; our reformatted copy in `data/cameras/` is shared under the same license);
 Caltrans, USGS, NOAA, NWS, FEMA, EPA and Census data are U.S. or California public data. See "Data source &
 attribution" above for the full list.

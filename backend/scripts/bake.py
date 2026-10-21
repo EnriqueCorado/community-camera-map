@@ -1,7 +1,8 @@
 """Pre-bake all map data to static files for a backend-free (GitHub Pages) deploy.
 
 Runs the same CameraService / LayerService used by the live API, once, and writes:
-  frontend/public/data/cameras.json      the /api/cameras payload
+  frontend/public/data/cameras/          the /api/cameras payload, split for a light
+                                         first load (app/cameras/static_split.py)
   frontend/public/data/layers.json       the layer catalog (+ source URLs)
   frontend/public/data/layers/<name>.geojson   each available layer
   frontend/public/data/alpr_access.json  who can search each plate reader
@@ -9,7 +10,7 @@ Runs the same CameraService / LayerService used by the live API, once, and write
 
 Keys (Census) are read from the backend's .env and used ONLY here —
 they never reach the shipped static site. Run from backend/: `uv run python scripts/bake.py`.
-`--cameras-only` rebuilds just cameras.json (all camera sources, ~1 minute).
+`--cameras-only` rebuilds just the camera list (all camera sources, ~1 minute).
 """
 
 from __future__ import annotations
@@ -27,6 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import httpx
 
+from app.cameras import static_split
 from app.cameras.national import sources_for
 from app.cameras.schemas import Camera
 from app.cameras.service import CameraService
@@ -250,7 +252,7 @@ MIN_KEEP = 0.8  # of the previous list's size
 
 
 def check_camera_list(camera_list: list[Camera], previous_count: int, secrets: list[str]) -> None:
-    """Sanity checks before cameras.json is replaced (and, in CI, published and
+    """Sanity checks before the camera list is replaced (and, in CI, published and
     cached): Caltrans must be present, the list mustn't shrink below MIN_KEEP of
     the last one, and no configured API key may appear anywhere in it."""
     if not any(c.source == "caltrans" for c in camera_list):
@@ -264,12 +266,10 @@ def check_camera_list(camera_list: list[Camera], previous_count: int, secrets: l
 
 async def bake_cameras(cams: CameraService) -> None:
     camera_list = await cams.list_cameras()
-    try:
-        previous = json.loads((OUT / "cameras.json").read_text()).get("count", 0)
-    except (OSError, ValueError, AttributeError):
-        previous = 0
+    previous = static_split.read_count(OUT)
     s = get_settings()
-    check_camera_list(camera_list, previous, [*s.iteris_keys.values(), s.ohgo_api_key])
+    secrets = [*s.iteris_keys.values(), s.ohgo_api_key]
+    check_camera_list(camera_list, previous, secrets)
     sources = sources_for(camera_list)
     payload = {
         "count": len(camera_list),
@@ -281,12 +281,19 @@ async def bake_cameras(cams: CameraService) -> None:
             for c in camera_list
         ],
     }
-    body = json.dumps(payload, separators=(",", ":"))
-    (OUT / "cameras.json").write_text(body)
+    try:  # the key check again, on the exact bytes that get published
+        sizes = static_split.write(OUT, payload, secrets)
+    except ValueError as exc:
+        raise CameraBakeError(str(exc)) from exc
     per: dict[str, int] = {}
     for c in camera_list:
         per[c.source] = per.get(c.source, 0) + 1
-    print(f"cameras.json: {len(camera_list)} cameras, {len(body) / 1e6:.2f} MB")
+    cells = [n for p, n in sizes.items() if p.startswith("cells/")]
+    print(
+        f"cameras/: {len(camera_list)} cameras; index {sizes['index.json'] / 1e3:.0f} kB, "
+        f"search {sizes['search.json'] / 1e3:.0f} kB, {len(cells)} cells "
+        f"(largest {max(cells, default=0) / 1e3:.0f} kB, all {sum(cells) / 1e6:.2f} MB)"
+    )
     print("  by source:", ", ".join(f"{k} {n}" for k, n in sorted(per.items())))
 
 
@@ -305,7 +312,7 @@ async def main() -> None:
             await bake_cameras(cams)
         except CameraBakeError as exc:
             # Fail loudly (CI keeps the cached/committed list); never write it.
-            sys.exit(f"cameras.json NOT updated: {exc}")
+            sys.exit(f"camera list NOT updated: {exc}")
         if "--cameras-only" in sys.argv[1:]:
             return
         layers = LayerService(settings=settings, client=client, fallback_to_baked=False)

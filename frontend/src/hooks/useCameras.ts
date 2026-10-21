@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
-import type { Camera, SourceInfo } from "../types";
+import { CameraStore } from "../camera-store";
+import type { CameraPoints, CameraText } from "../camera-data";
 
 type State =
   | { status: "loading" }
   | { status: "error"; error: string }
-  | { status: "ready"; cameras: Camera[]; source: string; sources: Record<string, SourceInfo> };
+  | { status: "ready"; store: CameraStore; points: CameraPoints; search: CameraText[] | null };
 
-/** Loads the camera inventory once on mount. */
+/** Opens the camera list once on mount: on the static site just its small
+ *  index (positions + counts; search and full records load on demand), from
+ *  the dev API the whole list. Re-renders when the store swaps in a newer index
+ *  or the search rows arrive. */
 export function useCameras(): State {
   const [state, setState] = useState<State>({ status: "loading" });
 
   useEffect(() => {
     let cancelled = false;
-    api
-      .listCameras()
-      .then((data) => {
-        if (!cancelled) {
-          setState({ status: "ready", cameras: data.cameras, source: data.source, sources: data.sources });
-        }
+    let unsubscribe = () => {};
+    (api.static ? CameraStore.fromFiles(api.cameraFiles) : api.listCameras().then(CameraStore.fromList))
+      .then((store) => {
+        if (cancelled) return;
+        const update = () => setState({ status: "ready", store, points: store.points, search: store.search });
+        unsubscribe = store.subscribe(update);
+        update();
       })
       .catch((err: unknown) => {
         if (!cancelled) {
@@ -27,6 +32,7 @@ export function useCameras(): State {
       });
     return () => {
       cancelled = true;
+      unsubscribe();
     };
   }, []);
 
