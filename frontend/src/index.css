@@ -1353,3 +1353,19 @@ fieldset.subfilter {
 @media (max-width: 560px) {
   .historybanner { top: 60px; } /* clear of the "Layers & search" button */
 }
+
+/* "Or go to a state" picker under the jump chips. */
+.statejump {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 10px;
+}
+.statejump select {
+  font: inherit;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--ink);
+}

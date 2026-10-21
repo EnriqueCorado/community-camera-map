@@ -1,6 +1,6 @@
 // Unit tests for nationwide view loading (no browser).
 import { test, expect } from "@playwright/test";
-import { applyFields, arcgisQueryUrl, chooseSource, covers, exceededLimit, fieldsAt, levelUrl, tractLabel, within, wrapLon, HOME_BBOX, stateName, statesAt } from "../../frontend/src/view-logic";
+import { applyFields, arcgisQueryUrl, chooseSource, covers, exceededLimit, fieldsAt, levelUrl, tractLabel, within, wrapLon, HOME_BBOX, stateName, statesAt, stateViews } from "../../frontend/src/view-logic";
 import type { ViewSpec } from "../../frontend/src/api/client";
 import { RAMPS, fmtMetric, metricStops } from "../../frontend/src/colors";
 
@@ -288,4 +288,17 @@ test("state coverage: names, boxes under a point, and 'no data here' by state", 
   expect(statesAt([-30, 40])).toEqual([]); // mid-Atlantic
   expect(covers("TX", [-95.37, 29.76])).toBe(true);
   expect(covers("TX", [-120.99, 37.64])).toBe(false);
+});
+
+test("state picker: every state/territory, A-Z, framed inside its box", () => {
+  const views = stateViews();
+  expect(views).toHaveLength(56);
+  expect(views[0]!.name).toBe("Alabama");
+  const tx = views.find((v) => v.code === "TX")!;
+  expect(covers("TX", tx.center)).toBe(true);
+  expect(tx.zoom).toBeGreaterThan(3.5);
+  expect(tx.zoom).toBeLessThan(6.5);
+  const dc = views.find((v) => v.code === "DC")!;
+  expect(dc.zoom).toBeGreaterThan(tx.zoom); // small places zoom in further
+  expect(views.find((v) => v.code === "AK")!.center[0]).toBe(-152); // not the antimeridian
 });

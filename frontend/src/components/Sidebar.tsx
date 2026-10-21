@@ -12,7 +12,9 @@ import {
 } from "../colors";
 import { downloadLayer, downloadCameras } from "../download";
 import { LIVE_SOURCES } from "../live-sources";
-import { covers, stateName, statesAt } from "../view-logic";
+import { covers, stateName, statesAt, stateViews } from "../view-logic";
+
+const STATE_VIEWS = stateViews();
 import { OSM_MIN_ZOOM } from "../osm-sources";
 import { NearMe, type NearPoint } from "./NearMe";
 import { HistoryPicker } from "./HistoryPicker";
@@ -487,6 +489,23 @@ export function Sidebar({
             </button>
           ))}
         </div>
+        <label className="statejump">
+          <span className="panel__note">{t("jumpToState")}</span>
+          <select
+            value=""
+            onChange={(e) => {
+              const v = STATE_VIEWS.find((sv) => sv.code === e.target.value);
+              if (v) onJump({ label: v.name, center: v.center, zoom: v.zoom });
+            }}
+          >
+            <option value="">{t("chooseState")}</option>
+            {STATE_VIEWS.map((v) => (
+              <option key={v.code} value={v.code}>
+                {v.name}
+              </option>
+            ))}
+          </select>
+        </label>
       </Section>
 
       <Section {...section("presets")} title={t("presetsTitle")}>

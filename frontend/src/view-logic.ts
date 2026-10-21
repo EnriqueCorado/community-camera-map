@@ -30,6 +30,19 @@ const STATE_INFO = STATES as unknown as Record<string, { name: string; bbox: Bbo
 /** A state/territory's name for a USPS code ("TX" -> "Texas"), if known. */
 export const stateName = (code: string | undefined): string | undefined => (code ? STATE_INFO[code]?.name : undefined);
 
+/** Every state/territory, A-Z by name, with a view that frames it. */
+export function stateViews(): { code: string; name: string; center: [number, number]; zoom: number }[] {
+  return Object.entries(STATE_INFO)
+    .map(([code, { name, bbox: [w, s, e, n] }]) => {
+      const lat = (s + n) / 2;
+      // Fit the larger of width / (height corrected for latitude) into ~3 tiles.
+      const span = Math.max(e - w, (n - s) / Math.cos((lat * Math.PI) / 180));
+      const zoom = Math.min(10, Math.max(3, Math.log2((360 * 3) / span) - 1.2));
+      return { code, name, center: [code === "AK" ? -152 : (w + e) / 2, lat] as [number, number], zoom: Math.round(zoom * 10) / 10 };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
 /** The states whose bounding box holds this point (neighbors' boxes overlap). */
 export function statesAt([lon, lat]: [number, number]): string[] {
   return Object.entries(STATE_INFO)
