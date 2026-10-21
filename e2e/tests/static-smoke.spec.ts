@@ -10,14 +10,36 @@ function errs(page: Page): string[] {
 const IGNORE = [/openfreemap/i, /wzmedia\.dot\.ca\.gov/i, /Failed to load resource.*(403|429|50\d)/i];
 const real = (a: string[]) => a.filter((x) => !IGNORE.some((r) => r.test(x)));
 
-test("static: loads cameras from pre-baked data with a clean console", async ({ page }) => {
+test("static: loads the camera index (only) from pre-baked data with a clean console", async ({ page }) => {
   const e = errs(page);
-  const cams = page.waitForResponse((r) => r.url().includes("data/cameras.json") && r.status() === 200);
+  const camFiles: string[] = [];
+  page.on("request", (r) => {
+    if (r.url().includes("data/cameras")) camFiles.push(new URL(r.url()).pathname.replace(/.*data\//, ""));
+  });
+  const cams = page.waitForResponse((r) => r.url().includes("data/cameras/index.json") && r.status() === 200);
   await page.goto(BASE + "/");
   await cams;
   await expect(page.locator("canvas.maplibregl-canvas")).toBeVisible();
+  await expect(page.locator(".sidebar__sub")).toContainText(/public cameras from \d+ agencies/i);
   await page.waitForTimeout(2000);
   expect(real(e), real(e).join("\n")).toEqual([]);
+  // The default (Stanislaus) view needs no search rows or camera records yet.
+  expect(camFiles).toEqual(["cameras/index.json"]);
+});
+
+test("static: search finds an out-of-state camera and opens it", async ({ page }) => {
+  await page.goto(BASE + "/");
+  await expect(page.locator(".sidebar__sub")).toContainText(/public cameras/i);
+  const search = page.waitForResponse((r) => r.url().includes("data/cameras/search.json") && r.status() === 200);
+  await page.getByPlaceholder(/Filter cameras/i).fill("illinois");
+  await search;
+  const first = page.locator(".camlist__item").first();
+  await expect(first).toBeVisible();
+  const cell = page.waitForResponse((r) => r.url().includes("data/cameras/cells/") && r.status() === 200);
+  await first.click();
+  await cell;
+  await expect(page.locator(".detail")).toBeVisible();
+  await expect(page.locator(".detail .detail__note")).toContainText("Illinois DOT");
 });
 
 test("static: camera dots render at city zoom", async ({ page }) => {

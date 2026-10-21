@@ -1,16 +1,15 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import type { Camera } from "../types";
 import { api, type LayerInfo } from "../api/client";
 import { ago } from "../freshness";
 import type { LayerState } from "./MapView";
-import { matchCamera } from "../camera-data";
+import { matchCamera, type CameraText } from "../camera-data";
 import {
   CAM, VENDOR_COLORS, VENDOR_SWATCH, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
   HEALTH_STOPS, metricStops, fmtMetric, DROUGHT_COLORS, HEAT_COLORS, LAND_COVER_CLASSES, CROP_CLASSES, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, VOTING_KEYS, WVAL_COLORS,
   WVAL_KEYS, GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS,
   VOLCANO_COLORS, VOLCANO_KEYS, DEV_STAGES,
 } from "../colors";
-import { downloadLayer, downloadCameras } from "../download";
+import { downloadLayer } from "../download";
 import { LIVE_SOURCES } from "../live-sources";
 import { covers, stateName, statesAt, stateViews } from "../view-logic";
 
@@ -152,9 +151,18 @@ const VENDORS: { id: string; label?: string; labelKey?: Key }[] = [
 const MAX_LIST = 200;
 
 interface Props {
-  cameras: Camera[];
-  selectedId: string | null;
-  onSelect: (id: string) => void;
+  /** How many cameras, from how many agencies (header). */
+  cameraCount: number;
+  agencyCount: number;
+  /** Every camera's searchable text, by point index (null until loaded). */
+  search: CameraText[] | null;
+  /** Asks for the search rows (the search box got focus / text). */
+  onSearchWanted: () => void;
+  /** Download every camera as GeoJSON. */
+  onDownloadCameras: () => void;
+  /** Selected camera's point index. */
+  selectedId: number | null;
+  onSelect: (i: number) => void;
   layers: LayerState;
   onLayersChange: (next: LayerState) => void;
   overlayInfos: LayerInfo[];
@@ -212,7 +220,11 @@ const ONLY_KEY: Record<string, Key> = {
 };
 
 export function Sidebar({
-  cameras,
+  cameraCount,
+  agencyCount,
+  search,
+  onSearchWanted,
+  onDownloadCameras,
   selectedId,
   onSelect,
   layers,
@@ -309,11 +321,19 @@ export function Sidebar({
 
   const allMatches = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return [];
-    return cameras.filter((c) => matchCamera(c, q));
-  }, [cameras, query]);
+    if (!q || !search) return [];
+    const out: number[] = [];
+    search.forEach((c, i) => {
+      if (matchCamera(c, q)) out.push(i);
+    });
+    return out;
+  }, [search, query]);
   const matches = allMatches.slice(0, MAX_LIST);
-  const agencyCount = useMemo(() => new Set(cameras.map((c) => c.source)).size, [cameras]);
+  const searching = !!query.trim() && !search;
+  // A search in the URL (or typed before the rows arrive) needs them now.
+  useEffect(() => {
+    if (query.trim() && !search) onSearchWanted();
+  }, [query, search, onSearchWanted]);
 
   const setLayer = (patch: Partial<LayerState>) => onLayersChange({ ...layers, ...patch });
   // Only layers that can actually be switched on (a checkbox may be disabled).
@@ -454,7 +474,7 @@ export function Sidebar({
             </button>
           </div>
         </div>
-        <p className="sidebar__sub">{t("camerasCount", { n: fmt(cameras.length), k: fmt(agencyCount) })}</p>
+        <p className="sidebar__sub">{t("camerasCount", { n: fmt(cameraCount), k: fmt(agencyCount) })}</p>
         <div className="sidebar__meta">
           <button type="button" className="linkbtn" onClick={onAbout}>
             {t("about")}
@@ -807,7 +827,7 @@ export function Sidebar({
             className="dl"
             title={t("downloadCameras")}
             aria-label={t("downloadCameras")}
-            onClick={() => downloadCameras(cameras)}
+            onClick={onDownloadCameras}
           >
             <span aria-hidden="true">⬇</span>
           </button>
@@ -818,12 +838,16 @@ export function Sidebar({
           className="search"
           placeholder={t("filterPlaceholder")}
           value={query}
-          onChange={(e) => onQueryChange(e.target.value)}
+          onChange={(e) => {
+            onQueryChange(e.target.value);
+            if (!search) onSearchWanted(); // also retries a failed load
+          }}
+          onFocus={onSearchWanted}
           aria-label={t("filterLabel")}
           aria-describedby="search-status"
         />
         <p id="search-status" className="sr-only" role="status" aria-live="polite">
-          {query
+          {query && !searching
             ? allMatches.length === 1
               ? t("resultsCountOne")
               : allMatches.length
@@ -832,26 +856,31 @@ export function Sidebar({
             : ""}
         </p>
         {query && (
-          <p className="panel__note search-note">{t("searchNote", { n: fmt(cameras.length) })}</p>
+          <p className="panel__note search-note">{t("searchNote", { n: fmt(cameraCount) })}</p>
         )}
         {/* Scrollable list: focusable so keyboard users can scroll it (WCAG 2.1.1). */}
         <ul className="camlist" tabIndex={0} aria-label={t("cameraList")}>
-          {matches.map((cam) => (
-            <li key={cam.id}>
-              <button
-                type="button"
-                className={`camlist__item ${cam.id === selectedId ? "camlist__item--on" : ""}`}
-                aria-current={cam.id === selectedId ? "true" : undefined}
-                onClick={() => onSelect(cam.id)}
-              >
-                <span className="camlist__name">{cam.name}</span>
-                <span className="camlist__meta">
-                  {[cam.route, cam.nearby_place, cam.county, cam.state].filter(Boolean).join(" · ")}
-                </span>
-              </button>
-            </li>
-          ))}
-          {query && matches.length === 0 && <li className="camlist__empty">{t("noMatch")}</li>}
+          {search &&
+            matches.map((i) => {
+              const cam = search[i]!;
+              return (
+                <li key={i}>
+                  <button
+                    type="button"
+                    className={`camlist__item ${i === selectedId ? "camlist__item--on" : ""}`}
+                    aria-current={i === selectedId ? "true" : undefined}
+                    onClick={() => onSelect(i)}
+                  >
+                    <span className="camlist__name">{cam.name}</span>
+                    <span className="camlist__meta">
+                      {[cam.route, cam.nearby_place, cam.county, cam.state].filter(Boolean).join(" · ")}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          {searching && <li className="camlist__empty">{t("loading")}</li>}
+          {query && !searching && matches.length === 0 && <li className="camlist__empty">{t("noMatch")}</li>}
           {!query && <li className="camlist__empty">{t("typeToSearch")}</li>}
           {allMatches.length > MAX_LIST && (
             <li className="camlist__empty">{t("showingFirst", { n: MAX_LIST })}</li>

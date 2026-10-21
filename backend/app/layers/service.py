@@ -25,6 +25,7 @@ from pathlib import Path
 
 import httpx
 
+from ..cameras import static_split
 from ..core.config import Settings
 from ..core.http import fetch_capped, post_capped
 from . import arcgis, census, development, haze, transforms
@@ -1056,19 +1057,20 @@ def _json_transform(url: str, transform: Callable[[object], dict]) -> Loader:
 WINDY_URL = "https://api.windy.com/webcams/api/v3/webcams"
 WINDY_RADIUS_KM = 150  # around Modesto
 WINDY_MAX_PAGES = 25  # 50 per page (~970 within 150 km, mostly Caltrans re-lists)
-# The baked Caltrans camera list, used to drop Windy's re-lists of them.
-BAKED_CAMERAS = Path(__file__).resolve().parents[3] / "frontend/public/data/cameras.json"
+# The static site's data folder. Its baked camera list (cameras/, see
+# app/cameras/static_split.py) is used to drop Windy's re-lists of them.
+BAKED_DATA = Path(__file__).resolve().parents[3] / "frontend/public/data"
 
 
 # Baked static copies of each layer (fallback when an upstream is down).
-BAKED_LAYERS = BAKED_CAMERAS.parent / "layers"
+BAKED_LAYERS = BAKED_DATA / "layers"
 # Never fall back to these: the committed file is an empty placeholder.
 LIVE_ONLY = {"flights"}
 
 
 # When each baked layer was actually fetched (written by bake.py/refresh_live.py).
 # File mtimes are useless here: a git checkout resets them all to "now".
-LAYER_TIMES = BAKED_CAMERAS.parent / "layer_times.json"
+LAYER_TIMES = BAKED_DATA / "layer_times.json"
 
 
 def _baked_times() -> dict[str, float]:
@@ -1115,9 +1117,8 @@ def record_layer_times(names: list[str]) -> None:
 
 def _known_cameras() -> list[tuple[float, float]]:
     try:
-        cams = json.loads(BAKED_CAMERAS.read_text()).get("cameras", [])
-        return [(float(c["latitude"]), float(c["longitude"])) for c in cams]
-    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return static_split.read_points(BAKED_DATA)
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, IndexError):
         return []  # title-pattern dedupe still applies
 
 

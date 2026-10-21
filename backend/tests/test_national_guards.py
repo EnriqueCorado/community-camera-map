@@ -1,6 +1,6 @@
 """Guards around the nationwide cameras: the snapshot proxy's per-source host
 and public-address checks, HTML-entity handling, keys never kept in URLs, the
-bake's sanity checks and the compact cameras.json format. No network."""
+bake's sanity checks and the compact camera list format. No network."""
 
 from __future__ import annotations
 
@@ -155,3 +155,32 @@ def test_compact_camera_drops_defaults_and_keeps_non_default_state():
         False,
         "avo",
     )
+
+
+async def test_bake_cameras_writes_the_split_list(tmp_path, monkeypatch):
+    ca = _cam(
+        id="d10-a", latitude=37.6, longitude=-121.0, snapshot_url="https://cwwp2.dot.ca.gov/a.jpg"
+    )
+    il = _cam(id="il-a", source="il", state="IL", latitude=41.9, longitude=-87.9,
+              snapshot_url="https://cctv.travelmidwest.com/a.jpg")  # fmt: skip
+
+    class Cams:
+        def __init__(self, cams):
+            self.cams = cams
+
+        async def list_cameras(self):
+            return self.cams
+
+    monkeypatch.setattr(bake, "OUT", tmp_path)
+    await bake.bake_cameras(Cams([ca, il]))
+    index = json.loads((tmp_path / "cameras/index.json").read_text())
+    assert (index["count"], index["agencies"], sorted(index["sources"])) == (
+        2,
+        2,
+        ["caltrans", "il"],
+    )
+    assert bake.static_split.read(tmp_path)["cameras"][0]["id"] == "d10-a"
+    # The next bake compares against this one's count (MIN_KEEP guard).
+    with pytest.raises(bake.CameraBakeError, match="only 1"):
+        await bake.bake_cameras(Cams([ca]))
+    assert bake.static_split.read_count(tmp_path) == 2  # the guard kept the old list

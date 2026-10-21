@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as maplibregl from "maplibre-gl";
 import type { GeoJSONSource, MapMouseEvent } from "maplibre-gl";
-import type { Camera } from "../types";
-import { matchCamera } from "../camera-data";
+import { matchCamera, type CameraPoints, type CameraText } from "../camera-data";
 
 // maplibre v6 adds `features` to the event only through the layer-listener
 // overload; name that shape for our click handlers.
@@ -50,9 +49,15 @@ export interface LayerState {
 }
 
 interface Props {
-  cameras: Camera[];
-  selectedId: string | null;
-  onSelect: (id: string) => void;
+  /** Every camera's position (clustered). */
+  points: CameraPoints;
+  /** Every camera's searchable text (null until loaded: the filter waits). */
+  search: CameraText[] | null;
+  /** Selected camera's point index. */
+  selectedId: number | null;
+  onSelect: (i: number) => void;
+  /** A close-up view settled: warm the camera records there. */
+  onPrefetch?: (west: number, south: number, east: number, north: number) => void;
   layers: LayerState;
   overlayInfos: LayerInfo[];
   query: string;
@@ -84,24 +89,31 @@ const LABEL_FONT = ["Noto Sans Bold"];
 
 const CA_CENTER: [number, number] = [-119.4, 37.2];
 
-function toFeatureCollection(cameras: Camera[], query: string): GeoJSON.FeatureCollection {
+/** Camera points as GeoJSON (property `i`: the point index). A filter waits
+ *  for the search rows: until they arrive every camera shows. */
+function toFeatureCollection(points: CameraPoints, search: CameraText[] | null, query: string): GeoJSON.FeatureCollection {
   const q = query.trim().toLowerCase();
-  return {
-    type: "FeatureCollection",
-    features: cameras
-      .filter((c) => matchCamera(c, q))
-      .map((c) => ({
-        type: "Feature",
-        geometry: { type: "Point", coordinates: [c.longitude, c.latitude] },
-        properties: { id: c.id, name: c.name },
-      })),
-  };
+  const features: GeoJSON.Feature[] = [];
+  for (let i = 0; i < points.count; i++) {
+    if (q && search && !matchCamera(search[i]!, q)) continue;
+    features.push({
+      type: "Feature",
+      geometry: { type: "Point", coordinates: [points.lon[i]!, points.lat[i]!] },
+      properties: { i },
+    });
+  }
+  return { type: "FeatureCollection", features };
 }
 
+// Records load for close-up views only (individual dots show from zoom 12).
+const PREFETCH_ZOOM = 10;
+
 export function MapView({
-  cameras,
+  points,
+  search,
   selectedId,
   onSelect,
+  onPrefetch,
   layers,
   overlayInfos,
   query,
@@ -132,6 +144,12 @@ export function MapView({
   const historyShownRef = useRef<Map<string, string>>(new Map());
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
+  const onPrefetchRef = useRef(onPrefetch);
+  onPrefetchRef.current = onPrefetch;
+  const pointsRef = useRef(points);
+  pointsRef.current = points;
+  const searchRef = useRef(search);
+  searchRef.current = search;
   const onViewRef = useRef(onView);
   onViewRef.current = onView;
   const coverageRef = useRef(coverage);
@@ -200,7 +218,7 @@ export function MapView({
       // Camera source (clustered).
       map.addSource("cameras", {
         type: "geojson",
-        data: toFeatureCollection(cameras, queryRef.current),
+        data: toFeatureCollection(pointsRef.current, searchRef.current, queryRef.current),
         cluster: true,
         clusterRadius: 44,
         // Dissolve clusters by city zoom so individual cameras (and the
@@ -249,7 +267,7 @@ export function MapView({
         id: "cam-selected",
         type: "circle",
         source: "cameras",
-        filter: ["==", ["get", "id"], "__none__"],
+        filter: ["==", ["get", "i"], -1],
         paint: {
           "circle-color": "#ffd23f",
           "circle-radius": 9,
@@ -261,8 +279,8 @@ export function MapView({
       // Interactions.
       map.on("click", "cam-clusters", (e: LayerMouseEvent) => zoomCluster(map, "cameras", e));
       map.on("click", "cam-points", (e: LayerMouseEvent) => {
-        const id = e.features?.[0]?.properties?.id;
-        if (typeof id === "string") onSelectRef.current(id);
+        const i = e.features?.[0]?.properties?.i;
+        if (typeof i === "number") onSelectRef.current(i);
       });
       for (const l of ["cam-clusters", "cam-points"]) {
         map.on("mouseenter", l, () => (map.getCanvas().style.cursor = "pointer"));
@@ -307,6 +325,10 @@ export function MapView({
       map.on("moveend", () => {
         const c = map.getCenter();
         onViewRef.current({ center: [c.lng, c.lat], zoom: map.getZoom() });
+        if (map.getZoom() >= PREFETCH_ZOOM) {
+          const b = map.getBounds();
+          onPrefetchRef.current?.(b.getWest(), b.getSouth(), b.getEast(), b.getNorth());
+        }
       });
       map.on("click", (e) => {
         if (coverageRef.current.active) void runCoverage(map, e.lngLat, alprDataRef, coverageRef.current.radiusM, onCoverageResultRef.current);
@@ -340,22 +362,24 @@ export function MapView({
   // filter applies across the whole map and persists as you pan/zoom). ---
   // ~16k cameras: re-clustering on every keystroke stutters, so a typed
   // filter waits for a short pause, and an unchanged filter isn't re-pushed.
-  const pushedRef = useRef<{ cameras: Camera[]; q: string } | null>(null);
+  const pushedRef = useRef<{ points: CameraPoints; search: CameraText[] | null; q: string } | null>(null);
   useEffect(() => {
     const q = query.trim().toLowerCase();
     const push = () => {
       const map = mapRef.current;
       if (!map || !readyRef.current) return;
-      if (pushedRef.current?.cameras === cameras && pushedRef.current.q === q) return;
+      const last = pushedRef.current;
+      // Search rows arriving change nothing while there's no filter.
+      if (last?.points === points && last.q === q && (!q || last.search === search)) return;
       const src = map.getSource("cameras") as GeoJSONSource | undefined;
       if (!src) return;
-      src.setData(toFeatureCollection(cameras, q));
-      pushedRef.current = { cameras, q };
+      src.setData(toFeatureCollection(points, search, q));
+      pushedRef.current = { points, search, q };
     };
     if (!q) return push(); // clearing the filter shows everything at once
     const t = window.setTimeout(push, 200);
     return () => window.clearTimeout(t);
-  }, [cameras, query]);
+  }, [points, search, query]);
 
   // --- Lazy-load the ALPR layer the first time it's switched on. ---
   useEffect(() => {
@@ -808,18 +832,15 @@ export function MapView({
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !readyRef.current) return;
-    map.setFilter("cam-selected", ["==", ["get", "id"], selectedId ?? "__none__"]);
-    if (selectedId) {
-      const cam = cameras.find((c) => c.id === selectedId);
-      if (cam) {
-        map.easeTo({
-          center: [cam.longitude, cam.latitude],
-          zoom: Math.max(map.getZoom(), 13),
-          ...(prefersReducedMotion() ? { duration: 0 } : {}),
-        });
-      }
+    map.setFilter("cam-selected", ["==", ["get", "i"], selectedId ?? -1]);
+    if (selectedId !== null && selectedId < points.count) {
+      map.easeTo({
+        center: [points.lon[selectedId]!, points.lat[selectedId]!],
+        zoom: Math.max(map.getZoom(), 13),
+        ...(prefersReducedMotion() ? { duration: 0 } : {}),
+      });
     }
-  }, [selectedId, cameras]);
+  }, [selectedId, points]);
 
   // --- Quick-jump (Oakdale / Modesto / statewide). ---
   useEffect(() => {

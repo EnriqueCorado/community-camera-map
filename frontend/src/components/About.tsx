@@ -91,7 +91,7 @@ const COPY: Record<
     asOf: (d) => `Data as of ${d}.`,
     live: "live (served from the API)",
     cameras: "Public cameras",
-    shareAlike: "Our reformatted copy of this data (data/cameras.json) is shared under the same license.",
+    shareAlike: "Our reformatted copy of this data (the files under data/cameras/) is shared under the same license.",
   },
   es: {
     title: "Acerca de este mapa",
@@ -150,7 +150,7 @@ const COPY: Record<
     asOf: (d) => `Datos al ${d}.`,
     live: "en vivo (servidos por la API)",
     cameras: "Cámaras públicas",
-    shareAlike: "Nuestra copia reformateada de estos datos (data/cameras.json) se comparte bajo la misma licencia.",
+    shareAlike: "Nuestra copia reformateada de estos datos (los archivos en data/cameras/) se comparte bajo la misma licencia.",
   },
 };
 
