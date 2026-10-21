@@ -368,8 +368,8 @@ function BuiltLookup({ c, onAge }: { c: HelpCopy; onAge: (v: YesNo | null) => vo
                   {[m.number, m.dir, m.street, m.suffix].filter(Boolean).join(" ")}, {m.city}
                 </strong>
                 {": "}
-                {c.lookupYears(m.minYear, m.maxYear)} {m.use && `(${c.useLabel[m.use]}). `}
-                {c.lookupAge[age](year - RENT_FACTS.newConstructionYears)}
+                {c.lookupYears(m.minYear, m.maxYear)}
+                {m.use && ` (${c.useLabel[m.use]})`}. {c.lookupAge[age](year - RENT_FACTS.newConstructionYears)}
               </p>
             );
           })}

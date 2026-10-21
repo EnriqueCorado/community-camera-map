@@ -103,7 +103,10 @@
 
 .help__lead {
   font-size: 15px;
-  max-width: 68ch;
+}
+
+.help .linkbtn {
+  font-size: 14px;
 }
 
 /* Tabs */
@@ -192,6 +195,14 @@
 
 .hform--1 {
   grid-template-columns: 1fr;
+}
+
+.hf--wide {
+  grid-column: 1 / -1;
+}
+
+.hf--wide select.hf__input {
+  max-width: 560px;
 }
 
 .hf {

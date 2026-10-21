@@ -165,7 +165,7 @@ export const REPAIR_FACTS = {
   ] satisfies Fact[],
   /** City/county inspectors who can order repairs (the cities not listed have their own; call city hall). */
   codeEnforcement: [
-    { name: { en: "Modesto Code Enforcement", es: "Código de Construcción de Modesto (Code Enforcement)" }, phone: "(209) 577-5250", url: "https://www.modestogov.com/666/Code-Enforcement" },
+    { name: { en: "Modesto Code Enforcement", es: "Inspección de Códigos de Modesto (Code Enforcement)" }, phone: "(209) 577-5250", url: "https://www.modestogov.com/666/Code-Enforcement" },
     { name: { en: "Turlock Code Enforcement", es: "Code Enforcement de Turlock" }, phone: "(209) 664-7348", url: "https://www.cityofturlock.org/neighborhoodissues/safetyconcerns/unsafebuildings.asp" },
     { name: { en: "Ceres Code Enforcement", es: "Code Enforcement de Ceres" }, phone: "(209) 538-5799", url: "https://www.ceres.gov/714/Code-Enforcement" },
     { name: { en: "Stanislaus County (unincorporated areas): Environmental Resources", es: "Condado de Stanislaus (zonas no incorporadas): Recursos Ambientales" }, phone: "(209) 525-6700", url: "https://www.stancounty.com/er/codeenforcement/faq.shtm" },
@@ -253,8 +253,8 @@ export const MOBILE_FACTS = {
     {
       id: "renter",
       cite: "Civ. Code §1947.12(i), (j)",
-      en: "If you RENT the mobile home itself (you don’t own it), the regular renter rent cap can protect you instead. Use “Is my rent increase legal?”.",
-      es: "Si usted RENTA la casa móvil (no es suya), le puede proteger el límite normal de renta para inquilinos. Use “¿Es legal mi aumento de renta?”.",
+      en: "If you RENT the mobile home itself (you don’t own it), the regular renter rent cap can protect you instead: use the rent increase check.",
+      es: "Si usted RENTA la casa móvil (no es suya), le puede proteger el límite normal de renta para inquilinos: use la revisión del aumento de renta.",
     },
   ] satisfies Fact[],
   contacts: [
