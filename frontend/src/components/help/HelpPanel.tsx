@@ -11,6 +11,8 @@ import { Tabs } from "./Tabs";
 import { MedicalHelp } from "./MedicalHelp";
 import { RenterHelp } from "./RenterHelp";
 import { LegalHelp } from "./LegalHelp";
+import { WorkHelp } from "./WorkHelp";
+import { BenefitsHelp } from "./BenefitsHelp";
 
 interface Props {
   target: HelpTarget;
@@ -30,6 +32,8 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
   const tabs: { id: HelpTab; label: string }[] = [
     { id: "medical", label: c.tabMedical },
     { id: "rent", label: c.tabRent },
+    { id: "work", label: c.tabWork },
+    { id: "benefits", label: c.tabBenefits },
     { id: "legal", label: c.tabLegal },
   ];
   const go = (t: HelpTarget) => {
@@ -70,10 +74,13 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
             <RenterHelp
               c={c}
               mobileHome={!!target.mobileHome}
+              eviction={!!target.eviction}
               onMobileHome={(mobileHome) => go({ tab: "rent", mobileHome })}
               onLegal={() => go({ tab: "legal" })}
             />
           )}
+          {target.tab === "work" && <WorkHelp c={c} heat={!!target.heat} onLegal={() => go({ tab: "legal" })} />}
+          {target.tab === "benefits" && <BenefitsHelp c={c} />}
           {target.tab === "legal" && <LegalHelp c={c} onShowOnMap={onShowOnMap} />}
           <p className="hdisclaimer">{c.disclaimer}</p>
         </div>

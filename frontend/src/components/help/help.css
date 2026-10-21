@@ -583,3 +583,22 @@ textarea.hf__input {
     margin: 0.4in;
   }
 }
+
+/* Windows high contrast / forced colors: selected states and result kinds
+   must not rely on background or border color alone. */
+@media (forced-colors: active) {
+  .chip--on,
+  .hchoice__opt--on,
+  .htabs__tab[aria-selected="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: 1px;
+  }
+  .hresult {
+    border-left-width: 8px;
+    border-left-style: double;
+  }
+  .hletter__preview {
+    background: Canvas;
+    color: CanvasText;
+  }
+}

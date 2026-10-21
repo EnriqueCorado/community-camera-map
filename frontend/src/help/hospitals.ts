@@ -1,6 +1,6 @@
 // Hospitals in Stanislaus County and their financial assistance ("charity
 // care") policies, read from each hospital's own policy as filed with HCAI
-// (hcai.ca.gov/affordability/hospital-billing-policies). Locations are from
+// (HCAI policy lookup: hcai.ca.gov/affordability/hospital-fair-billing-program). Locations are from
 // CDPH's licensed-facility list (2026-10-16). Checked 2026-10-19.
 //
 // Links point at the HCAI-filed copy when a hospital's own site blocks

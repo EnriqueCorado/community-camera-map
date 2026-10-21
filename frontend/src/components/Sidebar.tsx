@@ -16,6 +16,7 @@ import { covers, stateName, statesAt, stateViews } from "../view-logic";
 const STATE_VIEWS = stateViews();
 import { OSM_MIN_ZOOM } from "../osm-sources";
 import { NearMe, type NearPoint } from "./NearMe";
+import { DisplaySettings } from "./DisplaySettings";
 import { HistoryPicker } from "./HistoryPicker";
 import { PRESETS, activePreset, applyPreset } from "../presets";
 import { HISTORY_LAYERS } from "../history";
@@ -499,6 +500,7 @@ export function Sidebar({
             <span className="helpbtn__sub">{t("helpOpenSub")}</span>
           </span>
         </button>
+        <DisplaySettings />
       </div>
 
       <Section {...section("jump")} as="nav" title={t("jumpTo")}>

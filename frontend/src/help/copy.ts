@@ -15,6 +15,12 @@ export interface HelpCopy {
   tabMedical: string;
   tabRent: string;
   tabLegal: string;
+  tabWork: string;
+  tabBenefits: string;
+  workViewLabel: string;
+  workViewWages: string;
+  workViewHeat: string;
+  rentViewEviction: string;
   disclaimer: string;
   loading: string;
   newTab: string;
@@ -174,6 +180,12 @@ const en: HelpCopy = {
   tabMedical: "Medical bills",
   tabRent: "Renters",
   tabLegal: "Legal help",
+  tabWork: "Work",
+  tabBenefits: "Benefits",
+  workViewLabel: "Choose a topic",
+  workViewWages: "Unpaid wages",
+  workViewHeat: "Heat at work today",
+  rentViewEviction: "Got an eviction notice?",
   disclaimer:
     "This is general information, not legal advice, from public law and official sources (checked dates are shown). Every situation is different. For advice about yours, contact one of the free legal help offices.",
   loading: "Loading…",
@@ -355,6 +367,12 @@ const es: HelpCopy = {
   tabMedical: "Cuentas médicas",
   tabRent: "Inquilinos",
   tabLegal: "Ayuda legal",
+  tabWork: "Trabajo",
+  tabBenefits: "Beneficios",
+  workViewLabel: "Elija un tema",
+  workViewWages: "Salarios no pagados",
+  workViewHeat: "Calor en el trabajo hoy",
+  rentViewEviction: "¿Recibió un aviso de desalojo?",
   disclaimer:
     "Esta es información general, no consejo legal, tomada de la ley y de fuentes oficiales (se muestra la fecha de revisión). Cada caso es distinto. Para un consejo sobre su caso, comuníquese con una de las oficinas de ayuda legal gratuita.",
   loading: "Cargando…",

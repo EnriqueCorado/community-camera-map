@@ -9,22 +9,26 @@ import { depositLetter, repairLetter } from "../../help/letters";
 import { builtAge, lookupAddress, type ParcelMatch } from "../../help/parcels";
 import { Choice, ExtLink, Field, MoneyInput, Phone, Result, Sources } from "./ui";
 import { LetterBuilder } from "./LetterBuilder";
+import { EvictionTool } from "./EvictionTool";
 
-type View = "rent" | "repairs" | "deposit" | "mobile";
+type View = "rent" | "eviction" | "repairs" | "deposit" | "mobile";
 
 export function RenterHelp({
   c,
   mobileHome,
+  eviction,
   onMobileHome,
   onLegal,
 }: {
   c: HelpCopy;
   mobileHome: boolean;
+  /** Open on the eviction-notice deadline helper. */
+  eviction: boolean;
   onMobileHome: (on: boolean) => void;
   onLegal: () => void;
 }) {
   const { lang, locale } = useI18n();
-  const [view, setView] = useState<View>(mobileHome ? "mobile" : "rent");
+  const [view, setView] = useState<View>(mobileHome ? "mobile" : eviction ? "eviction" : "rent");
   useEffect(() => {
     if (mobileHome) setView("mobile");
   }, [mobileHome]);
@@ -34,6 +38,7 @@ export function RenterHelp({
   };
   const views: [View, string][] = [
     ["rent", c.rentViewIncrease],
+    ["eviction", c.rentViewEviction],
     ["repairs", c.rentViewRepairs],
     ["deposit", c.rentViewDeposit],
     ["mobile", c.rentViewMobile],
@@ -51,6 +56,7 @@ export function RenterHelp({
       </div>
 
       {view === "rent" && <RentIncrease c={c} onMobileOwner={() => pick("mobile")} />}
+      {view === "eviction" && <EvictionTool c={c} onLegal={onLegal} />}
       {view === "repairs" && (
         <>
           <h3>{c.repairsTitle}</h3>

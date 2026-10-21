@@ -386,7 +386,7 @@ export const MEDICAL_FACTS = {
   } satisfies Contact,
   sources: [
     { label: "Hospital Fair Pricing Act, Health & Safety Code §127400 and following", url: LEGINFO("HSC", "127405") },
-    { label: "HCAI: hospital financial assistance policies (search any California hospital)", url: "https://hcai.ca.gov/affordability/hospital-billing-policies/" },
+    { label: "HCAI: hospital financial assistance policies (search any California hospital)", url: "https://hcai.ca.gov/affordability/hospital-fair-billing-program/hospital-fair-pricing-policy-lookup/" },
     { label: "HCAI Hospital Bill Complaint Program", url: "https://hcai.ca.gov/HospitalBillHelp" },
     { label: "HHS poverty guidelines (2026)", url: "https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines" },
     { label: "Civil Code §1785.27 (no credit reporting of medical debt)", url: LEGINFO("CIV", "1785.27") },

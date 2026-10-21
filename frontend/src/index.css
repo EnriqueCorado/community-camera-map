@@ -16,8 +16,10 @@
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
+/* Light theme: follows the device unless the viewer picked one
+   (html[data-theme], see display.ts). */
 @media (prefers-color-scheme: light) {
-  :root {
+  :root:not([data-theme="dark"]) {
     --bg: #f4f6f8;
     --panel: #ffffff;
     --panel-2: #eef1f4;
@@ -31,6 +33,30 @@
     --danger: #b42318; /* 6.6:1 on white */
     color-scheme: light;
   }
+}
+
+:root[data-theme="light"] {
+  --bg: #f4f6f8;
+  --panel: #ffffff;
+  --panel-2: #eef1f4;
+  --line: #dde3e9;
+  --ink: #16202b;
+  --muted: #5e6b78;
+  --accent: #0b7a4c; /* 5.4:1 on white (WCAG AA); was #0f9d63 at 3.5:1 */
+  --accent-ink: #ffffff;
+  --marker: #0f9d63;
+  --marker-active: #e08a00;
+  --danger: #b42318; /* 6.6:1 on white */
+  color-scheme: light;
+}
+
+/* Larger text: the panels' sizes are in px, so scale them as a whole. */
+:root[data-text="large"] {
+  --sidebar-w: 400px;
+}
+
+:root[data-text="large"] :is(.sidebar, .help__card, .about__card, .detail, .scm-popup) {
+  zoom: 1.18;
 }
 
 * {
@@ -597,6 +623,25 @@ body:has(.app) {
 }
 
 /* Sidebar entry point to the free Help tools (the panel's own styles load with it) */
+.display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 10px;
+}
+
+.display__group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.display__label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-right: 2px;
+}
+
 .helpbtn__wrap {
   padding: 12px 20px;
   border-bottom: 1px solid var(--line);
@@ -1368,4 +1413,13 @@ fieldset.subfilter {
   border: 1px solid var(--line);
   background: var(--panel-2);
   color: var(--ink);
+}
+
+/* Forced colors (Windows high contrast): pressed chips keep a visible state. */
+@media (forced-colors: active) {
+  .chip--on,
+  .helpbtn {
+    outline: 2px solid Highlight;
+    outline-offset: 1px;
+  }
 }
