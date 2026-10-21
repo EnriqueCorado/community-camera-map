@@ -44,7 +44,7 @@ async def check(client: httpx.AsyncClient, spec: dict) -> str | None:
         states._check(spec, spec.get("name", "?"))
     except states.SpecError as exc:
         return f"invalid: {exc}"
-    if spec["name"] in LAYERS:
+    if spec["name"] in LAYERS and spec["name"] not in _REVERIFYING:
         return "name already used by an existing layer"
     v = spec["view"]
     try:
@@ -65,7 +65,9 @@ async def check(client: httpx.AsyncClient, spec: dict) -> str | None:
         "outSR": "4326",
         "spatialRel": "esriSpatialRelIntersects",
         "outFields": ",".join(v["fields"]),
-        "resultRecordCount": "50",
+        # big Esri services time out (~55 s) on tiny pages; the map asks for
+        # spec.max_features (2000) and so do we
+        "resultRecordCount": str(v.get("max_features", 2000)),
         "f": "geojson",
     }
     try:
@@ -82,8 +84,23 @@ async def check(client: httpx.AsyncClient, spec: dict) -> str | None:
     return None
 
 
+# Layers already shipped from the output file being rewritten (a re-run).
+_REVERIFYING: set[str] = set()
+
+
+def _prefixed(spec: dict) -> dict:
+    """City-scoped specs ("nyc-…") get their state prefix ("ny-nyc-…")."""
+    st = str(spec.get("state", "")).lower()
+    name = str(spec.get("name", ""))
+    if st and not name.startswith(f"{st}-"):
+        spec = {**spec, "name": f"{st}-{name}"}
+    return spec
+
+
 async def main(src: Path, dst: Path) -> None:
-    specs = json.loads(src.read_text())
+    specs = [_prefixed(s) for s in json.loads(src.read_text())]
+    if dst.is_file():
+        _REVERIFYING.update(s["name"] for s in json.loads(dst.read_text()))
     sem = asyncio.Semaphore(6)
     async with httpx.AsyncClient(
         timeout=60, headers={"User-Agent": UA}, follow_redirects=True

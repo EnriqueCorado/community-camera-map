@@ -1,0 +1,4089 @@
+[
+ {
+  "name": "nd-parcels",
+  "state": "ND",
+  "title": "Parcels (North Dakota statewide)",
+  "title_es": "Parcelas (Dakota del Norte, todo el estado)",
+  "description": "North Dakota GIS Hub statewide parcel boundaries compiled from counties, with plat, lot, and acreage (no owner or address fields).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "North Dakota GIS Hub (NDIT) / counties",
+  "license": "ND GIS Hub open data (public); attribute ND GIS Hub and counties",
+  "view": {
+   "url": "https://services1.arcgis.com/GOcSXpzwBHyk2nog/arcgis/rest/services/NDGISHUB_Parcels/FeatureServer/0",
+   "fields": {
+    "UniqueGISID": "parcel_id",
+    "CountyName": "county",
+    "SubdivisionPlat": "name",
+    "Lot": "lot",
+    "Block": "block",
+    "CalculatedAcres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.8037,
+    46.8691,
+    -96.7763,
+    46.8809
+   ],
+   "count": 1453,
+   "kb": 513,
+   "max_record_count": 2000,
+   "features_in_probe": 1453
+  }
+ },
+ {
+  "name": "nd-plots-walk-in",
+  "state": "ND",
+  "title": "PLOTS walk-in hunting lands (North Dakota)",
+  "title_es": "Tierras PLOTS de caza a pie (Dakota del Norte)",
+  "description": "Private Land Open To Sportsmen (PLOTS) tracts leased by ND Game and Fish for public walk-in hunting; 2025 review-year data, confirm with the current PLOTS guide.",
+  "group": "nature",
+  "category": "park",
+  "source": "North Dakota Game and Fish Department via ND GIS Hub",
+  "license": "ND GIS Hub open data (public); attribute ND Game and Fish",
+  "view": {
+   "url": "https://services1.arcgis.com/GOcSXpzwBHyk2nog/arcgis/rest/services/NDGISHUB_PLOTS_Lands/FeatureServer/0",
+   "fields": {
+    "Unit_Name": "name",
+    "Unit_Type": "kind",
+    "Status": "status",
+    "County_Name": "county",
+    "Total_Acres": "acres",
+    "Review_Year": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "Status = 'Active'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.5578,
+    46.1291,
+    -95.0422,
+    47.6309
+   ],
+   "count": 384,
+   "kb": 132,
+   "max_record_count": 2000,
+   "features_in_probe": 384
+  }
+ },
+ {
+  "name": "nd-school-districts",
+  "state": "ND",
+  "title": "School districts (North Dakota)",
+  "title_es": "Distritos escolares (Dakota del Norte)",
+  "description": "North Dakota Department of Public Instruction school district boundaries with grades and county seat.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "North Dakota Department of Public Instruction via ND GIS Hub",
+  "license": "ND GIS Hub open data (public); attribute ND DPI",
+  "view": {
+   "url": "https://services1.arcgis.com/GOcSXpzwBHyk2nog/arcgis/rest/services/NDGISHUB_School_Districts/FeatureServer/0",
+   "fields": {
+    "DistrictName": "name",
+    "DistrictID": "district_id",
+    "LEAType": "kind",
+    "AcademicSchoolYear": "updated",
+    "CountyName": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -100.3156,
+    45.3781,
+    -93.2844,
+    48.3819
+   ],
+   "count": 84,
+   "kb": 306,
+   "max_record_count": 2000,
+   "features_in_probe": 84
+  }
+ },
+ {
+  "name": "nd-state-forests",
+  "state": "ND",
+  "title": "State forests (North Dakota)",
+  "title_es": "Bosques estatales (Dakota del Norte)",
+  "description": "North Dakota state forest units (Forest Service of North Dakota lands).",
+  "group": "nature",
+  "category": "park",
+  "source": "North Dakota Forest Service / Game and Fish via ND GIS Hub",
+  "license": "ND GIS Hub open data (public); attribute ND GIS Hub",
+  "view": {
+   "url": "https://services1.arcgis.com/GOcSXpzwBHyk2nog/arcgis/rest/services/NDGISHUB_State_Forest/FeatureServer/0",
+   "fields": {
+    "DESCRIPTION": "name",
+    "UNIT_TYPE": "kind",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -107.0312,
+    45.9054,
+    -92.9688,
+    51.6946
+   ],
+   "count": 27,
+   "kb": 8,
+   "max_record_count": 2000,
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "nd-state-parks",
+  "state": "ND",
+  "title": "State parks & recreation areas (North Dakota)",
+  "title_es": "Parques estatales y áreas recreativas (Dakota del Norte)",
+  "description": "North Dakota Parks and Recreation Department state park and recreation area boundaries.",
+  "group": "nature",
+  "category": "park",
+  "source": "North Dakota Parks and Recreation Department via ND GIS Hub",
+  "license": "ND GIS Hub open data (public); attribute ND Parks and Recreation",
+  "view": {
+   "url": "https://services1.arcgis.com/GOcSXpzwBHyk2nog/arcgis/rest/services/NDGISHUB_State_Parks/FeatureServer/0",
+   "fields": {
+    "UNIT_NAME": "name",
+    "DESCRIPTION": "kind",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -107.0312,
+    44.2142,
+    -92.9688,
+    50.1858
+   ],
+   "count": 21,
+   "kb": 8,
+   "max_record_count": 2000,
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "nd-wildlife-mgmt-areas",
+  "state": "ND",
+  "title": "Wildlife management areas (North Dakota Game and Fish)",
+  "title_es": "Áreas de manejo de vida silvestre (Dakota del Norte)",
+  "description": "North Dakota Game and Fish Department wildlife management areas open to public hunting.",
+  "group": "nature",
+  "category": "park",
+  "source": "North Dakota Game and Fish Department via ND GIS Hub",
+  "license": "ND GIS Hub open data (public); attribute ND Game and Fish",
+  "view": {
+   "url": "https://services1.arcgis.com/GOcSXpzwBHyk2nog/arcgis/rest/services/NDGISHUB_Wildlife_Management_Areas/FeatureServer/0",
+   "fields": {
+    "Unit_Name": "name",
+    "COUNTY": "county",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -103.5156,
+    45.7071,
+    -96.4844,
+    48.6929
+   ],
+   "count": 295,
+   "kb": 140,
+   "max_record_count": 2000,
+   "features_in_probe": 295
+  }
+ },
+ {
+  "name": "nd-winter-road-conditions",
+  "state": "ND",
+  "title": "Winter road conditions (North Dakota 511)",
+  "title_es": "Condiciones invernales de carreteras (North Dakota 511)",
+  "description": "North Dakota DOT highway segment driving conditions (normal, snow, ice, closed), collected by Iowa DOT's Midwest road-conditions feed and linked to North Dakota 511.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "North Dakota DOT via Iowa DOT Midwest Winter Road Conditions",
+  "license": "Public 511 data; attribute North Dakota DOT and Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Midwest_Winter_Road_Conditions_View/FeatureServer/0",
+   "fields": {
+    "SEGMENT_NAME": "name",
+    "ROUTE_NAME": "address",
+    "HEADLINE": "status",
+    "DESCRIPTION": "kind",
+    "SOURCE_LINK": "page",
+    "REPORT_UPDATED": "updated"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "SOURCE = 'North Dakota DOT'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.5578,
+    46.1291,
+    -95.0422,
+    47.6309
+   ],
+   "count": 106,
+   "kb": 42,
+   "max_record_count": 2000,
+   "features_in_probe": 106
+  }
+ },
+ {
+  "name": "sd-gfp-lands",
+  "state": "SD",
+  "title": "Game production & GFP public lands – hunting (South Dakota)",
+  "title_es": "Tierras públicas de GFP para caza (Dakota del Sur)",
+  "description": "Lands managed by South Dakota Game, Fish and Parks, mostly game production areas open to public hunting, plus parks and water access areas.",
+  "group": "nature",
+  "category": "park",
+  "source": "South Dakota Game, Fish and Parks",
+  "license": "SD GFP open data (public); attribute SD GFP",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/0a01764b6c3b4d13b9af23df1610214b/rest/services/OpenData/SouthDakota_GFPManagedLands/FeatureServer/0",
+   "fields": {
+    "AreaName": "name",
+    "ClassificationCode": "kind",
+    "Division": "operator"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.4878,
+    42.7436,
+    -94.9722,
+    44.3364
+   ],
+   "count": 208,
+   "kb": 83,
+   "max_record_count": 2000,
+   "features_in_probe": 208
+  }
+ },
+ {
+  "name": "sd-school-public-lands",
+  "state": "SD",
+  "title": "State school & public lands – open to hunting (South Dakota)",
+  "title_es": "Tierras estatales escolares y públicas (Dakota del Sur)",
+  "description": "South Dakota school and public (state trust) lands, generally open to walk-in hunting and fishing, as mapped by SD GFP.",
+  "group": "nature",
+  "category": "park",
+  "source": "South Dakota Game, Fish and Parks / SD Office of School and Public Lands",
+  "license": "SD GFP open data (public); attribute SD GFP",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/56823372753a4c678ae006b7b19c5a6e/rest/services/OpenData/SouthDakota_SchoolAndPublicLands/FeatureServer/0",
+   "fields": {
+    "Type": "kind",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -102.1078,
+    43.5847,
+    -98.5922,
+    45.1553
+   ],
+   "count": 372,
+   "kb": 94,
+   "max_record_count": 2000,
+   "features_in_probe": 372
+  }
+ },
+ {
+  "name": "sd-sioux-falls-parcels",
+  "state": "SD",
+  "title": "Parcels (City of Sioux Falls)",
+  "title_es": "Parcelas (Ciudad de Sioux Falls)",
+  "description": "City of Sioux Falls parcels with address, subdivision, land use code, and acreage; owner names left out.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Sioux Falls GIS",
+  "license": "City of Sioux Falls public GIS data; attribute City of Sioux Falls",
+  "view": {
+   "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Property/MapServer/1",
+   "fields": {
+    "TAG": "parcel_id",
+    "ADDRESS": "address",
+    "ADDITION": "name",
+    "LANDUSE": "kind",
+    "ACREAGE": "acres",
+    "NUMUNITS": "units",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.7369,
+    43.5419,
+    -96.7231,
+    43.5481
+   ],
+   "count": 481,
+   "kb": 171,
+   "max_record_count": 1000,
+   "features_in_probe": 481
+  }
+ },
+ {
+  "name": "sd-state-parks",
+  "state": "SD",
+  "title": "State parks & recreation areas (South Dakota)",
+  "title_es": "Parques estatales y áreas recreativas (Dakota del Sur)",
+  "description": "South Dakota Game, Fish and Parks state parks, recreation areas, and lakeside use areas.",
+  "group": "nature",
+  "category": "park",
+  "source": "South Dakota Game, Fish and Parks",
+  "license": "SD GFP open data (public); attribute SD GFP",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/4787d99dcb1f4728b33f89a9eb9ae03e/rest/services/OpenData/SouthDakota_ParksAndRecreationAreas/FeatureServer/0",
+   "fields": {
+    "AreaName": "name",
+    "ClassificationCode": "kind",
+    "ModifiedOn": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -100.2456,
+    41.9472,
+    -93.2144,
+    45.1328
+   ],
+   "count": 71,
+   "kb": 26,
+   "max_record_count": 2000,
+   "features_in_probe": 71
+  }
+ },
+ {
+  "name": "sd-winter-road-conditions",
+  "state": "SD",
+  "title": "Winter road conditions (South Dakota 511)",
+  "title_es": "Condiciones invernales de carreteras (South Dakota 511)",
+  "description": "South Dakota DOT highway segment driving conditions (normal, snow, ice, closed), collected by Iowa DOT's Midwest road-conditions feed and linked to South Dakota 511.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "South Dakota DOT via Iowa DOT Midwest Winter Road Conditions",
+  "license": "Public 511 data; attribute South Dakota DOT and Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Midwest_Winter_Road_Conditions_View/FeatureServer/0",
+   "fields": {
+    "SEGMENT_NAME": "name",
+    "ROUTE_NAME": "address",
+    "HEADLINE": "status",
+    "DESCRIPTION": "kind",
+    "SOURCE_LINK": "page",
+    "REPORT_UPDATED": "updated"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "SOURCE = 'South Dakota DOT'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -98.4878,
+    42.7436,
+    -94.9722,
+    44.3364
+   ],
+   "count": 146,
+   "kb": 52,
+   "max_record_count": 2000,
+   "features_in_probe": 146
+  }
+ },
+ {
+  "name": "ne-511-events",
+  "state": "NE",
+  "title": "Road closures, work zones & incidents (Nebraska 511)",
+  "title_es": "Cierres, obras e incidentes viales (Nebraska 511)",
+  "description": "Live Nebraska 511 traveler events (closures, roadwork, restrictions, warnings), mirrored by Iowa DOT.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Nebraska DOT 511 via Iowa DOT",
+  "license": "Public 511 data; attribute Nebraska DOT and Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/CARS511_NE_Events_View/FeatureServer/0",
+   "fields": {
+    "headline": "name",
+    "STYLE": "kind",
+    "Route": "address",
+    "phrase": "status",
+    "linktxt": "page",
+    "UpdateDate": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -103.7313,
+    37.4734,
+    -89.6688,
+    44.1266
+   ],
+   "count": 199,
+   "kb": 47,
+   "max_record_count": 2000,
+   "features_in_probe": 198
+  }
+ },
+ {
+  "name": "ne-child-care-centers",
+  "state": "NE",
+  "title": "Licensed child care centers & preschools (Nebraska DHHS)",
+  "title_es": "Centros de cuidado infantil y preescolares con licencia (Nebraska DHHS)",
+  "description": "Nebraska DHHS licensed child care centers, school-age centers, and preschools with capacity and hours; family child care homes are excluded.",
+  "group": "help",
+  "category": "point",
+  "source": "Nebraska Department of Health and Human Services",
+  "license": "NebraskaMAP public data; attribute Nebraska DHHS",
+  "view": {
+   "url": "https://gis.ne.gov/Agency/rest/services/DHHS_Licensed_Child_Care/FeatureServer/0",
+   "fields": {
+    "Full_Name": "name",
+    "License_Type": "kind",
+    "Address": "address",
+    "City": "city",
+    "Phone": "phone",
+    "Capacity": "capacity",
+    "Days_Open": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "License_Type NOT LIKE '%Family Child Care Home%'",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.4395,
+    41.0535,
+    -95.5605,
+    41.4665
+   ],
+   "count": 525,
+   "kb": 179,
+   "max_record_count": 2000,
+   "features_in_probe": 525
+  }
+ },
+ {
+  "name": "ne-parcels",
+  "state": "NE",
+  "title": "Parcels (Nebraska statewide)",
+  "title_es": "Parcelas (Nebraska, todo el estado)",
+  "description": "Nebraska statewide parcel layer from county assessors via the Nebraska GIO, with situs address, assessed value, school district, and a link to the county record; owner names not included.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Nebraska Office of the CIO – GIS (NebraskaMAP) / county assessors",
+  "license": "NebraskaMAP public data; attribute Nebraska GIO and county assessors",
+  "view": {
+   "url": "https://gis.ne.gov/Enterprise/rest/services/StatewideParcelsExternal/FeatureServer/0",
+   "fields": {
+    "State_PID": "parcel_id",
+    "Situs_Address": "address",
+    "Ph_City": "city",
+    "Property_SubClass": "kind",
+    "GIS_Acres": "acres",
+    "Total_Assessed_Value": "assessed_value",
+    "BuildingYear": "year_built",
+    "School_District_Name": "school_district",
+    "Parcel_URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.0069,
+    41.2568,
+    -95.9931,
+    41.2632
+   ],
+   "count": 382,
+   "kb": 213,
+   "max_record_count": 2000,
+   "features_in_probe": 382
+  }
+ },
+ {
+  "name": "ne-public-boating",
+  "state": "NE",
+  "title": "Public boating & fishing sites (Nebraska)",
+  "title_es": "Sitios públicos de navegación y pesca (Nebraska)",
+  "description": "Nebraska Game and Parks public boating and fishing waters with boating restrictions.",
+  "group": "nature",
+  "category": "point",
+  "source": "Nebraska Game and Parks Commission",
+  "license": "NGPC open data (public); attribute Nebraska Game and Parks",
+  "view": {
+   "url": "https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Public_Boating_Sites_OPEN_DATA_PORTAL/FeatureServer/0",
+   "fields": {
+    "AreaName": "name",
+    "Type": "kind",
+    "PublicLake": "lake",
+    "Restrictions": "status",
+    "County": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -99.8156,
+    39.3417,
+    -92.7844,
+    42.6583
+   ],
+   "count": 320,
+   "kb": 79,
+   "max_record_count": 2000,
+   "features_in_probe": 320
+  }
+ },
+ {
+  "name": "ne-school-districts",
+  "state": "NE",
+  "title": "School districts (Nebraska)",
+  "title_es": "Distritos escolares (Nebraska)",
+  "description": "Nebraska public school district boundaries with student population, from NebraskaMAP.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Nebraska Department of Education / Nebraska GIO",
+  "license": "NebraskaMAP public data; attribute Nebraska GIO",
+  "view": {
+   "url": "https://gis.ne.gov/Enterprise/rest/services/School_Districts/FeatureServer/0",
+   "fields": {
+    "DistrictName": "name",
+    "DistrictNumber": "district_number",
+    "ESU": "kind",
+    "StudentPopulation": "students"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.8789,
+    40.8471,
+    -95.1211,
+    41.6729
+   ],
+   "count": 38,
+   "kb": 317,
+   "max_record_count": 2000,
+   "features_in_probe": 38
+  }
+ },
+ {
+  "name": "ne-state-park-trails",
+  "state": "NE",
+  "title": "State park trails (Nebraska)",
+  "title_es": "Senderos de parques estatales (Nebraska)",
+  "description": "Trails in Nebraska state parks and recreation areas with surface, length, and allowed uses.",
+  "group": "nature",
+  "category": "park",
+  "source": "Nebraska Game and Parks Commission",
+  "license": "NGPC open data (public); attribute Nebraska Game and Parks",
+  "view": {
+   "url": "https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Park_Trails/FeatureServer/0",
+   "fields": {
+    "TrailName": "name",
+    "ParkName": "park",
+    "TrailSurface": "kind",
+    "Status": "status",
+    "Length": "length",
+    "Hike": "hike",
+    "MtnBike": "bike"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.7395,
+    40.8228,
+    -95.8605,
+    41.2372
+   ],
+   "count": 445,
+   "kb": 152,
+   "max_record_count": 2000,
+   "features_in_probe": 445
+  }
+ },
+ {
+  "name": "ne-state-parks",
+  "state": "NE",
+  "title": "State parks, recreation areas & historical parks (Nebraska)",
+  "title_es": "Parques estatales y áreas recreativas (Nebraska)",
+  "description": "Nebraska Game and Parks state parks (SP), state recreation areas (SRA), and state historical parks (SHP).",
+  "group": "nature",
+  "category": "park",
+  "source": "Nebraska Game and Parks Commission",
+  "license": "NGPC open data (public); attribute Nebraska Game and Parks",
+  "view": {
+   "url": "https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Park_Areas/FeatureServer/0",
+   "fields": {
+    "AreaName": "name",
+    "AreaType": "kind",
+    "County": "county",
+    "GISAcres": "acres",
+    "Status": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "Display2Public = 'Yes'",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -99.8156,
+    39.3417,
+    -92.7844,
+    42.6583
+   ],
+   "count": 46,
+   "kb": 21,
+   "max_record_count": 1000,
+   "features_in_probe": 46
+  }
+ },
+ {
+  "name": "ne-wic-clinics",
+  "state": "NE",
+  "title": "WIC clinics (Nebraska DHHS)",
+  "title_es": "Clínicas WIC (Nebraska DHHS)",
+  "description": "Nebraska WIC (Women, Infants, and Children) nutrition program clinic locations and phone numbers.",
+  "group": "help",
+  "category": "point",
+  "source": "Nebraska Department of Health and Human Services",
+  "license": "NebraskaMAP public data; attribute Nebraska DHHS",
+  "view": {
+   "url": "https://gis.ne.gov/Agency/rest/services/WomenInfantsChildrenClinicsWICDHHS/FeatureServer/0",
+   "fields": {
+    "Clinic_Name": "name",
+    "Street_Address": "address",
+    "Town": "city",
+    "Phone_Number": "phone",
+    "Clinic_Building": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -103.0312,
+    37.9565,
+    -88.9688,
+    44.5635
+   ],
+   "count": 87,
+   "kb": 21,
+   "max_record_count": 2000,
+   "features_in_probe": 87
+  }
+ },
+ {
+  "name": "ne-winter-road-conditions",
+  "state": "NE",
+  "title": "Winter road conditions (Nebraska 511)",
+  "title_es": "Condiciones invernales de carreteras (Nebraska 511)",
+  "description": "Nebraska DOT highway segment driving conditions (normal, snow, ice, closed), collected by Iowa DOT's Midwest road-conditions feed and linked to Nebraska 511.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Nebraska DOT via Iowa DOT Midwest Winter Road Conditions",
+  "license": "Public 511 data; attribute Nebraska DOT and Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Midwest_Winter_Road_Conditions_View/FeatureServer/0",
+   "fields": {
+    "SEGMENT_NAME": "name",
+    "ROUTE_NAME": "address",
+    "HEADLINE": "status",
+    "DESCRIPTION": "kind",
+    "SOURCE_LINK": "page",
+    "REPORT_UPDATED": "updated"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "SOURCE = 'Nebraska DOT'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -97.7578,
+    40.4341,
+    -94.2422,
+    42.0859
+   ],
+   "count": 254,
+   "kb": 122,
+   "max_record_count": 2000,
+   "features_in_probe": 254
+  }
+ },
+ {
+  "name": "ks-rail-trails",
+  "state": "KS",
+  "title": "Rail trails (Kansas)",
+  "title_es": "Senderos ferroviarios (Kansas)",
+  "description": "Kansas rail-trails and multi-use trails with surface, difficulty, and managing jurisdiction (KDOT).",
+  "group": "nature",
+  "category": "park",
+  "source": "Kansas Department of Transportation (KanPlan)",
+  "license": "KDOT public GIS data; attribute KDOT",
+  "view": {
+   "url": "https://kanplan.ksdot.gov/arcgis_web_adaptor/rest/services/Bike/Rail_Trails_of_Kansas/MapServer/1",
+   "fields": {
+    "TrailName": "name",
+    "Surface": "surface",
+    "Type": "kind",
+    "UnderConstruction": "status",
+    "Jurisdiction": "operator"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -99.2156,
+    37.19,
+    -92.1844,
+    40.61
+   ],
+   "count": 87,
+   "kb": 26,
+   "max_record_count": 2000,
+   "features_in_probe": 87
+  }
+ },
+ {
+  "name": "ks-reservoir-levels",
+  "state": "KS",
+  "title": "Reservoir levels & water storage today (Kansas Water Office)",
+  "title_es": "Niveles y almacenamiento de embalses hoy (Kansas Water Office)",
+  "description": "Daily water-supply reservoir conditions from the Kansas Water Office: current elevation, percent of normal and flood pool, and storage.",
+  "group": "weather",
+  "category": "point",
+  "source": "Kansas Water Office (with USACE / USBR data)",
+  "license": "Public data, Kansas Water Office; attribute KWO",
+  "view": {
+   "url": "https://services1.arcgis.com/q2CglofYX6ACNEeu/arcgis/rest/services/KWO_Reservoir_Daily_Data/FeatureServer/0",
+   "fields": {
+    "LAKENAME": "name",
+    "Fed_Agency": "operator",
+    "perc_normal_pool": "pct_normal_pool",
+    "perc_flood_pool": "pct_flood_pool",
+    "inst_elev": "elevation_ft",
+    "current_storage": "storage_acre_ft",
+    "PWS_Lake": "kind",
+    "updated_date": "updated",
+    "AppDetails_Link": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -111.4025,
+    30.7349,
+    -83.2775,
+    44.6451
+   ],
+   "count": 24,
+   "kb": 10,
+   "max_record_count": 2000,
+   "features_in_probe": 24
+  }
+ },
+ {
+  "name": "ks-rest-areas",
+  "state": "KS",
+  "title": "Highway rest areas (Kansas DOT)",
+  "title_es": "Áreas de descanso en carreteras (Kansas DOT)",
+  "description": "KDOT highway rest areas with restrooms, shelter, ADA access, and truck parking.",
+  "group": "roads",
+  "category": "point",
+  "source": "Kansas Department of Transportation (KanPlan)",
+  "license": "KDOT public GIS data; attribute KDOT",
+  "view": {
+   "url": "https://kanplan.ksdot.gov/arcgis_web_adaptor/rest/services/Facilities/Rest_Areas/FeatureServer/0",
+   "fields": {
+    "LocationDescription": "name",
+    "Route": "address",
+    "County": "county",
+    "Restroom": "restroom",
+    "ADAAccessible": "ada",
+    "TruckParking": "truck_parking"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -111.4025,
+    30.7349,
+    -83.2775,
+    44.6451
+   ],
+   "count": 36,
+   "kb": 8,
+   "max_record_count": 1000,
+   "features_in_probe": 36
+  }
+ },
+ {
+  "name": "ks-state-parks",
+  "state": "KS",
+  "title": "State parks (Kansas, locations)",
+  "title_es": "Parques estatales (Kansas, ubicaciones)",
+  "description": "Kansas state park locations as points (names only), published by KDOT for its bicycle and trip-planning maps.",
+  "group": "nature",
+  "category": "point",
+  "source": "Kansas Department of Transportation (KanPlan)",
+  "license": "KDOT public GIS data; attribute KDOT",
+  "view": {
+   "url": "https://kanplan.ksdot.gov/arcgis_web_adaptor/rest/services/Bike/State_Park/MapServer/0",
+   "fields": {
+    "Name": "name"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -111.4025,
+    30.7349,
+    -83.2775,
+    44.6451
+   ],
+   "count": 43,
+   "kb": 5,
+   "max_record_count": 2000,
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "ks-winter-road-conditions",
+  "state": "KS",
+  "title": "Winter road conditions (Kansas 511)",
+  "title_es": "Condiciones invernales de carreteras (Kansas 511)",
+  "description": "Kansas DOT highway segment driving conditions (normal, snow, ice, closed), collected by Iowa DOT's Midwest road-conditions feed and linked to Kansas 511.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Kansas DOT via Iowa DOT Midwest Winter Road Conditions",
+  "license": "Public 511 data; attribute Kansas DOT and Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Midwest_Winter_Road_Conditions_View/FeatureServer/0",
+   "fields": {
+    "SEGMENT_NAME": "name",
+    "ROUTE_NAME": "address",
+    "HEADLINE": "status",
+    "DESCRIPTION": "kind",
+    "SOURCE_LINK": "page",
+    "REPORT_UPDATED": "updated"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "SOURCE = 'Kansas DOT'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -99.0978,
+    36.8206,
+    -95.5822,
+    38.5594
+   ],
+   "count": 223,
+   "kb": 94,
+   "max_record_count": 2000,
+   "features_in_probe": 223
+  }
+ },
+ {
+  "name": "mn-511-events",
+  "state": "MN",
+  "title": "Road closures, work zones & incidents (Minnesota 511)",
+  "title_es": "Cierres, obras e incidentes viales (Minnesota 511)",
+  "description": "Live Minnesota 511 traveler events (closures, roadwork, restrictions, warnings), mirrored by Iowa DOT.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Minnesota DOT 511 via Iowa DOT",
+  "license": "Public 511 data; attribute Minnesota DOT and Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/CARS511_MN_Events_View/FeatureServer/0",
+   "fields": {
+    "headline": "name",
+    "STYLE": "kind",
+    "Route": "address",
+    "phrase": "status",
+    "linktxt": "page",
+    "UpdateDate": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -100.2963,
+    41.8684,
+    -86.2338,
+    48.0856
+   ],
+   "count": 288,
+   "kb": 77,
+   "max_record_count": 2000,
+   "features_in_probe": 271
+  }
+ },
+ {
+  "name": "mn-child-care-centers",
+  "state": "MN",
+  "title": "Licensed child care centers (Minnesota)",
+  "title_es": "Centros de cuidado infantil con licencia (Minnesota)",
+  "description": "Licensed and certified child care centers from Minnesota DHS licensing data; home-based family child care is excluded.",
+  "group": "help",
+  "category": "point",
+  "source": "Minnesota DHS via MnGeo",
+  "license": "Minnesota Geospatial Commons open data; attribute Minnesota DHS",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_mngeo/econ_child_care/FeatureServer/0",
+   "fields": {
+    "name_of_program": "name",
+    "license_type": "kind",
+    "addressline1": "address",
+    "city": "city",
+    "zip": "zip",
+    "license_number": "license"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "license_type IN ('Child Care Center','Certified Child Care Center')",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -93.7045,
+    44.7827,
+    -92.8255,
+    45.1713
+   ],
+   "count": 1144,
+   "kb": 317,
+   "max_record_count": 2000,
+   "features_in_probe": 1144
+  }
+ },
+ {
+  "name": "mn-ej-areas",
+  "state": "MN",
+  "title": "Environmental justice areas (MPCA)",
+  "title_es": "Áreas de justicia ambiental (MPCA)",
+  "description": "Census tracts the Minnesota Pollution Control Agency flags as environmental justice areas based on poverty, people of color, and limited English (September 2024 version).",
+  "group": "people",
+  "category": "boundary",
+  "source": "Minnesota Pollution Control Agency",
+  "license": "Minnesota Geospatial Commons open data; attribute MPCA",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_pca/env_ej_mpca_census/FeatureServer/0",
+   "fields": {
+    "namelsad": "name",
+    "geography": "kind",
+    "status200x": "low_income_flag",
+    "statuspoc": "people_of_color_flag",
+    "statuslep": "limited_english_flag",
+    "prp200x": "pct_below_200_poverty",
+    "prppoc": "pct_people_of_color",
+    "geoid": "geoid"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -94.1439,
+    44.5884,
+    -92.3861,
+    45.3656
+   ],
+   "count": 832,
+   "kb": 562,
+   "max_record_count": 2000,
+   "features_in_probe": 832
+  }
+ },
+ {
+  "name": "mn-groundwater-wells",
+  "state": "MN",
+  "title": "Groundwater monitoring wells (Minnesota DNR)",
+  "title_es": "Pozos de monitoreo de agua subterránea (Minnesota DNR)",
+  "description": "Minnesota DNR cooperative groundwater monitoring network wells, each linking to its water-level record.",
+  "group": "weather",
+  "category": "point",
+  "source": "Minnesota DNR (WISKI)",
+  "license": "Minnesota Geospatial Commons open data; attribute Minnesota DNR",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/env_wiski_groundwater_monitoring/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "well_type": "kind",
+    "aquifer_name": "aquifer",
+    "read_status": "status",
+    "url": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -94.1439,
+    44.5884,
+    -92.3861,
+    45.3656
+   ],
+   "count": 663,
+   "kb": 190,
+   "max_record_count": 2000,
+   "features_in_probe": 663
+  }
+ },
+ {
+  "name": "mn-mpca-sites",
+  "state": "MN",
+  "title": "Regulated pollution sites (MPCA What's In My Neighborhood)",
+  "title_es": "Sitios regulados de contaminación (MPCA)",
+  "description": "Active sites the Minnesota Pollution Control Agency regulates or cleans up (tanks, permits, cleanups, stormwater), linked to MPCA site pages.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Minnesota Pollution Control Agency",
+  "license": "Minnesota Geospatial Commons open data; attribute MPCA",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_pca/env_my_neighborhood/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "address_street": "address",
+    "address_city": "city",
+    "program_name": "kind",
+    "activity": "status",
+    "site_url": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 15,
+   "where": "active_flag = 'Y'",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -93.2925,
+    44.9649,
+    -93.2375,
+    44.9891
+   ],
+   "count": 1292,
+   "kb": 422,
+   "max_record_count": 2000,
+   "features_in_probe": 1292
+  }
+ },
+ {
+  "name": "mn-nursing-homes",
+  "state": "MN",
+  "title": "Nursing homes & boarding care (Minnesota)",
+  "title_es": "Hogares de ancianos y cuidado residencial (Minnesota)",
+  "description": "Minnesota Department of Health licensed nursing homes and boarding care homes.",
+  "group": "help",
+  "category": "point",
+  "source": "Minnesota Department of Health via MnGeo",
+  "license": "Minnesota Geospatial Commons open data; attribute MDH",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_mngeo/health_facility_nursing_boarding/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "city": "city",
+    "telephone": "phone",
+    "provider_type": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -94.1439,
+    44.5884,
+    -92.3861,
+    45.3656
+   ],
+   "count": 135,
+   "kb": 35,
+   "max_record_count": 2000,
+   "features_in_probe": 135
+  }
+ },
+ {
+  "name": "mn-parcels",
+  "state": "MN",
+  "title": "Parcels (Minnesota, open-data counties)",
+  "title_es": "Parcelas (Minnesota, condados con datos abiertos)",
+  "description": "Tax parcels from the Minnesota counties that publish open data (about 70 of 87 counties, including Hennepin and Ramsey), compiled quarterly by MnGeo; owner names left out.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Minnesota IT Services / MnGeo (Minnesota Geospatial Commons)",
+  "license": "Open data per county opt-in (Minnesota Geospatial Commons); attribute MnGeo and the county",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_mngeo/plan_parcels_open/FeatureServer/1",
+   "fields": {
+    "state_pin": "parcel_id",
+    "anumber": "house_number",
+    "st_name": "street",
+    "st_pos_typ": "street_type",
+    "ctu_name": "city",
+    "co_name": "county",
+    "useclass1": "kind",
+    "acres_poly": "acres",
+    "emv_total": "market_value",
+    "year_built": "year_built"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -93.2719,
+    44.974,
+    -93.2581,
+    44.98
+   ],
+   "count": 1732,
+   "kb": 823,
+   "max_record_count": 2000,
+   "features_in_probe": 1732
+  }
+ },
+ {
+  "name": "mn-school-districts",
+  "state": "MN",
+  "title": "School districts (Minnesota, 2025-26)",
+  "title_es": "Distritos escolares (Minnesota, 2025-26)",
+  "description": "Minnesota Department of Education school district boundaries for school year 2025-26, with district websites.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Minnesota Department of Education",
+  "license": "Minnesota Geospatial Commons open data; attribute MDE",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_mde/bdry_school_district_boundaries/FeatureServer/0",
+   "fields": {
+    "prefname": "name",
+    "sdnumber": "district_number",
+    "sdtype": "kind",
+    "web_url": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.0228,
+    44.1998,
+    -91.5072,
+    45.7542
+   ],
+   "count": 127,
+   "kb": 480,
+   "max_record_count": 2000,
+   "features_in_probe": 127
+  }
+ },
+ {
+  "name": "mn-state-forests",
+  "state": "MN",
+  "title": "State forests (Minnesota)",
+  "title_es": "Bosques estatales (Minnesota)",
+  "description": "Statutory boundaries of Minnesota's state forests (DNR); land inside may include private parcels.",
+  "group": "nature",
+  "category": "park",
+  "source": "Minnesota DNR",
+  "license": "Minnesota Geospatial Commons open data; attribute Minnesota DNR",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/bdry_state_forest/FeatureServer/4",
+   "fields": {
+    "name": "name",
+    "acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -101.0312,
+    43.475,
+    -86.9688,
+    49.525
+   ],
+   "count": 60,
+   "kb": 130,
+   "max_record_count": 2000,
+   "features_in_probe": 60
+  }
+ },
+ {
+  "name": "mn-state-parks",
+  "state": "MN",
+  "title": "State parks & recreation areas (Minnesota)",
+  "title_es": "Parques estatales y áreas recreativas (Minnesota)",
+  "description": "Minnesota DNR state park, recreation area, and wayside management unit boundaries.",
+  "group": "nature",
+  "category": "park",
+  "source": "Minnesota DNR",
+  "license": "Minnesota Geospatial Commons open data; attribute Minnesota DNR",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/bdry_dnr_lrs_prk/FeatureServer/2",
+   "fields": {
+    "unit_name": "name",
+    "unit_type": "kind",
+    "gis_acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -97.1156,
+    44.0627,
+    -90.0844,
+    47.1373
+   ],
+   "count": 47,
+   "kb": 65,
+   "max_record_count": 2000,
+   "features_in_probe": 47
+  }
+ },
+ {
+  "name": "mn-state-trails",
+  "state": "MN",
+  "title": "State trails (Minnesota)",
+  "title_es": "Senderos estatales (Minnesota)",
+  "description": "Minnesota DNR state trail centerlines with allowed uses (hike, bike, snowshoe).",
+  "group": "nature",
+  "category": "park",
+  "source": "Minnesota DNR",
+  "license": "Minnesota Geospatial Commons open data; attribute Minnesota DNR",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/trans_state_trails_minnesota/FeatureServer/0",
+   "fields": {
+    "trail_name": "name",
+    "surfacetyp": "kind",
+    "lengthmile": "miles",
+    "use_bike": "bike",
+    "use_hike": "hike",
+    "use_snosho": "snowshoe"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.0228,
+    44.1998,
+    -91.5072,
+    45.7542
+   ],
+   "count": 115,
+   "kb": 39,
+   "max_record_count": 2000,
+   "features_in_probe": 115
+  }
+ },
+ {
+  "name": "mn-water-access",
+  "state": "MN",
+  "title": "Public water access & boat ramps (Minnesota)",
+  "title_es": "Accesos públicos al agua y rampas (Minnesota)",
+  "description": "Public water access sites (boat launches, carry-ins) on Minnesota lakes and rivers, with ramp and parking details.",
+  "group": "nature",
+  "category": "point",
+  "source": "Minnesota DNR",
+  "license": "Minnesota Geospatial Commons open data; attribute Minnesota DNR",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/struc_water_access_sites/FeatureServer/0",
+   "fields": {
+    "access_name": "name",
+    "lake_name": "lake",
+    "launch_type": "kind",
+    "administrator": "operator",
+    "ramp_surface": "ramp",
+    "alerts": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -94.1439,
+    44.5884,
+    -92.3861,
+    45.3656
+   ],
+   "count": 296,
+   "kb": 85,
+   "max_record_count": 2000,
+   "features_in_probe": 296
+  }
+ },
+ {
+  "name": "mn-wildlife-mgmt-areas",
+  "state": "MN",
+  "title": "Wildlife management areas – hunting access (Minnesota)",
+  "title_es": "Áreas de manejo de vida silvestre – caza (Minnesota)",
+  "description": "Publicly accessible Minnesota DNR wildlife management areas open to hunting, trapping, and wildlife watching.",
+  "group": "nature",
+  "category": "park",
+  "source": "Minnesota DNR",
+  "license": "Minnesota Geospatial Commons open data; attribute Minnesota DNR",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/bdry_dnr_wildlife_mgmt_areas_pub/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "nearest_town": "city",
+    "gis_area_acres": "acres",
+    "special_restrictions": "status",
+    "general_access_notes": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.3578,
+    44.3245,
+    -91.8422,
+    45.8755
+   ],
+   "count": 375,
+   "kb": 231,
+   "max_record_count": 2000,
+   "features_in_probe": 375
+  }
+ },
+ {
+  "name": "mn-winter-road-conditions",
+  "state": "MN",
+  "title": "Winter road conditions (Minnesota 511)",
+  "title_es": "Condiciones invernales de carreteras (Minnesota 511)",
+  "description": "Minnesota DOT highway segment driving conditions (normal, snow, ice, closed), collected by Iowa DOT's Midwest road-conditions feed and linked to Minnesota 511.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Minnesota DOT via Iowa DOT Midwest Winter Road Conditions",
+  "license": "Public 511 data; attribute Minnesota DOT and Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Midwest_Winter_Road_Conditions_View/FeatureServer/0",
+   "fields": {
+    "SEGMENT_NAME": "name",
+    "ROUTE_NAME": "address",
+    "HEADLINE": "status",
+    "DESCRIPTION": "kind",
+    "SOURCE_LINK": "page",
+    "REPORT_UPDATED": "updated"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "SOURCE = 'Minnesota DOT'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.0228,
+    44.1998,
+    -91.5072,
+    45.7542
+   ],
+   "count": 291,
+   "kb": 165,
+   "max_record_count": 2000,
+   "features_in_probe": 291
+  }
+ },
+ {
+  "name": "ia-511-events",
+  "state": "IA",
+  "title": "Road closures, work zones & incidents (Iowa 511)",
+  "title_es": "Cierres, obras e incidentes viales (Iowa 511)",
+  "description": "Live Iowa 511 traveler events: closures, lane closures, roadwork, restrictions, and warnings.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Iowa DOT 511",
+  "license": "Iowa DOT Open Data (public); attribute Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/CARS511_Iowa_View/FeatureServer/0",
+   "fields": {
+    "headline": "name",
+    "STYLE": "kind",
+    "Route": "address",
+    "phrase": "status",
+    "linktxt": "page",
+    "UpdateDate": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -100.6513,
+    38.3033,
+    -86.5888,
+    44.8767
+   ],
+   "count": 651,
+   "kb": 199,
+   "max_record_count": 2000,
+   "features_in_probe": 651
+  }
+ },
+ {
+  "name": "ia-crash-intersections",
+  "state": "IA",
+  "title": "High-crash intersections, 2020-2024 (Iowa DOT)",
+  "title_es": "Intersecciones con muchos choques, 2020-2024 (Iowa DOT)",
+  "description": "Intersections Iowa DOT rates high or medium for potential crash reduction, with 2020-2024 crash counts by severity (aggregated, no personal data).",
+  "group": "roads",
+  "category": "point",
+  "source": "Iowa DOT Traffic Safety",
+  "license": "Iowa DOT Open Data (public); attribute Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Intersections_PCR_KABCO_2020_2024/FeatureServer/0",
+   "fields": {
+    "RoadNames": "name",
+    "KABCO_PCR_LEVEL": "status",
+    "KABCO": "crashes",
+    "K": "fatal",
+    "A": "serious_injury",
+    "KABCO_STATEWIDE_RANK": "rank",
+    "CONTROL": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "KABCO_PCR_LEVEL IN ('HIGH','MEDIUM')",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -94.4989,
+    41.1792,
+    -92.7411,
+    42.0008
+   ],
+   "count": 1311,
+   "kb": 321,
+   "max_record_count": 2000,
+   "features_in_probe": 1311
+  }
+ },
+ {
+  "name": "ia-message-signs",
+  "state": "IA",
+  "title": "Highway message signs (Iowa DOT)",
+  "title_es": "Letreros de mensajes en carreteras (Iowa DOT)",
+  "description": "What Iowa DOT's electronic highway message signs are showing right now.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Iowa DOT",
+  "license": "Iowa DOT Open Data (public); attribute Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/DMS_View/FeatureServer/0",
+   "fields": {
+    "DeviceName": "name",
+    "Route": "address",
+    "Direction": "kind",
+    "msgtext": "status",
+    "EditDate": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.3778,
+    40.7683,
+    -91.8622,
+    42.4117
+   ],
+   "count": 79,
+   "kb": 18,
+   "max_record_count": 1000,
+   "features_in_probe": 80
+  }
+ },
+ {
+  "name": "ia-plow-cams",
+  "state": "IA",
+  "title": "Snowplow camera photos, past hour (Iowa)",
+  "title_es": "Fotos de cámaras de quitanieves, última hora (Iowa)",
+  "description": "Photos taken by Iowa DOT snowplows and maintenance trucks in the last hour, showing current road surface.",
+  "group": "cameras",
+  "category": "point",
+  "source": "Iowa DOT",
+  "license": "Iowa DOT Open Data (public); attribute Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/AVL_Images_Past_1HR_View/FeatureServer/0",
+   "fields": {
+    "ROUTE_NAME": "name",
+    "SECURE_PHOTO_URL": "image",
+    "GARAGE_NAME": "kind",
+    "PHOTO_FILEDATE": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -94.4989,
+    41.1792,
+    -92.7411,
+    42.0008
+   ],
+   "count": 227,
+   "kb": 71,
+   "max_record_count": 2000,
+   "features_in_probe": 227
+  }
+ },
+ {
+  "name": "ia-public-hunting",
+  "state": "IA",
+  "title": "Public hunting areas (Iowa DNR)",
+  "title_es": "Áreas públicas de caza (Iowa DNR)",
+  "description": "Lands open to public hunting in Iowa with the game species allowed and links to the hunting atlas.",
+  "group": "nature",
+  "category": "park",
+  "source": "Iowa DNR",
+  "license": "Iowa DNR open GIS data (public); attribute Iowa DNR",
+  "view": {
+   "url": "https://programs.iowadnr.gov/geospatial/rest/services/Recreation/Recreation/MapServer/9",
+   "fields": {
+    "AREA_NAME": "name",
+    "MANAGE": "operator",
+    "HABITAT": "kind",
+    "DEER": "deer",
+    "TURKEY": "turkey",
+    "PHEASANT": "pheasant",
+    "Acres": "acres",
+    "Hunt_Atlas_Link": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.3778,
+    40.7683,
+    -91.8622,
+    42.4117
+   ],
+   "count": 520,
+   "kb": 378,
+   "max_record_count": 2000,
+   "features_in_probe": 520
+  }
+ },
+ {
+  "name": "ia-public-lands",
+  "state": "IA",
+  "title": "Public lands: state parks, preserves, wildlife & county areas (Iowa)",
+  "title_es": "Tierras públicas: parques, reservas y áreas de vida silvestre (Iowa)",
+  "description": "Iowa DNR inventory of public conservation and recreation lands (state parks, forests, wildlife areas, county parks) with access and hunting status.",
+  "group": "nature",
+  "category": "park",
+  "source": "Iowa DNR",
+  "license": "Iowa DNR open GIS data (public); attribute Iowa DNR",
+  "view": {
+   "url": "https://programs.iowadnr.gov/geospatial/rest/services/Recreation/Recreation/MapServer/11",
+   "fields": {
+    "NameUnit": "name",
+    "TYPE": "kind",
+    "MANAGER": "operator",
+    "ACCESS": "status",
+    "PUB_HUNT": "public_hunting",
+    "ACRES": "acres",
+    "More_Info": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -94.4989,
+    41.1792,
+    -92.7411,
+    42.0008
+   ],
+   "count": 948,
+   "kb": 484,
+   "max_record_count": 2000,
+   "features_in_probe": 948
+  }
+ },
+ {
+  "name": "ia-rwis-atmos",
+  "state": "IA",
+  "title": "Road weather stations: air & wind (Iowa RWIS)",
+  "title_es": "Estaciones meteorológicas viales: aire y viento (Iowa RWIS)",
+  "description": "Live air temperature, wind, precipitation, and visibility at Iowa DOT road weather stations.",
+  "group": "weather",
+  "category": "point",
+  "source": "Iowa DOT RWIS",
+  "license": "Iowa DOT Open Data (public); attribute Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/RWIS_Atmospheric_Data_View/FeatureServer/0",
+   "fields": {
+    "RPUID_NAME": "name",
+    "ROUTE_NAME": "address",
+    "AIR_TEMP": "air_temp_f",
+    "AVG_WINDSPEED_MPH": "wind_mph",
+    "PRECIPITATION_TYPE": "status",
+    "VISIBILITY": "visibility",
+    "DATA_LAST_UPDATED": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -97.1356,
+    39.9466,
+    -90.1044,
+    43.2334
+   ],
+   "count": 88,
+   "kb": 22,
+   "max_record_count": 1000,
+   "features_in_probe": 88
+  }
+ },
+ {
+  "name": "ia-rwis-surface",
+  "state": "IA",
+  "title": "Road weather stations: pavement (Iowa RWIS)",
+  "title_es": "Estaciones meteorológicas viales: pavimento (Iowa RWIS)",
+  "description": "Live pavement sensors at Iowa DOT road weather stations: surface condition and temperature.",
+  "group": "weather",
+  "category": "point",
+  "source": "Iowa DOT RWIS",
+  "license": "Iowa DOT Open Data (public); attribute Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/RWIS_Surface_Data_View/FeatureServer/0",
+   "fields": {
+    "RPUID_NAME": "name",
+    "SENSOR_NAME": "kind",
+    "ROUTE_NAME": "address",
+    "SURFACE_CONDITION": "status",
+    "SURFACE_TEMP": "surface_temp_f",
+    "DATA_LAST_UPDATED": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.3778,
+    40.7683,
+    -91.8622,
+    42.4117
+   ],
+   "count": 74,
+   "kb": 18,
+   "max_record_count": 1000,
+   "features_in_probe": 74
+  }
+ },
+ {
+  "name": "ia-school-districts",
+  "state": "IA",
+  "title": "School districts (Iowa, 2026-27)",
+  "title_es": "Distritos escolares (Iowa, 2026-27)",
+  "description": "Iowa Department of Education public school district boundaries for 2026-27 with district office address and phone.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Iowa Department of Education",
+  "license": "Iowa Dept. of Education open data (public); attribute Iowa DE",
+  "view": {
+   "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/IowaSchoolDistricts2026_2027/FeatureServer/0",
+   "fields": {
+    "SchoolDistName": "name",
+    "AEA_Name": "kind",
+    "PhysicalStreet": "address",
+    "PhysicalCity": "city",
+    "PhoneNo": "phone",
+    "GradeStart": "grade_start",
+    "GradeEnd": "grade_end"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.3778,
+    40.7683,
+    -91.8622,
+    42.4117
+   ],
+   "count": 147,
+   "kb": 447,
+   "max_record_count": 2000,
+   "features_in_probe": 147
+  }
+ },
+ {
+  "name": "ia-traffic-cameras",
+  "state": "IA",
+  "title": "Traffic cameras (Iowa DOT)",
+  "title_es": "Cámaras de tráfico (Iowa DOT)",
+  "description": "Iowa DOT highway camera snapshots (about 1,260 cameras), refreshed every few minutes.",
+  "group": "cameras",
+  "category": "point",
+  "source": "Iowa DOT",
+  "license": "Iowa DOT Open Data (public); attribute Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Traffic_Cameras_View/FeatureServer/0",
+   "fields": {
+    "Desc_": "name",
+    "Route": "kind",
+    "ImageURL": "image",
+    "VideoURL": "page",
+    "REGION": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -97.1356,
+    39.9466,
+    -90.1044,
+    43.2334
+   ],
+   "count": 1224,
+   "kb": 373,
+   "max_record_count": 2000,
+   "features_in_probe": 1224
+  }
+ },
+ {
+  "name": "ia-trails",
+  "state": "IA",
+  "title": "Trails of Iowa",
+  "title_es": "Senderos de Iowa",
+  "description": "Iowa DNR statewide trail inventory (state, county, and city trails) with surface and allowed uses.",
+  "group": "nature",
+  "category": "park",
+  "source": "Iowa DNR",
+  "license": "Iowa DNR open GIS data (public); attribute Iowa DNR",
+  "view": {
+   "url": "https://programs.iowadnr.gov/geospatial/rest/services/Recreation/Recreation/MapServer/7",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Surface": "surface",
+    "Owner": "operator",
+    "Bike": "bike",
+    "Hike": "hike",
+    "Snowmobile": "snowmobile"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -94.4989,
+    41.1792,
+    -92.7411,
+    42.0008
+   ],
+   "count": 763,
+   "kb": 278,
+   "max_record_count": 2000,
+   "features_in_probe": 763
+  }
+ },
+ {
+  "name": "ia-winter-road-conditions",
+  "state": "IA",
+  "title": "Winter road conditions (Iowa 511)",
+  "title_es": "Condiciones invernales de carreteras (Iowa 511)",
+  "description": "Iowa DOT pavement condition reports by highway segment (snow, ice, wet, seasonal); off-season segments read 'Seasonal'.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Iowa DOT 511",
+  "license": "Iowa DOT Open Data (public); attribute Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/511_IA_Road_Conditions_View/FeatureServer/0",
+   "fields": {
+    "LONG_NAME": "name",
+    "ROUTE_NAME": "address",
+    "ROAD_CONDITION": "status",
+    "HL_PAVEMENT_CONDITION": "kind",
+    "CARS_MSG_UPDATE_DATE": "updated"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -97.1356,
+    39.9466,
+    -90.1044,
+    43.2334
+   ],
+   "count": 961,
+   "kb": 409,
+   "max_record_count": 2000,
+   "features_in_probe": 961
+  }
+ },
+ {
+  "name": "mo-cleanup-sites",
+  "state": "MO",
+  "title": "Hazardous waste cleanup sites (Missouri DNR)",
+  "title_es": "Sitios de limpieza de residuos peligrosos (Missouri DNR)",
+  "description": "Missouri DNR Hazardous Waste Program cleanup sites with status, contaminants, and use limits.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Missouri Department of Natural Resources (E-Start)",
+  "license": "Missouri DNR public GIS data; attribute Missouri DNR",
+  "view": {
+   "url": "https://gis.dnr.mo.gov/host/rest/services/e_start/e_start/MapServer/0",
+   "fields": {
+    "SITENAME": "name",
+    "SITESTAT": "status",
+    "DNRPROGRAM": "kind",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "CONTAMINS": "contaminants",
+    "URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.4197,
+    38.5227,
+    -89.9803,
+    38.7373
+   ],
+   "count": 1278,
+   "kb": 479,
+   "max_record_count": 2000,
+   "features_in_probe": 1278
+  }
+ },
+ {
+  "name": "mo-conservation-areas",
+  "state": "MO",
+  "title": "Conservation areas – hunting, fishing & hiking (Missouri MDC)",
+  "title_es": "Áreas de conservación – caza, pesca y senderismo (Missouri MDC)",
+  "description": "Missouri Department of Conservation areas open to the public, with links to area summaries, maps, and regulations.",
+  "group": "nature",
+  "category": "park",
+  "source": "Missouri Department of Conservation",
+  "license": "MDC public GIS data; attribute Missouri Department of Conservation",
+  "view": {
+   "url": "https://gisblue.mdc.mo.gov/arcgis/rest/services/Discover_Nature/MDC_Administrative_Areas/FeatureServer/5",
+   "fields": {
+    "Area_Name": "name",
+    "Division_Admin": "operator",
+    "County": "county",
+    "Acreage": "acres",
+    "Sum_Link": "page",
+    "Reg_Link": "regulations"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.3378,
+    38.2474,
+    -92.8222,
+    39.9526
+   ],
+   "count": 228,
+   "kb": 160,
+   "max_record_count": 3500,
+   "features_in_probe": 228
+  }
+ },
+ {
+  "name": "mo-mdc-boat-ramps",
+  "state": "MO",
+  "title": "Conservation area boat ramps (Missouri MDC)",
+  "title_es": "Rampas para botes en áreas de conservación (Missouri MDC)",
+  "description": "Boat ramps at Missouri Department of Conservation areas.",
+  "group": "nature",
+  "category": "point",
+  "source": "Missouri Department of Conservation",
+  "license": "MDC public GIS data; attribute Missouri Department of Conservation",
+  "view": {
+   "url": "https://gisblue.mdc.mo.gov/arcgis/rest/services/Discover_Nature/Area_Feature_Layers/FeatureServer/17",
+   "fields": {
+    "Area_Name": "name",
+    "ADA": "ada"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.3378,
+    38.2474,
+    -92.8222,
+    39.9526
+   ],
+   "count": 124,
+   "kb": 18,
+   "max_record_count": 3500,
+   "features_in_probe": 124
+  }
+ },
+ {
+  "name": "mo-state-park-trails",
+  "state": "MO",
+  "title": "State park trails (Missouri)",
+  "title_es": "Senderos de parques estatales (Missouri)",
+  "description": "Trail routes in Missouri state parks and historic sites, including the Katy Trail.",
+  "group": "nature",
+  "category": "park",
+  "source": "Missouri Department of Natural Resources, Division of State Parks",
+  "license": "Missouri DNR public GIS data; attribute Missouri DNR",
+  "view": {
+   "url": "https://gis.dnr.mo.gov/host/rest/services/sphs_trails/SPHS_trails/MapServer/0",
+   "fields": {
+    "TRAIL_NAME": "name",
+    "PARK_NAME": "park",
+    "TRAIL_CLASS": "kind"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -93.1789,
+    38.1707,
+    -91.4211,
+    39.0293
+   ],
+   "count": 48,
+   "kb": 192,
+   "max_record_count": 2000,
+   "features_in_probe": 48
+  }
+ },
+ {
+  "name": "mo-state-parks",
+  "state": "MO",
+  "title": "State parks & historic sites (Missouri)",
+  "title_es": "Parques estatales y sitios históricos (Missouri)",
+  "description": "Missouri State Parks and State Historic Sites boundaries (Missouri DNR) with links to each park page.",
+  "group": "nature",
+  "category": "park",
+  "source": "Missouri Department of Natural Resources, Division of State Parks",
+  "license": "Missouri DNR public GIS data; attribute Missouri DNR",
+  "view": {
+   "url": "https://gis.dnr.mo.gov/host/rest/services/boundary/modnr_land/MapServer/0",
+   "fields": {
+    "LOC_NAME": "name",
+    "REGION": "kind",
+    "GIS_ACRES": "acres",
+    "URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.8156,
+    36.8828,
+    -88.7844,
+    40.3172
+   ],
+   "count": 164,
+   "kb": 99,
+   "max_record_count": 2000,
+   "features_in_probe": 164
+  }
+ },
+ {
+  "name": "mo-winter-road-conditions",
+  "state": "MO",
+  "title": "Winter road conditions (Missouri 511)",
+  "title_es": "Condiciones invernales de carreteras (Missouri 511)",
+  "description": "Missouri DOT highway segment driving conditions (normal, snow, ice, closed), collected by Iowa DOT's Midwest road-conditions feed and linked to Missouri 511.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Missouri DOT via Iowa DOT Midwest Winter Road Conditions",
+  "license": "Public 511 data; attribute Missouri DOT and Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Midwest_Winter_Road_Conditions_View/FeatureServer/0",
+   "fields": {
+    "SEGMENT_NAME": "name",
+    "ROUTE_NAME": "address",
+    "HEADLINE": "status",
+    "DESCRIPTION": "kind",
+    "SOURCE_LINK": "page",
+    "REPORT_UPDATED": "updated"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "SOURCE = 'Missouri DOT'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.3378,
+    38.2474,
+    -92.8222,
+    39.9526
+   ],
+   "count": 225,
+   "kb": 94,
+   "max_record_count": 2000,
+   "features_in_probe": 225
+  }
+ },
+ {
+  "name": "wi-boat-access",
+  "state": "WI",
+  "title": "Public boat access sites (Wisconsin)",
+  "title_es": "Accesos públicos para botes (Wisconsin)",
+  "description": "Public boat landings on Wisconsin lakes and rivers from the DNR boat access inventory.",
+  "group": "nature",
+  "category": "point",
+  "source": "Wisconsin DNR",
+  "license": "Public data, Wisconsin DNR; attribute WI DNR",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis2/rest/services/PR_Recreation/PR_Boat_Access_Shore_Fishing_WTM_Ext/MapServer/2",
+   "fields": {
+    "LMS_BOAT_LANDING_NAME": "name",
+    "WATERBODY_NAME_TEXT": "lake",
+    "LANDING_TYPE_CODE": "kind",
+    "RAMP_TYPE_CODE": "ramp",
+    "OWNERSHIP_NAME_TEXT": "operator",
+    "MUNICIPALITY_NAME_TEXT": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "ABANDON_FLAG IS NULL OR ABANDON_FLAG <> 'Y'",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.2789,
+    42.6687,
+    -88.5211,
+    43.4713
+   ],
+   "count": 206,
+   "kb": 64,
+   "max_record_count": 2000,
+   "features_in_probe": 206
+  }
+ },
+ {
+  "name": "wi-child-care-centers",
+  "state": "WI",
+  "title": "Licensed group child care & school programs (Wisconsin)",
+  "title_es": "Guarderías grupales con licencia y programas escolares (Wisconsin)",
+  "description": "Wisconsin DCF licensed group child care centers and public-school programs with YoungStar rating and capacity; home-based family and certified providers are excluded.",
+  "group": "help",
+  "category": "point",
+  "source": "Wisconsin DCF via Wisconsin DHS GIS",
+  "license": "Public data, State of Wisconsin; attribute WI DCF/DHS",
+  "view": {
+   "url": "https://dhsgis.wi.gov/server/rest/services/DHS_DCF/Child_Care/MapServer/0",
+   "fields": {
+    "FacilityName": "name",
+    "CategoryType": "kind",
+    "LocationLineAddress1": "address",
+    "City": "city",
+    "LocationPrimaryPhoneNumber": "phone",
+    "Capacity": "capacity",
+    "StarLevel": "rating",
+    "Hours": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "CategoryType IN ('LICENSED GROUP','PUBLIC SCHOOL PROGRAM')",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -88.3495,
+    42.8393,
+    -87.4705,
+    43.2407
+   ],
+   "count": 806,
+   "kb": 294,
+   "max_record_count": 2000,
+   "features_in_probe": 806
+  }
+ },
+ {
+  "name": "wi-cleanup-sites",
+  "state": "WI",
+  "title": "Open contamination cleanup sites (Wisconsin BRRTS)",
+  "title_es": "Sitios de limpieza de contaminación abiertos (Wisconsin)",
+  "description": "Open spill, leaking-tank, and environmental repair cases tracked in Wisconsin DNR's BRRTS remediation database.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Wisconsin DNR Remediation and Redevelopment",
+  "license": "Public data, Wisconsin DNR; attribute WI DNR",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis/rest/services/RR_Sites_Map/RR_PUBLIC_MAPSERVICES_CORE_EXT/MapServer/101",
+   "fields": {
+    "ACTIVITY_DETAIL_NAME": "name",
+    "ACT_CODE": "kind",
+    "ACTIVITY_DETAIL_NO": "case_number",
+    "LOC_ADDR": "address",
+    "LOC_CITY": "city",
+    "START_DATE": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -88.1297,
+    42.9396,
+    -87.6903,
+    43.1404
+   ],
+   "count": 735,
+   "kb": 202,
+   "max_record_count": 2000,
+   "features_in_probe": 735
+  }
+ },
+ {
+  "name": "wi-dnr-lands",
+  "state": "WI",
+  "title": "DNR-managed lands: state parks, forests, wildlife & fishery areas (Wisconsin)",
+  "title_es": "Tierras del DNR: parques, bosques y áreas de vida silvestre (Wisconsin)",
+  "description": "Lands the Wisconsin DNR owns or manages, grouped by property (state parks, forests, wildlife and fishery areas, natural areas), most open to hunting and fishing.",
+  "group": "nature",
+  "category": "park",
+  "source": "Wisconsin DNR Bureau of Facilities and Lands",
+  "license": "Public data, Wisconsin DNR; attribute WI DNR",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis/rest/services/LF_DML/LF_AGOL_STAGING_WTM_Ext/MapServer/0",
+   "fields": {
+    "PROP_NAME": "name",
+    "PROGRAM": "kind",
+    "PROP_ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -90.2789,
+    42.6687,
+    -88.5211,
+    43.4713
+   ],
+   "count": 210,
+   "kb": 348,
+   "max_record_count": 2000,
+   "features_in_probe": 210
+  }
+ },
+ {
+  "name": "wi-fire-danger",
+  "state": "WI",
+  "title": "Fire danger & burning restrictions today (Wisconsin)",
+  "title_es": "Peligro de incendio y restricciones de quema hoy (Wisconsin)",
+  "description": "Wisconsin DNR daily fire danger rating and burn-permit restrictions by county and fire protection area.",
+  "group": "live",
+  "category": "hazard",
+  "source": "Wisconsin DNR Division of Forestry",
+  "license": "Public data, Wisconsin DNR; attribute WI DNR",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis/rest/services/FR_WIS_BURN/FR_WIS_BURN_MAP_EXT/MapServer/13",
+   "fields": {
+    "COUNTY_NAME": "name",
+    "DANGER_RATING_NAME": "status",
+    "NO_BURN_FLAG": "no_burn",
+    "PERMIT_RESTRICTIONS": "kind",
+    "ADD_COMMENT": "note",
+    "LAST_CHANGED_DATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -103.8625,
+    38.342,
+    -75.7375,
+    50.858
+   ],
+   "count": 72,
+   "kb": 87,
+   "max_record_count": 2000,
+   "features_in_probe": 72
+  }
+ },
+ {
+  "name": "wi-free-clinics",
+  "state": "WI",
+  "title": "Free & charitable clinics (Wisconsin)",
+  "title_es": "Clínicas gratuitas y benéficas (Wisconsin)",
+  "description": "Free and charitable health clinics listed by the Wisconsin Department of Health Services.",
+  "group": "help",
+  "category": "point",
+  "source": "Wisconsin Department of Health Services",
+  "license": "Public data, Wisconsin DHS; attribute WI DHS",
+  "view": {
+   "url": "https://dhsgis.wi.gov/server/rest/services/DHS_GIS/Facilities/MapServer/13",
+   "fields": {
+    "FACILITY_NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "PHONE": "phone",
+    "URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.4313,
+    39.8597,
+    -82.3688,
+    46.2803
+   ],
+   "count": 99,
+   "kb": 25,
+   "max_record_count": 2000,
+   "features_in_probe": 99
+  }
+ },
+ {
+  "name": "wi-heat-vulnerability",
+  "state": "WI",
+  "title": "Heat vulnerability index (Wisconsin DHS)",
+  "title_es": "Índice de vulnerabilidad al calor (Wisconsin DHS)",
+  "description": "Wisconsin DHS heat vulnerability index by 2010 census block group, combining environment, health, population, and socioeconomic factors (closest Wisconsin has to an EJ screen).",
+  "group": "people",
+  "category": "boundary",
+  "source": "Wisconsin Department of Health Services (Environmental Public Health Tracking)",
+  "license": "Public data, Wisconsin DHS; attribute WI DHS",
+  "view": {
+   "url": "https://dhsgis.wi.gov/server/rest/services/DHS_HVI/Heat_Vulnerability_Index/MapServer/0",
+   "fields": {
+    "BLKGRP_GEOID10": "geoid",
+    "CNTY_NAME10": "county",
+    "HVI_WI": "status",
+    "HVI_Value_WI": "hvi_score",
+    "EnviroIndex_WI": "environment",
+    "HealthIndex_WI": "health",
+    "SocioIndex_WI": "socioeconomic"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -88.3495,
+    42.8393,
+    -87.4705,
+    43.2407
+   ],
+   "count": 1160,
+   "kb": 601,
+   "max_record_count": 2000,
+   "features_in_probe": 1160
+  }
+ },
+ {
+  "name": "wi-narcan-direct",
+  "state": "WI",
+  "title": "Free NARCAN pickup sites (Wisconsin)",
+  "title_es": "Sitios para recoger NARCAN gratis (Wisconsin)",
+  "description": "Agencies in the Wisconsin DHS NARCAN Direct Program that hand out free naloxone.",
+  "group": "help",
+  "category": "point",
+  "source": "Wisconsin Department of Health Services",
+  "license": "Public data, Wisconsin DHS; attribute WI DHS",
+  "view": {
+   "url": "https://dhsgis.wi.gov/server/rest/services/DHS_GIS/Services/MapServer/7",
+   "fields": {
+    "AGENCY": "name",
+    "AGENCY_TYPE": "kind",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "COUNTY_TRIBE": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.4313,
+    39.8597,
+    -82.3688,
+    46.2803
+   ],
+   "count": 109,
+   "kb": 25,
+   "max_record_count": 2000,
+   "features_in_probe": 109
+  }
+ },
+ {
+  "name": "wi-nursing-homes",
+  "state": "WI",
+  "title": "Nursing homes (Wisconsin DHS)",
+  "title_es": "Hogares de ancianos (Wisconsin DHS)",
+  "description": "Nursing homes licensed by the Wisconsin DHS Division of Quality Assurance.",
+  "group": "help",
+  "category": "point",
+  "source": "Wisconsin Department of Health Services",
+  "license": "Public data, Wisconsin DHS; attribute WI DHS",
+  "view": {
+   "url": "https://dhsgis.wi.gov/server/rest/services/DHS_GIS/Facilities/MapServer/4",
+   "fields": {
+    "FACILITY_NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "TYPE_DESC": "kind",
+    "WI_LICENSE_NUM": "license"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -89.6678,
+    42.237,
+    -86.1522,
+    43.843
+   ],
+   "count": 141,
+   "kb": 33,
+   "max_record_count": 2000,
+   "features_in_probe": 141
+  }
+ },
+ {
+  "name": "wi-parcels",
+  "state": "WI",
+  "title": "Parcels (Wisconsin statewide)",
+  "title_es": "Parcelas (Wisconsin, todo el estado)",
+  "description": "Version 12 statewide parcel map (2026 release, 2025 tax roll) from the State Cartographer's Office and the Wisconsin Land Information Program; owner names left out.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Wisconsin State Cartographer's Office / Dept. of Administration (WLIP)",
+  "license": "Public open data (Wisconsin Statewide Parcel Map Initiative); attribute SCO/WLIP and counties",
+  "view": {
+   "url": "https://services3.arcgis.com/n6uYoouQZW75n5WI/arcgis/rest/services/Wisconsin_Statewide_Parcels_DB/FeatureServer/0",
+   "fields": {
+    "PARCELID": "parcel_id",
+    "SITEADRESS": "address",
+    "PLACENAME": "city",
+    "CONAME": "county",
+    "PROPCLASS": "kind",
+    "GISACRES": "acres",
+    "CNTASSDVALUE": "assessed_value",
+    "SCHOOLDIST": "school_district",
+    "TAXROLLYEAR": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.9169,
+    43.0369,
+    -87.9031,
+    43.0431
+   ],
+   "count": 413,
+   "kb": 180,
+   "max_record_count": 2000,
+   "features_in_probe": 413
+  }
+ },
+ {
+  "name": "wi-state-parks",
+  "state": "WI",
+  "title": "State parks, forests & recreation areas (Wisconsin)",
+  "title_es": "Parques estatales y áreas recreativas (Wisconsin)",
+  "description": "Wisconsin State Park System properties with links to each property's DNR page.",
+  "group": "nature",
+  "category": "park",
+  "source": "Wisconsin DNR Parks and Recreation Management",
+  "license": "Public data, Wisconsin DNR; attribute WI DNR",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis2/rest/services/PR_Recreation/PR_WSPS_Property_Info_WTM_Ext/MapServer/0",
+   "fields": {
+    "PROP_NAME": "name",
+    "PROP_TYPE": "kind",
+    "INFO_URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -96.4313,
+    39.8597,
+    -82.3688,
+    46.2803
+   ],
+   "count": 79,
+   "kb": 216,
+   "max_record_count": 2000,
+   "features_in_probe": 79
+  }
+ },
+ {
+  "name": "wi-state-trails",
+  "state": "WI",
+  "title": "State trails (Wisconsin)",
+  "title_es": "Senderos estatales (Wisconsin)",
+  "description": "Wisconsin state trail segments with surface, fee, and allowed uses (bike, hike, snowmobile, ski).",
+  "group": "nature",
+  "category": "park",
+  "source": "Wisconsin DNR Parks and Recreation Management",
+  "license": "Public data, Wisconsin DNR; attribute WI DNR",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis/rest/services/PR_TRAILS/PR_STATE_TRAILS_NETWORK_PLAN_WTM_Ext/MapServer/0",
+   "fields": {
+    "TRAIL_NAME": "name",
+    "TRAIL_SEGMENT_NAME": "segment",
+    "SURFACE_TYPE": "kind",
+    "STATUS": "status",
+    "FEE": "fee",
+    "GIS_MILES": "miles",
+    "BIKE_TOUR": "bike",
+    "SNOWMOBILE": "snowmobile"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -91.1578,
+    42.2674,
+    -87.6422,
+    43.8726
+   ],
+   "count": 89,
+   "kb": 39,
+   "max_record_count": 2000,
+   "features_in_probe": 89
+  }
+ },
+ {
+  "name": "wi-wildfires-today",
+  "state": "WI",
+  "title": "Wildfires reported today (Wisconsin DNR)",
+  "title_es": "Incendios forestales reportados hoy (Wisconsin DNR)",
+  "description": "Wildfires the Wisconsin DNR responded to today, with size, cause, and status; empty on days with no fires.",
+  "group": "live",
+  "category": "hazard",
+  "source": "Wisconsin DNR Division of Forestry",
+  "license": "Public data, Wisconsin DNR; attribute WI DNR",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis/rest/services/FR_WIS_BURN/FR_WIS_BURN_MAP_EXT/MapServer/0",
+   "fields": {
+    "FIRE_NAME": "name",
+    "FIRESTATUS": "status",
+    "GENERALCAUSE": "kind",
+    "TOTAL_ACRES_BURNED_AMT": "acres",
+    "REPORTED_DATE": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -103.8625,
+    38.342,
+    -75.7375,
+    50.858
+   ],
+   "count": 7,
+   "kb": 1,
+   "max_record_count": 2000,
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "wi-winter-road-conditions",
+  "state": "WI",
+  "title": "Winter road conditions (Wisconsin 511)",
+  "title_es": "Condiciones invernales de carreteras (Wisconsin 511)",
+  "description": "Wisconsin DOT highway segment driving conditions (normal, snow, ice, closed), collected by Iowa DOT's Midwest road-conditions feed and linked to Wisconsin 511.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Wisconsin DOT via Iowa DOT Midwest Winter Road Conditions",
+  "license": "Public 511 data; attribute Wisconsin DOT and Iowa DOT",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Midwest_Winter_Road_Conditions_View/FeatureServer/0",
+   "fields": {
+    "SEGMENT_NAME": "name",
+    "ROUTE_NAME": "address",
+    "HEADLINE": "status",
+    "DESCRIPTION": "kind",
+    "SOURCE_LINK": "page",
+    "REPORT_UPDATED": "updated"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "SOURCE = 'Wisconsin DOT'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -89.6678,
+    42.237,
+    -86.1522,
+    43.843
+   ],
+   "count": 380,
+   "kb": 164,
+   "max_record_count": 2000,
+   "features_in_probe": 380
+  }
+ },
+ {
+  "name": "il-cook-parcels",
+  "state": "IL",
+  "title": "Parcels (Cook County, Illinois, 2025)",
+  "title_es": "Parcelas (Condado de Cook, Illinois, 2025)",
+  "description": "Cook County tax parcels (2025 edition) with PIN, municipality, assessor building class, and Chicago ward.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Cook County GIS / Cook County Clerk",
+  "license": "Cook County open data; attribute Cook County",
+  "view": {
+   "url": "https://gis.cookcountyil.gov/traditional/rest/services/parcelHistorical/MapServer/2025",
+   "fields": {
+    "Name": "parcel_id",
+    "MUNICIPALITY": "city",
+    "AssessorBLDGclass": "kind",
+    "PoliticalTownship": "township",
+    "Ward": "ward",
+    "TIFDistrict": "tif"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.6869,
+    41.9168,
+    -87.6731,
+    41.9232
+   ],
+   "count": 1761,
+   "kb": 588,
+   "max_record_count": 2000,
+   "features_in_probe": 1761
+  }
+ },
+ {
+  "name": "il-ej-start",
+  "state": "IL",
+  "title": "Environmental justice areas (Illinois EPA EJ Start)",
+  "title_es": "Áreas de justicia ambiental (Illinois EPA EJ Start)",
+  "description": "Illinois EPA EJ Start 2023 block groups flagged as environmental justice areas based on low-income and minority population shares.",
+  "group": "people",
+  "category": "boundary",
+  "source": "Illinois Environmental Protection Agency",
+  "license": "Public data, Illinois EPA; attribute Illinois EPA",
+  "view": {
+   "url": "https://services1.arcgis.com/qI0WaD4k85ljbKGT/arcgis/rest/services/EjStatus2023/FeatureServer/0",
+   "fields": {
+    "ID": "geoid",
+    "CNTY_NAME": "county",
+    "EjStatus": "status",
+    "LowIncomePercent": "pct_low_income",
+    "MinorityPercent": "pct_minority",
+    "LinguistPercent": "pct_limited_english",
+    "ACSTOTPOP": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.8697,
+    41.7778,
+    -87.4303,
+    41.9822
+   ],
+   "count": 1851,
+   "kb": 754,
+   "max_record_count": 2000,
+   "features_in_probe": 1851
+  }
+ },
+ {
+  "name": "il-road-closures",
+  "state": "IL",
+  "title": "Road & ramp closures (IDOT)",
+  "title_es": "Cierres de carreteras y rampas (IDOT)",
+  "description": "Current Illinois DOT road and ramp closures with detours, from Getting Around Illinois.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Illinois Department of Transportation",
+  "license": "Public data, IDOT; attribute IDOT",
+  "view": {
+   "url": "https://services2.arcgis.com/aIrBD8yn1TDTEXoz/arcgis/rest/services/ClosureIncidentExtents/FeatureServer/0",
+   "fields": {
+    "Location": "name",
+    "ConstructionType": "kind",
+    "DetourRoute": "status",
+    "NearTown": "city",
+    "StartDate": "start",
+    "EndDate": "end",
+    "WebAddress": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -91.1656,
+    40.244,
+    -84.1344,
+    43.516
+   ],
+   "count": 34,
+   "kb": 13,
+   "max_record_count": 1000,
+   "features_in_probe": 34
+  }
+ },
+ {
+  "name": "il-road-construction",
+  "state": "IL",
+  "title": "Road construction (IDOT)",
+  "title_es": "Obras viales (IDOT)",
+  "description": "Illinois DOT highway construction projects with lane impacts, from Getting Around Illinois.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Illinois Department of Transportation",
+  "license": "Public data, IDOT; attribute IDOT",
+  "view": {
+   "url": "https://services2.arcgis.com/aIrBD8yn1TDTEXoz/arcgis/rest/services/Road_Construction_Public/FeatureServer/2",
+   "fields": {
+    "Location": "name",
+    "Comments": "status",
+    "StartDate": "start",
+    "EndDate": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -91.1656,
+    40.244,
+    -84.1344,
+    43.516
+   ],
+   "count": 59,
+   "kb": 21,
+   "max_record_count": 2000,
+   "features_in_probe": 59
+  }
+ },
+ {
+  "name": "il-winter-road-conditions-idot",
+  "state": "IL",
+  "title": "Winter road conditions by maintenance section (IDOT)",
+  "title_es": "Condiciones invernales por sección de mantenimiento (IDOT)",
+  "description": "Illinois DOT winter road condition (clear, wet, snow, ice) reported for each highway maintenance section.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Illinois Department of Transportation",
+  "license": "Public data, IDOT; attribute IDOT",
+  "view": {
+   "url": "https://services2.arcgis.com/aIrBD8yn1TDTEXoz/arcgis/rest/services/Wrc_Maintenance_Section_Road_Condition/FeatureServer/0",
+   "fields": {
+    "WrcMntSectionName": "name",
+    "COUNTY_NAM": "county",
+    "Condition": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -92.5156,
+    38.3168,
+    -85.4844,
+    41.6832
+   ],
+   "count": 335,
+   "kb": 435,
+   "max_record_count": 2000,
+   "features_in_probe": 335
+  }
+ },
+ {
+  "name": "mi-boating-access",
+  "state": "MI",
+  "title": "Public boating access sites (Michigan)",
+  "title_es": "Accesos públicos para botes (Michigan)",
+  "description": "Public boat launches on Michigan lakes and rivers from the DNR inventory.",
+  "group": "nature",
+  "category": "point",
+  "source": "Michigan DNR",
+  "license": "Michigan Open Data (public); attribute Michigan DNR",
+  "view": {
+   "url": "https://services3.arcgis.com/Jdnp1TjADvSDxMAX/arcgis/rest/services/dnrParksAndRecreation/FeatureServer/1",
+   "fields": {
+    "Detail": "name",
+    "Type": "kind",
+    "Management": "operator",
+    "Surface": "ramp",
+    "Condition": "status",
+    "Comment": "note"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -84.4789,
+    42.1956,
+    -82.7211,
+    43.0044
+   ],
+   "count": 111,
+   "kb": 24,
+   "max_record_count": 2000,
+   "features_in_probe": 111
+  }
+ },
+ {
+  "name": "mi-child-care-centers",
+  "state": "MI",
+  "title": "Licensed child care centers (Michigan LARA)",
+  "title_es": "Centros de cuidado infantil con licencia (Michigan LARA)",
+  "description": "Child care centers licensed by Michigan LARA with capacity; family and group child care homes are excluded.",
+  "group": "help",
+  "category": "point",
+  "source": "Michigan LARA, Bureau of Community and Health Systems",
+  "license": "Michigan Open Data (public); attribute LARA",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/a79c3b0caedf412599085941e2af91d4/rest/services/CSS/CSS_LARA/MapServer/5",
+   "fields": {
+    "FacilityName": "name",
+    "FacilityType": "kind",
+    "StreetAddress": "address",
+    "City": "city",
+    "Capacity": "capacity",
+    "LicenseNumber": "license"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "FacilityType = 'Center'",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.2697,
+    42.2285,
+    -82.8303,
+    42.4315
+   ],
+   "count": 433,
+   "kb": 111,
+   "max_record_count": 1000,
+   "features_in_probe": 433
+  }
+ },
+ {
+  "name": "mi-detroit-parcels",
+  "state": "MI",
+  "title": "Parcels (City of Detroit)",
+  "title_es": "Parcelas (Ciudad de Detroit)",
+  "description": "City of Detroit assessor parcels with property class, zoning district, assessed value, and year built; taxpayer names left out.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Detroit Office of the Assessor (Detroit Open Data)",
+  "license": "Detroit Open Data (public domain); attribute City of Detroit",
+  "view": {
+   "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/parcel_file_current/FeatureServer/0",
+   "fields": {
+    "parcel_id": "parcel_id",
+    "address": "address",
+    "property_class_description": "kind",
+    "zoning_district": "zoning",
+    "amt_assessed_value": "assessed_value",
+    "year_built": "year_built",
+    "tax_status_description": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.1069,
+    42.3568,
+    -83.0931,
+    42.3632
+   ],
+   "count": 942,
+   "kb": 359,
+   "max_record_count": 1000,
+   "features_in_probe": 942
+  }
+ },
+ {
+  "name": "mi-detroit-zoning",
+  "state": "MI",
+  "title": "Zoning (City of Detroit)",
+  "title_es": "Zonificación (Ciudad de Detroit)",
+  "description": "Official City of Detroit zoning districts.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Detroit Planning & Development (Detroit Open Data)",
+  "license": "Detroit Open Data (public domain); attribute City of Detroit",
+  "view": {
+   "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/Zoning_1/FeatureServer/0",
+   "fields": {
+    "ZONING_REV": "name",
+    "ZDESCR_N": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.1137,
+    42.3537,
+    -83.0863,
+    42.3663
+   ],
+   "count": 395,
+   "kb": 105,
+   "max_record_count": 1000,
+   "features_in_probe": 395
+  }
+ },
+ {
+  "name": "mi-dnr-trails",
+  "state": "MI",
+  "title": "DNR trails (Michigan)",
+  "title_es": "Senderos del DNR (Michigan)",
+  "description": "Michigan DNR trail network (hiking, biking, rail-trails, snowmobile, ORV) with open/closed status by use.",
+  "group": "nature",
+  "category": "park",
+  "source": "Michigan DNR",
+  "license": "Michigan Open Data (public); attribute Michigan DNR",
+  "view": {
+   "url": "https://gisagodnr.state.mi.us/arcgis/rest/services/DNR/DNRTrailsOPENDATA/FeatureServer/19",
+   "fields": {
+    "TrailNamePrimary": "name",
+    "TrailUseCategory": "kind",
+    "OpenClosedStatusNonmotor": "status",
+    "SurfaceType": "surface",
+    "SegmentLengthMiles": "miles",
+    "PublicComments": "note"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -84.0395,
+    42.3978,
+    -83.1605,
+    42.8022
+   ],
+   "count": 1197,
+   "kb": 476,
+   "max_record_count": 2000,
+   "features_in_probe": 1197
+  }
+ },
+ {
+  "name": "mi-ejscreen",
+  "state": "MI",
+  "title": "MiEJScreen environmental justice score (Michigan EGLE)",
+  "title_es": "Puntaje de justicia ambiental MiEJScreen (Michigan EGLE)",
+  "description": "Michigan EGLE's MiEJScreen overall environmental justice score and percentile by census tract (exposures, effects, sensitive populations, socioeconomic).",
+  "group": "people",
+  "category": "boundary",
+  "source": "Michigan Dept. of Environment, Great Lakes, and Energy (EGLE)",
+  "license": "Michigan Open Data (public); attribute EGLE",
+  "view": {
+   "url": "https://services1.arcgis.com/FNjlrOFR0aGJ71Tg/arcgis/rest/services/MiEJscreenScore4_WL/FeatureServer/0",
+   "fields": {
+    "GEOID": "geoid",
+    "TRACT_NA": "name",
+    "County": "county",
+    "MiEJScore": "score",
+    "MiEJScorePL": "percentile",
+    "ExposureAvePL": "exposure_pct",
+    "SOCECONAvePL": "socioeconomic_pct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.4895,
+    42.127,
+    -82.6105,
+    42.533
+   ],
+   "count": 860,
+   "kb": 434,
+   "max_record_count": 2000,
+   "features_in_probe": 860
+  }
+ },
+ {
+  "name": "mi-health-facilities",
+  "state": "MI",
+  "title": "Licensed health facilities: nursing homes, hospice, surgery centers (Michigan)",
+  "title_es": "Instalaciones de salud con licencia (Michigan)",
+  "description": "Michigan LARA licensed hospitals, nursing homes, hospice, psychiatric units, and outpatient surgery facilities.",
+  "group": "help",
+  "category": "point",
+  "source": "Michigan LARA, Bureau of Community and Health Systems",
+  "license": "Michigan Open Data (public); attribute LARA",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/a79c3b0caedf412599085941e2af91d4/rest/services/CSS/CSS_LARA/MapServer/6",
+   "fields": {
+    "Name": "name",
+    "FacilityType": "kind",
+    "StreetAddress": "address",
+    "City": "city",
+    "TotalCapacity": "capacity",
+    "LicenseNumber": "license"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.9289,
+    41.9239,
+    -82.1711,
+    42.7361
+   ],
+   "count": 352,
+   "kb": 95,
+   "max_record_count": 1000,
+   "features_in_probe": 352
+  }
+ },
+ {
+  "name": "mi-park-hunting-lands",
+  "state": "MI",
+  "title": "State park lands open to hunting (Michigan)",
+  "title_es": "Tierras de parques estatales abiertas a la caza (Michigan)",
+  "description": "Michigan DNR state park and recreation area lands where hunting and trapping are allowed, with restrictions.",
+  "group": "nature",
+  "category": "park",
+  "source": "Michigan DNR",
+  "license": "Michigan Open Data (public); attribute Michigan DNR",
+  "view": {
+   "url": "https://services3.arcgis.com/Jdnp1TjADvSDxMAX/arcgis/rest/services/DNRBoundariesParksHuntableLandsOPENDATA/FeatureServer/2",
+   "fields": {
+    "Facility": "name",
+    "HuntTrap": "status",
+    "HuntTrapRestrictions": "kind",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -85.3578,
+    41.7913,
+    -81.8422,
+    43.4087
+   ],
+   "count": 71,
+   "kb": 91,
+   "max_record_count": 2000,
+   "features_in_probe": 71
+  }
+ },
+ {
+  "name": "mi-state-parks",
+  "state": "MI",
+  "title": "State parks & recreation areas (Michigan)",
+  "title_es": "Parques estatales y áreas recreativas (Michigan)",
+  "description": "Michigan DNR state park and recreation area boundaries.",
+  "group": "nature",
+  "category": "park",
+  "source": "Michigan DNR",
+  "license": "Michigan Open Data (public); attribute Michigan DNR",
+  "view": {
+   "url": "https://services3.arcgis.com/Jdnp1TjADvSDxMAX/arcgis/rest/services/dnrParksAndRecreation/FeatureServer/5",
+   "fields": {
+    "FACILITY": "name",
+    "DISTRICT": "kind",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.1156,
+    40.9826,
+    -80.0844,
+    44.2174
+   ],
+   "count": 60,
+   "kb": 78,
+   "max_record_count": 2000,
+   "features_in_probe": 60
+  }
+ },
+ {
+  "name": "mi-trail-closures",
+  "state": "MI",
+  "title": "Temporary trail closures (Michigan DNR)",
+  "title_es": "Cierres temporales de senderos (Michigan DNR)",
+  "description": "Michigan DNR trail segments temporarily closed right now.",
+  "group": "nature",
+  "category": "park",
+  "source": "Michigan DNR",
+  "license": "Michigan Open Data (public); attribute Michigan DNR",
+  "view": {
+   "url": "https://gisagodnr.state.mi.us/arcgis/rest/services/DNR/DNRTrailsOPENDATA/FeatureServer/0",
+   "fields": {
+    "TrailNamePrimary": "name",
+    "TrailUseCategory": "kind",
+    "PublicComments": "status",
+    "County": "county",
+    "SegmentLengthMiles": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -91.6312,
+    41.1549,
+    -77.5687,
+    47.4451
+   ],
+   "count": 193,
+   "kb": 86,
+   "max_record_count": 2000,
+   "features_in_probe": 193
+  }
+ },
+ {
+  "name": "in-brownfields",
+  "state": "IN",
+  "title": "Brownfield sites (Indiana IDEM)",
+  "title_es": "Sitios brownfield (Indiana IDEM)",
+  "description": "Indiana Department of Environmental Management brownfield sites with program status.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Indiana Department of Environmental Management",
+  "license": "IndianaMap open data (public); attribute IDEM",
+  "view": {
+   "url": "https://gisdata.in.gov/server/rest/services/Hosted/IDEM_Land_Sites/FeatureServer/1100",
+   "fields": {
+    "site_names": "name",
+    "status": "status",
+    "address": "address",
+    "city": "city",
+    "bfd_no": "case_number"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.0369,
+    39.3458,
+    -85.2791,
+    40.1902
+   ],
+   "count": 784,
+   "kb": 188,
+   "max_record_count": 1000,
+   "features_in_probe": 784
+  }
+ },
+ {
+  "name": "in-fish-wildlife-areas",
+  "state": "IN",
+  "title": "Fish & wildlife areas (Indiana DNR)",
+  "title_es": "Áreas de pesca y vida silvestre (Indiana DNR)",
+  "description": "Indiana DNR fish and wildlife areas (public hunting, fishing, wildlife watching) with phone and website.",
+  "group": "nature",
+  "category": "point",
+  "source": "Indiana DNR",
+  "license": "IndianaMap open data (public); attribute Indiana DNR",
+  "view": {
+   "url": "https://gisdata.in.gov/server/rest/services/Hosted/Sites_FWA/FeatureServer/8",
+   "fields": {
+    "site": "name",
+    "category": "kind",
+    "activities": "status",
+    "phone": "phone",
+    "website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -100.3625,
+    33.0475,
+    -72.2375,
+    46.5525
+   ],
+   "count": 153,
+   "kb": 59,
+   "max_record_count": 1000,
+   "features_in_probe": 153
+  }
+ },
+ {
+  "name": "in-fishing-access",
+  "state": "IN",
+  "title": "Public fishing & boat access sites (Indiana DNR)",
+  "title_es": "Accesos públicos de pesca y botes (Indiana DNR)",
+  "description": "Indiana DNR public fishing access sites with boat ramp, motor restrictions, and fees.",
+  "group": "nature",
+  "category": "point",
+  "source": "Indiana DNR Division of Fish and Wildlife",
+  "license": "IndianaMap open data (public); attribute Indiana DNR",
+  "view": {
+   "url": "https://gisdata.in.gov/server/rest/services/Hosted/Fish_Access_RO/FeatureServer/0",
+   "fields": {
+    "site_name": "name",
+    "waterbody": "lake",
+    "boat_ramp": "ramp",
+    "motor": "kind",
+    "fee": "fee",
+    "ada_access": "ada"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.9158,
+    38.9235,
+    -84.4002,
+    40.6125
+   ],
+   "count": 388,
+   "kb": 87,
+   "max_record_count": 1000,
+   "features_in_probe": 388
+  }
+ },
+ {
+  "name": "in-hunting-areas",
+  "state": "IN",
+  "title": "Public hunting areas (Indiana DNR)",
+  "title_es": "Áreas públicas de caza (Indiana DNR)",
+  "description": "Lands open to public hunting in Indiana with game allowed, check-in rules, and ranges.",
+  "group": "nature",
+  "category": "park",
+  "source": "Indiana DNR Division of Fish and Wildlife",
+  "license": "IndianaMap open data (public, as-is); attribute Indiana DNR",
+  "view": {
+   "url": "https://gisdata.in.gov/server/rest/services/Hosted/Hunting_Areas_RO/FeatureServer/0",
+   "fields": {
+    "property": "name",
+    "mngdby": "operator",
+    "access_": "status",
+    "huntfor": "kind",
+    "checkin": "check_in",
+    "acreage": "acres",
+    "website": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -88.0578,
+    38.9559,
+    -84.5422,
+    40.6441
+   ],
+   "count": 46,
+   "kb": 228,
+   "max_record_count": 1000,
+   "features_in_probe": 46
+  }
+ },
+ {
+  "name": "in-parcels",
+  "state": "IN",
+  "title": "Parcels (Indiana statewide)",
+  "title_es": "Parcelas (Indiana, todo el estado)",
+  "description": "Statewide parcel boundaries from IndianaMap (county data harvest, 2025 load) with address, property class code, and tax districts; no owner names.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Indiana Geographic Information Office (IGIO) / IndianaMap",
+  "license": "IndianaMap open data (public); attribute IGIO and counties",
+  "view": {
+   "url": "https://gisdata.in.gov/server/rest/services/Hosted/Parcel_Boundaries_of_Indiana_Current/FeatureServer/0",
+   "fields": {
+    "state_parcel_id": "parcel_id",
+    "prop_add": "address",
+    "prop_city": "city",
+    "dlgf_prop_class_code": "kind",
+    "tax_township": "township",
+    "tax_school": "school_district",
+    "loaddate": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.1649,
+    39.7647,
+    -86.1511,
+    39.7713
+   ],
+   "count": 527,
+   "kb": 236,
+   "max_record_count": 2000,
+   "features_in_probe": 527
+  }
+ },
+ {
+  "name": "in-public-lands",
+  "state": "IN",
+  "title": "Public lands open to the public (Indiana)",
+  "title_es": "Tierras públicas abiertas al público (Indiana)",
+  "description": "Federal, state, and local conservation and recreation lands in Indiana that are open to the public, from the Indiana DNR managed lands inventory.",
+  "group": "nature",
+  "category": "park",
+  "source": "Indiana DNR / Indiana Natural Heritage Data Center",
+  "license": "IndianaMap open data (public); attribute Indiana DNR",
+  "view": {
+   "url": "https://gisdata.in.gov/server/rest/services/Hosted/ManagedLandsAll_DNR_INHD_IN_OpenPublic/FeatureServer/0",
+   "fields": {
+    "unitname": "name",
+    "manager": "operator",
+    "owner": "kind",
+    "access_": "status",
+    "acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -87.0369,
+    39.3458,
+    -85.2791,
+    40.1902
+   ],
+   "count": 390,
+   "kb": 229,
+   "max_record_count": 1000,
+   "features_in_probe": 390
+  }
+ },
+ {
+  "name": "in-state-forests",
+  "state": "IN",
+  "title": "State forests (Indiana DNR)",
+  "title_es": "Bosques estatales (Indiana DNR)",
+  "description": "Indiana DNR state forest properties with activities, phone, and website.",
+  "group": "nature",
+  "category": "point",
+  "source": "Indiana DNR",
+  "license": "IndianaMap open data (public); attribute Indiana DNR",
+  "view": {
+   "url": "https://gisdata.in.gov/server/rest/services/Hosted/Sites_StateForests/FeatureServer/8",
+   "fields": {
+    "site": "name",
+    "category": "kind",
+    "activities": "status",
+    "phone": "phone",
+    "website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -100.3625,
+    33.0475,
+    -72.2375,
+    46.5525
+   ],
+   "count": 18,
+   "kb": 7,
+   "max_record_count": 1000,
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "in-state-parks",
+  "state": "IN",
+  "title": "State parks & reservoirs (Indiana DNR)",
+  "title_es": "Parques estatales y embalses (Indiana DNR)",
+  "description": "Indiana DNR state parks and state reservoir properties with activities, phone, and website.",
+  "group": "nature",
+  "category": "point",
+  "source": "Indiana DNR",
+  "license": "IndianaMap open data (public); attribute Indiana DNR",
+  "view": {
+   "url": "https://gisdata.in.gov/server/rest/services/Hosted/Sites_SPR/FeatureServer/8",
+   "fields": {
+    "site": "name",
+    "category": "kind",
+    "activities": "status",
+    "phone": "phone",
+    "website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -100.3625,
+    33.0475,
+    -72.2375,
+    46.5525
+   ],
+   "count": 37,
+   "kb": 17,
+   "max_record_count": 1000,
+   "features_in_probe": 37
+  }
+ },
+ {
+  "name": "oh-dnr-facilities",
+  "state": "OH",
+  "title": "State park & ODNR facilities (Ohio)",
+  "title_es": "Instalaciones de parques estatales y ODNR (Ohio)",
+  "description": "Ohio DNR park, watercraft, and property facility points with links to each property's ODNR page.",
+  "group": "nature",
+  "category": "point",
+  "source": "Ohio Department of Natural Resources",
+  "license": "Ohio DNR public GIS data; attribute ODNR",
+  "view": {
+   "url": "https://gis.ohiodnr.gov/arcgis/rest/services/OIT_Services/ODNR_ODNR_Lands_Public_nolakes/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "PROP_TYPE": "kind",
+    "MANAGING_AGENCY": "operator",
+    "Public_Link": "page",
+    "COMMENTS": "note"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.5056,
+    38.2758,
+    -79.4744,
+    41.6442
+   ],
+   "count": 69,
+   "kb": 14,
+   "max_record_count": 1000,
+   "features_in_probe": 69
+  }
+ },
+ {
+  "name": "oh-franklin-parcels",
+  "state": "OH",
+  "title": "Parcels (Franklin County / Columbus, Ohio)",
+  "title_es": "Parcelas (Condado de Franklin / Columbus, Ohio)",
+  "description": "Franklin County Auditor tax parcels with address, land-use class, school district, and assessed value; owner names left out.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Franklin County Auditor",
+  "license": "Franklin County Auditor public GIS data; attribute Franklin County Auditor",
+  "view": {
+   "url": "https://gis.franklincountyohio.gov/hosting/rest/services/ParcelFeatures/Parcel_Features/MapServer/0",
+   "fields": {
+    "PARCELID": "parcel_id",
+    "SITEADDRESS": "address",
+    "CVTTXDSCRP": "city",
+    "CLASSDSCRP": "kind",
+    "SCHLDSCRP": "school_district",
+    "ACRES": "acres",
+    "TOTVALUEBASE": "market_value",
+    "RESYRBLT": "year_built"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -82.9969,
+    39.9567,
+    -82.9831,
+    39.9633
+   ],
+   "count": 1027,
+   "kb": 543,
+   "max_record_count": 3000,
+   "features_in_probe": 1027
+  }
+ },
+ {
+  "name": "oh-school-districts",
+  "state": "OH",
+  "title": "School districts (Ohio, 2025)",
+  "title_es": "Distritos escolares (Ohio, 2025)",
+  "description": "Ohio public school district boundaries (2025) from the state GIS office.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Ohio Department of Administrative Services / OGRIP",
+  "license": "Ohio public GIS data; attribute OGRIP",
+  "view": {
+   "url": "https://maps.ohio.gov/arcgis/rest/services/Hosted/Ohio_School_Districts_2025/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "irn": "district_id",
+    "taxid": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.8689,
+    39.539,
+    -82.1111,
+    40.381
+   ],
+   "count": 89,
+   "kb": 377,
+   "max_record_count": 2000,
+   "features_in_probe": 89
+  }
+ },
+ {
+  "name": "oh-state-forests",
+  "state": "OH",
+  "title": "State forests (Ohio DNR)",
+  "title_es": "Bosques estatales (Ohio DNR)",
+  "description": "Ohio DNR Division of Forestry state forest lands with hunting status.",
+  "group": "nature",
+  "category": "park",
+  "source": "Ohio Department of Natural Resources",
+  "license": "Ohio DNR public GIS data; attribute ODNR",
+  "view": {
+   "url": "https://gis.ohiodnr.gov/arcgis/rest/services/OIT_Services/ODNR_ODNR_Lands_Public_nolakes/FeatureServer/6",
+   "fields": {
+    "Name_Label": "name",
+    "PROP_TYPE": "kind",
+    "HUNTING_STATUS": "status",
+    "SUM_CALC_ACRES": "acres",
+    "COMMENTS": "note"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.1156,
+    37.7021,
+    -79.0844,
+    41.0979
+   ],
+   "count": 38,
+   "kb": 74,
+   "max_record_count": 1000,
+   "features_in_probe": 38
+  }
+ },
+ {
+  "name": "oh-state-parks",
+  "state": "OH",
+  "title": "State parks & watercraft lands (Ohio DNR)",
+  "title_es": "Parques estatales y tierras de navegación (Ohio DNR)",
+  "description": "Ohio DNR Division of Parks and Watercraft lands (state parks and lakes) with hunting status.",
+  "group": "nature",
+  "category": "park",
+  "source": "Ohio Department of Natural Resources",
+  "license": "Ohio DNR public GIS data; attribute ODNR",
+  "view": {
+   "url": "https://gis.ohiodnr.gov/arcgis/rest/services/OIT_Services/ODNR_ODNR_Lands_Public_nolakes/FeatureServer/5",
+   "fields": {
+    "Name_Label": "name",
+    "PROP_TYPE": "kind",
+    "HUNTING_STATUS": "status",
+    "SUM_CALC_ACRES": "acres",
+    "COMMENTS": "note"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.5056,
+    38.2758,
+    -79.4744,
+    41.6442
+   ],
+   "count": 195,
+   "kb": 132,
+   "max_record_count": 1000,
+   "features_in_probe": 195
+  }
+ },
+ {
+  "name": "oh-trails",
+  "state": "OH",
+  "title": "Statewide trails (Ohio DNR)",
+  "title_es": "Senderos estatales (Ohio DNR)",
+  "description": "Ohio DNR statewide trail inventory with trail class and status.",
+  "group": "nature",
+  "category": "park",
+  "source": "Ohio Department of Natural Resources",
+  "license": "Ohio DNR public GIS data; attribute ODNR",
+  "view": {
+   "url": "https://gis.ohiodnr.gov/arcgis/rest/services/OIT_Services/ODNR_Trails/MapServer/2",
+   "fields": {
+    "TRAIL_NAME": "name",
+    "TRAIL_CLAS": "kind",
+    "TRAIL_STAT": "status",
+    "miles": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -83.8689,
+    39.539,
+    -82.1111,
+    40.381
+   ],
+   "count": 39,
+   "kb": 307,
+   "max_record_count": 1000,
+   "features_in_probe": 39
+  }
+ },
+ {
+  "name": "oh-wildlife-areas",
+  "state": "OH",
+  "title": "Wildlife areas – public hunting & fishing (Ohio DNR)",
+  "title_es": "Áreas de vida silvestre – caza y pesca (Ohio DNR)",
+  "description": "Ohio DNR Division of Wildlife areas with hunting status.",
+  "group": "nature",
+  "category": "park",
+  "source": "Ohio Department of Natural Resources",
+  "license": "Ohio DNR public GIS data; attribute ODNR",
+  "view": {
+   "url": "https://gis.ohiodnr.gov/arcgis/rest/services/OIT_Services/ODNR_ODNR_Lands_Public_nolakes/FeatureServer/7",
+   "fields": {
+    "Name_Label": "name",
+    "PROP_TYPE": "kind",
+    "HUNTING_STATUS": "status",
+    "SUM_CALC_ACRES": "acres",
+    "COMMENTS": "note"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -86.5056,
+    38.2758,
+    -79.4744,
+    41.6442
+   ],
+   "count": 417,
+   "kb": 443,
+   "max_record_count": 1000,
+   "features_in_probe": 417
+  }
+ }
+]

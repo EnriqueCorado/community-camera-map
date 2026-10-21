@@ -28,7 +28,7 @@ GROUPS = {
 }  # fmt: skip
 CATEGORIES = {"boundary", "landuse", "point", "hazard", "park", "info", "roadops", "perimeter"}
 GEOMETRIES = {"point", "line", "polygon"}
-_URL = re.compile(r"^https://[a-z0-9.-]+(?::443)?/[\w./%-]*/(?:FeatureServer|MapServer)/\d+$", re.I)
+_URL = re.compile(r"^https://[a-z0-9.-]+(?::443)?/[\w./%()-]*/(?:FeatureServer|MapServer)/\d+$", re.I)
 _NAME = re.compile(r"^[a-z]{2}-[a-z0-9-]+$")
 _FIELD = re.compile(r"^[A-Za-z_][\w.]{0,63}$")
 _PROP = re.compile(r"^[a-z_][a-z0-9_]{0,31}$")
@@ -45,7 +45,7 @@ def _check(spec: dict, where: str) -> None:
 
     name, st = spec.get("name", ""), spec.get("state", "")
     need(isinstance(name, str) and bool(_NAME.match(name)), f"bad name {name!r}")
-    need(st in STATES, f"unknown state {st!r}")
+    need(st in STATES or st == "US", f"unknown state {st!r}")  # "US": a multi-state source
     need(name.startswith(f"{st.lower()}-"), f"{name}: name must start with '{st.lower()}-'")
     for key in ("title", "title_es", "description", "source"):
         need(isinstance(spec.get(key), str) and spec[key].strip() != "", f"{name}: missing {key}")
@@ -79,7 +79,7 @@ def _layer(spec: dict) -> Layer:
         title=spec["title"],
         description=spec["description"],
         category=spec["category"],
-        coverage=spec["state"],
+        coverage="usa" if spec["state"] == "US" else spec["state"],
         view=View(
             v["url"],
             dict(v["fields"]),

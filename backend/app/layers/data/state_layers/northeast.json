@@ -1,0 +1,4452 @@
+[
+ {
+  "name": "ny-parcels",
+  "state": "NY",
+  "title": "Tax parcels (New York)",
+  "title_es": "Parcelas catastrales (Nueva York)",
+  "description": "Tax parcels with address, property class, acreage and year built for the counties that share them with the state (includes NYC); 2025 roll.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "NYS Office of Information Technology Services GIS (NYS Tax Parcels Public)",
+  "license": "NY State public data (no restrictions; attribution requested)",
+  "view": {
+   "url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Tax_Parcels_Public/FeatureServer/1",
+   "fields": {
+    "PARCEL_ADDR": "address",
+    "CITYTOWN_NAME": "city",
+    "COUNTY_NAME": "county",
+    "PROP_CLASS": "kind",
+    "CALC_ACRES": "acres",
+    "YR_BLT": "year_built",
+    "SWIS_SBL_ID": "parcel_id",
+    "ROLL_YR": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -73.775,
+    42.6487,
+    -73.745,
+    42.6613
+   ],
+   "zoom": 16,
+   "count": 2000,
+   "kb": 775,
+   "max_record_count": 50000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "ny-disadvantaged-communities",
+  "state": "NY",
+  "title": "Disadvantaged communities (New York)",
+  "title_es": "Comunidades desfavorecidas (Nueva York)",
+  "description": "Census tracts designated Disadvantaged Communities under the NY Climate Act (Climate Justice Working Group, 2023), with combined burden/vulnerability score.",
+  "group": "people",
+  "category": "info",
+  "source": "NYS Climate Justice Working Group / NYSERDA / NYS DEC",
+  "license": "NY State public data (no restrictions; attribution requested)",
+  "view": {
+   "url": "https://services7.arcgis.com/ZR2wjW0JGwgm9bhz/ArcGIS/rest/services/Final_DAC_Designated/FeatureServer/0",
+   "fields": {
+    "GEOID": "geoid",
+    "DAC_Desig": "status",
+    "County": "county",
+    "City_Town": "city",
+    "Comb_Sc": "score",
+    "Burden_Pct": "burden_pct",
+    "Vulner_Pct": "vulnerability_pct",
+    "Rank_State": "state_rank"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.4657,
+    40.5419,
+    -73.5043,
+    40.9581
+   ],
+   "zoom": 11,
+   "count": 1000,
+   "kb": 460,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "ny-peja",
+  "state": "NY",
+  "title": "Potential environmental justice areas (New York)",
+  "title_es": "Áreas potenciales de justicia ambiental (Nueva York)",
+  "description": "NYS DEC Potential Environmental Justice Areas: block groups with high low-income or minority shares (ACS 2016-2020 basis).",
+  "group": "people",
+  "category": "info",
+  "source": "NYS Department of Environmental Conservation",
+  "license": "NY State public data (no restrictions; attribution requested)",
+  "view": {
+   "url": "https://services6.arcgis.com/DZHaqZm9cxOD4CWM/arcgis/rest/services/Potential_Environmental_Justice_Area__PEJA__Communities/FeatureServer/0",
+   "fields": {
+    "GEOID_DATA": "geoid",
+    "PEJA": "status",
+    "BPOVRATE": "poverty_rate",
+    "MINPOPRATE": "minority_rate",
+    "LANDTYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.1052,
+    40.698,
+    -73.8648,
+    40.802
+   ],
+   "zoom": 13,
+   "count": 758,
+   "kb": 265,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 758
+  }
+ },
+ {
+  "name": "ny-dec-lands",
+  "state": "NY",
+  "title": "DEC state lands (New York)",
+  "title_es": "Tierras estatales DEC (Nueva York)",
+  "description": "State forests, wildlife management areas, Forest Preserve and other lands managed by NYS DEC, with links to each property page.",
+  "group": "nature",
+  "category": "park",
+  "source": "NYS Department of Environmental Conservation",
+  "license": "NY State public data (no restrictions; attribution requested)",
+  "view": {
+   "url": "https://services6.arcgis.com/DZHaqZm9cxOD4CWM/arcgis/rest/services/NYS_DEC_Lands/FeatureServer/0",
+   "fields": {
+    "FACILITY": "name",
+    "CATEGORY": "kind",
+    "CLASS": "class",
+    "PUBLICUSE": "status",
+    "URL": "page",
+    "ACRES": "acres",
+    "COUNTY": "county",
+    "UPDATED": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.0226,
+    43.311,
+    -72.1774,
+    44.889
+   ],
+   "zoom": 9,
+   "count": 1539,
+   "kb": 1039,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1539
+  }
+ },
+ {
+  "name": "ny-dec-trails",
+  "state": "NY",
+  "title": "DEC hiking trails (New York)",
+  "title_es": "Senderos DEC (Nueva York)",
+  "description": "Hiking trails on NYS DEC lands (Forest Preserve, state forests, wildlife areas).",
+  "group": "nature",
+  "category": "park",
+  "source": "NYS Department of Environmental Conservation",
+  "license": "NY State public data (no restrictions; attribution requested)",
+  "view": {
+   "url": "https://services6.arcgis.com/DZHaqZm9cxOD4CWM/arcgis/rest/services/DEC_Trails/FeatureServer/1",
+   "fields": {
+    "NAME": "name",
+    "FACILITY": "area",
+    "MILES": "miles",
+    "ACCESSIBLE": "accessible",
+    "UPDATED": "updated"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.5807,
+    43.9028,
+    -73.6193,
+    44.2972
+   ],
+   "zoom": 11,
+   "count": 564,
+   "kb": 232,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 564
+  }
+ },
+ {
+  "name": "ny-dec-campsites",
+  "state": "NY",
+  "title": "DEC campsites (New York)",
+  "title_es": "Campamentos DEC (Nueva York)",
+  "description": "Individual campsites at NYS DEC campgrounds and primitive sites.",
+  "group": "nature",
+  "category": "point",
+  "source": "NYS Department of Environmental Conservation",
+  "license": "NY State public data (no restrictions; attribution requested)",
+  "view": {
+   "url": "https://services6.arcgis.com/DZHaqZm9cxOD4CWM/arcgis/rest/services/Campsites/FeatureServer/0",
+   "fields": {
+    "FACILITY": "name",
+    "SITE_NUMBER": "site",
+    "SITE_ACCESS": "kind",
+    "ACC_STATUS_": "accessible"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.4103,
+    44.1917,
+    -73.9297,
+    44.3883
+   ],
+   "zoom": 12,
+   "count": 702,
+   "kb": 135,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 702
+  }
+ },
+ {
+  "name": "ny-state-parks",
+  "state": "NY",
+  "title": "State parks and historic sites (New York)",
+  "title_es": "Parques y sitios históricos estatales (Nueva York)",
+  "description": "NY State Parks (OPRHP) parks, historic sites and recreation areas, with amenities and official page links.",
+  "group": "nature",
+  "category": "park",
+  "source": "NYS Office of Parks, Recreation and Historic Preservation",
+  "license": "NY State public data (no restrictions; attribution requested)",
+  "view": {
+   "url": "https://services.arcgis.com/1xFZPtKn1wKC6POA/arcgis/rest/services/NY_State_Park_Points_(public_view)/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Category": "kind",
+    "County": "county",
+    "URL": "page",
+    "Camp": "camping",
+    "Beach": "beach",
+    "Hunt": "hunting",
+    "Fish": "fishing"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -89.1409,
+    36.1911,
+    -58.3791,
+    49.1189
+   ],
+   "zoom": 6,
+   "count": 248,
+   "kb": 67,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 248
+  }
+ },
+ {
+  "name": "ny-state-parks-hunting",
+  "state": "NY",
+  "title": "State park hunting areas (New York)",
+  "title_es": "Áreas de caza en parques estatales (Nueva York)",
+  "description": "Areas of NY State Parks open to hunting, with the species/seasons allowed.",
+  "group": "nature",
+  "category": "park",
+  "source": "NYS Office of Parks, Recreation and Historic Preservation",
+  "license": "NY State public data (no restrictions; attribution requested)",
+  "view": {
+   "url": "https://services.arcgis.com/1xFZPtKn1wKC6POA/arcgis/rest/services/NY_State_Parks_Hunting_Areas_2_view/FeatureServer/1",
+   "fields": {
+    "Name": "name",
+    "Facility": "area",
+    "Hunting": "status",
+    "Website": "page",
+    "Acreage": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -75.6226,
+    42.0952,
+    -71.7774,
+    43.7048
+   ],
+   "zoom": 9,
+   "count": 39,
+   "kb": 41,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 39
+  }
+ },
+ {
+  "name": "ny-dec-remediation-sites",
+  "state": "NY",
+  "title": "Contaminated site cleanups (New York)",
+  "title_es": "Limpieza de sitios contaminados (Nueva York)",
+  "description": "NYS DEC remediation sites (state Superfund, Brownfield Cleanup, Environmental Restoration, spills) with class and DEC detail page.",
+  "group": "hazards",
+  "category": "point",
+  "source": "NYS Department of Environmental Conservation",
+  "license": "NY State public data (no restrictions; attribution requested)",
+  "view": {
+   "url": "https://services6.arcgis.com/DZHaqZm9cxOD4CWM/arcgis/rest/services/Remediation_Sites/FeatureServer/1",
+   "fields": {
+    "SITENAME": "name",
+    "PROGRAM": "kind",
+    "SITECLASS": "status",
+    "ADDRESS1": "address",
+    "LOCALITY": "city",
+    "DETAIL_URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.4307,
+    40.4717,
+    -73.4693,
+    40.8883
+   ],
+   "zoom": 11,
+   "count": 1720,
+   "kb": 579,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1720
+  }
+ },
+ {
+  "name": "ny-mesonet",
+  "state": "NY",
+  "title": "NYS Mesonet weather stations",
+  "title_es": "Estaciones meteorológicas NYS Mesonet",
+  "description": "The 126-station New York State Mesonet (University at Albany) weather network, with links to station pages.",
+  "group": "weather",
+  "category": "point",
+  "source": "NYS Mesonet / University at Albany (via NYS ITS GIS)",
+  "license": "NY State public data (no restrictions; attribution requested)",
+  "view": {
+   "url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Mesonet/MapServer/0",
+   "fields": {
+    "station_na": "name",
+    "code": "kind",
+    "url": "page",
+    "Elev": "elevation"
+   },
+   "geometry": "point",
+   "min_zoom": 5,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -104.5217,
+    29.7272,
+    -42.9983,
+    55.5828
+   ],
+   "zoom": 5,
+   "count": 127,
+   "kb": 26,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 127
+  }
+ },
+ {
+  "name": "ny-nyc-mappluto",
+  "state": "NY",
+  "title": "Tax lots, MapPLUTO (New York City)",
+  "title_es": "Lotes catastrales MapPLUTO (Ciudad de Nueva York)",
+  "description": "NYC Department of City Planning MapPLUTO tax lots with zoning, land use, floors, units and year built.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "NYC Department of City Planning (NYC Open Data)",
+  "license": "NYC Open Data terms of use (free public use; attribution)",
+  "view": {
+   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/MapPLUTO_View/FeatureServer/0",
+   "fields": {
+    "Address": "address",
+    "ZoneDist1": "zoning",
+    "LandUse": "kind",
+    "BldgClass": "building_class",
+    "NumFloors": "floors",
+    "UnitsRes": "units",
+    "YearBuilt": "year_built",
+    "BBL": "parcel_id",
+    "Version": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.0,
+    40.7435,
+    -73.97,
+    40.7565
+   ],
+   "zoom": 16,
+   "count": 2000,
+   "kb": 703,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "ny-nyc-zoning",
+  "state": "NY",
+  "title": "Zoning districts (New York City)",
+  "title_es": "Distritos de zonificación (Ciudad de Nueva York)",
+  "description": "NYC zoning districts (residence, commercial, manufacturing) from the Department of City Planning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "NYC Department of City Planning",
+  "license": "NYC Open Data terms of use (free public use; attribution)",
+  "view": {
+   "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/nyzd/FeatureServer/0",
+   "fields": {
+    "ZONEDIST": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.1052,
+    40.698,
+    -73.8648,
+    40.802
+   ],
+   "zoom": 13,
+   "count": 1632,
+   "kb": 592,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1632
+  }
+ },
+ {
+  "name": "ny-nyc-hurricane-evacuation-zones",
+  "state": "NY",
+  "title": "Hurricane evacuation zones (New York City)",
+  "title_es": "Zonas de evacuación por huracán (Ciudad de Nueva York)",
+  "description": "NYC Emergency Management hurricane evacuation zones 1-6 (current official zones; check NYC.gov/knowyourzone during a storm).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "NYC Emergency Management (NYC Open Data)",
+  "license": "NYC Open Data terms of use (free public use; attribution)",
+  "view": {
+   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/HurricaneEvacuationZone_view/FeatureServer/0",
+   "fields": {
+    "HURRICANE_EVACUATION_ZONE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.4307,
+    40.4717,
+    -73.4693,
+    40.8883
+   ],
+   "zoom": 11,
+   "count": 8,
+   "kb": 590,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "ny-nyc-evacuation-centers",
+  "state": "NY",
+  "title": "Hurricane evacuation centers (New York City)",
+  "title_es": "Centros de evacuación por huracán (Ciudad de Nueva York)",
+  "description": "NYC Emergency Management hurricane evacuation centers (opened only when an evacuation is ordered).",
+  "group": "help",
+  "category": "point",
+  "source": "NYC Emergency Management (NYC Open Data)",
+  "license": "NYC Open Data terms of use (free public use; attribution)",
+  "view": {
+   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/Hurricane_Evacuation_Centers_PROD_view/FeatureServer/0",
+   "fields": {
+    "OEM_LABEL": "name",
+    "BLDG_ADD": "address",
+    "CITY": "city",
+    "ACCESSIBLE": "accessible",
+    "AVAILABLE": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.9113,
+    40.2634,
+    -72.9887,
+    41.0966
+   ],
+   "zoom": 10,
+   "count": 60,
+   "kb": 12,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 60
+  }
+ },
+ {
+  "name": "ny-nyc-food-help",
+  "state": "NY",
+  "title": "Food pantries and soup kitchens (New York City)",
+  "title_es": "Despensas de alimentos y comedores (Ciudad de Nueva York)",
+  "description": "Emergency food pantries and community kitchens in the NYC HRA Emergency Food Assistance Program, with hours info.",
+  "group": "help",
+  "category": "point",
+  "source": "NYC Human Resources Administration (NYC Open Data)",
+  "license": "NYC Open Data terms of use (free public use; attribution)",
+  "view": {
+   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/Food_Help_Programs_PROD_view/FeatureServer/0",
+   "fields": {
+    "program": "name",
+    "distadd": "address",
+    "distboro": "city",
+    "org_phone": "phone",
+    "type_fp": "kind",
+    "fp_days_orig": "days",
+    "fp_hours_orig": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.4307,
+    40.4717,
+    -73.4693,
+    40.8883
+   ],
+   "zoom": 11,
+   "count": 518,
+   "kb": 154,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 518
+  }
+ },
+ {
+  "name": "ny-nyc-street-closures",
+  "state": "NY",
+  "title": "Event street closures (New York City)",
+  "title_es": "Cierres de calles por eventos (Ciudad de Nueva York)",
+  "description": "Permitted street closures for events (street fairs, parades, filming) from the NYC Street Activity Permit Office; current and upcoming.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "NYC Street Activity Permit Office / CECM (NYC Open Data)",
+  "license": "NYC Open Data terms of use (free public use; attribution)",
+  "view": {
+   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/Street_Closure_Events_PROD_view/FeatureServer/1",
+   "fields": {
+    "EventName": "name",
+    "Location": "address",
+    "EventTypeDescription": "kind",
+    "EventStatusName": "status",
+    "R_EventStartDate": "start",
+    "R_EventEndDate": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "R_EventEndDate >= CURRENT_TIMESTAMP",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.2253,
+    40.646,
+    -73.7447,
+    40.854
+   ],
+   "zoom": 12,
+   "count": 279,
+   "kb": 116,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 279
+  }
+ },
+ {
+  "name": "ny-nyc-early-childhood-programs",
+  "state": "NY",
+  "title": "Early childhood centers, 3-K/Pre-K (New York City)",
+  "title_es": "Centros de educación infantil 3-K/Pre-K (Ciudad de Nueva York)",
+  "description": "NYC Public Schools contracted early childhood centers (3-K, Pre-K, infant/toddler); centers only, no home-based providers.",
+  "group": "help",
+  "category": "point",
+  "source": "NYC Public Schools, Division of Early Childhood (NYC Open Data)",
+  "license": "NYC Open Data terms of use (free public use; attribution)",
+  "view": {
+   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/Childcare_Providers_PROD_view/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "boro": "city",
+    "phone": "phone",
+    "model_type": "kind",
+    "contract_type": "program"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "model_type IN ('PP','GC')",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.1903,
+    40.5759,
+    -73.7097,
+    40.7841
+   ],
+   "zoom": 12,
+   "count": 1706,
+   "kb": 420,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1706
+  }
+ },
+ {
+  "name": "ny-nyc-heat-vulnerability",
+  "state": "NY",
+  "title": "Heat vulnerability index (New York City)",
+  "title_es": "Índice de vulnerabilidad al calor (Ciudad de Nueva York)",
+  "description": "NYC Health Department Heat Vulnerability Index by neighborhood, 1 (lowest) to 5 (highest risk of heat death), 2023.",
+  "group": "people",
+  "category": "info",
+  "source": "NYC Department of Health and Mental Hygiene (NYC Open Data)",
+  "license": "NYC Open Data terms of use (free public use; attribution)",
+  "view": {
+   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/Heat_Vulnerability_Index_2023/FeatureServer/0",
+   "fields": {
+    "NTAName": "name",
+    "BoroName": "city",
+    "HVI__1_5_": "score"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.9113,
+    40.2634,
+    -72.9887,
+    41.0966
+   ],
+   "zoom": 10,
+   "count": 262,
+   "kb": 209,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 262
+  }
+ },
+ {
+  "name": "nj-parcels",
+  "state": "NJ",
+  "title": "Tax parcels (New Jersey)",
+  "title_es": "Parcelas catastrales (Nueva Jersey)",
+  "description": "Statewide parcel composite joined to MOD-IV tax records: address, property class, acreage, year built.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "NJ Office of GIS (NJOGIS) parcels and MOD-IV composite",
+  "license": "NJ Office of GIS (public; attribution requested)",
+  "view": {
+   "url": "https://services2.arcgis.com/XVOqAjTOJ5P6ngMu/arcgis/rest/services/Parcels_Composite_NJ_WM/FeatureServer/0",
+   "fields": {
+    "PROP_LOC": "address",
+    "MUN_NAME": "city",
+    "COUNTY": "county",
+    "PROP_CLASS": "kind",
+    "BLDG_DESC": "building",
+    "CALC_ACRE": "acres",
+    "YR_CONSTR": "year_built",
+    "PAMS_PIN": "parcel_id",
+    "PCLLASTUPD": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.187,
+    40.7285,
+    -74.157,
+    40.7415
+   ],
+   "zoom": 16,
+   "count": 2000,
+   "kb": 782,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "nj-overburdened-communities",
+  "state": "NJ",
+  "title": "Overburdened communities (New Jersey)",
+  "title_es": "Comunidades sobrecargadas (Nueva Jersey)",
+  "description": "Block groups designated Overburdened Communities under the NJ Environmental Justice Law (low income, minority or limited-English criteria).",
+  "group": "people",
+  "category": "info",
+  "source": "NJ Department of Environmental Protection, Office of Environmental Justice",
+  "license": "NJDEP Bureau of GIS (public; NJDEP data terms, attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/QWdNfRs7lkPq4g4Q/arcgis/rest/services/Overburdened_Communities_under_the_New_Jersey_Environmental_Justice_Law/FeatureServer/19",
+   "fields": {
+    "GEOID": "geoid",
+    "NAME": "city",
+    "COUNTY": "county",
+    "OVERBURDENED_COMMUNITY_CRITERI": "status",
+    "LOW_INCOME_PCT": "low_income_pct",
+    "MINORITY_PCT": "minority_pct",
+    "PCTLINGUAGEISO": "limited_english_pct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.4123,
+    40.6309,
+    -73.9317,
+    40.8391
+   ],
+   "zoom": 12,
+   "count": 1318,
+   "kb": 706,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1318
+  }
+ },
+ {
+  "name": "nj-places-to-keep-cool",
+  "state": "NJ",
+  "title": "Places to keep cool (New Jersey)",
+  "title_es": "Lugares para refrescarse (Nueva Jersey)",
+  "description": "Public libraries, senior centers, pools, splash pads, beaches and county parks listed by NJDEP for hot days (call ahead; not official emergency cooling centers).",
+  "group": "help",
+  "category": "point",
+  "source": "NJ Department of Environmental Protection",
+  "license": "NJDEP Bureau of GIS (public; NJDEP data terms, attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/QWdNfRs7lkPq4g4Q/arcgis/rest/services/Public_Places_to_Keep_Cool_in_New_Jersey/FeatureServer/0",
+   "fields": {
+    "FEATURE_NAME": "name",
+    "FEATURE_TYPE": "kind",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "PHONE_NUMBER": "phone",
+    "WEBSITE": "page",
+    "ADMISSION": "admission"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -75.1333,
+    40.3188,
+    -73.2107,
+    41.1512
+   ],
+   "zoom": 10,
+   "count": 858,
+   "kb": 246,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 858
+  }
+ },
+ {
+  "name": "nj-state-park-status",
+  "state": "NJ",
+  "title": "State park live status (New Jersey)",
+  "title_es": "Estado en vivo de parques estatales (Nueva Jersey)",
+  "description": "Live open/closed status, hours and swimming status for NJ state parks, forests and historic sites, updated by park staff.",
+  "group": "live",
+  "category": "point",
+  "source": "NJ State Park Service (NJDEP)",
+  "license": "NJDEP Bureau of GIS (public; NJDEP data terms, attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/QWdNfRs7lkPq4g4Q/arcgis/rest/services/New_Jersey_State_Park_Service_Live_Status_Updates_(Public_View)/FeatureServer/0",
+   "fields": {
+    "ParkName": "name",
+    "Status": "status",
+    "Park_Hours": "hours",
+    "Swimming": "swimming",
+    "Facility_URL": "page",
+    "Telephone": "phone",
+    "EditDate": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -82.4504,
+    36.8645,
+    -67.0696,
+    43.5755
+   ],
+   "zoom": 7,
+   "count": 53,
+   "kb": 18,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 53
+  }
+ },
+ {
+  "name": "nj-state-lands",
+  "state": "NJ",
+  "title": "State parks, forests and wildlife areas (New Jersey)",
+  "title_es": "Parques, bosques y áreas de vida silvestre estatales (Nueva Jersey)",
+  "description": "State-owned open space (state parks, forests, wildlife management areas, natural areas) with access, hunting and official links.",
+  "group": "nature",
+  "category": "park",
+  "source": "NJ Department of Environmental Protection (Green Acres / Parks / Fish & Wildlife)",
+  "license": "NJDEP Bureau of GIS (public; NJDEP data terms, attribution requested)",
+  "view": {
+   "url": "https://mapsdep.nj.gov/arcgis/rest/services/Features/Land/MapServer/67",
+   "fields": {
+    "FEATURE_NAME": "name",
+    "FEATURE_CLASS": "kind",
+    "LAND_MANAGER_AGENCY": "manager",
+    "PUBLIC_ACCESS": "status",
+    "HUNTING_PERMITTED": "hunting",
+    "FACILITY_URL": "page",
+    "TELEPHONE": "phone",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.4226,
+    38.9559,
+    -72.5774,
+    40.6441
+   ],
+   "zoom": 9,
+   "count": 258,
+   "kb": 700,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 260
+  }
+ },
+ {
+  "name": "nj-trails",
+  "state": "NJ",
+  "title": "Trails (New Jersey)",
+  "title_es": "Senderos (Nueva Jersey)",
+  "description": "Statewide trail network: state, county and municipal park trails with uses, difficulty and blaze.",
+  "group": "nature",
+  "category": "park",
+  "source": "NJ Department of Environmental Protection",
+  "license": "NJDEP Bureau of GIS (public; NJDEP data terms, attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/QWdNfRs7lkPq4g4Q/arcgis/rest/services/Statewide_Trails_in_New_Jersey/FeatureServer/10",
+   "fields": {
+    "TRAIL_NAME_LONG": "name",
+    "PARK_NAME": "area",
+    "TRAIL_TYPE": "kind",
+    "TRAIL_DIFFICULTY": "difficulty",
+    "BLAZE_COLOR": "blaze",
+    "GIS_SEGMENT_LENGTH_MI": "miles",
+    "TRAIL_WEBSITE": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.8903,
+    41.0967,
+    -74.4097,
+    41.3033
+   ],
+   "zoom": 12,
+   "count": 269,
+   "kb": 192,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 269
+  }
+ },
+ {
+  "name": "nj-public-access",
+  "state": "NJ",
+  "title": "Coastal public access (New Jersey)",
+  "title_es": "Acceso público a la costa (Nueva Jersey)",
+  "description": "NJDEP-mapped public access points to tidal waters and beaches, with parking, fishing, swimming and restroom info.",
+  "group": "nature",
+  "category": "point",
+  "source": "NJ Department of Environmental Protection, Coastal Management",
+  "license": "NJDEP Bureau of GIS (public; NJDEP data terms, attribution requested)",
+  "view": {
+   "url": "https://mapsdep.nj.gov/arcgis/rest/services/Features/Environmental_admin/MapServer/7",
+   "fields": {
+    "STREET": "address",
+    "MUN_LABEL": "city",
+    "ACCESS_TYP": "kind",
+    "PARKING": "parking",
+    "FISHING": "fishing",
+    "SWIMMING": "swimming",
+    "RESTRM": "restrooms",
+    "BADGE": "badge"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.5307,
+    39.9902,
+    -73.5693,
+    40.4098
+   ],
+   "zoom": 11,
+   "count": 625,
+   "kb": 157,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 625
+  }
+ },
+ {
+  "name": "nj-fishing-close-to-home",
+  "state": "NJ",
+  "title": "Great fishing close to home (New Jersey)",
+  "title_es": "Pesca cerca de casa (Nueva Jersey)",
+  "description": "NJ Fish & Wildlife's list of public lakes and ponds for fishing, with boat ramp and amenity info.",
+  "group": "nature",
+  "category": "point",
+  "source": "NJ Division of Fish & Wildlife",
+  "license": "NJDEP Bureau of GIS (public; NJDEP data terms, attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/QWdNfRs7lkPq4g4Q/arcgis/rest/services/Envr_admin_DFW_places_to_fish/FeatureServer/3",
+   "fields": {
+    "WATERBODY": "name",
+    "NEAREST_TOWN": "city",
+    "BOAT_RAMP": "boat_ramp",
+    "CAR_TOP_LAUNCH": "car_top",
+    "ACRES": "acres"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -78.6052,
+    38.5422,
+    -70.9148,
+    41.8978
+   ],
+   "zoom": 8,
+   "count": 299,
+   "kb": 63,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 299
+  }
+ },
+ {
+  "name": "nj-wma-restrictions",
+  "state": "NJ",
+  "title": "Wildlife area restrictions (New Jersey)",
+  "title_es": "Restricciones en áreas de vida silvestre (Nueva Jersey)",
+  "description": "Current closures and use restrictions inside NJ Wildlife Management Areas (with start/end dates).",
+  "group": "nature",
+  "category": "hazard",
+  "source": "NJ Division of Fish & Wildlife",
+  "license": "NJDEP Bureau of GIS (public; NJDEP data terms, attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/QWdNfRs7lkPq4g4Q/arcgis/rest/services/Wildlife_Management_Area_WMA_Restrictions_in_New_Jersey/FeatureServer/41",
+   "fields": {
+    "WMA": "name",
+    "TYPE": "kind",
+    "CATEGORY": "category",
+    "DESCRIPT": "status",
+    "SDATE": "start",
+    "EDATE": "end"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -75.4613,
+    39.378,
+    -73.5387,
+    40.222
+   ],
+   "zoom": 10,
+   "count": 65,
+   "kb": 56,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 65
+  }
+ },
+ {
+  "name": "nj-child-care-centers",
+  "state": "NJ",
+  "title": "Licensed child care centers (New Jersey)",
+  "title_es": "Centros de cuidado infantil con licencia (Nueva Jersey)",
+  "description": "NJ DCF-licensed child care centers (centers only, no home-based providers) with capacity and age range.",
+  "group": "help",
+  "category": "point",
+  "source": "NJ Department of Children and Families, Office of Licensing (via NJDEP GIS)",
+  "license": "NJDEP Bureau of GIS (public; NJDEP data terms, attribution requested)",
+  "view": {
+   "url": "https://mapsdep.nj.gov/arcgis/rest/services/Features/Structures/MapServer/4",
+   "fields": {
+    "center_name": "name",
+    "address": "address",
+    "city": "city",
+    "center_phone": "phone",
+    "licensed_capacity": "capacity",
+    "age_range": "ages",
+    "download_date": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.4123,
+    40.6309,
+    -73.9317,
+    40.8391
+   ],
+   "zoom": 12,
+   "count": 1141,
+   "kb": 344,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1141
+  }
+ },
+ {
+  "name": "nj-site-remediation",
+  "state": "NJ",
+  "title": "Contaminated site boundaries (New Jersey)",
+  "title_es": "Límites de sitios contaminados (Nueva Jersey)",
+  "description": "Mapped boundaries of NJDEP Site Remediation Program cases (known contaminated sites) with case status.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "NJ Department of Environmental Protection, Site Remediation Program",
+  "license": "NJDEP Bureau of GIS (public; NJDEP data terms, attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/QWdNfRs7lkPq4g4Q/arcgis/rest/services/Site_Remediation_Program_Site_Boundaries_in_New_Jersey/FeatureServer/99993",
+   "fields": {
+    "PI_NAME": "name",
+    "ADDRESS": "address",
+    "MUNICIPALITY": "city",
+    "CASE_STATUS": "status",
+    "ACRES": "acres",
+    "DATE_NJEMS_UPDATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.2321,
+    40.709,
+    -74.1119,
+    40.761
+   ],
+   "zoom": 14,
+   "count": 2000,
+   "kb": 720,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "nj-historic-properties",
+  "state": "NJ",
+  "title": "Historic properties (New Jersey)",
+  "title_es": "Propiedades históricas (Nueva Jersey)",
+  "description": "Properties listed on or eligible for the NJ and National Registers, from the NJ Historic Preservation Office.",
+  "group": "places",
+  "category": "landuse",
+  "source": "NJ Historic Preservation Office (NJDEP)",
+  "license": "NJDEP Bureau of GIS (public; NJDEP data terms, attribution requested)",
+  "view": {
+   "url": "https://mapsdep.nj.gov/arcgis/rest/services/Features/Land/MapServer/55",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "STATUS": "status",
+    "NRDATE": "national_register",
+    "SRDATE": "state_register"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "DEMOLISHED IS NULL OR DEMOLISHED <> 'Y'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.2321,
+    40.709,
+    -74.1119,
+    40.761
+   ],
+   "zoom": 14,
+   "count": 2000,
+   "kb": 638,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "pa-power-outages",
+  "state": "PA",
+  "title": "Power outages by municipality (Pennsylvania)",
+  "title_es": "Cortes de luz por municipio (Pensilvania)",
+  "description": "Live customers without power by municipality, aggregated by PEMA from utility reports.",
+  "group": "live",
+  "category": "info",
+  "source": "Pennsylvania Emergency Management Agency (PEMA), hosted by PennDOT GIS",
+  "license": "Commonwealth of Pennsylvania public data (attribution requested)",
+  "view": {
+   "url": "https://gis.penndot.gov/arcgis/rest/services/poweroutages/papoweroutages/FeatureServer/4",
+   "fields": {
+    "FIPS_MUNICIPAL_NAME": "name",
+    "COUNTY_NAME": "county",
+    "MUNICIPAL_OUT": "customers_out",
+    "EST_CUST_SERVED": "customers_served",
+    "UPDATE_DATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.0876,
+    39.1098,
+    -73.2424,
+    40.7942
+   ],
+   "zoom": 9,
+   "count": 703,
+   "kb": 627,
+   "max_record_count": 5000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 703
+  }
+ },
+ {
+  "name": "pa-enviroscreen",
+  "state": "PA",
+  "title": "PennEnviroScreen EJ areas (Pennsylvania)",
+  "title_es": "Áreas de justicia ambiental PennEnviroScreen (Pensilvania)",
+  "description": "PA DEP PennEnviroScreen v1.1 block-group scores; EJ areas are block groups at or above the 80th percentile.",
+  "group": "people",
+  "category": "info",
+  "source": "Pennsylvania Department of Environmental Protection, Office of Environmental Justice",
+  "license": "Commonwealth of Pennsylvania public data (attribution requested)",
+  "view": {
+   "url": "https://gis.dep.pa.gov/depgisprd/rest/services/EnviromentalJustice/EJO_PennEnviroScreenBlockGroups_v1_1/MapServer/0",
+   "fields": {
+    "GEOID": "geoid",
+    "COUNTY": "county",
+    "FINALSCOREPCTILE": "score",
+    "EJAREA": "status",
+    "POLLUTIONBURDENSCOREPCTILE": "pollution_pct",
+    "POPCHARSSCOREPCTILE": "population_pct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -75.4053,
+    39.8467,
+    -74.9247,
+    40.0573
+   ],
+   "zoom": 12,
+   "count": 1615,
+   "kb": 815,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1615
+  }
+ },
+ {
+  "name": "pa-state-parks",
+  "state": "PA",
+  "title": "State parks (Pennsylvania)",
+  "title_es": "Parques estatales (Pensilvania)",
+  "description": "Boundaries of Pennsylvania's 124 state parks (DCNR), with links to each park page.",
+  "group": "nature",
+  "category": "park",
+  "source": "PA Department of Conservation and Natural Resources (DCNR)",
+  "license": "Commonwealth of Pennsylvania public data (attribution requested)",
+  "view": {
+   "url": "https://www.gis.dcnr.pa.gov/agsprod/rest/services/Parks/State_Parks/MapServer/9",
+   "fields": {
+    "PARK_NAME": "name",
+    "TYPE": "kind",
+    "WEBLINK": "page",
+    "GIS_ACRE": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -80.7252,
+    38.5935,
+    -73.0348,
+    41.9465
+   ],
+   "zoom": 8,
+   "count": 124,
+   "kb": 123,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 124
+  }
+ },
+ {
+  "name": "pa-state-forests",
+  "state": "PA",
+  "title": "State forests (Pennsylvania)",
+  "title_es": "Bosques estatales (Pensilvania)",
+  "description": "Pennsylvania state forest lands by forest district (DCNR Bureau of Forestry).",
+  "group": "nature",
+  "category": "park",
+  "source": "PA DCNR Bureau of Forestry",
+  "license": "Commonwealth of Pennsylvania public data (attribution requested)",
+  "view": {
+   "url": "https://www.gis.dcnr.pa.gov/agsprod/rest/services/BOF/State_Forests/MapServer/4",
+   "fields": {
+    "SF_Name": "name",
+    "DistrictName": "district",
+    "SubType": "kind",
+    "Acreage": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -81.5452,
+    39.4442,
+    -73.8548,
+    42.7558
+   ],
+   "zoom": 8,
+   "count": 662,
+   "kb": 415,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 662
+  }
+ },
+ {
+  "name": "pa-state-park-trails",
+  "state": "PA",
+  "title": "State park and forest trails (Pennsylvania)",
+  "title_es": "Senderos de parques y bosques estatales (Pensilvania)",
+  "description": "Trails in Pennsylvania state parks and forests with allowed uses, difficulty and blaze color.",
+  "group": "nature",
+  "category": "park",
+  "source": "PA DCNR Bureau of State Parks",
+  "license": "Commonwealth of Pennsylvania public data (attribution requested)",
+  "view": {
+   "url": "https://gis.dcnr.pa.gov/dcnrbsc/rest/services/StateParks/BSP_StateParksTrails/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Park_ForestName": "area",
+    "Difficulty": "difficulty",
+    "BlazeColor": "blaze",
+    "Length": "miles",
+    "Surface": "surface"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -78.1807,
+    40.893,
+    -77.2193,
+    41.307
+   ],
+   "zoom": 11,
+   "count": 38,
+   "kb": 18,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 38
+  }
+ },
+ {
+  "name": "pa-state-game-lands",
+  "state": "PA",
+  "title": "State game lands (Pennsylvania)",
+  "title_es": "Tierras estatales de caza (Pensilvania)",
+  "description": "Pennsylvania Game Commission State Game Lands open to public hunting, trapping and wildlife viewing.",
+  "group": "nature",
+  "category": "park",
+  "source": "Pennsylvania Game Commission",
+  "license": "Commonwealth of Pennsylvania public data (attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/k8yxvICm95iIFicb/arcgis/rest/services/State_Game_Lands_Boundaries/FeatureServer/300",
+   "fields": {
+    "sgl_name": "name",
+    "sgl": "kind",
+    "sgl_status": "status",
+    "gis_area_ac": "acres",
+    "pgc_region": "region"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -79.6226,
+    40.2721,
+    -75.7774,
+    41.9279
+   ],
+   "zoom": 9,
+   "count": 186,
+   "kb": 706,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 186
+  }
+ },
+ {
+  "name": "pa-phl-zoning",
+  "state": "PA",
+  "title": "Zoning base districts (Philadelphia)",
+  "title_es": "Distritos de zonificación (Filadelfia)",
+  "description": "City of Philadelphia zoning base districts, with pending zoning bills.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Philadelphia, Department of Planning and Development",
+  "license": "City of Philadelphia open data (OpenDataPhilly terms; attribution)",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/Zoning_BaseDistricts/FeatureServer/0",
+   "fields": {
+    "long_code": "name",
+    "code": "kind",
+    "zoninggroup": "group",
+    "pending": "status",
+    "pendingbillurl": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -75.2852,
+    39.8994,
+    -75.0448,
+    40.0046
+   ],
+   "zoom": 13,
+   "count": 2000,
+   "kb": 629,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "pa-phl-polling-places",
+  "state": "PA",
+  "title": "Polling places (Philadelphia)",
+  "title_es": "Lugares de votación (Filadelfia)",
+  "description": "Current Election Day polling place for each Philadelphia ward/division, with accessibility code (City Commissioners).",
+  "group": "civic",
+  "category": "point",
+  "source": "Philadelphia City Commissioners",
+  "license": "City of Philadelphia open data (OpenDataPhilly terms; attribution)",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/POLLING_PLACES/FeatureServer/0",
+   "fields": {
+    "placename": "name",
+    "street_address": "address",
+    "ward": "ward",
+    "division": "division",
+    "accessibility_code": "accessible",
+    "parking_code": "parking"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -75.4053,
+    39.8467,
+    -74.9247,
+    40.0573
+   ],
+   "zoom": 12,
+   "count": 1452,
+   "kb": 338,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1452
+  }
+ },
+ {
+  "name": "de-parcels",
+  "state": "DE",
+  "title": "Parcels (Delaware)",
+  "title_es": "Parcelas (Delaware)",
+  "description": "Delaware statewide parcel boundaries (FirstMap State Parcels 2.0) with parcel id and acreage, from the three county assessors.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Delaware FirstMap / county assessment offices",
+  "license": "Delaware FirstMap open data (public; attribution to FirstMap and source agency)",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/PlanningCadastre/DE_StateParcels/FeatureServer/0",
+   "fields": {
+    "PIN": "parcel_id",
+    "ACRES": "acres",
+    "COUNTY": "county",
+    "UPDATED": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -75.58,
+    39.7318,
+    -75.52,
+    39.7582
+   ],
+   "zoom": 15,
+   "count": 2000,
+   "kb": 573,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "de-ej-index-exceedances",
+  "state": "DE",
+  "title": "EJ index exceedances (Delaware)",
+  "title_es": "Excedencias del índice de justicia ambiental (Delaware)",
+  "description": "DNREC's 2024 copy of EPA EJScreen for Delaware block groups: number of EJ indexes at or above the 80th national percentile.",
+  "group": "people",
+  "category": "info",
+  "source": "Delaware DNREC (from EPA EJScreen 2024)",
+  "license": "Delaware FirstMap open data (public; attribution to FirstMap and source agency)",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Society/DE_EJScreen/FeatureServer/5",
+   "fields": {
+    "ID": "geoid",
+    "CNTY_NAME": "county",
+    "EXCEED_COUNT_80": "score",
+    "LOWINCPCT": "low_income_pct",
+    "LINGISOPCT": "limited_english_pct",
+    "P_PM25": "pm25_pct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.0307,
+    39.5338,
+    -75.0693,
+    39.9562
+   ],
+   "zoom": 11,
+   "count": 383,
+   "kb": 236,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 383
+  }
+ },
+ {
+  "name": "de-child-care-centers",
+  "state": "DE",
+  "title": "Licensed child care centers (Delaware)",
+  "title_es": "Centros de cuidado infantil con licencia (Delaware)",
+  "description": "Delaware OCCL-licensed child care centers with capacity, hours and Stars quality level (centers only; family child care homes excluded).",
+  "group": "help",
+  "category": "point",
+  "source": "Delaware Office of Child Care Licensing / DSCYF (FirstMap)",
+  "license": "Delaware FirstMap open data (public; attribution to FirstMap and source agency)",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Society/DE_ChildCareCenters/FeatureServer/0",
+   "fields": {
+    "RSR_RESO_1": "name",
+    "ADR_STREET": "address",
+    "ADR_CITYNA": "city",
+    "ADR_PHONE_": "phone",
+    "RSR_CPCT_N": "capacity",
+    "RSR_AGE_RA": "ages",
+    "STARLEVEL": "stars",
+    "RSR_URL_PG": "page",
+    "DSI_EXPORT_DATE": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "RSR_TYPE_T = 'Licensed Child Care Center'",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.0307,
+    39.5338,
+    -75.0693,
+    39.9562
+   ],
+   "zoom": 11,
+   "count": 589,
+   "kb": 214,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 589
+  }
+ },
+ {
+  "name": "de-food-pantries",
+  "state": "DE",
+  "title": "Food Bank partner pantries (Delaware)",
+  "title_es": "Despensas asociadas al Banco de Alimentos (Delaware)",
+  "description": "Food Bank of Delaware partner agencies (pantries, soup kitchens, school pantries) across the state.",
+  "group": "help",
+  "category": "point",
+  "source": "Delaware Health and Social Services / Food Bank of Delaware (FirstMap)",
+  "license": "Delaware FirstMap open data (public; attribution to FirstMap and source agency)",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Society/DE_Food_Resources/FeatureServer/0",
+   "fields": {
+    "PARTNER_NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "SCHOOL_PANTRY_": "school_pantry",
+    "FYEAR": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.4726,
+    38.9003,
+    -73.6274,
+    40.5897
+   ],
+   "zoom": 9,
+   "count": 124,
+   "kb": 28,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 124
+  }
+ },
+ {
+  "name": "de-fishing-access",
+  "state": "DE",
+  "title": "Fishing access and boat ramps (Delaware)",
+  "title_es": "Accesos para pesca y rampas (Delaware)",
+  "description": "DNREC Fish & Wildlife tidal and freshwater fishing access sites, piers and boat ramps.",
+  "group": "nature",
+  "category": "point",
+  "source": "Delaware DNREC Division of Fish & Wildlife",
+  "license": "Delaware FirstMap open data (public; attribution to FirstMap and source agency)",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Society/DE_Fishing_Access/FeatureServer/0",
+   "fields": {
+    "FACILITY": "name",
+    "GNIS_NAME": "water",
+    "RAMPS": "ramps",
+    "FISHING_PIER": "pier",
+    "SHORELINE_FISHING": "shore_fishing",
+    "PARKINGCAP": "parking",
+    "URL": "photo"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.4426,
+    38.3081,
+    -73.5974,
+    40.0119
+   ],
+   "zoom": 9,
+   "count": 193,
+   "kb": 48,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 193
+  }
+ },
+ {
+  "name": "de-trails",
+  "state": "DE",
+  "title": "Trails and pathways (Delaware)",
+  "title_es": "Senderos y caminos (Delaware)",
+  "description": "Trails and multi-use pathways in Delaware state parks, wildlife areas and forests, with surface and allowed uses.",
+  "group": "nature",
+  "category": "park",
+  "source": "Delaware DNREC (FirstMap)",
+  "license": "Delaware FirstMap open data (public; attribution to FirstMap and source agency)",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Transportation/DE_Trails_and_Pathways/FeatureServer/0",
+   "fields": {
+    "TRAIL_NAME": "name",
+    "MANAGEMENT_UNIT": "area",
+    "STATUS": "status",
+    "MANAGED_USE": "kind",
+    "SURFACE_TYPE": "surface",
+    "MILES": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.0307,
+    39.5338,
+    -75.0693,
+    39.9562
+   ],
+   "zoom": 11,
+   "count": 594,
+   "kb": 269,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 594
+  }
+ },
+ {
+  "name": "de-crashes",
+  "state": "DE",
+  "title": "Injury and fatal crashes, 2025-present (Delaware)",
+  "title_es": "Choques con heridos o muertos, 2025 en adelante (Delaware)",
+  "description": "DelDOT/DSP public crash records (injury and fatal only; no personal information): date, severity, ped/bike involvement, work zone, conditions.",
+  "group": "roads",
+  "category": "point",
+  "source": "Delaware State Police / DelDOT public crash data (FirstMap)",
+  "license": "Delaware FirstMap open data (public; attribution to FirstMap and source agency)",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Transportation/DE_Public_Crash_Data/FeatureServer/0",
+   "fields": {
+    "CRASH_DATETIME": "updated",
+    "CRASH_CLASS_DESC": "kind",
+    "IMPACT_DESC": "status",
+    "PED_INVOLVED": "pedestrian",
+    "BIKE_INVOLVED": "bicycle",
+    "WORK_ZONE": "work_zone",
+    "ROAD_SURFACE_DESC": "surface",
+    "LIGHT_COND_DESC": "light"
+   },
+   "geometry": "point",
+   "min_zoom": 13,
+   "where": "YEAR >= 2025 AND CRASH_CLASS_DESC IN ('Personal Injury Crash','Fatality Crash')",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -75.6702,
+    39.6922,
+    -75.4298,
+    39.7978
+   ],
+   "zoom": 13,
+   "count": 1516,
+   "kb": 467,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1516
+  }
+ },
+ {
+  "name": "md-parcels",
+  "state": "MD",
+  "title": "Property parcels (Maryland)",
+  "title_es": "Parcelas (Maryland)",
+  "description": "Statewide parcel polygons joined to SDAT assessment data: address, land use, zoning, acreage, year built, SDAT link (no owner names shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Maryland Department of Planning / SDAT (MD iMAP)",
+  "license": "Maryland iMAP open data (public; attribution to source agency)",
+  "view": {
+   "url": "https://mdgeodata.md.gov/imap/rest/services/PlanningCadastre/MD_ParcelBoundaries/MapServer/0",
+   "fields": {
+    "ADDRESS": "address",
+    "CITY": "city",
+    "DESCLU": "kind",
+    "ZONING": "zoning",
+    "ACRES": "acres",
+    "YEARBLT": "year_built",
+    "ACCTID": "parcel_id",
+    "SDATWEBADR": "page",
+    "SDATDATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "ACCTID NOT IN ('ROW','Water')",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.625,
+    39.2834,
+    -76.595,
+    39.2966
+   ],
+   "zoom": 16,
+   "count": 1000,
+   "kb": 507,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "md-enviroscreen",
+  "state": "MD",
+  "title": "Maryland EJScreen score",
+  "title_es": "Puntaje EJScreen de Maryland",
+  "description": "MDE/UMD Maryland EJ Score (v3) by census tract, with overburdened and underserved community flags.",
+  "group": "people",
+  "category": "info",
+  "source": "Maryland Department of the Environment / University of Maryland (MD iMAP)",
+  "license": "Maryland iMAP open data (public; attribution to source agency)",
+  "view": {
+   "url": "https://mdgeodata.md.gov/imap/rest/services/Environment/MD_EnviroScreen/FeatureServer/0",
+   "fields": {
+    "GEOID20": "geoid",
+    "P_EJ": "score",
+    "OVERBURDENED_COMMUNITY": "status",
+    "UNDERSERVED_COMMUNITY": "underserved",
+    "P_POLLUTIONBURDEN": "pollution_pct",
+    "P_SENSITIVEPOPULATIONS": "sensitive_pct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.8503,
+    39.1837,
+    -76.3697,
+    39.3963
+   ],
+   "zoom": 12,
+   "count": 412,
+   "kb": 539,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 412
+  }
+ },
+ {
+  "name": "md-climate-vulnerability",
+  "state": "MD",
+  "title": "Climate vulnerability score (Maryland)",
+  "title_es": "Puntaje de vulnerabilidad climática (Maryland)",
+  "description": "MDE climate vulnerability score by census tract (Climate Solutions Now Act).",
+  "group": "people",
+  "category": "info",
+  "source": "Maryland Department of the Environment (MD iMAP)",
+  "license": "Maryland iMAP open data (public; attribution to source agency)",
+  "view": {
+   "url": "https://mdgeodata.md.gov/imap/rest/services/Environment/MD_Climate_Vulnerability_Score/FeatureServer/0",
+   "fields": {
+    "GEOID20": "geoid",
+    "CVS_PCTL": "score",
+    "CLIM_PCTL": "climate_pct",
+    "COMM_PCTL": "community_pct",
+    "FLOOD_SS": "flood",
+    "UHI": "heat_island",
+    "DROUGHT": "drought"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.8503,
+    39.1837,
+    -76.3697,
+    39.3963
+   ],
+   "zoom": 12,
+   "count": 412,
+   "kb": 528,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 412
+  }
+ },
+ {
+  "name": "md-dnr-lands",
+  "state": "MD",
+  "title": "DNR state lands (Maryland)",
+  "title_es": "Tierras estatales del DNR (Maryland)",
+  "description": "State parks, forests, wildlife management areas and natural resource areas owned or protected by Maryland DNR, with web links.",
+  "group": "nature",
+  "category": "park",
+  "source": "Maryland Department of Natural Resources (MD iMAP)",
+  "license": "Maryland iMAP open data (public; attribution to source agency)",
+  "view": {
+   "url": "https://mdgeodata.md.gov/imap/rest/services/Environment/MD_ProtectedLands/FeatureServer/0",
+   "fields": {
+    "DNRName": "name",
+    "DNRType": "kind",
+    "ManagedBy": "manager",
+    "County": "county",
+    "WebLink": "page",
+    "LandIntere": "interest"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -78.4126,
+    38.126,
+    -74.5674,
+    39.834
+   ],
+   "zoom": 9,
+   "count": 250,
+   "kb": 533,
+   "max_record_count": 36000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 250
+  }
+ },
+ {
+  "name": "md-community-support",
+  "state": "MD",
+  "title": "Government community support services (Maryland)",
+  "title_es": "Servicios comunitarios gubernamentales (Maryland)",
+  "description": "Government social-service, senior, health and workforce offices that are community anchor institutions in Maryland.",
+  "group": "help",
+  "category": "point",
+  "source": "Maryland Department of Information Technology (MD iMAP)",
+  "license": "Maryland iMAP open data (public; attribution to source agency)",
+  "view": {
+   "url": "https://mdgeodata.md.gov/imap/rest/services/Structure/MD_CommunitySupport/FeatureServer/0",
+   "fields": {
+    "ANCHORNAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "SubCategor": "kind",
+    "URL": "page",
+    "LastUpdate": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -78.5326,
+    38.4397,
+    -74.6874,
+    40.1403
+   ],
+   "zoom": 9,
+   "count": 1261,
+   "kb": 330,
+   "max_record_count": 3750,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1261
+  }
+ },
+ {
+  "name": "md-historic-properties",
+  "state": "MD",
+  "title": "Inventory of historic properties (Maryland)",
+  "title_es": "Inventario de propiedades históricas (Maryland)",
+  "description": "Maryland Historical Trust inventory of historic properties, with link to each MIHP form (PDF).",
+  "group": "places",
+  "category": "landuse",
+  "source": "Maryland Historical Trust (MD iMAP)",
+  "license": "Maryland iMAP open data (public; attribution to source agency)",
+  "view": {
+   "url": "https://mdgeodata.md.gov/imap/rest/services/Historic/MD_InventoryHistoricProperties/FeatureServer/0",
+   "fields": {
+    "Nam": "name",
+    "FULLADDR": "address",
+    "TOWN": "city",
+    "MIHPNO": "kind",
+    "PDFLINK": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.6701,
+    39.2634,
+    -76.5499,
+    39.3166
+   ],
+   "zoom": 14,
+   "count": 2000,
+   "kb": 736,
+   "max_record_count": 40500,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "md-long-term-care",
+  "state": "MD",
+  "title": "Nursing homes (Maryland)",
+  "title_es": "Hogares de ancianos (Maryland)",
+  "description": "OHCQ-licensed long-term care (nursing) facilities with phone and licensed beds.",
+  "group": "help",
+  "category": "point",
+  "source": "Maryland Department of Health, Office of Health Care Quality (MD iMAP)",
+  "license": "Maryland iMAP open data (public; attribution to source agency)",
+  "view": {
+   "url": "https://mdgeodata.md.gov/imap/rest/services/Health/MD_LongTermCareAssistedLiving/FeatureServer/6",
+   "fields": {
+    "Facility_Name": "name",
+    "Facility_Address": "address",
+    "Facility_City": "city",
+    "Facility_Phone": "phone",
+    "License_Capacity": "beds"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -80.4552,
+    37.5894,
+    -72.7648,
+    40.9906
+   ],
+   "zoom": 8,
+   "count": 227,
+   "kb": 60,
+   "max_record_count": 2200,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 227
+  }
+ },
+ {
+  "name": "md-road-sensors",
+  "state": "MD",
+  "title": "Mobile road weather sensors (Maryland)",
+  "title_es": "Sensores móviles de clima vial (Maryland)",
+  "description": "Live road surface condition and temperature from MDOT SHA vehicle-mounted sensors (active mainly during winter operations).",
+  "group": "roads",
+  "category": "roadops",
+  "source": "MDOT State Highway Administration",
+  "license": "Maryland iMAP open data (public; attribution to source agency)",
+  "view": {
+   "url": "https://app-storm-sha-prod.azurewebsites.net/koop/marwis/rest/services/0/FeatureServer/0",
+   "fields": {
+    "StationName": "name",
+    "roadCondition": "status",
+    "airTemperature": "air_temp",
+    "roadTemperature": "road_temp",
+    "MeasureTime": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -84.3904,
+    35.6896,
+    -69.0096,
+    42.5104
+   ],
+   "zoom": 7,
+   "count": 2,
+   "kb": 0,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "dc-zoning",
+  "state": "DC",
+  "title": "Zoning districts (District of Columbia)",
+  "title_es": "Distritos de zonificación (Distrito de Columbia)",
+  "description": "DC Office of Zoning zone districts with inclusionary zoning designation.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "DC Office of Zoning",
+  "license": "Open Data DC (CC BY 4.0)",
+  "view": {
+   "url": "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCOZ/Zone_Mapservice/MapServer/24",
+   "fields": {
+    "Zoning_Label": "name",
+    "Zone_District": "kind",
+    "Zone_Description": "description",
+    "Zoning_Status": "status",
+    "IZ_Designation": "inclusionary_zoning",
+    "Zoning_Web_URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.1502,
+    38.8516,
+    -76.9098,
+    38.9584
+   ],
+   "zoom": 13,
+   "count": 837,
+   "kb": 673,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 837
+  }
+ },
+ {
+  "name": "dc-property",
+  "state": "DC",
+  "title": "Property lots (District of Columbia)",
+  "title_es": "Lotes de propiedad (Distrito de Columbia)",
+  "description": "DC tax/ownership lots with premise address, use code, land area and assessed value (OTR common ownership layer; owner names not shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "DC Office of Tax and Revenue / OCTO",
+  "license": "Open Data DC (CC BY 4.0)",
+  "view": {
+   "url": "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Property_and_Land_WebMercator/MapServer/40",
+   "fields": {
+    "PREMISEADD": "address",
+    "SSL": "parcel_id",
+    "USECODE": "kind",
+    "PROPTYPE": "property_type",
+    "LANDAREA": "land_sf",
+    "ASSESSMENT": "assessment",
+    "NBHDNAME": "neighborhood"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.045,
+    38.8983,
+    -77.015,
+    38.9117
+   ],
+   "zoom": 16,
+   "count": 2000,
+   "kb": 761,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "dc-affordable-housing",
+  "state": "DC",
+  "title": "Affordable housing projects (District of Columbia)",
+  "title_es": "Proyectos de vivienda asequible (Distrito de Columbia)",
+  "description": "Affordable housing projects completed, under construction or in pipeline in DC (DMPED / DHCD), with affordable units by income band.",
+  "group": "housing",
+  "category": "point",
+  "source": "DC Deputy Mayor for Planning and Economic Development",
+  "license": "Open Data DC (CC BY 4.0)",
+  "view": {
+   "url": "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Property_and_Land_WebMercator/MapServer/62",
+   "fields": {
+    "PROJECT_NAME": "name",
+    "FULLADDRESS": "address",
+    "STATUS_PUBLIC": "status",
+    "AGENCY_CALCULATED": "kind",
+    "TOTAL_AFFORDABLE_UNITS": "affordable_units",
+    "UNITS_TOTAL": "units",
+    "GIS_LAST_MOD_DTTM": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.5107,
+    38.6913,
+    -76.5493,
+    39.1187
+   ],
+   "zoom": 11,
+   "count": 923,
+   "kb": 291,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 923
+  }
+ },
+ {
+  "name": "dc-cooling-centers",
+  "state": "DC",
+  "title": "Cooling centers (District of Columbia)",
+  "title_es": "Centros de enfriamiento (Distrito de Columbia)",
+  "description": "DC HSEMA cooling centers (libraries, recreation centers, senior wellness centers, spray parks) with hours and status; activated during heat emergencies.",
+  "group": "help",
+  "category": "point",
+  "source": "DC Homeland Security and Emergency Management Agency (HSEMA)",
+  "license": "Open Data DC (CC BY 4.0)",
+  "view": {
+   "url": "https://services.arcgis.com/neT9SoYxizqTHZPH/arcgis/rest/services/DC_Cooling_Centers_View/FeatureServer/1",
+   "fields": {
+    "USER_Name": "name",
+    "USER_Address": "address",
+    "USER_Type": "kind",
+    "USER_Status": "status",
+    "USER_Hours": "hours",
+    "USER_Phone": "phone",
+    "USER_Url": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.5107,
+    38.6913,
+    -76.5493,
+    39.1187
+   ],
+   "zoom": 11,
+   "count": 136,
+   "kb": 53,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 136
+  }
+ },
+ {
+  "name": "dc-public-space-permits",
+  "state": "DC",
+  "title": "Street work permits, last 30 days (District of Columbia)",
+  "title_es": "Permisos de obras en la vía, últimos 30 días (Distrito de Columbia)",
+  "description": "DDOT public-space construction permits (excavation, paving, sidewalk work) issued in the last 30 days, with work dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "District Department of Transportation (DDOT TOPS)",
+  "license": "Open Data DC (CC BY 4.0)",
+  "view": {
+   "url": "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/DDOT/MapServer/12",
+   "fields": {
+    "WLFULLADDRESS": "address",
+    "WORKDETAIL": "name",
+    "STATUS": "status",
+    "EFFECTIVEDATE": "start",
+    "EXPIRATIONDATE": "end",
+    "PERMITNUMBER": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.1502,
+    38.8516,
+    -76.9098,
+    38.9584
+   ],
+   "zoom": 13,
+   "count": 1000,
+   "kb": 429,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "dc-homeless-shelters",
+  "state": "DC",
+  "title": "Homeless shelters (District of Columbia)",
+  "title_es": "Albergues para personas sin hogar (Distrito de Columbia)",
+  "description": "DC Department of Human Services shelters with type, ages served and how to access.",
+  "group": "help",
+  "category": "point",
+  "source": "DC Department of Human Services",
+  "license": "Open Data DC (CC BY 4.0)",
+  "view": {
+   "url": "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Public_Service_WebMercator/MapServer/25",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "TYPE": "kind",
+    "STATUS": "status",
+    "AGES_SERVED": "ages",
+    "HOW_TO_ACCESS": "access",
+    "WEB_URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "STATUS = 'Active'",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.9913,
+    38.4775,
+    -76.0687,
+    39.3325
+   ],
+   "zoom": 10,
+   "count": 18,
+   "kb": 6,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "dc-child-care-centers",
+  "state": "DC",
+  "title": "Licensed child development centers (District of Columbia)",
+  "title_es": "Centros de desarrollo infantil con licencia (Distrito de Columbia)",
+  "description": "OSSE-licensed child development centers with capacity and hours (centers only; home-based providers excluded).",
+  "group": "help",
+  "category": "point",
+  "source": "DC Office of the State Superintendent of Education (OSSE)",
+  "license": "Open Data DC (CC BY 4.0)",
+  "view": {
+   "url": "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Public_Service_WebMercator/MapServer/33",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "PHONE": "phone",
+    "LICENSE_TYPE": "status",
+    "AUTHORIZED_CAPACITY": "capacity",
+    "START_TIME": "opens",
+    "END_TIME": "closes"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "CONTACT_TYPE <> 'Home Provider' AND UPPER(NAME) NOT LIKE '%HOME DAYCARE%' AND UPPER(NAME) NOT LIKE '%LEARNING HOME%' AND UPPER(NAME) NOT LIKE '%EXPLORERS HOME%' AND NAME <> 'Home Away From Home'",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.5107,
+    38.6913,
+    -76.5493,
+    39.1187
+   ],
+   "zoom": 11,
+   "count": 369,
+   "kb": 104,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 369
+  }
+ },
+ {
+  "name": "dc-heat-sensitivity",
+  "state": "DC",
+  "title": "Heat sensitivity and exposure index (District of Columbia)",
+  "title_es": "Índice de sensibilidad y exposición al calor (Distrito de Columbia)",
+  "description": "DC Health / DOEE heat sensitivity-exposure index by census tract (higher = more at risk), with tree cover and air temperature.",
+  "group": "people",
+  "category": "info",
+  "source": "DC Department of Energy and Environment / DC Health",
+  "license": "Open Data DC (CC BY 4.0)",
+  "view": {
+   "url": "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Health_WebMercator/MapServer/32",
+   "fields": {
+    "NAME": "name",
+    "HSEI": "score",
+    "HSI": "sensitivity",
+    "HEI": "exposure",
+    "P_TREECOVER": "tree_cover_pct",
+    "AIRTEMP_MEAN": "air_temp"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.5107,
+    38.6913,
+    -76.5493,
+    39.1187
+   ],
+   "zoom": 11,
+   "count": 206,
+   "kb": 115,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 206
+  }
+ },
+ {
+  "name": "dc-vote-centers",
+  "state": "DC",
+  "title": "Election Day vote centers (District of Columbia)",
+  "title_es": "Centros de votación el día de la elección (Distrito de Columbia)",
+  "description": "DC Board of Elections Election Day vote centers for the current election (any DC voter can vote at any center), with hours and accessibility.",
+  "group": "civic",
+  "category": "point",
+  "source": "DC Board of Elections (via OCTO GIS)",
+  "license": "Open Data DC (CC BY 4.0)",
+  "view": {
+   "url": "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Government_Operations/MapServer/9",
+   "fields": {
+    "LOCATION": "name",
+    "ADDRESS": "address",
+    "DATES_OPEN": "dates",
+    "TIME_OPEN": "hours",
+    "STATUS": "status",
+    "LAST_EDITED_DATE": "updated",
+    "ACCESSIBILITY": "accessible"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.9913,
+    38.4775,
+    -76.0687,
+    39.3325
+   ],
+   "zoom": 10,
+   "count": 50,
+   "kb": 16,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "dc-early-vote-centers",
+  "state": "DC",
+  "title": "Early vote centers (District of Columbia)",
+  "title_es": "Centros de votación anticipada (Distrito de Columbia)",
+  "description": "DC Board of Elections early vote centers for the current election, with dates and hours.",
+  "group": "civic",
+  "category": "point",
+  "source": "DC Board of Elections (via OCTO GIS)",
+  "license": "Open Data DC (CC BY 4.0)",
+  "view": {
+   "url": "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Government_Operations/MapServer/10",
+   "fields": {
+    "LOCATION": "name",
+    "ADDRESS": "address",
+    "DATES_OPEN": "dates",
+    "TIME_OPEN": "hours",
+    "STATUS": "status",
+    "LAST_EDITED_DATE": "updated",
+    "ACCESSIBILITY": "accessible"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.9913,
+    38.4775,
+    -76.0687,
+    39.3325
+   ],
+   "zoom": 10,
+   "count": 25,
+   "kb": 8,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "dc-ballot-drop-boxes",
+  "state": "DC",
+  "title": "Mail ballot drop boxes (District of Columbia)",
+  "title_es": "Buzones para boletas por correo (Distrito de Columbia)",
+  "description": "DC Board of Elections mail ballot drop boxes for the current election, with dates open.",
+  "group": "civic",
+  "category": "point",
+  "source": "DC Board of Elections (via OCTO GIS)",
+  "license": "Open Data DC (CC BY 4.0)",
+  "view": {
+   "url": "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Government_Operations/MapServer/8",
+   "fields": {
+    "LOCATION": "name",
+    "ADDRESS": "address",
+    "DATES_OPEN": "dates",
+    "TIME_OPEN": "hours",
+    "STATUS": "status",
+    "LAST_EDITED_DATE": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.9913,
+    38.4775,
+    -76.0687,
+    39.3325
+   ],
+   "zoom": 10,
+   "count": 55,
+   "kb": 15,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 55
+  }
+ },
+ {
+  "name": "ct-parcels",
+  "state": "CT",
+  "title": "Parcels with assessor data (Connecticut)",
+  "title_es": "Parcelas con datos de tasación (Connecticut)",
+  "description": "CT Office of Policy and Management statewide parcels joined to town CAMA assessor data: address, use, zoning, acreage, year built, assessed value (no owner names shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Connecticut GIS Office (OPM)",
+  "license": "CT Open Data / CT GIS Office & DEEP public data (attribution requested)",
+  "view": {
+   "url": "https://services3.arcgis.com/3FL1kr7L4LvwA2Kb/arcgis/rest/services/Connecticut_CAMA_and_Parcel_Layer/FeatureServer/0",
+   "fields": {
+    "Location": "address",
+    "Property_City": "city",
+    "State_Use_Description": "kind",
+    "Zone": "zoning",
+    "Land_Acres": "acres",
+    "AYB": "year_built",
+    "Assessed_Total": "assessed_value",
+    "Parcel_ID": "parcel_id",
+    "CAMA_Link": "page",
+    "CAMA_Collection_Year": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -73.205,
+    41.1735,
+    -73.175,
+    41.1865
+   ],
+   "zoom": 16,
+   "count": 2000,
+   "kb": 865,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "ct-ej-index",
+  "state": "CT",
+  "title": "CT Environmental Justice Index (Connecticut)",
+  "title_es": "Índice de justicia ambiental de Connecticut",
+  "description": "CT EJScreen v2 (UConn CIRCA with CT DEEP) census-tract index combining pollution, health and socioeconomic indicators; higher percentile = more burdened.",
+  "group": "people",
+  "category": "info",
+  "source": "UConn CIRCA / CT DEEP (CT EJScreen)",
+  "license": "CT EJScreen (UConn CIRCA), public; attribution",
+  "view": {
+   "url": "https://services1.arcgis.com/6ItOFXGFmdtfeOZb/arcgis/rest/services/CTEJIndex_v2_0/FeatureServer/0",
+   "fields": {
+    "GEOID20": "geoid",
+    "TOWN_NAME": "city",
+    "Percentile": "score",
+    "PollutionB": "pollution",
+    "SensitiveP": "sensitive",
+    "SocioEcoFa": "socioeconomic"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -73.6413,
+    41.3553,
+    -71.7187,
+    42.1747
+   ],
+   "zoom": 10,
+   "count": 594,
+   "kb": 467,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 594
+  }
+ },
+ {
+  "name": "ct-ej-block-groups",
+  "state": "CT",
+  "title": "Environmental justice block groups (Connecticut)",
+  "title_es": "Grupos de manzanas de justicia ambiental (Connecticut)",
+  "description": "CT DEEP 2025 environmental justice block groups (30%+ below 200% of poverty), used for the state EJ law.",
+  "group": "people",
+  "category": "info",
+  "source": "CT Department of Energy and Environmental Protection",
+  "license": "CT Open Data / CT GIS Office & DEEP public data (attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/FjPcSmEFuDYlIdKC/arcgis/rest/services/Environmental_Justice_2025_Set/FeatureServer/0",
+   "fields": {
+    "GEOID": "geoid",
+    "Town": "city",
+    "PercentPop": "low_income_pct",
+    "PercentMin": "minority_pct",
+    "PercentLEP": "limited_english_pct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -73.1607,
+    41.5601,
+    -72.1993,
+    41.9699
+   ],
+   "zoom": 11,
+   "count": 301,
+   "kb": 166,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 301
+  }
+ },
+ {
+  "name": "ct-deep-property",
+  "state": "CT",
+  "title": "State parks, forests and wildlife areas (Connecticut)",
+  "title_es": "Parques, bosques y áreas silvestres estatales (Connecticut)",
+  "description": "Lands owned or managed by CT DEEP: state parks, state forests, wildlife management areas, fishing areas.",
+  "group": "nature",
+  "category": "park",
+  "source": "CT Department of Energy and Environmental Protection",
+  "license": "CT Open Data / CT GIS Office & DEEP public data (attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/FjPcSmEFuDYlIdKC/arcgis/rest/services/Connecticut_DEEP_Property/FeatureServer/0",
+   "fields": {
+    "PROPERTY": "name",
+    "AV_LEGEND": "kind",
+    "ACRE_GIS": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.0226,
+    41.0316,
+    -70.1774,
+    42.6684
+   ],
+   "zoom": 9,
+   "count": 491,
+   "kb": 470,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 491
+  }
+ },
+ {
+  "name": "ct-deep-access",
+  "state": "CT",
+  "title": "State park and forest access points (Connecticut)",
+  "title_es": "Accesos a parques y bosques estatales (Connecticut)",
+  "description": "Entrances and access points to CT DEEP properties, with activities (hiking, fishing, camping, hunting, swimming) and official links.",
+  "group": "nature",
+  "category": "point",
+  "source": "CT Department of Energy and Environmental Protection",
+  "license": "CT Open Data / CT GIS Office & DEEP public data (attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/FjPcSmEFuDYlIdKC/arcgis/rest/services/DEEP_Property_Access_Locations/FeatureServer/0",
+   "fields": {
+    "PROPERTY": "name",
+    "ACCSS_NAME": "access",
+    "ACCSS_TOWN": "city",
+    "PROP_TYPE": "kind",
+    "STATUS": "status",
+    "LINK": "page",
+    "HIKING": "hiking",
+    "FISH_FRESH": "fishing",
+    "CAMPING": "camping",
+    "HUNTING": "hunting"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.0226,
+    41.0316,
+    -70.1774,
+    42.6684
+   ],
+   "zoom": 9,
+   "count": 385,
+   "kb": 141,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 385
+  }
+ },
+ {
+  "name": "ct-hunting-areas",
+  "state": "CT",
+  "title": "Areas open for hunting (Connecticut)",
+  "title_es": "Áreas abiertas a la caza (Connecticut)",
+  "description": "State and cooperative lands open to hunting with class (A/B/C) and allowed seasons.",
+  "group": "nature",
+  "category": "park",
+  "source": "CT DEEP Wildlife Division",
+  "license": "CT Open Data / CT GIS Office & DEEP public data (attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/FjPcSmEFuDYlIdKC/arcgis/rest/services/Connecticut_Open_for_Hunting_New_Schema/FeatureServer/0",
+   "fields": {
+    "HuntAName": "name",
+    "Hunt_Class": "kind",
+    "Property_Type": "property",
+    "Map_Link": "page",
+    "Acreage": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.0226,
+    41.0316,
+    -70.1774,
+    42.6684
+   ],
+   "zoom": 9,
+   "count": 177,
+   "kb": 309,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 177
+  }
+ },
+ {
+  "name": "ct-boat-launches",
+  "state": "CT",
+  "title": "Boat launches (Connecticut)",
+  "title_es": "Rampas para botes (Connecticut)",
+  "description": "CT DEEP state boat launches (trailer and car-top), with links to launch pages.",
+  "group": "nature",
+  "category": "point",
+  "source": "CT Department of Energy and Environmental Protection",
+  "license": "CT Open Data / CT GIS Office & DEEP public data (attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/FjPcSmEFuDYlIdKC/arcgis/rest/services/Connecticut_DEEP_Boat_Launches/FeatureServer/0",
+   "fields": {
+    "LAUNCHNAME": "name",
+    "LAUNCHTYPE": "kind",
+    "LINK": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.0452,
+    40.162,
+    -69.3548,
+    43.438
+   ],
+   "zoom": 8,
+   "count": 117,
+   "kb": 28,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 117
+  }
+ },
+ {
+  "name": "ct-deep-trails",
+  "state": "CT",
+  "title": "State trails (Connecticut)",
+  "title_es": "Senderos estatales (Connecticut)",
+  "description": "Trails on CT DEEP lands with allowed uses and accessibility.",
+  "group": "nature",
+  "category": "park",
+  "source": "CT Department of Energy and Environmental Protection",
+  "license": "CT Open Data / CT GIS Office & DEEP public data (attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/FjPcSmEFuDYlIdKC/arcgis/rest/services/DEEP_Trails_Set/FeatureServer/3",
+   "fields": {
+    "TRAILNAME": "name",
+    "TRAILCLASS": "kind",
+    "TRAILSTAT": "status",
+    "TRAILSURF": "surface",
+    "ADAACCESS": "accessible"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -72.3403,
+    41.7477,
+    -71.8597,
+    41.9523
+   ],
+   "zoom": 12,
+   "count": 837,
+   "kb": 243,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 837
+  }
+ },
+ {
+  "name": "ct-contaminated-sites",
+  "state": "CT",
+  "title": "Contaminated or potentially contaminated sites (Connecticut)",
+  "title_es": "Sitios contaminados o potencialmente contaminados (Connecticut)",
+  "description": "CT DEEP statutory list of contaminated or potentially contaminated sites (REACT), with cleanup stage and link to the case.",
+  "group": "hazards",
+  "category": "point",
+  "source": "CT Department of Energy and Environmental Protection, Remediation Division",
+  "license": "CT Open Data / CT GIS Office & DEEP public data (attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/FjPcSmEFuDYlIdKC/arcgis/rest/services/List_of_Contaminated_or_Potentially_Contaminated_Sites/FeatureServer/7",
+   "fields": {
+    "Case_Name": "name",
+    "Case_Address": "address",
+    "Official_Town": "city",
+    "Case_Program": "kind",
+    "Case_Status": "status",
+    "Cleanup_Stage": "stage",
+    "View_Case_in_REACT": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -72.9203,
+    41.6626,
+    -72.4397,
+    41.8674
+   ],
+   "zoom": 12,
+   "count": 2000,
+   "kb": 766,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "ct-work-zone-speed-cameras",
+  "state": "CT",
+  "title": "Work zone speed cameras (Connecticut)",
+  "title_es": "Cámaras de velocidad en zonas de obra (Connecticut)",
+  "description": "Approximate locations of CTDOT work-zone speed safety cameras, with whether each is active.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Connecticut Department of Transportation",
+  "license": "CT Open Data / CT GIS Office & DEEP public data (attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/FCaUeJ5SOVtImake/arcgis/rest/services/Approximate_Speed_Safety_Camera_Locations_Public/FeatureServer/0",
+   "fields": {
+    "Town": "city",
+    "Active": "status",
+    "CameraType": "kind",
+    "WorkZoneSpeed": "speed_limit",
+    "Project_Number": "project",
+    "EditDate": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -80.3704,
+    38.4872,
+    -64.9896,
+    45.0428
+   ],
+   "zoom": 7,
+   "count": 99,
+   "kb": 24,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 99
+  }
+ },
+ {
+  "name": "ri-ej-areas",
+  "state": "RI",
+  "title": "Environmental justice areas (Rhode Island)",
+  "title_es": "Áreas de justicia ambiental (Rhode Island)",
+  "description": "RIDEM 2023 environmental justice focus areas: census tracts meeting the state's income, minority and limited-English criteria.",
+  "group": "people",
+  "category": "info",
+  "source": "RI Department of Environmental Management (RIGIS)",
+  "license": "RIGIS / RI DEM public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services1.arcgis.com/HAt3zp2GOzn12Lxk/arcgis/rest/services/RI_Environmental_Justice_Factors/FeatureServer/33",
+   "fields": {
+    "GEOID": "geoid",
+    "Muni": "city",
+    "NAMELSAD": "name",
+    "LEPandINC1": "lep_income",
+    "MINandINC1": "minority_income"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -72.3713,
+    41.4106,
+    -70.4487,
+    42.2294
+   ],
+   "zoom": 10,
+   "count": 95,
+   "kb": 58,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 95
+  }
+ },
+ {
+  "name": "ri-dem-lands",
+  "state": "RI",
+  "title": "State parks and management areas (Rhode Island)",
+  "title_es": "Parques y áreas de manejo estatales (Rhode Island)",
+  "description": "RIDEM-managed recreational land (state parks, beaches, management areas) with hunting and fishing allowance.",
+  "group": "nature",
+  "category": "park",
+  "source": "RI Department of Environmental Management",
+  "license": "RIGIS / RI DEM public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://risegis.ri.gov/hosting/rest/services/RIDEM/Outdoor_Recreation_Map_v4/MapServer/21",
+   "fields": {
+    "NAME": "name",
+    "DEM_DIV": "manager",
+    "PrimUse": "kind",
+    "HUNTING": "hunting",
+    "FISHING": "fishing",
+    "Pub_Access": "status",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -73.6226,
+    40.7582,
+    -69.7774,
+    42.4018
+   ],
+   "zoom": 9,
+   "count": 535,
+   "kb": 239,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 535
+  }
+ },
+ {
+  "name": "ri-fishing-access",
+  "state": "RI",
+  "title": "Fishing access (Rhode Island)",
+  "title_es": "Accesos para pesca (Rhode Island)",
+  "description": "RIDEM freshwater and saltwater fishing access sites and boat ramps.",
+  "group": "nature",
+  "category": "point",
+  "source": "RI Department of Environmental Management",
+  "license": "RIGIS / RI DEM public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://risegis.ri.gov/hosting/rest/services/RIDEM/Outdoor_Recreation_Map_v4/MapServer/1",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "RMP_CND": "ramp",
+    "RSTRCTN": "restrictions",
+    "Wat_Ttp": "water"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -73.6226,
+    40.7582,
+    -69.7774,
+    42.4018
+   ],
+   "zoom": 9,
+   "count": 206,
+   "kb": 50,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 206
+  }
+ },
+ {
+  "name": "ri-trails",
+  "state": "RI",
+  "title": "State trails (Rhode Island)",
+  "title_es": "Senderos estatales (Rhode Island)",
+  "description": "Trails on RIDEM management areas and state parks, with allowed uses.",
+  "group": "nature",
+  "category": "park",
+  "source": "RI Department of Environmental Management",
+  "license": "RIGIS / RI DEM public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://risegis.ri.gov/hosting/rest/services/RIDEM/Outdoor_Recreation_Map_v4/MapServer/16",
+   "fields": {
+    "Label": "name",
+    "Mgt_Area": "area",
+    "Type": "kind",
+    "LenMile": "miles",
+    "Use_MtnBike": "mountain_bike",
+    "Use_Equestrian": "horses"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -72.1807,
+    41.3745,
+    -71.2193,
+    41.7855
+   ],
+   "zoom": 11,
+   "count": 1195,
+   "kb": 368,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1195
+  }
+ },
+ {
+  "name": "ma-parcels",
+  "state": "MA",
+  "title": "Property tax parcels (Massachusetts)",
+  "title_es": "Parcelas catastrales (Massachusetts)",
+  "description": "MassGIS standardized statewide tax parcels joined to assessor records: address, use, zoning, year built, assessed value (no owner names shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "MassGIS (Bureau of Geographic Information)",
+  "license": "MassGIS / Commonwealth of Massachusetts public data (free use; attribution to MassGIS)",
+  "view": {
+   "url": "https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Property_Tax_Parcels/FeatureServer/0",
+   "fields": {
+    "SITE_ADDR": "address",
+    "CITY": "city",
+    "USE_DESC": "kind",
+    "ZONING": "zoning",
+    "LOT_SIZE": "acres",
+    "YEAR_BUILT": "year_built",
+    "TOTAL_VAL": "assessed_value",
+    "UNITS": "units",
+    "LOC_ID": "parcel_id",
+    "FY": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -71.075,
+    42.3487,
+    -71.045,
+    42.3613
+   ],
+   "zoom": 16,
+   "count": 2000,
+   "kb": 900,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "ma-ej-populations",
+  "state": "MA",
+  "title": "Environmental justice populations (Massachusetts)",
+  "title_es": "Poblaciones de justicia ambiental (Massachusetts)",
+  "description": "EEA 2020 environmental justice block groups (income, minority and/or limited-English criteria), updated Nov 2022.",
+  "group": "people",
+  "category": "info",
+  "source": "MA Executive Office of Energy and Environmental Affairs (MassGIS)",
+  "license": "MassGIS / Commonwealth of Massachusetts public data (free use; attribution to MassGIS)",
+  "view": {
+   "url": "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/EJ2020/FeatureServer/0",
+   "fields": {
+    "GEOID": "geoid",
+    "MUNICIPALITY": "city",
+    "EJ": "status",
+    "EJ_CRIT_DESC": "kind",
+    "PCT_MINORITY": "minority_pct",
+    "LIMENGHHPCT": "limited_english_pct",
+    "BG_MHHI": "median_income"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -71.5407,
+    42.152,
+    -70.5793,
+    42.558
+   ],
+   "zoom": 11,
+   "count": 1375,
+   "kb": 706,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1375
+  }
+ },
+ {
+  "name": "ma-open-space",
+  "state": "MA",
+  "title": "Protected and recreational open space (Massachusetts)",
+  "title_es": "Espacios abiertos protegidos y recreativos (Massachusetts)",
+  "description": "MassGIS statewide conservation and recreation lands (state parks/forests, wildlife areas, town parks, land trusts) with public access level.",
+  "group": "nature",
+  "category": "park",
+  "source": "MassGIS / EEA",
+  "license": "MassGIS / Commonwealth of Massachusetts public data (free use; attribution to MassGIS)",
+  "view": {
+   "url": "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/openspace/FeatureServer/0",
+   "fields": {
+    "SITE_NAME": "name",
+    "MANAGER": "manager",
+    "PRIM_PURP": "kind",
+    "PUB_ACCESS": "status",
+    "LEV_PROT": "protection",
+    "GIS_ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -71.9202,
+    42.2192,
+    -71.6798,
+    42.3208
+   ],
+   "zoom": 13,
+   "count": 667,
+   "kb": 363,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 667
+  }
+ },
+ {
+  "name": "ma-hurricane-evacuation-zones",
+  "state": "MA",
+  "title": "Hurricane evacuation zones (Massachusetts)",
+  "title_es": "Zonas de evacuación por huracán (Massachusetts)",
+  "description": "MEMA coastal hurricane evacuation zones A-C (2017 zones, still the official 'Know Your Zone' zones; follow local orders in a storm).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Massachusetts Emergency Management Agency (MEMA)",
+  "license": "MassGIS / Commonwealth of Massachusetts public data (free use; attribution to MassGIS)",
+  "view": {
+   "url": "https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Hurricane_Evacuation_Zones/FeatureServer/0",
+   "fields": {
+    "ZONE": "kind",
+    "TOWN": "city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -72.0213,
+    41.9491,
+    -70.0987,
+    42.7609
+   ],
+   "zoom": 10,
+   "count": 420,
+   "kb": 344,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 420
+  }
+ },
+ {
+  "name": "ma-child-care-centers",
+  "state": "MA",
+  "title": "Licensed child care centers (Massachusetts)",
+  "title_es": "Centros de cuidado infantil con licencia (Massachusetts)",
+  "description": "EEC-licensed center-based child care programs (centers only; family child care homes are not included).",
+  "group": "help",
+  "category": "point",
+  "source": "MA Department of Early Education and Care (via MassGIS)",
+  "license": "MassGIS / Commonwealth of Massachusetts public data (free use; attribution to MassGIS)",
+  "view": {
+   "url": "https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Licensed_Child_Care_Programs/FeatureServer/0",
+   "fields": {
+    "PROG_NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "PHONE": "phone",
+    "PROG_TYPE": "kind",
+    "CAPACITY": "capacity",
+    "LICENSED_STATUS": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "PROG_TYPE = 'Center-based Care'",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -71.5407,
+    42.152,
+    -70.5793,
+    42.558
+   ],
+   "zoom": 11,
+   "count": 1474,
+   "kb": 420,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1474
+  }
+ },
+ {
+  "name": "ma-21e-sites",
+  "state": "MA",
+  "title": "Active hazardous waste sites, Chapter 21E (Massachusetts)",
+  "title_es": "Sitios activos de residuos peligrosos, Cap. 21E (Massachusetts)",
+  "description": "MassDEP currently active Tier-classified oil and hazardous material disposal sites, with release tracking number.",
+  "group": "hazards",
+  "category": "point",
+  "source": "MassDEP Bureau of Waste Site Cleanup (MassGIS)",
+  "license": "MassGIS / Commonwealth of Massachusetts public data (free use; attribution to MassGIS)",
+  "view": {
+   "url": "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/C21e/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "TOWN": "city",
+    "STATUS": "status",
+    "RTN": "kind",
+    "SITE_INFO": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -72.0213,
+    41.9491,
+    -70.0987,
+    42.7609
+   ],
+   "zoom": 10,
+   "count": 1582,
+   "kb": 468,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 1582
+  }
+ },
+ {
+  "name": "ma-historic-inventory",
+  "state": "MA",
+  "title": "Historic inventory (Massachusetts)",
+  "title_es": "Inventario histórico (Massachusetts)",
+  "description": "Massachusetts Historical Commission inventory of historic buildings, structures and sites (MACRIS), with designation.",
+  "group": "places",
+  "category": "point",
+  "source": "Massachusetts Historical Commission (MassGIS)",
+  "license": "MassGIS / Commonwealth of Massachusetts public data (free use; attribution to MassGIS)",
+  "view": {
+   "url": "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/MHC_Inventory/FeatureServer/1",
+   "fields": {
+    "HISTORIC_N": "name",
+    "ADDRESS": "address",
+    "TOWN_NAME": "city",
+    "DESIGNATIO": "status",
+    "USE_TYPE": "kind",
+    "CONSTRUCTI": "built"
+   },
+   "geometry": "point",
+   "min_zoom": 15,
+   "where": "DEMOLISHED IS NULL OR DEMOLISHED <> 'Y'",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -71.09,
+    42.3423,
+    -71.03,
+    42.3677
+   ],
+   "zoom": 15,
+   "count": 1983,
+   "kb": 542,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 1983
+  }
+ },
+ {
+  "name": "ma-boat-access",
+  "state": "MA",
+  "title": "Fishing and boating access sites (Massachusetts)",
+  "title_es": "Accesos para pesca y navegación (Massachusetts)",
+  "description": "MassWildlife Office of Fishing and Boating Access ramps, carry-in sites and shore fishing areas.",
+  "group": "nature",
+  "category": "point",
+  "source": "MA Office of Fishing and Boating Access (MassGIS)",
+  "license": "MassGIS / Commonwealth of Massachusetts public data (free use; attribution to MassGIS)",
+  "view": {
+   "url": "https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Office_of_Fishing_and_Boating_Access_Sites/FeatureServer/0",
+   "fields": {
+    "FACNAME": "name",
+    "FACILITY_TYPE": "kind",
+    "RAMPTYPE": "ramp",
+    "TOWN": "city",
+    "PARKING": "parking",
+    "FEE": "fee",
+    "BARRIER_FREE": "accessible",
+    "GOOGLE_MAP": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -75.6452,
+    40.6441,
+    -67.9548,
+    43.8959
+   ],
+   "zoom": 8,
+   "count": 282,
+   "kb": 95,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 282
+  }
+ },
+ {
+  "name": "ma-farmers-markets",
+  "state": "MA",
+  "title": "Farmers markets (Massachusetts)",
+  "title_es": "Mercados de agricultores (Massachusetts)",
+  "description": "Farmers markets with days/hours and whether they take SNAP, HIP and WIC (2023 season list; confirm dates with the market).",
+  "group": "help",
+  "category": "point",
+  "source": "MA Department of Agricultural Resources / Department of Public Health",
+  "license": "MassGIS / Commonwealth of Massachusetts public data (free use; attribution to MassGIS)",
+  "view": {
+   "url": "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/DPH/DPH_Farmers_Markets/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDR_1": "address",
+    "TOWN": "city",
+    "DAY_TIME": "hours",
+    "DATES": "dates",
+    "SNAP": "snap",
+    "HIP": "hip",
+    "WIC_CVV": "wic",
+    "WEBSITE": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -72.9826,
+    41.5431,
+    -69.1374,
+    43.1669
+   ],
+   "zoom": 9,
+   "count": 243,
+   "kb": 79,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 243
+  }
+ },
+ {
+  "name": "ma-councils-on-aging",
+  "state": "MA",
+  "title": "Councils on aging and senior centers (Massachusetts)",
+  "title_es": "Consejos para adultos mayores y centros de mayores (Massachusetts)",
+  "description": "Municipal councils on aging and senior centers, with phone and website (Executive Office of Aging & Independence).",
+  "group": "help",
+  "category": "point",
+  "source": "MA Executive Office of Aging & Independence (MassGIS)",
+  "license": "MassGIS / Commonwealth of Massachusetts public data (free use; attribution to MassGIS)",
+  "view": {
+   "url": "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/Councils_on_Aging/FeatureServer/0",
+   "fields": {
+    "LOCATION_NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "TYPE_OF_LOCATION": "kind",
+    "PHONE_NUMBER": "phone",
+    "WEBSITE": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -72.9826,
+    41.5431,
+    -69.1374,
+    43.1669
+   ],
+   "zoom": 9,
+   "count": 314,
+   "kb": 97,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 314
+  }
+ },
+ {
+  "name": "vt-parcels",
+  "state": "VT",
+  "title": "Parcels (Vermont)",
+  "title_es": "Parcelas (Vermont)",
+  "description": "VCGI statewide standardized parcels joined to the town grand list: location, property type, acreage, listed value (no owner names shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Vermont Center for Geographic Information (VCGI)",
+  "license": "Vermont Open Geodata (VCGI / ANR), public; attribution requested",
+  "view": {
+   "url": "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/FS_VCGI_OPENDATA_Cadastral_VTPARCELS_poly_standardized_parcels_SP_v1/FeatureServer/0",
+   "fields": {
+    "E911ADDR": "address",
+    "TNAME": "city",
+    "PROPTYPE": "kind",
+    "CAT": "category",
+    "ACRESGL": "acres",
+    "REAL_FLV": "listed_value",
+    "SPAN": "parcel_id",
+    "YEAR": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -73.225,
+    44.4689,
+    -73.195,
+    44.4811
+   ],
+   "zoom": 16,
+   "count": 2000,
+   "kb": 810,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "vt-anr-lands",
+  "state": "VT",
+  "title": "State lands: parks, forests, wildlife areas (Vermont)",
+  "title_es": "Tierras estatales: parques, bosques, áreas silvestres (Vermont)",
+  "description": "Lands owned or managed by the Vermont Agency of Natural Resources (state parks, state forests, wildlife management areas, fishing access).",
+  "group": "nature",
+  "category": "park",
+  "source": "Vermont Agency of Natural Resources",
+  "license": "Vermont Open Geodata (VCGI / ANR), public; attribution requested",
+  "view": {
+   "url": "https://anrmaps.vermont.gov/arcgis/rest/services/Open_Data/OPENDATA_ANR_CADASTRAL_SP_NOCACHE_v2/MapServer/39",
+   "fields": {
+    "NAME": "name",
+    "ANRUnitType": "kind",
+    "ANRDept": "manager",
+    "PUBACCESS": "status",
+    "GISACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -73.2307,
+    43.9028,
+    -72.2693,
+    44.2972
+   ],
+   "zoom": 11,
+   "count": 329,
+   "kb": 146,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 329
+  }
+ },
+ {
+  "name": "vt-state-parks",
+  "state": "VT",
+  "title": "State parks (Vermont)",
+  "title_es": "Parques estatales (Vermont)",
+  "description": "Vermont State Parks with camping, swimming, boating, hiking and accessibility amenities.",
+  "group": "nature",
+  "category": "point",
+  "source": "Vermont Department of Forests, Parks and Recreation",
+  "license": "Vermont Open Geodata (VCGI / ANR), public; attribution requested",
+  "view": {
+   "url": "https://anrmaps.vermont.gov/arcgis/rest/services/Open_Data/OPENDATA_ANR_TOURISM_SP_NOCACHE_v2/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "Camping": "camping",
+    "Swimming": "swimming",
+    "BoatLaunch": "boat_launch",
+    "Hiking": "hiking",
+    "Accessible": "accessible"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -88.1309,
+    37.7883,
+    -57.3691,
+    50.4117
+   ],
+   "zoom": 6,
+   "count": 51,
+   "kb": 11,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 51
+  }
+ },
+ {
+  "name": "vt-fishing-access",
+  "state": "VT",
+  "title": "Fishing access areas (Vermont)",
+  "title_es": "Áreas de acceso para pesca (Vermont)",
+  "description": "Vermont Fish & Wildlife fishing access areas with ramp type and winter plowing.",
+  "group": "nature",
+  "category": "point",
+  "source": "Vermont Fish & Wildlife Department",
+  "license": "Vermont Open Geodata (VCGI / ANR), public; attribution requested",
+  "view": {
+   "url": "https://anrmaps.vermont.gov/arcgis/rest/services/Open_Data/OPENDATA_ANR_TOURISM_SP_NOCACHE_v2/MapServer/163",
+   "fields": {
+    "AccessName": "name",
+    "WaterBody": "water",
+    "Town": "city",
+    "AccessType": "kind",
+    "RampType": "ramp",
+    "WinterPlowing": "winter_plowed"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -76.5952,
+    42.5221,
+    -68.9048,
+    45.6779
+   ],
+   "zoom": 8,
+   "count": 206,
+   "kb": 49,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 206
+  }
+ },
+ {
+  "name": "vt-hazardous-sites",
+  "state": "VT",
+  "title": "Hazardous waste sites (Vermont)",
+  "title_es": "Sitios de residuos peligrosos (Vermont)",
+  "description": "Vermont DEC hazardous site list (contaminated sites under investigation or cleanup), with status and document link.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Vermont Department of Environmental Conservation",
+  "license": "Vermont Open Geodata (VCGI / ANR), public; attribution requested",
+  "view": {
+   "url": "https://anrmaps.vermont.gov/arcgis/rest/services/Open_Data/OPENDATA_ANR_ENVIRON_SP_NOCACHE_v2/MapServer/163",
+   "fields": {
+    "SiteName": "name",
+    "Address": "address",
+    "Town": "city",
+    "SiteStatus": "status",
+    "Source_Of_Contamination": "kind",
+    "DocLink": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -73.6907,
+    44.279,
+    -72.7293,
+    44.671
+   ],
+   "zoom": 11,
+   "count": 989,
+   "kb": 303,
+   "max_record_count": 1000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 989
+  }
+ },
+ {
+  "name": "nh-parcels",
+  "state": "NH",
+  "title": "Parcels (New Hampshire)",
+  "title_es": "Parcelas (Nueva Hampshire)",
+  "description": "NH GRANIT statewide parcel mosaic (towns that share digital parcels) with street address and state land-use code (no owner names shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "NH GRANIT / NH Department of Revenue Administration",
+  "license": "NH GRANIT (UNH / NH Office of Planning & Development), public; attribution requested",
+  "view": {
+   "url": "https://nhgeodata.unh.edu/hosting/rest/services/Hosted/CAD_ParcelMosaic/FeatureServer/1",
+   "fields": {
+    "streetaddress": "address",
+    "town": "city",
+    "slu": "kind",
+    "displayid": "parcel_id",
+    "nh_gis_id": "gis_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -71.475,
+    42.9837,
+    -71.445,
+    42.9963
+   ],
+   "zoom": 16,
+   "count": 2000,
+   "kb": 644,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "nh-conservation-lands",
+  "state": "NH",
+  "title": "Conservation and public lands (New Hampshire)",
+  "title_es": "Tierras de conservación y públicas (Nueva Hampshire)",
+  "description": "GRANIT statewide conservation and public lands (state parks and forests, WMAs, town forests, easements) with public access level.",
+  "group": "nature",
+  "category": "park",
+  "source": "NH GRANIT / Society for the Protection of NH Forests",
+  "license": "NH GRANIT (UNH / NH Office of Planning & Development), public; attribution requested",
+  "view": {
+   "url": "https://nhgeodata.unh.edu/hosting/rest/services/Hosted/EC_Conservation/FeatureServer/6",
+   "fields": {
+    "name": "name",
+    "ppagency": "manager",
+    "pptype": "kind",
+    "ownertype": "owner_type",
+    "access": "status",
+    "level_": "protection",
+    "rsize": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "ownertype IN (1,2,3,6)",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -71.8807,
+    43.4011,
+    -70.9193,
+    43.7989
+   ],
+   "zoom": 11,
+   "count": 565,
+   "kb": 289,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 565
+  }
+ },
+ {
+  "name": "nh-public-water-access",
+  "state": "NH",
+  "title": "Public water access sites (New Hampshire)",
+  "title_es": "Accesos públicos al agua (Nueva Hampshire)",
+  "description": "Public access sites to lakes, ponds and rivers (boat ramps, carry-in, shore access) with fees, parking and uses.",
+  "group": "nature",
+  "category": "point",
+  "source": "NH Fish and Game / NH DES (GRANIT)",
+  "license": "NH GRANIT (UNH / NH Office of Planning & Development), public; attribution requested",
+  "view": {
+   "url": "https://nhgeodata.unh.edu/hosting/rest/services/Hosted/CSD_RecreationResources/FeatureServer/0",
+   "fields": {
+    "facility": "name",
+    "water_body": "water",
+    "town": "city",
+    "access_typ": "kind",
+    "ramp": "ramp",
+    "fee": "fee",
+    "parking_ty": "parking",
+    "hcap_acc": "accessible"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -73.3226,
+    42.8044,
+    -69.4774,
+    44.3956
+   ],
+   "zoom": 9,
+   "count": 855,
+   "kb": 233,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 855
+  }
+ },
+ {
+  "name": "nh-trails",
+  "state": "NH",
+  "title": "Trails (New Hampshire)",
+  "title_es": "Senderos (Nueva Hampshire)",
+  "description": "Statewide trails inventory (hiking, OHRV, snowmobile corridors, rail trails) with allowed uses.",
+  "group": "nature",
+  "category": "park",
+  "source": "NH Bureau of Trails / GRANIT",
+  "license": "NH GRANIT (UNH / NH Office of Planning & Development), public; attribution requested",
+  "view": {
+   "url": "https://nhgeodata.unh.edu/hosting/rest/services/Hosted/CSD_RecreationResources/FeatureServer/2",
+   "fields": {
+    "trailname": "name",
+    "trailsyste": "area",
+    "townname": "city",
+    "surface": "surface",
+    "hiking": "hiking",
+    "mtnbike": "mountain_bike",
+    "ohrv": "ohrv",
+    "mapurl": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -71.5403,
+    44.0014,
+    -71.0597,
+    44.1986
+   ],
+   "zoom": 12,
+   "count": 610,
+   "kb": 326,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 610
+  }
+ },
+ {
+  "name": "nh-recreation-areas",
+  "state": "NH",
+  "title": "Recreation areas (New Hampshire)",
+  "title_es": "Áreas recreativas (Nueva Hampshire)",
+  "description": "Statewide outdoor recreation inventory (state parks, town parks, beaches, campgrounds, ski areas) with operator and activities.",
+  "group": "nature",
+  "category": "park",
+  "source": "NH Office of Planning & Development (SCORP inventory, GRANIT)",
+  "license": "NH GRANIT (UNH / NH Office of Planning & Development), public; attribution requested",
+  "view": {
+   "url": "https://nhgeodata.unh.edu/hosting/rest/services/Hosted/CSD_RecreationResources/FeatureServer/3",
+   "fields": {
+    "site": "name",
+    "town": "city",
+    "operator": "manager",
+    "prim_use": "kind",
+    "own_typ": "owner_type",
+    "prk_fee": "fee",
+    "acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -71.9407,
+    42.7891,
+    -70.9793,
+    43.1909
+   ],
+   "zoom": 11,
+   "count": 674,
+   "kb": 369,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 674
+  }
+ },
+ {
+  "name": "me-parcels",
+  "state": "ME",
+  "title": "Parcels, organized towns (Maine)",
+  "title_es": "Parcelas, municipios organizados (Maine)",
+  "description": "Maine GeoLibrary parcel polygons for organized towns with property location and map/book/lot (no owner names).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Maine GeoLibrary / Maine Office of GIS",
+  "license": "Maine GeoLibrary / State of Maine open data (public; attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/Maine_Parcels_Organized_Towns/FeatureServer/10",
+   "fields": {
+    "PROP_LOC": "address",
+    "TOWN": "city",
+    "MAP_BK_LOT": "parcel_id",
+    "TYPE": "kind",
+    "FMUPDAT": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -70.275,
+    43.6538,
+    -70.245,
+    43.6662
+   ],
+   "zoom": 16,
+   "count": 2000,
+   "kb": 620,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": true,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "me-conserved-lands",
+  "state": "ME",
+  "title": "Conserved lands (Maine)",
+  "title_es": "Tierras conservadas (Maine)",
+  "description": "Publicly held conserved lands (state parks and public lands, wildlife management areas, federal and town lands) with public access.",
+  "group": "nature",
+  "category": "park",
+  "source": "Maine GeoLibrary / Maine Department of Agriculture, Conservation and Forestry",
+  "license": "Maine GeoLibrary / State of Maine open data (public; attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/Maine_Conserved_Lands_All/FeatureServer/0",
+   "fields": {
+    "PARCEL_NAME": "name",
+    "PROJECT": "project",
+    "HOLD1_NAME": "manager",
+    "DESIGNATION": "kind",
+    "PUB_ACCESS": "status",
+    "CALC_AC": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "HOLD1_TYPE IN ('State','Federal','Municipal')",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -69.9807,
+    44.6051,
+    -69.0193,
+    44.9949
+   ],
+   "zoom": 11,
+   "count": 87,
+   "kb": 65,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 87
+  }
+ },
+ {
+  "name": "me-coastal-public-access",
+  "state": "ME",
+  "title": "Coastal public access sites (Maine)",
+  "title_es": "Accesos públicos a la costa (Maine)",
+  "description": "Maine Coastal Program public access sites (beaches, boat launches, piers, trails) with amenities, April 2026.",
+  "group": "nature",
+  "category": "point",
+  "source": "Maine Coastal Program (DMR)",
+  "license": "Maine GeoLibrary / State of Maine open data (public; attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/Maine_Coastal_Public_Access_Sites_April_2026/FeatureServer/74",
+   "fields": {
+    "NAME": "name",
+    "TOWN": "city",
+    "primary_use": "kind",
+    "OWNERSHIP": "owner_type",
+    "beach": "beach",
+    "trailer_launch": "launch",
+    "restrooms": "restrooms",
+    "Fees": "fee"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -70.9226,
+    43.4124,
+    -67.0774,
+    44.9876
+   ],
+   "zoom": 9,
+   "count": 707,
+   "kb": 175,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 707
+  }
+ },
+ {
+  "name": "me-food-pantries",
+  "state": "ME",
+  "title": "Food pantries (Maine)",
+  "title_es": "Despensas de alimentos (Maine)",
+  "description": "Food pantries in Maine with phone, website and open days (State of Maine list, 2026).",
+  "group": "help",
+  "category": "point",
+  "source": "State of Maine (Maine GeoLibrary)",
+  "license": "Maine GeoLibrary / State of Maine open data (public; attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/FoodPantries/FeatureServer/7",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "TOWN_CITY": "city",
+    "PHONE_NUMBER": "phone",
+    "WEBSITE": "page",
+    "MON": "mon",
+    "TUES": "tue",
+    "WED": "wed",
+    "THURS": "thu",
+    "FRI": "fri",
+    "SAT": "sat"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -72.1826,
+    42.8652,
+    -68.3374,
+    44.4548
+   ],
+   "zoom": 9,
+   "count": 203,
+   "kb": 70,
+   "max_record_count": 2000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 203
+  }
+ },
+ {
+  "name": "me-wma",
+  "state": "ME",
+  "title": "Wildlife management areas (Maine)",
+  "title_es": "Áreas de manejo de vida silvestre (Maine)",
+  "description": "Maine Department of Inland Fisheries & Wildlife wildlife management areas (locations, open to hunting).",
+  "group": "nature",
+  "category": "point",
+  "source": "Maine Department of Inland Fisheries and Wildlife",
+  "license": "Maine GeoLibrary / State of Maine open data (public; attribution requested)",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/MDIFW_WMA_Locations/FeatureServer/0",
+   "fields": {
+    "PROJECT": "name",
+    "Town": "city",
+    "Region": "region",
+    "Acres": "acres"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -77.1904,
+    41.6818,
+    -61.8096,
+    47.9182
+   ],
+   "zoom": 7,
+   "count": 75,
+   "kb": 14,
+   "max_record_count": 5000,
+   "exceeded_transfer_limit": false,
+   "features_in_probe": 75
+  }
+ }
+]

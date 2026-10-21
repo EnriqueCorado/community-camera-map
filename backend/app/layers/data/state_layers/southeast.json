@@ -2298,7 +2298,6 @@
    "fields": {
     "Name": "name",
     "AreaType": "kind",
-    "Contact": "manager",
     "Telephone": "phone",
     "Acres": "acres"
    },

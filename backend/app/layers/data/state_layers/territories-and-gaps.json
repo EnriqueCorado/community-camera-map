@@ -1,0 +1,2277 @@
+[
+ {
+  "name": "pr-parcels",
+  "state": "PR",
+  "title": "Parcels (Puerto Rico)",
+  "title_es": "Parcelas (Puerto Rico)",
+  "description": "CRIM cadastral parcels, February 2025 edition, with cadastre number only.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "CRIM via Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/crim/crim_feb_2025/MapServer/0",
+   "fields": {
+    "NUM_CATASTRO": "name",
+    "TIPO": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -66.08,
+    18.44,
+    -66.05,
+    18.46
+   ],
+   "count": 2000,
+   "kb": 463.8,
+   "max_record_count": 2000,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "pr-zoning",
+  "state": "PR",
+  "title": "Zoning (Puerto Rico)",
+  "title_es": "Calificación de suelos (Puerto Rico)",
+  "description": "Official JP zoning (calificación) and land classification for every parcel in Puerto Rico.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Calificaci%C3%B3n/MapServer/228",
+   "fields": {
+    "descrip": "name",
+    "cali": "kind",
+    "descrip1": "land_class",
+    "vigencia": "updated",
+    "municipio": "city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 500,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -66.08,
+    18.44,
+    -66.05,
+    18.46
+   ],
+   "count": 500,
+   "kb": 90.5,
+   "max_record_count": 500,
+   "features_in_probe": 500
+  }
+ },
+ {
+  "name": "pr-liquefaction",
+  "state": "PR",
+  "title": "Liquefaction susceptibility (Puerto Rico)",
+  "title_es": "Susceptibilidad a licuación (Puerto Rico)",
+  "description": "Areas where soil can liquefy in a strong earthquake, by level.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Licuaci%C3%B3n/MapServer/36",
+   "fields": {
+    "Licuacion": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -66.15,
+    18.36,
+    -65.98,
+    18.47
+   ],
+   "count": 207,
+   "kb": 487.1,
+   "max_record_count": 2000,
+   "features_in_probe": 207
+  }
+ },
+ {
+  "name": "pr-advisory-flood",
+  "state": "PR",
+  "title": "Advisory flood zones, post-María (Puerto Rico)",
+  "title_es": "Zonas inundables de asesoramiento post-María (Puerto Rico)",
+  "description": "FEMA Advisory Base Flood Elevation zones adopted by JP after Hurricane María (2018); stricter than older FIRMs.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "FEMA ABFE via Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Hosted/ABFE/FeatureServer/5",
+   "fields": {
+    "fld_zone": "kind",
+    "st_bfe_m": "bfe_m"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -66.12,
+    18.38,
+    -66.02,
+    18.46
+   ],
+   "count": 51,
+   "kb": 273.8,
+   "max_record_count": 2000,
+   "features_in_probe": 51
+  }
+ },
+ {
+  "name": "pr-coastal-erosion",
+  "state": "PR",
+  "title": "Coastal erosion risk, 30-year (Puerto Rico)",
+  "title_es": "Riesgo de erosión costera a 30 años (Puerto Rico)",
+  "description": "Shoreline areas at risk of erosion within 30 years (FEMA advisory study, 2000–2017 shoreline change).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "FEMA via Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Advisory_Maps/Erosion_Advisory/MapServer/1",
+   "fields": {
+    "Label": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -66.15,
+    18.36,
+    -65.98,
+    18.47
+   ],
+   "count": 13,
+   "kb": 4.7,
+   "max_record_count": 1000,
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "pr-power-plants",
+  "state": "PR",
+  "title": "Power plants (Puerto Rico)",
+  "title_es": "Plantas de generación eléctrica (Puerto Rico)",
+  "description": "Electric generating plants with type and maximum capacity (federal power-plant layers skip Puerto Rico).",
+  "group": "infra",
+  "category": "point",
+  "source": "Junta de Planificación de Puerto Rico (SIGE) / LUMA / PREPA",
+  "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Instalaciones_Cr%C3%ADticas_para_Manejo_de_Emergencias_MIL1/MapServer/12",
+   "fields": {
+    "Facility_Name": "name",
+    "Type_": "kind",
+    "Maximum_Capacity_MW": "capacity_mw"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -67.95,
+    17.85,
+    -65.2,
+    18.55
+   ],
+   "count": 37,
+   "kb": 6.6,
+   "max_record_count": 2000,
+   "features_in_probe": 37
+  }
+ },
+ {
+  "name": "pr-substations",
+  "state": "PR",
+  "title": "Electric substations (Puerto Rico)",
+  "title_es": "Subestaciones eléctricas (Puerto Rico)",
+  "description": "Electric substations with voltage (federal substation layers skip Puerto Rico).",
+  "group": "infra",
+  "category": "point",
+  "source": "Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Instalaciones_Cr%C3%ADticas_para_Manejo_de_Emergencias_MIL1/MapServer/13",
+   "fields": {
+    "NAME": "name",
+    "CITY": "city",
+    "STATUS": "status",
+    "MAX_VOLT": "max_kv"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -66.15,
+    18.36,
+    -65.98,
+    18.47
+   ],
+   "count": 80,
+   "kb": 14.1,
+   "max_record_count": 2000,
+   "features_in_probe": 80
+  }
+ },
+ {
+  "name": "pr-cdt",
+  "state": "PR",
+  "title": "Diagnostic & treatment centers (CDT) (Puerto Rico)",
+  "title_es": "Centros de Diagnóstico y Tratamiento (CDT) (Puerto Rico)",
+  "description": "Public CDT clinics (urgent and outpatient care) with address and main phone.",
+  "group": "help",
+  "category": "point",
+  "source": "Junta de Planificación de Puerto Rico (SIGE) / PR Department of Health",
+  "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Instalaciones_Cr%C3%ADticas_para_Manejo_de_Emergencias_MIL1/MapServer/10",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Municipio": "city",
+    "Type_": "kind",
+    "Phone": "phone"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -67.95,
+    17.85,
+    -65.2,
+    18.55
+   ],
+   "count": 105,
+   "kb": 27.9,
+   "max_record_count": 2000,
+   "features_in_probe": 105
+  }
+ },
+ {
+  "name": "pr-shelters",
+  "state": "PR",
+  "title": "Certified hurricane shelters 2025 (Puerto Rico)",
+  "title_es": "Refugios certificados 2025 (Puerto Rico)",
+  "description": "Pre-designated shelters for the 2025 season with capacity and generator/cistern; not a list of shelters open now (see FEMA open shelters).",
+  "group": "help",
+  "category": "point",
+  "source": "PR Department of Housing & FEMA",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Shelters_PR_2025/FeatureServer/178",
+   "fields": {
+    "Facility": "name",
+    "Physical_Address": "address",
+    "Municipio": "city",
+    "Max_Capacity": "capacity",
+    "Generator_Yes_No": "generator",
+    "Cistern_Yes_No": "cistern"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -67.95,
+    17.85,
+    -65.2,
+    18.55
+   ],
+   "count": 367,
+   "kb": 101.5,
+   "max_record_count": 2000,
+   "features_in_probe": 367
+  }
+ },
+ {
+  "name": "pr-pods",
+  "state": "PR",
+  "title": "Disaster supply distribution points (PODs) 2025 (Puerto Rico)",
+  "title_es": "Puntos de distribución de suministros (PODs) 2025 (Puerto Rico)",
+  "description": "Pre-planned sites where water and food are handed out after a disaster (2025 plan); only active when announced.",
+  "group": "help",
+  "category": "point",
+  "source": "PR Emergency Management Bureau (NMEAD) & FEMA",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/PODs_PR_2025/FeatureServer/208",
+   "fields": {
+    "Name_of_Location": "name",
+    "Address_of_Location_": "address",
+    "Municipality_": "city",
+    "What_type_of_facility": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -67.95,
+    17.85,
+    -65.2,
+    18.55
+   ],
+   "count": 90,
+   "kb": 26.3,
+   "max_record_count": 2000,
+   "features_in_probe": 90
+  }
+ },
+ {
+  "name": "pr-reservoirs",
+  "state": "PR",
+  "title": "Reservoirs and lagoons (Puerto Rico)",
+  "title_es": "Embalses y lagunas (Puerto Rico)",
+  "description": "Reservoirs and lagoons with owner and type (2025).",
+  "group": "nature",
+  "category": "park",
+  "source": "PR DRNA & FEMA",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Reservoirs_Lagoons_PR_2025/FeatureServer/192",
+   "fields": {
+    "NOMBRE": "name",
+    "Municipio": "city",
+    "TIPO": "kind",
+    "Owner": "owner"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -67.95,
+    17.85,
+    -65.2,
+    18.55
+   ],
+   "count": 85,
+   "kb": 47.8,
+   "max_record_count": 2000,
+   "features_in_probe": 85
+  }
+ },
+ {
+  "name": "pr-historic-sites",
+  "state": "PR",
+  "title": "Historic sites (Puerto Rico)",
+  "title_es": "Sitios históricos (Puerto Rico)",
+  "description": "Historic sites designated by the Planning Board, with resolution and effective date.",
+  "group": "places",
+  "category": "point",
+  "source": "Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/JP_Reglamentario/Sitios_Historicos_JP/FeatureServer/0",
+   "fields": {
+    "SITIO": "name",
+    "Municipio": "city",
+    "vigencia": "updated",
+    "resolucion": "resolution"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -66.15,
+    18.36,
+    -65.98,
+    18.47
+   ],
+   "count": 51,
+   "kb": 10.4,
+   "max_record_count": 1000,
+   "features_in_probe": 51
+  }
+ },
+ {
+  "name": "pr-historic-zones",
+  "state": "PR",
+  "title": "Historic zones (Puerto Rico)",
+  "title_es": "Zonas históricas (Puerto Rico)",
+  "description": "Boundaries of designated historic zones (e.g. Old San Juan).",
+  "group": "places",
+  "category": "boundary",
+  "source": "Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/JP_Reglamentario/Sitios_Historicos_JP/FeatureServer/1",
+   "fields": {
+    "ZONA": "name",
+    "Resolucion": "resolution"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -66.15,
+    18.36,
+    -65.98,
+    18.47
+   ],
+   "count": 4,
+   "kb": 3.9,
+   "max_record_count": 1000,
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "pr-nature-reserves",
+  "state": "PR",
+  "title": "Nature reserves (Puerto Rico)",
+  "title_es": "Reservas naturales (Puerto Rico)",
+  "description": "Nature reserves designated by the Planning Board, with resolution and effective date.",
+  "group": "nature",
+  "category": "park",
+  "source": "Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Hosted/Areas_Protegidas_y_Reservas_Naturales_WFL1/FeatureServer/3",
+   "fields": {
+    "nombre_reserv": "name",
+    "municipio": "city",
+    "vigencia": "updated",
+    "resolucion": "resolution"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -67.95,
+    17.85,
+    -65.2,
+    18.55
+   ],
+   "count": 80,
+   "kb": 111.4,
+   "max_record_count": 2000,
+   "features_in_probe": 80
+  }
+ },
+ {
+  "name": "pr-agricultural-reserves",
+  "state": "PR",
+  "title": "Agricultural reserves (Puerto Rico)",
+  "title_es": "Reservas agrícolas (Puerto Rico)",
+  "description": "Land reserved for farming by Planning Board resolution.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Hosted/Reservas_Agr%C3%ADcolas/FeatureServer/1",
+   "fields": {
+    "nombrereser": "name",
+    "municipios": "city",
+    "vigencia": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -67.95,
+    17.85,
+    -65.2,
+    18.55
+   ],
+   "count": 8,
+   "kb": 47.2,
+   "max_record_count": 2000,
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "pr-social-vulnerability",
+  "state": "PR",
+  "title": "Social vulnerability by tract (Puerto Rico)",
+  "title_es": "Vulnerabilidad social por sector censal (Puerto Rico)",
+  "description": "CDC/ATSDR Social Vulnerability Index 2020 for Puerto Rico tracts, 0 (least) to 1 (most); the national CDC SVI layer omits Puerto Rico.",
+  "group": "people",
+  "category": "info",
+  "source": "CDC/ATSDR SVI 2020 (Puerto Rico), hosted by FEMA",
+  "license": "Public domain (US federal)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Puerto_Rico_Tracts_Social_Vulnerability_2020/FeatureServer/0",
+   "fields": {
+    "LOCATION": "name",
+    "RPL_THEMES": "svi",
+    "RPL_THEME1": "svi_socioeconomic",
+    "RPL_THEME3": "svi_minority_language",
+    "E_TOTPOP": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -66.15,
+    18.36,
+    -65.98,
+    18.47
+   ],
+   "count": 215,
+   "kb": 81.5,
+   "max_record_count": 2000,
+   "features_in_probe": 215
+  }
+ },
+ {
+  "name": "pr-fire-stations",
+  "state": "PR",
+  "title": "Fire stations (Puerto Rico)",
+  "title_es": "Estaciones de bomberos (Puerto Rico)",
+  "description": "Puerto Rico Fire Department stations with address and station phone.",
+  "group": "help",
+  "category": "point",
+  "source": "PR Fire Department & FEMA",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Fire_Stations_PR/FeatureServer/2",
+   "fields": {
+    "Municipio_Station": "name",
+    "Address": "address",
+    "Telephone": "phone"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -67.95,
+    17.85,
+    -65.2,
+    18.55
+   ],
+   "count": 97,
+   "kb": 20.2,
+   "max_record_count": 2000,
+   "features_in_probe": 97
+  }
+ },
+ {
+  "name": "pr-dialysis",
+  "state": "PR",
+  "title": "Dialysis centers 2026 (Puerto Rico)",
+  "title_es": "Centros de diálisis 2026 (Puerto Rico)",
+  "description": "Dialysis clinics and hospital dialysis units (2026), important during power outages.",
+  "group": "help",
+  "category": "point",
+  "source": "PR Department of Health & FEMA",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/DialysisClinic_DialysisClinic_a_Hospital_DialysisUnit_a_Hospital_2026/FeatureServer/41",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Municipality": "city",
+    "Classification": "kind",
+    "Phone": "phone"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -67.95,
+    17.85,
+    -65.2,
+    18.55
+   ],
+   "count": 345,
+   "kb": 94.2,
+   "max_record_count": 2000,
+   "features_in_probe": 345
+  }
+ },
+ {
+  "name": "vi-estates",
+  "state": "VI",
+  "title": "Estates (US Virgin Islands)",
+  "title_es": "Estates (Islas Vírgenes de EE. UU.)",
+  "description": "Estate boundaries, the place names used in Virgin Islands addresses and land records (2021).",
+  "group": "planning",
+  "category": "boundary",
+  "source": "USVI Lt. Governor's Office GIS & FEMA",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/USVI_Estates_2021/FeatureServer/0",
+   "fields": {
+    "ESTATE": "name",
+    "QUARTER": "quarter",
+    "Main_Island": "island"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -64.98,
+    18.31,
+    -64.88,
+    18.36
+   ],
+   "count": 74,
+   "kb": 45.6,
+   "max_record_count": 2000,
+   "features_in_probe": 74
+  }
+ },
+ {
+  "name": "vi-advisory-flood",
+  "state": "VI",
+  "title": "Advisory flood zones, post-Irma/María (US Virgin Islands)",
+  "title_es": "Zonas inundables de asesoramiento (Islas Vírgenes de EE. UU.)",
+  "description": "FEMA Advisory Base Flood Elevation zones made after the 2017 hurricanes.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "FEMA",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/USVI_ABFE/FeatureServer/6",
+   "fields": {
+    "FLD_ZONE": "kind",
+    "ST_BFE_ft": "bfe_ft"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -64.98,
+    18.31,
+    -64.88,
+    18.36
+   ],
+   "count": 277,
+   "kb": 115.4,
+   "max_record_count": 2000,
+   "features_in_probe": 277
+  }
+ },
+ {
+  "name": "vi-shelters",
+  "state": "VI",
+  "title": "Hurricane shelters (US Virgin Islands)",
+  "title_es": "Refugios de huracanes (Islas Vírgenes de EE. UU.)",
+  "description": "VITEMA-assessed shelter inventory as of February 2023; check VITEMA for which are open.",
+  "group": "help",
+  "category": "point",
+  "source": "VITEMA via FEMA",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Shelters_USVI_2023/FeatureServer/0",
+   "fields": {
+    "Facility": "name",
+    "Address": "address",
+    "Island": "island",
+    "Phone": "phone",
+    "Shelter_Priority": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -65.1,
+    17.65,
+    -64.55,
+    18.45
+   ],
+   "count": 7,
+   "kb": 2.0,
+   "max_record_count": 2000,
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "vi-health-facilities",
+  "state": "VI",
+  "title": "Health care facilities (US Virgin Islands)",
+  "title_es": "Centros de salud (Islas Vírgenes de EE. UU.)",
+  "description": "Hospitals, clinics and other health facilities (FEMA/HHS, August 2025).",
+  "group": "help",
+  "category": "point",
+  "source": "FEMA, HHS Protect",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Health_Care_Facilities_USVI/FeatureServer/0",
+   "fields": {
+    "FacilityName": "name",
+    "address": "address",
+    "FAC_TYPE": "kind",
+    "COUNTY": "island"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -65.1,
+    17.65,
+    -64.55,
+    18.45
+   ],
+   "count": 40,
+   "kb": 10.4,
+   "max_record_count": 2000,
+   "features_in_probe": 40
+  }
+ },
+ {
+  "name": "vi-power-plants",
+  "state": "VI",
+  "title": "Power plants (US Virgin Islands)",
+  "title_es": "Plantas eléctricas (Islas Vírgenes de EE. UU.)",
+  "description": "WAPA and private generating plants with capacity and fuel (2025).",
+  "group": "infra",
+  "category": "point",
+  "source": "USVI WAPA & FEMA",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Power_Generating_Infrastructure_USVI_2025/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Island": "island",
+    "Megawatts__mW_": "capacity_mw",
+    "Fuel_Type": "fuel",
+    "FacilityType": "kind",
+    "Operator": "operator"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -65.1,
+    17.65,
+    -64.55,
+    18.45
+   ],
+   "count": 16,
+   "kb": 3.9,
+   "max_record_count": 2000,
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "vi-police-stations",
+  "state": "VI",
+  "title": "Police stations (US Virgin Islands)",
+  "title_es": "Estaciones de policía (Islas Vírgenes de EE. UU.)",
+  "description": "VIPD stations (the national law-enforcement layer has none for the USVI).",
+  "group": "help",
+  "category": "point",
+  "source": "FEMA",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Police_Stations_USVI/FeatureServer/1",
+   "fields": {
+    "FAC_NAME": "name",
+    "FAC_TYPE": "kind",
+    "COUNTY": "island"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -65.1,
+    17.65,
+    -64.55,
+    18.45
+   ],
+   "count": 12,
+   "kb": 2.4,
+   "max_record_count": 2000,
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "vi-fire-stations",
+  "state": "VI",
+  "title": "Fire stations (US Virgin Islands)",
+  "title_es": "Estaciones de bomberos (Islas Vírgenes de EE. UU.)",
+  "description": "VI Fire and Emergency Medical Services stations.",
+  "group": "help",
+  "category": "point",
+  "source": "FEMA",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Fire_Stations_USVI/FeatureServer/2",
+   "fields": {
+    "FAC_NAME": "name",
+    "FAC_TYPE": "kind",
+    "COUNTY": "island"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -65.1,
+    17.65,
+    -64.55,
+    18.45
+   ],
+   "count": 12,
+   "kb": 2.3,
+   "max_record_count": 2000,
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "gu-parcels",
+  "state": "GU",
+  "title": "Parcels (Guam)",
+  "title_es": "Parcelas (Guam)",
+  "description": "Land parcels from the 2025 parcel layer joined to the 2024 tax roll; lot, zone and land area only (no owner names).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Guam Bureau of Statistics and Plans (BSP) GIS",
+  "license": "Public GovGuam data; informational and planning use only (BSP disclaimer) — attribute BSP",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/25%20Parcel%20Layer%20Update%20with%2024%20Tax%20Roll/FeatureServer/0",
+   "fields": {
+    "Lot_new": "name",
+    "PIN": "pin",
+    "ZONE": "kind",
+    "LandArea": "area_sqm"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    144.75,
+    13.47,
+    144.77,
+    13.49
+   ],
+   "count": 1061,
+   "kb": 298.0,
+   "max_record_count": 2000,
+   "features_in_probe": 1061
+  }
+ },
+ {
+  "name": "gu-zoning",
+  "state": "GU",
+  "title": "Zoning (Guam)",
+  "title_es": "Zonificación (Guam)",
+  "description": "Official zoning districts for Guam.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Guam Bureau of Statistics and Plans (BSP) GIS (Guam Coastal Management Program)",
+  "license": "Public GovGuam data; informational and planning use only (BSP disclaimer) — attribute BSP",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/GISGCMP/FeatureServer/11",
+   "fields": {
+    "ZONE_DESC": "name",
+    "ZONE_CODE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    144.74,
+    13.46,
+    144.8,
+    13.51
+   ],
+   "count": 108,
+   "kb": 129.9,
+   "max_record_count": 1000,
+   "features_in_probe": 108
+  }
+ },
+ {
+  "name": "gu-landslide",
+  "state": "GU",
+  "title": "Landslide hazard (Guam)",
+  "title_es": "Peligro de deslizamientos (Guam)",
+  "description": "Mapped landslide hazard areas and risk level.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Guam Bureau of Statistics and Plans (BSP) GIS (Guam Coastal Management Program)",
+  "license": "Public GovGuam data; informational and planning use only (BSP disclaimer) — attribute BSP",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/GISGCMP/FeatureServer/12",
+   "fields": {
+    "Lndsld_Rsk": "status",
+    "TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "count": 4,
+   "kb": 520.3,
+   "max_record_count": 1000,
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "gu-liquefaction",
+  "state": "GU",
+  "title": "Liquefaction susceptibility (Guam)",
+  "title_es": "Susceptibilidad a licuación (Guam)",
+  "description": "Earthquake liquefaction susceptibility from the Guam State Hazard Mitigation Plan.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Guam Bureau of Statistics and Plans (BSP) GIS (State Hazard Mitigation Plan)",
+  "license": "Public GovGuam data; informational and planning use only (BSP disclaimer) — attribute BSP",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/State_Hazard_Mitigation_Plan/FeatureServer/25",
+   "fields": {
+    "RISK": "status",
+    "HAZARD": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "count": 2,
+   "kb": 9.6,
+   "max_record_count": 2000,
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "gu-social-vulnerability",
+  "state": "GU",
+  "title": "Social vulnerability by village (Guam)",
+  "title_es": "Vulnerabilidad social por aldea (Guam)",
+  "description": "CDC-method Social Vulnerability Index for Guam places (2020 population); the national CDC SVI omits Guam.",
+  "group": "people",
+  "category": "info",
+  "source": "Guam Bureau of Statistics and Plans (BSP) GIS",
+  "license": "Public GovGuam data; informational and planning use only (BSP disclaimer) — attribute BSP",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/CDP%20SVI%20Polygon/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "CDC_SVI": "svi",
+    "ADJ_SVI": "svi_adjusted",
+    "Population_2020": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "count": 57,
+   "kb": 27.5,
+   "max_record_count": 2000,
+   "features_in_probe": 57
+  }
+ },
+ {
+  "name": "gu-conservation-areas",
+  "state": "GU",
+  "title": "Conservation areas (Guam)",
+  "title_es": "Áreas de conservación (Guam)",
+  "description": "Conservation areas managed by the Government of Guam (Department of Agriculture).",
+  "group": "nature",
+  "category": "park",
+  "source": "Guam Bureau of Statistics and Plans (BSP) GIS / Guam Dept. of Agriculture",
+  "license": "Public GovGuam data; informational and planning use only (BSP disclaimer) — attribute BSP",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Conservation_and_Historic_Layers_WFL1/FeatureServer/1",
+   "fields": {
+    "Name": "name",
+    "Area_ac": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "count": 4,
+   "kb": 1.8,
+   "max_record_count": 2000,
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "gu-historic-places",
+  "state": "GU",
+  "title": "Historic places (Guam)",
+  "title_es": "Lugares históricos (Guam)",
+  "description": "Guam and National Register historic places (survey points), without owner fields.",
+  "group": "places",
+  "category": "point",
+  "source": "Guam Bureau of Statistics and Plans (BSP) GIS / Guam Historic Preservation Office",
+  "license": "Public GovGuam data; informational and planning use only (BSP disclaimer) — attribute BSP",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/historic_places_points/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "MUNICIPAL": "city",
+    "CLASSIF": "kind",
+    "GR_DATE": "guam_register",
+    "NR_DATE": "national_register"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "count": 1059,
+   "kb": 202.5,
+   "max_record_count": 2000,
+   "features_in_probe": 1059
+  }
+ },
+ {
+  "name": "gu-sirens",
+  "state": "GU",
+  "title": "Outdoor warning sirens (Guam)",
+  "title_es": "Sirenas de alerta (Guam)",
+  "description": "Active All-Hazards Alert Warning System (AHAWS) sirens.",
+  "group": "help",
+  "category": "point",
+  "source": "Guam Bureau of Statistics and Plans (BSP) GIS / Guam Homeland Security",
+  "license": "Public GovGuam data; informational and planning use only (BSP disclaimer) — attribute BSP",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Untitled_map__AHAWS_MAP/FeatureServer/0",
+   "fields": {
+    "name": "name"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "count": 23,
+   "kb": 2.9,
+   "max_record_count": 1000,
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "gu-private-schools",
+  "state": "GU",
+  "title": "Private schools (Guam)",
+  "title_es": "Escuelas privadas (Guam)",
+  "description": "Private schools from Guam's NG911 data, with school phone.",
+  "group": "civic",
+  "category": "point",
+  "source": "Guam Bureau of Statistics and Plans (BSP) GIS (NG911)",
+  "license": "Public GovGuam data; informational and planning use only (BSP disclaimer) — attribute BSP",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Ng_911/FeatureServer/3",
+   "fields": {
+    "DESC_": "name",
+    "ADDRESS": "address",
+    "PHONE": "phone",
+    "SUBCATEGRY": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "count": 18,
+   "kb": 3.3,
+   "max_record_count": 2000,
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "mp-parcels",
+  "state": "MP",
+  "title": "Parcels (Northern Mariana Islands)",
+  "title_es": "Parcelas (Islas Marianas del Norte)",
+  "description": "Saipan land parcels (Department of Public Lands data, updated 2020), parcel ID and public/private flag only.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "CNMI Bureau of Environmental and Coastal Quality – Division of Coastal Resources Management (DCRM) / CNMI Department of Public Lands",
+  "license": "Public CNMI government data — attribute CNMI DCRM / source agency",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/CNMI_PARCEL2021/FeatureServer/0",
+   "fields": {
+    "PARCEL_ID": "name",
+    "ISLAND": "island",
+    "PLAND_PVLA": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    145.69,
+    15.17,
+    145.76,
+    15.24
+   ],
+   "count": 2000,
+   "kb": 607.9,
+   "max_record_count": 2000,
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "mp-land-use",
+  "state": "MP",
+  "title": "Land use (Northern Mariana Islands)",
+  "title_es": "Uso del suelo (Islas Marianas del Norte)",
+  "description": "Land use classes from 2010 Department of Public Lands data (old vintage).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "CNMI Bureau of Environmental and Coastal Quality – Division of Coastal Resources Management (DCRM) / CNMI Department of Public Lands",
+  "license": "Public CNMI government data — attribute CNMI DCRM / source agency",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/LandUse/FeatureServer/0",
+   "fields": {
+    "LANDUSECODE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    145.69,
+    15.17,
+    145.76,
+    15.24
+   ],
+   "count": 340,
+   "kb": 179.7,
+   "max_record_count": 1000,
+   "features_in_probe": 340
+  }
+ },
+ {
+  "name": "mp-historic-areas",
+  "state": "MP",
+  "title": "Historic landmarks & sensitive areas (Northern Mariana Islands)",
+  "title_es": "Monumentos históricos y áreas sensibles (Islas Marianas del Norte)",
+  "description": "Historic Preservation Office landmarks and culturally sensitive areas.",
+  "group": "places",
+  "category": "boundary",
+  "source": "CNMI Bureau of Environmental and Coastal Quality – Division of Coastal Resources Management (DCRM) / CNMI Historic Preservation Office",
+  "license": "Public CNMI government data — attribute CNMI DCRM / source agency",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/CNMI_HPO_HistoricLandmarks_SensitiveAreas/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Island": "island",
+    "Category": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    145.6,
+    14.9,
+    145.9,
+    15.35
+   ],
+   "count": 12,
+   "kb": 12.2,
+   "max_record_count": 2000,
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "mp-marine-protected-areas",
+  "state": "MP",
+  "title": "Marine protected areas (Northern Mariana Islands)",
+  "title_es": "Áreas marinas protegidas (Islas Marianas del Norte)",
+  "description": "Marine areas protected by CNMI law and regulation.",
+  "group": "nature",
+  "category": "park",
+  "source": "CNMI Bureau of Environmental and Coastal Quality – Division of Coastal Resources Management (DCRM) / CNMI Division of Fish and Wildlife",
+  "license": "Public CNMI government data — attribute CNMI DCRM / source agency",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/CNMI_Marine_Protected_Areas/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "AGENCY": "manager"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    145.6,
+    14.9,
+    145.9,
+    15.35
+   ],
+   "count": 9,
+   "kb": 5.2,
+   "max_record_count": 1000,
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "mp-areas-of-particular-concern",
+  "state": "MP",
+  "title": "Coastal Areas of Particular Concern, Saipan (Northern Mariana Islands)",
+  "title_es": "Áreas costeras de interés particular, Saipán",
+  "description": "Coastal zones (shoreline, lagoon, wetlands, ports) where DCRM permits apply (2022).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "CNMI Bureau of Environmental and Coastal Quality – Division of Coastal Resources Management (DCRM)",
+  "license": "Public CNMI government data — attribute CNMI DCRM / source agency",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/Areas_of_Particular_Concern_Saipan_2022_view/FeatureServer/0",
+   "fields": {
+    "Type": "kind",
+    "Descript_1": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    145.69,
+    15.17,
+    145.76,
+    15.24
+   ],
+   "count": 10,
+   "kb": 244.5,
+   "max_record_count": 2000,
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "as-landslide-risk",
+  "state": "AS",
+  "title": "Landslide risk (American Samoa)",
+  "title_es": "Riesgo de deslizamientos (Samoa Americana)",
+  "description": "Landslide risk areas, high to low.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "American Samoa Department of Commerce (ASDOC) GIS",
+  "license": "Public American Samoa Government data — attribute ASDOC",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Landslide_Risk/FeatureServer/0",
+   "fields": {
+    "LS_RISK": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -170.75,
+    -14.32,
+    -170.66,
+    -14.25
+   ],
+   "count": 100,
+   "kb": 142.6,
+   "max_record_count": 2000,
+   "features_in_probe": 100
+  }
+ },
+ {
+  "name": "as-schools",
+  "state": "AS",
+  "title": "Schools (American Samoa)",
+  "title_es": "Escuelas (Samoa Americana)",
+  "description": "Public and private schools with level and village.",
+  "group": "civic",
+  "category": "point",
+  "source": "American Samoa Department of Commerce (ASDOC) GIS",
+  "license": "Public American Samoa Government data — attribute ASDOC",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Schools_View/FeatureServer/7",
+   "fields": {
+    "Name": "name",
+    "Level_": "kind",
+    "Category": "type",
+    "Village": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -170.9,
+    -14.4,
+    -170.5,
+    -14.2
+   ],
+   "count": 40,
+   "kb": 7.6,
+   "max_record_count": 2000,
+   "features_in_probe": 40
+  }
+ },
+ {
+  "name": "as-villages",
+  "state": "AS",
+  "title": "Villages (American Samoa)",
+  "title_es": "Aldeas (Samoa Americana)",
+  "description": "Village boundaries, the main local unit of government and address.",
+  "group": "planning",
+  "category": "boundary",
+  "source": "American Samoa Department of Commerce (ASDOC) GIS",
+  "license": "Public American Samoa Government data — attribute ASDOC",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/AS_Villages/FeatureServer/0",
+   "fields": {
+    "VILLAGE": "name",
+    "ISLAND": "island"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -170.75,
+    -14.32,
+    -170.66,
+    -14.25
+   ],
+   "count": 21,
+   "kb": 19.9,
+   "max_record_count": 2000,
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "us-state-parks",
+  "state": "US",
+  "title": "State parks (all states)",
+  "title_es": "Parques estatales (todos los estados)",
+  "description": "State parks, recreation areas and historic sites in every state, from the national Protected Areas Database (PAD-US).",
+  "group": "nature",
+  "category": "park",
+  "source": "USGS Protected Areas Database of the US (PAD-US), state agency sources",
+  "license": "Public domain (USGS)",
+  "view": {
+   "url": "https://services.arcgis.com/v01gqwM5QqNysAAi/arcgis/rest/services/PADUS_Public_Access/FeatureServer/0",
+   "fields": {
+    "Unit_Nm": "name",
+    "DesTp_Desc": "kind",
+    "MngNm_Desc": "manager",
+    "Pub_Access": "access",
+    "GIS_Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "MngTp_Desc='State' AND DesTp_Desc IN ('State Park','State Recreation Area','State Historic or Cultural Area')",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    29.6,
+    -95.2,
+    29.9
+   ],
+   "count": 1,
+   "kb": 1.2,
+   "max_record_count": 2000,
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "us-state-forests",
+  "state": "US",
+  "title": "State forests (all states)",
+  "title_es": "Bosques estatales (todos los estados)",
+  "description": "State forests in every state, from PAD-US.",
+  "group": "nature",
+  "category": "park",
+  "source": "USGS PAD-US",
+  "license": "Public domain (USGS)",
+  "view": {
+   "url": "https://services.arcgis.com/v01gqwM5QqNysAAi/arcgis/rest/services/PADUS_Public_Access/FeatureServer/0",
+   "fields": {
+    "Unit_Nm": "name",
+    "DesTp_Desc": "kind",
+    "MngNm_Desc": "manager",
+    "Pub_Access": "access",
+    "GIS_Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "MngTp_Desc='State' AND Unit_Nm LIKE '%State Forest%'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -74.8,
+    39.6,
+    -74.5,
+    39.8
+   ],
+   "count": 4,
+   "kb": 66.9,
+   "max_record_count": 2000,
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "us-state-wildlife-areas",
+  "state": "US",
+  "title": "State wildlife & hunting/fishing areas (all states)",
+  "title_es": "Áreas estatales de vida silvestre, caza y pesca (todos los estados)",
+  "description": "Lands managed by state fish & wildlife agencies (wildlife management areas, hunting and fishing access), from PAD-US; check state rules before hunting.",
+  "group": "nature",
+  "category": "park",
+  "source": "USGS PAD-US",
+  "license": "Public domain (USGS)",
+  "view": {
+   "url": "https://services.arcgis.com/v01gqwM5QqNysAAi/arcgis/rest/services/PADUS_Public_Access/FeatureServer/0",
+   "fields": {
+    "Unit_Nm": "name",
+    "DesTp_Desc": "kind",
+    "MngNm_Desc": "manager",
+    "Pub_Access": "access",
+    "GIS_Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "MngNm_Desc='State Fish and Wildlife'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.9,
+    29.3,
+    -94.8,
+    30.2
+   ],
+   "count": 1,
+   "kb": 0.5,
+   "max_record_count": 2000,
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "us-wui",
+  "state": "US",
+  "title": "Wildland-urban interface 2020 (all states)",
+  "title_es": "Interfaz urbano-forestal 2020 (todos los estados)",
+  "description": "Census blocks where homes meet or mix with wildland vegetation (USFS/SILVIS 2020, lower 48 only): intermix and interface classes.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "USDA Forest Service / UW–Madison SILVIS Lab",
+  "license": "Public domain (USDA Forest Service)",
+  "view": {
+   "url": "https://apps.fs.usda.gov/arcx/rest/services/EDW/EDW_WUI_2020_01/MapServer/0",
+   "fields": {
+    "wuiclass2020": "kind",
+    "hu2020": "housing_units",
+    "pop2020": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "wuiflag2020 > 0",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    30.15,
+    -95.4,
+    30.35
+   ],
+   "count": 807,
+   "kb": 393.4,
+   "max_record_count": 2000,
+   "features_in_probe": 807
+  }
+ },
+ {
+  "name": "us-forest-rec-sites",
+  "state": "US",
+  "title": "National forest recreation sites",
+  "title_es": "Sitios recreativos de bosques nacionales",
+  "description": "Campgrounds, trailheads, picnic and day-use sites in national forests, with open/closed status.",
+  "group": "nature",
+  "category": "point",
+  "source": "USDA Forest Service Recreation (EDW)",
+  "license": "Public domain (USDA Forest Service)",
+  "view": {
+   "url": "https://apps.fs.usda.gov/arcx/rest/services/EDW/EDW_RecreationOpportunities_01/MapServer/0",
+   "fields": {
+    "recareaname": "name",
+    "markeractivity": "kind",
+    "openstatus": "status",
+    "forestname": "manager",
+    "recareaurl": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "markeractivity IS NOT NULL AND markeractivity <> 'Forest Service Shield'",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.8,
+    30.2,
+    -95.0,
+    30.8
+   ],
+   "count": 11,
+   "kb": 3.7,
+   "max_record_count": 2000,
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "us-nursing-homes",
+  "state": "US",
+  "title": "Nursing homes & assisted living (all states)",
+  "title_es": "Hogares de ancianos y residencias asistidas (todos los estados)",
+  "description": "Open nursing homes and assisted-living facilities with beds and main phone (FEMA RAPT / HIFLD, 2026).",
+  "group": "help",
+  "category": "point",
+  "source": "FEMA Resilience Analysis and Planning Tool (HIFLD)",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Nursing_Homes_RAPT/FeatureServer/7",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "TELEPHONE": "phone",
+    "TYPE": "kind",
+    "BEDS": "beds"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "STATUS='OPEN'",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    29.6,
+    -95.2,
+    29.9
+   ],
+   "count": 224,
+   "kb": 53.8,
+   "max_record_count": 2000,
+   "features_in_probe": 224
+  }
+ },
+ {
+  "name": "us-urgent-care",
+  "state": "US",
+  "title": "Urgent care clinics (all states)",
+  "title_es": "Clínicas de atención urgente (todos los estados)",
+  "description": "Walk-in urgent care facilities with address and phone (FEMA RAPT / HIFLD, 2025).",
+  "group": "help",
+  "category": "point",
+  "source": "FEMA Resilience Analysis and Planning Tool (HIFLD)",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Urgent_Care_Facilities_RAPT/FeatureServer/11",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "city": "city",
+    "telephone": "phone"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    29.6,
+    -95.2,
+    29.9
+   ],
+   "count": 23,
+   "kb": 5.0,
+   "max_record_count": 2000,
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "us-private-schools",
+  "state": "US",
+  "title": "Private schools (all states)",
+  "title_es": "Escuelas privadas (todos los estados)",
+  "description": "Private schools from the NCES Private School Survey, with grade level and enrollment (HIFLD, 2026).",
+  "group": "civic",
+  "category": "point",
+  "source": "NCES Private School Survey via FEMA RAPT / HIFLD (ORNL)",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Private_Schools_RAPT/FeatureServer/4",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "LEVEL_": "kind",
+    "ENROLLMENT": "enrollment"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    29.6,
+    -95.2,
+    29.9
+   ],
+   "count": 115,
+   "kb": 23.6,
+   "max_record_count": 2000,
+   "features_in_probe": 115
+  }
+ },
+ {
+  "name": "us-resilience-challenges",
+  "state": "US",
+  "title": "Community resilience challenges by tract (all states + territories)",
+  "title_es": "Desafíos de resiliencia comunitaria por sector censal (estados y territorios)",
+  "description": "FEMA Community Resilience Challenges Index (2020–2024 ACS): higher percentile = more barriers to preparing for and recovering from disasters; covers PR, USVI, Guam, CNMI and American Samoa too.",
+  "group": "people",
+  "category": "info",
+  "source": "FEMA & Argonne National Laboratory (CRCI)",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Census_Tracts_FEMA_Community_Resilience_Challenges_Index_(CRCI)/FeatureServer/44",
+   "fields": {
+    "NAMELSAD": "name",
+    "NAMELSADCO": "county",
+    "CRCI_Percentile": "crci_pctl",
+    "B01001_Total_Population": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    29.6,
+    -95.2,
+    29.9
+   ],
+   "count": 658,
+   "kb": 250.0,
+   "max_record_count": 1000,
+   "features_in_probe": 658
+  }
+ },
+ {
+  "name": "us-nri-territories",
+  "state": "US",
+  "title": "Expected annual disaster loss, territories",
+  "title_es": "Pérdida anual esperada por desastres, territorios",
+  "description": "FEMA National Risk Index expected-annual-loss rating for tracts in PR, USVI, Guam, CNMI and American Samoa (the composite risk score is 'insufficient data' there).",
+  "group": "hazards",
+  "category": "info",
+  "source": "FEMA National Risk Index (Dec 2025)",
+  "license": "Public domain (US federal, FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/National_Risk_Index_Census_Tracts/FeatureServer/0",
+   "fields": {
+    "TRACT": "name",
+    "COUNTY": "county",
+    "EAL_RATNG": "status",
+    "POPULATION": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "STATEABBRV IN ('PR','VI','GU','AS','MP')",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -66.15,
+    18.36,
+    -65.98,
+    18.47
+   ],
+   "count": 213,
+   "kb": 69.9,
+   "max_record_count": 2000,
+   "features_in_probe": 213
+  }
+ },
+ {
+  "name": "us-electricity-dependent",
+  "state": "US",
+  "title": "Medicare users of electricity-dependent equipment, by ZIP",
+  "title_es": "Usuarios de Medicare con equipos que dependen de electricidad, por código postal",
+  "description": "HHS emPOWER count of Medicare beneficiaries who rely on powered medical devices (de-identified, small counts masked); key for outage planning.",
+  "group": "people",
+  "category": "info",
+  "source": "HHS ASPR emPOWER",
+  "license": "Public domain (US federal, HHS)",
+  "view": {
+   "url": "https://services2.arcgis.com/ZQ4jTQn6k7VPXEwO/arcgis/rest/services/HHS_emPOWER_REST_Service_Public/FeatureServer/1",
+   "fields": {
+    "Zip_Code": "name",
+    "COUNTY": "county",
+    "Medicare_Benes": "medicare",
+    "Power_Dependent_Devices_DME": "power_dependent"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    29.6,
+    -95.2,
+    29.9
+   ],
+   "count": 91,
+   "kb": 108.9,
+   "max_record_count": 2000,
+   "features_in_probe": 91
+  }
+ },
+ {
+  "name": "us-ferry-terminals",
+  "state": "US",
+  "title": "Ferry terminals (all states + territories)",
+  "title_es": "Terminales de ferry (estados y territorios)",
+  "description": "Passenger and vehicle ferry terminals with operator (BTS National Census of Ferry Operators, 2020 data compiled 2024).",
+  "group": "roads",
+  "category": "point",
+  "source": "BTS National Census of Ferry Operators (NTAD)",
+  "license": "Public domain (USDOT BTS)",
+  "view": {
+   "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_Ferry_Terminals/FeatureServer/0",
+   "fields": {
+    "TERMINAL_NAME": "name",
+    "TERM_CITY": "city",
+    "TERMINAL_OPERATED_BY": "operator",
+    "IN_OPERATION": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -66.2,
+    18.0,
+    -65.2,
+    18.5
+   ],
+   "count": 5,
+   "kb": 1.1,
+   "max_record_count": 2000,
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "us-ferry-routes",
+  "state": "US",
+  "title": "Ferry routes (all states + territories)",
+  "title_es": "Rutas de ferry (estados y territorios)",
+  "description": "Ferry route segments with operator and trips per year (BTS NCFO, 2020 data).",
+  "group": "roads",
+  "category": "roadops",
+  "source": "BTS National Census of Ferry Operators (NTAD)",
+  "license": "Public domain (USDOT BTS)",
+  "view": {
+   "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_Ferry_Routes/FeatureServer/0",
+   "fields": {
+    "segment_name": "name",
+    "operator_name": "operator",
+    "trips_per_year": "trips_per_year",
+    "average_trip_time": "trip_minutes"
+   },
+   "geometry": "line",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -66.2,
+    18.0,
+    -65.2,
+    18.5
+   ],
+   "count": 6,
+   "kb": 55.0,
+   "max_record_count": 2000,
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "us-intercity-bus-stops",
+  "state": "US",
+  "title": "Intercity bus stops (all states)",
+  "title_es": "Paradas de autobús interurbano (todos los estados)",
+  "description": "Greyhound, FlixBus and other intercity bus stops from carriers' schedules (BTS, October 2026).",
+  "group": "roads",
+  "category": "point",
+  "source": "BTS Intercity Bus Atlas (NTAD)",
+  "license": "Public domain (USDOT BTS)",
+  "view": {
+   "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_Intercity_Bus_Atlas_Stops/FeatureServer/0",
+   "fields": {
+    "stop_name": "name",
+    "carrier_name": "operator",
+    "brand_name": "kind",
+    "place_name": "city",
+    "stop_url": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.6,
+    29.6,
+    -95.2,
+    29.9
+   ],
+   "count": 5,
+   "kb": 1.3,
+   "max_record_count": 2000,
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "us-bikeshare",
+  "state": "US",
+  "title": "Bikeshare stations (all states)",
+  "title_es": "Estaciones de bicicletas compartidas (todos los estados)",
+  "description": "Docked bikeshare stations by system (BTS, 2025).",
+  "group": "roads",
+  "category": "point",
+  "source": "BTS Bikeshare (NTAD)",
+  "license": "Public domain (USDOT BTS)",
+  "view": {
+   "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_Bikeshare/FeatureServer/0",
+   "fields": {
+    "STATION_NAME": "name",
+    "SYSTEM_NAME": "operator",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "STATION_TYPE": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.4,
+    29.74,
+    -95.36,
+    29.77
+   ],
+   "count": 194,
+   "kb": 43.5,
+   "max_record_count": 2000,
+   "features_in_probe": 194
+  }
+ },
+ {
+  "name": "us-address-points",
+  "state": "US",
+  "title": "Address points (National Address Database)",
+  "title_es": "Puntos de dirección (Base Nacional de Direcciones)",
+  "description": "Official address points contributed by states, counties and tribes to USDOT's National Address Database (~98M points; coverage varies by state).",
+  "group": "planning",
+  "category": "point",
+  "source": "USDOT National Address Database (state/local contributors)",
+  "license": "Public domain (USDOT); per-contributor attribution in AddAuth",
+  "view": {
+   "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/Address_Points_from_National_Address_Database_view/FeatureServer/0",
+   "fields": {
+    "AddNo_Full": "number",
+    "StNam_Full": "street",
+    "Post_City": "city",
+    "Zip_Code": "zip",
+    "Placement": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.372,
+    29.755,
+    -95.364,
+    29.761
+   ],
+   "count": 178,
+   "kb": 36.2,
+   "max_record_count": 2000,
+   "features_in_probe": 178
+  }
+ },
+ {
+  "name": "us-structures",
+  "state": "US",
+  "title": "Building footprints with use (USA Structures)",
+  "title_es": "Huellas de edificios con uso (USA Structures)",
+  "description": "Every building over 450 sq ft with its occupancy class (residential, commercial, government...), height and size (FEMA/ORNL USA Structures).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "FEMA / ORNL / USGS USA Structures",
+  "license": "Public domain (US federal)",
+  "view": {
+   "url": "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/USA_Structures_View/FeatureServer/0",
+   "fields": {
+    "OCC_CLS": "kind",
+    "PRIM_OCC": "use",
+    "HEIGHT": "height_m",
+    "SQFEET": "sqft"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-21",
+   "cors": true,
+   "bbox": [
+    -95.372,
+    29.755,
+    -95.364,
+    29.761
+   ],
+   "count": 59,
+   "kb": 36.0,
+   "max_record_count": 2000,
+   "features_in_probe": 59
+  }
+ }
+]
