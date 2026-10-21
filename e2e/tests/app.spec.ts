@@ -334,9 +334,12 @@ test("satellite loads yesterday's NASA GIBS tiles, with attribution and no downl
   await page.goto("/");
   await waitForMap(page);
   const yesterday = new Date(Date.now() - 86_400_000).toISOString().slice(0, 10);
-  const tiles = page.waitForResponse((r) => r.url().includes(`/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/${yesterday}/`), {
-    timeout: 20000,
-  });
+  // Any of yesterday's tiles loading proves the source works (GIBS 404s some
+  // edge/no-swath tiles, so don't judge by whichever answers first).
+  const tiles = page.waitForResponse(
+    (r) => r.url().includes(`/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/${yesterday}/`) && r.status() === 200,
+    { timeout: 30000 },
+  );
   await page.getByText("Satellite (yesterday)", { exact: true }).click();
   expect((await tiles).status()).toBe(200);
   await expect(page.locator(".maplibregl-ctrl-attrib")).toContainText("NASA EOSDIS GIBS");
