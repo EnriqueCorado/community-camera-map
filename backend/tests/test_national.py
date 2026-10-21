@@ -46,6 +46,7 @@ def _pt(lon, lat, props, fid=None):
         "https://images.wsdot.wa.gov:8443/a.jpg",
         "https://evil.example\\@images.wsdot.wa.gov/a.jpg",
         "https://images.wsdot.wa.gov/a b.jpg",
+        "https://evil.example%2f.images.wsdot.wa.gov/a.jpg",  # %-escape in the host
         "javascript:alert(1)",
         "",
         None,

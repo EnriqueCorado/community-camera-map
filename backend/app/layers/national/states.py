@@ -28,7 +28,9 @@ GROUPS = {
 }  # fmt: skip
 CATEGORIES = {"boundary", "landuse", "point", "hazard", "park", "info", "roadops", "perimeter"}
 GEOMETRIES = {"point", "line", "polygon"}
-_URL = re.compile(r"^https://[a-z0-9.-]+(?::443)?/[\w./%()-]*/(?:FeatureServer|MapServer)/\d+$", re.I)
+_URL = re.compile(
+    r"^https://[a-z0-9.-]+(?::443)?/[\w./%()-]*/(?:FeatureServer|MapServer)/\d+$", re.I
+)
 _NAME = re.compile(r"^[a-z]{2}-[a-z0-9-]+$")
 _FIELD = re.compile(r"^[A-Za-z_][\w.]{0,63}$")
 _PROP = re.compile(r"^[a-z_][a-z0-9_]{0,31}$")

@@ -29,7 +29,7 @@ import re
 import time
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
-from urllib.parse import urlsplit
+from urllib.parse import quote, urlsplit
 
 import httpx
 
@@ -172,6 +172,49 @@ SOURCES["oh"] = SourceInfo(
     name="OHGO", state="OH", url="https://www.ohgo.com/", credit="OHGO / Ohio DOT"
 )
 
+# Keyless state feeds published as open ArcGIS layers by the agency itself or
+# by another state agency that republishes it (FDEM for FL511, Oregon OEM for
+# TripCheck). Checked 2026-10-21; licenses are as stated on each item.
+SOURCES.update(
+    {
+        "ia": SourceInfo(
+            name="Iowa DOT",
+            state="IA",
+            url="https://www.arcgis.com/home/item.html?id=c4063f200a7b4da5826e2ac86c677cf5",
+            credit="Iowa Department of Transportation",
+            license="CC BY 4.0",
+            license_url="https://creativecommons.org/licenses/by/4.0/",
+        ),
+        "fl": SourceInfo(
+            name="FL511 (via FDEM)",
+            state="FL",
+            url="https://fl511.com/",
+            credit="FL511 / Florida DOT, published by the Florida Division of Emergency Management",
+            license="Public data, no license stated",
+            license_url="https://www.arcgis.com/home/item.html?id=8c0046dd833347bea1c39decec1d3abb",
+        ),
+        "or": SourceInfo(
+            name="ODOT TripCheck (via Oregon OEM)",
+            state="OR",
+            url="https://www.tripcheck.com/",
+            credit="ODOT TripCheck, published by Oregon Emergency Management",
+            license="Public",
+            license_url="https://www.arcgis.com/home/item.html?id=1e3fb7169cd74127b9c1707258a6e6e9",
+        ),
+        "co": SourceInfo(
+            name="CDOT",
+            state="CO",
+            url="https://www.cotrip.org/",
+            credit="Colorado DOT (some cameras by Douglas County and Colorado Springs)",
+            license="Public data, no license stated",
+            license_url="https://dtdapps.codot.gov/server/rest/services/ATMS/ATMS/MapServer/7",
+        ),
+    }
+)
+# Sources added after the others overlapped them at the same spot; their
+# cameras give way to an earlier source's camera there (see dedupe_by_location).
+YIELDING_SOURCES = ("ia", "fl", "or", "co")
+
 # HLS kept only where the research verified CORS-open, unauthenticated streams.
 ITERIS_VIDEO_HOSTS: dict[str, tuple[str, ...]] = {"wi": ("cctv1.dot.wi.gov",)}
 for _st, (_host, _credit) in ITERIS.items():
@@ -199,6 +242,11 @@ HOSTS: dict[str, tuple[str, ...]] = {
     "ndbc": ("www.ndbc.noaa.gov",),
     **{st: (host, *ITERIS_VIDEO_HOSTS.get(st, ())) for st, (host, _) in ITERIS.items()},
     "oh": ("itscameras.dot.state.oh.us",),
+    # HLS on video*.iowadot.gov runs on port 8888, so Iowa is stills only.
+    "ia": ("atmsqf.iowadot.gov",),
+    "fl": ("images-dis.divas.cloud",),  # FDOT DIVAS video/image system
+    "or": ("tripcheck.com",),
+    "co": ("cocam.carsprogram.org", "websvc.coloradosprings.gov"),
 }
 
 
@@ -226,6 +274,7 @@ def _safe(url: object, hosts: tuple[str, ...]) -> str:
         and p.username is None
         and p.password is None
         and port in (None, 443)
+        and re.fullmatch(r"[a-z0-9.-]+", host) is not None  # no %-escapes in the host
         and any(host == h or host.endswith("." + h) for h in hosts)
     )
     if not ok:
@@ -780,6 +829,193 @@ def parse_oh(payload: object) -> list[Camera]:
     return out
 
 
+# ---------- state ArcGIS layers (IA, FL, OR, CO) ----------
+
+_ROUTE_CODE = re.compile(r"(I|US|SR|IA|OR|CO)[- ]?(\d{1,3}[A-Z]?)", re.I)
+_SITE_ID = re.compile(r"\d{1,12}")
+_LOOKING = re.compile(r"\b(north|south|east|west)", re.I)
+
+
+def _route_code(raw: str) -> str:
+    """'IA 100' / 'OR238' / 'US 160' -> 'IA-100' / 'OR-238' / 'US-160'; a local
+    road name ('Broadway Blvd') is kept as is."""
+    raw = raw.strip()
+    if raw.lower() in ("unknown", "n/a", "none"):
+        return ""
+    m = _ROUTE_CODE.fullmatch(raw)
+    return f"{m.group(1).upper()}-{m.group(2).upper()}" if m else (_route(raw) or raw)
+
+
+def _by_site(source: str, items: list[tuple[object, object, str, dict]]) -> list[Camera]:
+    """`items` holds (site key, sort key, still URL, camera fields) per view.
+    Views sharing a site key become one camera, as SD/MT do: the lowest sort
+    key's fields and still, the other stills as extra views."""
+    groups: dict[object, list[tuple[object, str, dict]]] = {}
+    for site, order, url, fields in items:
+        groups.setdefault(site, []).append((order, url, fields))
+    out = []
+    for rows in groups.values():
+        rows.sort(key=lambda r: r[0])  # type: ignore[arg-type,return-value]
+        urls = list(dict.fromkeys(u for _, u, _ in rows))
+        out.append(_cam(source, **rows[0][2], snapshot_url=urls[0], views=urls[1:]))
+    return out
+
+
+_IA_NOT_PLACE = {"rwis cameras", "wwd", "iwz", "icws"}
+
+
+def parse_ia(fc: object) -> list[Camera]:
+    """Iowa DOT `Traffic_Cameras_View` (CC BY 4.0): stills only (its HLS runs on
+    port 8888). Rest-area and road-weather sites carry several views."""
+    items: list[tuple[object, object, str, dict]] = []
+    for f in _features(fc):
+        p, ll = _props(f), _point(f)
+        snap = _safe(p.get("ImageURL"), HOSTS["ia"])
+        dev = str(p.get("device_id") or "")
+        if not ll or not snap or not _SITE_ID.fullmatch(dev):
+            continue
+        region = _text(p.get("REGION"))
+        place = (
+            region
+            if re.fullmatch(r"[A-Za-z][A-Za-z .'-]{1,40}", region)
+            and region.lower() not in _IA_NOT_PLACE
+            else ""
+        )
+        name = _text(p.get("Desc_")) or _text(p.get("ImageName"))
+        fields = {
+            "id": _slug("ia", dev),
+            "name": name or f"Iowa DOT camera {dev}",
+            "nearby_place": place,
+            "route": _route_code(_text(p.get("Route"))),
+            "latitude": ll[0],
+            "longitude": ll[1],
+        }
+        items.append(((round(ll[0], 5), round(ll[1], 5)), (int(dev), snap), snap, fields))
+    return _by_site("ia", items)
+
+
+_FL_CHAN = re.compile(r"/chan-(\d{1,10})_h\.jpg$")
+
+
+def parse_fl(fc: object) -> list[Camera]:
+    """FL511 cameras as republished by FDEM (`FL511_Traffic_Cameras`): FDOT DIVAS
+    stills. The feed's `ID` repeats, so the image's channel number is the id; a
+    channel listed twice (at two spots) is kept once, at its first spot."""
+    items: list[tuple[object, object, str, dict]] = []
+    seen: set[str] = set()
+    for f in _features(fc):
+        p, ll = _props(f), _point(f)
+        snap = _safe(p.get("IMAGE"), HOSTS["fl"])
+        m = _FL_CHAN.search(snap)
+        cam_id = m.group(1) if m else f"o{p.get('OBJECTID_1') or ''}"
+        if not ll or not snap or not _SAFE_ID.fullmatch(cam_id) or cam_id in seen:
+            continue
+        seen.add(cam_id)
+        name = _text(p.get("DESCRIPT"))
+        if name.lower() in ("[not provided]", "n/a"):
+            name = ""
+        hwy = _text(p.get("HIGHWAY"))
+        fields = {
+            "id": _slug("fl", cam_id),
+            "name": name or (f"{hwy} camera" if hwy else f"FL511 camera {cam_id}"),
+            "county": _text(p.get("COUNTY")),
+            "route": _route_code(hwy),
+            "direction": _direction(p.get("DIRECTION")),
+            "latitude": ll[0],
+            "longitude": ll[1],
+        }
+        items.append(((round(ll[0], 5), round(ll[1], 5)), cam_id.zfill(10), snap, fields))
+    return _by_site("fl", items)
+
+
+def _encode_path(raw: object) -> str:
+    """TripCheck file names contain spaces: percent-encode the path (already
+    encoded parts are kept) so `_safe` can check it. Backslashes and control
+    characters are refused outright rather than encoded past the check."""
+    s = str(raw or "").strip()
+    if not s or re.search(r"[\\\x00-\x1f\x7f]", s):
+        return ""
+    try:
+        p = urlsplit(s)
+    except ValueError:
+        return ""
+    path = quote(p.path, safe="/%()@&!$'*+,;=:-_.~")
+    return f"{p.scheme}://{p.netloc}{path}" + (f"?{p.query}" if p.query else "")
+
+
+def parse_or(fc: object) -> list[Camera]:
+    """ODOT TripCheck cameras as republished daily by Oregon OEM
+    (`TripCheck_Cameras`), not TripCheck's internal map data. Stills only."""
+    items: list[tuple[object, object, str, dict]] = []
+    for f in _features(fc):
+        p, ll = _props(f), _point(f)
+        snap = _safe(_encode_path(p.get("attributes_filename")), HOSTS["or"])
+        cam_id = str(p.get("attributes_cameraId") or "")
+        if not ll or not snap or not _SITE_ID.fullmatch(cam_id):
+            continue
+        title = _text(p.get("attributes_title"))
+        road = _text(p.get("attributes_route"))
+        route = "" if road.lower() in ("cnty", "city") else _route_code(road)
+        fields = {
+            "id": _slug("or", cam_id),
+            "name": title or f"TripCheck camera {cam_id}",
+            "route": route or _route(title),
+            "latitude": ll[0],
+            "longitude": ll[1],
+        }
+        items.append(((round(ll[0], 5), round(ll[1], 5)), int(cam_id), snap, fields))
+    return _by_site("or", items)
+
+
+def parse_co(fc: object) -> list[Camera]:
+    """CDOT ATMS cameras (`ATMS/MapServer/7`): public views only, one camera per
+    site (`cpk`), each other view an extra still."""
+    items: list[tuple[object, object, str, dict]] = []
+    for f in _features(fc):
+        p, ll = _props(f), _point(f)
+        if str(p.get("public_") or "").upper() != "TRUE":
+            continue
+        snap = _safe(p.get("viewurl"), HOSTS["co"])
+        site, view = str(p.get("cpk") or ""), str(p.get("cvpk") or "0")
+        if not ll or not snap or not _SITE_ID.fullmatch(site) or not _SITE_ID.fullmatch(view):
+            continue
+        looking = _LOOKING.search(_text(p.get("view_")))
+        fields = {
+            "id": _slug("co", site),
+            "name": _text(p.get("name")) or f"CDOT camera {site}",
+            "route": _route_code(_text(p.get("route"))),
+            "direction": looking.group(1).title() if looking else "",
+            "latitude": ll[0],
+            "longitude": ll[1],
+        }
+        items.append((site, int(view), snap, fields))
+    return _by_site("co", items)
+
+
+def dedupe_by_location(cameras: list[Camera]) -> list[Camera]:
+    """Drop a YIELDING_SOURCES camera at the same spot (coordinates rounded to 4
+    decimals, ~10 m) as a camera from a different source (an earlier source, or Caltrans, wins), so
+    one physical camera isn't listed twice. Cameras of one source never drop
+    each other."""
+
+    def spot(c: Camera) -> tuple[float, float]:
+        return round(c.latitude, 4), round(c.longitude, 4)
+
+    taken: dict[tuple[float, float], set[str]] = {}
+    for c in cameras:
+        if c.source not in YIELDING_SOURCES:
+            taken.setdefault(spot(c), set()).add(c.source)
+    out = []
+    for c in cameras:
+        if c.source in YIELDING_SOURCES:
+            here = taken.setdefault(spot(c), set())
+            if here - {c.source}:
+                continue
+            here.add(c.source)
+        out.append(c)
+    return out
+
+
 # ---------- fetching ----------
 
 IL_URL = "https://services2.arcgis.com/aIrBD8yn1TDTEXoz/arcgis/rest/services/TrafficCamerasTM_Public/FeatureServer/0"
@@ -794,6 +1030,12 @@ MI_URL = "https://mdotjboss.state.mi.us/MiDrive/camera/list"
 AVO_URL = "https://avo-volcview.wr.usgs.gov/ashcam-api/webcamApi/webcams"
 NDBC_URL = "https://www.ndbc.noaa.gov/buoycams.php"
 OHGO_URL = "https://publicapi.ohgo.com/api/v1/cameras"
+IA_URL = "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Traffic_Cameras_View/FeatureServer/0"
+FL_URL = "https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/FL511_Traffic_Cameras/FeatureServer/0"
+OR_URL = "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/TripCheck_Cameras/FeatureServer/0"
+# CDOT's own ArcGIS Server. Its service description reads "For new CDOT ATMS
+# development and testing", so this source may move; it fails soft like the rest.
+CO_URL = "https://dtdapps.codot.gov/server/rest/services/ATMS/ATMS/MapServer/7"
 
 Fetcher = Callable[[httpx.AsyncClient, int], Awaitable[list[Camera]]]
 
@@ -851,6 +1093,15 @@ FETCHERS: dict[str, Fetcher] = {
     "mi": _plain(MI_URL, parse_mi),
     "avo": _plain(AVO_URL, parse_avo),
     "ndbc": _plain(NDBC_URL, parse_ndbc),
+    "ia": _arcgis(IA_URL, "device_id,Desc_,ImageName,Route,ImageURL,REGION", parse_ia, 2000),
+    "fl": _arcgis(FL_URL, "OBJECTID_1,DESCRIPT,COUNTY,HIGHWAY,DIRECTION,IMAGE", parse_fl, 2000),
+    "or": _arcgis(
+        OR_URL,
+        "attributes_title,attributes_route,attributes_filename,attributes_cameraId",
+        parse_or,
+        1000,
+    ),
+    "co": _arcgis(CO_URL, "cpk,cvpk,name,route,view_,viewurl,public_", parse_co, 2000),
 }
 
 
