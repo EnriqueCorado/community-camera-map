@@ -4,7 +4,7 @@
 import { test, expect, type Page, type Request } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
+const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 
 async function ready(page: Page) {
   await expect(page.locator("canvas.maplibregl-canvas")).toBeVisible();
@@ -191,21 +191,64 @@ test("privacy: nothing typed into the tools is sent anywhere", async ({ page }) 
   for (const s of Object.values(secrets)) expect(stored).not.toContain(s);
 });
 
-for (const lang of ["en", "es"] as const) {
-  for (const tab of ["medical", "rent", "legal"] as const) {
-    test(`a11y: ${tab} tab (${lang}) has no WCAG 2.1 AA violations`, async ({ page }) => {
-      const dialog = await openHelp(page, `#help=${tab}${lang === "es" ? "&lang=es" : ""}`);
-      if (tab === "legal") await expect(dialog.getByText(/16 (offices|oficinas)/)).toBeVisible();
-      await expectNoA11yViolations(page, ".help__card");
-    });
-  }
+for (const scheme of ["light", "dark"] as const) {
+  test.describe(`a11y (${scheme})`, () => {
+    test.use({ colorScheme: scheme });
+    for (const lang of ["en", "es"] as const) {
+      for (const tab of ["medical", "rent", "work", "benefits", "legal"] as const) {
+        test(`${tab} tab (${lang}, ${scheme}) has no WCAG 2.2 AA violations`, async ({ page }) => {
+          const dialog = await openHelp(page, `#help=${tab}${lang === "es" ? "&lang=es" : ""}`);
+          if (tab === "legal") await expect(dialog.getByText(/16 (offices|oficinas)/)).toBeVisible();
+          await expectNoA11yViolations(page, ".help__card");
+        });
+      }
+    }
+  });
 }
+
+test("theme and text size: chosen explicitly, remembered, and still accessible", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("./");
+  await ready(page);
+  const light = page.getByRole("group", { name: "Theme" }).getByRole("button", { name: "Light" });
+  await light.click();
+  await expect(light).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  expect(bg).toBe("rgb(244, 246, 248)"); // light --bg despite a dark device setting
+  await page.getByRole("group", { name: "Text" }).getByRole("button", { name: "Larger" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-text", "large");
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await expect(page.locator("html")).toHaveAttribute("data-text", "large");
+  await page.getByRole("button", { name: /Free help/ }).click();
+  await expectNoA11yViolations(page, ".help__card");
+  await page.getByRole("group", { name: "Theme" }).count(); // still reachable after closing
+});
+
+test("keyboard only: reach the Help panel, every tab, and close it", async ({ page }) => {
+  await page.goto("./");
+  await ready(page);
+  const help = page.getByRole("button", { name: /Free help/ });
+  await help.focus();
+  await page.keyboard.press("Enter");
+  const dialog = page.getByRole("dialog", { name: "Free help" });
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole("tab", { name: "Medical bills" }).focus();
+  for (const name of ["Renters", "Work", "Benefits", "Legal help"]) {
+    await page.keyboard.press("ArrowRight");
+    await expect(dialog.getByRole("tab", { name })).toHaveAttribute("aria-selected", "true");
+  }
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(help).toBeFocused();
+});
 
 test.describe("phone layout", () => {
   test.use({ viewport: { width: 375, height: 740 }, hasTouch: true, isMobile: true });
 
   test("full screen, nothing wider than the screen", async ({ page }) => {
-    for (const tab of ["medical", "rent", "legal"]) {
+    for (const tab of ["medical", "rent", "work", "benefits", "legal"]) {
       const dialog = await openHelp(page, `#help=${tab}`);
       const box = await dialog.boundingBox();
       expect(box?.width).toBe(375);
@@ -215,5 +258,30 @@ test.describe("phone layout", () => {
       });
       expect(overflow, tab).toBeLessThanOrEqual(0);
     }
+  });
+});
+
+test.describe("400% zoom (320 CSS px wide)", () => {
+  test.use({ viewport: { width: 320, height: 640 } });
+  test("every tab reflows without sideways scrolling", async ({ page }) => {
+    for (const tab of ["medical", "rent", "work", "benefits", "legal"]) {
+      await openHelp(page, `#help=${tab}`);
+      const overflow = await page.evaluate(() => {
+        const body = document.querySelector(".help__body") as HTMLElement;
+        return body.scrollWidth - body.clientWidth;
+      });
+      expect(overflow, tab).toBeLessThanOrEqual(0);
+    }
+  });
+});
+
+test.describe("forced colors (Windows high contrast)", () => {
+  test("the selected tab and choices stay visible", async ({ page }) => {
+    await page.emulateMedia({ forcedColors: "active" });
+    const dialog = await openHelp(page, "#help=rent");
+    expect(await page.evaluate(() => matchMedia("(forced-colors: active)").matches)).toBe(true);
+    const tab = dialog.getByRole("tab", { name: "Renters" });
+    const outline = await tab.evaluate((el) => getComputedStyle(el).outlineStyle);
+    expect(outline).not.toBe("none");
   });
 });
