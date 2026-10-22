@@ -1,0 +1,3945 @@
+[
+ {
+  "name": "ri-zoning",
+  "state": "RI",
+  "title": "Zoning districts (Rhode Island)",
+  "title_es": "Zonas de uso de suelo (Rhode Island)",
+  "description": "Every city and town's zoning districts in one map, with the local zone code, what the zone allows (residential, commercial, open space...) and the minimum lot size where set. Check the town ordinance before building or buying.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "RIGIS / RI Division of Statewide Planning (Statewide Zoning, 2026)",
+  "license": "RIGIS public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/RI_Zoning/FeatureServer/1",
+   "fields": {
+    "ZONE_CODE": "zoning",
+    "ZONE_DESC": "description",
+    "CZONE_CODE": "kind",
+    "MUNI_NAME": "city",
+    "MIN_LOT_SF": "min_lot_sqft",
+    "DENSITY": "density"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.43,
+    41.8,
+    -71.38,
+    41.84
+   ],
+   "features_in_probe": 641
+  }
+ },
+ {
+  "name": "ri-zoning-overlays",
+  "state": "RI",
+  "title": "Zoning overlay districts (Rhode Island)",
+  "title_es": "Distritos superpuestos de zonificación (Rhode Island)",
+  "description": "Special zoning overlays layered on top of the base zoning (historic, village, redevelopment, aquifer and flood overlays and similar), by town, with a link to the ordinance.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "RIGIS / RI Division of Statewide Planning (Statewide Zoning, 2026)",
+  "license": "RIGIS public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/RI_Zoning/FeatureServer/0",
+   "fields": {
+    "OVERLAY": "name",
+    "ZONE_DESC": "description",
+    "MUNI_NAME": "city",
+    "SOURCE_ORD": "page",
+    "SOURCE_DATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.6,
+    41.7,
+    -71.3,
+    41.9
+   ],
+   "features_in_probe": 109
+  }
+ },
+ {
+  "name": "ri-future-land-use",
+  "state": "RI",
+  "title": "Future land use plans (Rhode Island)",
+  "title_es": "Uso de suelo futuro planeado (Rhode Island)",
+  "description": "What each town's comprehensive plan says land should become (residential, mixed use, industrial, conservation...), compiled statewide in 2025. Shows where growth or protection is planned.",
+  "group": "growth",
+  "category": "landuse",
+  "source": "RIGIS / RI Division of Statewide Planning (Statewide Future Land Use, Oct 2025)",
+  "license": "RIGIS public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/Statewide_FLU_10142025/FeatureServer/1",
+   "fields": {
+    "Future_LU_Code": "zoning",
+    "GENCAT_2050": "kind",
+    "MUNI_NAME": "city",
+    "FLU_SOURCE": "source",
+    "DATE_ADDED": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.5,
+    41.75,
+    -71.38,
+    41.85
+   ],
+   "features_in_probe": 502
+  }
+ },
+ {
+  "name": "ri-land-use-2025",
+  "state": "RI",
+  "title": "Land use today (Rhode Island)",
+  "title_es": "Uso actual del suelo (Rhode Island)",
+  "description": "How land is actually used now, mapped from aerial imagery: housing by density, commercial, industrial, farms, forest, wetlands and conservation land, with acres.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "RIGIS / RI Division of Statewide Planning (Land Use 2025)",
+  "license": "RIGIS public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/PLAN_Land_Use_2025_spf/FeatureServer/0",
+   "fields": {
+    "Map_Legend": "kind",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.45,
+    41.8,
+    -71.4,
+    41.84
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "ri-hurricane-evacuation-zones",
+  "state": "RI",
+  "title": "Hurricane evacuation zones (Rhode Island)",
+  "title_es": "Zonas de evacuación por huracán (Rhode Island)",
+  "description": "Coastal areas that may be told to evacuate in a hurricane. Zone A leaves first (any hurricane), then B, then C for the strongest storms. Know your zone before a storm.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "RIGIS / RI Emergency Management Agency (Hurricane Evacuation Areas)",
+  "license": "RIGIS public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/PLAN_Hurricane_Evacuation_Areas_spf/FeatureServer/0",
+   "fields": {
+    "EVAC": "kind",
+    "NAME": "city",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "EVAC IN ('A','B','C')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.42,
+    41.7,
+    -71.32,
+    41.78
+   ],
+   "features_in_probe": 759
+  }
+ },
+ {
+  "name": "ri-voting-precincts",
+  "state": "RI",
+  "title": "Voting precincts (Rhode Island)",
+  "title_es": "Precintos electorales (Rhode Island)",
+  "description": "2022 voting precincts with the state house, state senate, ward and congressional district each one votes in. Your precinct decides your polling place.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "RIGIS / RI Board of Elections (Voting Precincts 2022)",
+  "license": "RIGIS public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/BND_Voting_Precincts_2022/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "name",
+    "TOWN": "city",
+    "StHouse": "state_house",
+    "StSenate": "state_senate",
+    "Ward": "ward",
+    "Congress": "congress"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "features_in_probe": 38
+  }
+ },
+ {
+  "name": "ri-pvd-polling-places",
+  "state": "RI",
+  "title": "Polling places, Providence (Rhode Island)",
+  "title_es": "Lugares de votación, Providence (Rhode Island)",
+  "description": "Where Providence voters cast ballots in 2026, by precinct, with the address and how many registered voters use each site.",
+  "group": "civic",
+  "category": "point",
+  "source": "City of Providence (List of Polling Places 2026)",
+  "license": "City of Providence public data",
+  "view": {
+   "url": "https://services6.arcgis.com/wv9mHoqblhTsnqdG/arcgis/rest/services/List_of_Polling_Places_202526_view_layer/FeatureServer/188",
+   "fields": {
+    "USER_POLLING_PLACE": "name",
+    "USER_ADDRESS": "address",
+    "USER_PRECINCT": "precinct",
+    "USER_Reg__Vote": "registered_voters"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.47,
+    41.77,
+    -71.37,
+    41.86
+   ],
+   "features_in_probe": 82
+  }
+ },
+ {
+  "name": "ri-water-supply-districts",
+  "state": "RI",
+  "title": "Public water suppliers (Rhode Island)",
+  "title_es": "Proveedores de agua potable (Rhode Island)",
+  "description": "Which water utility serves each area, where its water comes from (reservoir or wells) and roughly how many people it serves. Homes outside these areas are usually on private wells.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "RIGIS / RI Water Resources Board (Water Supply Districts)",
+  "license": "RIGIS public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/UTILITY_Water_Supply_Districts_spf/FeatureServer/0",
+   "fields": {
+    "SUPPLIER": "name",
+    "H2O_SOURCE": "water",
+    "SW_OR_GW": "kind",
+    "SUP_TYPE": "operator",
+    "POP_2022": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "ri-sewered-areas",
+  "state": "RI",
+  "title": "Sewer service areas (Rhode Island)",
+  "title_es": "Zonas con alcantarillado (Rhode Island)",
+  "description": "Areas connected to a public sewer system, by the treatment plant that serves them. Outside these areas homes use septic systems (cesspools must be replaced).",
+  "group": "infra",
+  "category": "boundary",
+  "source": "RIGIS / RI Department of Environmental Management (Sewered Areas)",
+  "license": "RIGIS public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/UTILITY_Sewered_Areas_spf/FeatureServer/0",
+   "fields": {
+    "WWTF": "name",
+    "RcvWatr": "waterbody"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ri-historic-districts",
+  "state": "RI",
+  "title": "Historic districts (Rhode Island)",
+  "title_es": "Distritos históricos (Rhode Island)",
+  "description": "National Register and local historic districts. Exterior changes to buildings inside local districts usually need a historic commission review.",
+  "group": "places",
+  "category": "boundary",
+  "source": "RIGIS / RI Historical Preservation & Heritage Commission",
+  "license": "RIGIS public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/CULT_Historic_Districts/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "NAME2": "kind",
+    "TOWN": "city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "features_in_probe": 45
+  }
+ },
+ {
+  "name": "ri-historic-cemeteries",
+  "state": "RI",
+  "title": "Historical cemeteries (Rhode Island)",
+  "title_es": "Cementerios históricos (Rhode Island)",
+  "description": "Rhode Island's recorded historical cemeteries, including small family burial grounds, with the state cemetery number and town. Many are protected by state law.",
+  "group": "places",
+  "category": "point",
+  "source": "RIGIS / RI Historical Cemetery Commission",
+  "license": "RIGIS public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/Rhode_Island_Historical_Cemeteries/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "CemID": "number",
+    "MUNINAME": "city",
+    "URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "features_in_probe": 427
+  }
+ },
+ {
+  "name": "ri-shoreline-rights-of-way",
+  "state": "RI",
+  "title": "Public rights of way to the shore (Rhode Island)",
+  "title_es": "Accesos públicos a la costa (Rhode Island)",
+  "description": "Paths, streets and stairs the Coastal Resources Management Council has designated as legal public access to the shoreline, with how you get there and what is at the water (beach, rocks, marsh).",
+  "group": "nature",
+  "category": "point",
+  "source": "RIGIS / RI Coastal Resources Management Council (Designated Rights of Way)",
+  "license": "RIGIS public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/PLAN_Public_Shoreline_Access_spf/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Nearby_Add": "address",
+    "Town": "city",
+    "Means_of_A": "access",
+    "Coastal_Fe": "waterbody",
+    "Habitat": "surface",
+    "CRMC_Desig": "number"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.5,
+    41.4,
+    -71.2,
+    41.8
+   ],
+   "features_in_probe": 194
+  }
+ },
+ {
+  "name": "ri-shellfish-closures",
+  "state": "RI",
+  "title": "Shellfishing closures (Rhode Island)",
+  "title_es": "Zonas cerradas a la pesca de mariscos (Rhode Island)",
+  "description": "Waters where digging clams, oysters or mussels is prohibited or closed seasonally or after rain because of pollution. Shellfish from these areas can make you sick.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "RIGIS / RI Department of Environmental Management (Shellfish Growing Area Classifications 2024)",
+  "license": "RIGIS public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/ENV_ShellfishRestriction_2024_spf/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "SFC": "kind",
+    "Acres": "acres",
+    "URL_ShlCL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.5,
+    41.4,
+    -71.2,
+    41.8
+   ],
+   "features_in_probe": 81
+  }
+ },
+ {
+  "name": "ri-dam-inundation",
+  "state": "RI",
+  "title": "Dam failure flood areas (Rhode Island)",
+  "title_es": "Zonas inundables si falla una presa (Rhode Island)",
+  "description": "Land that would flood if a high- or significant-hazard dam failed, with a link to the dam's inundation map. Useful when choosing where to live or planning evacuation.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "RI Department of Environmental Management, Dam Safety Program",
+  "license": "RIGIS / RI DEM public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://risegis.ri.gov/hosting/rest/services/RIDEM/dam_safety/MapServer/1",
+   "fields": {
+    "Name": "name",
+    "State_ID": "number",
+    "Wshed": "waterbody",
+    "URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.6,
+    41.7,
+    -71.3,
+    41.9
+   ],
+   "features_in_probe": 73
+  }
+ },
+ {
+  "name": "ri-saltwater-beaches",
+  "state": "RI",
+  "title": "Saltwater beaches (Rhode Island)",
+  "title_es": "Playas de agua salada (Rhode Island)",
+  "description": "State and town saltwater beaches. Check RIDOH beach closures before swimming after heavy rain.",
+  "group": "nature",
+  "category": "point",
+  "source": "RI Department of Environmental Management (Outdoor Recreation Map)",
+  "license": "RIGIS / RI DEM public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://risegis.ri.gov/hosting/rest/services/RIDEM/Outdoor_Recreation_Map_v4/MapServer/13",
+   "fields": {
+    "COMNAME": "name",
+    "DEM_Man": "manager"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.9,
+    41.1,
+    -71.1,
+    42.0
+   ],
+   "features_in_probe": 39
+  }
+ },
+ {
+  "name": "ri-state-hunting-areas",
+  "state": "RI",
+  "title": "State hunting lands (Rhode Island)",
+  "title_es": "Tierras estatales de caza (Rhode Island)",
+  "description": "RIDEM management areas open to licensed hunting, with acres. Wear blaze orange in season; some areas have extra rules.",
+  "group": "nature",
+  "category": "park",
+  "source": "RI Department of Environmental Management (Outdoor Recreation Map)",
+  "license": "RIGIS / RI DEM public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://risegis.ri.gov/hosting/rest/services/RIDEM/Outdoor_Recreation_Map_v4/MapServer/19",
+   "fields": {
+    "DEM_AREA": "name",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.9,
+    41.3,
+    -71.4,
+    41.7
+   ],
+   "features_in_probe": 62
+  }
+ },
+ {
+  "name": "ri-trout-stocked-ponds",
+  "state": "RI",
+  "title": "Trout-stocked ponds (Rhode Island)",
+  "title_es": "Lagunas con siembra de truchas (Rhode Island)",
+  "description": "Ponds RIDEM stocks with trout, with acres, whether there is public access and a boat ramp.",
+  "group": "nature",
+  "category": "park",
+  "source": "RI Department of Environmental Management (Outdoor Recreation Map)",
+  "license": "RIGIS / RI DEM public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://risegis.ri.gov/hosting/rest/services/RIDEM/Outdoor_Recreation_Map_v4/MapServer/5",
+   "fields": {
+    "NAME": "name",
+    "ACRES": "acres",
+    "PubAcc": "access",
+    "BoatRamp": "ramp",
+    "Rstrctn": "restrictions"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.9,
+    41.3,
+    -71.4,
+    42.0
+   ],
+   "features_in_probe": 32
+  }
+ },
+ {
+  "name": "ri-bike-paths",
+  "state": "RI",
+  "title": "Bike paths (Rhode Island)",
+  "title_es": "Ciclovías (Rhode Island)",
+  "description": "Off-road bikeways and multi-use paths such as the East Bay and Washington Secondary paths, with who maintains them and length in miles.",
+  "group": "roads",
+  "category": "info",
+  "source": "RI Department of Environmental Management / RIDOT (Outdoor Recreation Map)",
+  "license": "RIGIS / RI DEM public data (attribution to RIGIS and source agency)",
+  "view": {
+   "url": "https://risegis.ri.gov/hosting/rest/services/RIDEM/Outdoor_Recreation_Map_v4/MapServer/12",
+   "fields": {
+    "PROJ_NAME": "name",
+    "TYPE": "kind",
+    "Management": "manager",
+    "Miles": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.9,
+    41.3,
+    -71.1,
+    42.0
+   ],
+   "features_in_probe": 26
+  }
+ },
+ {
+  "name": "ri-broadband-block-groups",
+  "state": "RI",
+  "title": "Internet service gaps by neighborhood (Rhode Island)",
+  "title_es": "Falta de internet por vecindario (Rhode Island)",
+  "description": "Share of homes and businesses in each census block group that are unserved or underserved by high-speed internet, from the state broadband map used to award BEAD funding.",
+  "group": "infra",
+  "category": "info",
+  "source": "RI Commerce, Broadband Office (Rhode Island Broadband Map)",
+  "license": "RI Commerce public data",
+  "view": {
+   "url": "https://services6.arcgis.com/70X0jB6UtsfE8L2y/arcgis/rest/services/Rhode_Island_Broadband_Map_Feature_Layers_View/FeatureServer/2",
+   "fields": {
+    "GEOID": "geoid",
+    "unserved_pct": "unserved_pct",
+    "underserved_pct": "underserved_pct",
+    "served_pct": "served_pct",
+    "total_serviceable_locations": "locations"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.5,
+    41.7,
+    -71.3,
+    41.9
+   ],
+   "features_in_probe": 448
+  }
+ },
+ {
+  "name": "ri-pvd-utility-projects",
+  "state": "RI",
+  "title": "Street work: utility projects, Providence (Rhode Island)",
+  "title_es": "Obras en calles: proyectos de servicios, Providence (Rhode Island)",
+  "description": "Gas, water, sewer and electric work permitted on Providence streets that is planned, under construction or awaiting repaving, with the utility, permit and status. Expect lane closures.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Providence Department of Public Works (Utility Projects)",
+  "license": "City of Providence public data",
+  "view": {
+   "url": "https://services6.arcgis.com/wv9mHoqblhTsnqdG/arcgis/rest/services/Utility_Projects_(View)/FeatureServer/20",
+   "fields": {
+    "Utility": "operator",
+    "UT_Type": "kind",
+    "Status": "status",
+    "Street": "street",
+    "PermitNo": "permit",
+    "Year": "year",
+    "Project": "name"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "Status IN ('Planned','Review','Construction','Inspection','Restoration','Restoration (by Others)','Striping')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.47,
+    41.77,
+    -71.37,
+    41.86
+   ],
+   "features_in_probe": 762
+  }
+ },
+ {
+  "name": "ri-pvd-trash-days",
+  "state": "RI",
+  "title": "Trash pickup days, Providence (Rhode Island)",
+  "title_es": "Días de recolección de basura, Providence (Rhode Island)",
+  "description": "Which weekday trash and recycling are collected in each part of Providence.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Providence Department of Public Works (Trash Pick-Up Days)",
+  "license": "City of Providence public data",
+  "view": {
+   "url": "https://services6.arcgis.com/wv9mHoqblhTsnqdG/arcgis/rest/services/Trash_Pick_Up_Days_(View)/FeatureServer/0",
+   "fields": {
+    "Pickup_Day": "name",
+    "Name": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.47,
+    41.77,
+    -71.37,
+    41.86
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "nh-road-construction",
+  "state": "NH",
+  "title": "Road construction projects (New Hampshire)",
+  "title_es": "Obras de construcción en carreteras (New Hampshire)",
+  "description": "NHDOT highway and bridge projects under construction now, with the route, what is being built, the contract dates and cost. Expect lane closures and detours.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "NH Department of Transportation (Projects Under Construction)",
+  "license": "NHDOT public data",
+  "view": {
+   "url": "https://maps.dot.nh.gov/arcgis_server/rest/services/Projects/NHDOT_PROJECTS_PROPOSALS/MapServer/0",
+   "fields": {
+    "PROJ_NAME": "name",
+    "MAIN_ROUTE": "route",
+    "PROJ_DESCRIPTION": "description",
+    "PROJ_NUMBER": "number",
+    "START_DATE": "start",
+    "CONTRACT_END_DATE": "end",
+    "BID_TOTAL": "cost",
+    "PROJECT_INFO": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 135
+  }
+ },
+ {
+  "name": "nh-road-projects-design",
+  "state": "NH",
+  "title": "Road projects being designed (New Hampshire)",
+  "title_es": "Proyectos de carreteras en diseño (New Hampshire)",
+  "description": "NHDOT projects in design that will go to construction in the next few years, with route, description and estimated cost. Public hearings are held before they are built.",
+  "group": "growth",
+  "category": "roadops",
+  "source": "NH Department of Transportation (Projects In Design)",
+  "license": "NHDOT public data",
+  "view": {
+   "url": "https://maps.dot.nh.gov/arcgis_server/rest/services/Projects/NHDOT_PROJECTS_PROPOSALS/MapServer/1",
+   "fields": {
+    "PROJ_NAME": "name",
+    "MAIN_ROUTE": "route",
+    "PROJ_DESCRIPTION": "description",
+    "PROJ_NUMBER": "number",
+    "AD_DATE": "start",
+    "TYP_INFLATED_COST": "cost",
+    "PROJECT_INFO": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 332
+  }
+ },
+ {
+  "name": "nh-plow-priority",
+  "state": "NH",
+  "title": "Snow plow priority by road (New Hampshire)",
+  "title_es": "Prioridad de limpieza de nieve por camino (New Hampshire)",
+  "description": "NHDOT plow level for each road it maintains in winter (level 1 roads are cleared first and kept bare), plus who maintains the road in winter. Helps plan winter travel.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "NH Department of Transportation (NHDOT Plow Levels)",
+  "license": "NHDOT public data",
+  "view": {
+   "url": "https://maps.dot.nh.gov/arcgis_server/rest/services/Maintenance/NHDOT_MAINTENANCE_Plow_Routes_Levels/MapServer/34",
+   "fields": {
+    "STREET": "name",
+    "TOWN_NAME": "city",
+    "PLOW_LEVEL": "kind",
+    "WINTER_MAINT": "manager",
+    "HIORDER_ROUTE_NAME": "route"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "PLOW_LEVEL IS NOT NULL"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.55,
+    43.15,
+    -71.45,
+    43.25
+   ],
+   "features_in_probe": 264
+  }
+ },
+ {
+  "name": "nh-rail-trails",
+  "state": "NH",
+  "title": "Rail trails (New Hampshire)",
+  "title_es": "Senderos sobre antiguas vías de tren (New Hampshire)",
+  "description": "Former railroad corridors turned into trails, with surface, length, seasonal use (snowmobile, OHRV, walking) and who manages them.",
+  "group": "nature",
+  "category": "park",
+  "source": "NH Department of Transportation, Bureau of Rail & Transit (Rail Trails)",
+  "license": "NHDOT public data",
+  "view": {
+   "url": "https://maps.dot.nh.gov/arcgis_server/rest/services/Rail/NHDOT_RAIL_TRAILS/MapServer/1",
+   "fields": {
+    "NAME": "name",
+    "SURFACE_TYPE": "surface",
+    "LENGTH_MILES": "miles",
+    "SEASONAL_USE": "kind",
+    "JURISDICTION": "manager",
+    "TRAIL_INFO": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 70
+  }
+ },
+ {
+  "name": "nh-wildlife-management-areas",
+  "state": "NH",
+  "title": "Wildlife management areas (New Hampshire)",
+  "title_es": "Áreas de manejo de vida silvestre (New Hampshire)",
+  "description": "NH Fish and Game lands open for hunting, fishing, wildlife watching and paddling, with acres, game species and access notes.",
+  "group": "nature",
+  "category": "park",
+  "source": "NH Fish and Game Department (Wildlife Management Areas)",
+  "license": "NH Fish and Game public data",
+  "view": {
+   "url": "https://services8.arcgis.com/hg1B9Egwk1I5p300/arcgis/rest/services/NHFG_WMA_online/FeatureServer/2",
+   "fields": {
+    "NAME": "name",
+    "TOWN": "city",
+    "GISACRES": "acres",
+    "HUNTING": "hunting",
+    "FISHING": "fishing",
+    "SPECIES": "species",
+    "NOTES": "notes",
+    "OnlineWMA": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 127
+  }
+ },
+ {
+  "name": "nh-wildlife-management-units",
+  "state": "NH",
+  "title": "Hunting management units (New Hampshire)",
+  "title_es": "Unidades de manejo de caza (New Hampshire)",
+  "description": "The wildlife management units (WMU A-M) that set deer, moose, bear and turkey seasons and bag limits. Check your unit before you hunt.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "NH Fish and Game Department (Wildlife Management Units)",
+  "license": "NH Fish and Game public data",
+  "view": {
+   "url": "https://services8.arcgis.com/hg1B9Egwk1I5p300/arcgis/rest/services/WMU/FeatureServer/0",
+   "fields": {
+    "WMU": "name",
+    "SQMILES": "square_miles",
+    "WMUDEER": "deer_unit",
+    "WMUMOOSE": "moose_unit",
+    "WMUBEAR": "bear_unit"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 24
+  }
+ },
+ {
+  "name": "nh-rifles-prohibited",
+  "state": "NH",
+  "title": "Towns where rifles are banned for deer (New Hampshire)",
+  "title_es": "Pueblos donde se prohíben rifles para cazar venado (New Hampshire)",
+  "description": "Towns and areas where deer may be hunted only with shotgun, muzzleloader or bow, not rifles, under NH Fish and Game rules.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "NH Fish and Game Department (Rifles Prohibited for Deer Hunting)",
+  "license": "NH Fish and Game public data",
+  "view": {
+   "url": "https://services8.arcgis.com/hg1B9Egwk1I5p300/arcgis/rest/services/Rifles_Prohibited_Deer_Hunting/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "DeerRestri": "restrictions"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 56
+  }
+ },
+ {
+  "name": "nh-waterfowl-closed-areas",
+  "state": "NH",
+  "title": "Areas closed to waterfowl hunting (New Hampshire)",
+  "title_es": "Zonas cerradas a la caza de aves acuáticas (New Hampshire)",
+  "description": "Ponds, marshes and coastal areas where duck and goose hunting is closed, with the rule that applies.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "NH Fish and Game Department (Waterfowl Closed Areas)",
+  "license": "NH Fish and Game public data",
+  "view": {
+   "url": "https://services8.arcgis.com/hg1B9Egwk1I5p300/arcgis/rest/services/WaterfowlClosedAreas/FeatureServer/0",
+   "fields": {
+    "SiteName": "name",
+    "Closure": "restrictions",
+    "LegalRef": "ordinance",
+    "MoreInfo": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 26
+  }
+ },
+ {
+  "name": "nh-deer-registration-stations",
+  "state": "NH",
+  "title": "Deer & turkey check stations (New Hampshire)",
+  "title_es": "Estaciones de registro de venado y pavo (New Hampshire)",
+  "description": "Stores and sites where hunters register a deer or turkey (and which also take bears).",
+  "group": "nature",
+  "category": "point",
+  "source": "NH Fish and Game Department (Deer & Turkey Registration Stations)",
+  "license": "NH Fish and Game public data",
+  "view": {
+   "url": "https://services8.arcgis.com/hg1B9Egwk1I5p300/arcgis/rest/services/DeerTurkeyRegistrationStations/FeatureServer/0",
+   "fields": {
+    "STATION": "name",
+    "STREET": "address",
+    "TOWN": "city",
+    "COUNTY": "county",
+    "BEAR": "bear"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 51
+  }
+ },
+ {
+  "name": "nh-stocked-lakes",
+  "state": "NH",
+  "title": "Trout-stocked lakes & ponds (New Hampshire)",
+  "title_es": "Lagos y lagunas con siembra de truchas (New Hampshire)",
+  "description": "Lakes and ponds NH Fish and Game stocks, with how many brook, brown and rainbow trout went in last year, maximum depth and whether it is a kids-only pond.",
+  "group": "nature",
+  "category": "park",
+  "source": "NH Fish and Game Department (Fish Stocking)",
+  "license": "NH Fish and Game public data",
+  "view": {
+   "url": "https://services8.arcgis.com/hg1B9Egwk1I5p300/arcgis/rest/services/FishStocking_view/FeatureServer/3",
+   "fields": {
+    "GNIS_Name": "name",
+    "TOWN": "city",
+    "NHFISHERY": "kind",
+    "EBT_LastYear": "brook_trout_last_year",
+    "BT_LastYear": "brown_trout_last_year",
+    "RT_LastYear": "rainbow_trout_last_year",
+    "MAXFT": "max_depth_ft",
+    "KIDSPOND": "kids_pond"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.8,
+    42.9,
+    -71.2,
+    43.4
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "nh-stocked-streams",
+  "state": "NH",
+  "title": "Trout-stocked rivers & streams (New Hampshire)",
+  "title_es": "Ríos y arroyos con siembra de truchas (New Hampshire)",
+  "description": "River and stream stretches NH Fish and Game stocks with trout, with last year's numbers by species and reach length.",
+  "group": "nature",
+  "category": "park",
+  "source": "NH Fish and Game Department (Fish Stocking)",
+  "license": "NH Fish and Game public data",
+  "view": {
+   "url": "https://services8.arcgis.com/hg1B9Egwk1I5p300/arcgis/rest/services/FishStocking_view/FeatureServer/2",
+   "fields": {
+    "GNIS_Name": "name",
+    "TOWN": "city",
+    "EBT_LastYear": "brook_trout_last_year",
+    "BT_LastYear": "brown_trout_last_year",
+    "RT_LastYear": "rainbow_trout_last_year",
+    "REACH_MILES": "miles",
+    "KIDS_DERBY": "kids_derby"
+   },
+   "geometry": "line",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.8,
+    42.9,
+    -71.2,
+    43.4
+   ],
+   "features_in_probe": 33
+  }
+ },
+ {
+  "name": "nh-fishing-guide-lakes",
+  "state": "NH",
+  "title": "Freshwater fishing guide (New Hampshire)",
+  "title_es": "Guía de pesca de agua dulce (New Hampshire)",
+  "description": "NH Fish and Game's lake-by-lake fishing guide: species present, average and maximum depth, public access and directions to the launch.",
+  "group": "nature",
+  "category": "park",
+  "source": "NH Fish and Game Department (Freshwater Fishing Guide)",
+  "license": "NH Fish and Game public data",
+  "view": {
+   "url": "https://services8.arcgis.com/hg1B9Egwk1I5p300/arcgis/rest/services/NH_Freshwater_Fishing_Guide/FeatureServer/0",
+   "fields": {
+    "WB_NAME": "name",
+    "TOWN": "city",
+    "SPECIES": "species",
+    "FISHERY": "kind",
+    "ACCESS": "access",
+    "DIRECTNS": "directions",
+    "DEPTHMAX": "max_depth_ft",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.8,
+    43.3,
+    -71.2,
+    43.8
+   ],
+   "features_in_probe": 147
+  }
+ },
+ {
+  "name": "nh-beach-advisories",
+  "state": "NH",
+  "title": "Swimming beach water quality (New Hampshire)",
+  "title_es": "Calidad del agua en playas (New Hampshire)",
+  "description": "Public swimming beaches NHDES tests for bacteria, with the current advisory status, latest sample results and past advisories.",
+  "group": "hazards",
+  "category": "point",
+  "source": "NH Department of Environmental Services (Healthy Swimming Mapper)",
+  "license": "NHDES public data",
+  "view": {
+   "url": "https://services1.arcgis.com/MAcUimSes4gPY4sM/arcgis/rest/services/2024_Healthy_Swimming_Mapper_V2_WFL1/FeatureServer/0",
+   "fields": {
+    "Beach_Name": "name",
+    "Waterbody_Name": "waterbody",
+    "Status": "status",
+    "SampleDate": "updated",
+    "Sample_Results": "results",
+    "Advisory_history": "notes",
+    "Report": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 93
+  }
+ },
+ {
+  "name": "nh-cyanobacteria-warnings",
+  "state": "NH",
+  "title": "Toxic algae (cyanobacteria) warnings (New Hampshire)",
+  "title_es": "Alertas de algas tóxicas (cianobacterias) (New Hampshire)",
+  "description": "Lakes and coves where NHDES has a cyanobacteria bloom report or warning. Keep people and pets out of the water while a warning is up. Empty when no blooms are reported.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "NH Department of Environmental Services (Healthy Swimming Mapper, cyanobacteria)",
+  "license": "NHDES public data",
+  "view": {
+   "url": "https://services1.arcgis.com/MAcUimSes4gPY4sM/arcgis/rest/services/2024_Healthy_Swimming_Mapper_V2_WFL1/FeatureServer/9",
+   "fields": {
+    "WB_NAME": "name",
+    "Town": "city",
+    "Status": "status",
+    "LatestAdvisory": "notes",
+    "StatusDate": "updated",
+    "Description": "description",
+    "CyanoHistory": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "Status <> 'No bloom reported'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "nh-designated-river-corridors",
+  "state": "NH",
+  "title": "Designated rivers & protected corridors (New Hampshire)",
+  "title_es": "Ríos designados y sus corredores protegidos (New Hampshire)",
+  "description": "Rivers in the state Rivers Management and Protection Program and the quarter-mile corridor along them, where building near the bank needs extra state review.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "NH Department of Environmental Services, Rivers Management & Protection Program",
+  "license": "NHDES public data",
+  "view": {
+   "url": "https://services1.arcgis.com/MAcUimSes4gPY4sM/arcgis/rest/services/Designated_River_Corridor/FeatureServer/31",
+   "fields": {
+    "RIVERNAME": "name",
+    "RIVERSECT": "kind",
+    "CLASS": "class",
+    "FACTSHEET": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 153
+  }
+ },
+ {
+  "name": "nh-water-service-areas",
+  "state": "NH",
+  "title": "Public water system service areas (New Hampshire)",
+  "title_es": "Zonas servidas por sistemas de agua (New Hampshire)",
+  "description": "Areas served by a public water system (town water, village districts, mobile home parks, condos), with the system name and population served. Outside them most homes use private wells, which NHDES recommends testing.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "NH Department of Environmental Services, Drinking Water & Groundwater Bureau",
+  "license": "NHDES public data",
+  "view": {
+   "url": "https://gis.des.nh.gov/server/rest/services/Projects_DWGB/Water_line/MapServer/4",
+   "fields": {
+    "SYS_NAME": "name",
+    "SYS_TOWN": "city",
+    "SYS_CAT": "kind",
+    "POPULATION": "population",
+    "PWS_ID": "number"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.6,
+    42.9,
+    -71.3,
+    43.1
+   ],
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "nh-groundwater-wells",
+  "state": "NH",
+  "title": "Groundwater level monitoring wells (New Hampshire)",
+  "title_es": "Pozos de monitoreo del agua subterránea (New Hampshire)",
+  "description": "State monitoring wells with the latest groundwater level and how it compares with normal for this time of year (below normal can mean dry private wells).",
+  "group": "weather",
+  "category": "point",
+  "source": "NH Geological Survey / NHDES (Groundwater Level Monitoring)",
+  "license": "NHDES public data",
+  "view": {
+   "url": "https://services1.arcgis.com/MAcUimSes4gPY4sM/arcgis/rest/services/Groundwater_Level_Monitoring___Dashboard_WFL1/FeatureServer/0",
+   "fields": {
+    "Site_Name": "name",
+    "Percentile_Class": "status",
+    "Most_Recent_Measurement": "level",
+    "Most_Recent_Measurement_Date": "updated",
+    "WellType": "kind",
+    "Years_of_Record": "years_of_record",
+    "Link": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 41
+  }
+ },
+ {
+  "name": "nh-boat-pumpouts",
+  "state": "NH",
+  "title": "Boat sewage pumpout stations (New Hampshire)",
+  "title_es": "Estaciones de vaciado de aguas residuales de barcos (New Hampshire)",
+  "description": "Marinas and docks where boaters can pump out holding tanks, with the waterbody, cost and whether it is open to the public.",
+  "group": "nature",
+  "category": "point",
+  "source": "NH Department of Environmental Services (Clean Vessel Act pumpouts)",
+  "license": "NHDES public data",
+  "view": {
+   "url": "https://gis.des.nh.gov/server/rest/services/Projects_Watershed/CVA_Map_of_Pumpouts/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Town": "city",
+    "WB_Name": "waterbody",
+    "Public": "access",
+    "Type": "kind",
+    "Cost": "fee",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 24
+  }
+ },
+ {
+  "name": "nh-executive-council-districts",
+  "state": "NH",
+  "title": "Executive Council districts (New Hampshire)",
+  "title_es": "Distritos del Consejo Ejecutivo (New Hampshire)",
+  "description": "The five Executive Council districts (2022). Councilors approve state contracts, judges and pardons with the governor.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "NH GRANIT / NH Secretary of State (Executive Council Districts 2022)",
+  "license": "NH GRANIT public data",
+  "view": {
+   "url": "https://nhgeodata.unh.edu/hosting/rest/services/Hosted/APB_ElectoralDistricts/FeatureServer/7",
+   "fields": {
+    "execco2022": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "nh-broadband-by-town",
+  "state": "NH",
+  "title": "Broadband availability by town (New Hampshire)",
+  "title_es": "Disponibilidad de internet de alta velocidad por pueblo (New Hampshire)",
+  "description": "Share of homes and businesses in each town that are unserved, underserved or served by high-speed internet, from the NH broadband map (round 7, Dec 2025).",
+  "group": "infra",
+  "category": "info",
+  "source": "NH GRANIT / NH Broadband Office (Service by Municipality, Round 7)",
+  "license": "NH GRANIT public data",
+  "view": {
+   "url": "https://nhgeodata.unh.edu/hosting/rest/services/Hosted/p_ServiceByMunicipality_Round7_20251231_v2/FeatureServer/22",
+   "fields": {
+    "name": "name",
+    "bbservice0": "unserved_pct",
+    "bbservice1": "underserved_pct",
+    "bbservice2": "served_pct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.6,
+    42.7,
+    -70.6,
+    45.3
+   ],
+   "features_in_probe": 259
+  }
+ },
+ {
+  "name": "nh-village-centers",
+  "state": "NH",
+  "title": "Village & community centers (New Hampshire)",
+  "title_es": "Centros de pueblos y aldeas (New Hampshire)",
+  "description": "Town and village centers mapped by the regional planning commissions, the traditional downtowns where housing, shops and services cluster.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "NH GRANIT / NH regional planning commissions (Community Center Areas)",
+  "license": "NH GRANIT public data",
+  "view": {
+   "url": "https://nhgeodata.unh.edu/hosting/rest/services/Hosted/CSD_CommunityCenterAreas/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "town": "city",
+    "descrip": "description",
+    "acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.8,
+    42.8,
+    -71.2,
+    43.3
+   ],
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "me-road-projects",
+  "state": "ME",
+  "title": "Road & bridge projects (Maine)",
+  "title_es": "Proyectos de carreteras y puentes (Maine)",
+  "description": "MaineDOT projects awaiting kick-off, in design or under construction, with the scope (paving, bridge, intersection...), location description, estimated cost and construction dates. Expect work zones.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Maine Department of Transportation (Public Projects)",
+  "license": "MaineDOT public data",
+  "view": {
+   "url": "https://gis.maine.gov/mapservices/rest/services/dot/MaineDOT_OpenData/MapServer/5",
+   "fields": {
+    "project_title": "name",
+    "scope_desc": "kind",
+    "description": "description",
+    "reporting_status": "status",
+    "estimated_total_cost": "cost",
+    "conbegin_forecast": "start",
+    "concomp_forecast": "end",
+    "total_miles": "miles",
+    "pin": "number"
+   },
+   "geometry": "line",
+   "min_zoom": 7,
+   "where": "reporting_status <> '4 - Construction Complete'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.1,
+    43.0,
+    -66.9,
+    47.5
+   ],
+   "features_in_probe": 541
+  }
+ },
+ {
+  "name": "me-park-and-ride",
+  "state": "ME",
+  "title": "Park & ride lots (Maine)",
+  "title_es": "Estacionamientos para compartir auto o tomar transporte (Maine)",
+  "description": "Free MaineDOT and Turnpike commuter lots, with number of spaces and the buses or vanpools that stop there.",
+  "group": "roads",
+  "category": "point",
+  "source": "Maine Department of Transportation (Park and Ride)",
+  "license": "MaineDOT public data",
+  "view": {
+   "url": "https://gis.maine.gov/mapservices/rest/services/dot/MaineDOT_OpenData/MapServer/8",
+   "fields": {
+    "asset_descr": "name",
+    "location": "address",
+    "begin_town": "city",
+    "total_num_spaces": "capacity",
+    "num_handicap_spaces": "ada",
+    "transit_other_services": "route",
+    "ownership": "operator"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.1,
+    43.0,
+    -66.9,
+    47.5
+   ],
+   "features_in_probe": 58
+  }
+ },
+ {
+  "name": "me-scenic-byways",
+  "state": "ME",
+  "title": "Scenic byways (Maine)",
+  "title_es": "Rutas escénicas (Maine)",
+  "description": "State and national scenic byways, with the designation and a link to the route guide.",
+  "group": "places",
+  "category": "info",
+  "source": "Maine Department of Transportation (Scenic Byways)",
+  "license": "MaineDOT public data",
+  "view": {
+   "url": "https://gis.maine.gov/mapservices/rest/services/dot/MaineDOT_OpenData/MapServer/6",
+   "fields": {
+    "sb_name": "name",
+    "designation_type_decode": "kind",
+    "designation_year": "year",
+    "description": "description",
+    "explore_maine": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.1,
+    43.0,
+    -66.9,
+    47.5
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "me-hurricane-evacuation-zones",
+  "state": "ME",
+  "title": "Hurricane evacuation zones (Maine)",
+  "title_es": "Zonas de evacuación por huracán (Maine)",
+  "description": "Coastal areas that may be ordered to evacuate before a hurricane: zone A first, then B and C for stronger storms (2021 MEMA zones).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Maine Emergency Management Agency / Maine GeoLibrary (Hurricane Evacuation Zones)",
+  "license": "Maine GeoLibrary public data",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/Hurricane_Evacuation_Zones_RoutesJoin/FeatureServer/0",
+   "fields": {
+    "EVACZONE": "kind",
+    "TOWN": "city",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "EVACZONE IN ('A','B','C')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -70.4,
+    43.5,
+    -70.0,
+    43.8
+   ],
+   "features_in_probe": 130
+  }
+ },
+ {
+  "name": "me-shellfish-closures",
+  "state": "ME",
+  "title": "Shellfish harvesting closures (Maine)",
+  "title_es": "Zonas cerradas a la recolección de mariscos (Maine)",
+  "description": "Coastal waters where clamming and other shellfish harvest is prohibited, restricted or closed after rain or seasonally (2025 DMR classifications). Check DMR's current closures before you dig.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Maine Department of Marine Resources, Public Health Bureau (NSSP Classifications 2025)",
+  "license": "Maine GeoLibrary public data",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/MaineDMR_Public_Health_2025_NSSP_Classifications/FeatureServer/81",
+   "fields": {
+    "GA": "area_code",
+    "GA_SECTION": "section",
+    "NSSP": "kind",
+    "CA_TYPE": "restrictions",
+    "COMMENT_PUBLIC": "notes",
+    "ACRES": "acres",
+    "WEBSITE_1": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "NSSP <> 'A'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -70.4,
+    43.5,
+    -69.8,
+    44.0
+   ],
+   "features_in_probe": 93
+  }
+ },
+ {
+  "name": "me-pfas-fish-advisory",
+  "state": "ME",
+  "title": "PFAS \"do not eat\" fish advisory areas (Maine)",
+  "title_es": "Zonas donde no se debe comer pescado por PFAS (Maine)",
+  "description": "Waters where the Maine CDC says not to eat any fish because of PFAS (\"forever chemical\") contamination.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Maine CDC / Maine DEP (PFAS Do Not Eat Advisory Areas)",
+  "license": "Maine GeoLibrary public data",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/PFAS_Do_Not_Eat_Advisory_Area/FeatureServer/1",
+   "fields": {
+    "AreaName": "name",
+    "AreaDescription": "description",
+    "AreaSqMi": "square_miles"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.1,
+    43.0,
+    -66.9,
+    47.5
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "me-browntail-moth",
+  "state": "ME",
+  "title": "Browntail moth outbreak areas (Maine)",
+  "title_es": "Zonas con brote de polilla de cola parda (Maine)",
+  "description": "Towns with browntail moth defoliation mapped from the air in 2025, with acres. The caterpillars' hairs cause itchy rashes and breathing trouble from spring into summer.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Maine Forest Service (Browntail Moth Aerial Survey 2025)",
+  "license": "Maine GeoLibrary public data",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/BTM_2025_Towns/FeatureServer/69",
+   "fields": {
+    "TOWN": "name",
+    "BTM_Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.1,
+    43.0,
+    -66.9,
+    47.5
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "me-emerald-ash-borer-quarantine",
+  "state": "ME",
+  "title": "Emerald ash borer quarantine (Maine)",
+  "title_es": "Cuarentena por el barrenador esmeralda del fresno (Maine)",
+  "description": "Towns under the emerald ash borer quarantine. Don't move firewood or ash wood out of these towns; buy it where you burn it.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Maine Forest Service / Maine DACF (EAB Quarantine 2025)",
+  "license": "Maine GeoLibrary public data",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/EAB_2025_positives_quarantines/FeatureServer/12",
+   "fields": {
+    "town": "name",
+    "COUNTY": "county",
+    "STATUS": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "STATUS IS NOT NULL"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.1,
+    43.0,
+    -66.9,
+    47.5
+   ],
+   "features_in_probe": 389
+  }
+ },
+ {
+  "name": "me-fall-foliage",
+  "state": "ME",
+  "title": "Fall foliage report (Maine)",
+  "title_es": "Reporte de colores de otoño (Maine)",
+  "description": "The state's weekly fall foliage report by zone: how close leaf color is to peak. Updated each week in season.",
+  "group": "nature",
+  "category": "info",
+  "source": "Maine Forest Service / Maine Office of Tourism (Foliage Report)",
+  "license": "Maine GeoLibrary public data",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/Foliage_Map_view/FeatureServer/2",
+   "fields": {
+    "ZoneName": "name",
+    "FoliageClass": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 5
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.1,
+    43.0,
+    -66.9,
+    47.5
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "me-wildlife-management-districts",
+  "state": "ME",
+  "title": "Wildlife management districts (Maine)",
+  "title_es": "Distritos de manejo de vida silvestre (Maine)",
+  "description": "The 29 hunting districts (WMDs) that set Maine's deer, moose, bear and turkey seasons and permits, with each district's recent harvest counts.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Maine Department of Inland Fisheries & Wildlife (WMD Harvest)",
+  "license": "Maine IF&W public data",
+  "view": {
+   "url": "https://gis.maine.gov/mapservices/rest/services/ifw/Wildlife_Management_District_Harvest/MapServer/0",
+   "fields": {
+    "IDENTIFIER": "name",
+    "Deer": "deer_harvest",
+    "Moose": "moose_harvest",
+    "Bear": "bear_harvest",
+    "Turkey": "turkey_harvest"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.1,
+    43.0,
+    -66.9,
+    47.5
+   ],
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "me-expanded-archery-areas",
+  "state": "ME",
+  "title": "Expanded archery deer zones (Maine)",
+  "title_es": "Zonas ampliadas de caza de venado con arco (Maine)",
+  "description": "Built-up areas with an extended bow-hunting season for deer, and the towns included.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Maine Department of Inland Fisheries & Wildlife (Expanded Archery Areas)",
+  "license": "Maine GeoLibrary public data",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/MaineDIFW_ExpandedArcheryAreas/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "TownsIncluded": "towns",
+    "Description": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.1,
+    43.0,
+    -66.9,
+    47.5
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "me-historic-districts",
+  "state": "ME",
+  "title": "Historic districts (Maine)",
+  "title_es": "Distritos históricos (Maine)",
+  "description": "National Register historic districts mapped by the Maine Historic Preservation Commission, by town.",
+  "group": "places",
+  "category": "boundary",
+  "source": "Maine Historic Preservation Commission (Historic Districts)",
+  "license": "Maine GeoLibrary public data",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/Historic_Districts/FeatureServer/0",
+   "fields": {
+    "histname": "name",
+    "town": "city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -70.5,
+    43.4,
+    -69.8,
+    44.0
+   ],
+   "features_in_probe": 58
+  }
+ },
+ {
+  "name": "me-county-commissioner-districts",
+  "state": "ME",
+  "title": "County commissioner districts (Maine)",
+  "title_es": "Distritos de comisionados del condado (Maine)",
+  "description": "Districts that elect county commissioners, who run county government, jails and budgets (2024 update).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Maine Secretary of State / Maine GeoLibrary (Voting Districts 2024, County Commissioners)",
+  "license": "Maine GeoLibrary public data",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/Maine_Voting_Districts_2024_County_Commissioners_Update/FeatureServer/19",
+   "fields": {
+    "district": "name",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.1,
+    43.0,
+    -66.9,
+    47.5
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "me-unorganized-parcels",
+  "state": "ME",
+  "title": "Parcels, unorganized territory (Maine)",
+  "title_es": "Parcelas, territorios no organizados (Maine)",
+  "description": "Property parcels in Maine's unorganized townships and plantations (taxed by Maine Revenue Services, not a town), with plan and lot number and acres.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Maine Revenue Services, Property Tax Division (Unorganized Territory Parcels)",
+  "license": "Maine GeoLibrary public data",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/Maine_Unorganized_Parcel_Layers_view/FeatureServer/0",
+   "fields": {
+    "TOWN": "city",
+    "PLAN_LOT": "parcel_id",
+    "TOTACRES": "acres",
+    "AREATYPE": "kind",
+    "MAPYEAR": "year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -69.62,
+    45.45,
+    -69.55,
+    45.5
+   ],
+   "features_in_probe": 226
+  }
+ },
+ {
+  "name": "me-lupc-zoning",
+  "state": "ME",
+  "title": "Zoning, unorganized territory (Maine)",
+  "title_es": "Zonificación, territorios no organizados (Maine)",
+  "description": "Land Use Planning Commission zones for the North Woods and other places without a town government: development, shoreland, wetland, recreation and protection subdistricts.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Maine Land Use Planning Commission (LUPC Zoning)",
+  "license": "Maine LUPC public data",
+  "view": {
+   "url": "https://gis.maine.gov/mapservices/rest/services/lupc/LUPC_Zoning_Data/MapServer/4",
+   "fields": {
+    "ZONE": "zoning",
+    "MAP": "name",
+    "START_DATE": "start"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "PUBLISH = 'Yes' AND END_DATE IS NULL"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -69.62,
+    45.45,
+    -69.55,
+    45.5
+   ],
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "me-child-care-centers",
+  "state": "ME",
+  "title": "Licensed child care centers (Maine)",
+  "title_es": "Centros de cuidado infantil con licencia (Maine)",
+  "description": "Licensed child care centers and nursery schools (not home daycares), with the license type, whether they take child care subsidy (CCSP) and their Rising Stars quality status (May 2024 list).",
+  "group": "help",
+  "category": "point",
+  "source": "Maine DHHS, Office of Child and Family Services (Rising Stars Child Care Database, 2024)",
+  "license": "Maine GeoLibrary public data",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/Rising_Stars_Childcare_Database_Maine_2024/FeatureServer/0",
+   "fields": {
+    "CHILDCAREN": "name",
+    "street": "address",
+    "city": "city",
+    "TYPE": "kind",
+    "STATUS": "status",
+    "ACCEPTSCCS": "accepts_subsidy",
+    "COUNTY": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "TYPE IN ('Center','Nursery')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -70.5,
+    43.5,
+    -70.0,
+    43.9
+   ],
+   "features_in_probe": 179
+  }
+ },
+ {
+  "name": "me-healthy-beaches",
+  "state": "ME",
+  "title": "Monitored saltwater beaches (Maine)",
+  "title_es": "Playas de agua salada monitoreadas (Maine)",
+  "description": "Coastal beach sites tested for bacteria by the Maine Healthy Beaches program, by beach management area. Advisories are posted at the beach and on the program website.",
+  "group": "nature",
+  "category": "point",
+  "source": "Maine DEP / Maine Healthy Beaches Program (Sites)",
+  "license": "Maine GeoLibrary public data",
+  "view": {
+   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/Maine_Healthy_Beaches/FeatureServer/4",
+   "fields": {
+    "Site": "name",
+    "Beach_Management_Area": "park",
+    "Management_Entity": "manager",
+    "SiteType": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -71.1,
+    43.0,
+    -66.9,
+    47.5
+   ],
+   "features_in_probe": 95
+  }
+ },
+ {
+  "name": "vt-polling-places",
+  "state": "VT",
+  "title": "Polling places, 2026 general election (Vermont)",
+  "title_es": "Lugares de votación, elección general 2026 (Vermont)",
+  "description": "Where each town (or ward) votes on Election Day 2026, with the address, polling hours and accessibility notes, from the Secretary of State.",
+  "group": "civic",
+  "category": "point",
+  "source": "Vermont Secretary of State / VCGI (Polling Locations 2026 General)",
+  "license": "VCGI public data",
+  "view": {
+   "url": "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/FS_VCGI_VT_POLLING_LOCATIONS_2026_general_WM_v1/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "TOWN": "city",
+    "POLL_HRS": "hours",
+    "ACCESSIBILITY": "accessible",
+    "NOTE": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 262
+  }
+ },
+ {
+  "name": "vt-ballot-drop-boxes",
+  "state": "VT",
+  "title": "Ballot drop boxes (Vermont)",
+  "title_es": "Buzones para entregar la boleta (Vermont)",
+  "description": "Secure drop boxes where you can return an early or mail ballot, with where the box is at the site.",
+  "group": "civic",
+  "category": "point",
+  "source": "Vermont Secretary of State / VCGI (Ballot Drop Box Locations)",
+  "license": "VCGI public data",
+  "view": {
+   "url": "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/FS_VCGI_VT_DROP_BOX_LOCATIONS_WM_v1/FeatureServer/37",
+   "fields": {
+    "Town": "city",
+    "Match_addr": "address",
+    "DropBoxLoc": "location",
+    "DropBoxNote": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "DropBoxLoc IS NOT NULL"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 167
+  }
+ },
+ {
+  "name": "vt-town-clerk-offices",
+  "state": "VT",
+  "title": "Town clerk offices (Vermont)",
+  "title_es": "Oficinas del secretario municipal (Vermont)",
+  "description": "Every town clerk's office, where you register to vote, request a ballot, get dog licenses and land records, with office hours and phone.",
+  "group": "civic",
+  "category": "point",
+  "source": "Vermont Secretary of State / VCGI (Municipal Clerk Offices)",
+  "license": "VCGI public data",
+  "view": {
+   "url": "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/FS_VCGI_VT_MUNI_CLERK_OFFICES_WM_v1/FeatureServer/35",
+   "fields": {
+    "TownName": "name",
+    "OfficeAdd": "address",
+    "OfficeCity": "city",
+    "Hours": "hours",
+    "PhNum": "phone",
+    "PreElection": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 247
+  }
+ },
+ {
+  "name": "vt-emergency-service-zones",
+  "state": "VT",
+  "title": "Fire, ambulance & police coverage (Vermont)",
+  "title_es": "Cobertura de bomberos, ambulancia y policía (Vermont)",
+  "description": "E-911 emergency service zones: for any spot, which fire department, ambulance/rescue squad and police agency respond, and which dispatch center answers.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Vermont Enhanced 911 Board / VCGI (Emergency Service Zones)",
+  "license": "VCGI public data",
+  "view": {
+   "url": "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/FS_VCGI_OPENDATA_Emergency_ESZ_poly_SP_v1/FeatureServer/0",
+   "fields": {
+    "TOWNNAME": "city",
+    "FIRE_DisplayName": "fire",
+    "EMS_DisplayName": "ambulance",
+    "EMS2_DisplayName": "first_response",
+    "LAW_DisplayName": "police",
+    "PSAP_DisplayName": "dispatch",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.3,
+    44.3,
+    -72.8,
+    44.7
+   ],
+   "features_in_probe": 59
+  }
+ },
+ {
+  "name": "vt-ambulance-service-areas",
+  "state": "VT",
+  "title": "Ambulance service areas (Vermont)",
+  "title_es": "Zonas de servicio de ambulancia (Vermont)",
+  "description": "The licensed ambulance service that covers each area and its certification level (basic, advanced or paramedic).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Vermont Department of Health, EMS / VCGI (Ambulance Service Areas)",
+  "license": "VCGI public data",
+  "view": {
+   "url": "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/FS_VCGI_OPENDATA_Emergency_AmbulanceServiceAreas_SP_v1/FeatureServer/0",
+   "fields": {
+    "Serv_Name": "name",
+    "Cert_Level": "kind",
+    "City": "city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 67
+  }
+ },
+ {
+  "name": "vt-dam-inundation",
+  "state": "VT",
+  "title": "Dam failure flood areas (Vermont)",
+  "title_es": "Zonas inundables si falla una presa (Vermont)",
+  "description": "Areas that would flood if a large dam failed, from the dams' emergency action plans.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Vermont Emergency Management / VCGI (Dam Inundation Areas)",
+  "license": "VCGI public data",
+  "view": {
+   "url": "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/FS_VCGI_OPENDATA_Emergency_DAMINUND_poly_SP_v1/FeatureServer/0",
+   "fields": {
+    "DamName": "name",
+    "StreamName": "waterbody",
+    "StateDamId": "number"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "vt-river-corridors",
+  "state": "VT",
+  "title": "River corridors, flood erosion hazard (Vermont)",
+  "title_es": "Corredores de ríos, peligro de erosión por inundación (Vermont)",
+  "description": "Land along rivers and streams that rivers need to move and flood safely. Most flood damage in Vermont (2011, 2023, 2024) came from erosion here, often outside FEMA flood zones; building inside needs state review.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Vermont Agency of Natural Resources, Rivers Program (River Corridors)",
+  "license": "Vermont ANR open data",
+  "view": {
+   "url": "https://anrmaps.vermont.gov/arcgis/rest/services/Open_Data/OPENDATA_ANR_WATER_SP_NOCACHE_v2/MapServer/176",
+   "fields": {
+    "GNIS_NAME": "name",
+    "DA_sqmi_f": "drainage_sq_mi",
+    "Bkful_ft": "bankfull_width_ft"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.65,
+    44.2,
+    -72.5,
+    44.3
+   ],
+   "features_in_probe": 77
+  }
+ },
+ {
+  "name": "vt-flood-damage-2023-2024",
+  "state": "VT",
+  "title": "Public flood damage sites, 2023-2024 floods (Vermont)",
+  "title_es": "Sitios públicos dañados por las inundaciones de 2023-2024 (Vermont)",
+  "description": "Roads, bridges, culverts, buildings and parks damaged in the July 2023 and July 2024 floods that towns and agencies asked FEMA to help repair, by damage category.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Vermont Emergency Management / VCGI (FEMA Public Assistance Flood Damage 2023-2024)",
+  "license": "VCGI public data",
+  "view": {
+   "url": "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/VT_FEMA_Public_Assistance_Flood_Damage_2023_2024/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Category": "kind",
+    "Applicant": "agency",
+    "County": "county",
+    "sourceFile": "disaster"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -72.7,
+    44.15,
+    -72.4,
+    44.35
+   ],
+   "features_in_probe": 928
+  }
+ },
+ {
+  "name": "vt-zoning-districts",
+  "state": "VT",
+  "title": "Zoning districts (Vermont)",
+  "title_es": "Zonas de uso de suelo (Vermont)",
+  "description": "Town zoning districts from the Vermont Zoning Atlas: district type, whether 1-, 2-, 3- and 4-family homes and accessory apartments are allowed, and minimum lot size and height for a single-family home.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Vermont Zoning Atlas (UVM / VT Dept. of Housing & Community Development), hosted by VCGI",
+  "license": "VCGI public data",
+  "view": {
+   "url": "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/VT_Zoning_Atlas_UVM_/FeatureServer/0",
+   "fields": {
+    "DIST_NAME": "name",
+    "ABB_DIST_NAME": "zoning",
+    "JXTN": "city",
+    "DIST_TYPE": "kind",
+    "F1FDP": "single_family",
+    "F2FDP": "two_family",
+    "F3FDP": "three_family",
+    "F4FDP": "four_family",
+    "ADUDP": "accessory_apartment",
+    "F1F_MIN_LOT": "min_lot_acres",
+    "F1F_HEIGHT": "max_height_ft"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.3,
+    44.4,
+    -73.0,
+    44.6
+   ],
+   "features_in_probe": 175
+  }
+ },
+ {
+  "name": "vt-wastewater-service-areas",
+  "state": "VT",
+  "title": "Sewer service areas (Vermont)",
+  "title_es": "Zonas con alcantarillado (Vermont)",
+  "description": "Areas served by a municipal sewer system, with the system, treatment plant and number of connections (2023). Outside them homes rely on septic systems.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Vermont Agency of Commerce & Community Development / VCGI (Known Wastewater Service Areas 2023)",
+  "license": "VCGI public data",
+  "view": {
+   "url": "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/2023_VT_Known_Wastewater_Service_Areas_in_Towns_With_Zoning_and_Subdivision_Regulations/FeatureServer/20",
+   "fields": {
+    "sSYSNAME": "name",
+    "sSYSOWNER": "operator",
+    "sTRTMNTFAC": "kind",
+    "iTOTCON": "connections"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 104
+  }
+ },
+ {
+  "name": "vt-villages",
+  "state": "VT",
+  "title": "Incorporated villages (Vermont)",
+  "title_es": "Villas incorporadas (Vermont)",
+  "description": "Vermont's incorporated villages, which have their own trustees and may run water, sewer, police or electric service inside a town.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "VCGI (Village Boundaries)",
+  "license": "VCGI public data",
+  "view": {
+   "url": "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/FS_VCGI_OPENDATA_Boundary_BNDHASH_poly_villages_SP_v1/FeatureServer/0",
+   "fields": {
+    "VILLNAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 34
+  }
+ },
+ {
+  "name": "vt-new-homes",
+  "state": "VT",
+  "title": "New homes since 2016 (Vermont)",
+  "title_es": "Viviendas nuevas desde 2016 (Vermont)",
+  "description": "Housing units added since 2016, mapped from new E-911 addresses and utility hookups, with the year, type of home and number of units. Shows where Vermont is building.",
+  "group": "growth",
+  "category": "point",
+  "source": "Vermont Dept. of Housing & Community Development / VCGI (Vermont New Housing)",
+  "license": "VCGI public data",
+  "view": {
+   "url": "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/Vermont_New_Housing_v1_view/FeatureServer/0",
+   "fields": {
+    "TOWNNAME": "city",
+    "SITETYPE": "kind",
+    "UNITCOUNT": "units",
+    "YEARBUILT": "year_built",
+    "AFFORDABLE": "affordable"
+   },
+   "geometry": "point",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.25,
+    44.45,
+    -73.15,
+    44.52
+   ],
+   "features_in_probe": 435
+  }
+ },
+ {
+  "name": "vt-road-projects",
+  "state": "VT",
+  "title": "Road & bridge projects (Vermont)",
+  "title_es": "Proyectos de carreteras y puentes (Vermont)",
+  "description": "VTrans paving, bridge, safety and other projects that are planned or under construction, with the work, expected construction start and finish.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Vermont Agency of Transportation (VTrans Projects)",
+  "license": "VTrans public data",
+  "view": {
+   "url": "https://services1.arcgis.com/NXmBVyW5TaiCXqFs/arcgis/rest/services/Projects_FLV_External/FeatureServer/1",
+   "fields": {
+    "ProjectName": "name",
+    "ProjectDescription": "description",
+    "WorkDescription": "kind",
+    "SimplifiedStatus": "status",
+    "ExpectedConstructionStart": "start",
+    "ExpectedConstructionFinish": "end",
+    "PlannedConstructionYear": "year",
+    "ProjectNumber": "number"
+   },
+   "geometry": "line",
+   "min_zoom": 7,
+   "where": "SimplifiedStatus <> 'Complete'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 201
+  }
+ },
+ {
+  "name": "vt-bridge-closures",
+  "state": "VT",
+  "title": "Planned bridge closures (Vermont)",
+  "title_es": "Cierres programados de puentes (Vermont)",
+  "description": "State bridges VTrans plans to close for construction, with the route, closure dates and detour information link.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Vermont Agency of Transportation (Highway Closures)",
+  "license": "VTrans public data",
+  "view": {
+   "url": "https://services1.arcgis.com/NXmBVyW5TaiCXqFs/arcgis/rest/services/HighwayClosures_View/FeatureServer/0",
+   "fields": {
+    "LongTown": "city",
+    "Route": "route",
+    "Project": "name",
+    "BeginClosure": "start",
+    "EndClosure": "end",
+    "Link": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "vt-rail-trail-closures",
+  "state": "VT",
+  "title": "Rail trail closures & warnings (Vermont)",
+  "title_es": "Cierres y avisos en senderos ferroviarios (Vermont)",
+  "description": "Current closures and warnings on state rail trails such as the Lamoille Valley and Missisquoi Valley rail trails, with dates. Empty when nothing is posted.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Vermont Agency of Transportation, Rail Section (Rail Trail Notices)",
+  "license": "VTrans public data",
+  "view": {
+   "url": "https://services1.arcgis.com/NXmBVyW5TaiCXqFs/arcgis/rest/services/VT_Rail_Trails_Closure_View/FeatureServer/4",
+   "fields": {
+    "displayName": "name",
+    "description": "description",
+    "town": "city",
+    "lineName": "route",
+    "startDate": "start",
+    "endDate": "end",
+    "hyperlink": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 7,
+   "where": "isActive = 1 AND isPublic = 1"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "vt-park-and-ride",
+  "state": "VT",
+  "title": "Park & ride lots (Vermont)",
+  "title_es": "Estacionamientos para compartir auto o tomar transporte (Vermont)",
+  "description": "Free commuter lots with number of spaces, lighting, bus shelter, bike racks and EV charging.",
+  "group": "roads",
+  "category": "point",
+  "source": "Vermont Agency of Transportation (Park and Ride Locations)",
+  "license": "VTrans public data",
+  "view": {
+   "url": "https://services1.arcgis.com/NXmBVyW5TaiCXqFs/arcgis/rest/services/Vermont_Park_and_Ride_Locations/FeatureServer/0",
+   "fields": {
+    "STREET_ADDRESS": "address",
+    "TOWN": "city",
+    "ROUTE": "route",
+    "SPACES": "capacity",
+    "HC_SPACES": "ada",
+    "LIGHTING": "light",
+    "BUS_SHELTER": "bus_shelter",
+    "EV_CHRG": "ev_charging",
+    "BIKE_RACK": "bike",
+    "STATUS": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 120
+  }
+ },
+ {
+  "name": "vt-community-mental-health",
+  "state": "VT",
+  "title": "Community mental health agencies (Vermont)",
+  "title_es": "Agencias comunitarias de salud mental (Vermont)",
+  "description": "The designated community mental health agency for each region, with its main and 24/7 crisis phone numbers. Anyone can also call or text 988.",
+  "group": "help",
+  "category": "point",
+  "source": "Vermont Department of Mental Health (Wellness Providers - Community Mental Health)",
+  "license": "Vermont AHS public data",
+  "view": {
+   "url": "https://services.arcgis.com/YKJ5JtnaPQ2jDbX8/arcgis/rest/services/Mental_Health_Wellness_Providers_-_Community_Mental_Health_view/FeatureServer/0",
+   "fields": {
+    "Provider_Name": "name",
+    "Address": "address",
+    "County": "county",
+    "Phone": "phone",
+    "CrisisPhone": "crisis_phone",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "vt-mental-health-urgent-care",
+  "state": "VT",
+  "title": "Mental health urgent care (Vermont)",
+  "title_es": "Atención urgente de salud mental (Vermont)",
+  "description": "Walk-in mental health urgent care centers, with hours and how to get in, as an alternative to the emergency room.",
+  "group": "help",
+  "category": "point",
+  "source": "Vermont Department of Mental Health (Wellness Providers - Mental Health Urgent Care)",
+  "license": "Vermont AHS public data",
+  "view": {
+   "url": "https://services.arcgis.com/YKJ5JtnaPQ2jDbX8/arcgis/rest/services/Mental_Health_Wellness_Providers_-_Mental_Health_Urgent_Care_Providers_view/FeatureServer/0",
+   "fields": {
+    "Provider_Name": "name",
+    "Address": "address",
+    "Phone": "phone",
+    "HoursOpen": "hours",
+    "AccessNotes": "access",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "vt-cyanobacteria-reports",
+  "state": "VT",
+  "title": "Toxic algae (cyanobacteria) reports (Vermont)",
+  "title_es": "Reportes de algas tóxicas (cianobacterias) (Vermont)",
+  "description": "Latest shoreline checks for cyanobacteria blooms on Lake Champlain and other lakes: generally safe, low alert or high alert. Keep kids and dogs out of the water at alert sites.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Vermont Department of Health / Lake Champlain Committee (Cyanobacteria Tracker)",
+  "license": "Vermont AHS public data",
+  "view": {
+   "url": "https://services.arcgis.com/YKJ5JtnaPQ2jDbX8/arcgis/rest/services/Cyanobacteria_Current_Approved_Reports_View/FeatureServer/0",
+   "fields": {
+    "SiteName": "name",
+    "Waterbody": "waterbody",
+    "Municipality": "city",
+    "StatusWeb": "status",
+    "ReportDate": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 147
+  }
+ },
+ {
+  "name": "vt-game-refuges",
+  "state": "VT",
+  "title": "Game refuges & controlled hunting areas (Vermont)",
+  "title_es": "Refugios de caza y áreas de caza controlada (Vermont)",
+  "description": "State game refuges and controlled hunting areas where hunting is closed or limited, with the designation date.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Vermont Fish & Wildlife Department / ANR",
+  "license": "Vermont ANR open data",
+  "view": {
+   "url": "https://anrmaps.vermont.gov/arcgis/rest/services/Open_Data/OPENDATA_ANR_CADASTRAL_SP_NOCACHE_v2/MapServer/181",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "DesgDate": "listed"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "vt-waterfowl-zones",
+  "state": "VT",
+  "title": "Waterfowl hunting zones (Vermont)",
+  "title_es": "Zonas de caza de aves acuáticas (Vermont)",
+  "description": "The Lake Champlain, Interior and Connecticut River duck-hunting zones, which have different season dates.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Vermont Fish & Wildlife Department / ANR",
+  "license": "Vermont ANR open data",
+  "view": {
+   "url": "https://anrmaps.vermont.gov/arcgis/rest/services/Open_Data/OPENDATA_ANR_BOUNDARIES_SP_NOCACHE_v2/MapServer/183",
+   "fields": {
+    "ZoneName": "name",
+    "Type": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -73.5,
+    42.7,
+    -71.4,
+    45.1
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "id-ada-zoning",
+  "state": "ID",
+  "title": "Zoning, Ada County (Idaho)",
+  "title_es": "Zonificación, condado de Ada (Idaho)",
+  "description": "Zoning for Boise, Meridian, Eagle, Kuna, Star, Garden City and unincorporated Ada County, with the base zone and the city whose code applies.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Ada County Development Services GIS (Zoning)",
+  "license": "Ada County public data",
+  "view": {
+   "url": "https://services2.arcgis.com/dgGjZc6xAH5m5JyP/arcgis/rest/services/Zoning/FeatureServer/22",
+   "fields": {
+    "ZONING": "zoning",
+    "BASEZONE": "kind",
+    "CITY": "city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -116.3,
+    43.57,
+    -116.15,
+    43.65
+   ],
+   "features_in_probe": 781
+  }
+ },
+ {
+  "name": "id-ada-polling-places",
+  "state": "ID",
+  "title": "Polling places, Ada County (Idaho)",
+  "title_es": "Lugares de votación, condado de Ada (Idaho)",
+  "description": "Election Day polling place for each Ada County precinct, with the address.",
+  "group": "civic",
+  "category": "point",
+  "source": "Ada County Elections (Election Day Polling Places)",
+  "license": "Ada County public data",
+  "view": {
+   "url": "https://services2.arcgis.com/dgGjZc6xAH5m5JyP/arcgis/rest/services/ElectionDay/FeatureServer/0",
+   "fields": {
+    "polling_place": "name",
+    "address": "address",
+    "city": "city",
+    "precinct": "precinct"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -116.5,
+    43.4,
+    -116.0,
+    43.8
+   ],
+   "features_in_probe": 196
+  }
+ },
+ {
+  "name": "id-ada-fire-districts",
+  "state": "ID",
+  "title": "Fire districts, Ada County (Idaho)",
+  "title_es": "Distritos de bomberos, condado de Ada (Idaho)",
+  "description": "Which city fire department or rural fire protection district covers each part of Ada County.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Ada County GIS (Fire Districts)",
+  "license": "Ada County public data",
+  "view": {
+   "url": "https://services2.arcgis.com/dgGjZc6xAH5m5JyP/arcgis/rest/services/Fire_Districts/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "DISTCAT": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -116.5,
+    43.2,
+    -115.9,
+    43.9
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "id-ada-historic-sites",
+  "state": "ID",
+  "title": "Historic sites survey, Ada County (Idaho)",
+  "title_es": "Inventario de sitios históricos, condado de Ada (Idaho)",
+  "description": "Buildings recorded in Ada County's historic sites survey, with the type, year built, a short description and whether they are eligible for or contribute to a historic listing.",
+  "group": "places",
+  "category": "point",
+  "source": "Ada County Historic Preservation Commission (Historical Sites)",
+  "license": "Ada County public data",
+  "view": {
+   "url": "https://services2.arcgis.com/dgGjZc6xAH5m5JyP/arcgis/rest/services/Historical_Sites/FeatureServer/0",
+   "fields": {
+    "Address": "address",
+    "City": "city",
+    "Site_Types": "kind",
+    "Built__Ca_": "year_built",
+    "Site_Descr": "description",
+    "Status_1": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -116.5,
+    43.4,
+    -116.0,
+    43.8
+   ],
+   "features_in_probe": 387
+  }
+ },
+ {
+  "name": "id-boise-future-land-use",
+  "state": "ID",
+  "title": "Future land use plan, Boise (Idaho)",
+  "title_es": "Plan de uso de suelo futuro, Boise (Idaho)",
+  "description": "What Boise's comprehensive plan (Blueprint Boise) designates each area to become: neighborhoods, mixed use, employment, open space and more.",
+  "group": "growth",
+  "category": "landuse",
+  "source": "City of Boise Planning & Development Services (Future Land Use)",
+  "license": "City of Boise public data",
+  "view": {
+   "url": "https://services1.arcgis.com/WHM6qC35aMtyAAlN/arcgis/rest/services/FutureLandUse/FeatureServer/0",
+   "fields": {
+    "LandUse": "kind",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -116.3,
+    43.55,
+    -116.1,
+    43.68
+   ],
+   "features_in_probe": 347
+  }
+ },
+ {
+  "name": "id-boise-historic-districts",
+  "state": "ID",
+  "title": "Historic districts, Boise (Idaho)",
+  "title_es": "Distritos históricos, Boise (Idaho)",
+  "description": "Boise's local historic districts, where exterior changes need Historic Preservation Commission approval, with the ordinance that created each one.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Boise Planning & Development Services (Historic Districts)",
+  "license": "City of Boise public data",
+  "view": {
+   "url": "https://services1.arcgis.com/WHM6qC35aMtyAAlN/arcgis/rest/services/HistoricDistricts/FeatureServer/0",
+   "fields": {
+    "District_Name": "name",
+    "Ordinance": "ordinance",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -116.3,
+    43.55,
+    -116.1,
+    43.68
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "id-boise-warming-resources",
+  "state": "ID",
+  "title": "Winter warming places, Boise (Idaho)",
+  "title_es": "Lugares para calentarse en invierno, Boise (Idaho)",
+  "description": "Libraries, churches and service providers the City of Boise lists as places to get warm in winter, with hours, phone and whether they offer meals, showers, laundry or an overnight stay. List from winter 2023-24: call ahead to confirm.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Boise (Winter Resources)",
+  "license": "City of Boise public data",
+  "view": {
+   "url": "https://services1.arcgis.com/WHM6qC35aMtyAAlN/arcgis/rest/services/Winter_Resources/FeatureServer/0",
+   "fields": {
+    "Location": "name",
+    "Type": "kind",
+    "Address": "address",
+    "Hours": "hours",
+    "Phone": "phone",
+    "Food_Meals": "meals",
+    "Overnight_Stay": "overnight",
+    "Showers": "showers",
+    "Laundry": "laundry",
+    "Clothes": "clothes"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -116.3,
+    43.55,
+    -116.1,
+    43.68
+   ],
+   "features_in_probe": 26
+  }
+ },
+ {
+  "name": "id-boise-river-hazards",
+  "state": "ID",
+  "title": "Boise River float hazards & access (Idaho)",
+  "title_es": "Peligros y accesos del río Boise para flotar (Idaho)",
+  "description": "Put-ins, take-outs, rapids, diversion dams and other hazards along the Boise River float, with safety notes and river mile.",
+  "group": "nature",
+  "category": "point",
+  "source": "City of Boise Parks & Recreation (Boise River Hazards and Access)",
+  "license": "City of Boise public data",
+  "view": {
+   "url": "https://services1.arcgis.com/WHM6qC35aMtyAAlN/arcgis/rest/services/Boise_River_Hazards_and_Access_-_VIEW/FeatureServer/10",
+   "fields": {
+    "Name": "name",
+    "Descriptions": "description",
+    "Marker": "marker",
+    "Comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -116.4,
+    43.5,
+    -116.05,
+    43.7
+   ],
+   "features_in_probe": 119
+  }
+ },
+ {
+  "name": "id-boise-waste-drop-off",
+  "state": "ID",
+  "title": "Recycling & hazardous waste drop-off, Boise (Idaho)",
+  "title_es": "Puntos de reciclaje y desechos peligrosos, Boise (Idaho)",
+  "description": "Glass recycling bins, household hazardous waste, medication take-back, leaf and food-scrap drop-off sites, with what each one accepts.",
+  "group": "infra",
+  "category": "point",
+  "source": "City of Boise Public Works (Waste Collection Sites)",
+  "license": "City of Boise public data",
+  "view": {
+   "url": "https://services1.arcgis.com/WHM6qC35aMtyAAlN/arcgis/rest/services/Waste_Collection_Sites_Public/FeatureServer/0",
+   "fields": {
+    "Title": "name",
+    "Type": "kind",
+    "Address": "address",
+    "Description": "description",
+    "URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -116.4,
+    43.5,
+    -116.05,
+    43.7
+   ],
+   "features_in_probe": 44
+  }
+ },
+ {
+  "name": "id-boise-development-tracker",
+  "state": "ID",
+  "title": "Development applications, Boise (Idaho)",
+  "title_es": "Solicitudes de desarrollo, Boise (Idaho)",
+  "description": "Rezonings, subdivisions, conditional uses and other land-use applications under review in Boise, with status, who decides and the next public hearing date.",
+  "group": "growth",
+  "category": "landuse",
+  "source": "City of Boise Planning & Development Services (Development Tracker)",
+  "license": "City of Boise public data",
+  "view": {
+   "url": "https://services1.arcgis.com/WHM6qC35aMtyAAlN/arcgis/rest/services/Development_Tracker_Open_Data/FeatureServer/0",
+   "fields": {
+    "RecordType": "kind",
+    "PropertyAddress": "address",
+    "Status": "status",
+    "ReviewAuthority": "agency",
+    "NextHearingDate": "hearing_date",
+    "HearingBody": "hearing_body",
+    "NeighborhoodAssociationName": "neighborhood",
+    "RecordID": "number",
+    "Website": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -116.3,
+    43.55,
+    -116.1,
+    43.68
+   ],
+   "features_in_probe": 812
+  }
+ },
+ {
+  "name": "id-highway-districts",
+  "state": "ID",
+  "title": "Highway districts (Idaho)",
+  "title_es": "Distritos de carreteras (Idaho)",
+  "description": "The local highway district, county or city that owns and plows each area's local roads. In Idaho these are often separate elected districts (like ACHD in Ada County), so this is who to call about potholes and snow.",
+  "group": "roads",
+  "category": "boundary",
+  "source": "Idaho Transportation Department (Local Road Inventory, Local Highway Districts)",
+  "license": "ITD public data",
+  "view": {
+   "url": "https://gisp.itd.idaho.gov/server/rest/services/GDWarehouse/LocalRoadInventory/FeatureServer/3",
+   "fields": {
+    "HDJName": "name",
+    "County": "county",
+    "Co_or_HD": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3,
+    42.0,
+    -111.0,
+    49.0
+   ],
+   "features_in_probe": 104
+  }
+ },
+ {
+  "name": "id-itd-planned-projects",
+  "state": "ID",
+  "title": "Planned state highway projects (Idaho)",
+  "title_es": "Proyectos planeados en carreteras estatales (Idaho)",
+  "description": "State highway projects in the Idaho Transportation Investment Program (ITIP): location, type of work, program year and a plain-language description.",
+  "group": "growth",
+  "category": "roadops",
+  "source": "Idaho Transportation Department (ITIP Projects)",
+  "license": "ITD public data",
+  "view": {
+   "url": "https://gisp.itd.idaho.gov/server/rest/services/GDWarehouse/Capital_Projects/FeatureServer/3",
+   "fields": {
+    "Location": "name",
+    "Route": "route",
+    "Work_": "kind",
+    "PublicDescription": "description",
+    "ProgramYear": "year",
+    "City": "city",
+    "County": "county",
+    "KeyNo": "number"
+   },
+   "geometry": "line",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3,
+    42.0,
+    -111.0,
+    49.0
+   ],
+   "features_in_probe": 237
+  }
+ },
+ {
+  "name": "id-rest-areas",
+  "state": "ID",
+  "title": "Highway rest areas (Idaho)",
+  "title_es": "Áreas de descanso en carreteras (Idaho)",
+  "description": "ITD rest areas along interstates and state highways.",
+  "group": "roads",
+  "category": "point",
+  "source": "Idaho Transportation Department (Rest Areas)",
+  "license": "ITD public data",
+  "view": {
+   "url": "https://gisp.itd.idaho.gov/server/rest/services/GDWarehouse/Assets/FeatureServer/5",
+   "fields": {
+    "FacilityName": "name",
+    "CommonRoadName": "route",
+    "CountyName": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3,
+    42.0,
+    -111.0,
+    49.0
+   ],
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "id-water-districts",
+  "state": "ID",
+  "title": "Water districts (Idaho)",
+  "title_es": "Distritos de agua (Idaho)",
+  "description": "IDWR water districts, whose watermasters deliver water by priority date to canals, irrigators and wells. Your water right is administered by the district it falls in.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Idaho Department of Water Resources (Water Districts)",
+  "license": "IDWR public data",
+  "view": {
+   "url": "https://gis.idwr.idaho.gov/hosting/rest/services/Regulatory/WaterDistricts/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "number",
+    "DISTAME": "name",
+    "STATUS": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "STATUS = 'Active'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3,
+    42.0,
+    -111.0,
+    49.0
+   ],
+   "features_in_probe": 101
+  }
+ },
+ {
+  "name": "id-groundwater-management-areas",
+  "state": "ID",
+  "title": "Groundwater management & critical areas (Idaho)",
+  "title_es": "Áreas de manejo y críticas de agua subterránea (Idaho)",
+  "description": "Areas where IDWR limits new well permits because groundwater is declining or over-allocated. New wells here may face extra rules.",
+  "group": "hazards",
+  "category": "boundary",
+  "source": "Idaho Department of Water Resources (Groundwater Management Areas)",
+  "license": "IDWR public data",
+  "view": {
+   "url": "https://gis.idwr.idaho.gov/hosting/rest/services/Regulatory/GroundwaterManagementAreas/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "SubArea": "kind",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3,
+    42.0,
+    -111.0,
+    49.0
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "id-critical-groundwater-areas",
+  "state": "ID",
+  "title": "Critical groundwater areas (Idaho)",
+  "title_es": "Áreas críticas de agua subterránea (Idaho)",
+  "description": "Basins IDWR has declared critical: not enough groundwater for current uses, so new appropriations are restricted.",
+  "group": "hazards",
+  "category": "boundary",
+  "source": "Idaho Department of Water Resources (Critical Groundwater Areas)",
+  "license": "IDWR public data",
+  "view": {
+   "url": "https://gis.idwr.idaho.gov/hosting/rest/services/Regulatory/CriticalGroundwaterAreas/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3,
+    42.0,
+    -111.0,
+    49.0
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "id-drilling-concern-areas",
+  "state": "ID",
+  "title": "Areas of drilling concern, contaminated groundwater (Idaho)",
+  "title_es": "Zonas con restricciones de perforación por agua contaminada (Idaho)",
+  "description": "Places where groundwater contamination (such as the PCE plume in west Boise or Superfund metals) means new wells need special construction rules.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Idaho Department of Water Resources (Areas of Drilling Concern)",
+  "license": "IDWR public data",
+  "view": {
+   "url": "https://gis.idwr.idaho.gov/hosting/rest/services/Regulatory/AreasOfDrillingConcern/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "STATUS": "status",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3,
+    42.0,
+    -111.0,
+    49.0
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "id-wells",
+  "state": "ID",
+  "title": "Water wells (Idaho)",
+  "title_es": "Pozos de agua (Idaho)",
+  "description": "Wells on file with IDWR (domestic, irrigation, public supply and more) with use, depth, casing depth, water level and yield when drilled. Useful for knowing how deep neighbors had to drill. Owner names are left out.",
+  "group": "infra",
+  "category": "point",
+  "source": "Idaho Department of Water Resources (Wells)",
+  "license": "IDWR public data",
+  "view": {
+   "url": "https://gis.idwr.idaho.gov/hosting/rest/services/Groundwater/Wells/FeatureServer/0",
+   "fields": {
+    "WellUse": "kind",
+    "ConstructionDate": "start",
+    "TotalDepth": "depth_ft",
+    "CasingDepth": "casing_depth_ft",
+    "StaticWaterLevel": "water_level_ft",
+    "ProductionRate": "yield_gpm",
+    "CountyName": "county",
+    "WellID": "number"
+   },
+   "geometry": "point",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -116.3,
+    43.55,
+    -116.22,
+    43.6
+   ],
+   "features_in_probe": 1273
+  }
+ },
+ {
+  "name": "id-hot-springs",
+  "state": "ID",
+  "title": "Geothermal hot springs (Idaho)",
+  "title_es": "Aguas termales (Idaho)",
+  "description": "Thermal springs recorded by IDWR with their water temperature. Many are on public land; some are scalding or on private property, so check before visiting.",
+  "group": "nature",
+  "category": "point",
+  "source": "Idaho Department of Water Resources (Geothermal Springs)",
+  "license": "IDWR public data",
+  "view": {
+   "url": "https://gis.idwr.idaho.gov/hosting/rest/services/Groundwater/GeothermalSprings/FeatureServer/0",
+   "fields": {
+    "SiteName": "name",
+    "MaxWaterTemp": "max_temp_f",
+    "GeothermalUse": "use",
+    "Discharge": "discharge"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3,
+    42.0,
+    -111.0,
+    49.0
+   ],
+   "features_in_probe": 279
+  }
+ },
+ {
+  "name": "id-wildlife-management-areas",
+  "state": "ID",
+  "title": "Wildlife management areas (Idaho)",
+  "title_es": "Áreas de manejo de vida silvestre (Idaho)",
+  "description": "Idaho Fish and Game WMAs open for hunting, fishing and wildlife watching, with acres.",
+  "group": "nature",
+  "category": "park",
+  "source": "Idaho Department of Fish and Game (Wildlife Management Areas)",
+  "license": "IDFG public data",
+  "view": {
+   "url": "https://services.arcgis.com/FjJI5xHF2dUPVrgK/arcgis/rest/services/WildlifeManagementAreas/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3,
+    42.0,
+    -111.0,
+    49.0
+   ],
+   "features_in_probe": 31
+  }
+ },
+ {
+  "name": "id-controlled-hunt-areas",
+  "state": "ID",
+  "title": "Controlled hunt areas (Idaho)",
+  "title_es": "Áreas de cacerías controladas (Idaho)",
+  "description": "Boundaries of the current controlled (draw) hunts for deer, elk, pronghorn, moose, bighorn, goat, bear and turkey, by hunt area number and season year.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Idaho Department of Fish and Game (Controlled Hunt Areas)",
+  "license": "IDFG public data",
+  "view": {
+   "url": "https://services.arcgis.com/FjJI5xHF2dUPVrgK/arcgis/rest/services/ControlledHunts_All/FeatureServer/0",
+   "fields": {
+    "HuntArea": "name",
+    "BigGame": "species",
+    "Year": "year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "Year >= 2025"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -116.5,
+    43.0,
+    -115.5,
+    44.0
+   ],
+   "features_in_probe": 51
+  }
+ },
+ {
+  "name": "id-big-game-hunting-restrictions",
+  "state": "ID",
+  "title": "Areas closed or restricted for big game hunting (Idaho)",
+  "title_es": "Zonas cerradas o restringidas para la caza mayor (Idaho)",
+  "description": "Parks, refuges, towns and other places where big game hunting is closed or limited (archery-only, no rifles...), with the rule.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Idaho Department of Fish and Game (Areas with Hunting Restrictions)",
+  "license": "IDFG public data",
+  "view": {
+   "url": "https://services.arcgis.com/FjJI5xHF2dUPVrgK/arcgis/rest/services/AreasWithHuntingRestrictions/FeatureServer/0",
+   "fields": {
+    "Closed_Are": "name",
+    "Comments": "restrictions"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3,
+    42.0,
+    -111.0,
+    49.0
+   ],
+   "features_in_probe": 48
+  }
+ },
+ {
+  "name": "id-forest-fire-protection-districts",
+  "state": "ID",
+  "title": "Forest fire protection districts (Idaho)",
+  "title_es": "Distritos de protección contra incendios forestales (Idaho)",
+  "description": "Who fights wildfires on state and private forest land in each area: Idaho Department of Lands districts and timber protective associations.",
+  "group": "hazards",
+  "category": "boundary",
+  "source": "Idaho Department of Lands (Forest Protective Districts)",
+  "license": "IDL public data",
+  "view": {
+   "url": "https://services2.arcgis.com/1cvrwLhZRFh3okEF/arcgis/rest/services/IDL_Fire_Layers/FeatureServer/0",
+   "fields": {
+    "Lable2": "name",
+    "Agency": "agency",
+    "Fire_Protection_Response": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3,
+    42.0,
+    -111.0,
+    49.0
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "id-rangeland-fire-protection",
+  "state": "ID",
+  "title": "Rangeland fire protection associations (Idaho)",
+  "title_es": "Asociaciones de protección contra incendios en pastizales (Idaho)",
+  "description": "Areas covered by rancher-run rangeland fire protection associations (RFPAs), trained and equipped by the state to attack range fires early.",
+  "group": "hazards",
+  "category": "boundary",
+  "source": "Idaho Department of Lands (RFPA Boundaries)",
+  "license": "IDL public data",
+  "view": {
+   "url": "https://services2.arcgis.com/1cvrwLhZRFh3okEF/arcgis/rest/services/IDL_Fire_Layers/FeatureServer/1",
+   "fields": {
+    "Name": "name",
+    "Acres": "acres",
+    "Type": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3,
+    42.0,
+    -111.0,
+    49.0
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "as-beach-water-tests",
+  "state": "AS",
+  "title": "Beach water tests, last 90 days (American Samoa)",
+  "title_es": "Pruebas de agua en playas, últimos 90 días (Samoa Americana)",
+  "description": "Recent bacteria (Enterococcus) tests at American Samoa beaches with the result: safe, advisory or not sampled. Several samples per beach may stack; empty if nothing was sampled in the last 90 days.",
+  "group": "hazards",
+  "category": "point",
+  "source": "American Samoa Environmental Protection Agency (Beach Advisory Data)",
+  "license": "American Samoa Government public data",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Beach_Advisory_Data/FeatureServer/0",
+   "fields": {
+    "Beach_Name": "name",
+    "Village": "city",
+    "Date": "updated",
+    "Result": "status",
+    "Enteroccocus_Level": "enterococcus"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "Date >= CURRENT_DATE - INTERVAL '90' DAY"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -170.9,
+    -14.4,
+    -170.5,
+    -14.2
+   ],
+   "features_in_probe": 41
+  }
+ },
+ {
+  "name": "as-wetlands",
+  "state": "AS",
+  "title": "Delineated wetlands (American Samoa)",
+  "title_es": "Humedales delimitados (Samoa Americana)",
+  "description": "Wetlands surveyed in 2023-2024 by village, with type, size and whether they fall under federal (Army Corps) jurisdiction. Filling or building in them needs a permit.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "American Samoa Government, Dept. of Commerce Coastal Management Program (Wetlands 2023)",
+  "license": "American Samoa Government public data",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/American_Samoa_Wetlands_2023/FeatureServer/0",
+   "fields": {
+    "WetlandID": "name",
+    "Village": "city",
+    "NationalWetlandClassification": "kind",
+    "Acres": "acres",
+    "USACE_Jurisdictional": "federal_jurisdiction"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -170.9,
+    -14.4,
+    -170.5,
+    -14.2
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "as-groundwater-recharge",
+  "state": "AS",
+  "title": "Groundwater recharge areas (American Samoa)",
+  "title_es": "Zonas de recarga de agua subterránea (Samoa Americana)",
+  "description": "Areas that refill the aquifer most of Tutuila drinks from. Land use permits here get extra review to protect drinking water.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "American Samoa Government, Land Use Permitting (Recharge Areas)",
+  "license": "American Samoa Government public data",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Land_Use_Permitting_Data/FeatureServer/7",
+   "fields": {
+    "ID": "number"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -170.9,
+    -14.4,
+    -170.5,
+    -14.2
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "as-special-management-areas",
+  "state": "AS",
+  "title": "Special management areas (American Samoa)",
+  "title_es": "Áreas de manejo especial (Samoa Americana)",
+  "description": "Coastal Special Management Areas (such as Pago Pago Harbor, Leone and Nu'uuli Pala) where development follows stricter coastal rules.",
+  "group": "planning",
+  "category": "boundary",
+  "source": "American Samoa Government, Coastal Management Program (Special Management Areas)",
+  "license": "American Samoa Government public data",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Land_Use_Permitting_Data/FeatureServer/9",
+   "fields": {
+    "SMA_NAME": "name",
+    "DESCRIPTIO": "description",
+    "TOWN": "city",
+    "ISLAND": "island",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -170.9,
+    -14.4,
+    -170.5,
+    -14.2
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "as-bridges",
+  "state": "AS",
+  "title": "Bridges (American Samoa)",
+  "title_es": "Puentes (Samoa Americana)",
+  "description": "Road bridges on Tutuila and Manu'a with the route and structure type.",
+  "group": "roads",
+  "category": "point",
+  "source": "American Samoa Dept. of Public Works (Bridges)",
+  "license": "American Samoa Government public data",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/AS_Bridges_Civil_Highway_/FeatureServer/5",
+   "fields": {
+    "Bridge_Nam": "name",
+    "Route_Loca": "route",
+    "Structure1": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -170.9,
+    -14.4,
+    -170.5,
+    -14.2
+   ],
+   "features_in_probe": 62
+  }
+ },
+ {
+  "name": "as-gas-stations",
+  "state": "AS",
+  "title": "Gas stations (American Samoa)",
+  "title_es": "Gasolineras (Samoa Americana)",
+  "description": "Fuel stations, useful to know before and after cyclones.",
+  "group": "places",
+  "category": "point",
+  "source": "American Samoa Government (Gas Stations)",
+  "license": "American Samoa Government public data",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Gas_Stations/FeatureServer/2",
+   "fields": {
+    "STAT_NAME": "name",
+    "LOCATION": "address"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -170.9,
+    -14.4,
+    -170.5,
+    -14.2
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "mp-brownfields",
+  "state": "MP",
+  "title": "Brownfield sites (Northern Mariana Islands)",
+  "title_es": "Sitios contaminados (brownfields) (Islas Marianas del Norte)",
+  "description": "Properties with known or suspected contamination (mostly petroleum) being assessed or cleaned up, with the contaminant and cleanup status.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "CNMI Bureau of Environmental & Coastal Quality (Brownfield Sites)",
+  "license": "CNMI Government public data",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/Brownfield_sites/FeatureServer/0",
+   "fields": {
+    "CONTAMINAN": "kind",
+    "RESPONSE_S": "status",
+    "ISLAND": "island",
+    "PARCEL_ID": "parcel_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    145.6,
+    15.0,
+    145.9,
+    15.3
+   ],
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "mp-groundwater-zones",
+  "state": "MP",
+  "title": "Groundwater management zones (Northern Mariana Islands)",
+  "title_es": "Zonas de manejo del agua subterránea (Islas Marianas del Norte)",
+  "description": "Class I and II zones protecting the aquifers that supply drinking water; septic systems, fuel tanks and other uses here face stricter rules.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "CNMI Bureau of Environmental & Coastal Quality (Groundwater Management Zones)",
+  "license": "CNMI Government public data",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/Groundwater_management_zones/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Descriptio": "description",
+    "BMP": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    145.6,
+    14.1,
+    145.9,
+    15.3
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "mp-coastal-flood-2067",
+  "state": "MP",
+  "title": "100-year coastal flood with sea-level rise, 2067 (Northern Mariana Islands)",
+  "title_es": "Inundación costera de 100 años con subida del mar, 2067 (Islas Marianas del Norte)",
+  "description": "Land that a 100-year typhoon-driven coastal flood could reach after 50 years of high-end sea-level rise (about 3.2 m total water level).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "CNMI Office of Planning & Development / BECQ Coastal Resources (Flood Scenarios 2023)",
+  "license": "CNMI Government public data",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/FloodScenarios_2023_dissolve/FeatureServer/6",
+   "fields": {
+    "Descriptio": "description",
+    "Rise_meter": "water_level_m"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    145.6,
+    15.0,
+    145.9,
+    15.3
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "mp-shoreline-access",
+  "state": "MP",
+  "title": "Shoreline access points (Northern Mariana Islands)",
+  "title_es": "Accesos públicos a la costa (Islas Marianas del Norte)",
+  "description": "Public beaches, fishing cliffs, tide pools and other shoreline access points from the CNMI Shoreline Access Guide, with a short description.",
+  "group": "nature",
+  "category": "point",
+  "source": "CNMI Division of Coastal Resources Management (Shoreline Access Guide)",
+  "license": "CNMI Government public data",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/ShorelineAccessAll/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Island": "island",
+    "Short_Desc": "description",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    145.0,
+    14.0,
+    146.0,
+    15.4
+   ],
+   "features_in_probe": 56
+  }
+ },
+ {
+  "name": "vi-lead-water-neighborhoods",
+  "state": "VI",
+  "title": "Neighborhoods affected by lead in tap water, St. Croix (US Virgin Islands)",
+  "title_es": "Vecindarios afectados por plomo en el agua, St. Croix (Islas Vírgenes de EE. UU.)",
+  "description": "St. Croix estates included in the 2023 lead and copper drinking-water emergency. Residents there were told to use bottled water for drinking, cooking and baby formula until their supply was cleared.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "FEMA Region 2 / USVI government (STX Pb Impacted Neighborhoods, Dec 2023)",
+  "license": "Public domain (FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/20231204_STX_Pb_Impacted_Neighborhoods/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "Impacted": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "Impacted = 'Yes'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -65.0,
+    17.6,
+    -64.5,
+    17.85
+   ],
+   "features_in_probe": 24
+  }
+ },
+ {
+  "name": "vi-fema-offices",
+  "state": "VI",
+  "title": "FEMA and recovery offices (US Virgin Islands)",
+  "title_es": "Oficinas de FEMA y de recuperación (Islas Vírgenes de EE. UU.)",
+  "description": "FEMA field and joint recovery offices and other government facilities that support disaster recovery on each island, with address.",
+  "group": "help",
+  "category": "point",
+  "source": "FEMA Region 2 (Government Facilities USVI, validated 2025)",
+  "license": "Public domain (FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Government_Facilities_USVI_2022/FeatureServer/59",
+   "fields": {
+    "Facility_Name": "name",
+    "Address": "address",
+    "COUNTY": "island",
+    "Type": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -65.1,
+    17.6,
+    -64.5,
+    18.45
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "vi-seaports",
+  "state": "VI",
+  "title": "Seaports & docks (US Virgin Islands)",
+  "title_es": "Puertos y muelles (Islas Vírgenes de EE. UU.)",
+  "description": "Cargo, cruise, ferry and fuel ports and docks on St. Thomas, St. John and St. Croix, with their main use.",
+  "group": "infra",
+  "category": "point",
+  "source": "FEMA Region 2 (Seaports USVI)",
+  "license": "Public domain (FEMA)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Seaports_USVI_2021/FeatureServer/0",
+   "fields": {
+    "FAC_NAME": "name",
+    "FAC_TYPE": "kind",
+    "Main_Use": "use",
+    "COUNTY": "island"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -65.1,
+    17.6,
+    -64.5,
+    18.45
+   ],
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "vi-territorial-parks",
+  "state": "VI",
+  "title": "Territorial parks (US Virgin Islands)",
+  "title_es": "Parques territoriales (Islas Vírgenes de EE. UU.)",
+  "description": "Parks and protected properties managed by the Territorial Park and Protected Areas program, with acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "USVI Territorial Parks & Protected Areas (TPPA Managed Properties)",
+  "license": "USVI Government public data",
+  "view": {
+   "url": "https://services3.arcgis.com/VlblJrJklerBHiW0/arcgis/rest/services/TPPA_Managed_Properties/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Acreage": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -65.1,
+    17.6,
+    -64.5,
+    18.45
+   ],
+   "features_in_probe": 6
+  }
+ }
+]
