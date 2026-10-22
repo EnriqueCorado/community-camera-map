@@ -19,6 +19,12 @@ const base = process.env.VITE_BASE ?? "/";
 const origin = (process.env.SITE_ORIGIN ?? "https://enriquecorado.github.io").replace(/\/$/, "");
 const publicBase = process.env.SITE_BASE ?? "/community-camera-map/";
 const repo = "https://github.com/EnriqueCorado/community-camera-map";
+// The anonymous usage counter (relay/api/count.ts), the same variable the app
+// build reads. Empty = no counting, and the pages may connect to nothing.
+const counter = process.env.VITE_COUNTER_URL ?? "";
+if (counter && !/^https:\/\/[a-z0-9.-]+(:\d+)?\/api\/count$/i.test(counter)) {
+  throw new Error(`prerender: VITE_COUNTER_URL must be https://<host>/api/count (got "${counter}")`);
+}
 
 // Every link must be https, a phone or email link, or a path on this site: a
 // bad edit to a facts file fails the build instead of shipping.
@@ -30,9 +36,9 @@ function checkLinks(path, html) {
   }
 }
 
-/** A Content-Security-Policy that lets the page load nothing but itself: the
- *  browser enforces the "no requests" promise, and only these exact inline
- *  scripts can run. */
+/** A Content-Security-Policy that lets the page load nothing but itself (and,
+ *  when the build has one, send to the usage counter): the browser enforces
+ *  the "no requests" promise, and only these exact inline scripts can run. */
 function withCsp(html) {
   const hashes = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(
     ([, body]) => `'sha256-${createHash("sha256").update(body).digest("base64")}'`,
@@ -42,6 +48,8 @@ function withCsp(html) {
     "style-src 'unsafe-inline'",
     `script-src ${hashes.join(" ") || "'none'"}`,
     "worker-src 'self'", // the folder's offline service worker (help/sw.js, ayuda/sw.js)
+    // Only pages that count (not flyers) may reach the counter.
+    ...(counter && /<body[^>]*\sdata-counter="/.test(html) ? [`connect-src ${new URL(counter).origin}`] : []),
     "base-uri 'none'",
     "form-action 'none'",
   ].join("; ");
@@ -75,7 +83,7 @@ const vite = await createServer({ root, logLevel: "error", server: { middlewareM
 try {
   const { renderSite } = await vite.ssrLoadModule("/src/landing/render.tsx");
   const legalHelp = JSON.parse(await readFile(join(root, "public/data/layers/legal-help.geojson"), "utf8"));
-  const pages = renderSite({ origin, base, publicBase, repo, legalHelp });
+  const pages = renderSite({ origin, base, publicBase, repo, legalHelp, counter });
   // "Save all pages (about N KB)": what saving really downloads (compressed).
   for (const folder of SW_FOLDERS) {
     const bytes = savedPages(pages, folder).reduce((n, p) => n + gzipSync(p.html).length, 0);

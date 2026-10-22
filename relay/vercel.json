@@ -1,5 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "regions": ["sfo1"],
-  "functions": { "api/flights.ts": { "maxDuration": 20 } }
+  "regions": [
+    "sfo1"
+  ],
+  "functions": {
+    "api/flights.ts": {
+      "maxDuration": 20
+    },
+    "api/count.ts": {
+      "maxDuration": 5
+    }
+  }
 }

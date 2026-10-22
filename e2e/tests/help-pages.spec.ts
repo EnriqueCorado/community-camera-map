@@ -76,6 +76,8 @@ test("no broken links between the pages", async ({ page, request }) => {
 });
 
 test("pages make no requests beyond the page itself, and the browser enforces it", async ({ page }) => {
+  // A build with the usage counter: answer for it here (tests aren't visitors).
+  await page.route("**/api/count?e=*", (route) => route.fulfill({ status: 204 }));
   const blocked: string[] = [];
   page.on("console", (m) => m.type() === "error" && blocked.push(m.text()));
   for (const path of ALL) {
@@ -85,12 +87,19 @@ test("pages make no requests beyond the page itself, and the browser enforces it
     await page.goto(path);
     await page.waitForLoadState("networkidle");
     page.off("request", log);
-    // The page itself, plus (in help/ and ayuda/) its own folder's offline worker.
-    const others = urls.filter((u) => u !== page.url() && !/\/(help|ayuda)\/sw\.js$/.test(new URL(u).pathname));
+    // The page itself, plus (in help/ and ayuda/) its own folder's offline worker,
+    // plus, when the build has the anonymous usage counter, one count to it.
+    const counter = await page.locator("body").getAttribute("data-counter");
+    const counts = counter ? urls.filter((u) => u.startsWith(`${counter}?e=`)) : [];
+    expect(counts.length, path).toBeLessThanOrEqual(1);
+    const others = urls.filter((u) => u !== page.url() && !counts.includes(u) && !/\/(help|ayuda)\/sw\.js$/.test(new URL(u).pathname));
     expect(others, path).toEqual([]);
-    expect(urls.every((u) => new URL(u).origin === new URL(page.url()).origin), path).toBe(true);
+    expect(urls.every((u) => counts.includes(u) || new URL(u).origin === new URL(page.url()).origin), path).toBe(true);
     const csp = await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute("content");
     expect(csp, path).toContain("default-src 'none'");
+    // The only place a page may connect to is the counter (and only if there is one).
+    if (counter) expect(csp, path).toContain(`connect-src ${new URL(counter).origin};`);
+    else expect(csp, path).not.toContain("connect-src");
     await expect(page.locator('meta[name="referrer"]'), path).toHaveAttribute("content", "no-referrer");
   }
   // The theme and Print scripts are allowed by hash: no CSP errors anywhere.

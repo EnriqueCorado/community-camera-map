@@ -176,6 +176,8 @@ export interface HelpCopy {
   legalCount: Fn<[number]>;
   legalLanguages: string;
   legalCallFirst: string;
+  /** Shown only when the anonymous usage counter is on (help/count.ts). */
+  countNote: string;
 }
 
 const pctText = (n: number) => `${n}%`;
@@ -373,6 +375,8 @@ const en: HelpCopy = {
   legalLanguages: "Languages",
   legalCallFirst:
     "“DOJ-recognized” means the U.S. Department of Justice approved the organization to give immigration legal help. Some of its staff may only help with applications, not in immigration court: ask.",
+  countNote:
+    "We count how many times each tool is opened (one number per tool, per month) to show it helps. Nothing about you or what you type is sent. Browsers set to Do Not Track or Global Privacy Control aren’t counted.",
 };
 
 const es: HelpCopy = {
@@ -575,6 +579,8 @@ const es: HelpCopy = {
   legalLanguages: "Idiomas",
   legalCallFirst:
     "“Reconocida por el DOJ” quiere decir que el Departamento de Justicia de EE. UU. aprobó a la organización para dar ayuda legal de inmigración. Parte de su personal quizá solo ayude con solicitudes y no en la corte de inmigración: pregunte.",
+  countNote:
+    "Contamos cuántas veces se abre cada herramienta (un número por herramienta, por mes) para mostrar que ayuda. No se envía nada sobre usted ni lo que escribe. Los navegadores con “No rastrear” (Do Not Track) o Control Global de Privacidad no se cuentan.",
 };
 
 export const COPY: Record<Lang, HelpCopy> = { en, es };

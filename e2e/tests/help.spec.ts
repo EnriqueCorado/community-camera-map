@@ -194,6 +194,12 @@ test("privacy: nothing typed into the tools is sent anywhere", async ({ page }) 
     }
     // The tools themselves only load this site's own files (map tiles may
     // keep loading in the background, but never with anything typed here).
+    // The one exception: a build with the usage counter sends the tool's name
+    // (bodiless, nothing else; see unit-counter.spec.ts).
+    if (/\/api\/count\?e=[\w%-]+$/.test(r.url())) {
+      expect(body, r.url()).toBe("");
+      continue;
+    }
     if (r.resourceType() === "fetch" && !/tiles|openfreemap|maplibre|glyphs|sprite/.test(r.url())) {
       expect(new URL(r.url()).origin, r.url()).toBe(origin);
     }

@@ -1,7 +1,8 @@
 // The public "Free help" pages, rendered to static HTML at build time
 // (scripts/prerender.mjs) so they load fast, work without JavaScript and can
 // be found by search engines. Every link is a plain link; the only scripts are
-// the saved theme/text size (read, never written) and the flyer Print button.
+// the saved theme/text size (read, never written), the flyer Print button and
+// the page script (client.js: offline, read aloud, the optional usage counter).
 import type { ReactNode } from "react";
 import { translate, type Lang } from "../i18n";
 import { COPY } from "../help/copy";
@@ -26,6 +27,8 @@ export interface Site {
   publicBase: string;
   css: string;
   repo: string;
+  /** The anonymous usage counter's URL (relay/api/count.ts), or "" for none. */
+  counter: string;
 }
 
 const LOCALE: Record<Lang, string> = { en: "en-US", es: "es-US" };
@@ -79,14 +82,17 @@ interface DocProps {
   alternate?: string;
   /** Flyers are always light (they're made for paper). */
   print?: boolean;
+  /** What the usage counter calls this page ("home" or a tool id); omitted = not counted. */
+  countId?: string;
   children: ReactNode;
 }
 
 /** The folder a page's service worker covers: help/ or ayuda/ (flyers included). */
 const swFolder = (path: string) => (path.startsWith("ayuda/") ? "ayuda/" : path.startsWith("help/") ? "help/" : null);
 
-function Doc({ site, lang, title, description, path, alternate, print, children }: DocProps) {
+function Doc({ site, lang, title, description, path, alternate, print, countId, children }: DocProps) {
   const folder = swFolder(path);
+  const count = site.counter && countId && !print ? { "data-counter": site.counter, "data-count": `page:${countId}:${lang}` } : {};
   const alt = other(lang);
   return (
     <html lang={lang} {...(print ? { "data-theme": "light" } : {})}>
@@ -117,6 +123,7 @@ function Doc({ site, lang, title, description, path, alternate, print, children 
       <body
         className={print ? "is-flyer" : undefined}
         {...(folder && !print ? { "data-sw": `${site.base}${folder}sw.js`, "data-scope": `${site.base}${folder}` } : {})}
+        {...count}
       >
         {children}
         {!print && <script dangerouslySetInnerHTML={{ __html: CLIENT_SCRIPT }} />}
@@ -155,6 +162,7 @@ function Chrome({ site, lang, alternate, children }: { site: Site; lang: Lang; a
             <a href={site.base}>{s.footerMap}</a> {s.footerVolunteer}{" "}
             <a href={site.repo}>{s.footerSource}</a>
           </p>
+          {site.counter && <p>{s.footerCount}</p>}
         </div>
       </footer>
     </>
@@ -242,7 +250,7 @@ export function HomePage({ site, lang }: { site: Site; lang: Lang }) {
   const s = SITE_COPY[lang];
   const alternate = homePath(other(lang));
   return (
-    <Doc site={site} lang={lang} title={s.homeTitle} description={s.homeDescription} path={homePath(lang)} alternate={alternate}>
+    <Doc site={site} lang={lang} title={s.homeTitle} description={s.homeDescription} path={homePath(lang)} alternate={alternate} countId="home">
       <Chrome site={site} lang={lang} alternate={alternate}>
         <section className="hero" aria-labelledby="hero-title">
           <h1 id="hero-title">{s.heroTitle}</h1>
@@ -323,6 +331,7 @@ export function ToolPageView({ site, lang, tool, offices }: { site: Site; lang: 
       description={tool.summary[lang]}
       path={toolPath(lang, tool)}
       alternate={alternate}
+      countId={tool.id}
     >
       <Chrome site={site} lang={lang} alternate={alternate}>
         <nav aria-label={s.breadcrumb} className="crumbs">

@@ -1,13 +1,20 @@
 // Free help: hospital bills, renters' rights, legal aid. A modal over the map
 // (full screen on phones). Nothing typed here is stored or sent anywhere:
-// state lives in these components and is gone when the panel closes.
-import { lazy, Suspense, useRef } from "react";
+// state lives in these components and is gone when the panel closes. (When
+// the usage counter is on, only "this tool was opened" is sent: help/count.ts.)
+import { lazy, Suspense, useEffect, useRef } from "react";
 import "./help.css";
 import { useI18n } from "../../i18n";
 import { useDialog } from "../../hooks/useDialog";
 import { COPY } from "../../help/copy";
 import { isBenefitsView, isImmigrationView, isRentView, isWorkView, type HelpTab, type HelpTarget } from "../../help/target";
+import { appCountId, countEvent, mayCount, sendCount } from "../../help/count";
 import { Tabs } from "./Tabs";
+
+// The anonymous usage counter (help/count.ts); empty = off. Each tool counts
+// once per page load, however often it's reopened.
+const COUNTER_URL = import.meta.env.VITE_COUNTER_URL ?? "";
+const counted = new Set<string>();
 
 // Each tab is its own download, fetched the first time it's opened: most
 // visitors need one tool, often on a slow phone connection.
@@ -32,6 +39,14 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
   const ref = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   useDialog(ref, onClose, { modal: true });
+
+  const countId = appCountId(target);
+  useEffect(() => {
+    const event = countEvent("app", countId, lang);
+    if (!COUNTER_URL || counted.has(event) || !mayCount(navigator)) return;
+    counted.add(event);
+    sendCount(COUNTER_URL, event);
+  }, [countId, lang]);
 
   const tabs: { id: HelpTab; label: string }[] = [
     { id: "medical", label: c.tabMedical },
@@ -116,6 +131,7 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
             {target.tab === "legal" && <LegalHelp c={c} onShowOnMap={onShowOnMap} />}
           </Suspense>
           <p className="hdisclaimer">{c.disclaimer}</p>
+          {COUNTER_URL && <p className="hdisclaimer">{c.countNote}</p>}
           <p className="hdisclaimer">
             {/* A new tab, so leaving for the flyers doesn't erase what was typed here. */}
             <a href={`${import.meta.env.BASE_URL}help/flyers/`} target="_blank" rel="noopener">

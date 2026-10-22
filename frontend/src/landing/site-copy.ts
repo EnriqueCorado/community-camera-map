@@ -35,6 +35,8 @@ export interface SiteCopy {
   footerMap: string;
   footerVolunteer: string;
   footerSource: string;
+  /** Shown only when the build has the anonymous usage counter. */
+  footerCount: string;
   officesTitle: string;
   listen: string;
   listenStop: string;
@@ -88,6 +90,8 @@ const en: SiteCopy = {
   footerMap: "Part of the Community Camera Map, a free public map of community services.",
   footerVolunteer: "Built by a local volunteer. Not a government website.",
   footerSource: "Open source",
+  footerCount:
+    "We count how many times each page is opened (one number per page, per month) to show it helps. Nothing about you is recorded. Browsers set to Do Not Track or Global Privacy Control aren’t counted.",
   officesTitle: "Free and low-cost offices",
   listen: "Listen to this page",
   listenStop: "Stop reading",
@@ -140,6 +144,8 @@ const es: SiteCopy = {
   footerMap: "Parte del Mapa Comunitario de Cámaras, un mapa público y gratuito de servicios para la comunidad.",
   footerVolunteer: "Hecho por un voluntario local. No es un sitio del gobierno.",
   footerSource: "Código abierto",
+  footerCount:
+    "Contamos cuántas veces se abre cada página (un número por página, por mes) para mostrar que ayuda. No se registra nada sobre usted. Los navegadores con “No rastrear” (Do Not Track) o Control Global de Privacidad no se cuentan.",
   officesTitle: "Oficinas gratuitas y de bajo costo",
   listen: "Escuchar esta página",
   listenStop: "Dejar de leer",
