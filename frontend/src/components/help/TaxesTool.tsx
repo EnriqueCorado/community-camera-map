@@ -1,6 +1,7 @@
 // "Free tax help for 2027": where to file for free in Stanislaus County, the
 // cash-back credits (with an SSN or an ITIN), ITINs, privacy, refunds and
 // scams, all cited. A page to read: nothing to type, nothing stored.
+import { useRef } from "react";
 import { useI18n } from "../../i18n";
 import type { HelpCopy } from "../../help/copy";
 import { TAXES_COPY } from "../../help/taxes-copy";
@@ -13,6 +14,8 @@ import "./taxes.css";
 export function TaxesTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) {
   const { lang, locale } = useI18n();
   const t = TAXES_COPY[lang];
+  // Not an #anchor: the app keeps the Help panel's place in the URL hash.
+  const privacyRef = useRef<HTMLHeadingElement>(null);
   const usd = (n: number) => formatMoney(n, locale);
   const places = (list: TaxPlace[]) => (
     <ul className="hplaces htax__places">
@@ -59,6 +62,18 @@ export function TaxesTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) 
 
       <Result tone="info" title={t.seasonTitle}>
         <p>{t.seasonText(TAX_SEASON.taxYear, longDate(TAX_SEASON.due, locale))}</p>
+        <p>
+          <button
+            type="button"
+            className="linkbtn"
+            onClick={() => {
+              privacyRef.current?.scrollIntoView({ block: "start" });
+              privacyRef.current?.focus();
+            }}
+          >
+            {t.seasonImmigration}
+          </button>
+        </p>
         <p>{t.seasonPrivate}</p>
       </Result>
 
@@ -87,7 +102,10 @@ export function TaxesTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) 
                 <tr key={label}>
                   <th scope="row">{label}</th>
                   <td>{usd(CA_CREDITS.caleitcMax.byChildren[i]!)}</td>
-                  <td>{usd(FED_CREDITS.eitcMax[i]!)}</td>
+                  <td>
+                    {usd(FED_CREDITS.eitcMax[i]!)}
+                    {i === 0 && <span className="htax__joint">{t.noChildAges}</span>}
+                  </td>
                   <td>
                     {usd(FED_CREDITS.eitcLimitSingle[i]!)}
                     <span className="htax__joint">
@@ -114,7 +132,9 @@ export function TaxesTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) 
       </section>
 
       <section aria-labelledby="taxes-privacy">
-        <h3 id="taxes-privacy">{t.privacyTitle}</h3>
+        <h3 id="taxes-privacy" ref={privacyRef} tabIndex={-1}>
+          {t.privacyTitle}
+        </h3>
         <FactList facts={TAXES_FACTS.privacy} />
         <p>
           <button type="button" className="linkbtn" onClick={onLegal}>

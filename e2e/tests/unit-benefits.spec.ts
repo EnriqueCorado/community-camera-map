@@ -256,44 +256,70 @@ test.describe("program verdicts", () => {
     expect(verdict(answers({ size: 6, income: cents(99999), per: "year", gets: ["ssi"] }), "lifeline")).toBe("likely");
   });
 
-  test("CalEITC: $1 to $32,900 of earnings, SSN or ITIN", () => {
+  test("CalEITC (tax year 2026): earnings LESS than $34,051, SSN or ITIN", () => {
+    const { en, es } = BENEFITS_COPY;
     const y = (d: number, over: Partial<Answers> = {}) => answers({ income: cents(d), per: "year", ...over });
-    expect(verdict(y(32900), "caleitc")).toBe("likely");
-    expect(verdict(y(32900.01), "caleitc")).toBe("unlikely");
+    expect(TAX.year).toBe(2026);
+    expect(verdict(y(34050), "caleitc")).toBe("likely");
+    expect(verdict(y(34050.99), "caleitc")).toBe("likely");
+    expect(verdict(y(34051), "caleitc")).toBe("unlikely"); // FTB: "less than $34,051"
+    expect(result(y(34051), "caleitc")?.reasons[0]).toMatchObject({ kind: "taxIncome", cmp: "at", strict: true });
+    expect(verdict(y(33500), "caleitc")).toBe("likely"); // was "probably not" under the 2025 limit
     expect(verdict(y(20000, { taxId: "itin" }), "caleitc")).toBe("likely");
     expect(verdict(y(20000, { taxId: "none" }), "caleitc")).toBe("unlikely");
     expect(verdict(y(20000, { taxId: "unsure" }), "caleitc")).toBe("maybe");
     expect(verdict(y(0), "caleitc")).toBe("unlikely");
-    expect(verdict(answers({ income: cents(2741.66) }), "caleitc")).toBe("likely"); // × 12 = 32,899.92
-    expect(verdict(answers({ income: cents(2741.67) }), "caleitc")).toBe("unlikely"); // × 12 = 32,900.04
-    expect(result(y(1, { children: 5 }), "caleitc")?.upTo?.cents).toBe(cents(3756));
+    expect(verdict(answers({ income: cents(2837.58) }), "caleitc")).toBe("likely"); // × 12 = 34,050.96
+    expect(verdict(answers({ income: cents(2837.59) }), "caleitc")).toBe("unlikely"); // × 12 = 34,051.08
+    // The per-child amounts are still tax year 2025's (FTB hadn't posted 2026's), and say so.
+    expect(result(y(1, { children: 5 }), "caleitc")?.upTo).toEqual({ cents: cents(3756), per: "return", year: 2025 });
+    expect(en.upTo("$3,756", "return", 1, 2025, TAX.year)).toBe("Up to $3,756 (tax year 2025 amounts; 2026 amounts not posted yet).");
+    expect(es.upTo("$3,756", "return", 1, 2025, TAX.year)).toBe("Hasta $3,756 (cantidades del año fiscal 2025; las de 2026 aún no se publican).");
   });
 
-  test("YCTC: child under 6; no earnings needed", () => {
+  test("YCTC (tax year 2026): child under 6; no earnings needed; a worker over CalEITC's limit doesn't qualify", () => {
+    const { en } = BENEFITS_COPY;
     const kid = { size: 2, children: 1, youngest: "under5" as const, per: "year" as const };
     expect(verdict(answers({ ...kid, income: 0 }), "yctc")).toBe("likely");
-    expect(verdict(answers({ ...kid, income: cents(32900) }), "yctc")).toBe("likely");
-    expect(verdict(answers({ ...kid, income: cents(32900.01) }), "yctc")).toBe("maybe");
-    expect(verdict(answers({ ...kid, income: cents(35640) }), "yctc")).toBe("maybe");
-    expect(verdict(answers({ ...kid, income: cents(35640.01) }), "yctc")).toBe("unlikely");
+    expect(verdict(answers({ ...kid, income: cents(34050) }), "yctc")).toBe("likely");
+    expect(verdict(answers({ ...kid, income: cents(34051) }), "yctc")).toBe("unlikely");
+    // The FTB's $36,852 cap is only for total earned income of $0 or less (a business loss):
+    // between the two limits it's "probably not", with that exception explained.
+    const between = result(answers({ ...kid, income: cents(35000) }), "yctc");
+    expect(between?.verdict).toBe("unlikely");
+    expect(between?.reasons).toEqual([
+      { kind: "taxIncome", cmp: "over", income: cents(35000), limit: cents(34051), strict: true },
+      { kind: "yctcWages", limit: cents(36852) },
+    ]);
+    expect(result(answers({ ...kid, income: cents(36852) }), "yctc")?.reasons.map((r) => r.kind)).toEqual(["taxIncome", "yctcWages"]);
+    const above = result(answers({ ...kid, income: cents(36852.01) }), "yctc");
+    expect(above?.verdict).toBe("unlikely");
+    expect(above?.reasons).toEqual([{ kind: "taxIncome", cmp: "over", income: cents(36852.01), limit: cents(34051), strict: true }]);
+    expect(en.reason({ kind: "yctcWages", limit: cents(36852) }, money)).toBe(
+      "If a business loss brings your total earned income to $0 or less, you can still get YCTC if your wages and your loss are each $36,852 or less. Ask a free tax site.",
+    );
+    expect(result(answers({ ...kid, income: cents(1000) }), "yctc")?.upTo).toEqual({ cents: cents(1229), per: "return" });
+    expect(en.upTo("$1,229", "return", 2, undefined, TAX.year)).toBe("Up to $1,229 (tax year 2026).");
     expect(verdict(answers({ ...kid, youngest: "five", income: cents(1000) }), "yctc")).toBe("maybe");
     expect(verdict(answers({ ...kid, youngest: "6to18", income: cents(1000) }), "yctc")).toBe("unlikely");
     expect(verdict(answers({ ...kid, income: cents(1000), taxId: "itin" }), "yctc")).toBe("likely");
   });
 
-  test("federal EITC: SSN only; income must be UNDER the single cap, then a maybe under the joint cap", () => {
+  test("federal EITC (tax year 2026): SSN only; income must be UNDER the single cap, then a maybe under the joint cap", () => {
     const y = (d: number, over: Partial<Answers> = {}) => answers({ size: 2, children: 1, youngest: "6to18", income: cents(d), per: "year", ...over });
-    expect(verdict(y(50433.99), "federal-eitc")).toBe("likely");
-    expect(verdict(y(50434), "federal-eitc")).toBe("maybe");
-    expect(verdict(y(57553.99), "federal-eitc")).toBe("maybe");
-    expect(verdict(y(57554), "federal-eitc")).toBe("unlikely");
-    expect(result(y(60000), "federal-eitc")?.reasons[0]).toMatchObject({ kind: "taxIncome", filing: "joint", limit: cents(57554) });
+    expect(verdict(y(51000), "federal-eitc")).toBe("likely"); // was "maybe" under the 2025 limit
+    expect(verdict(y(51592.99), "federal-eitc")).toBe("likely");
+    expect(verdict(y(51593), "federal-eitc")).toBe("maybe");
+    expect(verdict(y(58862.99), "federal-eitc")).toBe("maybe");
+    expect(verdict(y(58863), "federal-eitc")).toBe("unlikely");
+    expect(result(y(60000), "federal-eitc")?.reasons[0]).toMatchObject({ kind: "taxIncome", filing: "joint", limit: cents(58863) });
+    expect(result(y(20000), "federal-eitc")?.upTo).toEqual({ cents: cents(4427), per: "return" });
     expect(verdict(y(20000, { taxId: "itin" }), "federal-eitc")).toBe("unlikely");
     expect(result(y(20000, { taxId: "unsure" }), "federal-eitc")?.reasons.map((r) => r.kind)).toContain("eitcSsnUnsure");
-    expect(verdict(answers({ children: 0, income: cents(19103.99), per: "year" }), "federal-eitc")).toBe("likely");
-    expect(verdict(answers({ children: 0, income: cents(19104), per: "year" }), "federal-eitc")).toBe("maybe");
-    expect(verdict(answers({ size: 6, children: 4, youngest: "6to18", income: cents(61554.99), per: "year" }), "federal-eitc")).toBe("likely");
-    expect(verdict(answers({ size: 6, children: 4, youngest: "6to18", income: cents(61555), per: "year" }), "federal-eitc")).toBe("maybe");
+    expect(verdict(answers({ children: 0, income: cents(19539.99), per: "year" }), "federal-eitc")).toBe("likely");
+    expect(verdict(answers({ children: 0, income: cents(19540), per: "year" }), "federal-eitc")).toBe("maybe");
+    expect(verdict(answers({ size: 6, children: 4, youngest: "6to18", income: cents(62973.99), per: "year" }), "federal-eitc")).toBe("likely");
+    expect(verdict(answers({ size: 6, children: 4, youngest: "6to18", income: cents(62974), per: "year" }), "federal-eitc")).toBe("maybe");
   });
 
   test("tax credits fall back to maybe once the next tax year's figures are due", () => {

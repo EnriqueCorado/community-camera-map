@@ -490,8 +490,8 @@ export const TOOLS: readonly ToolPage[] = [
       es: "Presente sus impuestos de 2026 gratis en el condado de Stanislaus y reciba CalEITC y otros créditos en efectivo, con número de Seguro Social o ITIN. Evite las estafas.",
     },
     intro: {
-      en: `${TAXES_COPY.en.lead} ${TAXES_COPY.en.seasonText(TAX_SEASON.taxYear, longDate(TAX_SEASON.due, LOCALE.en))}`,
-      es: `${TAXES_COPY.es.lead} ${TAXES_COPY.es.seasonText(TAX_SEASON.taxYear, longDate(TAX_SEASON.due, LOCALE.es))}`,
+      en: `${TAXES_COPY.en.lead} ${TAXES_COPY.en.seasonText(TAX_SEASON.taxYear, longDate(TAX_SEASON.due, LOCALE.en))} ${TAXES_COPY.en.seasonImmigration}`,
+      es: `${TAXES_COPY.es.lead} ${TAXES_COPY.es.seasonText(TAX_SEASON.taxYear, longDate(TAX_SEASON.due, LOCALE.es))} ${TAXES_COPY.es.seasonImmigration}`,
     },
     groups: [
       group({ en: TAXES_COPY.en.freeTitle, es: TAXES_COPY.es.freeTitle }, TAXES_FACTS.free),
@@ -513,8 +513,8 @@ export const TOOLS: readonly ToolPage[] = [
           ...TAXES_COPY.en.children.map((label, i) => {
             const d = (n: number) => `$${n.toLocaleString("en-US")}`;
             return {
-              en: `${label === "None" ? "No children" : `${label} ${label === "1" ? "child" : "children"}`}: CalEITC up to ${d(CA_CREDITS.caleitcMax.byChildren[i]!)} (tax year ${CA_CREDITS.caleitcMax.year}); federal EITC up to ${d(FED_CREDITS.eitcMax[i]!)} (tax year ${TAX_SEASON.taxYear}), for income under ${d(FED_CREDITS.eitcLimitSingle[i]!)}, or ${d(FED_CREDITS.eitcLimitJoint[i]!)} if married filing jointly.`,
-              es: `${i === 0 ? "Sin hijos" : `${TAXES_COPY.es.children[i]} ${i === 1 ? "hijo" : "hijos"}`}: CalEITC hasta ${d(CA_CREDITS.caleitcMax.byChildren[i]!)} (año fiscal ${CA_CREDITS.caleitcMax.year}); EITC federal hasta ${d(FED_CREDITS.eitcMax[i]!)} (año fiscal ${TAX_SEASON.taxYear}), con ingresos de menos de ${d(FED_CREDITS.eitcLimitSingle[i]!)}, o ${d(FED_CREDITS.eitcLimitJoint[i]!)} si son casados y declaran juntos.`,
+              en: `${label === "None" ? "No children" : `${label} ${label === "1" ? "child" : "children"}`}: CalEITC up to ${d(CA_CREDITS.caleitcMax.byChildren[i]!)} (tax year ${CA_CREDITS.caleitcMax.year}); federal EITC up to ${d(FED_CREDITS.eitcMax[i]!)} (tax year ${TAX_SEASON.taxYear})${i === 0 ? ` ${TAXES_COPY.en.noChildAges}` : ""}, for income under ${d(FED_CREDITS.eitcLimitSingle[i]!)}, or ${d(FED_CREDITS.eitcLimitJoint[i]!)} if married filing jointly.`,
+              es: `${i === 0 ? "Sin hijos" : `${TAXES_COPY.es.children[i]} ${i === 1 ? "hijo" : "hijos"}`}: CalEITC hasta ${d(CA_CREDITS.caleitcMax.byChildren[i]!)} (año fiscal ${CA_CREDITS.caleitcMax.year}); EITC federal hasta ${d(FED_CREDITS.eitcMax[i]!)} (año fiscal ${TAX_SEASON.taxYear})${i === 0 ? ` ${TAXES_COPY.es.noChildAges}` : ""}, con ingresos de menos de ${d(FED_CREDITS.eitcLimitSingle[i]!)}, o ${d(FED_CREDITS.eitcLimitJoint[i]!)} si son casados y declaran juntos.`,
             };
           }),
         ],

@@ -17,6 +17,20 @@ async function open(page: Page, lang: "en" | "es" = "en") {
   return dialog;
 }
 
+test("before the ITIN how-to, the season box points to the immigration section, which takes focus", async ({ page }) => {
+  const dialog = await open(page);
+  const hash = await page.evaluate(() => location.hash);
+  await dialog.getByRole("button", { name: /Applying for an ITIN, or have a deportation order\?/ }).click();
+  const heading = dialog.getByRole("heading", { level: 3, name: "Your information and immigration" });
+  await expect(heading).toBeFocused();
+  await expect(heading).toBeInViewport();
+  // A button, not an #anchor: the Help panel keeps its place in the URL hash.
+  expect(await page.evaluate(() => location.hash)).toBe(hash);
+  await expect(dialog.getByText(/November 21, 2025/)).toBeVisible();
+  // The no-children federal amount carries its age rule.
+  await expect(dialog.getByRole("row", { name: /None/ })).toContainText("(no children: ages 25 to 64)");
+});
+
 async function expectNoA11yViolations(page: Page, include: string) {
   const { violations } = await new AxeBuilder({ page }).withTags(WCAG).include(include).analyze();
   const summary = violations.map((v) => `${v.impact} ${v.id}: ${v.help} — ${v.nodes.map((n) => n.target.join(" ")).slice(0, 3).join(" | ")}`);

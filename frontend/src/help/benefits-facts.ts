@@ -95,9 +95,10 @@ const SRC = {
   lifeline: { label: "CPUC: California LifeLine fact sheet (Jun 1, 2026 – May 31, 2027)", url: "https://www.cpuc.ca.gov/-/media/cpuc-website/about-cpuc/documents/transparency-and-reporting/fact_sheets/california-lifeline/lifeline_onesheet_051126.pdf" },
   liheapIncome: { label: "CSD: LIHEAP income eligibility (2026 program year)", url: "https://www.csd.ca.gov/Pages/LIHEAP-Income-Eligibility.aspx" },
   liheapPlan: { label: "CSD: 2026 LIHEAP State Plan", url: "https://www.csd.ca.gov/Shared%20Documents/2026-Final-LIHEAP-State-Plan.pdf" },
-  caleitc: { label: "FTB: CalEITC eligibility and credit amounts (tax year 2025)", url: "https://www.ftb.ca.gov/file/personal/credits/caleitc/eligibility-and-credit-information.html" },
+  caleitc: { label: "FTB: CalEITC (tax year 2026 limits, FTB memo Sept 3, 2026)", url: "https://www.caltax.org/regulatory-issues/ftb/2026-PIT-Indexing-Memo.pdf" },
+  caleitcAmounts: { label: "FTB: CalEITC eligibility and credit amounts (tax year 2025 amounts)", url: "https://www.ftb.ca.gov/file/personal/credits/caleitc/eligibility-and-credit-information.html" },
   yctc: { label: "FTB: Young Child Tax Credit", url: "https://www.ftb.ca.gov/file/personal/credits/young-child-tax-credit.html" },
-  eitc: { label: "IRS: EITC income limits and amounts (tax year 2025)", url: "https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit/earned-income-and-earned-income-tax-credit-eitc-tables" },
+  eitc: { label: "IRS Rev. Proc. 2025-32: tax year 2026 EITC", url: "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf" },
   vita: { label: "IRS: find free tax help (VITA)", url: "https://irs.treasury.gov/freetaxprep/" },
   publicCharge: { label: "DHS final rule: Public Charge Ground of Inadmissibility (91 FR 45324, Jul 20, 2026; effective Sept 18, 2026)", url: "https://www.govinfo.gov/content/pkg/FR-2026-07-20/html/2026-14539.htm" },
   immigrationProviders: { label: "CA Dept. of Social Services: free immigration legal services providers", url: "https://www.cdss.ca.gov/inforesources/immigration/contractor-contact-information" },
@@ -279,26 +280,28 @@ export type TableId = keyof typeof TABLES;
 
 /** Tax credits: limits by number of children, not household size. */
 export const TAX = {
-  year: 2025,
-  /** Tax year 2026 figures weren't out yet; re-check by this date. */
-  recheckBy: "2027-01-31",
-  period: { en: "Tax year 2025 (returns filed in 2026)", es: "Año fiscal 2025 (declaraciones presentadas en 2026)" } as Bilingual,
+  year: 2026,
+  /** Tax year 2027 figures (FTB memo, Rev. Proc.) come out around September; re-check by this date. */
+  recheckBy: "2027-10-15",
+  period: { en: "Tax year 2026 (returns filed in 2027)", es: "Año fiscal 2026 (declaraciones presentadas en 2027)" } as Bilingual,
   caleitc: {
-    /** Earned income from $1 to $32,900, any household size. */
-    maxEarned: 32900,
-    maxCredit: [302, 2016, 3339, 3756] as const, // 0, 1, 2, 3+ children
+    /** FTB memo (Sept 3, 2026): earned income and AGI must be LESS than $34,051. */
+    maxEarned: 34051,
+    /** 0, 1, 2, 3+ children. FTB hadn't posted tax year 2026's amounts: these are 2025's. */
+    maxCredit: [302, 2016, 3339, 3756] as const,
+    maxCreditYear: 2025,
   },
   yctc: {
-    maxCredit: 1189,
-    /** FTB: for TY2025, wages up to $35,640 are allowed. */
-    maxWages: 35640,
+    maxCredit: 1229,
+    /** FTB: with total earned income of $0 or less, wages and the loss may each be up to this. */
+    maxWages: 36852,
   },
   federal: {
-    /** AGI caps by 0, 1, 2, 3+ qualifying children. */
-    single: [19104, 50434, 57310, 61555] as const,
-    joint: [26214, 57554, 64430, 68675] as const,
-    maxCredit: [649, 4328, 7152, 8046] as const,
-    investmentIncomeLimit: 11950,
+    /** Rev. Proc. 2025-32 §4.06: AGI caps by 0, 1, 2, 3+ qualifying children. */
+    single: [19540, 51593, 58629, 62974] as const,
+    joint: [26820, 58863, 65899, 70244] as const,
+    maxCredit: [664, 4427, 7316, 8231] as const,
+    investmentIncomeLimit: 12200,
   },
 } as const;
 
@@ -336,8 +339,8 @@ const TAX_APPLY: ProgramFacts["apply"] = {
   urlLabel: "CalFile (FTB)",
   phones: [{ number: "(877) 211-7826", label: { en: "Stanislaus 211 (free tax help near you)", es: "211 de Stanislaus (ayuda gratis con impuestos)" } }],
   office: {
-    en: "Free tax help (VITA): use the IRS locator from January. We could not confirm this season’s Stanislaus sites; past years had United Way of Stanislaus County and county library branches.",
-    es: "Ayuda gratis con impuestos (VITA): use el buscador del IRS a partir de enero. No pudimos confirmar los sitios de Stanislaus para esta temporada; en años pasados hubo sitios de United Way of Stanislaus County y bibliotecas del condado.",
+    en: "Free tax help (VITA): use the IRS locator from February. We could not confirm this season’s Stanislaus sites; past years had United Way of Stanislaus County and county library branches.",
+    es: "Ayuda gratis con impuestos (VITA): use el buscador del IRS a partir de febrero. No pudimos confirmar los sitios de Stanislaus para esta temporada; en años pasados hubo sitios de United Way of Stanislaus County y bibliotecas del condado.",
   },
 };
 
@@ -606,10 +609,10 @@ export const PROGRAMS = {
         es: "Presente la declaración de California con el formulario FTB 3514. Puede reclamar hasta 4 años anteriores. Debe haber vivido en California más de la mitad del año.",
       },
     ],
-    sources: [SRC.caleitc, SRC.vita],
+    sources: [SRC.caleitc, SRC.caleitcAmounts, SRC.vita],
   },
   yctc: {
-    name: { en: "Young Child Tax Credit (YCTC)", es: "Crédito por Hijos Pequeños (YCTC)" },
+    name: { en: "Young Child Tax Credit (YCTC)", es: "Crédito Tributario por Hijos Menores (YCTC)" },
     gives: { en: "Extra money back on your California taxes if you have a child under 6.", es: "Dinero extra de vuelta en sus impuestos de California si tiene un hijo menor de 6 años." },
     immigration: {
       en: "You can claim it with an SSN or an ITIN.",
@@ -628,14 +631,14 @@ export const PROGRAMS = {
     name: { en: "Federal Earned Income Tax Credit (EITC)", es: "Crédito Federal por Ingreso del Trabajo (EITC)" },
     gives: { en: "Money back when you file your federal taxes.", es: "Dinero de vuelta cuando declara sus impuestos federales." },
     immigration: {
-      en: "The federal EITC needs a valid Social Security number (people filing with an ITIN can’t get it; confirm at a free tax site). ITIN families can still get CalEITC and YCTC.",
-      es: "El EITC federal necesita un número de Seguro Social válido (quienes declaran con ITIN no lo pueden recibir; confírmelo en un sitio gratis de impuestos). Las familias con ITIN sí pueden recibir CalEITC y YCTC.",
+      en: "The federal EITC needs a Social Security number valid for work, issued by the return’s due date, for you and your spouse if filing jointly. People filing with an ITIN can’t get it. To get the bigger amount for a child, the child needs one too. If your child doesn’t have one, you may still get the smaller no-children amount (ages 25 to 64). ITIN families can still get CalEITC and YCTC.",
+      es: "El EITC federal necesita un número de Seguro Social válido para trabajar, emitido antes de la fecha límite de la declaración, para usted y su cónyuge si declaran juntos. Quienes declaran con ITIN no lo pueden recibir. Para recibir la cantidad mayor por un hijo, el hijo también necesita uno. Si su hijo no lo tiene, todavía podría recibir la cantidad menor para personas sin hijos (de 25 a 64 años). Las familias con ITIN sí pueden recibir CalEITC y YCTC.",
     },
     apply: { ...TAX_APPLY, url: "https://irs.treasury.gov/freetaxprep/", urlLabel: "IRS free tax help (VITA)" },
     notes: [
       {
-        en: "Both your earned income and your adjusted gross income must be under the limit, and investment income must be $11,950 or less.",
-        es: "Sus ingresos del trabajo y su ingreso bruto ajustado deben estar por debajo del límite, y los ingresos por inversiones deben ser de $11,950 o menos.",
+        en: "Both your earned income and your adjusted gross income must be under the limit, and investment income must be $12,200 or less.",
+        es: "Sus ingresos del trabajo y su ingreso bruto ajustado deben estar por debajo del límite, y los ingresos por inversiones deben ser de $12,200 o menos.",
       },
     ],
     sources: [SRC.eitc, SRC.vita],

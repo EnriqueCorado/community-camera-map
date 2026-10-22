@@ -4,7 +4,7 @@
 // tool that no longer exists.
 import { test, expect } from "@playwright/test";
 import * as TAXES from "../../frontend/src/help/taxes-facts";
-import { CA_CREDITS, FED_CREDITS, TAX_PLACES, TAX_SEASON, TAXES_CHECKED, TAXES_FACTS, TAXES_RECHECK } from "../../frontend/src/help/taxes-facts";
+import { CA_CREDITS, FED_CREDITS, TAX_PLACES, TAX_SEASON, TAXES_CHECKED, TAXES_FACTS, TAXES_RECHECK, TAXES_SOURCES } from "../../frontend/src/help/taxes-facts";
 import { TAXES_COPY } from "../../frontend/src/help/taxes-copy";
 import { BENEFITS_VIEWS } from "../../frontend/src/help/target";
 import { COPY } from "../../frontend/src/help/copy";
@@ -49,15 +49,28 @@ test("who needs a Social Security number is stated the way the law says", () => 
   // CalEITC/YCTC/FYTC: SSN or ITIN. Federal EITC: SSN for everyone; ITIN filers can't.
   expect(f("itin-ok").en).toMatch(/Social Security number OR an ITIN/);
   expect(f("eitc-ssn").en).toMatch(/ITIN can’t get it/);
+  // Pub. 596 Rule 2: a child without an SSN still allows the smaller no-children amount.
+  expect(f("eitc-ssn").en).toMatch(/smaller no-children amount \(ages 25 to 64\)/);
   // CTC (IRC §24(h)(7)): the child, and the filer or at least one spouse on a joint return.
-  expect(f("ctc-ssn").en).toMatch(/one of the two spouses/);
+  expect(f("ctc-ssn").en).toMatch(/so does the person filing \(on a joint return, one spouse is enough\)/);
+  expect(f("ctc-ssn").en).toMatch(/under 17/);
   expect(f("ctc-ssn").cite).toContain("§70104");
-  // Direct File ended: never presented as an option, never linked.
-  expect(f("direct-file").en).toMatch(/is gone/);
+  // Direct File wasn't offered last season: never presented as an option, never linked.
+  expect(f("direct-file").en).toMatch(/was not offered last season/);
   expect(JSON.stringify(TAXES)).not.toMatch(/directfile\.irs\.gov/);
   // The IRS-ICE sharing case is described as still open, never as settled.
   expect(f("ice").en).toMatch(/isn’t over/);
   expect(f("ice").es).toMatch(/no ha terminado/);
+  // The district court's order is Nov 21, 2025 (ECF 53), and it paused the MASS sharing only.
+  expect(f("ice").en).toMatch(/November 21, 2025/);
+  expect(f("ice").en).toMatch(/does not stop all sharing/);
+  expect(f("ice").en).not.toMatch(/November 1, 2025/);
+  expect(TAXES_SOURCES.map((x) => x.url)).toContain("https://storage.courtlistener.com/recap/gov.uscourts.dcd.277519/gov.uscourts.dcd.277519.53.0.pdf");
+  // P.O. box: the ALC's advice is for the return, and the IRS's W-7 rules are stated with it.
+  expect(f("advice").en).toMatch(/on your return or extension/);
+  expect(f("advice").en).toMatch(/can’t use a private mailbox on the W-7/);
+  // VITA's privacy is the volunteers', not protection from the IRS-ICE case.
+  expect(f("vita-private").en).toMatch(/the court case above still applies/);
 });
 
 test("only phone numbers verified in the research", () => {

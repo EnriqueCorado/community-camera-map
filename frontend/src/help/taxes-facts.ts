@@ -2,7 +2,8 @@
 // Researched 2026-10-22 from the IRS (Rev. Proc. 2025-32, ITIN, VITA, refund
 // and scam pages, the office locator), the FTB (2026 indexing memo of Sept 3,
 // 2026; CalEITC, YCTC, FYTC, CalFile and time-frame pages), Pub. L. 119-21,
-// the D.C. Circuit (No. 26-5006), CTEC, and the local sites' own pages. The
+// the D.C. district court (No. 25-cv-457, ECF 53) and Circuit (No. 26-5006), CTEC,
+// and the local sites' own pages. The
 // research archive is ~/dev/outreach-help-2026-10/research/taxes.{json,md}.
 //
 // RE-CHECK by TAXES_RECHECK (upkeep.ts tracks it):
@@ -50,6 +51,7 @@ const FTB_CALEITC = "https://www.ftb.ca.gov/file/personal/credits/caleitc/eligib
 const IRS_ITIN = "https://www.irs.gov/tin/itin/individual-taxpayer-identification-number-itin";
 const IRS_VITA = "https://www.irs.gov/individuals/free-tax-return-preparation-for-qualifying-taxpayers";
 const DC_CIR = "https://media.cadc.uscourts.gov/opinions/docs/2026/09/26-5006-2191763.pdf";
+const DDC_ORDER = "https://storage.courtlistener.com/recap/gov.uscourts.dcd.277519/gov.uscourts.dcd.277519.53.0.pdf";
 const ALC = "https://www.asianlawcaucus.org/news-resources/guides-reports/filing-taxes-itin";
 
 export const TAXES_FACTS = {
@@ -82,20 +84,20 @@ export const TAXES_FACTS = {
     {
       id: "calfile",
       cite: "FTB: CalFile",
-      en: "CalFile: file your California return free, directly with the state (FTB). You need a MyFTB account, and you must have filed a California return in one of the last 5 years.",
-      es: "CalFile: presente su declaración de California gratis, directamente con el estado (FTB). Necesita una cuenta MyFTB y haber presentado una declaración de California en alguno de los últimos 5 años.",
+      en: "CalFile: file your California return free, directly with the state (FTB). You need a MyFTB account, and you must have filed a California return in one of the last 5 years. It’s for simpler returns, so first-time filers and most self-employed people can’t use it.",
+      es: "CalFile: presente su declaración de California gratis, directamente con el estado (FTB). Necesita una cuenta MyFTB y haber presentado una declaración de California en alguno de los últimos 5 años. Es para declaraciones sencillas, así que quienes declaran por primera vez y la mayoría de los que trabajan por su cuenta no lo pueden usar.",
     },
     {
       id: "direct-file",
       cite: "IRS email to states, Nov 3, 2025, via Federal News Network",
-      en: "IRS Direct File, the IRS’s own free filing tool, is gone. The IRS told states it would not be available and set no date to bring it back. Guides that still mention it are out of date.",
-      es: "IRS Direct File, la herramienta gratis del propio IRS, ya no existe. El IRS les dijo a los estados que no estaría disponible y no fijó fecha para volver. Las guías que todavía la mencionan están desactualizadas.",
+      en: "IRS Direct File was not offered last season, and the IRS has not said it will come back. Guides that still mention it are out of date.",
+      es: "IRS Direct File no se ofreció la temporada pasada y el IRS no ha dicho que vuelva. Las guías que todavía la mencionan están desactualizadas.",
     },
     {
       id: "bring",
       cite: "United Way of Stanislaus County: what to bring",
-      en: "What to bring: photo ID; Social Security cards or ITIN letters for everyone on the return; all W-2s and 1099s; health insurance forms (1095); last year’s returns; and a blank check for direct deposit. Married and filing jointly? Both spouses must come to sign.",
-      es: "Qué llevar: identificación con foto; tarjetas de Seguro Social o cartas del ITIN de todas las personas en la declaración; todos los W-2 y 1099; formularios del seguro médico (1095); las declaraciones del año pasado; y un cheque en blanco para el depósito directo. ¿Casados y declaran juntos? Los dos deben ir a firmar.",
+      en: "What to bring: photo ID; Social Security cards or ITIN letters for everyone on the return; all W-2s and 1099s; health insurance forms (1095); last year’s returns; and a blank check for direct deposit. Married and filing jointly? Both spouses must come to sign. Birth dates for everyone on the return. Applying for an ITIN? Also bring proof of identity and foreign status, such as your passport.",
+      es: "Qué llevar: identificación con foto; tarjetas de Seguro Social o cartas del ITIN de todas las personas en la declaración; todos los W-2 y 1099; formularios del seguro médico (1095); las declaraciones del año pasado; y un cheque en blanco para el depósito directo. ¿Casados y declaran juntos? Los dos deben ir a firmar. Fechas de nacimiento de todas las personas en la declaración. ¿Va a solicitar un ITIN? Lleve también prueba de identidad y de estatus extranjero, como su pasaporte.",
     },
   ],
 
@@ -129,7 +131,7 @@ export const TAXES_FACTS = {
       id: "fytc",
       cite: "FTB indexing memo, Sept 3, 2026; FTB: FYTC",
       en: "Foster Youth Tax Credit: up to $1,229 for tax year 2026 for people 18 to 25 who were in California foster care at age 13 or older and qualify for CalEITC (each spouse can qualify).",
-      es: "Crédito Tributario para Jóvenes de Crianza Temporal (FYTC): hasta $1,229 para el año fiscal 2026 para personas de 18 a 25 años que estuvieron en foster care en California a los 13 años o más y califican para CalEITC (cada cónyuge puede calificar).",
+      es: "Crédito Tributario para Jóvenes de Crianza Temporal (FYTC): hasta $1,229 para el año fiscal 2026 para personas de 18 a 25 años que estuvieron en cuidado de crianza temporal en California a los 13 años o más y califican para CalEITC (cada cónyuge puede calificar).",
     },
     {
       id: "past-years",
@@ -143,21 +145,21 @@ export const TAXES_FACTS = {
   federal: [
     {
       id: "eitc-ssn",
-      cite: "IRS: Who qualifies for the EITC; IRS: ITIN",
-      en: "The federal EITC needs a Social Security number valid for work, issued by the return’s due date, for you, your spouse if filing jointly, and each child you claim. People filing with an ITIN can’t get it.",
-      es: "El EITC federal necesita un número de Seguro Social válido para trabajar, emitido antes de la fecha límite de la declaración, para usted, su cónyuge si declaran juntos, y cada hijo que reclame. Quienes declaran con ITIN no lo pueden recibir.",
+      cite: "IRS: Who qualifies for the EITC; IRS Pub. 596; IRS: ITIN",
+      en: "The federal EITC needs a Social Security number valid for work, issued by the return’s due date, for you and your spouse if filing jointly. People filing with an ITIN can’t get it. To get the bigger amount for a child, the child needs one too. If your child doesn’t have one, you may still get the smaller no-children amount (ages 25 to 64).",
+      es: "El EITC federal necesita un número de Seguro Social válido para trabajar, emitido antes de la fecha límite de la declaración, para usted y su cónyuge si declaran juntos. Quienes declaran con ITIN no lo pueden recibir. Para recibir la cantidad mayor por un hijo, el hijo también necesita uno. Si su hijo no lo tiene, todavía podría recibir la cantidad menor para personas sin hijos (de 25 a 64 años).",
     },
     {
       id: "eitc-2026",
       cite: "Rev. Proc. 2025-32 §4.06",
-      en: "Federal EITC, tax year 2026: up to $664 with no children, $4,427 with 1, $7,316 with 2 and $8,231 with 3 or more. Income must be under $19,540, $51,593, $58,629 or $62,974 ($26,820, $58,863, $65,899 or $70,244 if married filing jointly). Investment income must be $12,200 or less.",
-      es: "EITC federal, año fiscal 2026: hasta $664 sin hijos, $4,427 con 1, $7,316 con 2 y $8,231 con 3 o más. Los ingresos deben ser menos de $19,540, $51,593, $58,629 o $62,974 ($26,820, $58,863, $65,899 o $70,244 si son casados y declaran juntos). Los ingresos por inversiones deben ser de $12,200 o menos.",
+      en: "Federal EITC, tax year 2026: up to $664 with no children (no children: ages 25 to 64), $4,427 with 1, $7,316 with 2 and $8,231 with 3 or more. Income must be under $19,540, $51,593, $58,629 or $62,974 ($26,820, $58,863, $65,899 or $70,244 if married filing jointly). Investment income must be $12,200 or less.",
+      es: "EITC federal, año fiscal 2026: hasta $664 sin hijos (sin hijos: de 25 a 64 años), $4,427 con 1, $7,316 con 2 y $8,231 con 3 o más. Los ingresos deben ser menos de $19,540, $51,593, $58,629 o $62,974 ($26,820, $58,863, $65,899 o $70,244 si son casados y declaran juntos). Los ingresos por inversiones deben ser de $12,200 o menos.",
     },
     {
       id: "ctc-ssn",
       cite: "Pub. L. 119-21 §70104(b), IRC §24(h)(7); IRS: Child Tax Credit",
-      en: "Child Tax Credit (up to $2,200 per child for 2026, up to $1,700 of it as a refund): since tax year 2025, the child needs a Social Security number valid for work, and so does the parent who files. On a joint return, one of the two spouses having one is enough.",
-      es: "Crédito Tributario por Hijos (hasta $2,200 por hijo en 2026, hasta $1,700 de ese crédito como reembolso): desde el año fiscal 2025, el hijo necesita un número de Seguro Social válido para trabajar, y también el padre o la madre que declara. En una declaración conjunta, basta con que uno de los dos cónyuges lo tenga.",
+      en: "Child Tax Credit (up to $2,200 per child under 17 for 2026, up to $1,700 of it as a refund): since tax year 2025, the child needs a Social Security number valid for work, and so does the person filing (on a joint return, one spouse is enough). The numbers must be issued by the return’s due date.",
+      es: "Crédito Tributario por Hijos (hasta $2,200 por hijo menor de 17 años en 2026, hasta $1,700 de ese crédito como reembolso): desde el año fiscal 2025, el hijo necesita un número de Seguro Social válido para trabajar, y también la persona que declara (en una declaración conjunta, basta con un cónyuge). Los números deben emitirse antes de la fecha límite de la declaración.",
     },
     {
       id: "odc",
@@ -207,9 +209,9 @@ export const TAXES_FACTS = {
     },
     {
       id: "extension",
-      cite: "IRS: ITIN",
-      en: "No ITIN yet? You can still ask for more time to file, until October 15, on Form 4868 (write “ITIN TO BE REQUESTED” where it asks for the number). Tax you owe is still due in April.",
-      es: "¿Todavía no tiene ITIN? Igual puede pedir más tiempo para declarar, hasta el 15 de octubre, con el formulario 4868 (escriba “ITIN TO BE REQUESTED” donde pide el número). El impuesto que deba se paga de todos modos en abril.",
+      cite: "IRS: ITIN; FTB: Extension to file",
+      en: "No ITIN yet? You can still ask for more time to file, until October 15, on Form 4868 (write “ITIN TO BE REQUESTED” where it asks for the number). Tax you owe is still due in April. California gives an automatic extension to October 15; no form needed.",
+      es: "¿Todavía no tiene ITIN? Igual puede pedir más tiempo para declarar, hasta el 15 de octubre, con el formulario 4868 (escriba “ITIN TO BE REQUESTED” donde pide el número). El impuesto que deba se paga de todos modos en abril. California da una prórroga automática hasta el 15 de octubre; no se necesita formulario.",
     },
   ],
 
@@ -223,15 +225,15 @@ export const TAXES_FACTS = {
     },
     {
       id: "ice",
-      cite: "Center for Taxpayer Rights v. IRS, No. 26-5006, D.C. Cir., Sept 8, 2026",
-      en: "In 2025 the IRS began giving ICE taxpayers’ addresses and turned over more than 47,000 records before a federal court stopped it on November 1, 2025. On September 8, 2026, the federal appeals court in Washington, D.C. kept that order in place. The case isn’t over, and this could change.",
-      es: "En 2025 el IRS empezó a darle a ICE las direcciones de contribuyentes y entregó más de 47,000 registros antes de que una corte federal lo detuviera el 1 de noviembre de 2025. El 8 de septiembre de 2026, la corte federal de apelaciones en Washington, D.C. mantuvo esa orden. El caso no ha terminado y esto podría cambiar.",
+      cite: "D.D.C. No. 25-cv-457, Nov. 21, 2025, ECF 53; aff’d, D.C. Cir. No. 26-5006, Sept. 8, 2026",
+      en: "In 2025 the IRS began giving ICE the addresses of people with deportation orders and turned over more than 47,000 records. On November 21, 2025, a federal court in Washington, D.C. paused that mass sharing. Now the IRS may share tax information with ICE only in individual criminal cases that strictly follow the law, and it must tell the court first. On September 8, 2026, the federal appeals court kept that order in place. The order protects everyone, not only the groups that sued. But it does not stop all sharing, ICE was only ordered to limit how it uses the records it already has, and the case isn’t over.",
+      es: "En 2025 el IRS empezó a darle a ICE las direcciones de personas con órdenes de deportación y entregó más de 47,000 registros. El 21 de noviembre de 2025, una corte federal en Washington, D.C. detuvo ese intercambio masivo. Ahora el IRS solo puede compartir información de impuestos con ICE en casos penales individuales que cumplan estrictamente la ley, y antes debe avisarle a la corte. El 8 de septiembre de 2026, la corte federal de apelaciones mantuvo esa orden. La orden protege a todos, no solo a los grupos que demandaron. Pero no detiene todo intercambio, a ICE solo se le ordenó limitar el uso de los registros que ya tiene, y el caso no ha terminado.",
     },
     {
       id: "advice",
-      cite: "Asian Law Caucus: Filing taxes with an ITIN, Mar 16, 2026",
-      en: "Advocates suggest: talk to an immigration lawyer before applying for an ITIN, especially if you have a deportation order. You can use a mailing address such as a P.O. box, and you don’t have to give an email or phone number.",
-      es: "Los defensores recomiendan: hable con un abogado de inmigración antes de solicitar un ITIN, sobre todo si tiene una orden de deportación. Puede usar una dirección de correo como un apartado postal (P.O. box), y no tiene que dar correo electrónico ni teléfono.",
+      cite: "Asian Law Caucus: Filing taxes with an ITIN, Mar 16, 2026; IRS: Form W-7 and Form 1040 instructions",
+      en: "The Asian Law Caucus advises: talk to an immigration lawyer before you apply for an ITIN. ICE’s requests have focused on people with a final deportation order, so this matters most if you have one. Worried about giving your home address? The Asian Law Caucus suggests another mailing address, such as a P.O. box, on your return or extension. But IRS instructions say to use a P.O. box only if mail isn’t delivered to your home, and you can’t use a private mailbox on the W-7, where the IRS sends back your documents. Ask a lawyer before you decide. You don’t have to give an email address or phone number.",
+      es: "El Asian Law Caucus aconseja: hable con un abogado de inmigración antes de solicitar un ITIN. Las solicitudes de ICE se han enfocado en personas con una orden final de deportación, así que esto importa más si usted tiene una. ¿Le preocupa dar la dirección de su casa? El Asian Law Caucus sugiere otra dirección postal, como un apartado postal (P.O. box), en su declaración o prórroga. Pero las instrucciones del IRS dicen que use un apartado postal solo si el correo no llega a su casa, y en el W-7, donde el IRS le devuelve sus documentos, no se puede usar un buzón privado. Pregúntele a un abogado antes de decidir. No tiene que dar correo electrónico ni número de teléfono.",
     },
     {
       id: "moral-character",
@@ -242,8 +244,8 @@ export const TAXES_FACTS = {
     {
       id: "vita-private",
       cite: "IRS: VITA/TCE",
-      en: "VITA volunteers are trained to keep your information private and confidential.",
-      es: "Los voluntarios de VITA están capacitados para mantener su información privada y confidencial.",
+      en: "VITA volunteers are trained to keep your information private. That is about the volunteers: your return still goes to the IRS, so the court case above still applies.",
+      es: "Los voluntarios de VITA están capacitados para mantener su información privada. Eso se refiere a los voluntarios: su declaración igual llega al IRS, así que el caso de la corte de arriba también aplica.",
     },
   ],
 
@@ -251,9 +253,9 @@ export const TAXES_FACTS = {
   refunds: [
     {
       id: "irs",
-      cite: "IRS: Refunds; IRS: Refund timing",
-      en: "Federal refunds usually take about 3 weeks after you e-file, or 6 weeks or more for a mailed return. If you claim the EITC or the Additional Child Tax Credit, the law holds your whole refund until mid-February; with e-file and direct deposit, most arrive by early March.",
-      es: "Los reembolsos federales suelen tardar unas 3 semanas después de presentar electrónicamente, o 6 semanas o más si envía la declaración por correo. Si reclama el EITC o el Crédito Tributario Adicional por Hijos, la ley retiene todo su reembolso hasta mediados de febrero; con declaración electrónica y depósito directo, la mayoría llega a principios de marzo.",
+      cite: "IRS: Refunds; IRS: Refund timing; IRS: ITIN",
+      en: "Federal refunds usually take about 3 weeks after you e-file, or 6 weeks or more for a mailed return. If you claim the EITC or the Additional Child Tax Credit, the law holds your whole refund until mid-February; with e-file and direct deposit, most arrive by early March. Applying for an ITIN? Your return is mailed with the W-7, not e-filed. The ITIN takes about 7 weeks (9 to 11 in tax season) before the return is processed.",
+      es: "Los reembolsos federales suelen tardar unas 3 semanas después de presentar electrónicamente, o 6 semanas o más si envía la declaración por correo. Si reclama el EITC o el Crédito Tributario Adicional por Hijos, la ley retiene todo su reembolso hasta mediados de febrero; con declaración electrónica y depósito directo, la mayoría llega a principios de marzo. ¿Va a solicitar un ITIN? Su declaración se envía por correo con el W-7, no electrónicamente. El ITIN tarda unas 7 semanas (de 9 a 11 en temporada de impuestos) antes de que se procese la declaración.",
     },
     {
       id: "ftb",
@@ -314,7 +316,7 @@ export const TAX_PLACES = {
     name: { en: "United Way of Stanislaus County: free tax help (VITA)", es: "United Way of Stanislaus County: ayuda gratis con impuestos (VITA)" },
     phone: "(209) 523-4562",
     address: "422 McHenry Ave., Modesto",
-    note: { en: `English and Spanish. Last season it opened February 4, by appointment. ${CHECK_2027.en}`, es: `Inglés y español. La temporada pasada abrió el 4 de febrero, con cita. ${CHECK_2027.es}` },
+    note: { en: `English and Spanish. Last season it opened February 4; appointments recommended. ${CHECK_2027.en}`, es: `Inglés y español. La temporada pasada abrió el 4 de febrero; se recomienda hacer cita. ${CHECK_2027.es}` },
     url: "https://uwaystan.org/tax-free-assistance",
   },
   csuStan: {
@@ -371,9 +373,13 @@ export const TAXES_SOURCES: SourceRef[] = [
   { label: "FTB: Young Child Tax Credit", url: "https://www.ftb.ca.gov/file/personal/credits/young-child-tax-credit.html" },
   { label: "FTB: Foster Youth Tax Credit", url: "https://www.ftb.ca.gov/file/personal/credits/foster-youth-tax-credit.html" },
   { label: "FTB: CalFile", url: "https://www.ftb.ca.gov/file/ways-to-file/online/calfile/index.asp" },
+  { label: "FTB: Extension to file", url: "https://www.ftb.ca.gov/file/when-to-file/extension-to-file.html" },
   { label: "FTB: Processing and refund time frames", url: "https://www.ftb.ca.gov/help/time-frames/" },
   { label: "Public Law 119-21 §70104 (Child Tax Credit Social Security number rule)", url: "https://www.govinfo.gov/content/pkg/PLAW-119publ21/html/PLAW-119publ21.htm" },
   { label: "IRS: Child Tax Credit and Credit for Other Dependents", url: "https://www.irs.gov/credits-deductions/individuals/child-tax-credit" },
+  { label: "IRS Publication 596: Earned Income Credit", url: "https://www.irs.gov/publications/p596" },
+  { label: "IRS: Form W-7 instructions", url: "https://www.irs.gov/instructions/iw7" },
+  { label: "IRS: Form 1040 instructions", url: "https://www.irs.gov/instructions/i1040gi" },
   { label: "IRS: Who qualifies for the EITC", url: "https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit/who-qualifies-for-the-earned-income-tax-credit-eitc" },
   { label: "IRS FS-2025-03: deductions for tips, overtime and seniors", url: "https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors" },
   { label: "FTB analysis of AB 1550 (state tips and overtime bill)", url: "https://www.ftb.ca.gov/tax-pros/law/legislation/2025-2026/AB1550-031626.pdf" },
@@ -390,6 +396,7 @@ export const TAXES_SOURCES: SourceRef[] = [
   { label: "IRS: How to know it’s really the IRS", url: "https://www.irs.gov/help/how-to-know-its-the-irs" },
   { label: "IRS IR-2024-96: ghost preparers", url: "https://www.irs.gov/newsroom/dirty-dozen-irs-urges-taxpayers-to-not-fall-prey-to-untrustworthy-tax-preparers-ghost-preparers-can-disappear-with-taxpayer-cash-information" },
   { label: "CTEC: For taxpayers", url: "https://ctec.org/taxpayers/" },
+  { label: "Center for Taxpayer Rights v. IRS, No. 25-cv-457 (D.D.C.), order of Nov. 21, 2025 (ECF 53)", url: DDC_ORDER },
   { label: "Center for Taxpayer Rights v. IRS, No. 26-5006 (D.C. Cir. Sept 8, 2026)", url: DC_CIR },
   { label: "Asian Law Caucus: Filing taxes with an ITIN, Mar 16, 2026", url: ALC },
   { label: "United Way of Stanislaus County: free income tax assistance", url: "https://uwaystan.org/tax-free-assistance" },

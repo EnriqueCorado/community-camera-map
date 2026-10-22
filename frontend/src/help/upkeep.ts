@@ -117,7 +117,7 @@ export function upkeepItems(): UpkeepItem[] {
     {
       id: "taxes-season",
       due: TAXES_RECHECK,
-      task: "Before tax season: add FTB's 2026 CalEITC table by number of children (CA_CREDITS.caleitcMax in taxes-facts.ts), this season's VITA / AARP Tax-Aide sites and dates in Stanislaus (TAX_PLACES; IRS locator, United Way, 211), the IRS opening day, and the latest in Center for Taxpayer Rights v. IRS (IRS-ICE sharing); then move TAXES_RECHECK.",
+      task: "Before tax season: add FTB's 2026 CalEITC table by number of children (CA_CREDITS.caleitcMax in taxes-facts.ts and TAX.caleitc.maxCredit/maxCreditYear in benefits-facts.ts), this season's VITA / AARP Tax-Aide sites and dates in Stanislaus (TAX_PLACES; IRS locator, United Way, 211), the IRS opening day, and the latest in Center for Taxpayer Rights v. IRS (IRS-ICE sharing); then move TAXES_RECHECK.",
       source: "https://www.ftb.ca.gov/file/personal/credits/caleitc/eligibility-and-credit-information.html",
     },
     {

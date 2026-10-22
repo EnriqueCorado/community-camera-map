@@ -46,7 +46,8 @@ export interface BenefitsCopy {
   verdictTitle: Record<Verdict, string>;
   verdictIntro: Record<Verdict, string>;
   why: string;
-  upTo: Fn<[string, Per | "return", number]>;
+  /** `year`/`taxYear`: an amount from an older tax year than the screener's is labeled so. */
+  upTo: Fn<[string, Per | "return", number, number?, number?]>;
   limitsFor: Fn<[string]>;
   limitSource: string;
   apply: string;
@@ -121,8 +122,12 @@ const en: BenefitsCopy = {
     unlikely: "Based on your answers, probably not right now. If things change, check again.",
   },
   why: "Why",
-  upTo: (amount, per, size) =>
-    per === "return" ? `Up to ${amount} (tax year 2025).` : `Up to ${amount} ${perEn(per)} for ${peopleEn(size)}.`,
+  upTo: (amount, per, size, year, taxYear) =>
+    per !== "return"
+      ? `Up to ${amount} ${perEn(per)} for ${peopleEn(size)}.`
+      : year != null && taxYear != null && year < taxYear
+        ? `Up to ${amount} (tax year ${year} amounts; ${taxYear} amounts not posted yet).`
+        : `Up to ${amount} (tax year ${taxYear ?? year}).`,
   limitsFor: (period) => `Limits used: ${period.replace(/\.$/, "")}.`,
   limitSource: "Source",
   apply: "How to apply",
@@ -187,7 +192,7 @@ const en: BenefitsCopy = {
       case "eitcJoint":
         return `If you are married and file together, the limit is ${m(r.limit)}. Ask a free tax site.`;
       case "yctcWages":
-        return `The FTB allows wages up to ${m(r.limit)} for YCTC. Ask a free tax site.`;
+        return `If a business loss brings your total earned income to $0 or less, you can still get YCTC if your wages and your loss are each ${m(r.limit)} or less. Ask a free tax site.`;
       case "yctcNoEarned":
         return "You don’t need income from work to get YCTC.";
       case "noYoungChild":
@@ -259,8 +264,12 @@ const es: BenefitsCopy = {
     unlikely: "Según sus respuestas, probablemente no por ahora. Si algo cambia, vuelva a revisar.",
   },
   why: "Por qué",
-  upTo: (amount, per, size) =>
-    per === "return" ? `Hasta ${amount} (año fiscal 2025).` : `Hasta ${amount} ${perEs(per)} para ${peopleEs(size)}.`,
+  upTo: (amount, per, size, year, taxYear) =>
+    per !== "return"
+      ? `Hasta ${amount} ${perEs(per)} para ${peopleEs(size)}.`
+      : year != null && taxYear != null && year < taxYear
+        ? `Hasta ${amount} (cantidades del año fiscal ${year}; las de ${taxYear} aún no se publican).`
+        : `Hasta ${amount} (año fiscal ${taxYear ?? year}).`,
   limitsFor: (period) => `Límites usados: ${period.replace(/\.$/, "")}.`,
   limitSource: "Fuente",
   apply: "Cómo solicitar",
@@ -325,7 +334,7 @@ const es: BenefitsCopy = {
       case "eitcJoint":
         return `Si está casado y declaran juntos, el límite es ${m(r.limit)}. Pregunte en un sitio gratis de impuestos.`;
       case "yctcWages":
-        return `La FTB permite sueldos de hasta ${m(r.limit)} para el YCTC. Pregunte en un sitio gratis de impuestos.`;
+        return `Si una pérdida en su negocio deja su ingreso total del trabajo en $0 o menos, todavía puede recibir el YCTC si su sueldo y su pérdida son cada uno de ${m(r.limit)} o menos. Pregunte en un sitio gratis de impuestos.`;
       case "yctcNoEarned":
         return "No necesita ingresos por trabajo para recibir el YCTC.";
       case "noYoungChild":

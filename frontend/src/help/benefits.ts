@@ -111,7 +111,8 @@ export interface ProgramResult {
   /** Table whose limit decided the answer (for the "limits in effect" line). */
   table?: TableId;
   /** Largest amount it can give ("up to"), cents. */
-  upTo?: { cents: number; per: Per | "return" };
+  /** `year`: the tax year an amount is for, when it isn't the screener's (TAX.year). */
+  upTo?: { cents: number; per: Per | "return"; year?: number };
 }
 
 export interface Screen {
@@ -311,16 +312,17 @@ const kidsIndex = (n: number) => Math.min(3, Math.max(0, Math.floor(n)));
 
 function caleitc(a: Answers): ProgramResult {
   const kids = kidsIndex(a.children ?? 0);
-  const upTo = { cents: cents(TAX.caleitc.maxCredit[kids]!), per: "return" as const };
+  const upTo = { cents: cents(TAX.caleitc.maxCredit[kids]!), per: "return" as const, year: TAX.caleitc.maxCreditYear };
   if (a.taxId === "none") return { id: "caleitc", verdict: "unlikely", reasons: [{ kind: "taxNeedsId" }], upTo };
   if (a.income === 0) return { id: "caleitc", verdict: "unlikely", reasons: [{ kind: "earnedZero" }], upTo };
   const income = yearlyCents(a);
   const limit = cents(TAX.caleitc.maxEarned);
+  // FTB: earned income and AGI must be LESS than the limit.
   const cmp = cmpOf(income, limit);
   const r: ProgramResult = {
     id: "caleitc",
-    verdict: within(cmp) ? "likely" : "unlikely",
-    reasons: [{ kind: "taxIncome", cmp, income, limit }, { kind: "earnedAssumption" }],
+    verdict: cmp === "below" ? "likely" : "unlikely",
+    reasons: [{ kind: "taxIncome", cmp, income, limit, strict: true }, { kind: "earnedAssumption" }],
     upTo,
   };
   return a.taxId === "unsure" ? capMaybe(r, { kind: "taxIdUnsure" }) : r;
@@ -336,12 +338,14 @@ function yctc(a: Answers): ProgramResult {
   let r: ProgramResult;
   if (income === 0) {
     r = { id: "yctc", verdict: "likely", reasons: [{ kind: "yctcNoEarned" }], upTo };
-  } else if (income <= eitcLimit) {
-    r = { id: "yctc", verdict: "likely", reasons: [{ kind: "taxIncome", cmp: cmpOf(income, eitcLimit), income, limit: eitcLimit }, { kind: "earnedAssumption" }], upTo };
-  } else if (income <= wageLimit) {
-    r = { id: "yctc", verdict: "maybe", reasons: [{ kind: "taxIncome", cmp: "over", income, limit: eitcLimit }, { kind: "yctcWages", limit: wageLimit }], upTo };
+  } else if (income < eitcLimit) {
+    r = { id: "yctc", verdict: "likely", reasons: [{ kind: "taxIncome", cmp: "below", income, limit: eitcLimit, strict: true }, { kind: "earnedAssumption" }], upTo };
   } else {
-    r = { id: "yctc", verdict: "unlikely", reasons: [{ kind: "taxIncome", cmp: "over", income, limit: wageLimit }], upTo };
+    // YCTC follows CalEITC's income limit. The FTB's higher wage cap applies only
+    // when a business loss brings total earned income to $0 or less, so say so
+    // to someone whose wages are under that cap; for a worker, it's "unlikely".
+    const over = { kind: "taxIncome" as const, cmp: cmpOf(income, eitcLimit), income, limit: eitcLimit, strict: true };
+    r = { id: "yctc", verdict: "unlikely", reasons: income <= wageLimit ? [over, { kind: "yctcWages", limit: wageLimit }] : [over], upTo };
   }
   if (a.youngest === "five") r = capMaybe(r, { kind: "childFive" });
   return a.taxId === "unsure" ? capMaybe(r, { kind: "taxIdUnsure" }) : r;

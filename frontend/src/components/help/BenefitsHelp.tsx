@@ -274,7 +274,7 @@ function ProgramCard({ r, b, c, money, size }: { r: ProgramResult; b: BenefitsCo
       </h5>
       <p>
         {p.gives[lang]}
-        {r.upTo && !compact && <> {b.upTo(money(r.upTo.cents), r.upTo.per, size)}</>}
+        {r.upTo && !compact && <> {b.upTo(money(r.upTo.cents), r.upTo.per, size, r.upTo.year, TAX.year)}</>}
       </p>
       <p className="hben__label">{b.why}</p>
       <ul className="hben__why">
