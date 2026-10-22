@@ -1081,6 +1081,13 @@ def _baked_times() -> dict[str, float]:
         return {}
 
 
+def _baked_count(name: str) -> int | None:
+    try:
+        return len(json.loads((BAKED_LAYERS / f"{name}.geojson").read_text()).get("features", []))
+    except (OSError, ValueError, AttributeError):
+        return None
+
+
 def sync_catalog(catalog: list[dict], layers: list[Layer], sources: dict[str, str]) -> list[dict]:
     """The static catalog, with registry metadata (titles, coverage, views)
     brought up to date: layers added to the registry appear (in registry
@@ -1103,6 +1110,10 @@ def sync_catalog(catalog: list[dict], layers: list[Layer], sources: dict[str, st
         )
         if layer.view:  # loads from the national service even without a baked copy
             c["available"] = True
+        elif not c.get("available") and (BAKED_LAYERS / f"{layer.name}.geojson").is_file():
+            # baked (by a pack's loader or CI) but new to this catalog copy
+            c["available"] = True
+            c.setdefault("count", _baked_count(layer.name))
         out.append(c)
     return out
 
@@ -1482,7 +1493,7 @@ LAYERS: dict[str, Layer] = {
         name="message-signs",
         title="Highway message signs",
         description="Caltrans changeable message signs and their current text, statewide.",
-        category="point",
+        category="info",  # INFO_FIELDS in MapView.tsx shows the sign text
         loader=_caltrans("cms", transforms.caltrans_cms),
         ttl=180,
         coverage="california",

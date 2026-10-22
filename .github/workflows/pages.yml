@@ -54,11 +54,14 @@ jobs:
 
   # Isolated job, like windy: the only place the Iteris 511 / OHGO keys exist.
   # Rebuilds the camera list from every camera source (Caltrans, keyless state
-  # DOTs, USGS, NOAA, and the keyed 511 states) and hands back just its folder
-  # (frontend/public/data/cameras/: index, search file and grid cells, see
-  # backend/app/cameras/static_split.py). bake.py's check_camera_list guards
-  # (Caltrans present, no big shrink, no key in any URL) run before it's written.
-  # Hourly at most: Iteris allows 10 calls / 60 s per key and we make one per
+  # DOTs, USGS, NOAA, and the keyed 511 states) and the road-operations layers
+  # (work zones, incidents, message signs, road weather: keyless feeds + the
+  # keyed 511 / OHGO ones), and hands back just those files as data: the camera
+  # folder (frontend/public/data/cameras/: index, search file and grid cells, see
+  # backend/app/cameras/static_split.py) and the road GeoJSON. bake.py's
+  # check_camera_list guards (Caltrans present, no big shrink, no key in any URL)
+  # run before the camera list is written.
+  # Hourly at most: Iteris allows 10 calls / 60 s per key and we make three per
   # state per run. A missing or not-yet-approved key just skips that state.
   cameras:
     if: github.event_name != 'schedule' || github.event.schedule == '7 * * * *'
@@ -89,6 +92,37 @@ jobs:
           name: cameras
           path: frontend/public/data/cameras/
           if-no-files-found: error
+          retention-days: 1
+      # Road operations (scripts/refresh_live.py KEYED). The committed copies are
+      # removed first, so only freshly baked files are handed back (a layer whose
+      # every source failed keeps the build job's cached copy instead).
+      - name: Bake road-operations layers
+        working-directory: backend
+        continue-on-error: true # a slow state feed must not cost the camera list
+        timeout-minutes: 10
+        env:
+          CAM_ITERIS_KEY_GA: ${{ secrets.ITERIS_KEY_GA }}
+          CAM_ITERIS_KEY_WI: ${{ secrets.ITERIS_KEY_WI }}
+          CAM_ITERIS_KEY_NV: ${{ secrets.ITERIS_KEY_NV }}
+          CAM_ITERIS_KEY_NC: ${{ secrets.ITERIS_KEY_NC }}
+          CAM_ITERIS_KEY_UT: ${{ secrets.ITERIS_KEY_UT }}
+          CAM_ITERIS_KEY_AK: ${{ secrets.ITERIS_KEY_AK }}
+          CAM_ITERIS_KEY_LA: ${{ secrets.ITERIS_KEY_LA }}
+          CAM_ITERIS_KEY_ID: ${{ secrets.ITERIS_KEY_ID }}
+          CAM_ITERIS_KEY_AZ: ${{ secrets.ITERIS_KEY_AZ }}
+          CAM_OHGO_API_KEY: ${{ secrets.OHGO_API_KEY }}
+        run: |
+          rm -f ../frontend/public/data/layers/{work-zones,road-incidents,message-signs-usa,road-weather-usa}.geojson
+          uv run --locked python scripts/refresh_live.py --keyed
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: road-ops
+          path: |
+            frontend/public/data/layers/work-zones.geojson
+            frontend/public/data/layers/road-incidents.geojson
+            frontend/public/data/layers/message-signs-usa.geojson
+            frontend/public/data/layers/road-weather-usa.geojson
+          if-no-files-found: ignore
           retention-days: 1
 
   # Daily snapshot of the fast-changing layers (quakes, fires, smoke, outages,
@@ -244,6 +278,43 @@ jobs:
         with:
           path: camera-cache
           key: cameras-v2-${{ github.run_id }}
+      # Road-operations layers come from the keyed cameras job (hourly / push);
+      # their own cache carries them into the 15-minute runs. Without either,
+      # the committed copies are used.
+      - name: Restore road-operations layers
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            frontend/public/data/layers/work-zones.geojson
+            frontend/public/data/layers/road-incidents.geojson
+            frontend/public/data/layers/message-signs-usa.geojson
+            frontend/public/data/layers/road-weather-usa.geojson
+          key: road-ops-v1-${{ github.run_id }}
+          restore-keys: road-ops-v1-
+      # Downloaded aside, so a layer missing from this run's artifact keeps its
+      # cached copy (and its "updated" time) instead of being re-stamped.
+      - name: Fetch road-operations layers
+        id: roads-dl
+        if: needs.cameras.result == 'success'
+        continue-on-error: true # no artifact when every road feed failed
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: road-ops
+          path: road-ops-in
+      - name: Adopt road-operations layers
+        if: steps.roads-dl.outcome == 'success'
+        working-directory: backend
+        run: uv run --locked python scripts/refresh_live.py --adopt work-zones,road-incidents,message-signs-usa,road-weather-usa --from ../road-ops-in
+      - name: Save road-operations layers
+        if: steps.roads-dl.outcome == 'success'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            frontend/public/data/layers/work-zones.geojson
+            frontend/public/data/layers/road-incidents.geojson
+            frontend/public/data/layers/message-signs-usa.geojson
+            frontend/public/data/layers/road-weather-usa.geojson
+          key: road-ops-v1-${{ github.run_id }}
       # Weekly service lists (scripts/refresh_live.py --weekly): their own cache,
       # so the hourly/daily cache above is untouched; without a cached copy the
       # committed files are used. Bump the key (v1 -> v2) when a committed

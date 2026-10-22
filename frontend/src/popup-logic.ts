@@ -105,6 +105,43 @@ export const WEBCAM_PAGE_HOSTS = [
   ...SERVICE_LINK_HOSTS, // community & immigrant services pack (official .gov pages)
 ];
 
+/** State traffic-info sites the road-operations popups may link to (work zones,
+ *  incidents). Mirrors backend app/layers/national/roads.py PAGE_HOSTS;
+ *  backend tests/test_roads_pack.py fails if the two lists drift. */
+export const ROAD_PAGE_HOSTS = [
+  "511.alaska.gov",
+  "511.idaho.gov",
+  "511ga.org",
+  "511ia.org",
+  "511in.org",
+  "511la.org",
+  "511mn.org",
+  "511nj.org",
+  "511ny.org",
+  "511wi.gov",
+  "az511.com",
+  "chart.maryland.gov",
+  "deldot.gov",
+  "fl511.com",
+  "goky.ky.gov",
+  "hidot.hawaii.gov",
+  "newengland511.org",
+  "nmroads.com",
+  "oktraffic.org",
+  "travel.dot.nd.gov",
+  "traveler.modot.org",
+  "udottraffic.utah.gov",
+  "wsdot.com",
+  "www.511la.org",
+  "www.algotraffic.com",
+  "www.drivenc.gov",
+  "www.kandrive.gov",
+  "www.mdottraffic.com",
+  "www.nvroads.com",
+  "www.ohgo.com",
+  "www.udottraffic.utah.gov",
+];
+
 /** Hosts the camera viewer may load stills / HLS from (a host matches itself or
  *  any subdomain). Mirrors backend app/cameras/national.py HOSTS plus Caltrans;
  *  backend tests/test_national.py fails if the two lists drift. */

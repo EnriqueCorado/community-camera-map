@@ -181,3 +181,35 @@ def test_state_layers_keep_their_state_coverage():
     states = [lay for lay in LAYERS.values() if len(lay.coverage) == 2]
     for lay in states:
         assert lay.catalog_extras()["coverage"] == lay.coverage, lay.name
+
+
+def test_a_baked_file_makes_a_new_layer_available(tmp_path, monkeypatch):
+    import json
+
+    from app.layers import service
+
+    (tmp_path / "fresh.geojson").write_text(
+        json.dumps({"type": "FeatureCollection", "features": [{}, {}]})
+    )
+    monkeypatch.setattr(service, "BAKED_LAYERS", tmp_path)
+    reg = [
+        Layer(name="fresh", title="F", description="d", category="point"),
+        Layer(name="missing", title="M", description="d", category="point"),
+    ]
+    fresh, missing = sync_catalog([], reg, {})
+    assert fresh["available"] is True and fresh["count"] == 2
+    assert missing["available"] is False
+
+
+def test_shipped_catalog_marks_every_baked_layer_available():
+    import json
+
+    from app.layers import service
+
+    cat = json.loads((service.BAKED_LAYERS.parent / "layers.json").read_text())
+    off = [
+        c["name"]
+        for c in cat
+        if not c["available"] and (service.BAKED_LAYERS / f"{c['name']}.geojson").is_file()
+    ]
+    assert off == []
