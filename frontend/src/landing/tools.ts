@@ -22,6 +22,9 @@ import { CIVICS_COPY } from "../help/civics-copy";
 import { CIVICS_QUESTIONS } from "../help/civics-questions";
 import { CIVICS_PARTS } from "../help/civics";
 import { HEAT_COPY } from "../help/heat-copy";
+import { PLAN_CHECKED, PLAN_FACTS, PLAN_SOURCES } from "../help/family-plan-facts";
+import { FAMILY_PLAN_COPY } from "../help/family-plan-copy";
+import { PLAN_SECTIONS } from "../help/family-plan";
 
 /** A place to call or visit (the shape every facts file's contacts share). */
 export interface PlaceInfo {
@@ -47,7 +50,8 @@ export type ToolId =
   | "medi-cal-work"
   | "know-your-rights"
   | "citizenship"
-  | "legal";
+  | "legal"
+  | "family-plan";
 
 /** A line in a section. `esEn`: an English part shown first on the Spanish page
  *  (marked lang="en"), e.g. the official civics question the officer asks. */
@@ -411,6 +415,35 @@ export const TOOLS: readonly ToolPage[] = [
     places: [],
     sources: LEGAL_FACTS.sources,
     checked: LEGAL_FACTS.checked,
+  },
+  {
+    id: "family-plan",
+    group: "immigration",
+    slug: { en: "family-plan", es: "plan-familiar" },
+    target: { tab: "immigration", view: "plan" },
+    name: { en: FAMILY_PLAN_COPY.en.title, es: FAMILY_PLAN_COPY.es.title },
+    summary: {
+      en: "Write down who will care for your children, who to call and where your documents are, then print it for your family. Private: nothing is saved.",
+      es: "Anote quién cuidará a sus hijos, a quién llamar y dónde están sus documentos, y luego imprímalo para su familia. Privado: no se guarda nada.",
+    },
+    intro: {
+      en: `${FAMILY_PLAN_COPY.en.lead} The free tool asks the questions below, keeps your answers only on your phone, and prints a clean copy. You can also print a blank plan to fill in by hand.`,
+      es: `${FAMILY_PLAN_COPY.es.lead} La herramienta gratis hace las preguntas de abajo, guarda sus respuestas solo en su teléfono e imprime una copia limpia. También puede imprimir un plan en blanco para llenarlo a mano.`,
+    },
+    // The plan's own sections, with the facts each one carries.
+    groups: PLAN_SECTIONS.filter((s) => PLAN_FACTS[s.id]).map((s) => group(s.title, PLAN_FACTS[s.id]!)),
+    sections: [
+      {
+        title: { en: "What the plan asks you to write down", es: "Lo que el plan le pide anotar" },
+        items: PLAN_SECTIONS.map((s) => ({
+          en: `${s.title.en}: ${s.fields.map((f) => f.label.en).join("; ")}.`,
+          es: `${s.title.es}: ${s.fields.map((f) => f.label.es).join("; ")}.`,
+        })),
+      },
+    ],
+    places: [RAPID_RESPONSE],
+    sources: PLAN_SOURCES,
+    checked: PLAN_CHECKED,
   },
 ];
 

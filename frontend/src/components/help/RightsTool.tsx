@@ -2,6 +2,7 @@
 // Attorney General and the courts say, in their words, plus red cards, a
 // family plan, how to find someone who was detained, and an emergency line.
 // Nothing to type: a page to read (and print).
+import { useEffect, useRef } from "react";
 import { useI18n } from "../../i18n";
 import type { HelpCopy } from "../../help/copy";
 import { RIGHTS_COPY } from "../../help/rights-copy";
@@ -22,9 +23,13 @@ import {
 import { longDate } from "../../help/dates";
 import { ExtLink, FactList, Phone, Result, Sources } from "./ui";
 
-export function RightsTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) {
+export function RightsTool({ c, onLegal, onPlan, focusTitle }: { c: HelpCopy; onLegal: () => void; onPlan?: () => void; focusTitle?: boolean }) {
   const { lang, locale } = useI18n();
   const r = RIGHTS_COPY[lang];
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    if (focusTitle) titleRef.current?.focus();
+  }, [focusTitle]);
   const sections: [string, keyof typeof RIGHTS_FACTS][] = [
     [r.door, "door"],
     [r.stopped, "stopped"],
@@ -34,7 +39,9 @@ export function RightsTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void })
 
   return (
     <>
-      <h3>{r.title}</h3>
+      <h3 ref={titleRef} tabIndex={-1}>
+        {r.title}
+      </h3>
       <p className="help__lead">{r.lead}</p>
 
       <Result tone="warn" title={r.emergencyTitle}>
@@ -98,6 +105,13 @@ export function RightsTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void })
         <section key={key} aria-labelledby={`rights-${key}`}>
           <h3 id={`rights-${key}`}>{title}</h3>
           <FactList facts={RIGHTS_FACTS[key]} />
+          {key === "plan" && onPlan && (
+            <p>
+              <button type="button" className="hbtn hbtn--primary" onClick={onPlan}>
+                {r.planButton}
+              </button>
+            </p>
+          )}
         </section>
       ))}
 

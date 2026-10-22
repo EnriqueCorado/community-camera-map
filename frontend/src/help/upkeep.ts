@@ -12,6 +12,7 @@ import { BENEFITS_CHECKED, TABLES, TAX, type IncomeTable } from "./benefits-fact
 import { MCW_CHECKED, MCW_IMMIGRANT_RECHECK, MCW_RECHECK } from "./medi-cal-work-facts";
 import { RIGHTS_CHECKED, RIGHTS_RECHECK } from "./rights-facts";
 import { CIVICS_CHECKED, CIVICS_OFFICIALS_RECHECK } from "./civics-facts";
+import { PLAN_CHECKED } from "./family-plan-facts";
 import { addDays } from "./dates";
 
 export interface UpkeepItem {
@@ -122,6 +123,7 @@ export function upkeepItems(): UpkeepItem[] {
         ["medi-cal-work", MCW_CHECKED],
         ["know-your-rights", RIGHTS_CHECKED],
         ["citizenship", CIVICS_CHECKED],
+        ["family-plan", PLAN_CHECKED],
       ] as const
     ).map(([id, checked]) => ({
       id: `yearly-${id}`,

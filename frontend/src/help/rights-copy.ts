@@ -29,6 +29,7 @@ export interface RightsCopy {
   scams: string;
   legal: string;
   legalButton: string;
+  planButton: string;
   changing: (date: string) => string;
 }
 
@@ -59,6 +60,7 @@ const en: RightsCopy = {
   scams: "Watch out for scams",
   legal: "Get real legal help",
   legalButton: "See free legal help near you",
+  planButton: "Make your family plan now (free and private)",
   changing: (d) => `Some of these rules are being decided in court right now. Last checked ${d}.`,
 };
 
@@ -89,6 +91,7 @@ const es: RightsCopy = {
   scams: "Cuidado con las estafas",
   legal: "Consiga ayuda legal de verdad",
   legalButton: "Ver ayuda legal gratis cerca de usted",
+  planButton: "Haga su plan familiar ahora (gratis y privado)",
   changing: (d) => `Algunas de estas reglas se están decidiendo en las cortes ahora mismo. Revisado por última vez el ${d}.`,
 };
 
