@@ -9,6 +9,9 @@
     },
     "api/count.ts": {
       "maxDuration": 5
+    },
+    "api/inbound.ts": {
+      "maxDuration": 10
     }
   }
 }

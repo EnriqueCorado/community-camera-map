@@ -358,6 +358,14 @@ cd relay && npm ci && vercel login && npm run deploy   # project: stanislaus-fli
 gh variable set FLIGHTS_RELAY_URL --body "https://stanislaus-flights.vercel.app/api/flights"
 ```
 
+**Corrections mail** (`relay/src/inbound.ts`, `relay/api/inbound.ts`): the "See something wrong? Tell
+us" links (`help/report.ts`) and the partners page write to the corrections address. Resend receives
+mail for the domain and POSTs a signed `email.received` notice to `/api/inbound`; the relay checks the
+Svix signature (5-minute window), fetches the message from Resend and sends a copy to the volunteer
+(`FORWARD_TO`, kept only in the Vercel project's environment) with Reply-To set to the sender.
+Nothing is stored; only error messages are logged; attachments stay in Resend (Emails → Receiving).
+Environment (Production): `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET`, `FORWARD_TO`, `FORWARD_FROM`.
+
 **Usage counter** (`relay/src/counter.ts`, `relay/api/count.ts`; browser side in `help/count.ts` and
 `landing/client.js`): how many times each free-help page or tool was opened, per month, for partners
 and grant applications. It counts uses, not people.
