@@ -11,9 +11,9 @@
 //  - storage holds only counters: field "<kind>:<id>:<lang>" in the hash
 //    "count:<YYYY-MM>" (UTC month). Nothing from the request (IP address,
 //    user agent, referrer, cookies, the exact time) is stored or logged by this
-//    code. It reads only the `e` value and the Origin, DNT, Sec-GPC and
+//    code. It reads only the event (the body) and the Origin, DNT, Sec-GPC and
 //    User-Agent headers (the last only to drop bots and test browsers);
-//  - `e` must be one of EVENTS, a fixed list, so nothing else can be smuggled in;
+//  - the event must be one of EVENTS, a fixed list, so nothing else can be smuggled in;
 //  - "DNT: 1" or "Sec-GPC: 1" means the visit isn't counted (the page script
 //    already skips those browsers);
 //  - counts are rough (no visitor ID means no way to tell repeat visits apart).
