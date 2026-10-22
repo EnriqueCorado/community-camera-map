@@ -6,7 +6,7 @@ import "./help.css";
 import { useI18n } from "../../i18n";
 import { useDialog } from "../../hooks/useDialog";
 import { COPY } from "../../help/copy";
-import { isRentView, isWorkView, type HelpTab, type HelpTarget } from "../../help/target";
+import { isBenefitsView, isRentView, isWorkView, type HelpTab, type HelpTarget } from "../../help/target";
 import { Tabs } from "./Tabs";
 
 // Each tab is its own download, fetched the first time it's opened: most
@@ -14,7 +14,7 @@ import { Tabs } from "./Tabs";
 const MedicalHelp = lazy(() => import("./MedicalHelp").then((m) => ({ default: m.MedicalHelp })));
 const RenterHelp = lazy(() => import("./RenterHelp").then((m) => ({ default: m.RenterHelp })));
 const WorkHelp = lazy(() => import("./WorkHelp").then((m) => ({ default: m.WorkHelp })));
-const BenefitsHelp = lazy(() => import("./BenefitsHelp").then((m) => ({ default: m.BenefitsHelp })));
+const BenefitsTab = lazy(() => import("./BenefitsTab").then((m) => ({ default: m.BenefitsTab })));
 const LegalHelp = lazy(() => import("./LegalHelp").then((m) => ({ default: m.LegalHelp })));
 
 interface Props {
@@ -96,7 +96,13 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
                 onLegal={() => go({ tab: "legal" })}
               />
             )}
-            {target.tab === "benefits" && <BenefitsHelp c={c} />}
+            {target.tab === "benefits" && (
+              <BenefitsTab
+                c={c}
+                view={isBenefitsView(target.view) ? target.view : "screener"}
+                onView={(view) => onTarget({ tab: "benefits", view })}
+              />
+            )}
             {target.tab === "legal" && <LegalHelp c={c} onShowOnMap={onShowOnMap} />}
           </Suspense>
           <p className="hdisclaimer">{c.disclaimer}</p>

@@ -424,6 +424,7 @@ first two letters. `e2e/tests/help.spec.ts` checks this.
 | Heat at work (Work tab) | `help/heat.ts`, `heat-forecast.ts` | `help/heat-facts.ts` (8 CCR §3395/§3396); Open-Meteo for a fixed city list |
 | Eviction-notice deadlines (Renters) | `help/court-days.ts`, `eviction.ts` | `help/eviction-facts.ts` (CCP §1161/§1167, 2026–27 court holidays) |
 | Benefits screener | `help/benefits.ts` | `help/benefits-facts.ts` (CalFresh, WIC, Medi-Cal, CARE, MID/TID, LIHEAP, LifeLine, CalEITC…) |
+| Medi-Cal work rules (2027), Benefits tab | `help/medi-cal-work.ts` | `help/medi-cal-work-facts.ts` (Pub. L. 119-21 §71119 / SSA §1902(xx), CMS-2454-IFC, DHCS ACWDL 25-30, SB 164, Stanislaus CSA) |
 
 Each tool opens directly with `#help=<tab>&hv=<tool>` (e.g. `#lang=es&help=rent&hv=eviction`).
 
@@ -456,6 +457,10 @@ on one page. Flyers avoid figures that change yearly, so printed copies stay cor
 - **Each January:** minimum wage (`MIN_WAGE`), court holidays for the next year (`court-days.ts`; dates past the
   table answer "call now"), tax-credit limits; on 2027-01-01 re-read Labor Code §226.7 (`LAB_226_7_RECHECK`) and
   the unlawful-detainer service rules (AB 747).
+- **Medi-Cal work rules** (new; still settling): by `MCW_RECHECK` (2026-12-15) check the states' lawsuit
+  (*Massachusetts v. Oz*), new DHCS county letters and when current members are first checked; by
+  `MCW_IMMIGRANT_RECHECK` (2027-06-01) the state-funded Medi-Cal premium and the July 2027 changes. Research archive:
+  `~/dev/outreach-help-2026-10/research/medi-cal-work.{json,md}` (local, not in git).
 - **Benefits tables** carry their own effective dates (CalFresh Oct 1, WIC Jul 1, CARE/LifeLine Jun 1, …); the
   unit tests fail when one lapses. Public charge rules changed 2026-09-18; keep that note current.
 - A weekly GitHub Action (`help-links.yml`) checks every cited link and the AG rent-cap page and opens an issue.

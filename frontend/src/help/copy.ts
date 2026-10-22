@@ -20,6 +20,9 @@ export interface HelpCopy {
   workViewLabel: string;
   workViewWages: string;
   workViewHeat: string;
+  benefitsViewLabel: string;
+  benefitsViewScreener: string;
+  benefitsViewWork: string;
   rentViewEviction: string;
   disclaimer: string;
   flyers: string;
@@ -186,6 +189,9 @@ const en: HelpCopy = {
   workViewLabel: "Choose a topic",
   workViewWages: "Unpaid wages",
   workViewHeat: "Heat at work today",
+  benefitsViewLabel: "Choose a topic",
+  benefitsViewScreener: "Which benefits can I get?",
+  benefitsViewWork: "Medi-Cal work rules (2027)",
   rentViewEviction: "Got an eviction notice?",
   flyers: "Share these tools: free printable flyers in English and Spanish",
   disclaimer:
@@ -374,6 +380,9 @@ const es: HelpCopy = {
   workViewLabel: "Elija un tema",
   workViewWages: "Salarios no pagados",
   workViewHeat: "Calor en el trabajo hoy",
+  benefitsViewLabel: "Elija un tema",
+  benefitsViewScreener: "¿Qué beneficios puedo recibir?",
+  benefitsViewWork: "Reglas de trabajo de Medi-Cal (2027)",
   rentViewEviction: "¿Recibió un aviso de desalojo?",
   flyers: "Comparta estas herramientas: volantes gratis para imprimir, en español e inglés",
   disclaimer:

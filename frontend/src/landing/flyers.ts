@@ -71,6 +71,31 @@ export const FLYERS: readonly Flyer[] = [
     },
   },
   {
+    id: "medi-cal",
+    to: { tool: "medi-cal-work" },
+    layout: "page",
+    side: {
+      en: {
+        headline: "New Medi-Cal work rules start in 2027",
+        bullets: [
+          "Many adults 19–64 will need 80 hours a month of work, school, training or volunteering, or $580 a month in pay.",
+          "Many are exempt: parents of young children, pregnant people, people with serious health conditions, and more.",
+          "It includes state-funded Medi-Cal. Answer every county letter.",
+          "See if it applies to you, and what to do now.",
+        ],
+      },
+      es: {
+        headline: "Nuevas reglas de trabajo de Medi-Cal desde 2027",
+        bullets: [
+          "Muchos adultos de 19 a 64 años necesitarán 80 horas al mes de trabajo, escuela, capacitación o voluntariado, o ganar $580 al mes.",
+          "Muchos están exentos: padres de niños pequeños, personas embarazadas, con problemas de salud serios, y más.",
+          "Incluye el Medi-Cal pagado por el estado. Conteste toda carta del condado.",
+          "Vea si aplica a usted y qué hacer ahora.",
+        ],
+      },
+    },
+  },
+  {
     id: "renters",
     to: { group: "housing" },
     layout: "page",

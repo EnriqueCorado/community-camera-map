@@ -9,6 +9,7 @@ import { COURT_HOLIDAYS_SOURCE, COVERED_TO } from "./court-days";
 import { LAB_226_7_RECHECK, MIN_WAGE, WAGE_FACTS } from "./wages-facts";
 import { HEAT_FACTS, LAB_226_7_RECHECK as HEAT_226_7_RECHECK } from "./heat-facts";
 import { BENEFITS_CHECKED, TABLES, TAX, type IncomeTable } from "./benefits-facts";
+import { MCW_CHECKED, MCW_IMMIGRANT_RECHECK, MCW_RECHECK } from "./medi-cal-work-facts";
 import { addDays } from "./dates";
 
 export interface UpkeepItem {
@@ -77,6 +78,18 @@ export function upkeepItems(): UpkeepItem[] {
       due: after(TAX.recheckBy, 1),
       task: `Post the tax year ${TAX.year + 1} CalEITC, YCTC and federal EITC figures (TAX in benefits-facts.ts).`,
     },
+    {
+      id: "medi-cal-work-start",
+      due: MCW_RECHECK,
+      task: "Before Medi-Cal's work rules start: check Massachusetts v. Oz (D. Mass.) for a ruling on CMS's rule, new DHCS county letters (medically frail list, verification), and when current members are first checked (DHCS: March 2027); update medi-cal-work-facts.ts and move MCW_RECHECK.",
+      source: "https://www.dhcs.ca.gov/medi-cal/updates/medi-cal-changes/",
+    },
+    {
+      id: "medi-cal-immigrants-2027",
+      due: MCW_IMMIGRANT_RECHECK,
+      task: "Update the state-funded Medi-Cal premium amount (2027-28 May Revision) and the July 1, 2027 changes (dental, refugees' state coverage) in medi-cal-work-facts.ts, then move MCW_IMMIGRANT_RECHECK.",
+      source: "https://www.dhcs.ca.gov/medi-cal/updates/medi-cal-changes/",
+    },
     ...(Object.entries(TABLES) as [string, IncomeTable][]).map(([id, t]) => ({
       id: `benefits-${id}`,
       due: after(t.graceUntil ?? t.to, 1),
@@ -92,6 +105,7 @@ export function upkeepItems(): UpkeepItem[] {
         ["wages", WAGE_FACTS.checked],
         ["heat", HEAT_FACTS.checked],
         ["benefits", BENEFITS_CHECKED],
+        ["medi-cal-work", MCW_CHECKED],
       ] as const
     ).map(([id, checked]) => ({
       id: `yearly-${id}`,

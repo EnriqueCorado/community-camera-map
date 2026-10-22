@@ -610,3 +610,19 @@ textarea.hf__input {
     color: CanvasText;
   }
 }
+
+/* Medi-Cal work rules tool */
+.hcheck__note {
+  display: block;
+  margin-top: 2px;
+}
+.hmcw__acts {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.hmcw__bad {
+  color: var(--danger);
+  font-weight: 600;
+}

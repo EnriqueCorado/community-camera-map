@@ -13,6 +13,8 @@ import { WAGE_FACTS, WAGE_SOURCES } from "../help/wages-facts";
 import { HEAT_FACTS } from "../help/heat-facts";
 import { BENEFITS_CHECKED, BENEFITS_SOURCES, PROGRAMS, PUBLIC_CHARGE } from "../help/benefits-facts";
 import { WAGES_COPY } from "../help/wages-copy";
+import { MCW_CHECKED, MCW_CONTACTS, MCW_FACTS, MCW_SOURCES } from "../help/medi-cal-work-facts";
+import { MEDI_CAL_WORK_COPY } from "../help/medi-cal-work-copy";
 import { HEAT_COPY } from "../help/heat-copy";
 
 /** A place to call or visit (the shape every facts file's contacts share). */
@@ -36,6 +38,7 @@ export type ToolId =
   | "wages"
   | "heat"
   | "benefits"
+  | "medi-cal-work"
   | "legal";
 
 export interface FactGroup {
@@ -129,6 +132,32 @@ export const TOOLS: readonly ToolPage[] = [
     places: [],
     sources: BENEFITS_SOURCES,
     checked: BENEFITS_CHECKED,
+  },
+  {
+    id: "medi-cal-work",
+    group: "health",
+    slug: { en: "medi-cal-work-rules", es: "reglas-de-trabajo-medi-cal" },
+    target: { tab: "benefits", view: "medi-cal" },
+    name: { en: MEDI_CAL_WORK_COPY.en.title, es: MEDI_CAL_WORK_COPY.es.title },
+    summary: {
+      en: "From 2027, many adults on Medi-Cal must show 80 hours a month or $580 in earnings. See if it applies to you, if you’re exempt, and what to do now.",
+      es: "Desde 2027, muchos adultos con Medi-Cal deberán demostrar 80 horas al mes o $580 en ingresos. Vea si aplica a usted, si está exento y qué hacer ahora.",
+    },
+    intro: {
+      en: `Starting in 2027, many adults on Medi-Cal must show 80 hours a month of work, school, job training or volunteering, or $580 a month in earnings, to keep it. Many people are exempt. The free tool asks a few questions and shows where you stand. ${MCW_FACTS.caveat.en}`,
+      es: `Desde 2027, muchos adultos con Medi-Cal deberán demostrar 80 horas al mes de trabajo, escuela, capacitación o voluntariado, o ganar $580 al mes, para mantenerlo. Muchas personas están exentas. La herramienta gratis hace unas preguntas y le muestra su situación. ${MCW_FACTS.caveat.es}`,
+    },
+    groups: [
+      group({ en: MEDI_CAL_WORK_COPY.en.ruleTitle, es: MEDI_CAL_WORK_COPY.es.ruleTitle }, MCW_FACTS.rule),
+      group({ en: MEDI_CAL_WORK_COPY.en.exemptListTitle, es: MEDI_CAL_WORK_COPY.es.exemptListTitle }, MCW_FACTS.exempt),
+      group({ en: MEDI_CAL_WORK_COPY.en.whenTitle, es: MEDI_CAL_WORK_COPY.es.whenTitle }, MCW_FACTS.when),
+      group({ en: MEDI_CAL_WORK_COPY.en.noticeTitle, es: MEDI_CAL_WORK_COPY.es.noticeTitle }, MCW_FACTS.notice),
+      group({ en: MEDI_CAL_WORK_COPY.en.immigrantsTitle, es: MEDI_CAL_WORK_COPY.es.immigrantsTitle }, MCW_FACTS.immigrants),
+    ],
+    sections: [{ title: { en: MEDI_CAL_WORK_COPY.en.todoTitle, es: MEDI_CAL_WORK_COPY.es.todoTitle }, items: MEDI_CAL_WORK_COPY.en.todo.map((en, i) => ({ en, es: MEDI_CAL_WORK_COPY.es.todo[i]! })) }],
+    places: [MCW_CONTACTS.county, MCW_CONTACTS.hca, MCW_CONTACTS.helpline, MCW_CONTACTS.benefitsCal],
+    sources: MCW_SOURCES,
+    checked: MCW_CHECKED,
   },
   {
     id: "rent",

@@ -6,15 +6,17 @@ export const HELP_TABS: HelpTab[] = ["medical", "rent", "work", "benefits", "leg
 /** The tools inside the tabs that have more than one (the chips under the tabs). */
 export const RENT_VIEWS = ["rent", "eviction", "repairs", "deposit", "mobile"] as const;
 export const WORK_VIEWS = ["wages", "heat"] as const;
+export const BENEFITS_VIEWS = ["screener", "medi-cal"] as const;
 export type RentView = (typeof RENT_VIEWS)[number];
 export type WorkView = (typeof WORK_VIEWS)[number];
-export type HelpView = RentView | WorkView;
+export type BenefitsView = (typeof BENEFITS_VIEWS)[number];
+export type HelpView = RentView | WorkView | BenefitsView;
 
-const VIEWS: Partial<Record<HelpTab, readonly string[]>> = { rent: RENT_VIEWS, work: WORK_VIEWS };
+const VIEWS: Partial<Record<HelpTab, readonly string[]>> = { rent: RENT_VIEWS, work: WORK_VIEWS, benefits: BENEFITS_VIEWS };
 
 export interface HelpTarget {
   tab: HelpTab;
-  /** Rent or Work: which tool to show (each tab's first one by default). */
+  /** Rent, Work or Benefits: which tool to show (each tab's first one by default). */
   view?: HelpView;
   /** Medical: preselect this hospital (id from hospitals.ts). */
   hospitalId?: string;
@@ -31,3 +33,4 @@ export function isHelpView(tab: HelpTab, v: unknown): v is HelpView {
 
 export const isRentView = (v: unknown): v is RentView => isHelpView("rent", v);
 export const isWorkView = (v: unknown): v is WorkView => isHelpView("work", v);
+export const isBenefitsView = (v: unknown): v is BenefitsView => isHelpView("benefits", v);
