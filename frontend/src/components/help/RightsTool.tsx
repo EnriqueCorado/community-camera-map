@@ -139,7 +139,7 @@ export function RightsTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void })
       </section>
 
       <p className="hf__hint">{r.changing(longDate(RIGHTS_CHECKED, locale))}</p>
-      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(RIGHTS_CHECKED, locale))} items={RIGHTS_SOURCES} newTab={c.newTab} />
+      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(RIGHTS_CHECKED, locale))} items={RIGHTS_SOURCES} newTab={c.newTab} report={{ topic: r.title, checked: RIGHTS_CHECKED }} />
     </>
   );
 }

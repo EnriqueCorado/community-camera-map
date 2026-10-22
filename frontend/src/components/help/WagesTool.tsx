@@ -556,7 +556,7 @@ export function WagesTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) 
       <h4>{w.rulesFinal}</h4>
       <FactList facts={WAGE_FACTS.finalPay} />
 
-      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(WAGE_FACTS.checked, locale))} items={WAGE_SOURCES} newTab={c.newTab} />
+      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(WAGE_FACTS.checked, locale))} items={WAGE_SOURCES} newTab={c.newTab} report={{ topic: c.workViewWages, checked: WAGE_FACTS.checked }} />
     </>
   );
 }

@@ -528,6 +528,17 @@ textarea.hf__input {
   font-size: 13px !important;
 }
 
+/* "See something wrong? Tell us": under the sources, visible but quiet. */
+.hreport {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.hreport a {
+  color: inherit;
+}
+
 .hdisclaimer {
   font-size: 12.5px !important;
   color: var(--muted);

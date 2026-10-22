@@ -13,7 +13,10 @@ import type { HelpTarget } from "../help/target";
 import { LEGAL_SITE_HOSTS, safeUrl } from "../popup-logic";
 import { SITE_COPY, type SiteCopy } from "./site-copy";
 import { GROUPS, TOOLS, type PlaceInfo, type ToolPage } from "./tools";
-import { FLYER_COPY, flyerTarget, type Flyer } from "./flyers";
+import { FLYER_COPY, FLYERS, flyerTarget, type Flyer } from "./flyers";
+import { PARTNERS_COPY } from "./partners-copy";
+import { generalBlurb, partnersPath, toolBlurb } from "./partners";
+import { REPORT_COPY, mailto, reportHref } from "../help/report";
 import { qr } from "./qr";
 import CLIENT_SCRIPT from "./client.js?raw";
 
@@ -125,9 +128,36 @@ function Doc({ site, lang, title, description, path, alternate, print, children 
   );
 }
 
-function Chrome({ site, lang, alternate, children }: { site: Site; lang: Lang; alternate?: string; children: ReactNode }) {
+/** What the footer's correction email is about: this page, and when its facts were checked. */
+interface ReportInfo {
+  title: string;
+  path: string;
+  /** ISO date the page's facts were last checked. */
+  checked?: string;
+}
+
+function Chrome({
+  site,
+  lang,
+  alternate,
+  report,
+  children,
+}: {
+  site: Site;
+  lang: Lang;
+  alternate?: string;
+  report?: ReportInfo;
+  children: ReactNode;
+}) {
   const s = SITE_COPY[lang];
+  const r = REPORT_COPY[lang];
   const alt = other(lang);
+  const reportLink = reportHref(
+    lang,
+    report?.title ?? s.siteName,
+    report?.checked ? longDate(report.checked, LOCALE[lang]) : undefined,
+    report ? absolute(site, report.path) : undefined,
+  );
   return (
     <>
       <a className="skip" href="#main">
@@ -151,6 +181,13 @@ function Chrome({ site, lang, alternate, children }: { site: Site; lang: Lang; a
       <footer className="foot">
         <div className="wrap">
           <p>{s.disclaimer}</p>
+          <p className="foot__links">
+            <a href={reportLink} data-report>
+              {r.link}
+              <span className="vh"> ({r.opensEmail})</span>
+            </a>
+            <a href={`${site.base}${partnersPath(lang)}`}>{PARTNERS_COPY[lang].footerLink}</a>
+          </p>
           <p>
             <a href={site.base}>{s.footerMap}</a> {s.footerVolunteer}{" "}
             <a href={site.repo}>{s.footerSource}</a>
@@ -243,7 +280,7 @@ export function HomePage({ site, lang }: { site: Site; lang: Lang }) {
   const alternate = homePath(other(lang));
   return (
     <Doc site={site} lang={lang} title={s.homeTitle} description={s.homeDescription} path={homePath(lang)} alternate={alternate}>
-      <Chrome site={site} lang={lang} alternate={alternate}>
+      <Chrome site={site} lang={lang} alternate={alternate} report={{ title: s.homeTitle, path: homePath(lang) }}>
         <section className="hero" aria-labelledby="hero-title">
           <h1 id="hero-title">{s.heroTitle}</h1>
           <Listen s={s} />
@@ -299,9 +336,12 @@ export function HomePage({ site, lang }: { site: Site; lang: Lang }) {
         <section className="group share" aria-labelledby="share">
           <h2 id="share">{s.flyersTitle}</h2>
           <p>{s.flyersLead}</p>
-          <p>
+          <p className="offline__buttons">
             <a className="btn btn--quiet" href={`${site.base}${FLYERS_PATH}`}>
               {s.flyersLink}
+            </a>
+            <a className="btn btn--quiet" href={`${site.base}${partnersPath(lang)}`}>
+              {PARTNERS_COPY[lang].homeLink}
             </a>
           </p>
         </section>
@@ -324,7 +364,7 @@ export function ToolPageView({ site, lang, tool, offices }: { site: Site; lang: 
       path={toolPath(lang, tool)}
       alternate={alternate}
     >
-      <Chrome site={site} lang={lang} alternate={alternate}>
+      <Chrome site={site} lang={lang} alternate={alternate} report={{ title: tool.name[lang], path: toolPath(lang, tool), checked: tool.checked }}>
         <nav aria-label={s.breadcrumb} className="crumbs">
           <a href={`${site.base}${homePath(lang)}`}>{s.home}</a>
           <span aria-hidden="true"> › </span>
@@ -520,7 +560,7 @@ export function FlyerIndex({ site, flyers }: { site: Site; flyers: readonly Flye
   const es = FLYER_COPY.es;
   return (
     <Doc site={site} lang="en" title={`${en.indexTitle} / ${es.indexTitle}`} description={en.indexLead} path={FLYERS_PATH}>
-      <Chrome site={site} lang="en">
+      <Chrome site={site} lang="en" report={{ title: en.indexTitle, path: FLYERS_PATH }}>
         <h1>
           {en.indexTitle} / <span lang="es">{es.indexTitle}</span>
         </h1>
@@ -546,6 +586,164 @@ export function FlyerIndex({ site, flyers }: { site: Site; flyers: readonly Flye
             {SITE_COPY.es.home}
           </a>
         </p>
+      </Chrome>
+    </Doc>
+  );
+}
+
+/** One ready-to-share paragraph with its Copy button (shown by the page
+ *  script when the browser can copy; the text itself is always selectable). */
+function Blurb({ id, text, textLang, name, lang }: { id: string; text: string; textLang: Lang; name: string; lang: Lang }) {
+  const p = PARTNERS_COPY[lang];
+  return (
+    <div className="blurb__item">
+      <p className="blurb__lang">{p.langName[textLang]}</p>
+      <p className="blurb__text" id={id} lang={textLang === lang ? undefined : textLang}>
+        {text}
+      </p>
+      <p className="blurb__bar">
+        <button type="button" className="btn btn--quiet" data-copy={id} data-name={name} aria-label={p.copyLabel(name, p.langName[textLang])} hidden>
+          {p.copy}
+        </button>
+        <span className="blurb__done" role="status" data-copy-status></span>
+      </p>
+    </div>
+  );
+}
+
+/** Both languages' paragraphs for one tool (or the home page), page language first. */
+function ShareBlock({
+  id,
+  name,
+  lang,
+  text,
+  links,
+  level = 4,
+}: {
+  id: string;
+  name: string;
+  lang: Lang;
+  text: (l: Lang) => string;
+  links: Record<Lang, string>;
+  level?: 3 | 4;
+}) {
+  const p = PARTNERS_COPY[lang];
+  const order: Lang[] = [lang, other(lang)];
+  const Heading = level === 3 ? "h3" : "h4";
+  return (
+    <article className="blurb" aria-labelledby={`t-${id}`}>
+      <Heading id={`t-${id}`}>{name}</Heading>
+      {order.map((l) => (
+        <Blurb key={l} id={`b-${id}-${l}`} text={text(l)} textLang={l} name={name} lang={lang} />
+      ))}
+      <p className="blurb__links">
+        <span className="vh">{p.linksLabel(name)} </span>
+        {order.map((l) => (
+          <a key={l} href={links[l]} hrefLang={l}>
+            {p.pageIn[l]}
+          </a>
+        ))}
+      </p>
+    </article>
+  );
+}
+
+export function PartnersPage({ site, lang }: { site: Site; lang: Lang }) {
+  const s = SITE_COPY[lang];
+  const p = PARTNERS_COPY[lang];
+  const path = partnersPath(lang);
+  const alternate = partnersPath(other(lang));
+  const both = (f: (l: Lang) => string): Record<Lang, string> => ({ en: f("en"), es: f("es") });
+  const homeUrls = both((l) => absolute(site, homePath(l)));
+  return (
+    <Doc site={site} lang={lang} title={`${p.title} | ${s.siteName}`} description={p.description} path={path} alternate={alternate}>
+      <Chrome site={site} lang={lang} alternate={alternate} report={{ title: p.title, path }}>
+        <nav aria-label={s.breadcrumb} className="crumbs">
+          <a href={`${site.base}${homePath(lang)}`}>{s.home}</a>
+          <span aria-hidden="true"> › </span>
+          <span aria-current="page">{p.title}</span>
+        </nav>
+        <h1>{p.title}</h1>
+        <p className="lead">{p.lead}</p>
+
+        <section aria-labelledby="never">
+          <h2 id="never">{p.neverTitle}</h2>
+          <ul className="never">
+            {p.never.map((n) => (
+              <li key={n}>{n}</li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="flyers">
+          <h2 id="flyers">{p.flyersTitle}</h2>
+          <p>{p.flyersLead}</p>
+          <ul className="cards">
+            {FLYERS.map((f) => (
+              <li key={f.id}>
+                <a className="card" href={`${site.base}${flyerPath(f)}`}>
+                  <span className="card__title">{f.side[lang].headline}</span>
+                  <span className="card__text" lang={other(lang)}>
+                    {f.side[other(lang)].headline}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <h3>{p.printTitle}</h3>
+          <ul>
+            {p.printTips.map((t) => (
+              <li key={t}>{t}</li>
+            ))}
+          </ul>
+          <p>
+            <a href={`${site.base}${FLYERS_PATH}`}>{p.flyersAll}</a>
+          </p>
+        </section>
+
+        <section aria-labelledby="text" data-copied={p.copied("{name}")} data-failed={p.copyFailed}>
+          <h2 id="text">{p.textTitle}</h2>
+          <p>{p.textLead}</p>
+          <ShareBlock
+            id="home"
+            level={3}
+            name={p.generalName}
+            lang={lang}
+            text={(l) => generalBlurb(l, homeUrls[l])}
+            links={both((l) => `${site.base}${homePath(l)}`)}
+          />
+          {GROUPS.map((g) => {
+            const tools = TOOLS.filter((t) => t.group === g.id);
+            return tools.length === 0 ? null : (
+              <section key={g.id} aria-labelledby={`pg-${g.id}`} className="blurbs">
+                <h3 id={`pg-${g.id}`} className="blurbs__group">
+                  {g.name[lang]}
+                </h3>
+                {tools.map((t) => (
+                  <ShareBlock
+                    key={t.id}
+                    id={t.id}
+                    name={t.name[lang]}
+                    lang={lang}
+                    text={(l) => toolBlurb(l, t, absolute(site, toolPath(l, t)))}
+                    links={both((l) => `${site.base}${toolPath(l, t)}`)}
+                  />
+                ))}
+              </section>
+            );
+          })}
+        </section>
+
+        <section aria-labelledby="request">
+          <h2 id="request">{p.requestTitle}</h2>
+          <p>{p.requestText}</p>
+          <p>
+            <a className="btn btn--quiet" href={mailto(p.requestSubject, p.requestBody)}>
+              {p.requestLink}
+              <span className="vh"> ({REPORT_COPY[lang].opensEmail})</span>
+            </a>
+          </p>
+        </section>
       </Chrome>
     </Doc>
   );

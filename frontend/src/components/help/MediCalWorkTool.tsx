@@ -347,7 +347,7 @@ export function MediCalWorkTool({ c }: { c: HelpCopy }) {
         </li>
       </ul>
 
-      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(MCW_CHECKED, locale))} items={MCW_SOURCES} newTab={c.newTab} />
+      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(MCW_CHECKED, locale))} items={MCW_SOURCES} newTab={c.newTab} report={{ topic: m.title, checked: MCW_CHECKED }} />
     </>
   );
 }

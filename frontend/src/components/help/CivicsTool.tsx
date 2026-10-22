@@ -400,7 +400,7 @@ export function CivicsTool({ c }: { c: HelpCopy }) {
       </ul>
 
       <p className="hf__hint">{m.credit}</p>
-      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(CIVICS_CHECKED, locale))} items={CIVICS_SOURCES} newTab={c.newTab} />
+      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(CIVICS_CHECKED, locale))} items={CIVICS_SOURCES} newTab={c.newTab} report={{ topic: m.title, checked: CIVICS_CHECKED }} />
     </>
   );
 }

@@ -177,6 +177,7 @@ export function MedicalHelp({
         checked={c.checkedOn(longDate(MEDICAL_FACTS.checked, locale))}
         items={MEDICAL_FACTS.sources}
         newTab={c.newTab}
+        report={{ topic: c.tabMedical, checked: MEDICAL_FACTS.checked }}
       />
     </>
   );

@@ -3,6 +3,8 @@
 // phone keyboards.
 import { useId, type ReactNode } from "react";
 import { useI18n } from "../../i18n";
+import { longDate } from "../../help/dates";
+import { REPORT_COPY, reportHref } from "../../help/report";
 
 export function Field({
   label,
@@ -147,32 +149,53 @@ export interface SourceRef {
   url: string;
 }
 
-/** "Where this comes from" list with the date the facts were last checked. */
+/** "Where this comes from" list with the date the facts were last checked,
+ *  and (with `report`) the "See something wrong? Tell us" email link. */
 export function Sources({
   heading,
   checked,
   items,
   newTab,
+  report,
 }: {
   heading: string;
   checked: string;
   items: SourceRef[];
   newTab: string;
+  /** The tool's name and its last-checked ISO date, for the correction email. */
+  report?: { topic: string; checked: string };
 }) {
   return (
-    <details className="hsources">
-      <summary>{heading}</summary>
-      <ul>
-        {items.map((s) => (
-          <li key={s.url}>
-            <ExtLink href={s.url} newTab={newTab}>
-              {s.label}
-            </ExtLink>
-          </li>
-        ))}
-      </ul>
-      <p className="hf__hint">{checked}</p>
-    </details>
+    <>
+      <details className="hsources">
+        <summary>{heading}</summary>
+        <ul>
+          {items.map((s) => (
+            <li key={s.url}>
+              <ExtLink href={s.url} newTab={newTab}>
+                {s.label}
+              </ExtLink>
+            </li>
+          ))}
+        </ul>
+        <p className="hf__hint">{checked}</p>
+      </details>
+      {report && <ReportLink topic={report.topic} checked={report.checked} />}
+    </>
+  );
+}
+
+/** A quiet email link for corrections, in the reader's language. */
+export function ReportLink({ topic, checked }: { topic: string; checked?: string }) {
+  const { lang, locale } = useI18n();
+  const r = REPORT_COPY[lang];
+  return (
+    <p className="hreport">
+      <a href={reportHref(lang, topic, checked ? longDate(checked, locale) : undefined)} data-report>
+        {r.link}
+        <span className="sr-only"> ({r.opensEmail})</span>
+      </a>
+    </p>
   );
 }
 
