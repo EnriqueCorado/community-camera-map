@@ -43,7 +43,7 @@ export function inboundFromEnv(env: Record<string, string | undefined>): Inbound
   return { ...(c as InboundConfig), forwardFor };
 }
 
-function fromBase64(s: string): Uint8Array<ArrayBuffer> | null {
+function fromBase64(s: string): Uint8Array | null {
   try {
     return Uint8Array.from(atob(s), (ch) => ch.charCodeAt(0));
   } catch {
@@ -73,7 +73,7 @@ export async function verifySignature(
   if (!/^\d{1,12}$/.test(timestamp) || Math.abs(nowMs / 1000 - t) > TOLERANCE_SECONDS) return false;
   const raw = fromBase64(secret.slice("whsec_".length));
   if (!raw || raw.length === 0) return false;
-  const key = await crypto.subtle.importKey("raw", raw, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const key = await crypto.subtle.importKey("raw", raw.buffer as ArrayBuffer, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
   const mac = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`${id}.${timestamp}.${body}`)));
   return signature.split(" ").some((entry) => {
     const [version, sig] = entry.split(",");
