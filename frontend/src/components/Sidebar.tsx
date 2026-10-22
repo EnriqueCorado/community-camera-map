@@ -416,7 +416,8 @@ export function Sidebar({
     );
     for (const x of [...stateIndex, ...loaded]) {
       // On-screen states' layers are listed above (once their catalog loads).
-      if (listed.has(x.n) || here.includes(x.s) || !matchesQuery(indexTitle(x))) continue;
+      // (A state this build doesn't know, from a stale cached index, is skipped.)
+      if (listed.has(x.n) || here.includes(x.s) || !stateName(x.s) || !matchesQuery(indexTitle(x))) continue;
       listed.add(x.n);
       elsewhere.push(x);
     }
@@ -430,7 +431,9 @@ export function Sidebar({
     const box = name ? asideRef.current?.querySelector<HTMLInputElement>(`input[data-layer="${CSS.escape(name)}"]`) : null;
     if (box) {
       pendingFocus.current = null;
-      box.focus();
+      // Only if focus was dropped (the chosen button is gone), never stolen.
+      const at = document.activeElement;
+      if (!at || at === document.body || at.closest(".otherstates")) box.focus();
     }
   });
   const showElsewhere = (x: LayerIndexEntry) => {
@@ -612,7 +615,10 @@ export function Sidebar({
           placeholder={t("findLayer")}
           aria-label={t("findLayerLabel")}
           value={layerQuery}
-          onChange={(e) => setLayerQuery(e.target.value)}
+          onChange={(e) => {
+            setLayerQuery(e.target.value);
+            pendingFocus.current = null; // a new search: don't move focus later
+          }}
         />
         {groups.map(([key, items]) =>
           items.length || (key === "cameras" && (showTraffic || showAlpr)) ? (
