@@ -1,0 +1,3398 @@
+[
+ {
+  "name": "tx-houston-council-districts",
+  "state": "TX",
+  "title": "City council districts (Houston)",
+  "title_es": "Distritos del concejo municipal (Houston)",
+  "description": "Houston's lettered city council districts (A-K). Find which district council member represents your address.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Houston GIS (mycity2.houstontx.gov)",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Administrative_Boundary/MapServer/2",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "tx-houston-super-neighborhoods",
+  "state": "TX",
+  "title": "Super neighborhoods (Houston)",
+  "title_es": "Supervecindarios (Houston)",
+  "description": "Houston's 88 super neighborhoods, the city's recognized community planning areas, with a link to each one's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Houston GIS (mycity2.houstontx.gov)",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Administrative_Boundary/MapServer/3",
+   "fields": {
+    "SNBNAME": "name",
+    "SnbrInfoURL": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "tx-houston-muds",
+  "state": "TX",
+  "title": "Municipal utility districts (Houston area)",
+  "title_es": "Distritos de servicios municipales (área de Houston)",
+  "description": "Municipal utility districts (MUDs) and similar water districts around Houston. Many suburban homes pay a MUD tax for water, sewer and drainage.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "City of Houston GIS (mycity2.houstontx.gov)",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Administrative_Boundary/MapServer/6",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.62,
+    29.7,
+    -95.55,
+    29.76
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "tx-houston-historic-districts",
+  "state": "TX",
+  "title": "City historic districts (Houston)",
+  "title_es": "Distritos históricos de la ciudad (Houston)",
+  "description": "Houston's locally designated historic districts. Exterior changes, new construction and demolition here need a certificate of appropriateness.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Houston GIS (mycity2.houstontx.gov)",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Planning_and_Development/MapServer/8",
+   "fields": {
+    "NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "tx-houston-hisd-elementary-zones",
+  "state": "TX",
+  "title": "HISD elementary school zones (Houston)",
+  "title_es": "Zonas escolares de primaria de HISD (Houston)",
+  "description": "Houston ISD elementary school attendance boundaries: which zoned campus serves an address, with its address and grades.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Houston GIS (mycity2.houstontx.gov) / Houston ISD",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Neighborhood/MapServer/2",
+   "fields": {
+    "Campus_Lon": "school",
+    "Grades_Tau": "grades",
+    "Street_Add": "address",
+    "City": "city",
+    "Magnet_Sta": "magnet"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "tx-houston-hisd-middle-zones",
+  "state": "TX",
+  "title": "HISD middle school zones (Houston)",
+  "title_es": "Zonas escolares de secundaria de HISD (Houston)",
+  "description": "Houston ISD middle school attendance boundaries: which zoned campus serves an address, with its address and grades.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Houston GIS (mycity2.houstontx.gov) / Houston ISD",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Neighborhood/MapServer/3",
+   "fields": {
+    "Campus_Lon": "school",
+    "Grades_Tau": "grades",
+    "Street_Add": "address",
+    "City": "city",
+    "Magnet_Sta": "magnet"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "tx-houston-hisd-high-zones",
+  "state": "TX",
+  "title": "HISD high school zones (Houston)",
+  "title_es": "Zonas escolares de preparatoria de HISD (Houston)",
+  "description": "Houston ISD high school attendance boundaries: which zoned campus serves an address, with its address and grades.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Houston GIS (mycity2.houstontx.gov) / Houston ISD",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Neighborhood/MapServer/4",
+   "fields": {
+    "Campus_Lon": "school",
+    "Grades_Tau": "grades",
+    "Street_Add": "address",
+    "City": "city",
+    "Magnet_Sta": "magnet"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "tx-houston-multi-service-centers",
+  "state": "TX",
+  "title": "Multi-service centers (Houston)",
+  "title_es": "Centros de servicios múltiples (Houston)",
+  "description": "City multi-service centers offering senior programs, WIC, social services and meeting rooms; several serve as cooling centers in heat emergencies.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Houston GIS (mycity2.houstontx.gov)",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Neighborhood/MapServer/7",
+   "fields": {
+    "NAME": "name",
+    "PHONE": "phone",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "tx-houston-parks",
+  "state": "TX",
+  "title": "City parks (Houston)",
+  "title_es": "Parques municipales (Houston)",
+  "description": "Parks run by the Houston Parks and Recreation Department, with type and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Houston GIS (mycity2.houstontx.gov)",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Neighborhood/MapServer/14",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Park_Type": "kind",
+    "Park_Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 62
+  }
+ },
+ {
+  "name": "tx-houston-heavy-trash-days",
+  "state": "TX",
+  "title": "Heavy trash pickup week (Houston)",
+  "title_es": "Semana de recolección de basura pesada (Houston)",
+  "description": "Which week and day of the month Houston Solid Waste picks up heavy trash and junk waste on your street.",
+  "group": "civic",
+  "category": "info",
+  "source": "City of Houston GIS (mycity2.houstontx.gov) Solid Waste",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Neighborhood/MapServer/17",
+   "fields": {
+    "SERVICE_DA": "schedule",
+    "QUAD": "quadrant",
+    "HolidaySchedule": "holiday_schedule"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 78
+  }
+ },
+ {
+  "name": "tx-houston-trash-days",
+  "state": "TX",
+  "title": "Trash pickup day (Houston)",
+  "title_es": "Día de recolección de basura (Houston)",
+  "description": "Weekly garbage collection day for city-served homes in Houston.",
+  "group": "civic",
+  "category": "info",
+  "source": "City of Houston GIS (mycity2.houstontx.gov) Solid Waste",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Neighborhood/MapServer/18",
+   "fields": {
+    "DAY": "day",
+    "QUAD": "quadrant",
+    "HolidaySchedule": "holiday_schedule"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 71
+  }
+ },
+ {
+  "name": "tx-houston-recycling-days",
+  "state": "TX",
+  "title": "Recycling pickup day (Houston)",
+  "title_es": "Día de recolección de reciclaje (Houston)",
+  "description": "Curbside recycling collection day for city-served homes in Houston (A/B weeks where applicable).",
+  "group": "civic",
+  "category": "info",
+  "source": "City of Houston GIS (mycity2.houstontx.gov) Solid Waste",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Neighborhood/MapServer/19",
+   "fields": {
+    "SERVICE_DAY": "day",
+    "QUAD": "quadrant",
+    "HolidaySchedule": "holiday_schedule"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 160
+  }
+ },
+ {
+  "name": "tx-houston-recycling-centers",
+  "state": "TX",
+  "title": "Recycling & depository centers (Houston)",
+  "title_es": "Centros de reciclaje y depósito (Houston)",
+  "description": "City recycling drop-off and neighborhood depository sites where residents can take recyclables, tires and bulky trash, with hours.",
+  "group": "civic",
+  "category": "point",
+  "source": "City of Houston GIS (mycity2.houstontx.gov) Solid Waste",
+  "view": {
+   "url": "https://mycity2.houstontx.gov/gisweb02/rest/services/HoustonMap/Neighborhood/MapServer/20",
+   "fields": {
+    "FacilityName": "name",
+    "ADDRESS": "address",
+    "TYPE": "kind",
+    "ServiceHours": "hours",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "Status = 'Active'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "tx-harris-voting-precincts-2026",
+  "state": "TX",
+  "title": "Voting precincts 2026 (Harris County)",
+  "title_es": "Precintos electorales 2026 (condado de Harris)",
+  "description": "Harris County election precincts for 2026 with the congressional, state house, state senate and commissioner districts each one falls in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Harris County GIS (gis.hctx.net / Harris County ArcGIS Online)",
+  "view": {
+   "url": "https://services.arcgis.com/su8ic9KbA7PYVxPS/arcgis/rest/services/Tax_votingprecincts_2026/FeatureServer/0",
+   "fields": {
+    "VPCT_txt": "precinct",
+    "USCong_C23": "congress",
+    "StRep_H231": "state_house",
+    "StSenate_S": "state_senate",
+    "CoComm": "commissioner"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 59
+  }
+ },
+ {
+  "name": "tx-harris-commissioner-precincts",
+  "state": "TX",
+  "title": "Commissioner precincts (Harris County)",
+  "title_es": "Precintos de comisionados (condado de Harris)",
+  "description": "The four Harris County Commissioners Court precincts, which handle county roads, parks and many local services.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Harris County GIS (gis.hctx.net / Harris County ArcGIS Online)",
+  "view": {
+   "url": "https://www.gis.hctx.net/arcgis/rest/services/Amenities/HarrisCoCommPcts/MapServer/0",
+   "fields": {
+    "District": "precinct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "tx-harris-constable-precincts",
+  "state": "TX",
+  "title": "Constable precincts (Harris County)",
+  "title_es": "Precintos de alguaciles (condado de Harris)",
+  "description": "Harris County constable and justice-of-the-peace precincts, with each constable office's address and phone.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Harris County GIS (gis.hctx.net / Harris County ArcGIS Online)",
+  "view": {
+   "url": "https://services.arcgis.com/su8ic9KbA7PYVxPS/arcgis/rest/services/Harris_County_Constable_Precincts/FeatureServer/0",
+   "fields": {
+    "PCT_NUM": "precinct",
+    "STREET": "office_address",
+    "CITY": "city",
+    "PHONE": "phone",
+    "Web": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "tx-harris-county-parks",
+  "state": "TX",
+  "title": "County parks (Harris County)",
+  "title_es": "Parques del condado (Harris)",
+  "description": "Parks run by Harris County precincts, with trail, greenway and community center details.",
+  "group": "nature",
+  "category": "park",
+  "source": "Harris County GIS (gis.hctx.net / Harris County ArcGIS Online)",
+  "view": {
+   "url": "https://www.gis.hctx.net/arcgis/rest/services/Amenities/Parks/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Type": "kind",
+    "Acreage": "acres",
+    "HBAccess": "trail_access",
+    "ComCtr": "community_center"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.62,
+    29.7,
+    -95.55,
+    29.76
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "tx-harris-west-nile-areas",
+  "state": "TX",
+  "title": "West Nile virus mosquito activity this year (Harris County)",
+  "title_es": "Mosquitos con virus del Nilo Occidental este año (condado de Harris)",
+  "description": "Mosquito-control areas where Harris County Public Health has found West Nile virus-positive mosquitoes this year, with the positive count. Use repellent and drain standing water.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Harris County GIS (gis.hctx.net / Harris County ArcGIS Online) Public Health Mosquito & Vector Control",
+  "view": {
+   "url": "https://www.gis.hctx.net/arcgis/rest/services/HCPHES/MVCD_ConfirmedMosquitoActivity_OpAreas_Public_MapService/MapServer/6",
+   "fields": {
+    "OperationalArea": "area",
+    "PositiveCount": "positive_pools",
+    "TestYear": "year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "tx-harris-recycling-sites",
+  "state": "TX",
+  "title": "Recycling drop-off sites (Harris County)",
+  "title_es": "Sitios de entrega de reciclaje (condado de Harris)",
+  "description": "Recycling drop-off locations listed by Harris County, with hours and what kind of site each is.",
+  "group": "civic",
+  "category": "point",
+  "source": "Harris County GIS (gis.hctx.net / Harris County ArcGIS Online)",
+  "view": {
+   "url": "https://www.gis.hctx.net/arcgis/rest/services/Amenities/community_amenities/MapServer/0",
+   "fields": {
+    "LOCATION": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "TYPE": "kind",
+    "Hours_1": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.4,
+    29.73,
+    -95.34,
+    29.78
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "tx-harris-pct4-projects",
+  "state": "TX",
+  "title": "Precinct 4 road & drainage projects (Harris County)",
+  "title_es": "Proyectos de calles y drenaje del Precinto 4 (condado de Harris)",
+  "description": "Road, drainage, park and trail projects by Harris County Precinct 4, with phase, type and estimated cost.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Harris County GIS (gis.hctx.net / Harris County ArcGIS Online) Precinct 4",
+  "view": {
+   "url": "https://services.arcgis.com/su8ic9KbA7PYVxPS/arcgis/rest/services/InfrastructureProjects_83cdc723dc4a4b729f6e023e54b41155/FeatureServer/0",
+   "fields": {
+    "projname": "name",
+    "projdesc": "description",
+    "projtype": "kind",
+    "projphase": "phase",
+    "estcost": "est_cost",
+    "planend": "planned_end"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "publicview = 'Yes'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.75,
+    29.85,
+    -95.55,
+    30.05
+   ],
+   "features_in_probe": 40
+  }
+ },
+ {
+  "name": "tx-dallas-council-districts",
+  "state": "TX",
+  "title": "City council districts (Dallas)",
+  "title_es": "Distritos del concejo municipal (Dallas)",
+  "description": "Dallas's 14 city council districts. Find which council district covers your address.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Dallas GIS (Dallas ArcGIS Online)",
+  "view": {
+   "url": "https://services2.arcgis.com/rwnOSbfKSwyTBcwN/arcgis/rest/services/CouncilBoundaries_FeatureService/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.82,
+    32.76,
+    -96.76,
+    32.8
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "tx-dallas-trash-days",
+  "state": "TX",
+  "title": "Trash & recycling day (Dallas)",
+  "title_es": "Día de basura y reciclaje (Dallas)",
+  "description": "Dallas Sanitation's weekly collection day for garbage and recycling by service area.",
+  "group": "civic",
+  "category": "info",
+  "source": "City of Dallas GIS (Dallas ArcGIS Online) Sanitation",
+  "view": {
+   "url": "https://services2.arcgis.com/rwnOSbfKSwyTBcwN/arcgis/rest/services/Sanitation_Layers/FeatureServer/1",
+   "fields": {
+    "DOW": "day",
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.82,
+    32.76,
+    -96.76,
+    32.8
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "tx-dallas-land-use",
+  "state": "TX",
+  "title": "Parcel land use 2026 (Dallas)",
+  "title_es": "Uso de suelo por parcela 2026 (Dallas)",
+  "description": "Existing land use for each Dallas parcel (single-family, multifamily, retail, open space, vacant...) with acreage and appraisal property class.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Dallas GIS (Dallas ArcGIS Online) Planning & Development",
+  "view": {
+   "url": "https://services2.arcgis.com/rwnOSbfKSwyTBcwN/arcgis/rest/services/Existing_Land_Use_Layer_2025/FeatureServer/5",
+   "fields": {
+    "Existing_Land_Use": "land_use",
+    "Vacant": "vacant",
+    "PROP_CL": "property_class",
+    "Acerage": "acres",
+    "Address": "address"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.82,
+    32.76,
+    -96.76,
+    32.8
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "tx-dallas-county-parcels",
+  "state": "TX",
+  "title": "Parcels (Dallas County, DCAD)",
+  "title_es": "Parcelas (condado de Dallas, DCAD)",
+  "description": "Dallas Central Appraisal District parcel outlines with account number and recorded acreage (look up values on dallascad.org).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Dallas GIS (Dallas ArcGIS Online) / Dallas Central Appraisal District",
+  "view": {
+   "url": "https://services2.arcgis.com/rwnOSbfKSwyTBcwN/arcgis/rest/services/CurrentDcadParcels/FeatureServer/0",
+   "fields": {
+    "GIS_Acct": "account",
+    "RecAcs": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.82,
+    32.76,
+    -96.76,
+    32.8
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "tx-dallas-floodplain",
+  "state": "TX",
+  "title": "Floodplains (Dallas)",
+  "title_es": "Llanuras de inundación (Dallas)",
+  "description": "City of Dallas regulatory floodplain (FEMA zones maintained by Dallas Water Utilities): 1% and 0.2% annual-chance flood areas.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "City of Dallas GIS (Dallas ArcGIS Online) Water Utilities Floodplain Management",
+  "view": {
+   "url": "https://services2.arcgis.com/rwnOSbfKSwyTBcwN/arcgis/rest/services/Current_Floodplain/FeatureServer/0",
+   "fields": {
+    "FLD_ZONE": "zone",
+    "ZONE_SUBTY": "subtype",
+    "SFHA_TF": "special_flood_hazard"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.82,
+    32.76,
+    -96.76,
+    32.8
+   ],
+   "features_in_probe": 335
+  }
+ },
+ {
+  "name": "tx-dallas-street-maintenance",
+  "state": "TX",
+  "title": "Street maintenance projects (Dallas)",
+  "title_es": "Proyectos de mantenimiento de calles (Dallas)",
+  "description": "Dallas street resurfacing and repair projects for this fiscal year: treatment, limits, status and dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Dallas GIS (Dallas ArcGIS Online) Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/rwnOSbfKSwyTBcwN/arcgis/rest/services/StreetMaintenanceProjects/FeatureServer/0",
+   "fields": {
+    "ST_FULLNAME": "street",
+    "PROJ_DESC": "limits",
+    "ACTN_NAME": "work",
+    "STATUS": "status",
+    "EST_START": "est_start",
+    "ACT_START": "start",
+    "ACT_STOP": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.82,
+    32.76,
+    -96.76,
+    32.8
+   ],
+   "features_in_probe": 88
+  }
+ },
+ {
+  "name": "tx-dallas-lane-closures",
+  "state": "TX",
+  "title": "Permitted lane & street closures (Dallas)",
+  "title_es": "Cierres de carriles y calles con permiso (Dallas)",
+  "description": "Active traffic-control permits in Dallas: where crews may close lanes or whole streets, why, and the expected end date.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Dallas GIS (Dallas ArcGIS Online) Transportation",
+  "view": {
+   "url": "https://services2.arcgis.com/rwnOSbfKSwyTBcwN/arcgis/rest/services/Traffic_Control_Permits/FeatureServer/1",
+   "fields": {
+    "LOCATIONNAMES": "location",
+    "WORKDESCRIPTION": "work",
+    "ROWNUMBEROFLANESCLOSED": "lanes_closed",
+    "TCREASONFORJOB": "reason",
+    "ROWREQUESTEDSTARTDATE": "start",
+    "ROWESTIMATEDCOMPLETIONDATE": "est_end"
+   },
+   "geometry": "line",
+   "min_zoom": 14,
+   "where": "STATUSDESCRIPTION = 'Issued' AND ROWESTIMATEDCOMPLETIONDATE >= CURRENT_TIMESTAMP AND ROWREQUESTEDSTARTDATE <= CURRENT_TIMESTAMP"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.82,
+    32.76,
+    -96.76,
+    32.8
+   ],
+   "features_in_probe": 332
+  }
+ },
+ {
+  "name": "tx-dallas-bond-projects",
+  "state": "TX",
+  "title": "Bond program projects (Dallas)",
+  "title_es": "Proyectos del programa de bonos (Dallas)",
+  "description": "Active City of Dallas bond-funded street, trail and facility projects (line projects), with category and status.",
+  "group": "growth",
+  "category": "roadops",
+  "source": "City of Dallas GIS (Dallas ArcGIS Online)",
+  "view": {
+   "url": "https://services2.arcgis.com/rwnOSbfKSwyTBcwN/arcgis/rest/services/CapitalImprovementProgram/FeatureServer/3",
+   "fields": {
+    "Name": "name",
+    "Description": "description",
+    "Category": "category",
+    "Status": "status",
+    "ProgramYr": "bond_year"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.82,
+    32.76,
+    -96.76,
+    32.8
+   ],
+   "features_in_probe": 42
+  }
+ },
+ {
+  "name": "tx-dallas-trails",
+  "state": "TX",
+  "title": "Trails (Dallas)",
+  "title_es": "Senderos (Dallas)",
+  "description": "Dallas Park and Recreation trails with surface, width, length and status.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Dallas GIS (Dallas ArcGIS Online) Park & Recreation",
+  "view": {
+   "url": "https://services2.arcgis.com/rwnOSbfKSwyTBcwN/arcgis/rest/services/Dallas_Trails_Source_File/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "TRAILS": "kind",
+    "SURFACE": "surface",
+    "LENGTH_mi_": "miles",
+    "STATUS": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.82,
+    32.76,
+    -96.76,
+    32.8
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "tx-dallas-sirens",
+  "state": "TX",
+  "title": "Outdoor warning sirens (Dallas)",
+  "title_es": "Sirenas de alerta exterior (Dallas)",
+  "description": "City of Dallas outdoor warning sirens, sounded for tornado warnings and other severe-weather threats. Sirens are for people outdoors; indoors, use a weather radio or alerts.",
+  "group": "hazards",
+  "category": "point",
+  "source": "City of Dallas GIS (Dallas ArcGIS Online) Office of Emergency Management",
+  "view": {
+   "url": "https://services2.arcgis.com/rwnOSbfKSwyTBcwN/arcgis/rest/services/OutdoorWarningSystem_ViewLayer/FeatureServer/0",
+   "fields": {
+    "ADD_FULLNA": "address",
+    "ZONE_A": "zone",
+    "PWR_TYP": "power"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.82,
+    32.76,
+    -96.76,
+    32.8
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "tx-fort-worth-council-districts",
+  "state": "TX",
+  "title": "City council districts (Fort Worth)",
+  "title_es": "Distritos del concejo municipal (Fort Worth)",
+  "description": "Fort Worth's city council districts. Find which district covers your address.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Fort Worth GIS (mapit.fortworthtexas.gov)",
+  "view": {
+   "url": "https://mapit.fortworthtexas.gov/ags/rest/services/CIVIC/OpenData_Boundaries/MapServer/2",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.36,
+    32.72,
+    -97.3,
+    32.76
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "tx-fort-worth-historic-districts",
+  "state": "TX",
+  "title": "Historic districts (Fort Worth)",
+  "title_es": "Distritos históricos (Fort Worth)",
+  "description": "Fort Worth's locally designated historic districts, where exterior changes need historic-preservation review.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Fort Worth GIS (mapit.fortworthtexas.gov)",
+  "view": {
+   "url": "https://mapit.fortworthtexas.gov/ags/rest/services/CIVIC/OpenData_Boundaries/MapServer/56",
+   "fields": {
+    "DISTRICT": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.36,
+    32.72,
+    -97.3,
+    32.76
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "tx-fort-worth-parks",
+  "state": "TX",
+  "title": "City parks (Fort Worth)",
+  "title_es": "Parques municipales (Fort Worth)",
+  "description": "Fort Worth Park & Recreation parks with type (neighborhood, community, metropolitan...).",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Fort Worth GIS (mapit.fortworthtexas.gov)",
+  "view": {
+   "url": "https://mapit.fortworthtexas.gov/ags/rest/services/CIVIC/OpenData_Facilities/MapServer/31",
+   "fields": {
+    "PARK_ALIAS": "name",
+    "TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.36,
+    32.72,
+    -97.3,
+    32.76
+   ],
+   "features_in_probe": 32
+  }
+ },
+ {
+  "name": "tx-fort-worth-neighborhood-associations",
+  "state": "TX",
+  "title": "Neighborhood associations (Fort Worth)",
+  "title_es": "Asociaciones de vecinos (Fort Worth)",
+  "description": "Registered neighborhood associations and alliances in Fort Worth, a starting point for getting involved locally.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Fort Worth GIS (mapit.fortworthtexas.gov)",
+  "view": {
+   "url": "https://mapit.fortworthtexas.gov/ags/rest/services/CIVIC/OpenData_Boundaries/MapServer/6",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "Status": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.36,
+    32.72,
+    -97.3,
+    32.76
+   ],
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "tx-fort-worth-sirens",
+  "state": "TX",
+  "title": "Outdoor warning sirens (Fort Worth)",
+  "title_es": "Sirenas de alerta exterior (Fort Worth)",
+  "description": "Fort Worth outdoor warning sirens for tornadoes and severe weather, with working status. Sirens are meant for people outdoors.",
+  "group": "hazards",
+  "category": "point",
+  "source": "City of Fort Worth GIS (mapit.fortworthtexas.gov) Office of Emergency Management",
+  "view": {
+   "url": "https://mapit.fortworthtexas.gov/ags/rest/services/EOC/EOC_Sirens_Only/MapServer/0",
+   "fields": {
+    "STAN_ADDR": "address",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.36,
+    32.72,
+    -97.3,
+    32.76
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "tx-fort-worth-bond-streets",
+  "state": "TX",
+  "title": "2022 bond street projects (Fort Worth)",
+  "title_es": "Proyectos de calles del bono 2022 (Fort Worth)",
+  "description": "Neighborhood streets selected for reconstruction in Fort Worth's 2022 bond program, with limits, treatment and estimated cost.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Fort Worth GIS (mapit.fortworthtexas.gov) Transportation & Public Works",
+  "view": {
+   "url": "https://mapit.fortworthtexas.gov/ags/rest/services/TPW/TPW_Bond_Projects/MapServer/4",
+   "fields": {
+    "STREET_NAME": "street",
+    "FROM_STREET": "from",
+    "TO_STREET": "to",
+    "CONSTRUCTION_TYPE": "work",
+    "ESTIMATED_COST": "est_cost",
+    "BOND_YEAR": "bond_year"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.36,
+    32.72,
+    -97.3,
+    32.76
+   ],
+   "features_in_probe": 48
+  }
+ },
+ {
+  "name": "tx-tarrant-voting-precincts",
+  "state": "TX",
+  "title": "Voting precincts (Tarrant County)",
+  "title_es": "Precintos electorales (condado de Tarrant)",
+  "description": "Tarrant County election precincts with the congressional, state senate, state house, commissioner and JP districts each falls in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Tarrant County GIS (mapit.tarrantcounty.com) Elections",
+  "view": {
+   "url": "https://mapit.tarrantcounty.com/arcgis/rest/services/Elections/Voting_Precinct/MapServer/0",
+   "fields": {
+    "Pct_Char": "precinct",
+    "Congress": "congress",
+    "Senate": "state_senate",
+    "House": "state_house",
+    "Commish": "commissioner",
+    "JP": "justice_of_peace"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.36,
+    32.72,
+    -97.3,
+    32.76
+   ],
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "tx-tarrant-commissioner-precincts",
+  "state": "TX",
+  "title": "Commissioner precincts (Tarrant County)",
+  "title_es": "Precintos de comisionados (condado de Tarrant)",
+  "description": "The four Tarrant County Commissioners Court precincts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Tarrant County GIS (mapit.tarrantcounty.com)",
+  "view": {
+   "url": "https://mapit.tarrantcounty.com/arcgis/rest/services/Dynamic/CommissionerPrecinct/MapServer/0",
+   "fields": {
+    "District_N": "precinct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.36,
+    32.72,
+    -97.3,
+    32.76
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "tx-tarrant-parcels",
+  "state": "TX",
+  "title": "Parcels (Tarrant County, TAD)",
+  "title_es": "Parcelas (condado de Tarrant, TAD)",
+  "description": "Tarrant Appraisal District parcels with account, school district, land acreage, year built and appraised value (no owner information shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Tarrant County GIS (mapit.tarrantcounty.com) / Tarrant Appraisal District",
+  "view": {
+   "url": "https://mapit.tarrantcounty.com/arcgis/rest/services/Dynamic/TADParcels/MapServer/0",
+   "fields": {
+    "ACCOUNT": "account",
+    "SITUS_ADDR": "address",
+    "SCHOOL": "school_district",
+    "LAND_ACRES": "acres",
+    "YEAR_BUILT": "year_built",
+    "APPRAISEDV": "appraised_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.36,
+    32.72,
+    -97.3,
+    32.76
+   ],
+   "features_in_probe": 1928
+  }
+ },
+ {
+  "name": "tx-tarrant-water-providers",
+  "state": "TX",
+  "title": "Water utility service areas 2025 (Tarrant County)",
+  "title_es": "Áreas de servicio de agua 2025 (condado de Tarrant)",
+  "description": "Which water utility (city or private) holds the certificate to serve each area of Tarrant County, from 2025 PUC data.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Tarrant County GIS (mapit.tarrantcounty.com) Transportation",
+  "view": {
+   "url": "https://mapit.tarrantcounty.com/arcgis/rest/services/Transportation/WaterUtilityProvider2025/MapServer/0",
+   "fields": {
+    "UTILITY": "utility",
+    "CCN_NO": "ccn",
+    "CCN_TYPE": "kind",
+    "STATUS": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.15,
+    32.72,
+    -97.09,
+    32.76
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "tx-tarrant-bond-road-projects",
+  "state": "TX",
+  "title": "2021 transportation bond projects (Tarrant County)",
+  "title_es": "Proyectos del bono de transporte 2021 (condado de Tarrant)",
+  "description": "Road projects funded by Tarrant County's 2021 transportation bond program, with city, county precinct and funding amount.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Tarrant County GIS (mapit.tarrantcounty.com) Transportation",
+  "view": {
+   "url": "https://mapit.tarrantcounty.com/arcgis/rest/services/Transportation/BondFundedProjects2021/MapServer/1",
+   "fields": {
+    "Project": "name",
+    "city": "city",
+    "funded": "funded",
+    "FundingReq": "funding",
+    "precinct": "precinct"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.55,
+    32.55,
+    -97.03,
+    32.99
+   ],
+   "features_in_probe": 48
+  }
+ },
+ {
+  "name": "tx-san-antonio-council-districts",
+  "state": "TX",
+  "title": "City council districts (San Antonio)",
+  "title_es": "Distritos del concejo municipal (San Antonio)",
+  "description": "San Antonio's 10 city council districts. Find which district covers your address.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of San Antonio GIS (CoSA open data)",
+  "view": {
+   "url": "https://services.arcgis.com/g1fRTDLeMgspWrYp/arcgis/rest/services/CouncilDistricts/FeatureServer/2",
+   "fields": {
+    "District": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.52,
+    29.4,
+    -98.46,
+    29.45
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "tx-san-antonio-low-water-crossings",
+  "state": "TX",
+  "title": "Low-water crossings (San Antonio)",
+  "title_es": "Cruces de agua baja (San Antonio)",
+  "description": "Roads in San Antonio that flood first in heavy rain. Turn around, don't drown: never drive into water over a crossing.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "City of San Antonio GIS (CoSA open data) Public Works",
+  "view": {
+   "url": "https://services.arcgis.com/g1fRTDLeMgspWrYp/arcgis/rest/services/LowWaterCrossings/FeatureServer/0",
+   "fields": {
+    "Name": "location"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.6,
+    29.35,
+    -98.4,
+    29.55
+   ],
+   "features_in_probe": 56
+  }
+ },
+ {
+  "name": "tx-san-antonio-pools",
+  "state": "TX",
+  "title": "City pools (San Antonio)",
+  "title_es": "Piscinas municipales (San Antonio)",
+  "description": "San Antonio Parks pools with this year's hours, closures and features (baby pool, slide, accessible lift).",
+  "group": "nature",
+  "category": "point",
+  "source": "City of San Antonio GIS (CoSA open data) Parks & Recreation",
+  "view": {
+   "url": "https://services.arcgis.com/g1fRTDLeMgspWrYp/arcgis/rest/services/Pools_Public/FeatureServer/0",
+   "fields": {
+    "PoolName": "name",
+    "Address": "address",
+    "OperatingTimes": "hours",
+    "PoolClosure": "closed",
+    "AccesiblePoolLift": "accessibility",
+    "Website": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.52,
+    29.4,
+    -98.46,
+    29.45
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "tx-san-antonio-splash-pads",
+  "state": "TX",
+  "title": "Splash pads (San Antonio)",
+  "title_es": "Chapoteaderos (San Antonio)",
+  "description": "Free city splash pads in San Antonio parks, and whether they are shaded.",
+  "group": "nature",
+  "category": "point",
+  "source": "City of San Antonio GIS (CoSA open data) Parks & Recreation",
+  "view": {
+   "url": "https://services.arcgis.com/g1fRTDLeMgspWrYp/arcgis/rest/services/Splashpads_2026_Public/FeatureServer/0",
+   "fields": {
+    "ParkName": "park",
+    "Address": "address",
+    "Shaded": "shaded"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.52,
+    29.4,
+    -98.46,
+    29.45
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "tx-san-antonio-street-projects",
+  "state": "TX",
+  "title": "Planned street projects 2026-27 (San Antonio)",
+  "title_es": "Proyectos de calles planeados 2026-27 (San Antonio)",
+  "description": "Streets in San Antonio's Infrastructure Management Program for fiscal years 2026-2027: limits, treatment, status and schedule.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of San Antonio GIS (CoSA open data) Public Works",
+  "view": {
+   "url": "https://services.arcgis.com/g1fRTDLeMgspWrYp/arcgis/rest/services/IMP_Street_NEW/FeatureServer/0",
+   "fields": {
+    "ProjectStreet": "street",
+    "StreetFrom": "from",
+    "StreetTo": "to",
+    "Application": "work",
+    "FiscalYear": "fiscal_year",
+    "ProjectStatus": "status",
+    "ScheduleStart": "start",
+    "ScheduleFinish": "finish"
+   },
+   "geometry": "line",
+   "min_zoom": 14,
+   "where": "FiscalYear >= 2026"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.52,
+    29.4,
+    -98.46,
+    29.45
+   ],
+   "features_in_probe": 175
+  }
+ },
+ {
+  "name": "tx-san-antonio-community-organizations",
+  "state": "TX",
+  "title": "Neighborhood & community organizations (San Antonio)",
+  "title_es": "Organizaciones vecinales y comunitarias (San Antonio)",
+  "description": "Neighborhood associations and community groups registered with the City of San Antonio, with meeting times and websites.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of San Antonio GIS (CoSA open data) Neighborhood & Housing Services",
+  "view": {
+   "url": "https://services.arcgis.com/g1fRTDLeMgspWrYp/arcgis/rest/services/Community_Organizations/FeatureServer/0",
+   "fields": {
+    "CommunityOrganization": "name",
+    "MeetingDayAndTime": "meets",
+    "Website": "url",
+    "Status": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.52,
+    29.4,
+    -98.46,
+    29.45
+   ],
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "tx-bexar-early-voting",
+  "state": "TX",
+  "title": "Early voting sites, Nov 2026 (Bexar County)",
+  "title_es": "Sitios de votación anticipada, nov. 2026 (condado de Bexar)",
+  "description": "Bexar County early voting locations and hours for the November 3, 2026 general election. Any registered Bexar County voter can use any site.",
+  "group": "civic",
+  "category": "point",
+  "source": "Bexar County GIS (maps.bexar.org) Elections",
+  "view": {
+   "url": "https://maps.bexar.org/arcgis/rest/services/EL/PollingLocationsEarly/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "DETAILS": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "ACTIVE = 'Yes'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.52,
+    29.4,
+    -98.46,
+    29.45
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "tx-bexar-election-day-sites",
+  "state": "TX",
+  "title": "Election Day vote centers, Nov 3 2026 (Bexar County)",
+  "title_es": "Centros de votación del día de elección, 3 nov. 2026 (condado de Bexar)",
+  "description": "Bexar County Election Day polling places for the November 3, 2026 general election (7 a.m.-7 p.m.).",
+  "group": "civic",
+  "category": "point",
+  "source": "Bexar County GIS (maps.bexar.org) Elections",
+  "view": {
+   "url": "https://maps.bexar.org/arcgis/rest/services/EL/PollingLocationsElectionDay/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "DETAILS": "details"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "ACTIVE = 'Yes'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.52,
+    29.4,
+    -98.46,
+    29.45
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "tx-bexar-voting-precincts",
+  "state": "TX",
+  "title": "Voting precincts (Bexar County)",
+  "title_es": "Precintos electorales (condado de Bexar)",
+  "description": "Bexar County election precinct boundaries.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Bexar County GIS (maps.bexar.org) Elections",
+  "view": {
+   "url": "https://maps.bexar.org/arcgis/rest/services/EL/VoterPrecincts/MapServer/0",
+   "fields": {
+    "NAME": "precinct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.52,
+    29.4,
+    -98.46,
+    29.45
+   ],
+   "features_in_probe": 56
+  }
+ },
+ {
+  "name": "tx-bexar-warming-cooling-centers",
+  "state": "TX",
+  "title": "Warming & cooling centers (Bexar County)",
+  "title_es": "Centros de calefacción y enfriamiento (condado de Bexar)",
+  "description": "Sites Bexar County opens as warming or cooling centers during extreme weather. 'Active' shows whether a site is open now.",
+  "group": "help",
+  "category": "point",
+  "source": "Bexar County GIS (maps.bexar.org) Office of Emergency Management",
+  "view": {
+   "url": "https://maps.bexar.org/arcgis/rest/services/OEM/SeasonalShelters/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Active": "active",
+    "Notes": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.52,
+    29.4,
+    -98.46,
+    29.45
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "tx-bexar-esds",
+  "state": "TX",
+  "title": "Emergency services districts (Bexar County)",
+  "title_es": "Distritos de servicios de emergencia (condado de Bexar)",
+  "description": "Emergency services districts that fund fire and EMS coverage in unincorporated Bexar County.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Bexar County GIS (maps.bexar.org) Office of Emergency Management",
+  "view": {
+   "url": "https://maps.bexar.org/arcgis/rest/services/OEM/ESD/MapServer/1",
+   "fields": {
+    "NAME": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.7,
+    29.3,
+    -98.3,
+    29.7
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "tx-bexar-capital-projects",
+  "state": "TX",
+  "title": "County road & flood projects (Bexar County)",
+  "title_es": "Proyectos de caminos e inundaciones del condado (Bexar)",
+  "description": "Bexar County Public Works road, bridge and flood-control projects with status and construction cost.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Bexar County GIS (maps.bexar.org) Public Works",
+  "view": {
+   "url": "https://maps.bexar.org/arcgis/rest/services/PW/Capital_Projects/MapServer/0",
+   "fields": {
+    "Project_Name": "name",
+    "Location_Description": "location",
+    "Work_Type": "work",
+    "Project_Status": "status",
+    "Construction_Status": "construction",
+    "Construction_Cost": "cost"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.7,
+    29.3,
+    -98.3,
+    29.7
+   ],
+   "features_in_probe": 37
+  }
+ },
+ {
+  "name": "tx-bexar-high-water-warning-sites",
+  "state": "TX",
+  "title": "High-water warning gates & lights (Bexar County)",
+  "title_es": "Barreras y luces de alerta por agua alta (condado de Bexar)",
+  "description": "Bexar County's HALT sites: flood-prone crossings with automated warning lights or gates that switch on when water rises.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Bexar County GIS (maps.bexar.org) Public Works",
+  "view": {
+   "url": "https://maps.bexar.org/arcgis/rest/services/PW/HaltLocations/MapServer/0",
+   "fields": {
+    "name": "location",
+    "lastUpdated": "last_report"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.7,
+    29.3,
+    -98.3,
+    29.7
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "tx-bexar-county-parks",
+  "state": "TX",
+  "title": "County parks (Bexar County)",
+  "title_es": "Parques del condado (Bexar)",
+  "description": "Parks run by Bexar County, with address and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "Bexar County GIS (maps.bexar.org)",
+  "view": {
+   "url": "https://maps.bexar.org/arcgis/rest/services/Parks_County/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "Address": "address",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.7,
+    29.3,
+    -98.3,
+    29.7
+   ],
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "tx-bexar-commissioner-precincts",
+  "state": "TX",
+  "title": "Commissioner precincts (Bexar County)",
+  "title_es": "Precintos de comisionados (condado de Bexar)",
+  "description": "The four Bexar County Commissioners Court precincts, with a link to each precinct office.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Bexar County GIS (maps.bexar.org)",
+  "view": {
+   "url": "https://maps.bexar.org/arcgis/rest/services/CommissionerPrecincts/MapServer/0",
+   "fields": {
+    "Comm": "precinct",
+    "Website": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.52,
+    29.4,
+    -98.46,
+    29.45
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "tx-bexar-parcels",
+  "state": "TX",
+  "title": "Parcels (Bexar County, BCAD)",
+  "title_es": "Parcelas (condado de Bexar, BCAD)",
+  "description": "Bexar Appraisal District parcels with property ID, address, acreage, year built and appraised values (no owner information shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Bexar County GIS (maps.bexar.org) / Bexar Appraisal District",
+  "view": {
+   "url": "https://maps.bexar.org/arcgis/rest/services/Parcels/MapServer/0",
+   "fields": {
+    "PropID": "prop_id",
+    "Situs": "address",
+    "Acres": "acres",
+    "YrBlt": "year_built",
+    "LandVal": "land_value",
+    "TotVal": "total_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.52,
+    29.4,
+    -98.46,
+    29.45
+   ],
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "tx-austin-council-districts",
+  "state": "TX",
+  "title": "City council districts (Austin)",
+  "title_es": "Distritos del concejo municipal (Austin)",
+  "description": "Austin's 10 city council districts, with a link to each district's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Austin GIS (Austin ArcGIS Online)",
+  "view": {
+   "url": "https://services.arcgis.com/0L95CJ0VTaxqcmED/arcgis/rest/services/BOUNDARIES_single_member_districts/FeatureServer/0",
+   "fields": {
+    "COUNCIL_DISTRICT": "district",
+    "COUNCIL_DISTRICT_PATH": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.77,
+    30.25,
+    -97.72,
+    30.29
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "tx-austin-trash-days",
+  "state": "TX",
+  "title": "Trash pickup day (Austin)",
+  "title_es": "Día de recolección de basura (Austin)",
+  "description": "Austin Resource Recovery's weekly trash collection day by route.",
+  "group": "civic",
+  "category": "info",
+  "source": "City of Austin GIS (Austin ArcGIS Online) Resource Recovery",
+  "view": {
+   "url": "https://services.arcgis.com/0L95CJ0VTaxqcmED/arcgis/rest/services/BOUNDARIES_garbage_collection_routes/FeatureServer/0",
+   "fields": {
+    "SERVICE_DAY": "day",
+    "ROUTE_NAME": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.77,
+    30.25,
+    -97.72,
+    30.29
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "tx-austin-recycling-days",
+  "state": "TX",
+  "title": "Recycling pickup day & week (Austin)",
+  "title_es": "Día y semana de reciclaje (Austin)",
+  "description": "Austin's every-other-week recycling collection: day and A/B week for each route.",
+  "group": "civic",
+  "category": "info",
+  "source": "City of Austin GIS (Austin ArcGIS Online) Resource Recovery",
+  "view": {
+   "url": "https://services.arcgis.com/0L95CJ0VTaxqcmED/arcgis/rest/services/BOUNDARIES_recycle_collection_routes/FeatureServer/0",
+   "fields": {
+    "SERVICE_DAY": "day",
+    "SERVICE_WEEK": "week",
+    "ROUTE_NAME": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.77,
+    30.25,
+    -97.72,
+    30.29
+   ],
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "tx-austin-historic-landmarks",
+  "state": "TX",
+  "title": "Historic landmarks (Austin)",
+  "title_es": "Monumentos históricos (Austin)",
+  "description": "City of Austin designated historic landmarks. Changes to these buildings need Historic Landmark Commission review.",
+  "group": "places",
+  "category": "point",
+  "source": "City of Austin GIS (Austin ArcGIS Online) Planning",
+  "view": {
+   "url": "https://services.arcgis.com/0L95CJ0VTaxqcmED/arcgis/rest/services/STRUCTURE_historical_landmarks/FeatureServer/0",
+   "fields": {
+    "BUILDING_NAME": "name",
+    "ADDRESS": "address",
+    "CASE_NUMBER": "case"
+   },
+   "geometry": "point",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.77,
+    30.25,
+    -97.72,
+    30.29
+   ],
+   "features_in_probe": 422
+  }
+ },
+ {
+  "name": "tx-austin-parks",
+  "state": "TX",
+  "title": "City parks (Austin)",
+  "title_es": "Parques municipales (Austin)",
+  "description": "Open City of Austin parks and preserves with type, acreage and address.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Austin GIS (Austin ArcGIS Online) Parks & Recreation",
+  "view": {
+   "url": "https://services.arcgis.com/0L95CJ0VTaxqcmED/arcgis/rest/services/BOUNDARIES_city_of_austin_parks/FeatureServer/0",
+   "fields": {
+    "LOCATION_NAME": "name",
+    "PARK_TYPE": "kind",
+    "ASSET_SIZE": "acres",
+    "ADDRESS": "address"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "ASSET_STATUS = 'Open'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.77,
+    30.25,
+    -97.72,
+    30.29
+   ],
+   "features_in_probe": 59
+  }
+ },
+ {
+  "name": "tx-austin-urban-trails",
+  "state": "TX",
+  "title": "Urban trails (Austin)",
+  "title_es": "Senderos urbanos (Austin)",
+  "description": "Existing Austin-area urban trails and side paths for walking and biking, with surface, width and year opened.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Austin GIS (Austin ArcGIS Online) Transportation & Public Works",
+  "view": {
+   "url": "https://services.arcgis.com/0L95CJ0VTaxqcmED/arcgis/rest/services/Urban_Trails_Network_Public_view/FeatureServer/0",
+   "fields": {
+    "SYSTEM_NAME": "trail",
+    "SEGMENT_NAME": "segment",
+    "TRAIL_SURFACE_TYPE": "surface",
+    "WIDTH": "width_ft",
+    "YEAR_OPEN": "year_open"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "BUILD_STATUS = 'EXISTING'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.77,
+    30.25,
+    -97.72,
+    30.29
+   ],
+   "features_in_probe": 313
+  }
+ },
+ {
+  "name": "tx-austin-flood-gates",
+  "state": "TX",
+  "title": "Low-water crossing flood gates (Austin)",
+  "title_es": "Barreras de cruces de agua baja (Austin)",
+  "description": "Automated flood gates at Austin low-water crossings that close when creeks rise. If the gate is down, the road is flooded.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "City of Austin GIS (Austin ArcGIS Online) Watershed Protection",
+  "view": {
+   "url": "https://services.arcgis.com/0L95CJ0VTaxqcmED/arcgis/rest/services/INLANDWATERS_flood_low_water_crossings/FeatureServer/0",
+   "fields": {
+    "CROSSING_DESCRIPTION": "location",
+    "CROSSING_TYPE": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.88,
+    30.17,
+    -97.7,
+    30.42
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "tx-austin-event-road-closures",
+  "state": "TX",
+  "title": "Special-event road closures (Austin)",
+  "title_es": "Cierres de calles por eventos especiales (Austin)",
+  "description": "Streets Austin is closing for permitted races, festivals and other events, with start and end times. Past closures drop off automatically.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Austin GIS (Austin ArcGIS Online) Transportation & Public Works",
+  "view": {
+   "url": "https://services.arcgis.com/0L95CJ0VTaxqcmED/arcgis/rest/services/Special_Events_Road_Closures_Public/FeatureServer/0",
+   "fields": {
+    "EVENT_NAME": "event",
+    "STREET": "street",
+    "CLOSURE_AREA": "closure",
+    "START_TIME": "start",
+    "END_TIME": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "END_TIME >= CURRENT_TIMESTAMP"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.77,
+    30.25,
+    -97.72,
+    30.29
+   ],
+   "features_in_probe": 184
+  }
+ },
+ {
+  "name": "tx-austin-edwards-recharge-zone",
+  "state": "TX",
+  "title": "Edwards Aquifer recharge zone (Austin)",
+  "title_es": "Zona de recarga del acuífero Edwards (Austin)",
+  "description": "Where rain soaks into the Edwards Aquifer around Austin. Development and septic systems here face extra water-quality rules.",
+  "group": "nature",
+  "category": "hazard",
+  "source": "City of Austin GIS (Austin ArcGIS Online) Watershed Protection",
+  "view": {
+   "url": "https://services.arcgis.com/0L95CJ0VTaxqcmED/arcgis/rest/services/GEOSCIENTIFICINFORMATION_ed_aq_recharge_zone/FeatureServer/0",
+   "fields": {
+    "RECHARGE_ZONE": "zone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.95,
+    30.2,
+    -97.8,
+    30.35
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "tx-travis-voting-precincts",
+  "state": "TX",
+  "title": "Voting precincts (Travis County)",
+  "title_es": "Precintos electorales (condado de Travis)",
+  "description": "Travis County election precincts with their congressional (G), state senate (N), state house (L) and commissioner (P) district codes.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Travis County Clerk Elections via City of Austin GIS",
+  "view": {
+   "url": "https://services.arcgis.com/0L95CJ0VTaxqcmED/arcgis/rest/services/EXTERNAL_travis_voter_precincts/FeatureServer/0",
+   "fields": {
+    "PRECINCT": "precinct",
+    "CONGRESSIO": "congress",
+    "SENATE": "state_senate",
+    "LEGISLATIV": "state_house",
+    "COMMISSION": "commissioner"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.77,
+    30.25,
+    -97.72,
+    30.29
+   ],
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "tx-williamson-parcels",
+  "state": "TX",
+  "title": "Parcels (Williamson County, WCAD)",
+  "title_es": "Parcelas (condado de Williamson, WCAD)",
+  "description": "Williamson Central Appraisal District parcels with parcel ID, address, use, acreage and assessed value (no owner information shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Williamson Central Appraisal District (WCAD ArcGIS Online)",
+  "view": {
+   "url": "https://services1.arcgis.com/Xff0bbfp6vwIWmlU/arcgis/rest/services/WCAD_Tax_Parcels/FeatureServer/0",
+   "fields": {
+    "PARCELID": "parcel_id",
+    "SITEADDRESS": "address",
+    "USEDSCRP": "use",
+    "STATEDAREA": "acres",
+    "RESYRBLT": "year_built",
+    "PRVASSDVAL": "assessed_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.69,
+    30.5,
+    -97.66,
+    30.52
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "tx-el-paso-council-districts",
+  "state": "TX",
+  "title": "City council districts (El Paso)",
+  "title_es": "Distritos del concejo municipal (El Paso)",
+  "description": "El Paso's eight city council (representative) districts, with a link to each district's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of El Paso GIS (gis.elpasotexas.gov)",
+  "view": {
+   "url": "https://gis.elpasotexas.gov/arcgis/rest/services/RepresentativeDistricts/MapServer/0",
+   "fields": {
+    "DISTRICT": "district",
+    "LINK": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.5,
+    31.75,
+    -106.44,
+    31.79
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "tx-el-paso-cooling-centers",
+  "state": "TX",
+  "title": "Cooling centers (El Paso)",
+  "title_es": "Centros de enfriamiento (El Paso)",
+  "description": "City of El Paso 'Stay Cool, Stay Safe' cooling centers (libraries, recreation and senior centers) open to anyone during hot weather.",
+  "group": "help",
+  "category": "point",
+  "source": "City of El Paso GIS (gis.elpasotexas.gov)",
+  "view": {
+   "url": "https://gis.elpasotexas.gov/arcgis/rest/services/StayCoolStaySafeElPaso/MapServer/3",
+   "fields": {
+    "Name": "name",
+    "Address": "address"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.5,
+    31.75,
+    -106.44,
+    31.79
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "tx-el-paso-voting-precincts",
+  "state": "TX",
+  "title": "Voting precincts (El Paso County)",
+  "title_es": "Precintos electorales (condado de El Paso)",
+  "description": "El Paso County election precinct boundaries as kept by the City of El Paso.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of El Paso GIS (gis.elpasotexas.gov)",
+  "view": {
+   "url": "https://gis.elpasotexas.gov/arcgis/rest/services/VoterPrecincts/MapServer/0",
+   "fields": {
+    "PRCTNUM": "precinct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.5,
+    31.75,
+    -106.44,
+    31.79
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "tx-el-paso-parcels",
+  "state": "TX",
+  "title": "Parcels (El Paso)",
+  "title_es": "Parcelas (El Paso)",
+  "description": "El Paso parcels with parcel number, address and legal description (no owner information shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of El Paso GIS (gis.elpasotexas.gov)",
+  "view": {
+   "url": "https://gis.elpasotexas.gov/arcgis/rest/services/EPParcels/MapServer/0",
+   "fields": {
+    "PIDN": "parcel_id",
+    "LOCADDRESS": "address",
+    "LEGAL_DESC": "legal"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.5,
+    31.75,
+    -106.44,
+    31.79
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "tx-el-paso-parks",
+  "state": "TX",
+  "title": "City parks (El Paso)",
+  "title_es": "Parques municipales (El Paso)",
+  "description": "City of El Paso parks with type, acreage and address.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of El Paso GIS (gis.elpasotexas.gov) Parks & Recreation",
+  "view": {
+   "url": "https://gis.elpasotexas.gov/arcgis/rest/services/Parks/MapServer/3",
+   "fields": {
+    "PARK": "name",
+    "TYPE": "kind",
+    "CATEGORY": "category",
+    "TOTAL_ACRES": "acres",
+    "ADDRESS": "address"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.5,
+    31.75,
+    -106.44,
+    31.79
+   ],
+   "features_in_probe": 57
+  }
+ },
+ {
+  "name": "tx-el-paso-historic-districts",
+  "state": "TX",
+  "title": "Historic districts (El Paso)",
+  "title_es": "Distritos históricos (El Paso)",
+  "description": "El Paso's locally designated historic districts and areas, where exterior changes need Historic Landmark Commission review.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of El Paso GIS (gis.elpasotexas.gov) Planning",
+  "view": {
+   "url": "https://gis.elpasotexas.gov/arcgis/rest/services/Planning/HistoricDistrict/MapServer/0",
+   "fields": {
+    "NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.5,
+    31.75,
+    -106.44,
+    31.79
+   ],
+   "features_in_probe": 44
+  }
+ },
+ {
+  "name": "tx-el-paso-capital-projects",
+  "state": "TX",
+  "title": "Capital improvement projects (El Paso)",
+  "title_es": "Proyectos de mejoras capitales (El Paso)",
+  "description": "City of El Paso capital projects (streets, trails, drainage) with status, funding source and budget.",
+  "group": "growth",
+  "category": "roadops",
+  "source": "City of El Paso GIS (gis.elpasotexas.gov) Capital Improvement Dept.",
+  "view": {
+   "url": "https://gis.elpasotexas.gov/arcgis/rest/services/CIP/CIPS_LINES_VIEWER/MapServer/0",
+   "fields": {
+    "Proj_Name": "name",
+    "ProjectAdd": "location",
+    "ProjectSta": "status",
+    "BudgetSour": "funding",
+    "AdjAm": "budget"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.5,
+    31.75,
+    -106.44,
+    31.79
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "tx-collin-parcels",
+  "state": "TX",
+  "title": "Parcels (Collin County, CCAD)",
+  "title_es": "Parcelas (condado de Collin, CCAD)",
+  "description": "Collin Central Appraisal District parcels with property ID, address, land acreage, year built and market value (no owner information shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Collin Central Appraisal District (CCAD ArcGIS Online)",
+  "view": {
+   "url": "https://services2.arcgis.com/uXyoacYrZTPTKD3R/arcgis/rest/services/CCAD_Parcel_Feature_Set/FeatureServer/4",
+   "fields": {
+    "propID": "prop_id",
+    "situsConcat": "address",
+    "landSizeAcres": "acres",
+    "imprvYearBuilt": "year_built",
+    "currValMarket": "market_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "propID > 0"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.71,
+    33.01,
+    -96.69,
+    33.03
+   ],
+   "features_in_probe": 1838
+  }
+ },
+ {
+  "name": "tx-collin-special-districts",
+  "state": "TX",
+  "title": "MUDs, utility districts & TIRZs (Collin County)",
+  "title_es": "MUD, distritos de servicios y TIRZ (condado de Collin)",
+  "description": "Special taxing districts in Collin County: municipal utility districts, special utility districts, municipal management districts and tax increment zones.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Collin Central Appraisal District (CCAD ArcGIS Online)",
+  "view": {
+   "url": "https://services2.arcgis.com/uXyoacYrZTPTKD3R/arcgis/rest/services/CCAD_Parcel_Feature_Set/FeatureServer/7",
+   "fields": {
+    "Name": "name",
+    "Type": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.8,
+    33.1,
+    -96.6,
+    33.25
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "tx-cameron-early-voting",
+  "state": "TX",
+  "title": "Early voting sites, Nov 2026 (Cameron County)",
+  "title_es": "Sitios de votación anticipada, nov. 2026 (condado de Cameron)",
+  "description": "Cameron County early voting locations for the November 3, 2026 general election, as posted by the City of Brownsville.",
+  "group": "civic",
+  "category": "point",
+  "source": "City of Brownsville GIS / Cameron County Elections",
+  "view": {
+   "url": "https://services2.arcgis.com/6oaLMZEZlktbQpyi/arcgis/rest/services/Cameron_County_Early_Voting_Polling_Places_view/FeatureServer/0",
+   "fields": {
+    "FIELD_NAME_A": "name",
+    "FIELD_NAME_B": "address"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.85,
+    25.85,
+    -97.15,
+    26.3
+   ],
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "tx-cameron-parcels",
+  "state": "TX",
+  "title": "Parcels (Cameron County)",
+  "title_es": "Parcelas (condado de Cameron)",
+  "description": "Cameron Appraisal District parcels (2026 roll, published by the City of Brownsville) with property ID, address, acreage, year built and market value (no owner information shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Brownsville GIS / Cameron Appraisal District",
+  "view": {
+   "url": "https://cobgis.brownsvilletx.gov/arcgis/rest/services/Hosted/CameronCAD_Parcels_05312026/FeatureServer/0",
+   "fields": {
+    "prop_id": "prop_id",
+    "situsdispl": "address",
+    "acres": "acres",
+    "yrbuilt": "year_built",
+    "market": "market_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.51,
+    25.9,
+    -97.49,
+    25.92
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "tx-brownsville-trails",
+  "state": "TX",
+  "title": "Trails & bike routes (Brownsville)",
+  "title_es": "Senderos y rutas para bicicleta (Brownsville)",
+  "description": "Existing hike-and-bike trails and bike routes in Brownsville, with length in miles.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Brownsville GIS",
+  "view": {
+   "url": "https://services2.arcgis.com/6oaLMZEZlktbQpyi/arcgis/rest/services/Brownsville_Trail_System_WFL1/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "Length": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.55,
+    25.88,
+    -97.43,
+    26.04
+   ],
+   "features_in_probe": 119
+  }
+ },
+ {
+  "name": "tx-pharr-parks",
+  "state": "TX",
+  "title": "City parks (Pharr)",
+  "title_es": "Parques municipales (Pharr)",
+  "description": "City of Pharr parks and sports complexes with address and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Pharr GIS",
+  "view": {
+   "url": "https://services.arcgis.com/Uj8MycSVzMEzm7ey/arcgis/rest/services/Pharr_Published/FeatureServer/30",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.21,
+    26.12,
+    -98.16,
+    26.24
+   ],
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "tx-fort-bend-parcels",
+  "state": "TX",
+  "title": "Parcels (Fort Bend County, FBCAD)",
+  "title_es": "Parcelas (condado de Fort Bend, FBCAD)",
+  "description": "Fort Bend Central Appraisal District parcels (Sept. 2026) with property number, address, acreage, year built and total value (no owner information shown).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Fort Bend County GIS / Fort Bend Central Appraisal District",
+  "view": {
+   "url": "https://services.arcgis.com/HfQs2ClqmipKpmFK/arcgis/rest/services/FBCAD_Public_Parcels_Dec_2024/FeatureServer/0",
+   "fields": {
+    "PROPNUMBER": "prop_number",
+    "SITUS": "address",
+    "LANDSIZEAC": "acres",
+    "YEARBUILT": "year_built",
+    "TOTALVALUE": "total_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.57,
+    29.59,
+    -95.55,
+    29.61
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "tx-fort-bend-flood-gauges",
+  "state": "TX",
+  "title": "Flood & river gauges (Fort Bend County)",
+  "title_es": "Medidores de inundación y ríos (Fort Bend)",
+  "description": "Rain and river-level gauges Fort Bend County watches during floods (Brazos, San Bernard and bayous), with links to live readings from NWS, USGS or Harris County.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Fort Bend County GIS (Drainage District)",
+  "view": {
+   "url": "https://gisportal.fortbendcountytx.gov/arcgis/rest/services/Drainage/Drainage_Public/MapServer/1",
+   "fields": {
+    "DESCRIPTION": "gauge",
+    "OWNER": "operator",
+    "URL_NWS": "nws_url",
+    "URL_USGS": "usgs_url",
+    "URL_HCFCD": "hcfcd_url"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.1,
+    29.4,
+    -95.5,
+    29.8
+   ],
+   "features_in_probe": 32
+  }
+ },
+ {
+  "name": "tx-lubbock-council-districts",
+  "state": "TX",
+  "title": "City council districts (Lubbock)",
+  "title_es": "Distritos del concejo municipal (Lubbock)",
+  "description": "Lubbock's six city council districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Lubbock GIS",
+  "view": {
+   "url": "https://services2.arcgis.com/eYXun6c1pgy8Qpta/arcgis/rest/services/Council_Districts/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -101.9,
+    33.53,
+    -101.82,
+    33.6
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "tx-lubbock-parks",
+  "state": "TX",
+  "title": "City parks (Lubbock)",
+  "title_es": "Parques municipales (Lubbock)",
+  "description": "City of Lubbock parks with classification, address and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Lubbock GIS",
+  "view": {
+   "url": "https://services2.arcgis.com/eYXun6c1pgy8Qpta/arcgis/rest/services/ParkBoundaries/FeatureServer/1",
+   "fields": {
+    "Attraction": "name",
+    "Classification": "kind",
+    "Address": "address",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -101.9,
+    33.53,
+    -101.82,
+    33.6
+   ],
+   "features_in_probe": 42
+  }
+ },
+ {
+  "name": "tx-lubbock-bond-roads",
+  "state": "TX",
+  "title": "2022 & 2024 bond road projects (Lubbock)",
+  "title_es": "Proyectos viales de bonos 2022 y 2024 (Lubbock)",
+  "description": "Lubbock street projects funded by voter-approved road bonds: limits, status, percent complete and cost.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Lubbock GIS (Engineering)",
+  "view": {
+   "url": "https://services2.arcgis.com/eYXun6c1pgy8Qpta/arcgis/rest/services/Official_Bond_Roads/FeatureServer/2",
+   "fields": {
+    "ProjectName": "name",
+    "BondYear": "bond_year",
+    "ProjectStatus": "status",
+    "PercentComplete": "percent_complete",
+    "ProjectCost": "cost",
+    "ProjectWebsite": "url"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -101.95,
+    33.45,
+    -101.8,
+    33.65
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "tx-corpus-christi-council-districts",
+  "state": "TX",
+  "title": "City council districts (Corpus Christi)",
+  "title_es": "Distritos del concejo municipal (Corpus Christi)",
+  "description": "Corpus Christi's five single-member city council districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Corpus Christi GIS (open data)",
+  "view": {
+   "url": "https://services.arcgis.com/0J4ZNc4NaTguvRy0/arcgis/rest/services/OpenData/FeatureServer/63",
+   "fields": {
+    "TAG": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.42,
+    27.7,
+    -97.36,
+    27.75
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "tx-corpus-christi-voting-precincts",
+  "state": "TX",
+  "title": "Voting precincts (Corpus Christi area)",
+  "title_es": "Precintos electorales (área de Corpus Christi)",
+  "description": "Nueces County election precincts in and around Corpus Christi.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Corpus Christi GIS (open data)",
+  "view": {
+   "url": "https://services.arcgis.com/0J4ZNc4NaTguvRy0/arcgis/rest/services/OpenData/FeatureServer/65",
+   "fields": {
+    "NEWVTDPCT": "precinct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.42,
+    27.7,
+    -97.36,
+    27.75
+   ],
+   "features_in_probe": 38
+  }
+ },
+ {
+  "name": "tx-corpus-christi-parks",
+  "state": "TX",
+  "title": "City parks (Corpus Christi)",
+  "title_es": "Parques municipales (Corpus Christi)",
+  "description": "Corpus Christi parks with type, location, acreage and special features.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Corpus Christi GIS (open data) Parks & Recreation",
+  "view": {
+   "url": "https://services.arcgis.com/0J4ZNc4NaTguvRy0/arcgis/rest/services/OpenData/FeatureServer/44",
+   "fields": {
+    "TAG": "name",
+    "TYPE": "kind",
+    "LOCATION_D": "location",
+    "ACRES": "acres",
+    "SPECIAL_FE": "features"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "STATUS = 'OPERATING'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.42,
+    27.7,
+    -97.36,
+    27.75
+   ],
+   "features_in_probe": 34
+  }
+ },
+ {
+  "name": "tx-corpus-christi-zoning",
+  "state": "TX",
+  "title": "Zoning (Corpus Christi)",
+  "title_es": "Zonificación (Corpus Christi)",
+  "description": "Corpus Christi zoning districts (current code) with the ordinance number.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Corpus Christi GIS (open data) Development Services",
+  "view": {
+   "url": "https://services.arcgis.com/0J4ZNc4NaTguvRy0/arcgis/rest/services/OpenData/FeatureServer/48",
+   "fields": {
+    "TAG2023": "zone",
+    "TAG": "zone_old",
+    "ORDINANCE_": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.42,
+    27.7,
+    -97.36,
+    27.75
+   ],
+   "features_in_probe": 648
+  }
+ },
+ {
+  "name": "tx-laredo-council-districts",
+  "state": "TX",
+  "title": "City council districts (Laredo)",
+  "title_es": "Distritos del concejo municipal (Laredo)",
+  "description": "Laredo's eight city council districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Laredo GIS",
+  "view": {
+   "url": "https://services6.arcgis.com/8FCipc4uuUgyEpbK/arcgis/rest/services/COUNCIL_DISTRICTS_2025/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -99.52,
+    27.5,
+    -99.46,
+    27.55
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "tx-laredo-parks",
+  "state": "TX",
+  "title": "City parks (Laredo)",
+  "title_es": "Parques municipales (Laredo)",
+  "description": "City of Laredo parks with acreage and council district.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Laredo GIS",
+  "view": {
+   "url": "https://services6.arcgis.com/8FCipc4uuUgyEpbK/arcgis/rest/services/OL_Park_Boundaries/FeatureServer/0",
+   "fields": {
+    "park_name": "name",
+    "ACRES": "acres",
+    "Council_D": "council_district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -99.52,
+    27.5,
+    -99.46,
+    27.55
+   ],
+   "features_in_probe": 58
+  }
+ },
+ {
+  "name": "ok-okc-council-wards",
+  "state": "OK",
+  "title": "City council wards (Oklahoma City)",
+  "title_es": "Distritos (wards) del concejo municipal (Oklahoma City)",
+  "description": "Oklahoma City's eight city council wards. Find which ward covers your address.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Oklahoma City GIS (OKC open data)",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/666b9654ab104ba7ac49870c66190e9c/rest/services/OpenData/Government_Boundaries/FeatureServer/2",
+   "fields": {
+    "WARD": "ward"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.54,
+    35.45,
+    -97.48,
+    35.5
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "ok-okc-trash-days",
+  "state": "OK",
+  "title": "Trash pickup day (Oklahoma City)",
+  "title_es": "Día de recolección de basura (Oklahoma City)",
+  "description": "Weekly trash collection day and hauler for each Oklahoma City route.",
+  "group": "civic",
+  "category": "info",
+  "source": "City of Oklahoma City GIS (OKC open data) Utilities",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/45426e5e1b31489db9afea603870f724/rest/services/OpenData/Utilities/FeatureServer/1",
+   "fields": {
+    "PICKUPDAY": "day",
+    "SERVICE_PROVIDER": "hauler",
+    "ROUTE": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.54,
+    35.45,
+    -97.48,
+    35.5
+   ],
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "ok-okc-recycling-days",
+  "state": "OK",
+  "title": "Recycling pickup day (Oklahoma City)",
+  "title_es": "Día de recolección de reciclaje (Oklahoma City)",
+  "description": "Curbside recycling collection day and hauler for each Oklahoma City route.",
+  "group": "civic",
+  "category": "info",
+  "source": "City of Oklahoma City GIS (OKC open data) Utilities",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/0f286e1243ca4bb39a70e323b1608222/rest/services/OpenData/Utilities/FeatureServer/3",
+   "fields": {
+    "PickupDay": "day",
+    "ServiceProvider": "hauler",
+    "Route": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.54,
+    35.45,
+    -97.48,
+    35.5
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "ok-okc-bulky-waste-days",
+  "state": "OK",
+  "title": "Bulky waste pickup week (Oklahoma City)",
+  "title_es": "Recolección de objetos voluminosos (Oklahoma City)",
+  "description": "Which week and day each month Oklahoma City picks up bulky waste (furniture, appliances, brush) curbside.",
+  "group": "civic",
+  "category": "info",
+  "source": "City of Oklahoma City GIS (OKC open data) Utilities",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/c4455716f4bf4d1dafe6806e0e619de8/rest/services/OpenData/Utilities/FeatureServer/2",
+   "fields": {
+    "PICKUPDAY": "schedule",
+    "SERVICE_PROVIDER": "hauler"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.54,
+    35.45,
+    -97.48,
+    35.5
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "ok-okc-parks",
+  "state": "OK",
+  "title": "City parks (Oklahoma City)",
+  "title_es": "Parques municipales (Oklahoma City)",
+  "description": "Oklahoma City parks with type, address and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Oklahoma City GIS (OKC open data) Parks & Recreation",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/fe9dc8e85f9c43b7950e32b69edf28fc/rest/services/OpenData/Recreation_Parks/FeatureServer/4",
+   "fields": {
+    "Name": "name",
+    "ParkType": "kind",
+    "Address": "address",
+    "Park_Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.54,
+    35.45,
+    -97.48,
+    35.5
+   ],
+   "features_in_probe": 35
+  }
+ },
+ {
+  "name": "ok-okc-trails",
+  "state": "OK",
+  "title": "City trails (Oklahoma City)",
+  "title_es": "Senderos municipales (Oklahoma City)",
+  "description": "Oklahoma City multi-use trails with status, difficulty, accessibility and allowed uses.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Oklahoma City GIS (OKC open data) Parks & Recreation",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/1e65b61d07f5458a90d4cfa01e882044/rest/services/OpenData/Recreation_Parks/FeatureServer/3",
+   "fields": {
+    "TrailName": "name",
+    "Status": "status",
+    "Rating": "difficulty",
+    "Accessible": "accessible",
+    "RoadBike": "bikes",
+    "Equestrian": "horses"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.54,
+    35.45,
+    -97.48,
+    35.5
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ok-okc-work-zones",
+  "state": "OK",
+  "title": "Street work zones (Oklahoma City)",
+  "title_es": "Zonas de obras en calles (Oklahoma City)",
+  "description": "Permitted work zones on Oklahoma City streets: type of work, dates, and whether lanes, the road or the sidewalk are closed.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Oklahoma City GIS (OKC open data) Public Works",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/ead80c5e4e4e4c719359217f704a0c4c/rest/services/OpenData/Transportation/FeatureServer/5",
+   "fields": {
+    "Worklocation": "location",
+    "Worktype": "work",
+    "Startdate": "start",
+    "Enddate": "end",
+    "Roadclosure": "road_closed",
+    "LaneClosure": "lane_closed",
+    "SideWalkClosure": "sidewalk_closed"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.54,
+    35.45,
+    -97.48,
+    35.5
+   ],
+   "features_in_probe": 52
+  }
+ },
+ {
+  "name": "ok-okc-zoning",
+  "state": "OK",
+  "title": "Zoning (Oklahoma City)",
+  "title_es": "Zonificación (Oklahoma City)",
+  "description": "Oklahoma City base zoning districts and the zoning case that set them.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Oklahoma City GIS (OKC open data) Planning",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/388d1b1f0e804e378a2d138c39919085/rest/services/OpenData/Licensing_Zoning/FeatureServer/3",
+   "fields": {
+    "P_ZONE": "zone",
+    "P_CASE": "case"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.54,
+    35.45,
+    -97.48,
+    35.5
+   ],
+   "features_in_probe": 1834
+  }
+ },
+ {
+  "name": "ok-okc-infrastructure-projects",
+  "state": "OK",
+  "title": "Public infrastructure projects (Oklahoma City)",
+  "title_es": "Proyectos de infraestructura pública (Oklahoma City)",
+  "description": "Oklahoma City bond, MAPS and utility projects (streets, sidewalks, trails, drainage): location, category, funding and estimated cost.",
+  "group": "growth",
+  "category": "roadops",
+  "source": "City of Oklahoma City GIS (OKC open data)",
+  "view": {
+   "url": "https://services5.arcgis.com/2mOVdIcRtNH2JsSF/arcgis/rest/services/Infrastructure_Projects_OD/FeatureServer/0",
+   "fields": {
+    "projname": "name",
+    "projloc": "location",
+    "projcat": "category",
+    "projsec": "type",
+    "fundingsources": "funding",
+    "estcost": "est_cost",
+    "ward": "ward"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.54,
+    35.45,
+    -97.48,
+    35.5
+   ],
+   "features_in_probe": 160
+  }
+ },
+ {
+  "name": "ok-tulsa-council-districts",
+  "state": "OK",
+  "title": "City council districts (Tulsa)",
+  "title_es": "Distritos del concejo municipal (Tulsa)",
+  "description": "Tulsa's nine city council districts, with a link to each district's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Tulsa GIS (Tulsa open data)",
+  "view": {
+   "url": "https://services2.arcgis.com/XkZ90iCdbTJ9oNXl/arcgis/rest/services/Council_Districts/FeatureServer/0",
+   "fields": {
+    "NAME": "district",
+    "DISTRICTURL": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.01,
+    36.13,
+    -95.95,
+    36.17
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ok-tulsa-floodplains",
+  "state": "OK",
+  "title": "Regulatory floodplains (Tulsa)",
+  "title_es": "Llanuras de inundación reguladas (Tulsa)",
+  "description": "City of Tulsa regulatory floodplain, which Tulsa maps more strictly than FEMA. Building here needs a floodplain permit.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "City of Tulsa GIS (Tulsa open data) Engineering",
+  "view": {
+   "url": "https://services2.arcgis.com/XkZ90iCdbTJ9oNXl/arcgis/rest/services/Floodplains_OpenData/FeatureServer/0",
+   "fields": {
+    "FLD_TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.01,
+    36.13,
+    -95.95,
+    36.17
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "ok-tulsa-zoning",
+  "state": "OK",
+  "title": "Zoning (Tulsa)",
+  "title_es": "Zonificación (Tulsa)",
+  "description": "City of Tulsa zoning districts with the zoning case and ordinance that set them.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Tulsa GIS (Tulsa open data) Planning",
+  "view": {
+   "url": "https://services2.arcgis.com/XkZ90iCdbTJ9oNXl/arcgis/rest/services/TulsaZoning_OpenData/FeatureServer/0",
+   "fields": {
+    "ZONE_TYPE": "zone",
+    "LEGEND": "category",
+    "ZCASE_NUM": "case",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.01,
+    36.13,
+    -95.95,
+    36.17
+   ],
+   "features_in_probe": 499
+  }
+ },
+ {
+  "name": "ok-tulsa-historic-districts",
+  "state": "OK",
+  "title": "Historic preservation districts (Tulsa)",
+  "title_es": "Distritos de preservación histórica (Tulsa)",
+  "description": "Tulsa's HP-zoned historic districts, where exterior changes need Preservation Commission approval.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Tulsa GIS (Tulsa open data) Planning",
+  "view": {
+   "url": "https://services2.arcgis.com/XkZ90iCdbTJ9oNXl/arcgis/rest/services/HPZoning_OpenData/FeatureServer/0",
+   "fields": {
+    "DIST": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.01,
+    36.13,
+    -95.95,
+    36.17
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "ok-tulsa-parks",
+  "state": "OK",
+  "title": "Parks & amenities (Tulsa)",
+  "title_es": "Parques y servicios (Tulsa)",
+  "description": "City of Tulsa parks with hours, acreage and amenities like playgrounds, splash pads, restrooms and accessibility.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Tulsa GIS (Tulsa open data) Parks",
+  "view": {
+   "url": "https://services2.arcgis.com/XkZ90iCdbTJ9oNXl/arcgis/rest/services/Park_and_Recreation_Areas/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "FULLADDR": "address",
+    "OPERHOURS": "hours",
+    "PARKAREA": "acres",
+    "PLAYGROUND": "playground",
+    "SPLASHPAD": "splash_pad",
+    "RESTROOM": "restroom",
+    "ADACOMPLY": "accessible"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.01,
+    36.13,
+    -95.95,
+    36.17
+   ],
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "ok-tulsa-neighborhoods",
+  "state": "OK",
+  "title": "Neighborhood associations (Tulsa)",
+  "title_es": "Asociaciones de vecinos (Tulsa)",
+  "description": "Neighborhood associations and Alert Neighbors groups registered with the City of Tulsa.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Tulsa GIS (Tulsa open data)",
+  "view": {
+   "url": "https://services2.arcgis.com/XkZ90iCdbTJ9oNXl/arcgis/rest/services/Neighborhoods_OpenData/FeatureServer/0",
+   "fields": {
+    "Name_Long": "name",
+    "NeighborhoodType": "kind",
+    "ActiveInactive": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.01,
+    36.13,
+    -95.95,
+    36.17
+   ],
+   "features_in_probe": 40
+  }
+ },
+ {
+  "name": "ok-odot-workplan-roads",
+  "state": "OK",
+  "title": "ODOT 8-year highway work plan 2027-2034 (Oklahoma)",
+  "title_es": "Plan de obras de carreteras de ODOT 2027-2034 (Oklahoma)",
+  "description": "State highway projects ODOT plans to fund in federal years 2027-2034: route, location, work type, year and estimated cost.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Oklahoma Department of Transportation (ODOT GIS)",
+  "view": {
+   "url": "https://services6.arcgis.com/RBtoEUQ2lmN0K3GY/arcgis/rest/services/ODOT_Workplan_Roads_2027to2034/FeatureServer/0",
+   "fields": {
+    "C_HIGHWAY_NO": "highway",
+    "T_JP_DESC": "location",
+    "T_PROJ_WORK_DESC": "work",
+    "PROGRAM_FED_YR": "fiscal_year",
+    "A_TOTAL_AMT_INFL": "est_cost"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.6,
+    35.4,
+    -97.4,
+    35.55
+   ],
+   "features_in_probe": 58
+  }
+ },
+ {
+  "name": "ok-odot-county-road-projects",
+  "state": "OK",
+  "title": "County road & bridge projects FY2027 (Oklahoma)",
+  "title_es": "Proyectos de caminos y puentes del condado 2027 (Oklahoma)",
+  "description": "County Improvements for Roads and Bridges (CIRB) projects in ODOT's FY2027 plan: location, work type, year and cost.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Oklahoma Department of Transportation (ODOT GIS)",
+  "view": {
+   "url": "https://services6.arcgis.com/RBtoEUQ2lmN0K3GY/arcgis/rest/services/CIRB_Projects_FY2027/FeatureServer/1",
+   "fields": {
+    "T_JP_DESC": "location",
+    "T_PROJ_WORK_DESC": "work",
+    "PROGRAM_FED_YR": "fiscal_year",
+    "A_TOTAL_AMT_INFL": "est_cost"
+   },
+   "geometry": "line",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.0,
+    35.0,
+    -97.0,
+    36.0
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "ok-fish-attractors",
+  "state": "OK",
+  "title": "Fish attractors (Oklahoma lakes)",
+  "title_es": "Atrayentes de peces (lagos de Oklahoma)",
+  "description": "Brush piles and artificial structures the Oklahoma Department of Wildlife Conservation has placed in lakes to hold fish, with depth and whether you can reach them from the bank.",
+  "group": "nature",
+  "category": "point",
+  "source": "Oklahoma Department of Wildlife Conservation (ODWC GIS)",
+  "view": {
+   "url": "https://services1.arcgis.com/jRf8jjFwxedITdFe/arcgis/rest/services/FishAttractors_June2_2026/FeatureServer/0",
+   "fields": {
+    "LAKE": "lake",
+    "AREA_NAME": "area",
+    "HAB_TYPE": "kind",
+    "DEPTH_FT": "depth_ft",
+    "BANK_ACC": "bank_access",
+    "MARKED": "marked"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.7,
+    35.3,
+    -95.4,
+    35.5
+   ],
+   "features_in_probe": 75
+  }
+ },
+ {
+  "name": "ok-cwd-surveillance-areas",
+  "state": "OK",
+  "title": "Chronic wasting disease surveillance areas (Oklahoma)",
+  "title_es": "Áreas de vigilancia de la enfermedad debilitante crónica (Oklahoma)",
+  "description": "Areas where ODWC has special deer and elk carcass rules and testing because chronic wasting disease was found nearby.",
+  "group": "nature",
+  "category": "hazard",
+  "source": "Oklahoma Department of Wildlife Conservation (ODWC GIS)",
+  "view": {
+   "url": "https://services1.arcgis.com/jRf8jjFwxedITdFe/arcgis/rest/services/CWD_SSAs_v2/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Notes": "boundaries"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -101.6,
+    36.5,
+    -101.4,
+    36.7
+   ],
+   "features_in_probe": 1
+  }
+ }
+]
