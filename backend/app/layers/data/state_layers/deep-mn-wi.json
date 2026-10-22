@@ -1,0 +1,3646 @@
+[
+ {
+  "name": "mn-school-attendance-areas",
+  "state": "MN",
+  "title": "Public school attendance areas (which school serves you)",
+  "title_es": "Zonas de asistencia escolar (qué escuela le corresponde)",
+  "description": "Minnesota Department of Education attendance areas: for any address, the public elementary, middle and high school assigned by its school district.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Minnesota Department of Education (MDE)",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_mde/bdry_school_attendance_areas/FeatureServer/0",
+   "fields": {
+    "sdprefname": "district",
+    "elem_name": "elementary",
+    "midd_name": "middle",
+    "high_name": "high"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.7,
+    -92.9,
+    45.2
+   ],
+   "features_in_probe": 337
+  }
+ },
+ {
+  "name": "mn-metro-fire-departments",
+  "state": "MN",
+  "title": "Fire department response areas (Twin Cities metro)",
+  "title_es": "Zonas de respuesta de bomberos (área metropolitana)",
+  "description": "Which fire department responds to each part of the Twin Cities region, from the Metropolitan Emergency Services Board's 911 boundaries.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Metropolitan Emergency Services Board (MESB)",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/org_mn_mesb/bdry_fire/FeatureServer/0",
+   "fields": {
+    "fire_gis": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.7,
+    -92.9,
+    45.2
+   ],
+   "features_in_probe": 69
+  }
+ },
+ {
+  "name": "mn-metro-ems-agencies",
+  "state": "MN",
+  "title": "Ambulance (EMS) service areas (Twin Cities metro)",
+  "title_es": "Zonas de servicio de ambulancias (área metropolitana)",
+  "description": "Which ambulance service covers each part of the Twin Cities region, from the Metropolitan Emergency Services Board's 911 boundaries.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Metropolitan Emergency Services Board (MESB)",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/org_mn_mesb/bdry_ems/FeatureServer/0",
+   "fields": {
+    "ems_gis": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.7,
+    -92.9,
+    45.2
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "mn-fishing-piers",
+  "state": "MN",
+  "title": "Fishing piers and shore fishing sites (DNR)",
+  "title_es": "Muelles de pesca y sitios para pescar desde la orilla (DNR)",
+  "description": "Public fishing piers and shore-fishing spots across Minnesota, with the lake, directions and who manages them - no boat needed.",
+  "group": "nature",
+  "category": "point",
+  "source": "Minnesota Department of Natural Resources",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/struc_fishing_sites_in_minnesota/FeatureServer/0",
+   "fields": {
+    "facility_name": "name",
+    "fishing_site_type": "kind",
+    "lake_name": "lake",
+    "directions": "directions",
+    "ada_accessible_flag": "accessible",
+    "managing_party": "managed_by",
+    "county_name": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.7,
+    -92.9,
+    45.2
+   ],
+   "features_in_probe": 100
+  }
+ },
+ {
+  "name": "mn-special-well-construction-areas",
+  "state": "MN",
+  "title": "Special well construction areas (contaminated groundwater)",
+  "title_es": "Áreas especiales de construcción de pozos (agua subterránea contaminada)",
+  "description": "Areas where the Minnesota Department of Health restricts or adds rules for new private wells because the groundwater is contaminated. Check before drilling or drinking well water here.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Minnesota Department of Health",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_health/geos_special_well_const_areas/FeatureServer/1",
+   "fields": {
+    "swc_name": "name",
+    "zone": "zone",
+    "swca_d": "designated",
+    "acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.7,
+    -92.9,
+    45.2
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "mn-wellhead-protection-areas",
+  "state": "MN",
+  "title": "Wellhead protection areas (public drinking water)",
+  "title_es": "Áreas de protección de pozos de agua potable",
+  "description": "Land around public water-supply wells where what happens on the surface can reach the drinking water within about 10 years; spills and new wells get extra care here.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Minnesota Department of Health",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_health/water_wellhead_protection_areas/FeatureServer/0",
+   "fields": {
+    "whp_name": "name",
+    "acres": "acres",
+    "whpa_d": "approved"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.7,
+    -92.9,
+    45.2
+   ],
+   "features_in_probe": 118
+  }
+ },
+ {
+  "name": "mn-watershed-districts",
+  "state": "MN",
+  "title": "Watershed districts and organizations",
+  "title_es": "Distritos de cuencas hidrográficas",
+  "description": "The local watershed district or organization that handles flooding, stormwater permits and lake/stream protection where you live, with its website.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Minnesota Board of Water and Soil Resources (BWSR)",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_bwsr/bdry_watershed_mgmt_dist_orgs/FeatureServer/0",
+   "fields": {
+    "label": "name",
+    "website": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.7,
+    -92.9,
+    45.2
+   ],
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "mn-infested-waters",
+  "state": "MN",
+  "title": "Infested waters (aquatic invasive species)",
+  "title_es": "Aguas infestadas (especies invasoras acuáticas)",
+  "description": "Lakes and rivers the DNR lists as infested with zebra mussels, Eurasian watermilfoil, starry stonewort and other invasives - boaters must clean, drain and dry, and some bait rules change.",
+  "group": "nature",
+  "category": "hazard",
+  "source": "Minnesota Department of Natural Resources",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/env_listed_infested_waters/FeatureServer/0",
+   "fields": {
+    "waterbodydisplayname": "name",
+    "commonname": "species",
+    "counties": "county",
+    "designateddate": "year_listed"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.7,
+    -92.9,
+    45.2
+   ],
+   "features_in_probe": 256
+  }
+ },
+ {
+  "name": "mn-wildfires-this-year",
+  "state": "MN",
+  "title": "Wildfires this year (DNR)",
+  "title_es": "Incendios forestales este año (DNR)",
+  "description": "Wildfires the Minnesota DNR responded to this year: start date, size in acres, cause and status.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Minnesota Department of Natural Resources",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/env_wildfires_tracked_by_mndnr/FeatureServer/0",
+   "fields": {
+    "start_date": "start",
+    "acres_tot": "acres",
+    "cause": "cause",
+    "county": "county",
+    "status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "key_year>=2026"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.0,
+    46.0,
+    -92.0,
+    48.0
+   ],
+   "features_in_probe": 423
+  }
+ },
+ {
+  "name": "mn-walk-in-hunting-areas",
+  "state": "MN",
+  "title": "Walk-In Access hunting land (private land open to hunters)",
+  "title_es": "Tierras de caza de acceso a pie (privadas abiertas al público)",
+  "description": "Private land enrolled in the DNR Walk-In Access program, open to public hunting on foot during the season (a validation is required).",
+  "group": "nature",
+  "category": "park",
+  "source": "Minnesota Department of Natural Resources",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/bdry_dnr_walk_in_access_sites/FeatureServer/0",
+   "fields": {
+    "map_title": "name",
+    "cty_name": "county",
+    "acres": "acres",
+    "uses": "uses"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.5,
+    43.5,
+    -94.0,
+    45.5
+   ],
+   "features_in_probe": 181
+  }
+ },
+ {
+  "name": "mn-snowmobile-trails",
+  "state": "MN",
+  "title": "Snowmobile trails (grant-in-aid)",
+  "title_es": "Senderos para motos de nieve",
+  "description": "Minnesota's public snowmobile trail network kept up by local clubs and counties, with trail name, length and stud restrictions.",
+  "group": "nature",
+  "category": "park",
+  "source": "Minnesota Department of Natural Resources",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/trans_snowmobile_trails_mn/FeatureServer/0",
+   "fields": {
+    "trail_name": "name",
+    "trail_num": "number",
+    "miles": "miles",
+    "owner_type": "owner",
+    "maint_by": "maintained_by",
+    "stud_restr": "studs"
+   },
+   "geometry": "line",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.0,
+    46.0,
+    -92.0,
+    48.0
+   ],
+   "features_in_probe": 95
+  }
+ },
+ {
+  "name": "mn-water-trails",
+  "state": "MN",
+  "title": "State water trails (canoe and kayak routes)",
+  "title_es": "Rutas acuáticas estatales (canoa y kayak)",
+  "description": "Rivers designated as Minnesota State Water Trails, with mapped put-ins, campsites and rest areas for paddlers.",
+  "group": "nature",
+  "category": "park",
+  "source": "Minnesota Department of Natural Resources",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/trans_water_trails_minnesota/FeatureServer/0",
+   "fields": {
+    "trail_name": "name",
+    "lengthmile": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -94.5,
+    44.5,
+    -92.5,
+    46.5
+   ],
+   "features_in_probe": 42
+  }
+ },
+ {
+  "name": "mn-state-forest-campgrounds",
+  "state": "MN",
+  "title": "State forest campgrounds and day-use areas",
+  "title_es": "Campamentos y áreas de uso diurno en bosques estatales",
+  "description": "Campgrounds and day-use areas in Minnesota state forests, usually rustic and first-come, first-served.",
+  "group": "nature",
+  "category": "point",
+  "source": "Minnesota Department of Natural Resources",
+  "view": {
+   "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_dnr/struc_state_forest_campgrounds/FeatureServer/1",
+   "fields": {
+    "facility_name": "name",
+    "site_type": "kind",
+    "state_forest": "forest"
+   },
+   "geometry": "point",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.0,
+    46.0,
+    -92.0,
+    48.0
+   ],
+   "features_in_probe": 31
+  }
+ },
+ {
+  "name": "mn-mndot-road-projects",
+  "state": "MN",
+  "title": "MnDOT highway projects (2026-2027)",
+  "title_es": "Proyectos en carreteras de MnDOT (2026-2027)",
+  "description": "State highway projects MnDOT has programmed for this year and next: what will be rebuilt or resurfaced, where, and estimated cost.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Minnesota Department of Transportation (10-year Capital Highway Investment Plan / STIP)",
+  "view": {
+   "url": "https://services.arcgis.com/qWbGMYB49y8mLbRt/arcgis/rest/services/2025_2034_10_Year_Capital_Highway_Investment_Plan_WFL1/FeatureServer/68",
+   "fields": {
+    "New_Descriptions": "description",
+    "Route": "route",
+    "County": "county",
+    "Year": "year",
+    "Estimated_Project_Cost": "cost",
+    "Project_Selection_Category": "category",
+    "SP": "project"
+   },
+   "geometry": "line",
+   "min_zoom": 6,
+   "where": "Year>=2026 AND Year<=2027"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -94.5,
+    44.5,
+    -92.5,
+    46.5
+   ],
+   "features_in_probe": 124
+  }
+ },
+ {
+  "name": "mn-mndot-bridge-projects",
+  "state": "MN",
+  "title": "MnDOT bridge projects (2026-2027)",
+  "title_es": "Proyectos de puentes de MnDOT (2026-2027)",
+  "description": "State highway bridges MnDOT plans to repair or replace this year and next, with the route, bridge number and estimated cost.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Minnesota Department of Transportation (10-year Capital Highway Investment Plan / STIP)",
+  "view": {
+   "url": "https://services.arcgis.com/qWbGMYB49y8mLbRt/arcgis/rest/services/2025_2034_10_Year_Capital_Highway_Investment_Plan_WFL1/FeatureServer/56",
+   "fields": {
+    "New_Description": "description",
+    "Route": "route",
+    "County": "county",
+    "Year": "year",
+    "Bridge_Number": "bridge",
+    "Estimated_Project_Cost": "cost",
+    "SP": "project"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "Year>=2026 AND Year<=2027"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -94.5,
+    44.5,
+    -92.5,
+    46.5
+   ],
+   "features_in_probe": 64
+  }
+ },
+ {
+  "name": "mn-metro-regional-parks",
+  "state": "MN",
+  "title": "Regional parks (Twin Cities metro)",
+  "title_es": "Parques regionales (área metropolitana)",
+  "description": "Regional parks, park reserves and special recreation features open to the public across the seven-county metro, with the agency that runs each.",
+  "group": "nature",
+  "category": "park",
+  "source": "Metropolitan Council",
+  "view": {
+   "url": "https://arcgis.metc.state.mn.us/data1/rest/services/planning/Regional_Parks_Trails/FeatureServer/0",
+   "fields": {
+    "UnitName": "name",
+    "Category": "kind",
+    "AgencyManager": "managed_by",
+    "AcresCalculated": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "OpenPublic='Yes'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.7,
+    -92.9,
+    45.2
+   ],
+   "features_in_probe": 654
+  }
+ },
+ {
+  "name": "mn-metro-regional-trails",
+  "state": "MN",
+  "title": "Regional trails (Twin Cities metro)",
+  "title_es": "Senderos regionales (área metropolitana)",
+  "description": "The regional trail network for walking and biking across the seven-county metro, with the agency that maintains each trail.",
+  "group": "nature",
+  "category": "park",
+  "source": "Metropolitan Council",
+  "view": {
+   "url": "https://arcgis.metc.state.mn.us/data1/rest/services/planning/Regional_Parks_Trails/FeatureServer/4",
+   "fields": {
+    "TrailName": "name",
+    "AgencyManager": "managed_by",
+    "MilesCalculated": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "OpenPublic='Yes'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.7,
+    -92.9,
+    45.2
+   ],
+   "features_in_probe": 359
+  }
+ },
+ {
+  "name": "mn-metro-planned-land-use",
+  "state": "MN",
+  "title": "Planned land use (city comprehensive plans, metro)",
+  "title_es": "Uso de suelo planificado (planes de las ciudades, área metropolitana)",
+  "description": "What each metro city's 2040 comprehensive plan says land should become - housing densities, commercial, industrial, parks - compiled by the Metropolitan Council.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Metropolitan Council (compiled from local comprehensive plans)",
+  "view": {
+   "url": "https://arcgis.metc.state.mn.us/data1/rest/services/planning/PLU/FeatureServer/0",
+   "fields": {
+    "PLUSE_DESC": "land_use",
+    "METC_DESC": "regional_category",
+    "HSGDEN_RNG": "housing_density",
+    "CTU_NAME": "city",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.27,
+    44.94,
+    -93.25,
+    44.95
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "mn-metro-manufactured-home-parks",
+  "state": "MN",
+  "title": "Manufactured home parks (metro, with lot rent)",
+  "title_es": "Parques de casas prefabricadas (área metropolitana, con renta del lote)",
+  "description": "Manufactured (mobile) home communities in the seven-county metro: number of homes, estimated residents and monthly lot rent where reported (2025 survey).",
+  "group": "housing",
+  "category": "point",
+  "source": "Metropolitan Council",
+  "view": {
+   "url": "https://arcgis.metc.state.mn.us/data1/rest/services/structure/Other_Structure_Public/FeatureServer/2",
+   "fields": {
+    "PARK_NAME": "name",
+    "ADDRESS": "address",
+    "CTU_NAME": "city",
+    "PAD_SPACES": "lots",
+    "MANUFACTURED_UNITS": "homes",
+    "POPULATION_ESTIMATES": "residents",
+    "MONTHLY_PAD_RENT_LOW": "lot_rent_low",
+    "MONTHLY_PAD_RENT_HIGH": "lot_rent_high"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "YEAR='2025' AND PARK_STATUS='OPEN'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.7,
+    -92.9,
+    45.2
+   ],
+   "features_in_probe": 61
+  }
+ },
+ {
+  "name": "mn-metro-localized-flooding",
+  "state": "MN",
+  "title": "Localized flood risk from heavy rain (metro)",
+  "title_es": "Riesgo de inundación local por lluvias fuertes (área metropolitana)",
+  "description": "Low spots (\"bluespots\") where water would pond during a big rainstorm, and how deep, from the Met Council's climate vulnerability screening. Shows street-level flash flood risk that FEMA maps miss.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Metropolitan Council (Localized Flood Map for Climate Vulnerability)",
+  "view": {
+   "url": "https://arcgis.metc.state.mn.us/data1/rest/services/environment/Flood_Hazards/FeatureServer/2",
+   "fields": {
+    "Flood_zone": "zone",
+    "Max_depth": "max_depth_ft"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.27,
+    44.94,
+    -93.25,
+    44.95
+   ],
+   "features_in_probe": 412
+  }
+ },
+ {
+  "name": "mn-hennepin-food-resources",
+  "state": "MN",
+  "title": "Free food: food shelves, meals and boxes (Hennepin County)",
+  "title_es": "Comida gratis: despensas, comidas y cajas (condado de Hennepin)",
+  "description": "Food shelves, free meals and free food box sites in Hennepin County, with daily hours, who can come and how to sign up.",
+  "group": "help",
+  "category": "point",
+  "source": "Hennepin County",
+  "view": {
+   "url": "https://gis.hennepin.us/arcgis/rest/services/HennepinData/HEALTH/MapServer/3",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "PHONE": "phone",
+    "WEBSITE": "website",
+    "HOURS": "hours",
+    "MON_HOURS": "mon",
+    "TUE_HOURS": "tue",
+    "WED_HOURS": "wed",
+    "THU_HOURS": "thu",
+    "FRI_HOURS": "fri",
+    "SAT_HOURS": "sat",
+    "SUN_HOURS": "sun",
+    "RESTRICTION": "who_can_come",
+    "DESCRIPTION": "details"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.85,
+    -93.2,
+    45.15
+   ],
+   "features_in_probe": 111
+  }
+ },
+ {
+  "name": "mn-hennepin-road-projects",
+  "state": "MN",
+  "title": "Hennepin County road projects",
+  "title_es": "Proyectos viales del condado de Hennepin",
+  "description": "County road and transit projects in Hennepin County from planning through construction: what is being done, status and construction dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Hennepin County Transportation",
+  "view": {
+   "url": "https://gis.hennepin.us/arcgis/rest/services/Maps/TRANSPORTATION_PROJECTS/MapServer/1",
+   "fields": {
+    "Local_Name": "name",
+    "Roadway": "road",
+    "Location": "location",
+    "Description": "description",
+    "Proj_ChildCat": "kind",
+    "PD_Status": "status",
+    "Start_CRN_Dt": "start",
+    "End_CRN_Dt": "end",
+    "Website": "website"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.6,
+    44.85,
+    -93.2,
+    45.15
+   ],
+   "features_in_probe": 136
+  }
+ },
+ {
+  "name": "mn-minneapolis-wards",
+  "state": "MN",
+  "title": "Minneapolis city council wards",
+  "title_es": "Distritos del concejo municipal de Minneapolis",
+  "description": "Which of Minneapolis's 13 city council wards you live in (2022 boundaries), with a link to the council member's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Minneapolis",
+  "view": {
+   "url": "https://services.arcgis.com/afSMGVsC7QlRK1kZ/arcgis/rest/services/msvcWards_2022/FeatureServer/0",
+   "fields": {
+    "WardLabel": "name",
+    "CM_HomePage": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.3,
+    44.94,
+    -93.22,
+    45.0
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "mn-minneapolis-zoning",
+  "state": "MN",
+  "title": "Minneapolis zoning districts",
+  "title_es": "Zonificación de Minneapolis",
+  "description": "The City of Minneapolis primary zoning district for every block - what kinds of buildings and uses are allowed.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Minneapolis Community Planning & Economic Development",
+  "view": {
+   "url": "https://services.arcgis.com/afSMGVsC7QlRK1kZ/arcgis/rest/services/Planning_Primary_Zoning/FeatureServer/0",
+   "fields": {
+    "Land_Use": "district",
+    "Land_Use_Code": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.3,
+    44.94,
+    -93.22,
+    45.0
+   ],
+   "features_in_probe": 485
+  }
+ },
+ {
+  "name": "mn-minneapolis-future-land-use",
+  "state": "MN",
+  "title": "Minneapolis 2040 future land use and built form",
+  "title_es": "Uso de suelo futuro y forma urbana de Minneapolis 2040",
+  "description": "The Minneapolis 2040 plan's guidance for each parcel: the future land use and the allowed building scale (built form).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Minneapolis (Minneapolis 2040 Comprehensive Plan)",
+  "view": {
+   "url": "https://services.arcgis.com/afSMGVsC7QlRK1kZ/arcgis/rest/services/Future_Land_Use_and_Built_Form_2040/FeatureServer/0",
+   "fields": {
+    "Land_Use": "land_use",
+    "Built_Form": "built_form",
+    "PID": "parcel",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.29,
+    44.95,
+    -93.27,
+    44.96
+   ],
+   "features_in_probe": 1412
+  }
+ },
+ {
+  "name": "mn-minneapolis-polling-places",
+  "state": "MN",
+  "title": "Minneapolis polling places",
+  "title_es": "Lugares de votación de Minneapolis",
+  "description": "Where to vote on Election Day in Minneapolis, by ward and precinct.",
+  "group": "civic",
+  "category": "point",
+  "source": "City of Minneapolis Elections & Voter Services",
+  "view": {
+   "url": "https://services.arcgis.com/afSMGVsC7QlRK1kZ/arcgis/rest/services/MPLS_POLLING_LOCATIONS_view/FeatureServer/0",
+   "fields": {
+    "BldgName": "name",
+    "Address": "address",
+    "WARD_PREC": "precinct",
+    "Description": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.3,
+    44.94,
+    -93.22,
+    45.0
+   ],
+   "features_in_probe": 59
+  }
+ },
+ {
+  "name": "mn-minneapolis-food-shelves",
+  "state": "MN",
+  "title": "Minneapolis food shelves",
+  "title_es": "Despensas de alimentos de Minneapolis",
+  "description": "Active food shelves in Minneapolis with days and hours, phone, website and what to bring.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Minneapolis",
+  "view": {
+   "url": "https://services.arcgis.com/afSMGVsC7QlRK1kZ/arcgis/rest/services/Minneapolis_Food_Shelves_Map_Data_view/FeatureServer/0",
+   "fields": {
+    "Food_Shelf_Name": "name",
+    "Address": "address",
+    "Days___Hours": "hours",
+    "Phone_Number": "phone",
+    "Website": "website",
+    "Eligibility_Criteria": "who_can_come"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.3,
+    44.94,
+    -93.22,
+    45.0
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "mn-minneapolis-organics-dropoff",
+  "state": "MN",
+  "title": "Minneapolis organics (compost) drop-off sites",
+  "title_es": "Sitios para dejar residuos orgánicos (compost) en Minneapolis",
+  "description": "Free drop-off carts in Minneapolis parks for food scraps and other compostable organics.",
+  "group": "infra",
+  "category": "point",
+  "source": "City of Minneapolis Solid Waste & Recycling",
+  "view": {
+   "url": "https://services.arcgis.com/afSMGVsC7QlRK1kZ/arcgis/rest/services/Organics_Recycling_Drop_Off_Locations_Map/FeatureServer/0",
+   "fields": {
+    "PARK_NAME": "name",
+    "ADDRESS": "address",
+    "NOTES": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.3,
+    44.94,
+    -93.22,
+    45.0
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "mn-minneapolis-neighborhoods",
+  "state": "MN",
+  "title": "Minneapolis neighborhoods",
+  "title_es": "Vecindarios de Minneapolis",
+  "description": "The 83 official Minneapolis neighborhoods.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Minneapolis",
+  "view": {
+   "url": "https://services.arcgis.com/afSMGVsC7QlRK1kZ/arcgis/rest/services/Minneapolis_Neighborhoods/FeatureServer/0",
+   "fields": {
+    "BDNAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.3,
+    44.94,
+    -93.22,
+    45.0
+   ],
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "mn-minneapolis-street-reconstruction",
+  "state": "MN",
+  "title": "Minneapolis street reconstruction projects",
+  "title_es": "Reconstrucción de calles en Minneapolis",
+  "description": "Streets the City of Minneapolis is fully rebuilding, with the project years and a link to the project page.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Minneapolis Public Works (construction map)",
+  "view": {
+   "url": "https://services.arcgis.com/afSMGVsC7QlRK1kZ/arcgis/rest/services/2026_Mpls_Construction_Map/FeatureServer/13",
+   "fields": {
+    "PROJECT_DESCRIPTION": "name",
+    "PROJECT_START_YEAR": "start_year",
+    "PROJECT_END_YEAR": "end_year",
+    "WEBPAGE": "website"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.3,
+    44.94,
+    -93.22,
+    45.0
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "mn-minneapolis-street-resurfacing",
+  "state": "MN",
+  "title": "Minneapolis street resurfacing (this year)",
+  "title_es": "Repavimentación de calles en Minneapolis (este año)",
+  "description": "Streets being resurfaced this year by the City of Minneapolis - expect parking restrictions and lane closures.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Minneapolis Public Works (construction map)",
+  "view": {
+   "url": "https://services.arcgis.com/afSMGVsC7QlRK1kZ/arcgis/rest/services/2026_Mpls_Construction_Map/FeatureServer/14",
+   "fields": {
+    "PROJECT_DESCRIPTION": "name",
+    "PROJECT_TYPE": "kind",
+    "PROJECT_START_YEAR": "start_year",
+    "PROJECT_END_YEAR": "end_year",
+    "WEBPAGE": "website"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.3,
+    44.94,
+    -93.22,
+    45.0
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "mn-minneapolis-water-main-work",
+  "state": "MN",
+  "title": "Minneapolis water main rehabilitation",
+  "title_es": "Rehabilitación de tuberías de agua en Minneapolis",
+  "description": "Water mains the City of Minneapolis is relining or replacing; nearby homes may get short water shutoffs.",
+  "group": "infra",
+  "category": "roadops",
+  "source": "City of Minneapolis Public Works (construction map)",
+  "view": {
+   "url": "https://services.arcgis.com/afSMGVsC7QlRK1kZ/arcgis/rest/services/2026_Mpls_Construction_Map/FeatureServer/17",
+   "fields": {
+    "PROJECT_DESCRIPTION": "name",
+    "PROJECT_START_YEAR": "start_year",
+    "PROJECT_END_YEAR": "end_year",
+    "WEBPAGE": "website"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.3,
+    44.94,
+    -93.22,
+    45.0
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "mn-stpaul-wards",
+  "state": "MN",
+  "title": "Saint Paul city council wards",
+  "title_es": "Distritos del concejo municipal de Saint Paul",
+  "description": "Which of Saint Paul's seven city council wards you live in (2022 boundaries).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Saint Paul",
+  "view": {
+   "url": "https://services1.arcgis.com/9meaaHE3uiba0zr8/arcgis/rest/services/Council_Wards_2022/FeatureServer/0",
+   "fields": {
+    "Ward": "name",
+    "DISTRICT": "ward"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.2,
+    44.91,
+    -93.02,
+    44.99
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "mn-stpaul-district-councils",
+  "state": "MN",
+  "title": "Saint Paul district councils",
+  "title_es": "Consejos de distrito de Saint Paul",
+  "description": "Saint Paul's 17 district councils - the neighborhood groups that weigh in on zoning, development and city services - with office address, phone and website.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Saint Paul",
+  "view": {
+   "url": "https://services1.arcgis.com/9meaaHE3uiba0zr8/arcgis/rest/services/District_Councils/FeatureServer/0",
+   "fields": {
+    "planningdistrictname": "name",
+    "councilname": "council",
+    "address": "address",
+    "phone": "phone",
+    "website": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.2,
+    44.91,
+    -93.02,
+    44.99
+   ],
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "mn-stpaul-zoning",
+  "state": "MN",
+  "title": "Saint Paul zoning districts",
+  "title_es": "Zonificación de Saint Paul",
+  "description": "City of Saint Paul principal zoning district for every area - what kinds of buildings and uses are allowed.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Saint Paul Planning & Economic Development",
+  "view": {
+   "url": "https://services1.arcgis.com/9meaaHE3uiba0zr8/arcgis/rest/services/Zoning/FeatureServer/6",
+   "fields": {
+    "Zoning": "code",
+    "Zoning_Name": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.2,
+    44.91,
+    -93.02,
+    44.99
+   ],
+   "features_in_probe": 1026
+  }
+ },
+ {
+  "name": "mn-stpaul-future-land-use",
+  "state": "MN",
+  "title": "Saint Paul 2040 future land use",
+  "title_es": "Uso de suelo futuro de Saint Paul 2040",
+  "description": "The Saint Paul 2040 Comprehensive Plan's future land use categories.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Saint Paul (2040 Comprehensive Plan)",
+  "view": {
+   "url": "https://services1.arcgis.com/9meaaHE3uiba0zr8/arcgis/rest/services/Future_Land_Use_-_2040_Comprehensive_Plan/FeatureServer/3",
+   "fields": {
+    "Land_Use": "land_use"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.2,
+    44.91,
+    -93.02,
+    44.99
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "mn-stpaul-historic-districts",
+  "state": "MN",
+  "title": "Saint Paul heritage preservation districts",
+  "title_es": "Distritos históricos de Saint Paul",
+  "description": "Locally designated historic districts in Saint Paul, where exterior changes need heritage preservation review.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Saint Paul Heritage Preservation Commission",
+  "view": {
+   "url": "https://services1.arcgis.com/9meaaHE3uiba0zr8/arcgis/rest/services/Historic_Districts_-_Local/FeatureServer/8",
+   "fields": {
+    "Name": "name",
+    "Historic_Listing": "listing",
+    "Year_added_to_Local_Heritage_Pr": "year_local",
+    "Year_added_to_National_Register": "year_national"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.2,
+    44.91,
+    -93.02,
+    44.99
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "mn-stpaul-garbage-day",
+  "state": "MN",
+  "title": "Saint Paul garbage collection day",
+  "title_es": "Día de recolección de basura en Saint Paul",
+  "description": "Your garbage pickup day under Saint Paul's citywide collection, with the customer service number and website.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Saint Paul Public Works",
+  "view": {
+   "url": "https://services1.arcgis.com/9meaaHE3uiba0zr8/arcgis/rest/services/GarbageCollection/FeatureServer/0",
+   "fields": {
+    "HAUL_DAY": "day",
+    "HAULER": "hauler",
+    "HaulerCustomerServicePhone": "phone",
+    "HaulerWebsite": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.2,
+    44.91,
+    -93.02,
+    44.99
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "mn-stpaul-street-sweeping",
+  "state": "MN",
+  "title": "Saint Paul street sweeping schedule",
+  "title_es": "Calendario de barrido de calles en Saint Paul",
+  "description": "Each Saint Paul street block's sweeping route and scheduled date - move your car to avoid a ticket and tow.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Saint Paul Public Works",
+  "view": {
+   "url": "https://services1.arcgis.com/9meaaHE3uiba0zr8/arcgis/rest/services/Street_Sweeping/FeatureServer/0",
+   "fields": {
+    "STREETALL": "street",
+    "F_XSTREET": "from",
+    "T_XSTREET": "to",
+    "SweepDate": "sweep_date",
+    "SweepOperation": "kind",
+    "DAY_RTE": "route",
+    "STATUS": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 16,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.14,
+    44.94,
+    -93.12,
+    44.95
+   ],
+   "features_in_probe": 205
+  }
+ },
+ {
+  "name": "mn-stpaul-construction",
+  "state": "MN",
+  "title": "Saint Paul construction projects",
+  "title_es": "Proyectos de construcción en Saint Paul",
+  "description": "City of Saint Paul street, bridge, bike and utility projects in planning, design or construction, with years and location.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Saint Paul Public Works",
+  "view": {
+   "url": "https://services1.arcgis.com/9meaaHE3uiba0zr8/arcgis/rest/services/Construction_Project_Lines_View/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Location": "location",
+    "ProjType": "kind",
+    "Phase": "phase",
+    "Department": "department",
+    "StartYear": "start_year",
+    "EndYear": "end_year"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "Status <> 'Archived' AND Phase <> 'Completed'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.2,
+    44.91,
+    -93.02,
+    44.99
+   ],
+   "features_in_probe": 38
+  }
+ },
+ {
+  "name": "mn-stpaul-rec-centers",
+  "state": "MN",
+  "title": "Saint Paul recreation centers and partner sites",
+  "title_es": "Centros recreativos de Saint Paul",
+  "description": "Saint Paul Parks & Recreation centers and partner sites: hours, programs, after-school child care and kitchens.",
+  "group": "places",
+  "category": "point",
+  "source": "City of Saint Paul Parks & Recreation",
+  "view": {
+   "url": "https://services1.arcgis.com/9meaaHE3uiba0zr8/arcgis/rest/services/Recreation_Centers_and_Service_Partners_(_Public_View)/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "phonenumber": "phone",
+    "hours": "hours",
+    "description": "description",
+    "programdescription": "programs",
+    "afterschool_childcare": "after_school",
+    "website": "website"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.2,
+    44.91,
+    -93.02,
+    44.99
+   ],
+   "features_in_probe": 36
+  }
+ },
+ {
+  "name": "mn-stpaul-parks",
+  "state": "MN",
+  "title": "Saint Paul city parks",
+  "title_es": "Parques de la ciudad de Saint Paul",
+  "description": "Saint Paul city parks with acreage and what each has: playgrounds, splash pads, beaches, rinks, warming houses, restrooms and more.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Saint Paul Parks & Recreation",
+  "view": {
+   "url": "https://services1.arcgis.com/9meaaHE3uiba0zr8/arcgis/rest/services/CityParks/FeatureServer/0",
+   "fields": {
+    "park_name": "name",
+    "address": "address",
+    "acre": "acres",
+    "playground": "playground",
+    "splashpad": "splash_pad",
+    "swimmingbeach": "beach",
+    "restroom": "restroom",
+    "warmingfacility": "warming_house",
+    "skatingrink": "skating",
+    "sleddinghill": "sledding",
+    "dogpark": "dog_park",
+    "fishingpier": "fishing_pier",
+    "picnicarea": "picnic",
+    "website": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.2,
+    44.91,
+    -93.02,
+    44.99
+   ],
+   "features_in_probe": 185
+  }
+ },
+ {
+  "name": "mn-ramsey-warning-sirens",
+  "state": "MN",
+  "title": "Outdoor warning sirens (Ramsey County)",
+  "title_es": "Sirenas de alerta al aire libre (condado de Ramsey)",
+  "description": "Outdoor tornado and emergency warning sirens in Ramsey County. Sirens are for people outdoors - indoors, use a weather radio or phone alerts.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Ramsey County Emergency Management",
+  "view": {
+   "url": "https://gis.ramseycountymn.gov/server/rest/services/PublicSafety_ViewOnly/FeatureServer/11",
+   "fields": {
+    "ClosestIntersection": "location",
+    "ReverseGeocodeAddress": "address",
+    "SiteCity": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.23,
+    44.89,
+    -92.98,
+    45.13
+   ],
+   "features_in_probe": 92
+  }
+ },
+ {
+  "name": "mn-ramsey-commissioner-districts",
+  "state": "MN",
+  "title": "Ramsey County commissioner districts",
+  "title_es": "Distritos de comisionados del condado de Ramsey",
+  "description": "Which of the seven Ramsey County Board districts you live in (2022 boundaries).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Ramsey County",
+  "view": {
+   "url": "https://gis.ramseycountymn.gov/server/rest/services/Boundary/BOUND_CommissionerDistrict2022_ViewOnly/FeatureServer/25",
+   "fields": {
+    "District": "district",
+    "Population": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.23,
+    44.89,
+    -92.98,
+    45.13
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "mn-ramsey-beaches",
+  "state": "MN",
+  "title": "Swimming beaches (Ramsey County)",
+  "title_es": "Playas para nadar (condado de Ramsey)",
+  "description": "Public swimming beaches in Ramsey County parks: lifeguards, fees, restrooms and status.",
+  "group": "nature",
+  "category": "point",
+  "source": "Ramsey County Parks & Recreation",
+  "view": {
+   "url": "https://gis.ramseycountymn.gov/server/rest/services/Hosted/SOC_Beach_ViewOnly/FeatureServer/0",
+   "fields": {
+    "featurename": "name",
+    "locationname": "park",
+    "owneragency": "managed_by",
+    "status": "status",
+    "lifeguards": "lifeguards",
+    "fee": "fee",
+    "restrooms": "restrooms",
+    "parking": "parking"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.23,
+    44.89,
+    -92.98,
+    45.13
+   ],
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "mn-ramsey-boat-launches",
+  "state": "MN",
+  "title": "Boat launches (Ramsey County)",
+  "title_es": "Rampas para botes (condado de Ramsey)",
+  "description": "Public boat launches in Ramsey County with fees, trailer parking and restrooms.",
+  "group": "nature",
+  "category": "point",
+  "source": "Ramsey County Parks & Recreation",
+  "view": {
+   "url": "https://gis.ramseycountymn.gov/server/rest/services/Hosted/SOC_BoatLaunch_ViewOnly/FeatureServer/0",
+   "fields": {
+    "featurename": "name",
+    "locationname": "park",
+    "owneragency": "managed_by",
+    "status": "status",
+    "fee": "fee",
+    "trailerparkingspaces": "trailer_spaces",
+    "restrooms": "restrooms"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.23,
+    44.89,
+    -92.98,
+    45.13
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "mn-ramsey-fishing-piers",
+  "state": "MN",
+  "title": "Fishing piers (Ramsey County)",
+  "title_es": "Muelles de pesca (condado de Ramsey)",
+  "description": "Public fishing piers and platforms in Ramsey County parks.",
+  "group": "nature",
+  "category": "point",
+  "source": "Ramsey County Parks & Recreation",
+  "view": {
+   "url": "https://gis.ramseycountymn.gov/server/rest/services/Hosted/SOC_FishingPier_ViewOnly/FeatureServer/0",
+   "fields": {
+    "featurename": "name",
+    "locationname": "park",
+    "owneragency": "managed_by",
+    "type": "kind",
+    "description": "description",
+    "status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.23,
+    44.89,
+    -92.98,
+    45.13
+   ],
+   "features_in_probe": 40
+  }
+ },
+ {
+  "name": "mn-ramsey-sledding-hills",
+  "state": "MN",
+  "title": "Sledding hills (Ramsey County)",
+  "title_es": "Colinas para deslizarse en trineo (condado de Ramsey)",
+  "description": "Public sledding hills in Ramsey County, with lighting, warming houses and restrooms.",
+  "group": "nature",
+  "category": "point",
+  "source": "Ramsey County Parks & Recreation",
+  "view": {
+   "url": "https://gis.ramseycountymn.gov/server/rest/services/Hosted/SOC_SleddingHill_ViewOnly/FeatureServer/0",
+   "fields": {
+    "locationname": "park",
+    "featurename": "name",
+    "owneragency": "managed_by",
+    "lights": "lights",
+    "warminghouse": "warming_house",
+    "restrooms": "restrooms",
+    "status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.23,
+    44.89,
+    -92.98,
+    45.13
+   ],
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "mn-dakota-polling-places",
+  "state": "MN",
+  "title": "Polling places (Dakota County)",
+  "title_es": "Lugares de votación (condado de Dakota)",
+  "description": "Election Day polling places in Dakota County by city and precinct, with directions.",
+  "group": "civic",
+  "category": "point",
+  "source": "Dakota County Elections",
+  "view": {
+   "url": "https://gis2.co.dakota.mn.us/arcgis/rest/services/DCGIS_OL_PoliticalAdministrative/MapServer/1",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "LABEL": "precinct",
+    "DIR": "directions"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.33,
+    44.55,
+    -92.8,
+    44.9
+   ],
+   "features_in_probe": 130
+  }
+ },
+ {
+  "name": "mn-dakota-commissioner-districts",
+  "state": "MN",
+  "title": "Dakota County commissioner districts",
+  "title_es": "Distritos de comisionados del condado de Dakota",
+  "description": "Which of the seven Dakota County Board districts you live in (2022 boundaries).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Dakota County",
+  "view": {
+   "url": "https://gis2.co.dakota.mn.us/arcgis/rest/services/DCGIS_OL_PoliticalAdministrative/MapServer/8",
+   "fields": {
+    "DIST_NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.33,
+    44.55,
+    -92.8,
+    44.9
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "mn-dakota-parks",
+  "state": "MN",
+  "title": "Parks (Dakota County, city and county)",
+  "title_es": "Parques (condado de Dakota, municipales y del condado)",
+  "description": "City and county parks across Dakota County with the kind of park.",
+  "group": "nature",
+  "category": "park",
+  "source": "Dakota County",
+  "view": {
+   "url": "https://gis2.co.dakota.mn.us/arcgis/rest/services/DCGIS_OL_ParksRecreation/MapServer/12",
+   "fields": {
+    "PARKNAME": "name",
+    "FUNC_TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.33,
+    44.55,
+    -92.8,
+    44.9
+   ],
+   "features_in_probe": 519
+  }
+ },
+ {
+  "name": "mn-dakota-road-construction",
+  "state": "MN",
+  "title": "Dakota County road construction (2026)",
+  "title_es": "Obras viales del condado de Dakota (2026)",
+  "description": "County highway and bridge construction projects scheduled for 2026 in Dakota County's capital plan.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Dakota County Transportation (Capital Improvement Program)",
+  "view": {
+   "url": "https://gis2.co.dakota.mn.us/arcgis/rest/services/DCGIS_OL_Transportation/MapServer/58",
+   "fields": {
+    "ROADNAME": "road",
+    "PROJECTWORK": "description",
+    "PROJECTTYPE": "kind",
+    "PROJECTTYPEDETAIL": "detail",
+    "PROJECT": "project"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.33,
+    44.55,
+    -92.8,
+    44.9
+   ],
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "mn-dakota-pavement-preservation",
+  "state": "MN",
+  "title": "Dakota County resurfacing (2026)",
+  "title_es": "Repavimentación del condado de Dakota (2026)",
+  "description": "County roads scheduled for resurfacing or pavement repair in 2026.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Dakota County Transportation (Capital Improvement Program)",
+  "view": {
+   "url": "https://gis2.co.dakota.mn.us/arcgis/rest/services/DCGIS_OL_Transportation/MapServer/63",
+   "fields": {
+    "RoadNo": "road",
+    "STREET_NAM": "street",
+    "TerminiFrom": "from",
+    "TerminiTo": "to",
+    "ProgramYear": "program"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.33,
+    44.55,
+    -92.8,
+    44.9
+   ],
+   "features_in_probe": 71
+  }
+ },
+ {
+  "name": "mn-washington-polling-places",
+  "state": "MN",
+  "title": "Polling places (Washington County, MN)",
+  "title_es": "Lugares de votación (condado de Washington, MN)",
+  "description": "Election Day polling places in Washington County, Minnesota, and the precincts each serves.",
+  "group": "civic",
+  "category": "point",
+  "source": "Washington County, Minnesota",
+  "view": {
+   "url": "https://maps.co.washington.mn.us/arcgis/rest/services/GISViewer/Elections/MapServer/0",
+   "fields": {
+    "POLL_PLACE": "name",
+    "POLL_ADD": "address",
+    "CITY": "city",
+    "PRECINCT": "precinct"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.02,
+    44.8,
+    -92.74,
+    45.2
+   ],
+   "features_in_probe": 70
+  }
+ },
+ {
+  "name": "mn-washington-parks",
+  "state": "MN",
+  "title": "Parks (Washington County, MN)",
+  "title_es": "Parques (condado de Washington, MN)",
+  "description": "City, county and state parks in Washington County, Minnesota.",
+  "group": "nature",
+  "category": "park",
+  "source": "Washington County, Minnesota",
+  "view": {
+   "url": "https://maps.co.washington.mn.us/arcgis/rest/services/GISViewer/ParksRec/MapServer/1",
+   "fields": {
+    "NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.02,
+    44.8,
+    -92.74,
+    45.2
+   ],
+   "features_in_probe": 326
+  }
+ },
+ {
+  "name": "mn-olmsted-polling-places",
+  "state": "MN",
+  "title": "Polling places (Olmsted County / Rochester)",
+  "title_es": "Lugares de votación (condado de Olmsted / Rochester)",
+  "description": "Election Day polling places in Olmsted County, including Rochester, by precinct.",
+  "group": "civic",
+  "category": "point",
+  "source": "Olmsted County",
+  "view": {
+   "url": "https://public.gis.olmstedcounty.gov/arcgis/rest/services/AGOL_Open_Data/Olmsted_Elections/FeatureServer/1",
+   "fields": {
+    "POLL_PLACE": "name",
+    "CONDADDR1": "address",
+    "PCTNAME": "precinct",
+    "COMMUNITY": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -92.6,
+    43.95,
+    -92.35,
+    44.1
+   ],
+   "features_in_probe": 83
+  }
+ },
+ {
+  "name": "mn-rochester-wards-precincts",
+  "state": "MN",
+  "title": "Rochester wards and precincts (Olmsted County)",
+  "title_es": "Distritos y precintos electorales de Rochester (condado de Olmsted)",
+  "description": "City council wards and voting precincts in Olmsted County, including Rochester.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Olmsted County",
+  "view": {
+   "url": "https://public.gis.olmstedcounty.gov/arcgis/rest/services/AGOL_Open_Data/Olmsted_Elections/FeatureServer/2",
+   "fields": {
+    "PCTNAME": "name",
+    "WARD": "ward",
+    "PRECINCT": "precinct",
+    "url": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -92.6,
+    43.95,
+    -92.35,
+    44.1
+   ],
+   "features_in_probe": 90
+  }
+ },
+ {
+  "name": "mn-rochester-neighborhoods",
+  "state": "MN",
+  "title": "Rochester neighborhood associations",
+  "title_es": "Asociaciones de vecinos de Rochester",
+  "description": "Neighborhood association areas in Rochester and whether each is registered with the city.",
+  "group": "places",
+  "category": "boundary",
+  "source": "Olmsted County / City of Rochester",
+  "view": {
+   "url": "https://public.gis.olmstedcounty.gov/arcgis/rest/services/AGOL_Open_Data/Olmsted_Neighborhood_Associations/FeatureServer/0",
+   "fields": {
+    "neighborhood_association": "name",
+    "status": "status",
+    "quad": "quadrant"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -92.6,
+    43.95,
+    -92.35,
+    44.1
+   ],
+   "features_in_probe": 51
+  }
+ },
+ {
+  "name": "mn-olmsted-parks",
+  "state": "MN",
+  "title": "Parks (Olmsted County / Rochester)",
+  "title_es": "Parques (condado de Olmsted / Rochester)",
+  "description": "Parks and open space in Olmsted County and Rochester.",
+  "group": "nature",
+  "category": "park",
+  "source": "Olmsted County",
+  "view": {
+   "url": "https://public.gis.olmstedcounty.gov/arcgis/rest/services/AGOL_Open_Data/Olmsted_Parks/FeatureServer/1",
+   "fields": {
+    "Map_Label": "name",
+    "Feature_Type": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -92.6,
+    43.95,
+    -92.35,
+    44.1
+   ],
+   "features_in_probe": 150
+  }
+ },
+ {
+  "name": "mn-olmsted-trails",
+  "state": "MN",
+  "title": "Bike paths and trails (Olmsted County / Rochester)",
+  "title_es": "Ciclovías y senderos (condado de Olmsted / Rochester)",
+  "description": "Off-street trails, bike lanes and paths in Olmsted County and Rochester.",
+  "group": "nature",
+  "category": "park",
+  "source": "Olmsted County",
+  "view": {
+   "url": "https://public.gis.olmstedcounty.gov/arcgis/rest/services/AGOL_Open_Data/Olmsted_Parks/FeatureServer/0",
+   "fields": {
+    "Trail_Name": "name",
+    "Legend": "kind",
+    "Bikeway_Description": "description"
+   },
+   "geometry": "line",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -92.6,
+    43.95,
+    -92.35,
+    44.1
+   ],
+   "features_in_probe": 1390
+  }
+ },
+ {
+  "name": "mn-duluth-neighborhoods",
+  "state": "MN",
+  "title": "Duluth neighborhoods",
+  "title_es": "Vecindarios de Duluth",
+  "description": "Official City of Duluth neighborhoods.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Duluth",
+  "view": {
+   "url": "https://services.arcgis.com/DgKyOSWnVuXUe0Jp/arcgis/rest/services/Neighborhoods_Duluth/FeatureServer/0",
+   "fields": {
+    "NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -92.25,
+    46.7,
+    -92.0,
+    46.85
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "mn-duluth-community-gardens",
+  "state": "MN",
+  "title": "Duluth community gardens",
+  "title_es": "Huertos comunitarios de Duluth",
+  "description": "Community garden sites run by the Duluth Community Garden Program, with a description and website.",
+  "group": "places",
+  "category": "park",
+  "source": "City of Duluth / Duluth Community Garden Program",
+  "view": {
+   "url": "https://services.arcgis.com/DgKyOSWnVuXUe0Jp/arcgis/rest/services/DuluthCommunityGardens_View/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Description": "description",
+    "Website": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -92.25,
+    46.7,
+    -92.0,
+    46.85
+   ],
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "wi-shore-fishing-sites",
+  "state": "WI",
+  "title": "Shore fishing sites and fishing piers (DNR)",
+  "title_es": "Sitios para pescar desde la orilla y muelles de pesca (DNR)",
+  "description": "Wisconsin DNR-listed fishing piers and shore-fishing spots - fish without a boat - with a details link.",
+  "group": "nature",
+  "category": "point",
+  "source": "Wisconsin Department of Natural Resources",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis2/rest/services/PR_Recreation/PR_Boat_Access_Shore_Fishing_WTM_Ext/MapServer/1",
+   "fields": {
+    "FACILITY_NAME_TEXT": "name",
+    "WATERBODY_NAME_TEXT": "water",
+    "MUNICIPALITY_NAME_TEXT": "municipality",
+    "COUNTY_NAME_TEXT": "county",
+    "MORE_INFO_URL": "website"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.5,
+    43.0,
+    -88.0,
+    45.0
+   ],
+   "features_in_probe": 46
+  }
+ },
+ {
+  "name": "wi-leased-hunting-land",
+  "state": "WI",
+  "title": "Private land open to public hunting (VPA leases)",
+  "title_es": "Tierras privadas abiertas a la caza pública (arriendos VPA)",
+  "description": "Private land the DNR leases for public hunting (Voluntary Public Access and similar programs), with a printable map for each property.",
+  "group": "nature",
+  "category": "park",
+  "source": "Wisconsin Department of Natural Resources",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis/rest/services/WM_VPA/WM_VPA_HUNT_LEASE_LAND_WTM/MapServer/0",
+   "fields": {
+    "PAL_AREA": "name",
+    "COUNTY_NAME": "county",
+    "PROPERTY_ACRE_AMT": "acres",
+    "PROGRAM": "program",
+    "PDF_MAP": "map"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.5,
+    43.0,
+    -88.0,
+    45.0
+   ],
+   "features_in_probe": 58
+  }
+ },
+ {
+  "name": "wi-beach-monitoring",
+  "state": "WI",
+  "title": "Beach water quality and advisories (DNR)",
+  "title_es": "Calidad del agua y avisos en playas (DNR)",
+  "description": "Wisconsin beaches tested for E. coli: current status (open, advisory, closed), last sample date and result.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Wisconsin Department of Natural Resources (Beach Health)",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis2/rest/services/OGW_Beach_Monitoring/OGW_Beach_Monitoring_Locations_Ext/MapServer/0",
+   "fields": {
+    "OGW_BEACH_NAME_TEXT": "name",
+    "STATUS": "status",
+    "MAP_STATUS": "condition",
+    "ISSUED": "issued",
+    "SAMPLEDATE": "sampled",
+    "ECOLIVALUE": "ecoli",
+    "WATERTEMP": "water_temp"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.5,
+    43.0,
+    -88.0,
+    45.0
+   ],
+   "features_in_probe": 64
+  }
+ },
+ {
+  "name": "wi-trout-stream-regulations",
+  "state": "WI",
+  "title": "Trout stream fishing regulations (DNR)",
+  "title_es": "Reglamentos de pesca de trucha en arroyos (DNR)",
+  "description": "Inland trout stream regulations by stretch of stream: season dates, bag limit and gear restrictions.",
+  "group": "nature",
+  "category": "info",
+  "source": "Wisconsin Department of Natural Resources",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis/rest/services/FM_Trout/FM_TROUT_REGS_WTM_Ext/MapServer/0",
+   "fields": {
+    "STREAM": "name",
+    "REGCAT": "category",
+    "BAG_LMT": "bag_limit",
+    "SEASON_TXT": "season",
+    "EARLY_SEASON_TXT": "early_season",
+    "GEAR_RESTRICTIONS": "gear"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.5,
+    43.0,
+    -88.0,
+    45.0
+   ],
+   "features_in_probe": 668
+  }
+ },
+ {
+  "name": "wi-pfas-sites",
+  "state": "WI",
+  "title": "PFAS contamination sites under investigation (DNR)",
+  "title_es": "Sitios con contaminación por PFAS en investigación (DNR)",
+  "description": "Open sites where Wisconsin DNR is investigating PFAS (\"forever chemicals\") contamination: likely source and whether groundwater or drinking water is affected.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Wisconsin Department of Natural Resources",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis2/rest/services/EM_PFAS/EM_PFAS_MAPLAYERS_PUBLIC_EXT/MapServer/1",
+   "fields": {
+    "SITENAME": "name",
+    "SOURCES": "sources",
+    "MEDIA": "affected",
+    "SITE_STATUS": "status",
+    "SITEURL": "website"
+   },
+   "geometry": "point",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.5,
+    43.0,
+    -88.0,
+    45.0
+   ],
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "wi-pfas-fish-advice",
+  "state": "WI",
+  "title": "PFAS fish consumption advice areas (DNR)",
+  "title_es": "Avisos de consumo de pescado por PFAS (DNR)",
+  "description": "Rivers and lakes where Wisconsin has special advice limiting how often to eat fish because of PFAS (and PCBs).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Wisconsin Department of Natural Resources",
+  "view": {
+   "url": "https://dnrmaps.wi.gov/arcgis2/rest/services/EM_PFAS/EM_PFAS_MAPLAYERS_PUBLIC_EXT/MapServer/801",
+   "fields": {
+    "ROI_SHORT_NAME": "name",
+    "ROI_DESC": "description",
+    "ROI_SUBTYPE_DESC": "contaminants",
+    "ROI_STATUS_DESC": "advice"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.5,
+    43.0,
+    -88.0,
+    45.0
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "wi-highway-construction",
+  "state": "WI",
+  "title": "WisDOT highway construction (next 2 years)",
+  "title_es": "Obras en carreteras de WisDOT (próximos 2 años)",
+  "description": "State highway projects scheduled for construction in the next two years: what is being done, limits, length and cost range.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Wisconsin Department of Transportation (Highway Program)",
+  "view": {
+   "url": "https://dotmaps.wi.gov/arcgis/rest/services/agohub/HIGHWAY_PROGRAM_2_4_6_YEAR/MapServer/0",
+   "fields": {
+    "TITLE": "name",
+    "LIMITS": "limits",
+    "ROUTE": "route",
+    "CONCEPT_DESCRIPTION": "kind",
+    "WORK_DESCRIPTION": "description",
+    "CONSTRUCTION_YEAR": "year",
+    "MILES": "miles",
+    "CONSTRUCTION_COST_RANGE_WD": "cost",
+    "COUNTY": "county",
+    "PROJECT_ID": "project"
+   },
+   "geometry": "line",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.5,
+    43.0,
+    -88.0,
+    45.0
+   ],
+   "features_in_probe": 433
+  }
+ },
+ {
+  "name": "wi-dmv-service-centers",
+  "state": "WI",
+  "title": "DMV service centers (driver licenses and ID)",
+  "title_es": "Centros de servicio del DMV (licencias e identificación)",
+  "description": "Wisconsin DMV service centers with weekly hours and services - driver licenses, state ID cards, knowledge tests (some in other languages) and payment types.",
+  "group": "help",
+  "category": "point",
+  "source": "Wisconsin Department of Transportation (DMV)",
+  "view": {
+   "url": "https://dotmaps.wi.gov/arcgis/rest/services/agohub/DMV_SERVICE_CENTER/MapServer/0",
+   "fields": {
+    "STN_NAME": "name",
+    "STN_ADDR_LINE": "address",
+    "STN_CITY": "city",
+    "STN_HRS_MON": "mon",
+    "STN_HRS_TUE": "tue",
+    "STN_HRS_WED": "wed",
+    "STN_HRS_THUR": "thu",
+    "STN_HRS_FRI": "fri",
+    "STN_HRS_SAT": "sat",
+    "DRV_DL_FL": "licenses",
+    "DRV_IDCARD_FL": "id_cards",
+    "DRV_KNLG_TEST_FL": "knowledge_test",
+    "DRV_KNLG_TEST_VAR_LANG_FL": "test_other_languages",
+    "STN_DISA_ACS": "accessible",
+    "STN_SPCL_RULES": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.5,
+    43.0,
+    -88.0,
+    45.0
+   ],
+   "features_in_probe": 32
+  }
+ },
+ {
+  "name": "wi-safety-rest-areas",
+  "state": "WI",
+  "title": "Highway rest areas",
+  "title_es": "Áreas de descanso en carreteras",
+  "description": "Wisconsin highway safety rest areas: open or closed, restrooms, family restrooms, Wi-Fi, pet areas and truck parking.",
+  "group": "roads",
+  "category": "point",
+  "source": "Wisconsin Department of Transportation",
+  "view": {
+   "url": "https://dotmaps.wi.gov/arcgis/rest/services/agohub/SAFETY_REST_AREAS/MapServer/0",
+   "fields": {
+    "PROPERTY_NAME": "name",
+    "STATUS": "status",
+    "HIGHWAY": "highway",
+    "SERVICE_DIRECTION": "direction",
+    "RESTROOM_FACILITY": "restrooms",
+    "FAMILY_ASSISTED_RESTROOM": "family_restrooms",
+    "PUBLIC_WIFI_ACCESS": "wifi",
+    "DESIGNATED_PET_AREA": "pet_area",
+    "TRUCK_PARKING_SPACES": "truck_spaces"
+   },
+   "geometry": "point",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.5,
+    43.0,
+    -88.0,
+    45.0
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "wi-park-and-ride",
+  "state": "WI",
+  "title": "Park and ride lots",
+  "title_es": "Estacionamientos park and ride",
+  "description": "WisDOT park-and-ride lots for carpooling and transit: spaces, fees, lighting, bike parking and transit service.",
+  "group": "roads",
+  "category": "point",
+  "source": "Wisconsin Department of Transportation",
+  "view": {
+   "url": "https://dotmaps.wi.gov/arcgis/rest/services/agohub/PARK_AND_RIDE/MapServer/0",
+   "fields": {
+    "LOT_NM": "name",
+    "LOT_DESC": "location",
+    "CLSR": "status",
+    "NB_SPACES": "spaces",
+    "PRKG_FEE": "fee",
+    "LTG": "lighting",
+    "BIKE_PRKG": "bike_parking",
+    "TNST_LCL": "local_transit",
+    "PKRG_TM_LMT": "time_limit"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.5,
+    43.0,
+    -88.0,
+    45.0
+   ],
+   "features_in_probe": 63
+  }
+ },
+ {
+  "name": "wi-rustic-roads",
+  "state": "WI",
+  "title": "Rustic Roads (scenic back roads)",
+  "title_es": "Caminos rústicos (rutas escénicas)",
+  "description": "Officially designated Wisconsin Rustic Roads - lightly traveled scenic country roads for leisurely drives and bike rides.",
+  "group": "places",
+  "category": "info",
+  "source": "Wisconsin Department of Transportation",
+  "view": {
+   "url": "https://dotmaps.wi.gov/arcgis/rest/services/agohub/RUSTIC_ROAD/MapServer/0",
+   "fields": {
+    "ROADNAME": "name",
+    "RUSTICROADNUMBER": "number",
+    "SURFACETYPE": "surface",
+    "TOTAL_MILE": "miles",
+    "COMMUNITY": "community",
+    "LINK_TO_WEBPAGE": "website"
+   },
+   "geometry": "line",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.5,
+    43.0,
+    -88.0,
+    45.0
+   ],
+   "features_in_probe": 122
+  }
+ },
+ {
+  "name": "wi-milwaukee-polling-places",
+  "state": "WI",
+  "title": "Milwaukee polling places",
+  "title_es": "Lugares de votación de Milwaukee",
+  "description": "Where to vote on Election Day in the City of Milwaukee, with the main and accessible entrances and parking.",
+  "group": "civic",
+  "category": "point",
+  "source": "City of Milwaukee Election Commission",
+  "view": {
+   "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/election/election_wards/MapServer/0",
+   "fields": {
+    "POLLING_PL": "name",
+    "ADDRESS": "address",
+    "MAIN_ENTR": "entrance",
+    "ACSBL_ENTR": "accessible_entrance",
+    "ACSBL_PKNG": "accessible_parking"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.0,
+    43.0,
+    -87.88,
+    43.1
+   ],
+   "features_in_probe": 99
+  }
+ },
+ {
+  "name": "wi-milwaukee-voting-wards",
+  "state": "WI",
+  "title": "Milwaukee voting wards (and your polling place)",
+  "title_es": "Distritos electorales de Milwaukee (y su lugar de votación)",
+  "description": "City of Milwaukee voting wards with the polling place assigned to each.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Milwaukee Election Commission",
+  "view": {
+   "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/election/election_wards/MapServer/1",
+   "fields": {
+    "WARD": "ward",
+    "POLLING_PL": "polling_place",
+    "ADDRESS": "address",
+    "ACSBL_ENTR": "accessible_entrance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.0,
+    43.0,
+    -87.88,
+    43.1
+   ],
+   "features_in_probe": 205
+  }
+ },
+ {
+  "name": "wi-milwaukee-aldermanic-districts",
+  "state": "WI",
+  "title": "Milwaukee aldermanic districts",
+  "title_es": "Distritos de concejales de Milwaukee",
+  "description": "Which of Milwaukee's 15 Common Council (aldermanic) districts you live in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Milwaukee",
+  "view": {
+   "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/election/election_geography/MapServer/1",
+   "fields": {
+    "DISTRICT_LABEL": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.0,
+    43.0,
+    -87.88,
+    43.1
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "wi-milwaukee-county-supervisor-districts",
+  "state": "WI",
+  "title": "Milwaukee County supervisor districts",
+  "title_es": "Distritos de supervisores del condado de Milwaukee",
+  "description": "Which Milwaukee County Board supervisor district you live in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Milwaukee (election geography)",
+  "view": {
+   "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/election/election_geography/MapServer/2",
+   "fields": {
+    "SUPERVISOR": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.0,
+    43.0,
+    -87.88,
+    43.1
+   ],
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "wi-milwaukee-zoning",
+  "state": "WI",
+  "title": "Milwaukee zoning",
+  "title_es": "Zonificación de Milwaukee",
+  "description": "City of Milwaukee zoning for each parcel: district code, category and type.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Milwaukee Department of City Development",
+  "view": {
+   "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/planning/zoning/MapServer/11",
+   "fields": {
+    "Zoning": "code",
+    "ZoningCategory": "category",
+    "ZoningType": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.93,
+    43.04,
+    -87.91,
+    43.05
+   ],
+   "features_in_probe": 503
+  }
+ },
+ {
+  "name": "wi-milwaukee-historic-districts",
+  "state": "WI",
+  "title": "Milwaukee local historic districts",
+  "title_es": "Distritos históricos locales de Milwaukee",
+  "description": "Historic districts designated by the Milwaukee Historic Preservation Commission, where exterior changes need a certificate of appropriateness.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Milwaukee Historic Preservation Commission",
+  "view": {
+   "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/planning/special_districts/MapServer/17",
+   "fields": {
+    "NAME": "name",
+    "DES_LIST_DATE": "designated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.0,
+    43.0,
+    -87.88,
+    43.1
+   ],
+   "features_in_probe": 31
+  }
+ },
+ {
+  "name": "wi-milwaukee-neighborhoods",
+  "state": "WI",
+  "title": "Milwaukee neighborhoods",
+  "title_es": "Vecindarios de Milwaukee",
+  "description": "The City of Milwaukee's 190 named neighborhoods.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Milwaukee",
+  "view": {
+   "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/AGO/neighborhoods/MapServer/0",
+   "fields": {
+    "NEIGHBORHD": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.0,
+    43.0,
+    -87.88,
+    43.1
+   ],
+   "features_in_probe": 87
+  }
+ },
+ {
+  "name": "wi-milwaukee-county-parks",
+  "state": "WI",
+  "title": "Milwaukee County parks",
+  "title_es": "Parques del condado de Milwaukee",
+  "description": "Milwaukee County Parks properties with address, acreage and park type.",
+  "group": "nature",
+  "category": "park",
+  "source": "Milwaukee County Parks",
+  "view": {
+   "url": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Parks/FeatureServer/7",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Park_Class": "kind",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.0,
+    43.0,
+    -87.88,
+    43.1
+   ],
+   "features_in_probe": 61
+  }
+ },
+ {
+  "name": "wi-milwaukee-county-park-attractions",
+  "state": "WI",
+  "title": "Milwaukee County park attractions",
+  "title_es": "Atracciones de los parques del condado de Milwaukee",
+  "description": "Milwaukee County Parks attractions - pools, golf, the Domes, beer gardens and more - with phone and website.",
+  "group": "places",
+  "category": "point",
+  "source": "Milwaukee County Parks",
+  "view": {
+   "url": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Park_Attractions/FeatureServer/0",
+   "fields": {
+    "Attraction": "name",
+    "Primary_ca": "kind",
+    "Primary_ph": "phone",
+    "Current_li": "website",
+    "Operated_B": "operated_by"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.0,
+    43.0,
+    -87.88,
+    43.1
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "wi-madison-polling-places",
+  "state": "WI",
+  "title": "Madison polling places",
+  "title_es": "Lugares de votación de Madison",
+  "description": "Where to vote on Election Day in Madison, by ward.",
+  "group": "civic",
+  "category": "point",
+  "source": "City of Madison Clerk's Office",
+  "view": {
+   "url": "https://maps.cityofmadison.com/arcgis/rest/services/Public/PollsWards/MapServer/0",
+   "fields": {
+    "tvpoll_p_BLDG_NAME": "name",
+    "tvpoll_p_ADDRESS": "address",
+    "tvpoll_p_WARD": "ward",
+    "tvpoll_p_HANDICAP_ACCESS": "accessible",
+    "tvpoll_p_SPEC_COMMENTS": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.5,
+    43.03,
+    -89.3,
+    43.13
+   ],
+   "features_in_probe": 78
+  }
+ },
+ {
+  "name": "wi-madison-alder-districts",
+  "state": "WI",
+  "title": "Madison alder districts",
+  "title_es": "Distritos de concejales de Madison",
+  "description": "Which of Madison's 20 Common Council (alder) districts you live in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Madison",
+  "view": {
+   "url": "https://maps.cityofmadison.com/arcgis/rest/services/Public/OPEN_DATA/MapServer/10",
+   "fields": {
+    "ALD_DIST": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.5,
+    43.03,
+    -89.3,
+    43.13
+   ],
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "wi-madison-zoning",
+  "state": "WI",
+  "title": "Madison zoning districts",
+  "title_es": "Zonificación de Madison",
+  "description": "City of Madison zoning district for each area, with a link to the zoning code.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Madison Planning Division",
+  "view": {
+   "url": "https://maps.cityofmadison.com/arcgis/rest/services/Public/OPEN_DATA/MapServer/9",
+   "fields": {
+    "ZONING_CODE": "code",
+    "Zoning_Document": "code_link"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.5,
+    43.03,
+    -89.3,
+    43.13
+   ],
+   "features_in_probe": 1501
+  }
+ },
+ {
+  "name": "wi-madison-future-land-use",
+  "state": "WI",
+  "title": "Madison generalized future land use",
+  "title_es": "Uso de suelo futuro de Madison",
+  "description": "Madison Comprehensive Plan future land use: the intended mix of uses, housing density and building heights.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Madison Planning Division",
+  "view": {
+   "url": "https://maps.cityofmadison.com/arcgis/rest/services/Planning/GFLU_current/MapServer/3",
+   "fields": {
+    "GFLU_Description": "land_use",
+    "GFLU_Summary": "summary",
+    "General_density_range": "density",
+    "Max_height": "max_stories",
+    "Area_plan_name": "area_plan"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.5,
+    43.03,
+    -89.3,
+    43.13
+   ],
+   "features_in_probe": 1479
+  }
+ },
+ {
+  "name": "wi-madison-neighborhood-associations",
+  "state": "WI",
+  "title": "Madison neighborhood associations",
+  "title_es": "Asociaciones de vecinos de Madison",
+  "description": "Registered neighborhood associations in Madison with a link to each profile.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Madison",
+  "view": {
+   "url": "https://maps.cityofmadison.com/arcgis/rest/services/Public/OPEN_DATA/MapServer/12",
+   "fields": {
+    "NEIGHB_NAME": "name",
+    "STATUS": "status",
+    "CLASSIFICA": "kind",
+    "Web": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.5,
+    43.03,
+    -89.3,
+    43.13
+   ],
+   "features_in_probe": 91
+  }
+ },
+ {
+  "name": "wi-madison-parks",
+  "state": "WI",
+  "title": "Madison parks",
+  "title_es": "Parques de Madison",
+  "description": "City of Madison parks with type, acreage and a link to each park page.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Madison Parks Division",
+  "view": {
+   "url": "https://maps.cityofmadison.com/arcgis/rest/services/Public/OPEN_DATA/MapServer/24",
+   "fields": {
+    "Park_Name": "name",
+    "Type": "kind",
+    "Acreage": "acres",
+    "URL": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.5,
+    43.03,
+    -89.3,
+    43.13
+   ],
+   "features_in_probe": 193
+  }
+ },
+ {
+  "name": "wi-madison-trash-collection",
+  "state": "WI",
+  "title": "Madison trash, brush and yard waste collection",
+  "title_es": "Recolección de basura, ramas y desechos de jardín en Madison",
+  "description": "Your refuse and recycling collection day in Madison plus this year's brush and yard-waste pickup dates, with a link to the printable schedule.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Madison Streets Division",
+  "view": {
+   "url": "https://maps.cityofmadison.com/arcgis/rest/services/Streets/Streets_General_Purpose_Layers/MapServer/0",
+   "fields": {
+    "CollectionDay": "day",
+    "RefuseDist": "district",
+    "CollectionURL": "schedule",
+    "Brush1": "brush_1",
+    "Brush2": "brush_2",
+    "Brush3": "brush_3",
+    "Brush4": "brush_4",
+    "Brush5": "brush_5",
+    "YardWaste1": "yard_waste_1",
+    "YardWaste2": "yard_waste_2",
+    "YardWaste3": "yard_waste_3",
+    "YardWaste4": "yard_waste_4",
+    "YardWaste5": "yard_waste_5"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.5,
+    43.03,
+    -89.3,
+    43.13
+   ],
+   "features_in_probe": 166
+  }
+ },
+ {
+  "name": "wi-madison-flash-flood-streets",
+  "state": "WI",
+  "title": "Madison streets at risk of flash flooding",
+  "title_es": "Calles de Madison con riesgo de inundación repentina",
+  "description": "Madison streets that City Engineering identifies as at risk of flash flooding when lake levels are high - avoid driving through standing water.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "City of Madison Engineering (Flash Flood Resilience)",
+  "view": {
+   "url": "https://maps.cityofmadison.com/arcgis/rest/services/City_Engineering/FlashFloodResilience/MapServer/73",
+   "fields": {
+    "segment_name": "street",
+    "from_segment": "from",
+    "to_segment": "to"
+   },
+   "geometry": "line",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.5,
+    43.03,
+    -89.3,
+    43.13
+   ],
+   "features_in_probe": 165
+  }
+ },
+ {
+  "name": "wi-dane-warning-sirens",
+  "state": "WI",
+  "title": "Outdoor warning sirens (Dane County)",
+  "title_es": "Sirenas de alerta al aire libre (condado de Dane)",
+  "description": "Outdoor tornado warning sirens across Dane County. Sirens are meant for people outdoors - indoors, rely on weather radio or phone alerts.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Dane County Emergency Management",
+  "view": {
+   "url": "https://dcimapapps.countyofdane.com/arcgissrv/rest/services/Safety/MapServer/14",
+   "fields": {
+    "LOCATION": "location",
+    "COMMUNITY": "community",
+    "OWNER": "owner"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.84,
+    42.84,
+    -89.0,
+    43.3
+   ],
+   "features_in_probe": 144
+  }
+ },
+ {
+  "name": "wi-dane-fire-districts",
+  "state": "WI",
+  "title": "Fire districts (Dane County)",
+  "title_es": "Distritos de bomberos (condado de Dane)",
+  "description": "Which fire department serves each part of Dane County.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Dane County Land Information Office",
+  "view": {
+   "url": "https://dcimapapps.countyofdane.com/arcgissrv/rest/services/Safety/MapServer/2",
+   "fields": {
+    "NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.84,
+    42.84,
+    -89.0,
+    43.3
+   ],
+   "features_in_probe": 78
+  }
+ },
+ {
+  "name": "wi-dane-ems-districts",
+  "state": "WI",
+  "title": "Ambulance (EMS) districts (Dane County)",
+  "title_es": "Distritos de ambulancias (condado de Dane)",
+  "description": "Which ambulance service covers each part of Dane County and its service level.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Dane County Land Information Office",
+  "view": {
+   "url": "https://dcimapapps.countyofdane.com/arcgissrv/rest/services/Health/MapServer/2",
+   "fields": {
+    "NAME": "name",
+    "ServiceLevel": "level"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.84,
+    42.84,
+    -89.0,
+    43.3
+   ],
+   "features_in_probe": 72
+  }
+ },
+ {
+  "name": "wi-dane-rural-zoning",
+  "state": "WI",
+  "title": "Dane County zoning (towns)",
+  "title_es": "Zonificación del condado de Dane (municipios rurales)",
+  "description": "Dane County zoning districts in the towns that use county zoning (cities and villages zone themselves).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Dane County Planning & Development",
+  "view": {
+   "url": "https://dcimapapps.countyofdane.com/arcgissrv/rest/services/Zoning/MapServer/3",
+   "fields": {
+    "ZONING_DISTRICT": "district",
+    "ZONING_CATAGORY": "category"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.84,
+    42.84,
+    -89.0,
+    43.3
+   ],
+   "features_in_probe": 1744
+  }
+ },
+ {
+  "name": "wi-dane-supervisor-districts",
+  "state": "WI",
+  "title": "Dane County supervisor districts",
+  "title_es": "Distritos de supervisores del condado de Dane",
+  "description": "Which Dane County Board supervisor district you live in, with a link to the district page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Dane County Board of Supervisors",
+  "view": {
+   "url": "https://dcimapapps.countyofdane.com/arcgissrv/rest/services/Supervisors/MapServer/0",
+   "fields": {
+    "DistrictNumber": "district",
+    "WebsiteURL": "website",
+    "PdfURL": "map"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.84,
+    42.84,
+    -89.0,
+    43.3
+   ],
+   "features_in_probe": 37
+  }
+ },
+ {
+  "name": "wi-dane-county-parks",
+  "state": "WI",
+  "title": "Dane County parks",
+  "title_es": "Parques del condado de Dane",
+  "description": "Dane County park system properties - recreation parks, natural resource areas and wildlife areas.",
+  "group": "nature",
+  "category": "park",
+  "source": "Dane County Parks",
+  "view": {
+   "url": "https://dcimapapps.countyofdane.com/arcgissrv/rest/services/Parks/MapServer/1",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Status": "status",
+    "URL": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.84,
+    42.84,
+    -89.0,
+    43.3
+   ],
+   "features_in_probe": 71
+  }
+ },
+ {
+  "name": "wi-dane-park-trails",
+  "state": "WI",
+  "title": "Dane County park trails",
+  "title_es": "Senderos de los parques del condado de Dane",
+  "description": "Trails in Dane County parks with the allowed uses (hiking, biking, skiing, horses) and surface.",
+  "group": "nature",
+  "category": "park",
+  "source": "Dane County Parks",
+  "view": {
+   "url": "https://dcimapapps.countyofdane.com/arcgissrv/rest/services/Parks/MapServer/0",
+   "fields": {
+    "TrailName": "name",
+    "PropertyName": "park",
+    "Type": "uses",
+    "SurfaceType": "surface",
+    "WinterOnly": "winter_only"
+   },
+   "geometry": "line",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.84,
+    42.84,
+    -89.0,
+    43.3
+   ],
+   "features_in_probe": 1523
+  }
+ },
+ {
+  "name": "wi-dane-archery-hunting",
+  "state": "WI",
+  "title": "Archery hunting areas in Dane County parks",
+  "title_es": "Áreas de caza con arco en parques del condado de Dane",
+  "description": "Dane County park lands open or closed to archery hunting.",
+  "group": "nature",
+  "category": "park",
+  "source": "Dane County Parks",
+  "view": {
+   "url": "https://dcimapapps.countyofdane.com/arcgissrv/rest/services/Parks/MapServer/12",
+   "fields": {
+    "Name": "name",
+    "Open_Close": "status",
+    "Notes": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.84,
+    42.84,
+    -89.0,
+    43.3
+   ],
+   "features_in_probe": 137
+  }
+ },
+ {
+  "name": "wi-dane-snowmobile-trails",
+  "state": "WI",
+  "title": "Snowmobile trails (Dane County)",
+  "title_es": "Senderos para motos de nieve (condado de Dane)",
+  "description": "Dane County's club-maintained snowmobile trail network.",
+  "group": "nature",
+  "category": "park",
+  "source": "Dane County Parks",
+  "view": {
+   "url": "https://dcimapapps.countyofdane.com/arcgissrv/rest/services/Recreation/MapServer/0",
+   "fields": {
+    "TrailName": "trail",
+    "ClubName": "club",
+    "Class": "class",
+    "Type": "kind"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.84,
+    42.84,
+    -89.0,
+    43.3
+   ],
+   "features_in_probe": 256
+  }
+ },
+ {
+  "name": "wi-waukesha-emergency-shelters",
+  "state": "WI",
+  "title": "Emergency shelter sites (Waukesha County)",
+  "title_es": "Sitios de refugio de emergencia (condado de Waukesha)",
+  "description": "Buildings Waukesha County Emergency Management lists as potential emergency shelters, with capacity. Shelters open only when announced - check local news or call 211.",
+  "group": "help",
+  "category": "point",
+  "source": "Waukesha County Emergency Management",
+  "view": {
+   "url": "https://gis.waukeshacounty.gov/host/rest/services/EmergencyManagement/FeatureServer/1",
+   "fields": {
+    "FACNAME": "name",
+    "Address": "address",
+    "CAPACITY": "capacity"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "Shelter='Yes'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.55,
+    42.84,
+    -88.06,
+    43.19
+   ],
+   "features_in_probe": 99
+  }
+ },
+ {
+  "name": "wi-waukesha-park-hunting",
+  "state": "WI",
+  "title": "Hunting rules in Waukesha County parks",
+  "title_es": "Reglas de caza en parques del condado de Waukesha",
+  "description": "Whether hunting is allowed or prohibited on each Waukesha County park property, and what kind.",
+  "group": "nature",
+  "category": "park",
+  "source": "Waukesha County Parks & Land Use",
+  "view": {
+   "url": "https://gis.waukeshacounty.gov/host/rest/services/County_Hunting_Lands/FeatureServer/1",
+   "fields": {
+    "Hunting_Status": "status",
+    "Hunting_Type": "kind",
+    "Special_Notes": "notes",
+    "Link_To_Firearms_Ordinance": "firearms_rules"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.55,
+    42.84,
+    -88.06,
+    43.19
+   ],
+   "features_in_probe": 37
+  }
+ },
+ {
+  "name": "wi-waukesha-fire-districts",
+  "state": "WI",
+  "title": "Fire districts (Waukesha County)",
+  "title_es": "Distritos de bomberos (condado de Waukesha)",
+  "description": "Which fire department responds to each part of Waukesha County (911 emergency service zones).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Waukesha County",
+  "view": {
+   "url": "https://gis.waukeshacounty.gov/host/rest/services/Districts/FeatureServer/4",
+   "fields": {
+    "dsplayname": "name",
+    "zone_name": "zone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.55,
+    42.84,
+    -88.06,
+    43.19
+   ],
+   "features_in_probe": 592
+  }
+ },
+ {
+  "name": "wi-green-bay-elementary-attendance",
+  "state": "WI",
+  "title": "Green Bay elementary school attendance zones",
+  "title_es": "Zonas de asistencia de escuela primaria en Green Bay",
+  "description": "Which public elementary school serves each address in the Green Bay Area Public School District.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Brown County Land Information",
+  "view": {
+   "url": "https://gis.browncountywi.gov/arcgis/rest/services/Schools_Districts_AttendanceZones/MapServer/5",
+   "fields": {
+    "School": "school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.1,
+    44.4,
+    -87.9,
+    44.6
+   ],
+   "features_in_probe": 34
+  }
+ },
+ {
+  "name": "wi-green-bay-middle-attendance",
+  "state": "WI",
+  "title": "Green Bay middle school attendance zones",
+  "title_es": "Zonas de asistencia de escuela intermedia (middle school) en Green Bay",
+  "description": "Which public middle school serves each address in the Green Bay Area Public School District.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Brown County Land Information",
+  "view": {
+   "url": "https://gis.browncountywi.gov/arcgis/rest/services/Schools_Districts_AttendanceZones/MapServer/4",
+   "fields": {
+    "School": "school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.1,
+    44.4,
+    -87.9,
+    44.6
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "wi-green-bay-high-attendance",
+  "state": "WI",
+  "title": "Green Bay high school attendance zones",
+  "title_es": "Zonas de asistencia de escuela preparatoria (high school) en Green Bay",
+  "description": "Which public high school serves each address in the Green Bay Area Public School District.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Brown County Land Information",
+  "view": {
+   "url": "https://gis.browncountywi.gov/arcgis/rest/services/Schools_Districts_AttendanceZones/MapServer/3",
+   "fields": {
+    "School": "school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.1,
+    44.4,
+    -87.9,
+    44.6
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "wi-brown-warning-sirens",
+  "state": "WI",
+  "title": "Outdoor warning sirens (Brown County)",
+  "title_es": "Sirenas de alerta al aire libre (condado de Brown)",
+  "description": "Outdoor warning sirens in Brown County and their approximate range.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Brown County",
+  "view": {
+   "url": "https://gis.browncountywi.gov/arcgis/rest/services/Sirens/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Description": "location",
+    "Active": "active",
+    "Range_Mi": "range_miles"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.1,
+    44.4,
+    -87.9,
+    44.6
+   ],
+   "features_in_probe": 32
+  }
+ },
+ {
+  "name": "wi-brown-parks",
+  "state": "WI",
+  "title": "Parks (Brown County / Green Bay)",
+  "title_es": "Parques (condado de Brown / Green Bay)",
+  "description": "Parks in Brown County and Green Bay with hours and what each has: restrooms, shelters, playgrounds, splash pads, fishing, swimming, sledding.",
+  "group": "nature",
+  "category": "park",
+  "source": "Brown County",
+  "view": {
+   "url": "https://gis.browncountywi.gov/arcgis/rest/services/Parks/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Address": "address",
+    "Owner_Operator": "operator",
+    "OperHours": "hours",
+    "Acreage": "acres",
+    "Restroom": "restroom",
+    "Shelter": "shelter",
+    "Playground": "playground",
+    "Splashpad": "splash_pad",
+    "Fishing": "fishing",
+    "Swimming": "swimming",
+    "Sledding": "sledding",
+    "ParkURL": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.1,
+    44.4,
+    -87.9,
+    44.6
+   ],
+   "features_in_probe": 503
+  }
+ },
+ {
+  "name": "wi-outagamie-zoning",
+  "state": "WI",
+  "title": "Zoning (Outagamie County)",
+  "title_es": "Zonificación (condado de Outagamie)",
+  "description": "Zoning districts in Outagamie County towns and municipalities.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Outagamie County",
+  "view": {
+   "url": "https://gis.outagamie.org/arcgis/rest/services/OpenData/Zoning/MapServer/0",
+   "fields": {
+    "DIST_NAME": "district",
+    "DIST_CODE": "code",
+    "TOWN_NAME": "municipality"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.6,
+    44.2,
+    -88.3,
+    44.45
+   ],
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "wi-outagamie-parks",
+  "state": "WI",
+  "title": "Parks and recreation areas (Outagamie County)",
+  "title_es": "Parques y áreas recreativas (condado de Outagamie)",
+  "description": "Parks, wildlife areas and recreation land in Outagamie County (Appleton area).",
+  "group": "nature",
+  "category": "park",
+  "source": "Outagamie County",
+  "view": {
+   "url": "https://gis.outagamie.org/arcgis/rest/services/Parks/ParksRecreation/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "MUNICIPALI": "municipality",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.6,
+    44.2,
+    -88.3,
+    44.45
+   ],
+   "features_in_probe": 110
+  }
+ },
+ {
+  "name": "wi-outagamie-supervisor-districts",
+  "state": "WI",
+  "title": "Outagamie County supervisor districts",
+  "title_es": "Distritos de supervisores del condado de Outagamie",
+  "description": "Which Outagamie County Board supervisor district you live in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Outagamie County",
+  "view": {
+   "url": "https://gis.outagamie.org/arcgis/rest/services/Elections/ElectionsLayers2020/MapServer/1",
+   "fields": {
+    "SUPER": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.6,
+    44.2,
+    -88.3,
+    44.45
+   ],
+   "features_in_probe": 31
+  }
+ },
+ {
+  "name": "wi-racine-polling-places",
+  "state": "WI",
+  "title": "Polling places (Racine County)",
+  "title_es": "Lugares de votación (condado de Racine)",
+  "description": "Election Day polling places in Racine County with hours and accessibility.",
+  "group": "civic",
+  "category": "point",
+  "source": "Racine County",
+  "view": {
+   "url": "https://arcgis.racinecounty.com/arcgis/rest/services/ElectionPollingPlaces/ElectionPollingPlaces/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "FULLADD": "address",
+    "CITY": "city",
+    "OPERHOURS": "hours",
+    "HANDICAP": "accessible"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.31,
+    42.67,
+    -87.77,
+    42.84
+   ],
+   "features_in_probe": 44
+  }
+ },
+ {
+  "name": "wi-racine-county-parks",
+  "state": "WI",
+  "title": "Parks (Racine County)",
+  "title_es": "Parques (condado de Racine)",
+  "description": "County and local parks and wildlife areas in Racine County.",
+  "group": "nature",
+  "category": "park",
+  "source": "Racine County",
+  "view": {
+   "url": "https://arcgis.racinecounty.com/arcgis/rest/services/Parks/Parks/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "OWNTYPE": "owner"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.31,
+    42.67,
+    -87.77,
+    42.84
+   ],
+   "features_in_probe": 298
+  }
+ },
+ {
+  "name": "wi-racine-trails",
+  "state": "WI",
+  "title": "Trails (Racine County)",
+  "title_es": "Senderos (condado de Racine)",
+  "description": "Trails and paths in Racine County with surface and allowed uses.",
+  "group": "nature",
+  "category": "park",
+  "source": "Racine County",
+  "view": {
+   "url": "https://arcgis.racinecounty.com/arcgis/rest/services/Parks/TrailsRacineCounty/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "SURFTYPE": "surface",
+    "HIKING": "hiking",
+    "ROADCYCLE": "biking",
+    "SKI": "skiing",
+    "SNOWMOBILE": "snowmobile"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.31,
+    42.67,
+    -87.77,
+    42.84
+   ],
+   "features_in_probe": 65
+  }
+ },
+ {
+  "name": "wi-racine-city-zoning",
+  "state": "WI",
+  "title": "City of Racine zoning",
+  "title_es": "Zonificación de la ciudad de Racine",
+  "description": "City of Racine zoning for each parcel.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Racine County (City of Racine zoning)",
+  "view": {
+   "url": "https://arcgis.racinecounty.com/arcgis/rest/services/Zoning/RacineCityZoning/MapServer/0",
+   "fields": {
+    "ZONE_": "code",
+    "DESCRIPTIO": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.8,
+    42.72,
+    -87.78,
+    42.74
+   ],
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "wi-racine-county-zoning",
+  "state": "WI",
+  "title": "Racine County zoning (towns)",
+  "title_es": "Zonificación del condado de Racine (municipios rurales)",
+  "description": "Racine County zoning districts in towns under county zoning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Racine County",
+  "view": {
+   "url": "https://arcgis.racinecounty.com/arcgis/rest/services/DataPortal/ZONING/MapServer/0",
+   "fields": {
+    "ZONECLASS": "code",
+    "ZONEDESC": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.31,
+    42.67,
+    -87.77,
+    42.84
+   ],
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "wi-kenosha-voting-wards",
+  "state": "WI",
+  "title": "Kenosha voting wards and polling places",
+  "title_es": "Distritos electorales y lugares de votación de Kenosha",
+  "description": "City of Kenosha voting wards with the polling place assigned to each.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Kenosha",
+  "view": {
+   "url": "https://services1.arcgis.com/dEWY7aW7h9zHrSP9/arcgis/rest/services/VotingWards/FeatureServer/0",
+   "fields": {
+    "renumbered": "ward",
+    "pollingplace": "polling_place"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.95,
+    42.53,
+    -87.78,
+    42.65
+   ],
+   "features_in_probe": 100
+  }
+ }
+]

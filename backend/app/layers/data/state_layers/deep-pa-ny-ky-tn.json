@@ -1,0 +1,6590 @@
+[
+ {
+  "name": "ky-louisville-zoning",
+  "state": "KY",
+  "title": "Zoning (Louisville Metro)",
+  "title_es": "Zonificación (Louisville Metro)",
+  "description": "Zoning district for every lot in Jefferson County: the code, its name and the broad type (residential, commercial-industrial and so on), which decide what can be built and run there.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC)",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataDevelopment/MapServer/15",
+   "fields": {
+    "ZONING_CODE": "code",
+    "ZONING_NAME": "name",
+    "ZONING_TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 1224
+  }
+ },
+ {
+  "name": "ky-louisville-form-districts",
+  "state": "KY",
+  "title": "Form districts (Louisville Metro)",
+  "title_es": "Distritos de forma (Louisville Metro)",
+  "description": "Louisville's form districts (neighborhood, town center, suburban marketplace corridor and others) that set the look and layout new buildings must follow on top of zoning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC)",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataDevelopment/MapServer/1",
+   "fields": {
+    "DISTRICT": "name",
+    "DISTRICT_ABBR": "code",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 61
+  }
+ },
+ {
+  "name": "ky-louisville-land-use",
+  "state": "KY",
+  "title": "Land use (Louisville Metro)",
+  "title_es": "Uso del suelo (Louisville Metro)",
+  "description": "How each piece of land in Jefferson County is actually used today: homes, shops, industry, parks and open space, and so on, with acreage.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC)",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataDevelopment/MapServer/6",
+   "fields": {
+    "LANDUSE_NAME": "kind",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "ky-louisville-parcels",
+  "state": "KY",
+  "title": "Parcels (Jefferson County PVA)",
+  "title_es": "Parcelas (PVA del condado de Jefferson)",
+  "description": "Property lot lines in Jefferson County with the parcel ID used by the Property Valuation Administrator; owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC) / Jefferson County PVA",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataPVA/MapServer/1",
+   "fields": {
+    "PARCELID": "parcel_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.76,
+    38.24,
+    -85.74,
+    38.255
+   ],
+   "features_in_probe": 1910
+  }
+ },
+ {
+  "name": "ky-louisville-historic-districts",
+  "state": "KY",
+  "title": "Historic preservation districts and landmarks (Louisville)",
+  "title_es": "Distritos de preservación histórica y monumentos (Louisville)",
+  "description": "Local preservation districts and individual landmarks designated by the Louisville Metro Landmarks Commission, with the year designated; changes to the outside of buildings here need review.",
+  "group": "places",
+  "category": "boundary",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC)",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataDevelopment/MapServer/4",
+   "fields": {
+    "PRESDIST_NAME": "district",
+    "HISTORIC_NAME": "name",
+    "YEAR_DESIGNATED": "year",
+    "NATIONAL_REGISTER_TYPE": "national_register"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 95
+  }
+ },
+ {
+  "name": "ky-louisville-national-register-districts",
+  "state": "KY",
+  "title": "National Register historic districts (Louisville)",
+  "title_es": "Distritos históricos del Registro Nacional (Louisville)",
+  "description": "Historic districts in Jefferson County listed on the National Register of Historic Places.",
+  "group": "places",
+  "category": "boundary",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC)",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataDevelopment/MapServer/7",
+   "fields": {
+    "HISTDIST_NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 38
+  }
+ },
+ {
+  "name": "ky-louisville-metro-council-districts",
+  "state": "KY",
+  "title": "Metro Council districts (Louisville)",
+  "title_es": "Distritos del Concejo Metropolitano (Louisville)",
+  "description": "The 26 Louisville Metro Council districts: find which district you live in and the district's web page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC)",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataPolitical/MapServer/8",
+   "fields": {
+    "COUNDIST": "district",
+    "COUN_WEB": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "ky-louisville-school-board-districts",
+  "state": "KY",
+  "title": "School board districts (JCPS)",
+  "title_es": "Distritos de la junta escolar (JCPS)",
+  "description": "Jefferson County Board of Education member districts: which school board seat represents your home.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC)",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataPolitical/MapServer/2",
+   "fields": {
+    "SCHOOLDIST": "district",
+    "SCHL_WEB": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ky-louisville-voting-locations",
+  "state": "KY",
+  "title": "Polling places (Jefferson County)",
+  "title_es": "Lugares de votación (condado de Jefferson)",
+  "description": "Election Day voting location for each precinct in Jefferson County, with the address. Check the County Clerk before you go, as sites can change.",
+  "group": "civic",
+  "category": "point",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC) / Jefferson County Clerk",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataPolitical/MapServer/5",
+   "fields": {
+    "PRECINCT": "precinct",
+    "VOTE_LOC": "name",
+    "VOTE_ADD": "address"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 111
+  }
+ },
+ {
+  "name": "ky-louisville-suburban-fire-districts",
+  "state": "KY",
+  "title": "Suburban fire districts (Jefferson County)",
+  "title_es": "Distritos de bomberos suburbanos (condado de Jefferson)",
+  "description": "Which suburban fire protection district covers each part of Jefferson County outside the Louisville Fire Department area.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC)",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataPublicSafety/MapServer/1",
+   "fields": {
+    "JCFD_DIST": "name",
+    "JCFDNUM": "number",
+    "JCFD_WEB": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "ky-louisville-warning-sirens",
+  "state": "KY",
+  "title": "Outdoor warning sirens (Louisville area)",
+  "title_es": "Sirenas de alerta (área de Louisville)",
+  "description": "Community outdoor warning sirens in Jefferson and nearby counties that sound for tornado warnings and other emergencies, with location and coverage radius in feet.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC) / Louisville Metro Emergency Management",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataPublicSafety/MapServer/6",
+   "fields": {
+    "SILOCAL": "name",
+    "SIADDRESS": "address",
+    "COUNTY": "county",
+    "SIRADIUS": "radius_ft"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "ky-louisville-recycling-locations",
+  "state": "KY",
+  "title": "Recycling drop-off sites (Louisville)",
+  "title_es": "Centros de reciclaje (Louisville)",
+  "description": "Public recycling drop-off locations in Jefferson County, with what they accept and opening hours.",
+  "group": "infra",
+  "category": "point",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC)",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataSociety/MapServer/6",
+   "fields": {
+    "SITE_NAME": "name",
+    "ADDRESS": "address",
+    "RECYC_MAT": "materials",
+    "RECYC_TYPE": "kind",
+    "HOURS_OPEN": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ky-louisville-garbage-days",
+  "state": "KY",
+  "title": "Garbage pickup routes (Louisville)",
+  "title_es": "Rutas de recolección de basura (Louisville)",
+  "description": "Louisville Metro garbage collection routes inside the Urban Services District. The day is a number: 1 = Monday through 5 = Friday.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC) / Louisville Metro Public Works",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataSociety/MapServer/12",
+   "fields": {
+    "SRA_GARB": "route",
+    "SRA_DAY": "day"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 61
+  }
+ },
+ {
+  "name": "ky-louisville-recycling-days",
+  "state": "KY",
+  "title": "Recycling pickup routes (Louisville)",
+  "title_es": "Rutas de recolección de reciclaje (Louisville)",
+  "description": "Louisville Metro curbside recycling routes. The day is a number: 1 = Monday through 5 = Friday.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC) / Louisville Metro Public Works",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataSociety/MapServer/14",
+   "fields": {
+    "SRA_RECYCL": "route",
+    "RECY_DAY": "day"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "ky-louisville-junk-pickup",
+  "state": "KY",
+  "title": "Junk set-out areas (Louisville)",
+  "title_es": "Zonas de recolección de objetos grandes (Louisville)",
+  "description": "Louisville Metro junk (large item) set-out areas: your area's week and pickup day, with a link to schedule.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC) / Louisville Metro Public Works",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataSociety/MapServer/13",
+   "fields": {
+    "SRA_WEEK": "week",
+    "BWA_ID": "area",
+    "BWA_DAY": "day",
+    "URL": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "ky-louisville-community-ministries",
+  "state": "KY",
+  "title": "Community ministries: food and bill help (Louisville)",
+  "title_es": "Ministerios comunitarios: ayuda con comida y facturas (Louisville)",
+  "description": "Jefferson County's community ministries that run food pantries and emergency help with rent and utilities, with the ZIP codes each one serves, pantry hours and how to ask for help.",
+  "group": "help",
+  "category": "point",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC)",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataSociety/MapServer/2",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "PHONE": "phone",
+    "WEB": "url",
+    "ZIPSSERVED": "zips_served",
+    "FOOD": "food_help",
+    "FINANCIAL": "financial_help"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ky-louisville-neighborhood-places",
+  "state": "KY",
+  "title": "Neighborhood Place service areas (Louisville)",
+  "title_es": "Áreas de servicio de Neighborhood Place (Louisville)",
+  "description": "Neighborhood Place centers are one-stop offices for public benefits (SNAP, Medicaid, KTAP), health and family services; this shows which center serves your area.",
+  "group": "help",
+  "category": "boundary",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC)",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataSociety/MapServer/3",
+   "fields": {
+    "NBRHDPLACE": "name",
+    "ADDRESS": "address",
+    "NPPHONE": "phone",
+    "LINK": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "ky-louisville-metro-parks",
+  "state": "KY",
+  "title": "Metro parks (Louisville)",
+  "title_es": "Parques metropolitanos (Louisville)",
+  "description": "Louisville Metro parks with acreage and amenities such as restrooms, playgrounds, sprayground, hiking, fishing and camping.",
+  "group": "nature",
+  "category": "park",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC) / Louisville Parks and Recreation",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataEnvironment/MapServer/0",
+   "fields": {
+    "PARK_NAME": "name",
+    "PARK_TYPE": "kind",
+    "PARK_ACRE": "acres",
+    "FULL_ADDRESS": "address",
+    "RESTROOM": "restrooms",
+    "PLAYGROUND": "playground",
+    "SPRAYGROUND": "sprayground",
+    "HIKING": "hiking",
+    "FISHING": "fishing",
+    "CAMPING": "camping",
+    "PICNIC": "picnic",
+    "PARK_WEB": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 59
+  }
+ },
+ {
+  "name": "ky-louisville-bikeways",
+  "state": "KY",
+  "title": "Bikeways (Louisville)",
+  "title_es": "Ciclovías (Louisville)",
+  "description": "Bike lanes, shared lanes and paths in Jefferson County, with the kind of protection from traffic.",
+  "group": "roads",
+  "category": "info",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC) / Louisville Metro Public Works",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataTransportation/MapServer/0",
+   "fields": {
+    "ROADNAME": "name",
+    "MAP_TYPE": "kind",
+    "PROTECTION": "protection",
+    "PROTECTIONTYPE": "protection_type"
+   },
+   "geometry": "line",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 1119
+  }
+ },
+ {
+  "name": "ky-louisville-snow-routes",
+  "state": "KY",
+  "title": "Snow routes (Louisville Metro)",
+  "title_es": "Rutas de nieve (Louisville Metro)",
+  "description": "Streets Louisville Metro Public Works plows and salts, with the route and snow district.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC) / Louisville Metro Public Works",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataTransportation/MapServer/1",
+   "fields": {
+    "ROADNAME": "name",
+    "ROUTE": "route",
+    "SNOW_DIST": "district",
+    "STATE_OWND": "state_road"
+   },
+   "geometry": "line",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "ky-louisville-msd-capital-projects",
+  "state": "KY",
+  "title": "Sewer and drainage projects (Louisville MSD)",
+  "title_es": "Proyectos de alcantarillado y drenaje (MSD de Louisville)",
+  "description": "Current Metropolitan Sewer District construction projects (sewers, drainage, flood protection) with status, estimated cost and start and end dates.",
+  "group": "infra",
+  "category": "roadops",
+  "source": "Louisville and Jefferson County Metropolitan Sewer District (MSD)",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/MsdGis/Capital_Projects/MapServer/0",
+   "fields": {
+    "PROJECT_NAME": "name",
+    "MSD_SERVICE_TYPE": "service",
+    "MSD_PROGRAM_TYPE": "program",
+    "MSD_PROJECT_TYPE": "kind",
+    "PROJECT_STATUS": "status",
+    "ESTIMATED_COST": "cost",
+    "PROJECT_START_DATE": "start",
+    "PROJECT_END_DATE": "end"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.8,
+    38.2,
+    -85.7,
+    38.27
+   ],
+   "features_in_probe": 91
+  }
+ },
+ {
+  "name": "ky-lexington-zoning",
+  "state": "KY",
+  "title": "Zoning (Lexington)",
+  "title_es": "Zonificación (Lexington)",
+  "description": "Zoning district for every lot in Lexington-Fayette County (for example R-1E single-family, B-1 neighborhood business, A-R agricultural rural), with a link to the zoning code that explains it.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Zoning/FeatureServer/0",
+   "fields": {
+    "ZONING": "code",
+    "LINK": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 501
+  }
+ },
+ {
+  "name": "ky-lexington-parcels",
+  "state": "KY",
+  "title": "Parcels (Lexington)",
+  "title_es": "Parcelas (Lexington)",
+  "description": "Property lot lines in Lexington-Fayette County with the street address, PVA parcel number, tax class and acreage; owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Parcel/FeatureServer/0",
+   "fields": {
+    "PVANUM": "parcel_id",
+    "ADDRESS": "address",
+    "CLASS": "kind",
+    "PVA_ACRE": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.51,
+    38.04,
+    -84.49,
+    38.055
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "ky-lexington-council-districts",
+  "state": "KY",
+  "title": "Urban County Council districts (Lexington)",
+  "title_es": "Distritos del Concejo (Lexington)",
+  "description": "The 12 Lexington-Fayette Urban County Council districts, with a link to each district's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Council_District/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "district",
+    "URL": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "ky-lexington-school-board-districts",
+  "state": "KY",
+  "title": "School board districts (Fayette County)",
+  "title_es": "Distritos de la junta escolar (condado de Fayette)",
+  "description": "The five Fayette County Public Schools board member districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/School_Board_District/FeatureServer/0",
+   "fields": {
+    "SCHOOL": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ky-lexington-polling-places",
+  "state": "KY",
+  "title": "Polling places 2026 (Lexington)",
+  "title_es": "Lugares de votación 2026 (Lexington)",
+  "description": "Fayette County voting locations for the 2026 elections, with the room inside the building and the LexTran bus route that stops nearby.",
+  "group": "civic",
+  "category": "point",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS / Fayette County Clerk",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Voting_Area_Locations___2026/FeatureServer/0",
+   "fields": {
+    "LOCATION": "name",
+    "ADDRESS": "address",
+    "VOTING_AREA": "room",
+    "LEXTRAN_ROUTE": "bus_route"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "ky-lexington-parks",
+  "state": "KY",
+  "title": "Parks (Lexington)",
+  "title_es": "Parques (Lexington)",
+  "description": "Lexington-Fayette parks with their type (neighborhood, community, regional and so on), address and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS / Lexington Parks and Recreation",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Park/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "PRTYPE": "kind",
+    "ADDRESS": "address",
+    "ACREAGE": "acres",
+    "ZIP": "zip"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "ky-lexington-greenways",
+  "state": "KY",
+  "title": "Greenways (Lexington)",
+  "title_es": "Corredores verdes (Lexington)",
+  "description": "Public greenway land along Lexington's streams, with the watershed and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Greenway_Public/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "label": "kind",
+    "acreage": "acres",
+    "watershed": "watershed"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "ky-lexington-bike-network",
+  "state": "KY",
+  "title": "Bike network (Lexington)",
+  "title_es": "Red de ciclovías (Lexington)",
+  "description": "Lexington's bike lanes, shared-use trails and bike routes, with the facility type, whether it is on or off road and whether it is built or planned.",
+  "group": "roads",
+  "category": "info",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Bicycle_Network_Public_View/FeatureServer/0",
+   "fields": {
+    "name_facility": "name",
+    "type_facility": "kind",
+    "type_road": "road",
+    "from_": "from",
+    "to_": "to",
+    "status": "status",
+    "yearcomplete": "year",
+    "length_miles": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 199
+  }
+ },
+ {
+  "name": "ky-lexington-snow-emergency-routes",
+  "state": "KY",
+  "title": "Snow emergency routes (Lexington)",
+  "title_es": "Rutas de emergencia por nieve (Lexington)",
+  "description": "Streets Lexington clears first in a snowstorm; parking may be banned on them during a snow emergency.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Snow_Emergency_Route/FeatureServer/0",
+   "fields": {
+    "ROADNAME": "name"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 595
+  }
+ },
+ {
+  "name": "ky-lexington-warning-sirens",
+  "state": "KY",
+  "title": "Outdoor warning sirens (Lexington)",
+  "title_es": "Sirenas de alerta (Lexington)",
+  "description": "Outdoor warning sirens in Lexington-Fayette County that sound for tornado warnings.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS / Lexington Emergency Management",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Outdoor_Warning_Siren/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "STATUS": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "ky-lexington-historic-overlay",
+  "state": "KY",
+  "title": "Local historic districts (Lexington H-1)",
+  "title_es": "Distritos históricos locales (Lexington H-1)",
+  "description": "Lexington's H-1 historic overlay districts and landmarks, where exterior changes need approval from the Board of Architectural Review.",
+  "group": "places",
+  "category": "boundary",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/H1_Overlay/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "LINK": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "ky-lexington-national-register-districts",
+  "state": "KY",
+  "title": "National Register historic districts (Lexington)",
+  "title_es": "Distritos históricos del Registro Nacional (Lexington)",
+  "description": "Historic districts in Lexington-Fayette County listed on the National Register of Historic Places, with the listing date.",
+  "group": "places",
+  "category": "boundary",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/National_Register_District/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "DATE": "listed"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "ky-lexington-recycling-centers",
+  "state": "KY",
+  "title": "Recycling drop-off centers (Lexington)",
+  "title_es": "Centros de reciclaje (Lexington)",
+  "description": "Lexington's recycling and convenience centers where residents can drop off recycling, with hours and open days.",
+  "group": "infra",
+  "category": "point",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS / Lexington Waste Management",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Mixed_recycling_locations_view_public/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "office_hou": "hours",
+    "working_da": "days"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "ky-lexington-waste-quadrants",
+  "state": "KY",
+  "title": "Waste collection areas (Lexington)",
+  "title_es": "Zonas de recolección de residuos (Lexington)",
+  "description": "Lexington Waste Management collection quadrants (A to E); your quadrant sets your yard waste and bulky item schedule on the city's collection calendar.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS / Lexington Waste Management",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Waste_Management_Area/FeatureServer/0",
+   "fields": {
+    "QUAD": "area"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ky-lexington-park-projects",
+  "state": "KY",
+  "title": "Park improvement projects (Lexington)",
+  "title_es": "Proyectos de mejoras en parques (Lexington)",
+  "description": "Planned and active Lexington Parks and Recreation capital projects with phase, funding, expected completion and a link to the project tracker.",
+  "group": "growth",
+  "category": "info",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS / Lexington Parks and Recreation",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/CIP_Projects_Parks_Public/FeatureServer/0",
+   "fields": {
+    "projname": "name",
+    "projdesc": "description",
+    "projphase": "phase",
+    "status": "status",
+    "antcomp_season_year": "expected",
+    "funding": "funding",
+    "website": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "ky-lexington-right-of-way-permits",
+  "state": "KY",
+  "title": "Street and sidewalk work permits (Lexington)",
+  "title_es": "Permisos de obras en calles y aceras (Lexington)",
+  "description": "Right-of-way permits for utility and other work in Lexington streets and sidewalks, with what is being done, the dates and status.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Lexington-Fayette Urban County Government (LFUCG) GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/row_permits_open_view/FeatureServer/0",
+   "fields": {
+    "DescriptionOfWork": "description",
+    "PermitType": "kind",
+    "PermitCategory": "category",
+    "Status": "status",
+    "EstimatedStartDate": "start",
+    "EstimatedEndDate": "end"
+   },
+   "geometry": "point",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.53,
+    38.02,
+    -84.47,
+    38.07
+   ],
+   "features_in_probe": 679
+  }
+ },
+ {
+  "name": "ky-dam-inundation-areas",
+  "state": "KY",
+  "title": "Dam breach flood areas (Kentucky)",
+  "title_es": "Zonas de inundación por rotura de presa (Kentucky)",
+  "description": "Approximate areas that would flood if a regulated dam failed, mapped by the Kentucky Division of Water for emergency planning. If you live inside one, know your evacuation route.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Kentucky Energy and Environment Cabinet, Division of Water (via KyGovMaps)",
+  "view": {
+   "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/dow_dam_inundation_areas/FeatureServer/0",
+   "fields": {
+    "DAMNAME": "dam",
+    "Dam_ID": "dam_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.0,
+    37.3,
+    -83.5,
+    38.6
+   ],
+   "features_in_probe": 103
+  }
+ },
+ {
+  "name": "ky-wellhead-protection-areas",
+  "state": "KY",
+  "title": "Wellhead protection areas (Kentucky)",
+  "title_es": "Zonas de protección de pozos públicos (Kentucky)",
+  "description": "Land around public drinking water wells and springs where activities are managed to keep the groundwater clean, with the water system, aquifer and status.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Kentucky Energy and Environment Cabinet, Division of Water (via KyGovMaps)",
+  "view": {
+   "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/dow_wellhead_protection_areas/FeatureServer/0",
+   "fields": {
+    "SYS_NAME": "water_system",
+    "PWS_ID": "system_id",
+    "COUNTY": "county",
+    "AQUIFER": "aquifer",
+    "Status": "status",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.0,
+    37.3,
+    -83.5,
+    38.6
+   ],
+   "features_in_probe": 53
+  }
+ },
+ {
+  "name": "ky-trailheads",
+  "state": "KY",
+  "title": "Trailheads (Kentucky)",
+  "title_es": "Inicios de senderos (Kentucky)",
+  "description": "Trailheads across Kentucky with the trail they serve and whether there is parking, restrooms, shelter and picnic tables.",
+  "group": "nature",
+  "category": "park",
+  "source": "Kentucky Office of Outdoor Recreation / Commonwealth Office of Technology (KyGovMaps)",
+  "view": {
+   "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Ky_Recreational_Trailheads/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "TRAIL_NAME": "trail",
+    "PARKING": "parking",
+    "RESTROOMS": "restrooms",
+    "SHELTER": "shelter",
+    "PICNIC": "picnic",
+    "AGENCY": "managed_by"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.0,
+    37.3,
+    -83.5,
+    38.6
+   ],
+   "features_in_probe": 103
+  }
+ },
+ {
+  "name": "ky-hunting-area-entrances",
+  "state": "KY",
+  "title": "Public hunting area entrances (Kentucky)",
+  "title_es": "Entradas a áreas públicas de caza (Kentucky)",
+  "description": "Entrances to Kentucky Department of Fish and Wildlife public hunting areas, with a link to each area's rules and details.",
+  "group": "nature",
+  "category": "point",
+  "source": "Kentucky Department of Fish and Wildlife Resources (via KyGovMaps)",
+  "view": {
+   "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Public_Hunting_Area_Entrances_in_Kentucky/FeatureServer/0",
+   "fields": {
+    "AREANAME": "name",
+    "More_Info": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.0,
+    37.3,
+    -83.5,
+    38.6
+   ],
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "ky-wildlife-viewing-sites",
+  "state": "KY",
+  "title": "Wildlife viewing sites (Kentucky)",
+  "title_es": "Sitios para observar fauna (Kentucky)",
+  "description": "Places recommended by Kentucky Fish and Wildlife to watch elk, birds and other wildlife, with tips for each site.",
+  "group": "nature",
+  "category": "point",
+  "source": "Kentucky Department of Fish and Wildlife Resources (via KyGovMaps)",
+  "view": {
+   "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Wildlife_Viewing_Sites_in_Kentucky/FeatureServer/0",
+   "fields": {
+    "SiteName": "name",
+    "AreaName": "area",
+    "DETAIL": "description",
+    "Agency": "managed_by"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.0,
+    37.3,
+    -83.5,
+    38.6
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ky-mesonet",
+  "state": "KY",
+  "title": "Kentucky Mesonet weather stations",
+  "title_es": "Estaciones meteorológicas Kentucky Mesonet",
+  "description": "Live readings from Kentucky Mesonet weather stations: temperature, humidity, wind and rain so far today.",
+  "group": "weather",
+  "category": "info",
+  "source": "Kentucky Mesonet (Western Kentucky University) via KyGovMaps",
+  "view": {
+   "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/ky_mesonet_feed_wgs84_gdb/FeatureServer/0",
+   "fields": {
+    "location": "name",
+    "county": "county",
+    "local_time": "observed",
+    "air_temperature": "temperature",
+    "relative_humidity": "humidity",
+    "wind_speed": "wind",
+    "wind_direction": "wind_direction",
+    "peak_wind": "peak_wind",
+    "precipitation_today": "rain_today",
+    "weblink": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.0,
+    37.3,
+    -83.5,
+    38.6
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "ky-highway-plan-projects",
+  "state": "KY",
+  "title": "Highway plan projects (KYTC)",
+  "title_es": "Proyectos del plan de carreteras (KYTC)",
+  "description": "Statewide road projects in Kentucky's current highway plan (SHIFT 2026): what will be built, the county, plan year, status and total cost.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Kentucky Transportation Cabinet (KYTC)",
+  "view": {
+   "url": "https://services2.arcgis.com/CcI36Pduqd0OR4W9/arcgis/rest/services/SHIFT_2026_Statewide_Projects/FeatureServer/0",
+   "fields": {
+    "ProjectIdentifier": "project_id",
+    "ProjectWorkType": "kind",
+    "Project_Description": "description",
+    "County": "county",
+    "PlanYear_1": "plan_year",
+    "DefinitionQueryStatus": "status",
+    "TOTAL": "cost"
+   },
+   "geometry": "line",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.5,
+    36.5,
+    -82.0,
+    39.1
+   ],
+   "features_in_probe": 40
+  }
+ },
+ {
+  "name": "tn-nashville-zoning",
+  "state": "TN",
+  "title": "Zoning (Nashville)",
+  "title_es": "Zonificación (Nashville)",
+  "description": "Base zoning district for every lot in Nashville-Davidson County (for example RS5 single-family, MUL mixed use, IWD industrial), with the ordinance that set it.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Metropolitan Government of Nashville and Davidson County Planning Department",
+  "view": {
+   "url": "https://maps.nashville.gov/arcgis/rest/services/Zoning/Zoning/MapServer/0",
+   "fields": {
+    "ZONE_DESC": "code",
+    "NAME": "name",
+    "ORDINANCE": "ordinance",
+    "ORD_DATE": "adopted"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 1163
+  }
+ },
+ {
+  "name": "tn-nashville-zoning-overlays",
+  "state": "TN",
+  "title": "Zoning overlays (Nashville)",
+  "title_es": "Superposiciones de zonificación (Nashville)",
+  "description": "Overlay districts layered on top of base zoning in Nashville: historic and conservation overlays, urban design overlays, airport impact areas and others.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Metropolitan Government of Nashville and Davidson County Planning Department",
+  "view": {
+   "url": "https://maps.nashville.gov/arcgis/rest/services/Zoning/ZoningOverlayDistricts/MapServer/0",
+   "fields": {
+    "ZONE_DESC": "kind",
+    "NAME": "name",
+    "ORDINANCE": "ordinance",
+    "ORD_DATE": "adopted"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 133
+  }
+ },
+ {
+  "name": "tn-nashville-community-character",
+  "state": "TN",
+  "title": "Community character policy (Nashville plan)",
+  "title_es": "Política de carácter comunitario (plan de Nashville)",
+  "description": "Nashville's land use plan (Community Character Manual): the policy for each area, such as neighborhood maintenance, center or conservation, which guides future rezonings.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Metropolitan Government of Nashville and Davidson County Planning Department",
+  "view": {
+   "url": "https://maps.nashville.gov/arcgis/rest/services/Planning/CCM/MapServer/2",
+   "fields": {
+    "PolicyDesc": "policy",
+    "PolicyCode": "code",
+    "Transect": "transect",
+    "DateAdopted": "adopted",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.8,
+    36.14,
+    -86.78,
+    36.155
+   ],
+   "features_in_probe": 78
+  }
+ },
+ {
+  "name": "tn-nashville-parcels",
+  "state": "TN",
+  "title": "Parcels (Nashville)",
+  "title_es": "Parcelas (Nashville)",
+  "description": "Property lot lines in Nashville-Davidson County with address, land use, acreage, zoning and the assessor's appraised and assessed values; owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Metropolitan Government of Nashville and Davidson County Assessor of Property",
+  "view": {
+   "url": "https://maps.nashville.gov/arcgis/rest/services/Cadastral/Parcels/MapServer/0",
+   "fields": {
+    "STANPAR": "parcel_id",
+    "PropAddr": "address",
+    "PropCity": "city",
+    "LUDesc": "land_use",
+    "Acres": "acres",
+    "Zoning": "zoning",
+    "TotlAppr": "appraised_value",
+    "TotlAssd": "assessed_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.8,
+    36.14,
+    -86.79,
+    36.15
+   ],
+   "features_in_probe": 1326
+  }
+ },
+ {
+  "name": "tn-nashville-polling-places",
+  "state": "TN",
+  "title": "Polling places (Davidson County)",
+  "title_es": "Lugares de votación (condado de Davidson)",
+  "description": "Election Day polling place for each Davidson County precinct, with hours and the date of the next election.",
+  "group": "civic",
+  "category": "point",
+  "source": "Metropolitan Government of Nashville and Davidson County Election Commission",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Davidson_County_Voting_Locations_View/FeatureServer/0",
+   "fields": {
+    "FacilityName": "name",
+    "Precinct": "precinct",
+    "Address": "address",
+    "City": "city",
+    "Hours": "hours",
+    "NextElection": "next_election"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "tn-nashville-council-districts",
+  "state": "TN",
+  "title": "Metro Council districts (Nashville)",
+  "title_es": "Distritos del Concejo Metropolitano (Nashville)",
+  "description": "The 35 Nashville Metro Council districts, with a link to each district's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Metropolitan Government of Nashville and Davidson County",
+  "view": {
+   "url": "https://maps.nashville.gov/arcgis/rest/services/Elections/PoliticalDistricts/MapServer/0",
+   "fields": {
+    "DISTRICT": "district",
+    "Website": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "tn-nashville-school-board-districts",
+  "state": "TN",
+  "title": "School board districts (Metro Nashville Public Schools)",
+  "title_es": "Distritos de la junta escolar (Escuelas Públicas de Nashville)",
+  "description": "The nine Metro Nashville Public Schools board districts, with a link to each district's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Metropolitan Government of Nashville and Davidson County",
+  "view": {
+   "url": "https://maps.nashville.gov/arcgis/rest/services/Elections/PoliticalDistricts/MapServer/1",
+   "fields": {
+    "District": "district",
+    "Website": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "tn-nashville-warning-sirens",
+  "state": "TN",
+  "title": "Outdoor warning sirens (Nashville)",
+  "title_es": "Sirenas de alerta (Nashville)",
+  "description": "Outdoor warning sirens in Davidson County that sound for tornado warnings, with coverage radius.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Metropolitan Government of Nashville and Davidson County Office of Emergency Management",
+  "view": {
+   "url": "https://maps.nashville.gov/arcgis/rest/services/PublicSafety/PublicSafety/MapServer/2",
+   "fields": {
+    "SiteName": "name",
+    "Address": "address",
+    "City": "city",
+    "SirenType": "kind",
+    "Radius": "radius"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "tn-nashville-parks",
+  "state": "TN",
+  "title": "Metro parks (Nashville)",
+  "title_es": "Parques metropolitanos (Nashville)",
+  "description": "Nashville Metro parks with hours, acreage and amenities: playgrounds, restrooms, splash pads, dog parks, trails, fishing and more.",
+  "group": "nature",
+  "category": "park",
+  "source": "Metropolitan Government of Nashville and Davidson County Parks and Recreation",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Park_Boundary_View/FeatureServer/6",
+   "fields": {
+    "Name": "name",
+    "Classification": "kind",
+    "Acres": "acres",
+    "Address": "address",
+    "Hours": "hours",
+    "Playground": "playground",
+    "Restroom": "restrooms",
+    "Splashpad": "splash_pad",
+    "DogPark": "dog_park",
+    "Hiking": "hiking",
+    "Fishing": "fishing",
+    "Swimming": "swimming",
+    "CommunityCenter": "community_center",
+    "Website": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 45
+  }
+ },
+ {
+  "name": "tn-nashville-greenways",
+  "state": "TN",
+  "title": "Greenways (Nashville)",
+  "title_es": "Corredores verdes (Nashville)",
+  "description": "Nashville's greenway trails with surface, difficulty and length in miles.",
+  "group": "nature",
+  "category": "park",
+  "source": "Metropolitan Government of Nashville and Davidson County Parks and Recreation",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Greenways_View/FeatureServer/5",
+   "fields": {
+    "GreenwayTrailName": "name",
+    "Greenway": "greenway",
+    "SurfaceMaterial": "surface",
+    "Difficulty": "difficulty",
+    "Mileage": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "tn-nashville-park-trails",
+  "state": "TN",
+  "title": "Park trails (Nashville)",
+  "title_es": "Senderos de parques (Nashville)",
+  "description": "Hiking, mountain bike and walking trails inside Nashville Metro parks, with surface and length.",
+  "group": "nature",
+  "category": "park",
+  "source": "Metropolitan Government of Nashville and Davidson County Parks and Recreation",
+  "view": {
+   "url": "https://maps.nashville.gov/arcgis/rest/services/Transportation/WalknBike/MapServer/3",
+   "fields": {
+    "TrailLabel": "name",
+    "TrailName": "park",
+    "TrailType": "kind",
+    "SurfaceMaterial": "surface",
+    "Difficulty": "difficulty",
+    "Mileage": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "tn-nashville-national-register-districts",
+  "state": "TN",
+  "title": "National Register historic districts (Nashville)",
+  "title_es": "Distritos históricos del Registro Nacional (Nashville)",
+  "description": "Historic districts in Nashville-Davidson County listed on the National Register of Historic Places.",
+  "group": "places",
+  "category": "boundary",
+  "source": "Metropolitan Government of Nashville and Davidson County Historical Commission",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Historic_Districts_and_Properties/FeatureServer/2",
+   "fields": {
+    "DistrictName": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "tn-nashville-historic-properties",
+  "state": "TN",
+  "title": "Historic overlay properties (Nashville)",
+  "title_es": "Propiedades con designación histórica (Nashville)",
+  "description": "Lots inside Nashville's historic preservation and conservation zoning overlays or listed on the National Register; exterior work on many of them needs a Historic Zoning Commission permit.",
+  "group": "places",
+  "category": "boundary",
+  "source": "Metropolitan Government of Nashville and Davidson County Historical Commission",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Historic_Districts_and_Properties/FeatureServer/3",
+   "fields": {
+    "Name": "name",
+    "HistoricDesignation": "designation",
+    "ParcelID": "parcel_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "tn-nashville-convenience-centers",
+  "state": "TN",
+  "title": "Convenience centers and recycling drop-off (Nashville)",
+  "title_es": "Centros de conveniencia y reciclaje (Nashville)",
+  "description": "Metro Waste Services convenience centers and recycling drop-off sites, with hours and what each accepts (household trash, furniture and appliances, household hazardous waste, glass and more).",
+  "group": "infra",
+  "category": "point",
+  "source": "Metropolitan Government of Nashville and Davidson County Waste Services",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Convenience_Centers_and_Recycling_Dropoff_Locations_Vw/FeatureServer/0",
+   "fields": {
+    "FacilityName": "name",
+    "FacilityType": "kind",
+    "Address": "address",
+    "City": "city",
+    "Hours": "hours",
+    "HolidayClosing": "holidays",
+    "Glass": "glass",
+    "Plastic": "plastic",
+    "ResidentialTrash": "household_trash",
+    "ResidentialFurnApp": "furniture_appliances",
+    "HouseholdHazardous": "hazardous_waste",
+    "Website": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "tn-nashville-social-services-sites",
+  "state": "TN",
+  "title": "Metro Social Services sites (Nashville)",
+  "title_es": "Sitios de Servicios Sociales Metropolitanos (Nashville)",
+  "description": "Metro Social Services offices and congregate meal sites, with the services each offers such as senior meals, case management, homeless services and information and referral.",
+  "group": "help",
+  "category": "point",
+  "source": "Metropolitan Government of Nashville and Davidson County Social Services",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Metro_Social_Services_Locations_and_Services_Offered_View/FeatureServer/0",
+   "fields": {
+    "Organization_Type": "kind",
+    "Building": "name",
+    "Address": "address",
+    "City": "city",
+    "Phone_Number": "phone",
+    "Senior_Adult_Meals": "senior_meals",
+    "Case_Management": "case_management",
+    "Homeless_Services": "homeless_services",
+    "Information_and_Referral": "referrals",
+    "Counseling": "counseling",
+    "Meal_Delivery_to_Home_Bound_Res": "home_meal_delivery",
+    "Notes": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "tn-nashville-water-outages",
+  "state": "TN",
+  "title": "Water service outages (Nashville)",
+  "title_es": "Cortes del servicio de agua (Nashville)",
+  "description": "Current Metro Water Services outages and repairs: where water service is or will be shut off.",
+  "group": "live",
+  "category": "info",
+  "source": "Metropolitan Government of Nashville and Davidson County Metro Water Services",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Metro_Water_Services_Outages_Feature_Layer_view2/FeatureServer/0",
+   "fields": {
+    "Address": "address",
+    "City": "city",
+    "Zipcode": "zip",
+    "Notes": "notes",
+    "Date_Created": "reported",
+    "Date_Modified": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "tn-nashville-row-permits",
+  "state": "TN",
+  "title": "Street work permits (Nashville)",
+  "title_es": "Permisos de obras en la vía pública (Nashville)",
+  "description": "Active right-of-way permits in Nashville: excavation, lane closures and other work in streets and sidewalks, with the street, scheduled dates and work days.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Metropolitan Government of Nashville and Davidson County Department of Transportation (NDOT)",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Active_Right-of-Way_Permits/FeatureServer/0",
+   "fields": {
+    "Permit__Type": "kind",
+    "Permit__Description": "description",
+    "Status": "status",
+    "Onstreet": "street",
+    "Fromstreet": "from",
+    "Tostreet": "to",
+    "Scheduled__Start": "start",
+    "Scheduled__End": "end",
+    "Days_to__Work": "work_days"
+   },
+   "geometry": "point",
+   "min_zoom": 14,
+   "where": "Status = 'ACTIVE'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "tn-nashville-paving-projects",
+  "state": "TN",
+  "title": "Paving projects (Nashville)",
+  "title_es": "Proyectos de repavimentación (Nashville)",
+  "description": "Planned and in-progress street repaving in Nashville, with the segment, status and estimated dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Metropolitan Government of Nashville and Davidson County Department of Transportation (NDOT)",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Roadway_Paving_Management_Projects/FeatureServer/0",
+   "fields": {
+    "ProjectName": "name",
+    "Status": "status",
+    "Priority": "priority",
+    "ProjectYear": "year",
+    "EstStartDate": "start",
+    "EstEndDate": "end",
+    "CouncilDistrict": "council_district"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "Status <> 'Complete'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "tn-nashville-capital-projects",
+  "state": "TN",
+  "title": "Capital projects (Nashville)",
+  "title_es": "Proyectos de obras públicas (Nashville)",
+  "description": "Metro Nashville capital projects such as bridges, buildings and parks, with status, phase, budget and notes to the public (for example planned road closures).",
+  "group": "growth",
+  "category": "info",
+  "source": "Metropolitan Government of Nashville and Davidson County",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Capital_Project_Management_System_view/FeatureServer/2",
+   "fields": {
+    "ProjectName": "name",
+    "Department": "department",
+    "ProjectCategory": "kind",
+    "ProjectStatus": "status",
+    "ProjectPhase": "phase",
+    "RevisedBudget": "budget",
+    "EstStartDate": "start",
+    "EstFinishDate": "end",
+    "Description": "description",
+    "NotesToPublic": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "tn-nashville-capital-project-lines",
+  "state": "TN",
+  "title": "Capital projects along streets (Nashville)",
+  "title_es": "Proyectos de obras públicas en calles (Nashville)",
+  "description": "Metro Nashville capital projects along streets, sidewalks, greenways and pipes, with status, phase, budget and notes to the public.",
+  "group": "growth",
+  "category": "info",
+  "source": "Metropolitan Government of Nashville and Davidson County",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Capital_Project_Management_System_view/FeatureServer/1",
+   "fields": {
+    "ProjectName": "name",
+    "Department": "department",
+    "ProjectCategory": "kind",
+    "ProjectStatus": "status",
+    "ProjectPhase": "phase",
+    "RevisedBudget": "budget",
+    "EstStartDate": "start",
+    "EstFinishDate": "end",
+    "Description": "description",
+    "NotesToPublic": "notes"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 158
+  }
+ },
+ {
+  "name": "tn-nashville-traffic-calming",
+  "state": "TN",
+  "title": "Traffic calming projects (Nashville)",
+  "title_es": "Proyectos para calmar el tráfico (Nashville)",
+  "description": "Streets in Nashville's neighborhood traffic calming program (speed humps and similar), with status and expected install month.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Metropolitan Government of Nashville and Davidson County Department of Transportation (NDOT)",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Traffic_Calming_Projects_view/FeatureServer/0",
+   "fields": {
+    "OnStreet": "street",
+    "BeginStreet": "from",
+    "EndStreet": "to",
+    "Neighborhood": "neighborhood",
+    "Status": "status",
+    "AnticpatedInstallMonth": "expected",
+    "CompleteDate": "completed"
+   },
+   "geometry": "line",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 192
+  }
+ },
+ {
+  "name": "tn-nashville-water-fountains",
+  "state": "TN",
+  "title": "Public drinking fountains (Nashville)",
+  "title_es": "Bebederos públicos (Nashville)",
+  "description": "Public water fountains and bottle-filling stations in Nashville, including dog bowls and ADA access, useful on hot days.",
+  "group": "help",
+  "category": "point",
+  "source": "Metropolitan Government of Nashville and Davidson County",
+  "view": {
+   "url": "https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Public_Water_Fountains_and_Hydration_Systems_view/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "location": "location",
+    "feat_type": "kind",
+    "ada": "ada",
+    "dog": "dog_bowl"
+   },
+   "geometry": "point",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.82,
+    36.13,
+    -86.74,
+    36.19
+   ],
+   "features_in_probe": 57
+  }
+ },
+ {
+  "name": "tn-memphis-road-closures",
+  "state": "TN",
+  "title": "Road closures (Memphis)",
+  "title_es": "Cierres de calles (Memphis)",
+  "description": "Streets the City of Memphis has closed for construction, events or emergencies, with which lanes are affected, dates and detour.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Memphis Engineering / Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/saWmpKJIUAjyyNVc/arcgis/rest/services/RoadClosures_Public/FeatureServer/1",
+   "fields": {
+    "street": "name",
+    "reason": "kind",
+    "direction": "direction",
+    "laneimpact": "lanes",
+    "description": "description",
+    "starttime": "start",
+    "endtime": "end",
+    "altroute": "detour"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "endtime IS NULL OR endtime > CURRENT_TIMESTAMP",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.07,
+    35.1,
+    -89.97,
+    35.17
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "tn-memphis-council-districts",
+  "state": "TN",
+  "title": "City Council districts (Memphis)",
+  "title_es": "Distritos del Concejo Municipal (Memphis)",
+  "description": "The seven single-member Memphis City Council districts (2023 lines).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Memphis",
+  "view": {
+   "url": "https://services2.arcgis.com/saWmpKJIUAjyyNVc/arcgis/rest/services/Council_Districts_2023/FeatureServer/0",
+   "fields": {
+    "CD": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.07,
+    35.1,
+    -89.97,
+    35.17
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "tn-memphis-council-super-districts",
+  "state": "TN",
+  "title": "City Council super districts (Memphis)",
+  "title_es": "Superdistritos del Concejo Municipal (Memphis)",
+  "description": "The two Memphis City Council super districts; each elects three at-large members.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Memphis",
+  "view": {
+   "url": "https://services2.arcgis.com/saWmpKJIUAjyyNVc/arcgis/rest/services/Super_District_2023/FeatureServer/0",
+   "fields": {
+    "SD": "super_district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.07,
+    35.1,
+    -89.97,
+    35.17
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "tn-memphis-landmark-districts",
+  "state": "TN",
+  "title": "Historic landmark districts (Memphis)",
+  "title_es": "Distritos históricos protegidos (Memphis)",
+  "description": "Memphis Landmarks Commission historic districts, where exterior changes, demolitions and new buildings need a certificate of appropriateness.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Memphis Division of Planning and Development",
+  "view": {
+   "url": "https://services2.arcgis.com/saWmpKJIUAjyyNVc/arcgis/rest/services/all_landmarks_districts_2025_WEB/FeatureServer/0",
+   "fields": {
+    "NAME2": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.07,
+    35.1,
+    -89.97,
+    35.17
+   ],
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "tn-memphis-future-land-use",
+  "state": "TN",
+  "title": "Future land use (Memphis 3.0 plan)",
+  "title_es": "Uso futuro del suelo (plan Memphis 3.0)",
+  "description": "The Memphis 3.0 comprehensive plan's future land use for each parcel, the degree of change expected (nurture, accelerate, sustain) and the building types and heights it allows.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Memphis Division of Planning and Development",
+  "view": {
+   "url": "https://services2.arcgis.com/saWmpKJIUAjyyNVc/arcgis/rest/services/Memphis_30_Future_Land_Use/FeatureServer/0",
+   "fields": {
+    "FLU": "land_use",
+    "Deg_of_chg": "change",
+    "Form_char": "form",
+    "Scale_ht": "height",
+    "PARCELID": "parcel_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.03,
+    35.12,
+    -90.01,
+    35.135
+   ],
+   "features_in_probe": 1475
+  }
+ },
+ {
+  "name": "tn-memphis-parks",
+  "state": "TN",
+  "title": "Parks (Memphis)",
+  "title_es": "Parques (Memphis)",
+  "description": "City of Memphis parks with type and size in acres.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Memphis Parks",
+  "view": {
+   "url": "https://services2.arcgis.com/saWmpKJIUAjyyNVc/arcgis/rest/services/City_of_Memphis_Parks/FeatureServer/3",
+   "fields": {
+    "Park_Name": "name",
+    "Park_Designation": "kind",
+    "Park_Status": "status",
+    "Park_Size_Acres": "acres",
+    "Park_Address_1": "address",
+    "Park_Zip": "zip"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.07,
+    35.1,
+    -89.97,
+    35.17
+   ],
+   "features_in_probe": 62
+  }
+ },
+ {
+  "name": "tn-shelby-local-parks",
+  "state": "TN",
+  "title": "Local parks (Shelby County)",
+  "title_es": "Parques locales (condado de Shelby)",
+  "description": "Park land of Memphis and the other Shelby County cities, with the managing city and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Memphis / Shelby County",
+  "view": {
+   "url": "https://maps.memphistn.gov/mapping/rest/services/Basemaps/Common_Services_PROD/MapServer/32",
+   "fields": {
+    "NAME": "name",
+    "Jursdictn": "managed_by",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.07,
+    35.1,
+    -89.97,
+    35.17
+   ],
+   "features_in_probe": 49
+  }
+ },
+ {
+  "name": "tn-memphis-paving-2026",
+  "state": "TN",
+  "title": "Street paving FY2026 (Memphis)",
+  "title_es": "Repavimentación año fiscal 2026 (Memphis)",
+  "description": "Memphis streets on the fiscal year 2026 paving list, with the street segment, status and scheduled date.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Memphis Public Works",
+  "view": {
+   "url": "https://maps.memphistn.gov/mapping/rest/services/PublicWorks/SM_Paving_Public/MapServer/2",
+   "fields": {
+    "On_Street": "street",
+    "From_Street": "from",
+    "To_Street": "to",
+    "Paving_Status": "status",
+    "Scheduled_Date": "scheduled",
+    "Paving_Date_Completed": "completed",
+    "Lane_Miles": "lane_miles"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.07,
+    35.1,
+    -89.97,
+    35.17
+   ],
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "tn-memphis-paving-2027",
+  "state": "TN",
+  "title": "Street paving FY2027 (Memphis)",
+  "title_es": "Repavimentación año fiscal 2027 (Memphis)",
+  "description": "Memphis streets on the fiscal year 2027 paving list, with the street segment, status and scheduled date.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Memphis Public Works",
+  "view": {
+   "url": "https://maps.memphistn.gov/mapping/rest/services/PublicWorks/SM_Paving_Public/MapServer/1",
+   "fields": {
+    "On_Street": "street",
+    "From_Street": "from",
+    "To_Street": "to",
+    "Paving_Status": "status",
+    "Scheduled_Date": "scheduled",
+    "Lane_Miles": "lane_miles"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.07,
+    35.1,
+    -89.97,
+    35.17
+   ],
+   "features_in_probe": 134
+  }
+ },
+ {
+  "name": "tn-memphis-neighborhoods",
+  "state": "TN",
+  "title": "Neighborhoods (Memphis)",
+  "title_es": "Vecindarios (Memphis)",
+  "description": "Named Memphis neighborhoods used by the city for planning and services.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Memphis",
+  "view": {
+   "url": "https://maps.memphistn.gov/mapping/rest/services/Basemaps/Common_Services_PROD/MapServer/35",
+   "fields": {
+    "NHOOD": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.07,
+    35.1,
+    -89.97,
+    35.17
+   ],
+   "features_in_probe": 56
+  }
+ },
+ {
+  "name": "tn-knox-zoning",
+  "state": "TN",
+  "title": "Zoning (Knoxville and Knox County)",
+  "title_es": "Zonificación (Knoxville y condado de Knox)",
+  "description": "Zoning district for every lot in Knoxville and unincorporated Knox County (for example RN-1 single-family, C-G general commercial), with acreage and any conditions attached to the rezoning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Knoxville-Knox County Planning",
+  "view": {
+   "url": "https://services1.arcgis.com/QWaOgwdmpqI9HUzf/arcgis/rest/services/KnoxvilleKnoxCountyZoning/FeatureServer/2",
+   "fields": {
+    "ZONE1": "code",
+    "ZONE2": "code_2",
+    "ZONE_TYPE": "jurisdiction",
+    "AREA_ACRES": "acres",
+    "CONDITIONS": "conditions",
+    "FORM_DESCR": "form_district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -83.96,
+    35.93,
+    -83.88,
+    35.99
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "tn-knoxville-zoning-overlays",
+  "state": "TN",
+  "title": "Zoning overlays (Knoxville)",
+  "title_es": "Superposiciones de zonificación (Knoxville)",
+  "description": "Knoxville overlay districts on top of base zoning, such as historic and neighborhood conservation overlays, with a link to the design guidelines.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Knoxville-Knox County Planning",
+  "view": {
+   "url": "https://services1.arcgis.com/QWaOgwdmpqI9HUzf/arcgis/rest/services/KnoxvilleKnoxCountyZoning/FeatureServer/0",
+   "fields": {
+    "OVERLAY_TYPE": "kind",
+    "DISTRICT_NAME": "name",
+    "DESIGN_URL": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -83.96,
+    35.93,
+    -83.88,
+    35.99
+   ],
+   "features_in_probe": 153
+  }
+ },
+ {
+  "name": "tn-knoxville-future-land-use",
+  "state": "TN",
+  "title": "Future land use (Knoxville)",
+  "title_es": "Uso futuro del suelo (Knoxville)",
+  "description": "The City of Knoxville's adopted future land use plan by sector; the code is the planned land use class (for example TDR traditional neighborhood residential, CI civic/institutional).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Knoxville-Knox County Planning",
+  "view": {
+   "url": "https://services1.arcgis.com/QWaOgwdmpqI9HUzf/arcgis/rest/services/KnoxvilleCityFutureLandUsePlan/FeatureServer/1",
+   "fields": {
+    "PRLU": "land_use",
+    "SECTORNAME": "sector",
+    "MU_DISTRICT": "mixed_use_district",
+    "AREA_ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -83.96,
+    35.93,
+    -83.88,
+    35.99
+   ],
+   "features_in_probe": 301
+  }
+ },
+ {
+  "name": "tn-knox-county-future-land-use",
+  "state": "TN",
+  "title": "Future land use place types (Knox County)",
+  "title_es": "Tipos de lugar del uso futuro del suelo (condado de Knox)",
+  "description": "Advance Knox comprehensive plan place types for unincorporated Knox County (for example RL rural living, SR suburban residential), which guide future rezonings.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Knoxville-Knox County Planning",
+  "view": {
+   "url": "https://services1.arcgis.com/QWaOgwdmpqI9HUzf/arcgis/rest/services/KnoxCountyFutureLandUsePlan/FeatureServer/1",
+   "fields": {
+    "PLACETYPE": "place_type",
+    "GPP_COMPATIBILITY": "growth_policy"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.05,
+    35.95,
+    -83.85,
+    36.1
+   ],
+   "features_in_probe": 278
+  }
+ },
+ {
+  "name": "tn-knox-greenways",
+  "state": "TN",
+  "title": "Greenways and trails (Knoxville and Knox County)",
+  "title_es": "Corredores verdes y senderos (Knoxville y condado de Knox)",
+  "description": "Greenways and park trails in Knoxville and Knox County, with surface, difficulty, bike access and who maintains them.",
+  "group": "nature",
+  "category": "park",
+  "source": "Knoxville-Knox County Planning",
+  "view": {
+   "url": "https://services1.arcgis.com/QWaOgwdmpqI9HUzf/arcgis/rest/services/GreenwaysAndTrails/FeatureServer/2",
+   "fields": {
+    "NAME": "name",
+    "LOCATION": "location",
+    "STATUS": "status",
+    "TYPOLOGY": "kind",
+    "SURFACE": "surface",
+    "BIKEACCESS": "bikes",
+    "DIFFCULTY": "difficulty",
+    "MAINTAIN": "maintained_by"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -83.96,
+    35.93,
+    -83.88,
+    35.99
+   ],
+   "features_in_probe": 258
+  }
+ },
+ {
+  "name": "tn-knox-parks",
+  "state": "TN",
+  "title": "Parks (Knoxville and Knox County)",
+  "title_es": "Parques (Knoxville y condado de Knox)",
+  "description": "City, county and school parks in Knox County with type, address, acreage and greenway connections.",
+  "group": "nature",
+  "category": "park",
+  "source": "Knoxville-Knox County Planning",
+  "view": {
+   "url": "https://services1.arcgis.com/QWaOgwdmpqI9HUzf/arcgis/rest/services/OpenDataParks/FeatureServer/4",
+   "fields": {
+    "NAME": "name",
+    "PARKCLASS": "kind",
+    "FACTYPE": "facility",
+    "STREET": "address",
+    "GIS_ACRES": "acres",
+    "MAINTAIN": "maintained_by",
+    "GWAYNAME": "greenway"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -83.96,
+    35.93,
+    -83.88,
+    35.99
+   ],
+   "features_in_probe": 84
+  }
+ },
+ {
+  "name": "tn-knoxville-national-register-districts",
+  "state": "TN",
+  "title": "National Register historic districts (Knoxville)",
+  "title_es": "Distritos históricos del Registro Nacional (Knoxville)",
+  "description": "Historic districts in Knoxville and Knox County listed on the National Register of Historic Places, with the listing date.",
+  "group": "places",
+  "category": "boundary",
+  "source": "Knoxville-Knox County Planning",
+  "view": {
+   "url": "https://services1.arcgis.com/QWaOgwdmpqI9HUzf/arcgis/rest/services/NatlRegHistDistrictsKnoxville/FeatureServer/407",
+   "fields": {
+    "NR_NAME": "name",
+    "NR_CITY": "city",
+    "NR_DTELIST": "listed",
+    "NR_STATUS": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -83.96,
+    35.93,
+    -83.88,
+    35.99
+   ],
+   "features_in_probe": 34
+  }
+ },
+ {
+  "name": "tn-knoxville-council-districts",
+  "state": "TN",
+  "title": "City Council districts (Knoxville)",
+  "title_es": "Distritos del Concejo Municipal (Knoxville)",
+  "description": "Knoxville's six City Council districts, with a link to each district's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Knoxville / Knoxville-Knox County Planning",
+  "view": {
+   "url": "https://services1.arcgis.com/QWaOgwdmpqI9HUzf/arcgis/rest/services/Knoxville_City_Council_Districts/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "district",
+    "WEBSITE": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -83.96,
+    35.93,
+    -83.88,
+    35.99
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "tn-knox-county-capital-projects",
+  "state": "TN",
+  "title": "Road and capital projects (Knox County)",
+  "title_es": "Proyectos de carreteras y obras (condado de Knox)",
+  "description": "Knox County Engineering and Public Works road and capital projects that are planned or under way, with phase, estimated cost and end date.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Knox County Engineering and Public Works",
+  "view": {
+   "url": "https://services1.arcgis.com/QWaOgwdmpqI9HUzf/arcgis/rest/services/CapitalProjects/FeatureServer/0",
+   "fields": {
+    "PROJECTNAME": "name",
+    "PROJECTTYPE": "kind",
+    "PROJECTDESCRIPTION": "description",
+    "TERMINI": "limits",
+    "STATUS": "status",
+    "PHASE": "phase",
+    "PROJECTENDDATE": "end",
+    "ESTIMATEDCOST": "cost",
+    "PROJECTURL": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "STATUS <> 'Complete'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.1,
+    35.85,
+    -83.75,
+    36.1
+   ],
+   "features_in_probe": 41
+  }
+ },
+ {
+  "name": "tn-knox-county-road-closures",
+  "state": "TN",
+  "title": "Road closures (Knox County)",
+  "title_es": "Cierres de carreteras (condado de Knox)",
+  "description": "Roads in unincorporated Knox County closed or narrowed for county construction and other work, with dates and times.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Knox County Engineering and Public Works",
+  "view": {
+   "url": "https://services1.arcgis.com/QWaOgwdmpqI9HUzf/arcgis/rest/services/KnoxCountyRdClosures_2_view/FeatureServer/0",
+   "fields": {
+    "STREET_NAME": "name",
+    "DESCRIPTION": "description",
+    "CLOSURE_TYPE": "kind",
+    "LANE_CLOSURE": "lanes",
+    "FROM_TERMINUS": "from",
+    "TO_TERMINUS": "to",
+    "START_DATE": "start",
+    "END_DATE": "end",
+    "TIME_OF_DAY": "hours",
+    "ClosureReason": "reason"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "STATUS <> 'Expired'",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.1,
+    35.85,
+    -83.75,
+    36.1
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "tn-chattanooga-zoning",
+  "state": "TN",
+  "title": "Zoning (Chattanooga)",
+  "title_es": "Zonificación (Chattanooga)",
+  "description": "Zoning district for every lot in the City of Chattanooga (for example R-1 single-family, C-2 convenience commercial, M-1 manufacturing).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Chattanooga GIS / Chattanooga-Hamilton County Regional Planning Agency",
+  "view": {
+   "url": "https://pwgis.chattanooga.gov/server/rest/services/CHCRPA/Zoning/FeatureServer/0",
+   "fields": {
+    "Zone": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.33,
+    35.02,
+    -85.25,
+    35.07
+   ],
+   "features_in_probe": 1251
+  }
+ },
+ {
+  "name": "tn-chattanooga-parcels",
+  "state": "TN",
+  "title": "Parcels (Chattanooga)",
+  "title_es": "Parcelas (Chattanooga)",
+  "description": "Property lot lines in Chattanooga and Hamilton County with address, tax map number, acreage and appraised and assessed values; owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Chattanooga GIS / Hamilton County Assessor of Property",
+  "view": {
+   "url": "https://pwgis.chattanooga.gov/arcgis/rest/services/Misc/Parcels/FeatureServer/0",
+   "fields": {
+    "TAX_MAP_NO": "parcel_id",
+    "ADDRESS": "address",
+    "CALCACRES": "acres",
+    "APPVALUE": "appraised_value",
+    "ASSVALUE": "assessed_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.31,
+    35.04,
+    -85.3,
+    35.05
+   ],
+   "features_in_probe": 505
+  }
+ },
+ {
+  "name": "tn-chattanooga-council-districts",
+  "state": "TN",
+  "title": "City Council districts (Chattanooga)",
+  "title_es": "Distritos del Concejo Municipal (Chattanooga)",
+  "description": "The nine Chattanooga City Council districts (2025 lines).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Chattanooga GIS",
+  "view": {
+   "url": "https://pwgis.chattanooga.gov/server/rest/services/Administrative_Areas/CouncilDistricts/FeatureServer/0",
+   "fields": {
+    "COUNCIL": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.33,
+    35.02,
+    -85.25,
+    35.07
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "tn-chattanooga-road-closures",
+  "state": "TN",
+  "title": "Road closures (Chattanooga)",
+  "title_es": "Cierres de calles (Chattanooga)",
+  "description": "Streets closed in Chattanooga for construction, events and emergencies, with lanes affected, dates and the detour.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Chattanooga GIS / Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/OIAIimblRxPs0xxc/arcgis/rest/services/RoadClosures_public_ec7344db0bf0465695fafc6bdcd1b06f/FeatureServer/1",
+   "fields": {
+    "street": "name",
+    "reason": "kind",
+    "direction": "direction",
+    "laneimpact": "lanes",
+    "description": "description",
+    "Eventname": "event",
+    "starttime": "start",
+    "endtime": "end",
+    "altroute": "detour",
+    "url": "url"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "endtime IS NULL OR endtime > CURRENT_TIMESTAMP",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.33,
+    35.02,
+    -85.25,
+    35.07
+   ],
+   "features_in_probe": 44
+  }
+ },
+ {
+  "name": "tn-chattanooga-recycling-days",
+  "state": "TN",
+  "title": "Curbside recycling days (Chattanooga)",
+  "title_es": "Días de reciclaje en la acera (Chattanooga)",
+  "description": "Chattanooga's every-other-week curbside recycling areas: your pickup day and week, with a link to the printable schedule.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "City of Chattanooga GIS / Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/OIAIimblRxPs0xxc/arcgis/rest/services/Recycle_Service_Areas/FeatureServer/0",
+   "fields": {
+    "Recycle_Da": "route",
+    "DayLabel": "day",
+    "filepath": "schedule_url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.33,
+    35.02,
+    -85.25,
+    35.07
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "tn-chattanooga-brush-bulk-trash",
+  "state": "TN",
+  "title": "Brush and bulky trash areas (Chattanooga)",
+  "title_es": "Zonas de ramas y basura voluminosa (Chattanooga)",
+  "description": "Chattanooga brush and bulky trash collection areas with links to the area's schedule and the city's garbage, recycling and leaf pages.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "City of Chattanooga GIS / Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/OIAIimblRxPs0xxc/arcgis/rest/services/Brush_and_Bulk_Trash_Collection_Areas/FeatureServer/0",
+   "fields": {
+    "route_numb": "route",
+    "link": "schedule_url",
+    "bulk_trash": "bulk_trash_url",
+    "looseleaf": "leaf_url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.33,
+    35.02,
+    -85.25,
+    35.07
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "tn-chattanooga-recycling-centers",
+  "state": "TN",
+  "title": "Recycling centers (Chattanooga)",
+  "title_es": "Centros de reciclaje (Chattanooga)",
+  "description": "City of Chattanooga recycling drop-off centers with daily hours.",
+  "group": "infra",
+  "category": "point",
+  "source": "City of Chattanooga GIS / Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/OIAIimblRxPs0xxc/arcgis/rest/services/RecyclingCenters/FeatureServer/0",
+   "fields": {
+    "FacilityName": "name",
+    "Address": "address",
+    "Mon_Hours": "monday",
+    "Tue_Hours": "tuesday",
+    "Wed_Hours": "wednesday",
+    "Thur_Hours": "thursday",
+    "Fri_Hours": "friday",
+    "Sat_Hours": "saturday",
+    "Sun_Hours": "sunday",
+    "Website": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.33,
+    35.02,
+    -85.25,
+    35.07
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "tn-chattanooga-garbage-centers",
+  "state": "TN",
+  "title": "Garbage drop-off centers (Chattanooga)",
+  "title_es": "Centros de entrega de basura (Chattanooga)",
+  "description": "City of Chattanooga refuse collection centers where residents can drop off household trash and bulky items, with daily hours.",
+  "group": "infra",
+  "category": "point",
+  "source": "City of Chattanooga GIS / Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/OIAIimblRxPs0xxc/arcgis/rest/services/RefuseCollectionCenters/FeatureServer/0",
+   "fields": {
+    "FacilityName": "name",
+    "Address": "address",
+    "Mon_Hours": "monday",
+    "Tue_Hours": "tuesday",
+    "Wed_Hours": "wednesday",
+    "Thur_Hours": "thursday",
+    "Fri_Hours": "friday",
+    "Sat_Hours": "saturday",
+    "Sun_Hours": "sunday",
+    "Website": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.33,
+    35.02,
+    -85.25,
+    35.07
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "tn-chattanooga-local-historic-districts",
+  "state": "TN",
+  "title": "Local historic districts (Chattanooga)",
+  "title_es": "Distritos históricos locales (Chattanooga)",
+  "description": "Chattanooga's locally zoned historic districts, where exterior changes need Historic Zoning Commission approval, with a link to the design guidelines.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Chattanooga GIS / Land Development Office",
+  "view": {
+   "url": "https://pwgis.chattanooga.gov/server/rest/services/LDO/Local_Historic_Districts_View/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "name",
+    "Location": "location",
+    "Status": "status",
+    "PDF": "guidelines_url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.33,
+    35.02,
+    -85.25,
+    35.07
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "tn-chattanooga-national-register",
+  "state": "TN",
+  "title": "National Register historic places (Chattanooga)",
+  "title_es": "Lugares históricos del Registro Nacional (Chattanooga)",
+  "description": "National Register of Historic Places districts and properties in Chattanooga and Hamilton County, with address and listing date.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Chattanooga GIS / Land Development Office",
+  "view": {
+   "url": "https://pwgis.chattanooga.gov/server/rest/services/LDO/National_Historic_Districts_View/FeatureServer/0",
+   "fields": {
+    "Resource_Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Listed_Date": "listed",
+    "PDF": "nomination_url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.33,
+    35.02,
+    -85.25,
+    35.07
+   ],
+   "features_in_probe": 77
+  }
+ },
+ {
+  "name": "tn-chattanooga-community-centers",
+  "state": "TN",
+  "title": "Community centers (Chattanooga)",
+  "title_es": "Centros comunitarios (Chattanooga)",
+  "description": "City of Chattanooga community centers with what each offers (gym, computer lab, kitchen and more) and weekday and weekend hours.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Chattanooga GIS / Parks and Outdoors",
+  "view": {
+   "url": "https://services2.arcgis.com/OIAIimblRxPs0xxc/arcgis/rest/services/Chattanooga_Community_Centers/FeatureServer/0",
+   "fields": {
+    "Facility_Name": "name",
+    "Address": "address",
+    "Facilities": "facilities",
+    "Weekday_Hours": "weekday_hours",
+    "Weekend_Hours": "weekend_hours",
+    "Scheduling_URL": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.33,
+    35.02,
+    -85.25,
+    35.07
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "tn-tdot-projects",
+  "state": "TN",
+  "title": "TDOT road projects",
+  "title_es": "Proyectos de carreteras de TDOT",
+  "description": "Tennessee Department of Transportation road and bridge projects: scope of work, status, contractor, bid amount and estimated completion, with a link to the project page.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Tennessee Department of Transportation (TDOT)",
+  "view": {
+   "url": "https://spatial.tdot.tn.gov/arcgis/rest/services/Roadway_Projects/Projects_Public_Viewer/FeatureServer/0",
+   "fields": {
+    "PROJECT_TITLE": "name",
+    "COUNTY_NAMES": "county",
+    "ROUTE_NUMBERS": "route",
+    "TERMINI": "limits",
+    "SCOPE_OF_WORK": "scope",
+    "WORK_TYPE_INDICATOR": "kind",
+    "PROJECT_STATUS": "status",
+    "CURRENT_BUDGETED_PHASE": "phase",
+    "ESTIMATED_COMPLETION_DATE": "completion",
+    "PROJECT_BID_AMOUNT": "bid_amount",
+    "CONTRACTOR": "contractor",
+    "PROJECT_WEB_LINK": "url"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.2,
+    35.6,
+    -85.6,
+    36.6
+   ],
+   "features_in_probe": 426
+  }
+ },
+ {
+  "name": "tn-stip-projects",
+  "state": "TN",
+  "title": "Planned transportation projects (TN STIP)",
+  "title_es": "Proyectos de transporte planificados (STIP de Tennessee)",
+  "description": "Projects in Tennessee's Statewide Transportation Improvement Program, the funded four-year list of road, bridge and safety work, with scope and estimated cost.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Tennessee Department of Transportation (TDOT)",
+  "view": {
+   "url": "https://spatial.tdot.tn.gov/arcgis/rest/services/Roadway_Projects/STIP_Projects/FeatureServer/0",
+   "fields": {
+    "STIP_ID": "project_id",
+    "COUNTY": "county",
+    "TERMINI": "limits",
+    "SCOPE_OF_WORK": "scope",
+    "IMPROVEMENT_TYPE": "kind",
+    "ESTIMATED_COST": "cost",
+    "RESPONSIBLE_AGENCY": "agency",
+    "LENGTH_MI": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.2,
+    35.6,
+    -85.6,
+    36.6
+   ],
+   "features_in_probe": 118
+  }
+ },
+ {
+  "name": "tn-fishing-sites",
+  "state": "TN",
+  "title": "Public fishing access sites (TWRA)",
+  "title_es": "Sitios públicos de acceso para pesca (TWRA)",
+  "description": "TWRA bank and pier fishing access sites on Tennessee lakes and rivers, with parking, hours, restrooms and whether there is a fishing pier.",
+  "group": "nature",
+  "category": "point",
+  "source": "Tennessee Wildlife Resources Agency (TWRA)",
+  "view": {
+   "url": "https://services3.arcgis.com/PWXNAH2YKmZY7lBq/arcgis/rest/services/Fishing_Sites/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Waterway": "waterway",
+    "County": "county",
+    "Directions": "directions",
+    "Hours_Open": "hours",
+    "Spaces": "parking",
+    "Restrooms": "restrooms",
+    "FishingPier": "fishing_pier",
+    "HandicapPark": "accessible_parking",
+    "Manager": "managed_by",
+    "Comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.2,
+    35.6,
+    -85.6,
+    36.6
+   ],
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "tn-paddling-access",
+  "state": "TN",
+  "title": "Paddling access sites (TWRA)",
+  "title_es": "Sitios de acceso para kayak y canoa (TWRA)",
+  "description": "Places to put in a canoe or kayak on Tennessee rivers and lakes, with parking, hours and restrooms.",
+  "group": "nature",
+  "category": "point",
+  "source": "Tennessee Wildlife Resources Agency (TWRA)",
+  "view": {
+   "url": "https://services3.arcgis.com/PWXNAH2YKmZY7lBq/arcgis/rest/services/Paddling_Access_Sites/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Waterway": "waterway",
+    "County": "county",
+    "Directions": "directions",
+    "Hours_Open": "hours",
+    "Spaces": "parking",
+    "Restrooms": "restrooms",
+    "AccessFee": "fee",
+    "Manager": "managed_by",
+    "Comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.2,
+    35.6,
+    -85.6,
+    36.6
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "tn-marinas",
+  "state": "TN",
+  "title": "Marinas (Tennessee)",
+  "title_es": "Marinas (Tennessee)",
+  "description": "Marinas on Tennessee lakes and rivers listed by TWRA, with ramps, gas, bait, ice, camping, rentals and restrooms.",
+  "group": "nature",
+  "category": "point",
+  "source": "Tennessee Wildlife Resources Agency (TWRA)",
+  "view": {
+   "url": "https://services3.arcgis.com/PWXNAH2YKmZY7lBq/arcgis/rest/services/Marina_Sites_View/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Waterway": "waterway",
+    "County": "county",
+    "Directions": "directions",
+    "Ramps": "ramps",
+    "Gas": "gas",
+    "Bait": "bait",
+    "Ice": "ice",
+    "Camping": "camping",
+    "RentalAvail": "rentals",
+    "Restrooms": "restrooms",
+    "Comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.2,
+    35.6,
+    -85.6,
+    36.6
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "tn-trout-stocking",
+  "state": "TN",
+  "title": "Trout stocking locations (TWRA)",
+  "title_es": "Lugares de siembra de truchas (TWRA)",
+  "description": "Streams and lakes where TWRA stocks trout, with the stocking program (spring, winter, year-round), species, parking and any special rules such as delayed harvest or a daily permit.",
+  "group": "nature",
+  "category": "point",
+  "source": "Tennessee Wildlife Resources Agency (TWRA)",
+  "view": {
+   "url": "https://services3.arcgis.com/PWXNAH2YKmZY7lBq/arcgis/rest/services/TWRA_Trout_Stocking_Locations/FeatureServer/0",
+   "fields": {
+    "Site_Name": "name",
+    "StreamName": "water",
+    "County": "county",
+    "StockingProgram": "program",
+    "Species": "species",
+    "WaterClass": "water_type",
+    "HoursOpen": "hours",
+    "ParkingType": "parking",
+    "DelayedHarvestSeason": "delayed_harvest",
+    "DailyPermitRequired": "daily_permit",
+    "DayClosure": "closures"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.2,
+    35.6,
+    -85.6,
+    36.6
+   ],
+   "features_in_probe": 24
+  }
+ },
+ {
+  "name": "tn-wma-entrances",
+  "state": "TN",
+  "title": "Wildlife management area entrances (TWRA)",
+  "title_es": "Entradas a áreas de manejo de fauna (TWRA)",
+  "description": "Entrances to Tennessee wildlife management areas (WMAs) for hunting, fishing and wildlife watching, with the road and a directions link.",
+  "group": "nature",
+  "category": "point",
+  "source": "Tennessee Wildlife Resources Agency (TWRA)",
+  "view": {
+   "url": "https://services3.arcgis.com/PWXNAH2YKmZY7lBq/arcgis/rest/services/WMA_Entrances/FeatureServer/0",
+   "fields": {
+    "WMA": "name",
+    "Entrance_R": "road",
+    "Directions": "directions_url"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.2,
+    35.6,
+    -85.6,
+    36.6
+   ],
+   "features_in_probe": 42
+  }
+ },
+ {
+  "name": "tn-dove-fields",
+  "state": "TN",
+  "title": "WMA dove hunting fields (TWRA)",
+  "title_es": "Campos de caza de paloma en áreas de manejo (TWRA)",
+  "description": "Dove fields TWRA plants on wildlife management areas this season: crops planted, acreage, youth-hunt dates, special instructions and directions.",
+  "group": "nature",
+  "category": "point",
+  "source": "Tennessee Wildlife Resources Agency (TWRA)",
+  "view": {
+   "url": "https://services3.arcgis.com/PWXNAH2YKmZY7lBq/arcgis/rest/services/WMA_Dove_Fields_Map_View/FeatureServer/0",
+   "fields": {
+    "Field": "name",
+    "County": "county",
+    "TotAcres": "acres",
+    "Crop1": "crop_1",
+    "Crop2": "crop_2",
+    "Crop3": "crop_3",
+    "YouthDate": "youth_hunt",
+    "Dates": "dates",
+    "Special_Inst": "special_rules",
+    "Comments": "notes",
+    "Driving": "directions"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.2,
+    35.6,
+    -85.6,
+    36.6
+   ],
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "pa-phl-council-districts",
+  "state": "PA",
+  "title": "City Council districts (Philadelphia)",
+  "title_es": "Distritos del Concejo Municipal (Filadelfia)",
+  "description": "The 10 Philadelphia City Council districts (2024 lines).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Philadelphia",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/Council_Districts_2024/FeatureServer/0",
+   "fields": {
+    "district": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "pa-phl-trash-days",
+  "state": "PA",
+  "title": "Trash and recycling days (Philadelphia)",
+  "title_es": "Días de basura y reciclaje (Filadelfia)",
+  "description": "Philadelphia Streets Department collection areas: your trash and recycling day, plus a second trash day where there is one.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "City of Philadelphia Streets Department",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/Rubbish_Recyc_Coll_Bnd/FeatureServer/0",
+   "fields": {
+    "collday": "day",
+    "secondary_rubbish_day": "second_trash_day",
+    "sandis": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "pa-phl-street-sweeping",
+  "state": "PA",
+  "title": "Street sweeping routes (Philadelphia)",
+  "title_es": "Rutas de barrido de calles (Filadelfia)",
+  "description": "Streets on Philadelphia's mechanical street cleaning program, with the day and time window for each side of the street.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Philadelphia Streets Department (SweepPHL)",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/Broom_Routes_SweepPHL/FeatureServer/0",
+   "fields": {
+    "STNAME": "street",
+    "Name": "area",
+    "Day": "day",
+    "Time": "time",
+    "EVEN_SIDE_DAY": "even_side_day",
+    "ODD_SIDE_DAY": "odd_side_day"
+   },
+   "geometry": "line",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 1226
+  }
+ },
+ {
+  "name": "pa-phl-street-closures",
+  "state": "PA",
+  "title": "Street and sidewalk closure permits (Philadelphia)",
+  "title_es": "Permisos de cierre de calles y aceras (Filadelfia)",
+  "description": "Current Streets Department permits that close a lane, street or sidewalk in Philadelphia, with the block, purpose and permit dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Philadelphia Streets Department",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/LaneClosure_Master/FeatureServer/0",
+   "fields": {
+    "address": "location",
+    "occupancytype": "kind",
+    "permittype": "permit_type",
+    "purpose": "purpose",
+    "effectivedate": "start",
+    "expirationdate": "end",
+    "status": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 16,
+   "where": "expirationdate > CURRENT_TIMESTAMP",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "pa-phl-parcels",
+  "state": "PA",
+  "title": "Parcels (Philadelphia)",
+  "title_es": "Parcelas (Filadelfia)",
+  "description": "Philadelphia property lots with address, building type and gross area, and the Office of Property Assessment account number; owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Philadelphia Water Department (PWD parcels)",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/PWD_PARCELS/FeatureServer/0",
+   "fields": {
+    "address": "address",
+    "bldg_desc": "building",
+    "gross_area": "area_sqft",
+    "brt_id": "parcel_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.17,
+    39.95,
+    -75.16,
+    39.955
+   ],
+   "features_in_probe": 257
+  }
+ },
+ {
+  "name": "pa-phl-land-use",
+  "state": "PA",
+  "title": "Land use (Philadelphia)",
+  "title_es": "Uso del suelo (Filadelfia)",
+  "description": "How each Philadelphia lot is used today (residential, commercial, industrial, park, vacant and so on), from the City Planning Commission's land use survey.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Philadelphia City Planning Commission",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/Land_Use/FeatureServer/0",
+   "fields": {
+    "c_dig1desc": "kind",
+    "c_dig2desc": "category",
+    "c_dig3desc": "detail",
+    "vacbldg": "vacant_building",
+    "year": "year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.17,
+    39.95,
+    -75.16,
+    39.955
+   ],
+   "features_in_probe": 276
+  }
+ },
+ {
+  "name": "pa-phl-zoning-overlays",
+  "state": "PA",
+  "title": "Zoning overlays (Philadelphia)",
+  "title_es": "Superposiciones de zonificación (Filadelfia)",
+  "description": "Philadelphia zoning overlay districts that add or change rules on top of base zoning, with a link to the code section.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Philadelphia Department of Planning and Development",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/Zoning_Overlays/FeatureServer/0",
+   "fields": {
+    "overlay_name": "name",
+    "type": "kind",
+    "code_section": "code_section",
+    "code_section_link": "url",
+    "sunset_date": "sunset"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 108
+  }
+ },
+ {
+  "name": "pa-phl-historic-districts",
+  "state": "PA",
+  "title": "Local historic districts (Philadelphia)",
+  "title_es": "Distritos históricos locales (Filadelfia)",
+  "description": "Historic districts on the Philadelphia Register of Historic Places; exterior work needs Historical Commission review.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Philadelphia Historical Commission",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/HistoricDistricts_Local/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "designated": "designated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "pa-phl-historic-properties",
+  "state": "PA",
+  "title": "Philadelphia Register historic properties",
+  "title_es": "Propiedades del Registro Histórico de Filadelfia",
+  "description": "Individual properties listed on the Philadelphia Register of Historic Places, and the historic district each is in.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Philadelphia Historical Commission",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/Historic_sites_PhilReg/FeatureServer/0",
+   "fields": {
+    "loc": "address",
+    "district": "district",
+    "districtdesdate": "district_designated",
+    "idesigdate1": "designated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "pa-phl-school-catchments-elementary",
+  "state": "PA",
+  "title": "Elementary school catchments (Philadelphia)",
+  "title_es": "Zonas escolares de primaria (Filadelfia)",
+  "description": "School District of Philadelphia elementary catchment areas: the neighborhood elementary, middle and high school assigned to each address.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "School District of Philadelphia (via City of Philadelphia)",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/SchoolDist_Catchments_ES/FeatureServer/0",
+   "fields": {
+    "es_name": "school",
+    "es_grade": "grades",
+    "ms_name": "middle_school",
+    "hs_name": "high_school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 32
+  }
+ },
+ {
+  "name": "pa-phl-school-catchments-middle",
+  "state": "PA",
+  "title": "Middle school catchments (Philadelphia)",
+  "title_es": "Zonas escolares de secundaria media (Filadelfia)",
+  "description": "School District of Philadelphia middle school catchment areas.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "School District of Philadelphia (via City of Philadelphia)",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/SchoolDist_Catchments_MS/FeatureServer/0",
+   "fields": {
+    "ms_name": "school",
+    "ms_grade": "grades"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "pa-phl-school-catchments-high",
+  "state": "PA",
+  "title": "High school catchments (Philadelphia)",
+  "title_es": "Zonas escolares de preparatoria (Filadelfia)",
+  "description": "School District of Philadelphia neighborhood high school catchment areas.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "School District of Philadelphia (via City of Philadelphia)",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/SchoolDist_Catchments_HS/FeatureServer/0",
+   "fields": {
+    "hs_name": "school",
+    "hs_grade": "grades"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "pa-phl-free-food-sites",
+  "state": "PA",
+  "title": "Free meals and food sites (Philadelphia)",
+  "title_es": "Comidas gratis y sitios de alimentos (Filadelfia)",
+  "description": "Active free meal sites, food pantries, free grocery sites, community fridges, senior meals and WIC offices in Philadelphia, with hours, phone and any temporary closure.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Philadelphia Office of Community Empowerment and Opportunity",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/free_meal_sites/FeatureServer/0",
+   "fields": {
+    "site_name": "name",
+    "category": "kind",
+    "address": "address",
+    "zip_code": "zip",
+    "phone_number": "phone",
+    "website": "url",
+    "temporary_closure": "temporary_closure",
+    "seasonally_closed": "seasonal_closure",
+    "hours_mon_start1": "mon_open",
+    "hours_mon_end1": "mon_close",
+    "hours_tues_start1": "tue_open",
+    "hours_tues_end1": "tue_close",
+    "hours_wed_start1": "wed_open",
+    "hours_wed_end1": "wed_close",
+    "hours_thurs_start1": "thu_open",
+    "hours_thurs_end1": "thu_close",
+    "hours_fri_start1": "fri_open",
+    "hours_fri_end1": "fri_close",
+    "hours_sat_start1": "sat_open",
+    "hours_sat_end1": "sat_close"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "status = 'Active'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 76
+  }
+ },
+ {
+  "name": "pa-phl-pools",
+  "state": "PA",
+  "title": "Public swimming pools (Philadelphia)",
+  "title_es": "Piscinas públicas (Filadelfia)",
+  "description": "Philadelphia Parks and Recreation outdoor and indoor pools, with status, depth and ADA access.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Philadelphia Parks and Recreation",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/PPR_Swimming_Pools/FeatureServer/0",
+   "fields": {
+    "official_name": "name",
+    "address_911": "address",
+    "zip_code": "zip",
+    "pool_type": "kind",
+    "pool_status": "status",
+    "pool_maxdepth_ft": "max_depth_ft",
+    "ada_access": "ada_access",
+    "ada_lift": "ada_lift",
+    "comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "pa-phl-spraygrounds",
+  "state": "PA",
+  "title": "Spraygrounds (Philadelphia)",
+  "title_es": "Juegos de agua (Filadelfia)",
+  "description": "Philadelphia Parks and Recreation spraygrounds and sprinklers where kids can cool off, with status.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Philadelphia Parks and Recreation",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/PPR_Spraygrounds/FeatureServer/0",
+   "fields": {
+    "park_name": "name",
+    "spray_type": "kind",
+    "spray_status": "status",
+    "comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 26
+  }
+ },
+ {
+  "name": "pa-phl-hydration-stations",
+  "state": "PA",
+  "title": "Drinking fountains and hydration stations (Philadelphia parks)",
+  "title_es": "Bebederos y estaciones de hidratación (parques de Filadelfia)",
+  "description": "Drinking fountains and bottle-filling stations in Philadelphia parks.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Philadelphia Parks and Recreation",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/PPR_Hydration_Stations/FeatureServer/0",
+   "fields": {
+    "park_name": "park",
+    "station_type": "kind",
+    "location": "location",
+    "comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 33
+  }
+ },
+ {
+  "name": "pa-phl-parks",
+  "state": "PA",
+  "title": "Parks and recreation properties (Philadelphia)",
+  "title_es": "Parques y propiedades recreativas (Filadelfia)",
+  "description": "Philadelphia Parks and Recreation parks, recreation centers, playgrounds and other properties, with address and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Philadelphia Parks and Recreation",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/PPR_Properties/FeatureServer/0",
+   "fields": {
+    "official_name": "name",
+    "property_classification": "kind",
+    "ppr_use": "use",
+    "address_911": "address",
+    "zip_code": "zip",
+    "acreage": "acres",
+    "program_sites": "programs"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 140
+  }
+ },
+ {
+  "name": "pa-phl-rec-centers",
+  "state": "PA",
+  "title": "Recreation program sites (Philadelphia)",
+  "title_es": "Centros de programas recreativos (Filadelfia)",
+  "description": "Philadelphia Parks and Recreation centers and program sites, and whether each has a building and a gym.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Philadelphia Parks and Recreation",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/PPR_Program_Sites/FeatureServer/0",
+   "fields": {
+    "park_name": "name",
+    "program_type": "kind",
+    "building": "building",
+    "gym": "gym",
+    "comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 35
+  }
+ },
+ {
+  "name": "pa-phl-trails",
+  "state": "PA",
+  "title": "Park trails (Philadelphia)",
+  "title_es": "Senderos de parques (Filadelfia)",
+  "description": "Trails in Philadelphia parks, including the Wissahickon and Circuit Trails, with surface, length and whether bikes and horses are allowed.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Philadelphia Parks and Recreation",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/PPR_Trails/FeatureServer/0",
+   "fields": {
+    "trail_name": "name",
+    "trail_system": "system",
+    "trail_type": "kind",
+    "trail_surface": "surface",
+    "trail_status": "status",
+    "bike_access": "bikes",
+    "horse_access": "horses",
+    "miles": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 204
+  }
+ },
+ {
+  "name": "pa-phl-bike-network",
+  "state": "PA",
+  "title": "Bike network (Philadelphia)",
+  "title_es": "Red de ciclovías (Filadelfia)",
+  "description": "Philadelphia's bike lanes, protected lanes and sharrows by street.",
+  "group": "roads",
+  "category": "info",
+  "source": "City of Philadelphia Office of Transportation and Infrastructure Systems",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/Bike_Network/FeatureServer/0",
+   "fields": {
+    "st_name": "street",
+    "facityp": "kind",
+    "bikewaytyp": "bikeway_type",
+    "oneway": "one_way"
+   },
+   "geometry": "line",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 1297
+  }
+ },
+ {
+  "name": "pa-phl-boat-launches",
+  "state": "PA",
+  "title": "Boat launches (Philadelphia parks)",
+  "title_es": "Rampas para botes (parques de Filadelfia)",
+  "description": "Boat ramps and docks along the Schuylkill and Delaware rivers in Philadelphia parks.",
+  "group": "nature",
+  "category": "point",
+  "source": "City of Philadelphia Parks and Recreation",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/PPR_Boat_Launches/FeatureServer/0",
+   "fields": {
+    "amenity_name": "name",
+    "parent_name": "park",
+    "ramp": "ramp",
+    "dock": "dock",
+    "parking": "parking",
+    "comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "pa-phl-leaf-dropoff",
+  "state": "PA",
+  "title": "Leaf drop-off sites (Philadelphia)",
+  "title_es": "Sitios para dejar hojas (Filadelfia)",
+  "description": "Streets Department sites where residents can drop off bagged leaves during the fall leaf collection program, with dates and times.",
+  "group": "infra",
+  "category": "point",
+  "source": "City of Philadelphia Streets Department",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/Leaf_Dropoff_Sites/FeatureServer/0",
+   "fields": {
+    "drop_off_location": "name",
+    "arc_single_line_input": "address",
+    "dates": "dates",
+    "time": "hours",
+    "exceptions": "exceptions",
+    "area": "area"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.2,
+    39.93,
+    -75.13,
+    39.98
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "pa-pittsburgh-zoning",
+  "state": "PA",
+  "title": "Zoning (Pittsburgh)",
+  "title_es": "Zonificación (Pittsburgh)",
+  "description": "Zoning district for every lot in the City of Pittsburgh, with the full district name and a link to the zoning code.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Pittsburgh Department of City Planning",
+  "view": {
+   "url": "https://services1.arcgis.com/YZCmUqbcsUpOKfj7/arcgis/rest/services/PGHWebZoning/FeatureServer/0",
+   "fields": {
+    "zon_new": "code",
+    "full_zoning_type": "name",
+    "legendtype": "kind",
+    "municode": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.03,
+    40.42,
+    -79.94,
+    40.47
+   ],
+   "features_in_probe": 421
+  }
+ },
+ {
+  "name": "pa-pittsburgh-parcels",
+  "state": "PA",
+  "title": "Parcels (Pittsburgh)",
+  "title_es": "Parcelas (Pittsburgh)",
+  "description": "City of Pittsburgh property lots with address, use, acreage, building value, zoning, neighborhood and whether the lot is vacant; owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Pittsburgh",
+  "view": {
+   "url": "https://services1.arcgis.com/YZCmUqbcsUpOKfj7/arcgis/rest/services/ParcelsPublic/FeatureServer/0",
+   "fields": {
+    "pin": "parcel_id",
+    "Address": "address",
+    "classdesc": "kind",
+    "usedesc": "use",
+    "calcacreag": "acres",
+    "localbuild": "building_value",
+    "Vacant": "vacant",
+    "zon_new": "zoning",
+    "hood": "neighborhood"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -79.99,
+    40.44,
+    -79.98,
+    40.45
+   ],
+   "features_in_probe": 1038
+  }
+ },
+ {
+  "name": "pa-pittsburgh-council-districts",
+  "state": "PA",
+  "title": "City Council districts (Pittsburgh)",
+  "title_es": "Distritos del Concejo Municipal (Pittsburgh)",
+  "description": "The nine Pittsburgh City Council districts (2022 lines).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Pittsburgh",
+  "view": {
+   "url": "https://services1.arcgis.com/YZCmUqbcsUpOKfj7/arcgis/rest/services/CouncilDistricts2022/FeatureServer/0",
+   "fields": {
+    "DIST_T": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.03,
+    40.42,
+    -79.94,
+    40.47
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "pa-pittsburgh-historic-districts",
+  "state": "PA",
+  "title": "City historic districts (Pittsburgh)",
+  "title_es": "Distritos históricos de la ciudad (Pittsburgh)",
+  "description": "City-designated historic districts in Pittsburgh, where exterior changes need Historic Review Commission approval.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Pittsburgh Department of City Planning",
+  "view": {
+   "url": "https://services1.arcgis.com/YZCmUqbcsUpOKfj7/arcgis/rest/services/PGHWebCHDHistoricDistricts/FeatureServer/0",
+   "fields": {
+    "historic_name": "name",
+    "type": "kind",
+    "guideline_link": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.03,
+    40.42,
+    -79.94,
+    40.47
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "pa-pittsburgh-historic-sites",
+  "state": "PA",
+  "title": "City historic landmarks (Pittsburgh)",
+  "title_es": "Monumentos históricos de la ciudad (Pittsburgh)",
+  "description": "Individually designated City of Pittsburgh historic structures and sites.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Pittsburgh Department of City Planning",
+  "view": {
+   "url": "https://services1.arcgis.com/YZCmUqbcsUpOKfj7/arcgis/rest/services/PGHWEBCHDIndividialProperties/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "lotblock": "parcel_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.03,
+    40.42,
+    -79.94,
+    40.47
+   ],
+   "features_in_probe": 99
+  }
+ },
+ {
+  "name": "pa-pittsburgh-street-closures",
+  "state": "PA",
+  "title": "Street closures and work permits (Pittsburgh)",
+  "title_es": "Cierres de calles y permisos de obra (Pittsburgh)",
+  "description": "Active Department of Mobility and Infrastructure permits that close streets, lanes, parking or sidewalks in Pittsburgh, with the work, hours and dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Pittsburgh Department of Mobility and Infrastructure (DOMI)",
+  "view": {
+   "url": "https://services1.arcgis.com/YZCmUqbcsUpOKfj7/arcgis/rest/services/gis_all_street_closures_new/FeatureServer/0",
+   "fields": {
+    "permit_type": "kind",
+    "work_desc": "description",
+    "primary_street": "street",
+    "from_street": "from",
+    "to_street": "to",
+    "full_closure": "full_closure",
+    "travel_lane": "lane_closed",
+    "parking_lane": "parking_closed",
+    "sidewalk": "sidewalk_closed",
+    "weekday_hours": "weekday_hours",
+    "weekend_hours": "weekend_hours",
+    "from_EST": "start",
+    "to_EST": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 15,
+   "where": "active = 1 AND to_EST > CURRENT_TIMESTAMP",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.03,
+    40.42,
+    -79.94,
+    40.47
+   ],
+   "features_in_probe": 1044
+  }
+ },
+ {
+  "name": "pa-pittsburgh-paving-2026",
+  "state": "PA",
+  "title": "Street paving 2026 (Pittsburgh)",
+  "title_es": "Repavimentación 2026 (Pittsburgh)",
+  "description": "Pittsburgh streets on the 2026 paving schedule, block by block.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Pittsburgh Department of Mobility and Infrastructure (DOMI)",
+  "view": {
+   "url": "https://services1.arcgis.com/YZCmUqbcsUpOKfj7/arcgis/rest/services/2026_Paving_Schedule/FeatureServer/8",
+   "fields": {
+    "streetname": "street",
+    "fromstreet": "from",
+    "tostreet": "to",
+    "domi_class": "kind",
+    "UtilityProject2026": "utility_work"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.03,
+    40.42,
+    -79.94,
+    40.47
+   ],
+   "features_in_probe": 182
+  }
+ },
+ {
+  "name": "pa-allegheny-parcels",
+  "state": "PA",
+  "title": "Parcels (Allegheny County)",
+  "title_es": "Parcelas (condado de Allegheny)",
+  "description": "Property lot lines across Allegheny County with the parcel ID (PIN), map-block-lot number and acreage; owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Allegheny County Division of Computer Services GIS",
+  "view": {
+   "url": "https://gisdata.alleghenycounty.us/arcgis/rest/services/OPENDATA/Parcels/MapServer/0",
+   "fields": {
+    "PIN": "parcel_id",
+    "MAPBLOCKLOT": "map_block_lot",
+    "CALCACREAGE": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.06,
+    40.38,
+    -80.05,
+    40.39
+   ],
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "pa-allegheny-road-projects",
+  "state": "PA",
+  "title": "County road projects and closures (Allegheny County)",
+  "title_es": "Proyectos y cierres de carreteras del condado (Allegheny)",
+  "description": "Allegheny County Public Works road and bridge projects that close or detour roads, with dates, estimated cost and links to updates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Allegheny County Department of Public Works",
+  "view": {
+   "url": "https://services1.arcgis.com/vdNDkVykv9vEWFX4/arcgis/rest/services/Projects_and_Closures/FeatureServer/0",
+   "fields": {
+    "Street_Name": "name",
+    "Municipality": "municipality",
+    "Description": "description",
+    "Location": "location",
+    "Start_Date": "start",
+    "Est_End_Date": "end",
+    "Detour": "detour",
+    "Updates": "url",
+    "Est_Cost": "cost"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.36,
+    40.19,
+    -79.69,
+    40.67
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "pa-allegheny-park-trails",
+  "state": "PA",
+  "title": "County park trails (Allegheny County)",
+  "title_es": "Senderos de parques del condado (Allegheny)",
+  "description": "Blazed and unblazed trails in Allegheny County's nine regional parks, with difficulty, surface, blaze color, length and status.",
+  "group": "nature",
+  "category": "park",
+  "source": "Allegheny County Parks / GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/vdNDkVykv9vEWFX4/arcgis/rest/services/Allegheny_County_Trails/FeatureServer/0",
+   "fields": {
+    "Trail_Name": "name",
+    "Park_Name_Full": "park",
+    "Blaze_Color_Full": "blaze",
+    "Difficulty": "difficulty",
+    "Surface": "surface",
+    "Mileage": "miles",
+    "Trail_Status": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.1,
+    40.26,
+    -79.9,
+    40.36
+   ],
+   "features_in_probe": 177
+  }
+ },
+ {
+  "name": "pa-montgomery-zoning",
+  "state": "PA",
+  "title": "Municipal zoning (Montgomery County)",
+  "title_es": "Zonificación municipal (condado de Montgomery)",
+  "description": "Zoning districts of every municipality in Montgomery County, compiled by the county Planning Commission, with the district name, category and a link to the township or borough code.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Montgomery County Planning Commission",
+  "view": {
+   "url": "https://gis.montcopa.org/arcgis/rest/services/Zoning/Montgomery_County_Municipal_Zoning/FeatureServer/11",
+   "fields": {
+    "Name": "name",
+    "Code": "code",
+    "Category": "kind",
+    "Municipality": "municipality",
+    "WebSite": "url",
+    "Map_Date": "map_date"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.4,
+    40.1,
+    -75.2,
+    40.25
+   ],
+   "features_in_probe": 1001
+  }
+ },
+ {
+  "name": "pa-montgomery-parcels",
+  "state": "PA",
+  "title": "Parcels (Montgomery County)",
+  "title_es": "Parcelas (condado de Montgomery)",
+  "description": "Montgomery County property lots with the tax parcel number, street location, property class and appraised and assessed values; owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Montgomery County Board of Assessment Appeals / GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/kOChldNuKsox8qZD/arcgis/rest/services/Montgomery_County_Parcels/FeatureServer/6",
+   "fields": {
+    "TAXPIN": "parcel_id",
+    "LOCATION1": "address",
+    "CLASS": "kind",
+    "TOTAL_APPR": "appraised_value",
+    "TOTAL_ASSE": "assessed_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.3,
+    40.15,
+    -75.29,
+    40.16
+   ],
+   "features_in_probe": 220
+  }
+ },
+ {
+  "name": "pa-montgomery-polling-places",
+  "state": "PA",
+  "title": "Polling places (Montgomery County)",
+  "title_es": "Lugares de votación (condado de Montgomery)",
+  "description": "Election Day polling place for every precinct in Montgomery County, with the address.",
+  "group": "civic",
+  "category": "point",
+  "source": "Montgomery County Voter Services",
+  "view": {
+   "url": "https://gis.montcopa.org/arcgis/rest/services/Voters/Montgomery_County_Voting_Locations/FeatureServer/7",
+   "fields": {
+    "Precinct_Name": "precinct",
+    "Site_Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Zip": "zip"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.4,
+    40.1,
+    -75.2,
+    40.25
+   ],
+   "features_in_probe": 111
+  }
+ },
+ {
+  "name": "pa-montgomery-ballot-drop-boxes",
+  "state": "PA",
+  "title": "Mail ballot drop boxes (Montgomery County)",
+  "title_es": "Buzones para boletas por correo (condado de Montgomery)",
+  "description": "Official drop boxes for returning mail-in and absentee ballots in Montgomery County, with hours and Election Day closing time.",
+  "group": "civic",
+  "category": "point",
+  "source": "Montgomery County Voter Services",
+  "view": {
+   "url": "https://services1.arcgis.com/kOChldNuKsox8qZD/arcgis/rest/services/Montgomery_County_Ballot_Dropbox_Locations/FeatureServer/0",
+   "fields": {
+    "Location_Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Municipality": "municipality",
+    "Hours": "hours",
+    "Weekday_Hours": "weekday_hours",
+    "Weekend_Hours": "weekend_hours",
+    "Election_Day_Hours": "election_day_hours"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.4,
+    40.1,
+    -75.2,
+    40.25
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "pa-montgomery-trails",
+  "state": "PA",
+  "title": "Trails (Montgomery County)",
+  "title_es": "Senderos (condado de Montgomery)",
+  "description": "Existing and planned trails in Montgomery County, including the Schuylkill River Trail and Circuit Trails, with surface, use type, owner and length.",
+  "group": "nature",
+  "category": "park",
+  "source": "Montgomery County Planning Commission",
+  "view": {
+   "url": "https://gis.montcopa.org/arcgis/rest/services/Planning/Montgomery_County_Trails/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Phase": "status",
+    "Use_Type": "kind",
+    "Surface": "surface",
+    "Ownership": "ownership",
+    "Municipality": "municipality",
+    "Length": "miles",
+    "Accessible": "accessible",
+    "Circuit": "circuit_trail"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.4,
+    40.1,
+    -75.2,
+    40.25
+   ],
+   "features_in_probe": 639
+  }
+ },
+ {
+  "name": "pa-bucks-zoning",
+  "state": "PA",
+  "title": "Municipal zoning (Bucks County)",
+  "title_es": "Zonificación municipal (condado de Bucks)",
+  "description": "Zoning districts of the municipalities in Bucks County, with the general zoning category and a link to the municipal code.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Bucks County Planning Commission / GIS",
+  "view": {
+   "url": "https://services3.arcgis.com/SP47Tddf7RK32lBU/arcgis/rest/services/Bucks_County_Municipal_Zoning/FeatureServer/0",
+   "fields": {
+    "Zoning": "name",
+    "ZoningAbbr": "code",
+    "GenZoning": "kind",
+    "Municipality": "municipality",
+    "Acre": "acres",
+    "Website": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.1,
+    40.2,
+    -74.85,
+    40.4
+   ],
+   "features_in_probe": 432
+  }
+ },
+ {
+  "name": "pa-bucks-parcels",
+  "state": "PA",
+  "title": "Parcels (Bucks County)",
+  "title_es": "Parcelas (condado de Bucks)",
+  "description": "Bucks County property lots with parcel number, address, municipality, deed area and assessed land, building and total values; owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Bucks County GIS / Board of Assessment",
+  "view": {
+   "url": "https://services3.arcgis.com/SP47Tddf7RK32lBU/arcgis/rest/services/Bucks_County_Parcels/FeatureServer/0",
+   "fields": {
+    "PARCEL_NUM": "parcel_id",
+    "ADDRESS": "address",
+    "MUNICIPALITY": "municipality",
+    "DEED_AREA": "deed_area",
+    "LAND_VALUE": "land_value",
+    "BUILDING_VALUE": "building_value",
+    "TOTAL_VALUE": "total_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.95,
+    40.17,
+    -74.94,
+    40.18
+   ],
+   "features_in_probe": 375
+  }
+ },
+ {
+  "name": "pa-bucks-ballot-drop-boxes",
+  "state": "PA",
+  "title": "Mail ballot drop boxes (Bucks County)",
+  "title_es": "Buzones para boletas por correo (condado de Bucks)",
+  "description": "Official Bucks County drop boxes for mail-in ballots, with daily hours and Election Day hours.",
+  "group": "civic",
+  "category": "point",
+  "source": "Bucks County Board of Elections",
+  "view": {
+   "url": "https://services3.arcgis.com/SP47Tddf7RK32lBU/arcgis/rest/services/Bucks_County_Drop_Box_Locations/FeatureServer/11",
+   "fields": {
+    "USER_Name": "name",
+    "Place_addr": "address",
+    "Monday": "monday",
+    "Tuesday": "tuesday",
+    "Wednesday": "wednesday",
+    "Thursday": "thursday",
+    "Friday": "friday",
+    "Saturday": "saturday",
+    "Sunday": "sunday",
+    "ElectionDayHours": "election_day_hours",
+    "StateDate": "opens"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.1,
+    40.2,
+    -74.85,
+    40.4
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "pa-bucks-on-demand-voting",
+  "state": "PA",
+  "title": "In-person mail ballot offices (Bucks County)",
+  "title_es": "Oficinas para votar en persona por correo (condado de Bucks)",
+  "description": "Bucks County offices where you can apply for, fill out and return a mail ballot in one visit before Election Day, with weekday and Saturday hours.",
+  "group": "civic",
+  "category": "point",
+  "source": "Bucks County Board of Elections",
+  "view": {
+   "url": "https://services3.arcgis.com/SP47Tddf7RK32lBU/arcgis/rest/services/OnDemandVoting/FeatureServer/10",
+   "fields": {
+    "Place_Name": "name",
+    "Address": "address",
+    "Monday_Friday": "weekday_hours",
+    "Saturday_October_17": "sat_oct_17",
+    "Saturday_October_24": "sat_oct_24",
+    "Link": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.1,
+    40.2,
+    -74.85,
+    40.4
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "pa-bucks-county-parks",
+  "state": "PA",
+  "title": "County parks (Bucks County)",
+  "title_es": "Parques del condado (Bucks)",
+  "description": "Bucks County parks with address, acreage and links to park pages and maps.",
+  "group": "nature",
+  "category": "park",
+  "source": "Bucks County Parks and Recreation",
+  "view": {
+   "url": "https://services3.arcgis.com/SP47Tddf7RK32lBU/arcgis/rest/services/Park_Boundaries/FeatureServer/70",
+   "fields": {
+    "ParkName": "name",
+    "Municipality": "municipality",
+    "Address": "address",
+    "ParkAcreage": "acres",
+    "Website": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.1,
+    40.2,
+    -74.85,
+    40.4
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "pa-bucks-park-trails",
+  "state": "PA",
+  "title": "County park trails (Bucks County)",
+  "title_es": "Senderos de parques del condado (Bucks)",
+  "description": "Trails in Bucks County parks with surface, trail type and length.",
+  "group": "nature",
+  "category": "park",
+  "source": "Bucks County Parks and Recreation",
+  "view": {
+   "url": "https://services3.arcgis.com/SP47Tddf7RK32lBU/arcgis/rest/services/Trails_in_CountyParks/FeatureServer/64",
+   "fields": {
+    "ParkName": "park",
+    "TrailType": "kind",
+    "TrlSurface": "surface",
+    "TypeStatus": "status",
+    "LengthMiles": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.1,
+    40.2,
+    -74.85,
+    40.4
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "pa-bucks-national-register",
+  "state": "PA",
+  "title": "National Register historic places (Bucks County)",
+  "title_es": "Lugares históricos del Registro Nacional (condado de Bucks)",
+  "description": "Bucks County places on the National Register of Historic Places, with a short description.",
+  "group": "places",
+  "category": "point",
+  "source": "Bucks County Planning Commission",
+  "view": {
+   "url": "https://services3.arcgis.com/SP47Tddf7RK32lBU/arcgis/rest/services/National_Register_of_Historic_Places/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "description": "description",
+    "website": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.1,
+    40.2,
+    -74.85,
+    40.4
+   ],
+   "features_in_probe": 63
+  }
+ },
+ {
+  "name": "pa-delaware-county-parcels",
+  "state": "PA",
+  "title": "Parcels (Delaware County)",
+  "title_es": "Parcelas (condado de Delaware)",
+  "description": "Delaware County property lots with the parcel number, map ID and calculated acreage; owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Delaware County Planning Department / GIS",
+  "view": {
+   "url": "https://gis.delcopa.gov/arcgis/rest/services/Parcels/Parcels_Public_Access/FeatureServer/0",
+   "fields": {
+    "PIN": "parcel_id",
+    "MAPID": "map_id",
+    "CALCULATED": "acres",
+    "TAXYR": "tax_year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.33,
+    39.92,
+    -75.32,
+    39.93
+   ],
+   "features_in_probe": 981
+  }
+ },
+ {
+  "name": "pa-delaware-county-waste-recycling",
+  "state": "PA",
+  "title": "Trash and recycling by town (Delaware County)",
+  "title_es": "Basura y reciclaje por municipio (condado de Delaware)",
+  "description": "For each Delaware County municipality: who collects trash and what recycling is picked up at the curb.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Delaware County Planning Department",
+  "view": {
+   "url": "https://services3.arcgis.com/n2RXARD7dbpeC4OO/arcgis/rest/services/Delaware_County_Municipal_Waste_and_Recycling/FeatureServer/0",
+   "fields": {
+    "MUNICIPALITY": "municipality",
+    "Waste_Collection": "trash_collection",
+    "ITEMS_COLLECTED_CURBSIDE": "curbside_recycling",
+    "Mandated_Non__mandated": "recycling_mandated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.45,
+    39.85,
+    -75.25,
+    40.0
+   ],
+   "features_in_probe": 41
+  }
+ },
+ {
+  "name": "pa-delaware-county-food-pantries",
+  "state": "PA",
+  "title": "Food pantries (Delaware County)",
+  "title_es": "Despensas de alimentos (condado de Delaware)",
+  "description": "SHARE Food Program partner pantries in Delaware County, with hours and phone.",
+  "group": "help",
+  "category": "point",
+  "source": "Delaware County Planning Department",
+  "view": {
+   "url": "https://services3.arcgis.com/n2RXARD7dbpeC4OO/arcgis/rest/services/ShareFoodPantries/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "fulladdr": "address",
+    "municipality": "municipality",
+    "agency": "agency",
+    "phone": "phone",
+    "operhours": "hours",
+    "agencyurl": "url",
+    "comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.45,
+    39.85,
+    -75.25,
+    40.0
+   ],
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "pa-lancaster-zoning",
+  "state": "PA",
+  "title": "Zoning (Lancaster County)",
+  "title_es": "Zonificación (condado de Lancaster)",
+  "description": "Municipal zoning across Lancaster County: the local district code and name, plus a countywide standard category so districts compare across towns.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Lancaster County GIS / Lancaster County Planning Department",
+  "view": {
+   "url": "https://services1.arcgis.com/I6XnrlnguPDoEObn/arcgis/rest/services/Zoning_Authoritative/FeatureServer/0",
+   "fields": {
+    "ZONING": "code",
+    "FULLNAME": "name",
+    "Zoning_Lex_Full": "kind",
+    "MUNI_ID": "municipality_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.36,
+    39.99,
+    -76.25,
+    40.08
+   ],
+   "features_in_probe": 402
+  }
+ },
+ {
+  "name": "pa-lancaster-parcels",
+  "state": "PA",
+  "title": "Parcels (Lancaster County)",
+  "title_es": "Parcelas (condado de Lancaster)",
+  "description": "Lancaster County property lots with parcel ID, address, deeded acres and assessed land, building and total values; owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Lancaster County GIS / Property Assessment",
+  "view": {
+   "url": "https://services1.arcgis.com/I6XnrlnguPDoEObn/arcgis/rest/services/Parcels_HUBnew/FeatureServer/0",
+   "fields": {
+    "PIN": "parcel_id",
+    "ADDRESS": "address",
+    "DEED_ACRES": "acres",
+    "LANDASSESS": "land_value",
+    "BLDGASSESS": "building_value",
+    "TOTLASSESS": "total_value",
+    "NEIGHBORHOOD": "neighborhood"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.31,
+    40.03,
+    -76.3,
+    40.04
+   ],
+   "features_in_probe": 1974
+  }
+ },
+ {
+  "name": "pa-lancaster-peach-bottom-evacuation-zone",
+  "state": "PA",
+  "title": "Peach Bottom nuclear plant evacuation zone (Lancaster County)",
+  "title_es": "Zona de evacuación de la planta nuclear Peach Bottom (condado de Lancaster)",
+  "description": "The part of southern Lancaster County inside the Peach Bottom Atomic Power Station emergency planning zone, where residents would follow county evacuation instructions.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Lancaster County-Wide Communications / Emergency Management",
+  "view": {
+   "url": "https://services1.arcgis.com/I6XnrlnguPDoEObn/arcgis/rest/services/PBEvacuationZones/FeatureServer/0",
+   "fields": {
+    "Name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.4,
+    39.72,
+    -76.1,
+    39.95
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "pa-lancaster-parks",
+  "state": "PA",
+  "title": "Parks (Lancaster County)",
+  "title_es": "Parques (condado de Lancaster)",
+  "description": "County, municipal and other public parks in Lancaster County with type, address and website.",
+  "group": "nature",
+  "category": "park",
+  "source": "Lancaster County GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/I6XnrlnguPDoEObn/arcgis/rest/services/Parks2/FeatureServer/0",
+   "fields": {
+    "PARK_NAME": "name",
+    "PARK_TYPE": "kind",
+    "FULLADDR": "address",
+    "Website": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.36,
+    39.99,
+    -76.25,
+    40.08
+   ],
+   "features_in_probe": 59
+  }
+ },
+ {
+  "name": "pa-lehigh-parcels",
+  "state": "PA",
+  "title": "Parcels (Lehigh County)",
+  "title_es": "Parcelas (condado de Lehigh)",
+  "description": "Lehigh County property lots with the parcel ID, situs address and acreage; owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Lehigh County Assessment / GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/XWDNR4PQlDQwrRCL/arcgis/rest/services/ATestParcel/FeatureServer/1",
+   "fields": {
+    "PIN": "parcel_id",
+    "SITUS_ADDR_NUM": "house_number",
+    "SITUS_FNAME": "street",
+    "SITUS_CITY": "city",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.48,
+    40.6,
+    -75.47,
+    40.61
+   ],
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "pa-lehigh-ballot-drop-boxes",
+  "state": "PA",
+  "title": "Mail ballot drop boxes (Lehigh County)",
+  "title_es": "Buzones para boletas por correo (condado de Lehigh)",
+  "description": "Official Lehigh County drop boxes for mail-in ballots, with hours.",
+  "group": "civic",
+  "category": "point",
+  "source": "Lehigh County Board of Elections",
+  "view": {
+   "url": "https://services1.arcgis.com/XWDNR4PQlDQwrRCL/arcgis/rest/services/PollingDropBoxes/FeatureServer/0",
+   "fields": {
+    "LOCNAME": "name",
+    "LOCADDRESS": "address",
+    "HOO": "hours",
+    "PHONE": "phone",
+    "DISTRICT": "district"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "MAKEVIS = 'Y'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.55,
+    40.55,
+    -75.42,
+    40.65
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "pa-lehigh-parks",
+  "state": "PA",
+  "title": "Parks and recreation areas (Lehigh County)",
+  "title_es": "Parques y áreas recreativas (condado de Lehigh)",
+  "description": "Parks in Lehigh County with hours, acreage and parking, and links to park pages.",
+  "group": "nature",
+  "category": "point",
+  "source": "Lehigh County GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/XWDNR4PQlDQwrRCL/arcgis/rest/services/Parks_and_Recreation_Areas/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "FULLADDR": "address",
+    "OPERHOURS": "hours",
+    "PARKAREA": "acres",
+    "NUMPARKING": "parking",
+    "PARKURL": "url",
+    "Owner": "managed_by"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.55,
+    40.55,
+    -75.42,
+    40.65
+   ],
+   "features_in_probe": 59
+  }
+ },
+ {
+  "name": "pa-lehigh-waste-facilities",
+  "state": "PA",
+  "title": "Recycling and waste drop-off sites (Lehigh County)",
+  "title_es": "Sitios de reciclaje y residuos (condado de Lehigh)",
+  "description": "Recycling drop-off centers, yard waste sites and transfer stations listed in Lehigh County's solid waste plan.",
+  "group": "infra",
+  "category": "point",
+  "source": "Lehigh County Solid Waste Management",
+  "view": {
+   "url": "https://services1.arcgis.com/XWDNR4PQlDQwrRCL/arcgis/rest/services/LC_Solid_Waste_Management/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Type": "kind",
+    "Subtype": "subtype",
+    "Note": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.55,
+    40.55,
+    -75.42,
+    40.65
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "pa-penndot-construction",
+  "state": "PA",
+  "title": "PennDOT projects under construction",
+  "title_es": "Proyectos de PennDOT en construcción",
+  "description": "State road and bridge projects PennDOT has under construction, with the type of work, county, letting date, expected completion and contract amount.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Pennsylvania Department of Transportation (PennDOT)",
+  "view": {
+   "url": "https://gis.penndot.gov/arcgis/rest/services/paprojects/paprojects/MapServer/20",
+   "fields": {
+    "PROJECT_TITLE": "name",
+    "IMPROVEMENT_CODE_DESC": "kind",
+    "PROJECT_IMPROVEMENT_DESC": "description",
+    "COUNTY_NAME": "county",
+    "ST_RT_NO": "route",
+    "PROJ_STATUS_DESC": "status",
+    "LET_DATE_DISPLAY": "let_date",
+    "COMPLETION_DATE": "completion",
+    "CRNT_CNTRCT_AM": "contract_amount"
+   },
+   "geometry": "line",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -75.3,
+    39.9,
+    -75.0,
+    40.1
+   ],
+   "features_in_probe": 790
+  }
+ },
+ {
+  "name": "pa-park-and-ride",
+  "state": "PA",
+  "title": "Park and ride lots (PennDOT)",
+  "title_es": "Estacionamientos park and ride (PennDOT)",
+  "description": "Park and ride lots across Pennsylvania with the nearest exit, approximate number of spaces, accessible spaces and whether transit serves the lot.",
+  "group": "roads",
+  "category": "point",
+  "source": "Pennsylvania Department of Transportation (PennDOT)",
+  "view": {
+   "url": "https://gis.penndot.gov/arcgis/rest/services/opendata/parkandride/MapServer/0",
+   "fields": {
+    "DESCRIPTION": "name",
+    "DESCRIPTION_2": "location",
+    "EXIT_NAME": "exit",
+    "SPACES": "spaces",
+    "HCP_SPACES": "accessible_spaces",
+    "TRANSIT_AVAILABLE": "transit",
+    "OPEN_YN": "open"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -77.6,
+    40.0,
+    -76.4,
+    40.6
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "pa-pgc-shooting-ranges",
+  "state": "PA",
+  "title": "Game Commission shooting ranges",
+  "title_es": "Campos de tiro de la Comisión de Caza",
+  "description": "Public shooting ranges on Pennsylvania State Game Lands with any closure notice and whether there are rifle, handgun, shotgun and archery areas (Y = yes, N = no) and their distances in yards.",
+  "group": "nature",
+  "category": "point",
+  "source": "Pennsylvania Game Commission",
+  "view": {
+   "url": "https://services1.arcgis.com/k8yxvICm95iIFicb/arcgis/rest/services/PGC_Shooting_Ranges/FeatureServer/100",
+   "fields": {
+    "range_name": "name",
+    "range_notice": "notice",
+    "rifle": "rifle",
+    "rifle_distance_yd": "rifle_yards",
+    "handgun": "handgun",
+    "shotgun_patterning": "shotgun",
+    "archery": "archery",
+    "archery_distance_yd": "archery_yards",
+    "sgl": "state_game_land"
+   },
+   "geometry": "point",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -77.6,
+    40.0,
+    -76.4,
+    40.6
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "pa-pgc-pheasant-release",
+  "state": "PA",
+  "title": "Public pheasant release areas",
+  "title_es": "Áreas públicas de liberación de faisanes",
+  "description": "Game lands and other public areas where the Pennsylvania Game Commission stocks pheasants for the hunting season.",
+  "group": "nature",
+  "category": "park",
+  "source": "Pennsylvania Game Commission",
+  "view": {
+   "url": "https://services1.arcgis.com/k8yxvICm95iIFicb/arcgis/rest/services/PGC_Hunting_Boundaries/FeatureServer/303",
+   "fields": {
+    "name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -77.6,
+    40.0,
+    -76.4,
+    40.6
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "ny-early-voting-sites",
+  "state": "NY",
+  "title": "Early voting sites (New York outside NYC)",
+  "title_es": "Sitios de votación anticipada (Nueva York fuera de NYC)",
+  "description": "Early voting locations for the current election in every New York county outside New York City. Any voter in the county can use any early voting site in that county.",
+  "group": "civic",
+  "category": "point",
+  "source": "NYS Office of Information Technology Services GIS / county boards of elections",
+  "view": {
+   "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/0",
+   "fields": {
+    "Polling_Place_Name": "name",
+    "Polling_Place_Address_1": "address",
+    "City": "city",
+    "Zip": "zip",
+    "County": "county",
+    "Town": "town",
+    "Comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.0,
+    42.5,
+    -73.6,
+    42.8
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "ny-nyc-early-voting-sites",
+  "state": "NY",
+  "title": "Early voting sites (New York City)",
+  "title_es": "Sitios de votación anticipada (Ciudad de Nueva York)",
+  "description": "Early voting poll sites in the five boroughs for the current election. In NYC each voter is assigned one early voting site; check the Board of Elections poll site finder.",
+  "group": "civic",
+  "category": "point",
+  "source": "NYS Office of Information Technology Services GIS / county boards of elections / NYC Board of Elections",
+  "view": {
+   "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/1",
+   "fields": {
+    "Poll_Site_Name": "name",
+    "Poll_Site_Address": "address",
+    "City": "city",
+    "ZipCode": "zip",
+    "County": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "ny-election-day-poll-sites",
+  "state": "NY",
+  "title": "Election Day polling places (New York outside NYC)",
+  "title_es": "Lugares de votación el día de la elección (Nueva York fuera de NYC)",
+  "description": "Election Day polling places for the current election in New York counties outside New York City, with address and notes.",
+  "group": "civic",
+  "category": "point",
+  "source": "NYS Office of Information Technology Services GIS / county boards of elections",
+  "view": {
+   "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/2",
+   "fields": {
+    "Poll_Site": "name",
+    "Address1": "address",
+    "City": "city",
+    "Zip": "zip",
+    "County": "county",
+    "Comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.0,
+    42.5,
+    -73.6,
+    42.8
+   ],
+   "features_in_probe": 156
+  }
+ },
+ {
+  "name": "ny-nyc-election-day-poll-sites",
+  "state": "NY",
+  "title": "Election Day poll sites (New York City)",
+  "title_es": "Lugares de votación el día de la elección (Ciudad de Nueva York)",
+  "description": "Election Day poll sites in the five boroughs for the current election.",
+  "group": "civic",
+  "category": "point",
+  "source": "NYS Office of Information Technology Services GIS / county boards of elections / NYC Board of Elections",
+  "view": {
+   "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/3",
+   "fields": {
+    "Poll_Site_Name": "name",
+    "Poll_Site_Address": "address",
+    "City": "city",
+    "ZipCode": "zip",
+    "County": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 244
+  }
+ },
+ {
+  "name": "ny-boat-launches",
+  "state": "NY",
+  "title": "Boat launch sites (New York)",
+  "title_es": "Rampas para botes (Nueva York)",
+  "description": "Public boat launches and hand launches across New York State run by DEC, State Parks, towns and others, with the waterbody and a link to details.",
+  "group": "nature",
+  "category": "point",
+  "source": "NYS Department of Environmental Conservation (DEC)",
+  "view": {
+   "url": "https://services6.arcgis.com/DZHaqZm9cxOD4CWM/arcgis/rest/services/Boat_Launch_Sites/FeatureServer/4",
+   "fields": {
+    "WATERBODY": "waterbody",
+    "ACCESS_TYP": "kind",
+    "PARK": "site",
+    "AGENCY": "managed_by",
+    "COUNTY": "county",
+    "WEBLINK": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.5,
+    42.5,
+    -73.7,
+    43.5
+   ],
+   "features_in_probe": 146
+  }
+ },
+ {
+  "name": "ny-fishing-parking-areas",
+  "state": "NY",
+  "title": "Public fishing parking areas (New York)",
+  "title_es": "Estacionamientos para pesca pública (Nueva York)",
+  "description": "Parking areas DEC maintains for anglers at public fishing rights streams and other fishing spots.",
+  "group": "nature",
+  "category": "point",
+  "source": "NYS Department of Environmental Conservation (DEC)",
+  "view": {
+   "url": "https://services6.arcgis.com/DZHaqZm9cxOD4CWM/arcgis/rest/services/Public_Fishing_Parking_Areas/FeatureServer/2",
+   "fields": {
+    "WATER": "water",
+    "AGENCY": "managed_by",
+    "COMMENTS": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.5,
+    42.5,
+    -73.7,
+    43.5
+   ],
+   "features_in_probe": 130
+  }
+ },
+ {
+  "name": "ny-trout-streams",
+  "state": "NY",
+  "title": "Stocked trout streams (New York)",
+  "title_es": "Arroyos con siembra de truchas (Nueva York)",
+  "description": "Inland trout streams DEC manages and stocks, with the species stocked, number of trout, stocking schedule and harvest rules.",
+  "group": "nature",
+  "category": "park",
+  "source": "NYS Department of Environmental Conservation (DEC)",
+  "view": {
+   "url": "https://services6.arcgis.com/DZHaqZm9cxOD4CWM/arcgis/rest/services/Inland_Trout_Stream_Fishing/FeatureServer/0",
+   "fields": {
+    "WATER": "water",
+    "MGMTCAT": "category",
+    "STOCKEDSPECIES": "species",
+    "TOTALTROUT": "trout_stocked",
+    "SCHEDULE": "schedule",
+    "HARVESTREG": "harvest_rules",
+    "LENGTH_MILES": "miles",
+    "DESCRIPTION": "description"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.5,
+    42.5,
+    -73.7,
+    43.5
+   ],
+   "features_in_probe": 104
+  }
+ },
+ {
+  "name": "ny-trout-stream-access",
+  "state": "NY",
+  "title": "Public fishing rights easements (New York)",
+  "title_es": "Servidumbres de pesca pública (Nueva York)",
+  "description": "Stream banks where New York has bought permanent public fishing rights, so anglers may walk the bank and fish even on private land.",
+  "group": "nature",
+  "category": "park",
+  "source": "NYS Department of Environmental Conservation (DEC)",
+  "view": {
+   "url": "https://services6.arcgis.com/DZHaqZm9cxOD4CWM/arcgis/rest/services/Trout_Stream_Fishing_Access/FeatureServer/1",
+   "fields": {
+    "WATER": "water",
+    "AGENCY": "managed_by",
+    "COMMENTS": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.5,
+    42.5,
+    -73.7,
+    43.5
+   ],
+   "features_in_probe": 920
+  }
+ },
+ {
+  "name": "ny-accessible-recreation",
+  "state": "NY",
+  "title": "Accessible recreation destinations (DEC)",
+  "title_es": "Destinos recreativos accesibles (DEC)",
+  "description": "DEC sites with accessible features for people with disabilities: trails, fishing piers, boat launches, campsites, picnic areas, viewing platforms and accessible toilets.",
+  "group": "nature",
+  "category": "point",
+  "source": "NYS Department of Environmental Conservation (DEC)",
+  "view": {
+   "url": "https://services6.arcgis.com/DZHaqZm9cxOD4CWM/arcgis/rest/services/ARD/FeatureServer/0",
+   "fields": {
+    "F38_DEST": "name",
+    "F2_LAND": "land",
+    "F4_FEATURES": "features",
+    "F18_TRAIL_INFO": "trail",
+    "F19_ACC_DETAILS": "access_details",
+    "F20_COUNTY": "county",
+    "F25_WEB": "url",
+    "ACC_STATUS": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.5,
+    42.5,
+    -73.7,
+    43.5
+   ],
+   "features_in_probe": 63
+  }
+ },
+ {
+  "name": "ny-water-wells",
+  "state": "NY",
+  "title": "Water wells (DEC well completion reports)",
+  "title_es": "Pozos de agua (informes de pozos del DEC)",
+  "description": "Water wells drilled in New York since 2000 from contractor completion reports: well type, depth in feet and pump capacity in gallons per minute. Owner names are not shown.",
+  "group": "infra",
+  "category": "point",
+  "source": "NYS Department of Environmental Conservation (DEC) Water Well Contractor Program",
+  "view": {
+   "url": "https://services6.arcgis.com/DZHaqZm9cxOD4CWM/arcgis/rest/services/Water_Wells/FeatureServer/28",
+   "fields": {
+    "WELL_NO": "well_id",
+    "WELLTYPE": "kind",
+    "DEPTH": "depth_ft",
+    "PUMPCAP": "pump_gpm",
+    "COUNTY": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -73.0,
+    40.85,
+    -72.9,
+    40.9
+   ],
+   "features_in_probe": 135
+  }
+ },
+ {
+  "name": "ny-shellfish-closures",
+  "state": "NY",
+  "title": "Shellfish harvest closures (New York)",
+  "title_es": "Cierres de recolección de mariscos (Nueva York)",
+  "description": "Marine waters where DEC bans or limits shellfish harvesting because of water quality, with the regulation and a link to details.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "NYS Department of Environmental Conservation (DEC) Shellfisheries",
+  "view": {
+   "url": "https://services6.arcgis.com/DZHaqZm9cxOD4CWM/arcgis/rest/services/Shellfish/FeatureServer/3",
+   "fields": {
+    "NAME": "name",
+    "STATUS": "status",
+    "CLOSED": "closed",
+    "SGAREA": "growing_area",
+    "Regulation": "regulation",
+    "Regulations_Link": "url",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -73.8,
+    40.55,
+    -72.0,
+    41.1
+   ],
+   "features_in_probe": 349
+  }
+ },
+ {
+  "name": "ny-nyc-council-districts",
+  "state": "NY",
+  "title": "City Council districts (New York City)",
+  "title_es": "Distritos del Concejo Municipal (Ciudad de Nueva York)",
+  "description": "The 51 New York City Council districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "NYC Department of City Planning",
+  "view": {
+   "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_City_Council_Districts/FeatureServer/0",
+   "fields": {
+    "CounDist": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "ny-nyc-community-districts",
+  "state": "NY",
+  "title": "Community districts (New York City)",
+  "title_es": "Distritos comunitarios (Ciudad de Nueva York)",
+  "description": "The 59 community districts, each with a community board that weighs in on land use, zoning and city services. The code is borough number (1 Manhattan, 2 Bronx, 3 Brooklyn, 4 Queens, 5 Staten Island) followed by the district number.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "NYC Department of City Planning",
+  "view": {
+   "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_Community_Districts/FeatureServer/0",
+   "fields": {
+    "BoroCD": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "ny-nyc-school-districts",
+  "state": "NY",
+  "title": "Community school districts (New York City)",
+  "title_es": "Distritos escolares comunitarios (Ciudad de Nueva York)",
+  "description": "The 32 NYC public school community school districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "NYC Department of City Planning / NYC Public Schools",
+  "view": {
+   "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_School_Districts/FeatureServer/0",
+   "fields": {
+    "SchoolDist": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "ny-nyc-special-districts",
+  "state": "NY",
+  "title": "Special purpose zoning districts (New York City)",
+  "title_es": "Distritos especiales de zonificación (Ciudad de Nueva York)",
+  "description": "NYC special purpose districts, which add their own zoning rules on top of base zoning (for example Special Midtown, Special Hudson Yards, Special Coney Island).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "NYC Department of City Planning",
+  "view": {
+   "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/nysp/FeatureServer/0",
+   "fields": {
+    "SDNAME": "name",
+    "SDLBL": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 41
+  }
+ },
+ {
+  "name": "ny-nyc-commercial-overlays",
+  "state": "NY",
+  "title": "Commercial overlays (New York City)",
+  "title_es": "Superposiciones comerciales (Ciudad de Nueva York)",
+  "description": "Commercial overlay districts (C1-1 to C2-5) mapped over residential blocks in NYC, which allow corner stores and other local retail.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "NYC Department of City Planning",
+  "view": {
+   "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/nyco/FeatureServer/0",
+   "fields": {
+    "OVERLAY": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 1372
+  }
+ },
+ {
+  "name": "ny-nyc-historic-districts",
+  "state": "NY",
+  "title": "Historic districts (NYC Landmarks)",
+  "title_es": "Distritos históricos (Comisión de Monumentos de NYC)",
+  "description": "Historic districts designated by the NYC Landmarks Preservation Commission, with the designation date; exterior work needs an LPC permit.",
+  "group": "places",
+  "category": "boundary",
+  "source": "NYC Landmarks Preservation Commission (via NYC OTI)",
+  "view": {
+   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/HistoricDistrict_view/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "LP_NUMBER": "lp_number",
+    "DESIGNATED": "designated",
+    "BOROUGH": "borough"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 81
+  }
+ },
+ {
+  "name": "ny-nyc-capital-projects",
+  "state": "NY",
+  "title": "Capital projects (New York City)",
+  "title_es": "Proyectos de obras públicas (Ciudad de Nueva York)",
+  "description": "City-funded capital projects from the Capital Projects Database (parks, schools, sewers, streets and more): managing agency, description, dates and planned total cost.",
+  "group": "growth",
+  "category": "info",
+  "source": "NYC Department of City Planning (Capital Projects Database)",
+  "view": {
+   "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/Capital_Projects_Database_poly/FeatureServer/0",
+   "fields": {
+    "descript": "name",
+    "magenname": "agency",
+    "typecat": "kind",
+    "mindate": "start",
+    "maxdate": "end",
+    "pctotal": "planned_cost"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 576
+  }
+ },
+ {
+  "name": "ny-nyc-capital-project-sites",
+  "state": "NY",
+  "title": "Capital project sites (New York City)",
+  "title_es": "Sitios de proyectos de obras públicas (Ciudad de Nueva York)",
+  "description": "Point locations of city-funded capital projects from the Capital Projects Database, with agency, description, dates and planned total cost.",
+  "group": "growth",
+  "category": "info",
+  "source": "NYC Department of City Planning (Capital Projects Database)",
+  "view": {
+   "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/Capital_Projects_Database_points/FeatureServer/0",
+   "fields": {
+    "descript": "name",
+    "magenname": "agency",
+    "typecat": "kind",
+    "mindate": "start",
+    "maxdate": "end",
+    "pctotal": "planned_cost"
+   },
+   "geometry": "point",
+   "min_zoom": 13,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 749
+  }
+ },
+ {
+  "name": "ny-nyc-pops",
+  "state": "NY",
+  "title": "Privately owned public spaces (New York City)",
+  "title_es": "Espacios públicos de propiedad privada (Ciudad de Nueva York)",
+  "description": "Plazas, arcades and atriums that building owners must keep open to the public in exchange for extra floor area, with hours and required amenities.",
+  "group": "nature",
+  "category": "park",
+  "source": "NYC Department of City Planning",
+  "view": {
+   "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/Privately_Owned_Public_Spaces/FeatureServer/0",
+   "fields": {
+    "bldg_name": "building",
+    "addzipcode": "address",
+    "ps_type": "kind",
+    "houraccess": "hours",
+    "amen_reqd": "required_amenities",
+    "phys_dis": "accessibility",
+    "constructd": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 360
+  }
+ },
+ {
+  "name": "ny-nyc-free-computer-labs",
+  "state": "NY",
+  "title": "Free computer labs (New York City)",
+  "title_es": "Laboratorios de computadoras gratuitos (Ciudad de Nueva York)",
+  "description": "Free public computer centers and labs run by city agencies and partners, with daily hours, language access, wheelchair access, classes and device lending.",
+  "group": "help",
+  "category": "point",
+  "source": "NYC Office of Technology and Innovation",
+  "view": {
+   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/Free_Computer_Labs_PRD/FeatureServer/0",
+   "fields": {
+    "Location_Name": "name",
+    "Full_Location_Address": "address",
+    "Oversight_Agency": "agency",
+    "Location_Phone_Number": "phone",
+    "Status": "status",
+    "Mon_Hours": "monday",
+    "Tue_Hours": "tuesday",
+    "Wed_Hours": "wednesday",
+    "Thu_Hours": "thursday",
+    "Fri_Hours": "friday",
+    "Sat_Hours": "saturday",
+    "Sun_Hours": "sunday",
+    "Language_Access": "languages",
+    "Wheelchair_Accessible": "wheelchair",
+    "Technology_Related_Courses": "classes",
+    "Device_Loaning": "device_loans",
+    "Access_Notes": "who_can_use",
+    "URL": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 116
+  }
+ },
+ {
+  "name": "ny-nyc-senior-centers",
+  "state": "NY",
+  "title": "Older adult centers (New York City)",
+  "title_es": "Centros para adultos mayores (Ciudad de Nueva York)",
+  "description": "NYC Aging-funded older adult (senior) centers offering meals, activities and services, from the city Facilities Database.",
+  "group": "help",
+  "category": "point",
+  "source": "NYC Department of City Planning Facilities Database / NYC Aging",
+  "view": {
+   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/Senior_Center/FeatureServer/0",
+   "fields": {
+    "FACNAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "ZIPCODE": "zip",
+    "FACTYPE": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 60
+  }
+ },
+ {
+  "name": "ny-nyc-parks-properties",
+  "state": "NY",
+  "title": "Parks properties (New York City)",
+  "title_es": "Propiedades de parques (Ciudad de Nueva York)",
+  "description": "Every NYC Parks property (parks, playgrounds, gardens, malls, greenstreets) with type, acreage, address and waterfront status.",
+  "group": "nature",
+  "category": "park",
+  "source": "NYC Department of Parks and Recreation",
+  "view": {
+   "url": "https://services3.arcgis.com/xJHn8F2NTtwCMFtX/arcgis/rest/services/NYC_Parks_Legal_Property_Boundary_view/FeatureServer/0",
+   "fields": {
+    "PropertyName": "name",
+    "TypeCategory": "kind",
+    "SubCategory": "subcategory",
+    "Address": "address",
+    "Borough": "borough",
+    "Acres": "acres",
+    "Waterfront": "waterfront",
+    "Jurisdiction": "jurisdiction"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 498
+  }
+ },
+ {
+  "name": "ny-nyc-spray-showers",
+  "state": "NY",
+  "title": "Spray showers (NYC Parks)",
+  "title_es": "Duchas de agua en parques (NYC Parks)",
+  "description": "Spray showers and sprinklers in NYC parks and playgrounds, where kids can cool off in hot weather, with status.",
+  "group": "help",
+  "category": "point",
+  "source": "NYC Department of Parks and Recreation",
+  "view": {
+   "url": "https://services3.arcgis.com/xJHn8F2NTtwCMFtX/arcgis/rest/services/SprayShowers_VW/FeatureServer/0",
+   "fields": {
+    "PropName": "park",
+    "SiteName": "site",
+    "pubLocation": "location",
+    "FeatureType": "kind",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -74.02,
+    40.68,
+    -73.92,
+    40.78
+   ],
+   "features_in_probe": 231
+  }
+ },
+ {
+  "name": "ny-westchester-storm-surge-zones",
+  "state": "NY",
+  "title": "Hurricane storm surge zones (Westchester)",
+  "title_es": "Zonas de marejada ciclónica (Westchester)",
+  "description": "Areas along the Long Island Sound and Hudson River shore that could flood from hurricane storm surge, by hurricane category (1 = could flood in a Category 1 storm, up to 4).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Westchester County GIS / Office of Emergency Management",
+  "view": {
+   "url": "https://giswww.westchestergov.com/arcgis/rest/services/FindHurricanePlanningZone/MapServer/2",
+   "fields": {
+    "ZONE": "category"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -73.9,
+    40.9,
+    -73.7,
+    41.1
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ny-westchester-zoning",
+  "state": "NY",
+  "title": "Municipal zoning (Westchester)",
+  "title_es": "Zonificación municipal (Westchester)",
+  "description": "Zoning districts of Westchester's cities, towns and villages compiled by the county, with district name, general use, minimum lot size, height limit and the year each town's map was last updated.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Westchester County GIS / Department of Planning",
+  "view": {
+   "url": "https://giswww.westchestergov.com/arcgis/rest/services/DataHub_EnvironmentandPlanning/MapServer/207",
+   "fields": {
+    "ZONING": "code",
+    "ZONE_NAME": "name",
+    "GENZDESC": "kind",
+    "MUN": "municipality",
+    "MIN_LOT": "min_lot_sqft",
+    "MAX_HGHT": "max_height_ft",
+    "STORIES": "max_stories",
+    "YEARUPDATED": "year_updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -73.9,
+    40.9,
+    -73.7,
+    41.1
+   ],
+   "features_in_probe": 1702
+  }
+ },
+ {
+  "name": "ny-westchester-trails",
+  "state": "NY",
+  "title": "County trails (Westchester)",
+  "title_es": "Senderos del condado (Westchester)",
+  "description": "Westchester County trail system, including the North and South County Trailways and park trails, with surface and length.",
+  "group": "nature",
+  "category": "park",
+  "source": "Westchester County GIS / Parks",
+  "view": {
+   "url": "https://giswww.westchestergov.com/arcgis/rest/services/DataHub_EnvironmentandPlanning/MapServer/212",
+   "fields": {
+    "NAME": "name",
+    "DESCRIP": "description",
+    "SURFACE_TY": "surface",
+    "MILES": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -73.9,
+    40.9,
+    -73.7,
+    41.1
+   ],
+   "features_in_probe": 157
+  }
+ },
+ {
+  "name": "ny-westchester-fire-districts",
+  "state": "NY",
+  "title": "Fire districts (Westchester)",
+  "title_es": "Distritos de bomberos (Westchester)",
+  "description": "Fire protection districts and departments covering each part of Westchester County.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Westchester County GIS",
+  "view": {
+   "url": "https://giswww.westchestergov.com/arcgis/rest/services/Datahub_Boundaries/MapServer/153",
+   "fields": {
+    "FIRENAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -73.9,
+    40.9,
+    -73.7,
+    41.1
+   ],
+   "features_in_probe": 36
+  }
+ },
+ {
+  "name": "ny-westchester-water-suppliers",
+  "state": "NY",
+  "title": "Public water suppliers (Westchester)",
+  "title_es": "Proveedores de agua potable (Westchester)",
+  "description": "Which public water system serves each part of Westchester, whether it is public or private, with its phone number and website.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Westchester County GIS / Department of Health",
+  "view": {
+   "url": "https://giswww.westchestergov.com/arcgis/rest/services/Datahub_Boundaries/MapServer/151",
+   "fields": {
+    "PWS_NAME": "name",
+    "PWS_NO": "system_id",
+    "OWNER_TYPE_D": "ownership",
+    "MUNICIPALITY": "municipality",
+    "PHONE_NUMBER": "phone",
+    "WEBLINK": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -73.9,
+    40.9,
+    -73.7,
+    41.1
+   ],
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "ny-westchester-historic-sites",
+  "state": "NY",
+  "title": "Historic sites (Westchester)",
+  "title_es": "Sitios históricos (Westchester)",
+  "description": "Historic sites in Westchester County, with State and National Register listing dates and National Historic Landmark status.",
+  "group": "places",
+  "category": "point",
+  "source": "Westchester County GIS",
+  "view": {
+   "url": "https://giswww.westchestergov.com/arcgis/rest/services/DataHub_CommunityFacilities/MapServer/179",
+   "fields": {
+    "RESNAME": "name",
+    "ADDRESS": "address",
+    "MUN": "municipality",
+    "DESIG_TYPE": "designation",
+    "STATEREG": "state_register",
+    "NATL_REG": "national_register",
+    "NHL_STAT": "landmark"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -73.9,
+    40.9,
+    -73.7,
+    41.1
+   ],
+   "features_in_probe": 154
+  }
+ },
+ {
+  "name": "ny-westchester-parks",
+  "state": "NY",
+  "title": "Parks (Westchester)",
+  "title_es": "Parques (Westchester)",
+  "description": "County and municipal parks across Westchester County.",
+  "group": "nature",
+  "category": "point",
+  "source": "Westchester County GIS",
+  "view": {
+   "url": "https://giswww.westchestergov.com/arcgis/rest/services/DataHub_CommunityFacilities/MapServer/1",
+   "fields": {
+    "NAME": "name",
+    "LANDUSE": "kind",
+    "MUNICIPAL": "municipality"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -73.9,
+    40.9,
+    -73.7,
+    41.1
+   ],
+   "features_in_probe": 106
+  }
+ },
+ {
+  "name": "ny-syracuse-parcels",
+  "state": "NY",
+  "title": "Parcels with trash day and zoning (Syracuse)",
+  "title_es": "Parcelas con día de basura y zonificación (Syracuse)",
+  "description": "Syracuse property lots with address, land use, assessed value and year built, plus the lot's trash pickup day, recycling week, current zoning, ReZone Syracuse district and neighborhood. Owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Syracuse (quarterly parcel map)",
+  "view": {
+   "url": "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/QPD_2026_10_19_L1_ODP_view/FeatureServer/0",
+   "fields": {
+    "SBL": "parcel_id",
+    "FullAddres": "address",
+    "LU_parcel": "land_use",
+    "total_av": "assessed_value",
+    "ACRES": "acres",
+    "yr_built": "year_built",
+    "DPW_Sani": "trash_day",
+    "DPW_Recycl": "recycling_week",
+    "ZONE_DIST_": "zoning",
+    "REZONE": "rezone_district",
+    "NHOOD": "neighborhood",
+    "CC_DIST": "council_district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.16,
+    43.04,
+    -76.15,
+    43.05
+   ],
+   "features_in_probe": 465
+  }
+ },
+ {
+  "name": "ny-syracuse-snow-routes",
+  "state": "NY",
+  "title": "Snow plow status (Syracuse)",
+  "title_es": "Estado de quitanieves (Syracuse)",
+  "description": "Syracuse snow routes with their plowing priority, whether the street has been serviced in the current storm and when it was last plowed.",
+  "group": "live",
+  "category": "roadops",
+  "source": "City of Syracuse Department of Public Works",
+  "view": {
+   "url": "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/Winter_Operations_SnowRoutes_Current_View/FeatureServer/0",
+   "fields": {
+    "roadname": "name",
+    "routepriority": "priority",
+    "servicestatus": "status",
+    "lastserviced": "last_serviced"
+   },
+   "geometry": "line",
+   "min_zoom": 14,
+   "refresh_s": 1800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.17,
+    43.02,
+    -76.12,
+    43.06
+   ],
+   "features_in_probe": 1863
+  }
+ },
+ {
+  "name": "ny-syracuse-road-reconstruction",
+  "state": "NY",
+  "title": "Road reconstruction 2026-2027 (Syracuse)",
+  "title_es": "Reconstrucción de calles 2026-2027 (Syracuse)",
+  "description": "Syracuse streets planned for full reconstruction in 2026 and 2027, with status.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Syracuse Department of Public Works",
+  "view": {
+   "url": "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/Road_Recon_2026-2027_view/FeatureServer/0",
+   "fields": {
+    "StreetName": "street",
+    "Status": "status",
+    "Quadrant": "quadrant"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.17,
+    43.02,
+    -76.12,
+    43.06
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "ny-syracuse-resurfacing-2026",
+  "state": "NY",
+  "title": "Road resurfacing 2026 (Syracuse)",
+  "title_es": "Repavimentación 2026 (Syracuse)",
+  "description": "Syracuse streets on the 2026 resurfacing (repaving) list.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Syracuse Department of Public Works",
+  "view": {
+   "url": "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/Road_Resurfacing_2026/FeatureServer/0",
+   "fields": {
+    "CompleteSt": "street",
+    "Status": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.17,
+    43.02,
+    -76.12,
+    43.06
+   ],
+   "features_in_probe": 90
+  }
+ },
+ {
+  "name": "ny-syracuse-bike-infrastructure",
+  "state": "NY",
+  "title": "Bike lanes and trails (Syracuse)",
+  "title_es": "Ciclovías y senderos (Syracuse)",
+  "description": "Syracuse bike lanes, shared lanes and trails (2025), with length in miles.",
+  "group": "roads",
+  "category": "info",
+  "source": "City of Syracuse",
+  "view": {
+   "url": "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/Syracuse_Bike_Infrastructure_(2025)/FeatureServer/0",
+   "fields": {
+    "Infrastruc": "kind",
+    "TrailName": "name",
+    "Length_Mil": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.17,
+    43.02,
+    -76.12,
+    43.06
+   ],
+   "features_in_probe": 47
+  }
+ },
+ {
+  "name": "ny-syracuse-historic-properties",
+  "state": "NY",
+  "title": "Historic properties (Syracuse)",
+  "title_es": "Propiedades históricas (Syracuse)",
+  "description": "Syracuse properties that are locally protected sites or eligible for the National Register.",
+  "group": "places",
+  "category": "point",
+  "source": "City of Syracuse Landmark Preservation Board",
+  "view": {
+   "url": "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/Syracuse_Historical_Properties/FeatureServer/0",
+   "fields": {
+    "Property_Address": "address",
+    "LPSS": "local_protected",
+    "NR_Eligible": "national_register_eligible",
+    "SBL": "parcel_id"
+   },
+   "geometry": "point",
+   "min_zoom": 15,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.17,
+    43.02,
+    -76.12,
+    43.06
+   ],
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "ny-syracuse-neighborhoods",
+  "state": "NY",
+  "title": "Neighborhoods (Syracuse)",
+  "title_es": "Vecindarios (Syracuse)",
+  "description": "Syracuse's official neighborhoods (2026 boundaries).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Syracuse",
+  "view": {
+   "url": "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/Syracuse_Neighborhoods_20260604_view/FeatureServer/0",
+   "fields": {
+    "NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -76.17,
+    43.02,
+    -76.12,
+    43.06
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "ny-rochester-parcels",
+  "state": "NY",
+  "title": "Parcels with zoning (Rochester)",
+  "title_es": "Parcelas con zonificación (Rochester)",
+  "description": "City of Rochester property lots from the 2024 reassessment with address, property class, total assessed value, acreage, zoning and number of housing units. Owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Rochester (Open Data)",
+  "view": {
+   "url": "https://maps.cityofrochester.gov/server2/rest/services/Open_Data/TaxParcel2024/FeatureServer/0",
+   "fields": {
+    "PARCELID": "parcel_id",
+    "SITEADDRESS": "address",
+    "CLASSDSCRP": "kind",
+    "PROPERTYTYPE": "property_type",
+    "CURRENT_TOTAL_VALUE": "assessed_value",
+    "SHAPEACRES": "acres",
+    "BISZONING": "zoning",
+    "NORESUNITS": "housing_units"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -77.62,
+    43.15,
+    -77.61,
+    43.16
+   ],
+   "features_in_probe": 391
+  }
+ }
+]
