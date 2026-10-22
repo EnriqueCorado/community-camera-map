@@ -34,6 +34,7 @@ import { HISTORY_LAYERS } from "../history";
 import { ALPR_TILE_ZOOM, alprCells, alprIndex, alprNear, alprTile, evictAlprTile, mergeTiles, type AlprIndex } from "../alpr-tiles";
 import { VOTING_KEYS } from "../colors";
 import { servicePopup } from "../services-pack";
+import { VOTING_SITE } from "../presets";
 import { helpFor } from "../help/popup-help";
 import { LEGAL_COST_KEYS, LEGAL_KIND_KEYS } from "../help/legal-kinds";
 import type { LegalKind, LegalOffice } from "../help/legal-dir";
@@ -2884,6 +2885,7 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
           [t("rowHeight"), height != null ? `${fmt(height)} ft` : ""],
           // Researched state layers: the rest of their allowlisted fields.
           ...(/^[A-Z]{2}$/.test(info.coverage ?? "") ? specRows(p, GENERIC_SHOWN, lang, locale) : []),
+          [t("rowNote"), VOTING_SITE.test(info.name) ? t("votingConfirm") : ""],
         ],
       };
     }

@@ -128,7 +128,7 @@ test("post-processors: AirNow AQI band + drop inactive; gauge links", () => {
   expect(g.features[0]!.properties).toEqual({ page: "" });
 });
 
-import { PRESETS, activePreset, applyPreset } from "../../frontend/src/presets";
+import { PRESETS, VOTING_SITE, activePreset, applyPreset } from "../../frontend/src/presets";
 test("quick views: apply only known layers; recognize the active one", () => {
   const known = ["voting", "flood", "river-gauges", "rain-radar"];
   const flood = PRESETS.find((p) => p.id === "flood")!;
@@ -137,6 +137,19 @@ test("quick views: apply only known layers; recognize the active one", () => {
   expect(activePreset({ flood: true }, known)).toBeNull();
   expect(activePreset({}, known)).toBeNull();
   expect(new Set(PRESETS.map((p) => p.id)).size).toBe(PRESETS.length);
+});
+
+test("quick views add the on-screen state's own voting sites and cooling centers", () => {
+  const known = ["voting", "tx-bexar-early-voting", "tx-bexar-election-day-sites", "tx-bexar-voting-precincts", "ca-orange-vote-centers", "tx-bexar-warming-cooling-centers", "heat-risk"];
+  const voting = PRESETS.find((p) => p.id === "voting")!;
+  // In Texas: the Texas voting sites, not precincts, not another state's.
+  expect(applyPreset(voting, known, ["TX"])).toEqual({ voting: true, "tx-bexar-early-voting": true, "tx-bexar-election-day-sites": true });
+  expect(activePreset({ voting: true, "tx-bexar-early-voting": true, "tx-bexar-election-day-sites": true }, known, ["TX"])).toBe("voting");
+  expect(applyPreset(voting, known)).toEqual({ voting: true }); // no state on screen
+  const heat = PRESETS.find((p) => p.id === "heat")!;
+  expect(applyPreset(heat, known, ["TX"])).toEqual({ "heat-risk": true, "tx-bexar-warming-cooling-centers": true });
+  expect(VOTING_SITE.test("wa-king-ballot-drop-boxes") && VOTING_SITE.test("ny-election-day-poll-sites")).toBe(true);
+  expect(VOTING_SITE.test("tx-travis-voting-precincts")).toBe(false);
 });
 
 test("census posts: ratio and sum compute pct and drop their inputs", () => {

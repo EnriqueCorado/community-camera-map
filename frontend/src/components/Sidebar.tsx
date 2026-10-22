@@ -339,7 +339,8 @@ export function Sidebar({
   const setLayer = (patch: Partial<LayerState>) => onLayersChange({ ...layers, ...patch });
   // Only layers that can actually be switched on (a checkbox may be disabled).
   const presetable = overlayInfos.filter((l) => l.available || l.view).map((l) => l.name);
-  const current = activePreset(layers.overlays, presetable);
+  const here = statesAt(center);
+  const current = activePreset(layers.overlays, presetable, here);
   const anyOverlayOn = Object.values(layers.overlays).some(Boolean);
   const setVendor = (vendor: string, on: boolean) =>
     setLayer({ alprVendors: { ...layers.alprVendors, [vendor]: on } });
@@ -381,7 +382,6 @@ export function Sidebar({
   const showAlpr = !!alprInfo && matchesQuery(title(alprInfo));
   // "This state": the layers of the state(s) under the map center, plus any
   // still switched on elsewhere (so they can be turned off after panning away).
-  const here = statesAt(center);
   const inView = (l: LayerInfo) => groupOf(l) !== "state" || here.includes(l.coverage!) || !!layers.overlays[l.name];
   const groups = GROUP_ORDER.map(
     (key) =>
@@ -541,7 +541,7 @@ export function Sidebar({
               aria-pressed={current === p.id}
               disabled={presetable.length === 0} // the layer list hasn't loaded yet
               // Pressing the active view again turns it off.
-              onClick={() => setLayer({ overlays: current === p.id ? {} : applyPreset(p, presetable) })}
+              onClick={() => setLayer({ overlays: current === p.id ? {} : applyPreset(p, presetable, here) })}
             >
               {t(p.label)}
             </button>
@@ -551,6 +551,14 @@ export function Sidebar({
             {t("presetClear")}
           </button>
         </div>
+        {current === "voting" && (
+          <p className="panel__note">
+            {t("votingCoverage")}{" "}
+            <a href="https://vote.gov/" target="_blank" rel="noopener noreferrer">
+              {t("votingFindYours")}
+            </a>
+          </p>
+        )}
       </Section>
 
       <Section {...section("near")} title={t("nearTitle")}>

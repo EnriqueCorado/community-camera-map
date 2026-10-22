@@ -407,3 +407,13 @@ test("US groundwater wells show the depth legend", async ({ page }) => {
   await page.getByText("Groundwater levels (US wells)", { exact: true }).click();
   await expect(page.locator("#gw-legend")).toBeVisible();
 });
+
+test("Election day quick view adds the on-screen state's voting sites and links to vote.gov", async ({ page }) => {
+  await page.goto("/#v=-98.49,29.42,10"); // San Antonio, TX
+  await waitForMap(page);
+  await expect(page.getByText(/^This state: .*Texas/)).toBeVisible();
+  await page.getByRole("button", { name: "Election day", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Election day", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("checkbox", { name: /Early voting.*Bexar/i }).first()).toBeChecked();
+  await expect(page.getByRole("link", { name: /Find your official polling place/ })).toHaveAttribute("href", "https://vote.gov/");
+});
