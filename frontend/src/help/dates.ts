@@ -28,10 +28,11 @@ export function addDays(iso: string, n: number): string | null {
   return d == null ? null : new Date((d + n) * 86_400_000).toISOString().slice(0, 10);
 }
 
-/** Today in the visitor's own time zone, as ISO. */
+/** Today's date in California (deadlines are counted in local court days,
+ *  whatever time zone the visitor's device is set to). */
 export function todayIso(now: Date = new Date()): string {
-  const p = (v: number) => String(v).padStart(2, "0");
-  return `${now.getFullYear()}-${p(now.getMonth() + 1)}-${p(now.getDate())}`;
+  // en-CA formats as YYYY-MM-DD.
+  return now.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 }
 
 /** A long, localized date ("October 19, 2026" / "19 de octubre de 2026"). */

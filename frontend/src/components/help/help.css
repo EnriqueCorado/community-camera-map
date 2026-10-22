@@ -302,6 +302,7 @@ textarea.hf__input {
 
 .hchoice__opt input,
 .hcheck input {
+  flex: none; /* long, wrapping labels must not squeeze the control */
   accent-color: var(--accent);
   width: 18px;
   height: 18px;
@@ -548,6 +549,13 @@ textarea.hf__input {
   }
   .htabs {
     padding: 8px 12px 0;
+    /* Five tabs don't fit a phone: wrap rather than hide some off-screen. */
+    flex-wrap: wrap;
+    overflow-x: visible;
+    row-gap: 0;
+  }
+  .htabs__tab {
+    padding: 8px 10px;
   }
   .help__body {
     padding: 4px 16px 32px;

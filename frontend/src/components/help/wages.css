@@ -1,0 +1,111 @@
+/* "Unpaid wages" tool: the week-of-hours grid and the results table.
+   Theme tokens only (index.css), so light, dark and forced colors all work. */
+
+.wweek {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  margin: 12px 0;
+  padding: 10px 12px 8px;
+  min-width: 0;
+}
+
+.wweek > legend {
+  padding: 0 4px;
+}
+
+/* Seven boxes in a row on wide screens; wraps to 4 + 3 on phones. */
+.wweek__days {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+  gap: 8px;
+}
+
+.wweek__day .hf__input {
+  text-align: center;
+  padding: 9px 4px;
+}
+
+.wweek__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin-top: 6px;
+  min-height: 24px;
+}
+
+.wfinal {
+  margin-top: 14px;
+}
+
+.wtable-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.wtable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  margin: 6px 0 10px;
+}
+
+.wtable caption {
+  text-align: left;
+  font-weight: 600;
+  font-size: 13.5px;
+  padding-bottom: 6px;
+}
+
+.wtable th,
+.wtable td {
+  padding: 7px 6px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.wtable thead th {
+  font-size: 12.5px;
+  color: var(--muted);
+  text-align: right;
+}
+
+.wtable thead th:first-child,
+.wtable tbody th {
+  text-align: left;
+}
+
+.wtable tbody th {
+  font-weight: 400;
+}
+
+.wtable td {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.wtable__cite {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.wtable__sub th,
+.wtable__sub td {
+  font-weight: 600;
+}
+
+.wtable__total th,
+.wtable__total td {
+  font-weight: 700;
+  font-size: 15px;
+  border-top: 2px solid var(--ink);
+  border-bottom: 0;
+}
+
+.wnotes li {
+  font-size: 13.5px !important;
+}

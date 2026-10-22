@@ -1,0 +1,58 @@
+/* Benefits screener: result cards. Theme tokens only (see index.css). */
+.hben__summary {
+  font-size: 20px;
+}
+
+.hben__group {
+  margin-top: 18px;
+}
+
+.hben__group > h4 {
+  margin: 0 0 2px;
+}
+
+.hben__card h5 {
+  margin: 0 0 4px;
+}
+
+.hben__card p {
+  margin: 6px 0;
+}
+
+.hben__label {
+  font-weight: 700;
+  font-size: 14px;
+  margin: 10px 0 2px !important;
+}
+
+.hben__why {
+  margin: 0 0 6px;
+  padding-left: 20px;
+}
+
+.hben__why li {
+  margin: 2px 0;
+}
+
+.hben__office,
+.hben__imm {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.hben__more {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.hben__more summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ink);
+  min-height: 24px;
+}
+
+.hben__more ul {
+  margin: 6px 0 0;
+  padding-left: 20px;
+}

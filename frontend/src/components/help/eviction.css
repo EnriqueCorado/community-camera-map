@@ -1,0 +1,91 @@
+/* Eviction deadline helper. Theme tokens only (see index.css). */
+.hev-kinds {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 8px;
+}
+
+.hev-kind {
+  align-items: flex-start;
+  padding: 10px 12px;
+}
+
+.hev-kind input {
+  flex: none;
+  margin-top: 2px;
+}
+
+.hev-kind__label {
+  display: block;
+  font-weight: 600;
+}
+
+.hev-kind__top {
+  display: block;
+  margin-top: 2px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.hev-date {
+  max-width: 260px;
+}
+
+.help p.hev-deadline {
+  font-size: 26px;
+  line-height: 1.25;
+  margin: 4px 0;
+  overflow-wrap: anywhere;
+}
+
+.help p.hev-when {
+  font-size: 17px;
+  margin: 0 0 8px;
+}
+
+.help .hev-q .hf__label {
+  font-size: 15.5px;
+}
+
+.hev-count {
+  margin-top: 10px;
+  border-top: 1px solid var(--line);
+  padding-top: 8px;
+}
+
+.hev-count summary {
+  cursor: pointer;
+  font-weight: 600;
+  min-height: 24px;
+}
+
+.hev-days {
+  margin: 4px 0 8px;
+  padding-left: 22px;
+}
+
+.hev-help {
+  background: var(--panel-2);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin: 14px 0;
+}
+
+.hev-help__lead {
+  margin: 0;
+}
+
+.hev-places li {
+  margin-bottom: 8px;
+}
+
+.hev-places__line {
+  display: block;
+}
+
+/* Keep radio dots full size when a long option wraps on a phone. */
+.hev-q .hchoice__opt input {
+  flex: none;
+}

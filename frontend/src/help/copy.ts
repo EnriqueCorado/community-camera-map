@@ -201,7 +201,7 @@ const en: HelpCopy = {
 
   letterPreview: "Your letter",
   letterLanguage: "Letter language",
-  letterLanguageHint: "Letters to landlords and hospitals usually work best in English. You can print a Spanish copy for yourself.",
+  letterLanguageHint: "Letters to landlords, hospitals and employers usually work best in English. You can print a Spanish copy for yourself.",
   letterCopy: "Copy letter",
   letterPrint: "Print or save as PDF",
   letterDownload: "Download (.txt)",
@@ -388,7 +388,7 @@ const es: HelpCopy = {
 
   letterPreview: "Su carta",
   letterLanguage: "Idioma de la carta",
-  letterLanguageHint: "Las cartas a arrendadores y hospitales suelen funcionar mejor en inglés. Puede imprimir una copia en español para usted.",
+  letterLanguageHint: "Las cartas a arrendadores, hospitales y empleadores suelen funcionar mejor en inglés. Puede imprimir una copia en español para usted.",
   letterCopy: "Copiar carta",
   letterPrint: "Imprimir o guardar como PDF",
   letterDownload: "Descargar (.txt)",

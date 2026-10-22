@@ -9,6 +9,10 @@ import { HOSPITALS } from "../../frontend/src/help/hospitals";
 import {
   DEPOSIT_FACTS, LEGAL_FACTS, MEDICAL_FACTS, MOBILE_FACTS, RENT_FACTS, RENT_SOURCES, REPAIR_FACTS,
 } from "../../frontend/src/help/facts";
+import { WAGE_FACTS, WAGE_SOURCES } from "../../frontend/src/help/wages-facts";
+import { EVICTION_SOURCES } from "../../frontend/src/help/eviction-facts";
+import { BENEFITS_SOURCES, PROGRAMS } from "../../frontend/src/help/benefits-facts";
+import { HEAT_FACTS } from "../../frontend/src/help/heat-facts";
 
 test.skip(!process.env.LINKS, "network check; run with LINKS=1");
 
@@ -29,6 +33,15 @@ function links(): string[] {
     DEPOSIT_FACTS.smallClaims.url,
     MEDICAL_FACTS.complaint.url,
     MEDICAL_FACTS.freeHelp.url,
+    ...WAGE_SOURCES.map((s) => s.url),
+    WAGE_FACTS.office.url,
+    WAGE_FACTS.statewide.online,
+    ...Object.values(WAGE_FACTS.forms),
+    WAGE_FACTS.legalAidAtWork.url,
+    ...EVICTION_SOURCES.map((s) => s.url),
+    ...BENEFITS_SOURCES.map((s) => s.url),
+    ...JSON.stringify(PROGRAMS).match(/https:\/\/[^"\s]+/g) ?? [],
+    ...JSON.stringify(HEAT_FACTS).match(/https:\/\/[^"\s]+/g) ?? [],
     ...legal.offices.flatMap((o: { website: string; sources: string[] }) => [o.website, ...o.sources]),
   ];
   return [...new Set(all.filter((u): u is string => !!u && u.startsWith("https://")))].sort();

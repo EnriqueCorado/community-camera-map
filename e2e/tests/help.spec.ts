@@ -222,8 +222,8 @@ test("theme and text size: chosen explicitly, remembered, and still accessible",
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await expect(page.locator("html")).toHaveAttribute("data-text", "large");
   await page.getByRole("button", { name: /Free help/ }).click();
+  await expect(page.locator(".help__card")).toBeVisible();
   await expectNoA11yViolations(page, ".help__card");
-  await page.getByRole("group", { name: "Theme" }).count(); // still reachable after closing
 });
 
 test("keyboard only: reach the Help panel, every tab, and close it", async ({ page }) => {
