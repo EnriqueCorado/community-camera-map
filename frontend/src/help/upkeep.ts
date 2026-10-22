@@ -12,6 +12,7 @@ import { BENEFITS_CHECKED, TABLES, TAX, type IncomeTable } from "./benefits-fact
 import { MCW_CHECKED, MCW_IMMIGRANT_RECHECK, MCW_RECHECK } from "./medi-cal-work-facts";
 import { RIGHTS_CHECKED, RIGHTS_RECHECK } from "./rights-facts";
 import { CIVICS_CHECKED, CIVICS_OFFICIALS_RECHECK } from "./civics-facts";
+import { TAXES_CHECKED, TAXES_RECHECK } from "./taxes-facts";
 import { addDays } from "./dates";
 
 export interface UpkeepItem {
@@ -104,6 +105,12 @@ export function upkeepItems(): UpkeepItem[] {
       task: "Update the citizenship test's current officials (new governor 2027-01-04; Speaker and the new congressional districts 2027-01-03) in make_civics.py, and USCIS's official Spanish name lists (#30, #38, #39, #57) in research/civics-es-study.json from uscis.gov/es; regenerate civics-questions.ts and move CIVICS_OFFICIALS_RECHECK.",
       source: "https://www.uscis.gov/citizenship/testupdates",
     },
+    {
+      id: "taxes-season",
+      due: TAXES_RECHECK,
+      task: "Before tax season: add FTB's 2026 CalEITC table by number of children (CA_CREDITS.caleitcMax in taxes-facts.ts), this season's VITA / AARP Tax-Aide sites and dates in Stanislaus (TAX_PLACES; IRS locator, United Way, 211), the IRS opening day, and the latest in Center for Taxpayer Rights v. IRS (IRS-ICE sharing); then move TAXES_RECHECK.",
+      source: "https://www.ftb.ca.gov/file/personal/credits/caleitc/eligibility-and-credit-information.html",
+    },
     ...(Object.entries(TABLES) as [string, IncomeTable][]).map(([id, t]) => ({
       id: `benefits-${id}`,
       due: after(t.graceUntil ?? t.to, 1),
@@ -122,6 +129,7 @@ export function upkeepItems(): UpkeepItem[] {
         ["medi-cal-work", MCW_CHECKED],
         ["know-your-rights", RIGHTS_CHECKED],
         ["citizenship", CIVICS_CHECKED],
+        ["taxes", TAXES_CHECKED],
       ] as const
     ).map(([id, checked]) => ({
       id: `yearly-${id}`,

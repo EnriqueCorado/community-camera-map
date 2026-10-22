@@ -22,6 +22,10 @@ import { CIVICS_COPY } from "../help/civics-copy";
 import { CIVICS_QUESTIONS } from "../help/civics-questions";
 import { CIVICS_PARTS } from "../help/civics";
 import { HEAT_COPY } from "../help/heat-copy";
+import { CA_CREDITS, FED_CREDITS, TAX_PLACES, TAX_SEASON, TAXES_CHECKED, TAXES_FACTS, TAXES_SOURCES } from "../help/taxes-facts";
+import { TAXES_COPY } from "../help/taxes-copy";
+import { longDate } from "../help/dates";
+import { LOCALE } from "../i18n";
 
 /** A place to call or visit (the shape every facts file's contacts share). */
 export interface PlaceInfo {
@@ -47,7 +51,8 @@ export type ToolId =
   | "medi-cal-work"
   | "know-your-rights"
   | "citizenship"
-  | "legal";
+  | "legal"
+  | "taxes";
 
 /** A line in a section. `esEn`: an English part shown first on the Spanish page
  *  (marked lang="en"), e.g. the official civics question the officer asks. */
@@ -411,6 +416,51 @@ export const TOOLS: readonly ToolPage[] = [
     places: [],
     sources: LEGAL_FACTS.sources,
     checked: LEGAL_FACTS.checked,
+  },
+  {
+    id: "taxes",
+    group: "health",
+    slug: { en: "free-tax-help", es: "impuestos-gratis" },
+    target: { tab: "benefits", view: "taxes" },
+    name: { en: TAXES_COPY.en.title, es: TAXES_COPY.es.title },
+    summary: {
+      en: "File your 2026 taxes free in Stanislaus County and get CalEITC and other cash-back credits, with a Social Security number or an ITIN. Avoid tax scams.",
+      es: "Presente sus impuestos de 2026 gratis en el condado de Stanislaus y reciba CalEITC y otros créditos en efectivo, con número de Seguro Social o ITIN. Evite las estafas.",
+    },
+    intro: {
+      en: `${TAXES_COPY.en.lead} ${TAXES_COPY.en.seasonText(TAX_SEASON.taxYear, longDate(TAX_SEASON.due, LOCALE.en))}`,
+      es: `${TAXES_COPY.es.lead} ${TAXES_COPY.es.seasonText(TAX_SEASON.taxYear, longDate(TAX_SEASON.due, LOCALE.es))}`,
+    },
+    groups: [
+      group({ en: TAXES_COPY.en.freeTitle, es: TAXES_COPY.es.freeTitle }, TAXES_FACTS.free),
+      group({ en: TAXES_COPY.en.stateTitle, es: TAXES_COPY.es.stateTitle }, TAXES_FACTS.state),
+      group({ en: TAXES_COPY.en.fedTitle, es: TAXES_COPY.es.fedTitle }, TAXES_FACTS.federal),
+      group({ en: TAXES_COPY.en.itinTitle, es: TAXES_COPY.es.itinTitle }, TAXES_FACTS.itin),
+      group({ en: TAXES_COPY.en.privacyTitle, es: TAXES_COPY.es.privacyTitle }, TAXES_FACTS.privacy),
+      group({ en: TAXES_COPY.en.refundsTitle, es: TAXES_COPY.es.refundsTitle }, TAXES_FACTS.refunds),
+      group({ en: TAXES_COPY.en.scamsTitle, es: TAXES_COPY.es.scamsTitle }, TAXES_FACTS.scams),
+    ],
+    sections: [
+      {
+        title: { en: TAXES_COPY.en.numbersTitle, es: TAXES_COPY.es.numbersTitle },
+        items: [
+          {
+            en: TAXES_COPY.en.numbersNote(`$${CA_CREDITS.incomeUnder.toLocaleString("en-US")}`, `$${CA_CREDITS.yctcMax.toLocaleString("en-US")}`, `$${CA_CREDITS.fytcMax.toLocaleString("en-US")}`),
+            es: TAXES_COPY.es.numbersNote(`$${CA_CREDITS.incomeUnder.toLocaleString("en-US")}`, `$${CA_CREDITS.yctcMax.toLocaleString("en-US")}`, `$${CA_CREDITS.fytcMax.toLocaleString("en-US")}`),
+          },
+          ...TAXES_COPY.en.children.map((label, i) => {
+            const d = (n: number) => `$${n.toLocaleString("en-US")}`;
+            return {
+              en: `${label === "None" ? "No children" : `${label} ${label === "1" ? "child" : "children"}`}: CalEITC up to ${d(CA_CREDITS.caleitcMax.byChildren[i]!)} (tax year ${CA_CREDITS.caleitcMax.year}); federal EITC up to ${d(FED_CREDITS.eitcMax[i]!)} (tax year ${TAX_SEASON.taxYear}), for income under ${d(FED_CREDITS.eitcLimitSingle[i]!)}, or ${d(FED_CREDITS.eitcLimitJoint[i]!)} if married filing jointly.`,
+              es: `${i === 0 ? "Sin hijos" : `${TAXES_COPY.es.children[i]} ${i === 1 ? "hijo" : "hijos"}`}: CalEITC hasta ${d(CA_CREDITS.caleitcMax.byChildren[i]!)} (año fiscal ${CA_CREDITS.caleitcMax.year}); EITC federal hasta ${d(FED_CREDITS.eitcMax[i]!)} (año fiscal ${TAX_SEASON.taxYear}), con ingresos de menos de ${d(FED_CREDITS.eitcLimitSingle[i]!)}, o ${d(FED_CREDITS.eitcLimitJoint[i]!)} si son casados y declaran juntos.`,
+            };
+          }),
+        ],
+      },
+    ],
+    places: Object.values(TAX_PLACES),
+    sources: TAXES_SOURCES,
+    checked: TAXES_CHECKED,
   },
 ];
 

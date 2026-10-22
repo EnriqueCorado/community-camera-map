@@ -27,6 +27,7 @@ export interface HelpCopy {
   benefitsViewLabel: string;
   benefitsViewScreener: string;
   benefitsViewWork: string;
+  benefitsViewTaxes: string;
   rentViewEviction: string;
   disclaimer: string;
   flyers: string;
@@ -200,6 +201,7 @@ const en: HelpCopy = {
   benefitsViewLabel: "Choose a topic",
   benefitsViewScreener: "Which benefits can I get?",
   benefitsViewWork: "Medi-Cal work rules (2027)",
+  benefitsViewTaxes: "Free tax help (2027)",
   rentViewEviction: "Got an eviction notice?",
   flyers: "Share these tools: free printable flyers in English and Spanish",
   disclaimer:
@@ -395,6 +397,7 @@ const es: HelpCopy = {
   benefitsViewLabel: "Elija un tema",
   benefitsViewScreener: "¿Qué beneficios puedo recibir?",
   benefitsViewWork: "Reglas de trabajo de Medi-Cal (2027)",
+  benefitsViewTaxes: "Ayuda gratis con impuestos (2027)",
   rentViewEviction: "¿Recibió un aviso de desalojo?",
   flyers: "Comparta estas herramientas: volantes gratis para imprimir, en español e inglés",
   disclaimer:

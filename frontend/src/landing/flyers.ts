@@ -179,6 +179,31 @@ export const FLYERS: readonly Flyer[] = [
       es: { headline: "Ayuda gratis: hospital, renta, trabajo, beneficios", bullets: ["Gratis. Privado. Sin registrarse."] },
     },
   },
+  {
+    id: "taxes",
+    to: { tool: "taxes" },
+    layout: "page",
+    side: {
+      en: {
+        headline: "Do your taxes for free",
+        bullets: [
+          "IRS-certified volunteers prepare and file your taxes free. Local sites help in Spanish too.",
+          "Working families can get cash back from California, with a Social Security number or an ITIN.",
+          "Learn how to get or renew an ITIN, and what happens to your information.",
+          "Never pay a preparer a share of your refund. Check that they’re registered.",
+        ],
+      },
+      es: {
+        headline: "Haga sus impuestos gratis",
+        bullets: [
+          "Voluntarios certificados por el IRS preparan y presentan sus impuestos gratis. Los sitios locales también atienden en español.",
+          "Las familias trabajadoras pueden recibir dinero de California, con número de Seguro Social o con ITIN.",
+          "Aprenda a obtener o renovar el ITIN, y qué pasa con su información.",
+          "Nunca le pague a un preparador una parte de su reembolso. Verifique que esté registrado.",
+        ],
+      },
+    },
+  },
 ];
 
 /** Shared flyer wording (both languages appear on every flyer). */
