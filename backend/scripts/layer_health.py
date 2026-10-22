@@ -32,6 +32,7 @@ import datetime as dt
 import json
 import re
 from pathlib import Path
+from urllib.parse import urlsplit
 
 import httpx
 
@@ -157,6 +158,23 @@ def _clean(text: str, limit: int = 140) -> str:
     return text if len(text) <= limit else text[: limit - 1] + "…"
 
 
+def _host(url: str) -> str:
+    return urlsplit(url).netloc
+
+
+def unreachable_hosts(rows: list[dict]) -> dict[str, int]:
+    """Hosts (with 2+ layers) where every layer failed to connect at all:
+    {host: layer count}."""
+    by_host: dict[str, list[dict]] = {}
+    for r in rows:
+        by_host.setdefault(_host(r["url"]), []).append(r)
+    return {
+        host: len(rs)
+        for host, rs in by_host.items()
+        if len(rs) >= 2 and all(r["status"] == "broken" and "no answer" in r["detail"] for r in rs)
+    }
+
+
 def summary(
     rows: list[dict], *, checked: str, compared: bool = True, max_chars: int = MAX_BODY
 ) -> str:
@@ -179,6 +197,18 @@ def summary(
         f"**{len(todo):,} need attention** ({why}).",
         "This report changes nothing: every layer stays on the map until its spec is edited.",
     ]
+    # A server that refuses every connection from the CI runner (some agency
+    # firewalls block cloud addresses while browsers get through) is one line,
+    # not one per layer.
+    silent = unreachable_hosts(rows)
+    if silent:
+        lines += ["", f"## Servers that didn't answer the check ({len(silent)})", ""]
+        lines += [
+            f"- `{host}`: {n} layers. It may be blocking GitHub's servers rather than"
+            " visitors: open one of its layers in a browser to see."
+            for host, n in sorted(silent.items())
+        ]
+        todo = [r for r in todo if _host(r["url"]) not in silent]
     for status in STATUSES[:3]:
         group = [r for r in todo if r["status"] == status]
         if not group:

@@ -16,6 +16,7 @@ from scripts.layer_health import (
     sample_query,
     stale_able,
     summary,
+    unreachable_hosts,
 )
 
 NOW = dt.datetime(2026, 10, 22, tzinfo=dt.UTC)
@@ -239,3 +240,32 @@ def test_every_shipped_spec_can_be_probed():
     for spec in specs:
         stale_able(spec)  # no KeyError on any real spec
         assert spec["view"]["fields"] and spec["view"]["url"]
+
+
+def test_a_server_refusing_every_connection_is_one_line():
+    rows = [
+        {
+            "name": f"ky-a{i}",
+            "state": "KY",
+            "title": "A",
+            "status": "broken",
+            "attention": True,
+            "detail": "layer description: no answer (ConnectError)",
+            "url": f"https://gis.lojic.org/x/MapServer/{i}",
+        }
+        for i in range(3)
+    ] + [
+        {
+            "name": "ky-b",
+            "state": "KY",
+            "title": "B",
+            "status": "broken",
+            "attention": True,
+            "detail": "sample query: HTTP 404",
+            "url": "https://other.gov/x/MapServer/0",
+        },
+    ]
+    assert unreachable_hosts(rows) == {"gis.lojic.org": 3}
+    md = summary(rows, checked="2026-10-22")
+    assert "`gis.lojic.org`: 3 layers" in md
+    assert "ky-a0" not in md and "ky-b" in md
