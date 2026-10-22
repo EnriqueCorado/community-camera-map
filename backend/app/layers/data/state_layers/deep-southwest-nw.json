@@ -1,0 +1,4703 @@
+[
+ {
+  "name": "az-maricopa-vote-centers",
+  "state": "AZ",
+  "title": "Vote centers, Nov 2026 (Maricopa County)",
+  "title_es": "Centros de votación, nov. 2026 (condado de Maricopa)",
+  "description": "Where to vote in person in the November 3, 2026 general election in Maricopa County. Any registered county voter can use any vote center; the dates show the first and last day each site is open.",
+  "group": "civic",
+  "category": "point",
+  "source": "Maricopa County Elections Department",
+  "license": "Maricopa County Elections Department public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/ykpntM6e3tHvzKRJ/arcgis/rest/services/Maricopa_County_Vote_Centers/FeatureServer/0",
+   "fields": {
+    "FACNAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "RZIP": "zip",
+    "UseDate": "start",
+    "UseEndDate": "end"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.12,
+    33.42,
+    -112.0,
+    33.52
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "az-maricopa-council-districts",
+  "state": "AZ",
+  "title": "City council districts (Maricopa County cities)",
+  "title_es": "Distritos del concejo municipal (ciudades del condado de Maricopa)",
+  "description": "Which city council district or ward you live in, for every Maricopa County city that elects its council by district (Phoenix, Mesa, Glendale, Chandler, Buckeye and more).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Maricopa County Elections Department",
+  "license": "Maricopa County Elections Department public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/ykpntM6e3tHvzKRJ/arcgis/rest/services/Maricopa_County_City_Council_Districts/FeatureServer/0",
+   "fields": {
+    "LglLabel": "city",
+    "Ward": "district",
+    "BdName": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.12,
+    33.42,
+    -112.0,
+    33.52
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "az-maricopa-supervisor-districts",
+  "state": "AZ",
+  "title": "County supervisor districts (Maricopa)",
+  "title_es": "Distritos de supervisores del condado (Maricopa)",
+  "description": "The five Maricopa County Board of Supervisors districts (2024 lines): which supervisor represents you on county services, budget and unincorporated-area zoning.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Maricopa County Elections Department",
+  "license": "Maricopa County Elections Department public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/ykpntM6e3tHvzKRJ/arcgis/rest/services/Maricopa_County_Supervisor_Districts_(2024-)/FeatureServer/0",
+   "fields": {
+    "bos": "district",
+    "BdName": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.12,
+    33.42,
+    -112.0,
+    33.52
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "az-maricopa-fire-districts",
+  "state": "AZ",
+  "title": "Fire districts (Maricopa County)",
+  "title_es": "Distritos de bomberos (condado de Maricopa)",
+  "description": "Fire districts outside city fire departments in Maricopa County, including the county-island districts — who provides fire and ambulance service to unincorporated homes.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Maricopa County",
+  "license": "Maricopa County public ArcGIS service",
+  "view": {
+   "url": "https://gis.maricopa.gov/arcgis/rest/services/BOS/District/MapServer/450",
+   "fields": {
+    "DistrictName": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.32,
+    33.58,
+    -112.24,
+    33.66
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "az-maricopa-road-projects",
+  "state": "AZ",
+  "title": "County road projects (Maricopa County DOT)",
+  "title_es": "Proyectos de carreteras del condado (MCDOT)",
+  "description": "Maricopa County DOT road, bridge, drainage and pavement projects being scoped, designed or built on county roads, from the Transportation Improvement Program.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Maricopa County Department of Transportation",
+  "license": "Maricopa County Department of Transportation public ArcGIS service",
+  "view": {
+   "url": "https://gis.maricopa.gov/arcgis/rest/services/BOS/Transportation/MapServer/770",
+   "fields": {
+    "Title": "name",
+    "Phase": "status",
+    "ProjectType": "kind",
+    "OnRoadName": "road",
+    "FromRefName": "from",
+    "ToRefName": "to",
+    "ProjNum": "number"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "Phase IN ('Scoping','Design','Planned','Construction')",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.7,
+    33.2,
+    -111.6,
+    33.95
+   ],
+   "features_in_probe": 653
+  }
+ },
+ {
+  "name": "az-maricopa-regional-parks",
+  "state": "AZ",
+  "title": "Regional parks (Maricopa County)",
+  "title_es": "Parques regionales (condado de Maricopa)",
+  "description": "Maricopa County's large desert regional parks (White Tank, Lake Pleasant, Usery, Estrella, McDowell and more) with address, size and year opened.",
+  "group": "nature",
+  "category": "park",
+  "source": "Maricopa County Parks and Recreation",
+  "license": "Maricopa County Parks and Recreation public ArcGIS service",
+  "view": {
+   "url": "https://gis.maricopa.gov/arcgis/rest/services/PNR/ParkAndTrail/MapServer/13",
+   "fields": {
+    "ParkName": "name",
+    "ParkFullStreetAddress": "address",
+    "ParkCity": "city",
+    "ParkSize_Acre": "acres",
+    "YearOpen": "year",
+    "ParkType": "kind",
+    "ManagementAgency": "manager"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.7,
+    33.2,
+    -111.6,
+    33.95
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "az-maricopa-park-trails",
+  "state": "AZ",
+  "title": "Regional park trails (Maricopa County)",
+  "title_es": "Senderos de parques regionales (condado de Maricopa)",
+  "description": "Named trails in Maricopa County regional parks with allowed uses (hike, bike, horse), length, elevation change and difficulty.",
+  "group": "nature",
+  "category": "park",
+  "source": "Maricopa County Parks and Recreation",
+  "license": "Maricopa County Parks and Recreation public ArcGIS service",
+  "view": {
+   "url": "https://gis.maricopa.gov/arcgis/rest/services/PNR/ParkAndTrail/MapServer/3",
+   "fields": {
+    "TrailName": "name",
+    "ParkName": "park",
+    "TrailUse": "kind",
+    "Length_Mile": "miles",
+    "ElevationChange_Feet": "elevation_gain_ft",
+    "TrailRating": "difficulty",
+    "TrailComment": "notes"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.7,
+    33.2,
+    -111.6,
+    33.95
+   ],
+   "features_in_probe": 207
+  }
+ },
+ {
+  "name": "az-maricopa-park-amenities",
+  "state": "AZ",
+  "title": "Regional park amenities (Maricopa County)",
+  "title_es": "Servicios en parques regionales (condado de Maricopa)",
+  "description": "Picnic areas, ramadas, campgrounds, boat ramps, restrooms and other amenities inside Maricopa County regional parks, with reservation notes.",
+  "group": "nature",
+  "category": "point",
+  "source": "Maricopa County Parks and Recreation",
+  "license": "Maricopa County Parks and Recreation public ArcGIS service",
+  "view": {
+   "url": "https://gis.maricopa.gov/arcgis/rest/services/PNR/ParkAndTrail/MapServer/0",
+   "fields": {
+    "AmenityName": "name",
+    "AmenityType": "kind",
+    "ParkName": "park",
+    "AmenityComment": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.7,
+    33.2,
+    -111.6,
+    33.95
+   ],
+   "features_in_probe": 251
+  }
+ },
+ {
+  "name": "az-maricopa-area-plan-land-use",
+  "state": "AZ",
+  "title": "Planned land use, unincorporated (Maricopa County)",
+  "title_es": "Uso de suelo planificado, zonas no incorporadas (Maricopa)",
+  "description": "Land-use categories from Maricopa County area plans for unincorporated areas (Tonopah, New River, Rio Verde and more) — what the county plans to allow there.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Maricopa County Planning and Development",
+  "license": "Maricopa County Planning and Development public ArcGIS service",
+  "view": {
+   "url": "https://gis.maricopa.gov/arcgis/rest/services/BOS/PlanningDevelopment/MapServer/210",
+   "fields": {
+    "CATEGORY": "kind",
+    "AREAPLAN": "plan"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.9,
+    33.3,
+    -112.6,
+    33.6
+   ],
+   "features_in_probe": 225
+  }
+ },
+ {
+  "name": "az-maricopa-zoning",
+  "state": "AZ",
+  "title": "Zoning, unincorporated (Maricopa County)",
+  "title_es": "Zonificación, zonas no incorporadas (Maricopa)",
+  "description": "County zoning districts in unincorporated Maricopa County (outside city limits).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Maricopa County Planning and Development",
+  "license": "Maricopa County Planning and Development public ArcGIS service",
+  "view": {
+   "url": "https://gis.maricopa.gov/arcgis/rest/services/BOS/PlanningDevelopment/MapServer/190",
+   "fields": {
+    "ZONE": "zoning",
+    "JURIS": "jurisdiction"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.4,
+    33.6,
+    -112.3,
+    33.7
+   ],
+   "features_in_probe": 1600
+  }
+ },
+ {
+  "name": "az-maricopa-waste-facilities",
+  "state": "AZ",
+  "title": "Landfills, transfer stations & tire drop-offs (Maricopa)",
+  "title_es": "Rellenos, estaciones de transferencia y llantas (Maricopa)",
+  "description": "Where to take trash, bulky items and waste tires in Maricopa County: landfills, transfer stations and tire collection sites, with status and phone.",
+  "group": "infra",
+  "category": "point",
+  "source": "Maricopa County",
+  "license": "Maricopa County public ArcGIS service",
+  "view": {
+   "url": "https://gis.maricopa.gov/arcgis/rest/services/WRRM/Transfer_Stations/MapServer/4",
+   "fields": {
+    "FacilityName": "name",
+    "FacilityType": "kind",
+    "FacilityStatus": "status",
+    "FacilityFullStreetAddress": "address",
+    "FacilityCity": "city",
+    "FacilityPhoneNumber": "phone",
+    "HoursOfOperation": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.7,
+    33.2,
+    -111.6,
+    33.95
+   ],
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "az-mag-existing-land-use",
+  "state": "AZ",
+  "title": "Existing land use 2026 (Maricopa & Pinal)",
+  "title_es": "Uso de suelo actual 2026 (Maricopa y Pinal)",
+  "description": "How each piece of land in the Phoenix region is used today (homes by density, shopping, offices, industry, schools, farms, vacant), from MAG's 2026 inventory.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Maricopa Association of Governments (MAG)",
+  "license": "Maricopa Association of Governments (MAG) public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/MdyCMZnX1raZ7TS3/arcgis/rest/services/EXLU_2026/FeatureServer/0",
+   "fields": {
+    "LONG_DISPLAY_NAME": "kind",
+    "SECTOR_NAME": "sector",
+    "DEV_STATUS": "status",
+    "MPA_FULLNAME_2026": "jurisdiction",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.08,
+    33.44,
+    -112.05,
+    33.47
+   ],
+   "features_in_probe": 798
+  }
+ },
+ {
+  "name": "az-phoenix-trash-days",
+  "state": "AZ",
+  "title": "Trash pickup day (Phoenix)",
+  "title_es": "Día de recolección de basura (Phoenix)",
+  "description": "Which weekday City of Phoenix Public Works picks up curbside trash (black container) in each area.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Phoenix Public Works",
+  "license": "City of Phoenix Public Works public ArcGIS service",
+  "view": {
+   "url": "https://maps.phoenix.gov/pub/rest/services/Public/GarbagePickUp/MapServer/2",
+   "fields": {
+    "DOC": "day"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.12,
+    33.42,
+    -112.0,
+    33.52
+   ],
+   "features_in_probe": 55
+  }
+ },
+ {
+  "name": "az-phoenix-recycling-days",
+  "state": "AZ",
+  "title": "Recycling pickup day (Phoenix)",
+  "title_es": "Día de recolección de reciclaje (Phoenix)",
+  "description": "Which weekday City of Phoenix Public Works picks up curbside recycling (blue container) in each area.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Phoenix Public Works",
+  "license": "City of Phoenix Public Works public ArcGIS service",
+  "view": {
+   "url": "https://maps.phoenix.gov/pub/rest/services/Public/GarbagePickUp/MapServer/1",
+   "fields": {
+    "DOC": "day"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.12,
+    33.42,
+    -112.0,
+    33.52
+   ],
+   "features_in_probe": 54
+  }
+ },
+ {
+  "name": "az-phoenix-pavement-projects",
+  "state": "AZ",
+  "title": "Street repaving plans (Phoenix)",
+  "title_es": "Planes de repavimentación (Phoenix)",
+  "description": "City of Phoenix pavement maintenance projects approved or planned by fiscal year: which streets get seal coat, mill-and-overlay or other treatment, and when.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Phoenix Street Transportation Department",
+  "license": "City of Phoenix Street Transportation Department public ArcGIS service",
+  "view": {
+   "url": "https://maps.phoenix.gov/pub/rest/services/Public/Str_AprvdPlnd_Pvmnt_Maint/MapServer/0",
+   "fields": {
+    "LOCATION": "location",
+    "FROM_STREET": "from",
+    "TO_STREET": "to",
+    "FISCAL_YEAR": "fiscal_year",
+    "TREATMENT_COMMON_NAME": "kind",
+    "STATUS": "status",
+    "START_DATE": "start",
+    "END_DATE": "end",
+    "MILES": "miles"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "FISCAL_YEAR >= 2026",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.12,
+    33.42,
+    -112.0,
+    33.52
+   ],
+   "features_in_probe": 122
+  }
+ },
+ {
+  "name": "az-phoenix-parks",
+  "state": "AZ",
+  "title": "City parks (Phoenix)",
+  "title_es": "Parques de la ciudad (Phoenix)",
+  "description": "City of Phoenix parks and preserves with type, acreage and amenities (playground, splash pad, pool, restrooms, shade, dog park, courts).",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Phoenix Parks and Recreation",
+  "license": "City of Phoenix Parks and Recreation public ArcGIS service",
+  "view": {
+   "url": "https://maps.phoenix.gov/pub/rest/services/Public/ParksOpenData/MapServer/10",
+   "fields": {
+    "PROPERTY_NAME": "name",
+    "PARK_TYPE": "kind",
+    "ADDRESS": "address",
+    "PARK_ACRES": "acres",
+    "PLAYGROUND": "playground",
+    "SPLASH_PADS": "splash_pad",
+    "SWIMMING_POOL": "pool",
+    "RESTROOMS": "restrooms",
+    "SHADE_STRUCTURES": "shade",
+    "DRINKING_FOUNTAINS": "water",
+    "DOG_PARKS": "dog_park",
+    "ADA_ACCESSIBLE": "ada"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.12,
+    33.42,
+    -112.0,
+    33.52
+   ],
+   "features_in_probe": 52
+  }
+ },
+ {
+  "name": "az-phoenix-historic-properties",
+  "state": "AZ",
+  "title": "Historic properties & districts (Phoenix)",
+  "title_es": "Propiedades y distritos históricos (Phoenix)",
+  "description": "Phoenix historic districts and individually listed or eligible historic buildings: status (Phoenix Historic Property Register, National Register) and the survey that documented them.",
+  "group": "places",
+  "category": "landuse",
+  "source": "City of Phoenix Historic Preservation Office",
+  "license": "City of Phoenix Historic Preservation Office public ArcGIS service",
+  "view": {
+   "url": "https://maps.phoenix.gov/pub/rest/services/Public/HistoricProperties/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "STATUS": "status",
+    "ADDRESS": "address",
+    "SURVEY": "survey",
+    "LANDMARK": "landmark"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.12,
+    33.42,
+    -112.0,
+    33.52
+   ],
+   "features_in_probe": 845
+  }
+ },
+ {
+  "name": "az-mesa-zoning",
+  "state": "AZ",
+  "title": "Zoning (Mesa)",
+  "title_es": "Zonificación (Mesa)",
+  "description": "City of Mesa zoning districts with the plain-language district name and acreage.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Mesa",
+  "license": "City of Mesa public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/1gVyYKfYgW5Nxb1V/arcgis/rest/services/Zoning/FeatureServer/2",
+   "fields": {
+    "Description": "zoning",
+    "Zoning": "code",
+    "Acres": "acres",
+    "RelatedCase": "case"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.84,
+    33.4,
+    -111.8,
+    33.43
+   ],
+   "features_in_probe": 909
+  }
+ },
+ {
+  "name": "az-mesa-capital-projects",
+  "state": "AZ",
+  "title": "Capital projects (Mesa)",
+  "title_es": "Proyectos de obras públicas (Mesa)",
+  "description": "City of Mesa capital improvement projects — street, water, wastewater and building projects — with construction start and finish dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Mesa",
+  "license": "City of Mesa public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/1gVyYKfYgW5Nxb1V/arcgis/rest/services/CIP_Projects/FeatureServer/0",
+   "fields": {
+    "ProjectName": "name",
+    "ProjectType": "kind",
+    "ProgramType": "program",
+    "CIPNumber": "number",
+    "StartConstructionDate": "start",
+    "FinishConstructionDate": "end"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.86,
+    33.38,
+    -111.76,
+    33.45
+   ],
+   "features_in_probe": 153
+  }
+ },
+ {
+  "name": "az-pima-evacuation-zones",
+  "state": "AZ",
+  "title": "Evacuation zones (Pima County)",
+  "title_es": "Zonas de evacuación (condado de Pima)",
+  "description": "Pima County Office of Emergency Management evacuation zones for Tucson and the county. Know your zone; during a wildfire or flood each zone shows Ready, Set or Go.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Pima County Office of Emergency Management",
+  "license": "Pima County Office of Emergency Management public ArcGIS service",
+  "view": {
+   "url": "https://gisdata.pima.gov/arcgis1/rest/services/GISOpenData/Community/MapServer/13",
+   "fields": {
+    "Zone": "zone",
+    "Evac_Status": "status",
+    "Comments": "jurisdiction",
+    "N_Bound": "north",
+    "E_Bound": "east",
+    "S_Bound": "south",
+    "W_Bound": "west",
+    "Status_Date": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true,
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    32.15,
+    -110.85,
+    32.3
+   ],
+   "features_in_probe": 126
+  }
+ },
+ {
+  "name": "az-pima-school-attendance",
+  "state": "AZ",
+  "title": "School attendance areas (Pima County)",
+  "title_es": "Zonas de asistencia escolar (condado de Pima)",
+  "description": "Which public school serves each address in Pima County (Tucson Unified, Sunnyside, Amphitheater and other districts), by grade level.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Pima County",
+  "license": "Pima County public ArcGIS service",
+  "view": {
+   "url": "https://gisdata.pima.gov/arcgis1/rest/services/GISOpenData/Community2/MapServer/13",
+   "fields": {
+    "NAME": "name",
+    "GRADELVL": "grades",
+    "SDISTNAME": "district",
+    "ADDRESS": "address",
+    "PHONE": "phone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    32.15,
+    -110.85,
+    32.3
+   ],
+   "features_in_probe": 113
+  }
+ },
+ {
+  "name": "az-pima-trails",
+  "state": "AZ",
+  "title": "Trails & river parks (Pima County)",
+  "title_es": "Senderos y parques ribereños (condado de Pima)",
+  "description": "Shared-use paths, The Loop river parks and natural trails in eastern Pima County, with surface and who may use them (walkers, bikes, horses, dogs).",
+  "group": "nature",
+  "category": "park",
+  "source": "Pima County",
+  "license": "Pima County public ArcGIS service",
+  "view": {
+   "url": "https://gisdata.pima.gov/arcgis1/rest/services/GISOpenData/Community2/MapServer/7",
+   "fields": {
+    "NAME": "name",
+    "STATUS": "status",
+    "SURFACE": "surface",
+    "PEDESTRIAN": "walk",
+    "BIKE": "bike",
+    "EQUESTRIAN": "horse",
+    "DOG": "dogs",
+    "Difficulty": "difficulty",
+    "MAINT_ORG": "manager"
+   },
+   "geometry": "line",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    32.15,
+    -110.85,
+    32.3
+   ],
+   "features_in_probe": 1401
+  }
+ },
+ {
+  "name": "az-pima-parks",
+  "state": "AZ",
+  "title": "Parks & recreation areas (Pima County)",
+  "title_es": "Parques y áreas recreativas (condado de Pima)",
+  "description": "Parks, natural preserves and recreation areas in Pima County, including Tucson, Oro Valley, Marana and county parks, and who runs each one.",
+  "group": "nature",
+  "category": "park",
+  "source": "Pima County",
+  "license": "Pima County public ArcGIS service",
+  "view": {
+   "url": "https://gisdata.pima.gov/arcgis1/rest/services/GISOpenData/Community2/MapServer/11",
+   "fields": {
+    "NAME": "name",
+    "PARK_TYPE": "kind",
+    "ADMIN": "manager"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    32.15,
+    -110.85,
+    32.3
+   ],
+   "features_in_probe": 164
+  }
+ },
+ {
+  "name": "az-pima-fire-districts",
+  "state": "AZ",
+  "title": "Fire districts (Pima County)",
+  "title_es": "Distritos de bomberos (condado de Pima)",
+  "description": "Fire taxation districts in Pima County — which fire district serves and taxes homes outside city fire departments.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Pima County",
+  "license": "Pima County public ArcGIS service",
+  "view": {
+   "url": "https://gisdata.pima.gov/arcgis1/rest/services/GISOpenData/Boundaries/MapServer/4",
+   "fields": {
+    "NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.2,
+    32.0,
+    -110.7,
+    32.5
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "az-pima-supervisor-districts",
+  "state": "AZ",
+  "title": "County supervisor districts (Pima)",
+  "title_es": "Distritos de supervisores del condado (Pima)",
+  "description": "The five Pima County Board of Supervisors districts: which supervisor represents you on county services and budget.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Pima County",
+  "license": "Pima County public ArcGIS service",
+  "view": {
+   "url": "https://gisdata.pima.gov/arcgis1/rest/services/GISOpenData/Boundaries/MapServer/5",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    32.15,
+    -110.85,
+    32.3
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "az-pima-road-projects",
+  "state": "AZ",
+  "title": "Road repair projects (Pima County)",
+  "title_es": "Proyectos de reparación de calles (condado de Pima)",
+  "description": "Pima County road repair and pavement preservation projects that are planned or under construction now, with treatment, fiscal year and dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Pima County Department of Transportation",
+  "license": "Pima County Department of Transportation public ArcGIS service",
+  "view": {
+   "url": "https://gisdata.pima.gov/arcgis1/rest/services/GISOpenData/Transportation/MapServer/18",
+   "fields": {
+    "Street_Name": "street",
+    "From_": "from",
+    "To_": "to",
+    "Treatment": "kind",
+    "Status": "status",
+    "Fiscal_Year": "fiscal_year",
+    "Start_Date": "start",
+    "End_Date": "end",
+    "Length_mi": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "Status IN ('Active Construction','Planned')",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.1,
+    32.1,
+    -110.7,
+    32.5
+   ],
+   "features_in_probe": 245
+  }
+ },
+ {
+  "name": "az-pima-storm-road-passability",
+  "state": "AZ",
+  "title": "Roads during storms (Pima County)",
+  "title_es": "Caminos durante tormentas (condado de Pima)",
+  "description": "Pima County Regional Flood Control rating of which roads stay passable in moderate storms or major floods, and which are questionable when washes run. Turn around, don't drown.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Pima County Regional Flood Control District",
+  "license": "Pima County Regional Flood Control District public ArcGIS service",
+  "view": {
+   "url": "https://gisdata.pima.gov/arcgis1/rest/services/GISOpenData/FloodControl/MapServer/2",
+   "fields": {
+    "DESCRIP": "status",
+    "ROUTE_ID": "road",
+    "FCRSTR": "from",
+    "TCRSTR": "to"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "DESCRIP IS NOT NULL",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    32.15,
+    -110.85,
+    32.3
+   ],
+   "features_in_probe": 113
+  }
+ },
+ {
+  "name": "az-tucson-wards",
+  "state": "AZ",
+  "title": "City council wards (Tucson)",
+  "title_es": "Distritos (wards) del concejo municipal (Tucson)",
+  "description": "The six City of Tucson council wards — which ward office represents you.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Tucson",
+  "license": "City of Tucson public ArcGIS service",
+  "view": {
+   "url": "https://gis.tucsonaz.gov/arcgis/rest/services/PublicMaps/OpenData_Boundaries/MapServer/4",
+   "fields": {
+    "WARD": "district",
+    "ADDRESS": "address",
+    "PHONE": "phone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    32.15,
+    -110.85,
+    32.3
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "az-tucson-zoning",
+  "state": "AZ",
+  "title": "Zoning (Tucson)",
+  "title_es": "Zonificación (Tucson)",
+  "description": "City of Tucson zoning districts under the Unified Development Code (residential, commercial, industrial and more).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Tucson Planning and Development Services",
+  "license": "City of Tucson Planning and Development Services public ArcGIS service",
+  "view": {
+   "url": "https://gis.tucsonaz.gov/arcgis/rest/services/PublicMaps/OpenData_PropertyPlanning/MapServer/19",
+   "fields": {
+    "ZONE_COT": "zoning",
+    "ORIG_ZONE": "original_zoning"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    32.15,
+    -110.85,
+    32.3
+   ],
+   "features_in_probe": 1567
+  }
+ },
+ {
+  "name": "az-tucson-historic-districts",
+  "state": "AZ",
+  "title": "Historic districts (Tucson)",
+  "title_es": "Distritos históricos (Tucson)",
+  "description": "Tucson's historic preservation zones and National Register historic districts (Barrio Viejo, El Presidio, Sam Hughes, West University and more).",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Tucson Historic Preservation Office",
+  "license": "City of Tucson Historic Preservation Office public ArcGIS service",
+  "view": {
+   "url": "https://gis.tucsonaz.gov/arcgis/rest/services/PublicMaps/PropertyHousing/MapServer/33",
+   "fields": {
+    "NAME": "name",
+    "STATUS": "status",
+    "MAP_DESIG": "number"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    32.15,
+    -110.85,
+    32.3
+   ],
+   "features_in_probe": 45
+  }
+ },
+ {
+  "name": "az-tucson-capital-projects",
+  "state": "AZ",
+  "title": "Street & transportation projects (Tucson)",
+  "title_es": "Proyectos de calles y transporte (Tucson)",
+  "description": "City of Tucson transportation projects (Prop 407, Prop 411, RTA and more): road modernization, sidewalks, bike boulevards and safety work, with status and timing.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Tucson Department of Transportation and Mobility",
+  "license": "City of Tucson Department of Transportation and Mobility public ArcGIS service",
+  "view": {
+   "url": "https://gis.tucsonaz.gov/arcgis/rest/services/PublicMaps/OpenData_Transportation/MapServer/30",
+   "fields": {
+    "ProjectName": "name",
+    "Location": "location",
+    "Treatment": "kind",
+    "PublicStatus": "status",
+    "ConstructionBegin": "construction_begins",
+    "ConstructionFinish": "construction_ends",
+    "Description": "description",
+    "Ward": "ward"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "Status IN ('Construction','Pre-Construction','Design','Planned')",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    32.15,
+    -110.85,
+    32.3
+   ],
+   "features_in_probe": 303
+  }
+ },
+ {
+  "name": "az-coconino-evacuation-zones",
+  "state": "AZ",
+  "title": "Evacuation zones & notices (Coconino County)",
+  "title_es": "Zonas y avisos de evacuación (condado de Coconino)",
+  "description": "Coconino County Sheriff's pre-planned evacuation zones around Flagstaff, Sedona's Oak Creek Canyon, Munds Park and other communities, with any current advisory or evacuation order and the incident behind it.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Coconino County Sheriff's Office / Coconino County",
+  "license": "Coconino County Sheriff's Office / Coconino County public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/Rlvx5g8pKeK13apH/arcgis/rest/services/NoticesAndEvacuations_publicAllzones/FeatureServer/0",
+   "fields": {
+    "zonename": "zone",
+    "evactype": "status",
+    "incidentnm": "incident",
+    "description": "notes",
+    "startdate": "start",
+    "enddate": "end",
+    "agency": "agency"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "publicview IS NULL OR publicview <> 'No'",
+   "max_features": 2000,
+   "simplify": true,
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.8,
+    35.0,
+    -111.5,
+    35.3
+   ],
+   "features_in_probe": 124
+  }
+ },
+ {
+  "name": "az-coconino-zoning",
+  "state": "AZ",
+  "title": "Zoning, unincorporated (Coconino County)",
+  "title_es": "Zonificación, zonas no incorporadas (condado de Coconino)",
+  "description": "Coconino County zoning districts outside city limits (around Flagstaff, Williams, Tusayan, Munds Park), with the plain-language district name.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Coconino County Community Development",
+  "license": "Coconino County Community Development public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/Rlvx5g8pKeK13apH/arcgis/rest/services/County_Zoning/FeatureServer/0",
+   "fields": {
+    "ZONINGDESCRIPTION": "zoning",
+    "ZONINGCODE": "code",
+    "ORDINANCENUMBER": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.7,
+    35.15,
+    -111.6,
+    35.25
+   ],
+   "features_in_probe": 39
+  }
+ },
+ {
+  "name": "az-yuma-trash-days",
+  "state": "AZ",
+  "title": "Trash & recycling days (Yuma)",
+  "title_es": "Días de basura y reciclaje (Yuma)",
+  "description": "City of Yuma curbside pickup days in each half of the city: the weekday for the green trash can and for the blue recycling can.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Yuma Public Works",
+  "license": "City of Yuma Public Works public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/tzW2OKwR84ufoH3y/arcgis/rest/services/SW_Collection_Map/FeatureServer/0",
+   "fields": {
+    "GreenCan": "trash_day",
+    "BlueCan": "recycling_day"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -114.66,
+    32.64,
+    -114.55,
+    32.72
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "az-community-assistors",
+  "state": "AZ",
+  "title": "Help applying for AHCCCS & benefits",
+  "title_es": "Ayuda para solicitar AHCCCS y beneficios",
+  "description": "Community assistor sites (health centers, nonprofits) where trained staff help you apply for AHCCCS (Medicaid), KidsCare, SNAP food benefits and cash assistance through Health-e-Arizona, free of charge.",
+  "group": "help",
+  "category": "point",
+  "source": "Arizona Department of Economic Security (via AZGeo)",
+  "license": "Arizona Department of Economic Security (via AZGeo) public ArcGIS service",
+  "view": {
+   "url": "https://services6.arcgis.com/clPWQMwZfdWn4MQZ/arcgis/rest/services/Active_Assistor_locations/FeatureServer/0",
+   "fields": {
+    "USER_org_name": "name",
+    "USER_location_name": "location",
+    "USER_location_desc": "notes",
+    "USER_location_address": "address",
+    "USER_location_city": "city",
+    "USER_location_zip": "zip",
+    "USER_location_tel1": "phone",
+    "USER_location_hours_info": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    32.15,
+    -110.85,
+    32.3
+   ],
+   "features_in_probe": 39
+  }
+ },
+ {
+  "name": "nv-las-vegas-wards",
+  "state": "NV",
+  "title": "City council wards (Las Vegas)",
+  "title_es": "Distritos del concejo municipal (Las Vegas)",
+  "description": "Which of the six City of Las Vegas council wards you live in, so you know which council seat represents you. Unincorporated county islands are left out.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Las Vegas",
+  "license": "City of Las Vegas public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/F1v0ufATbBQScMtY/arcgis/rest/services/CLV_WARDS/FeatureServer/0",
+   "fields": {
+    "WARD": "district",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "WARD <> '0'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.25,
+    36.12,
+    -115.1,
+    36.22
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "nv-las-vegas-parks",
+  "state": "NV",
+  "title": "City parks (Las Vegas)",
+  "title_es": "Parques de la ciudad (Las Vegas)",
+  "description": "City of Las Vegas parks with their address, hours, a short description, park type, size and whether there is a dog park.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Las Vegas Parks & Recreation",
+  "license": "City of Las Vegas Parks & Recreation public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/F1v0ufATbBQScMtY/arcgis/rest/services/Parks_PRD/FeatureServer/12",
+   "fields": {
+    "ParkName": "name",
+    "ParkAddress": "address",
+    "Hours": "hours",
+    "Information": "notes",
+    "Type": "kind",
+    "Acreage": "acres",
+    "DogPark": "dog_park",
+    "Ward": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.25,
+    36.12,
+    -115.1,
+    36.22
+   ],
+   "features_in_probe": 41
+  }
+ },
+ {
+  "name": "nv-las-vegas-historic-areas",
+  "state": "NV",
+  "title": "Historic properties & districts (Las Vegas)",
+  "title_es": "Propiedades y distritos históricos (Las Vegas)",
+  "description": "Places on the City of Las Vegas historic property register (local, state or national listings), such as the Westside School and the Moulin Rouge site.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Las Vegas Planning",
+  "license": "City of Las Vegas Planning public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/F1v0ufATbBQScMtY/arcgis/rest/services/HistoricAreas/FeatureServer/163",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "TYP": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.25,
+    36.12,
+    -115.1,
+    36.22
+   ],
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "nv-las-vegas-trails",
+  "state": "NV",
+  "title": "Trails & shared-use paths (Las Vegas)",
+  "title_es": "Senderos y caminos compartidos (Las Vegas)",
+  "description": "City of Las Vegas trail network: regional trails, shared-use trails and urban paths, marked as built or only proposed.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Las Vegas Planning",
+  "license": "City of Las Vegas Planning public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/F1v0ufATbBQScMtY/arcgis/rest/services/Trails_Network/FeatureServer/3",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "STATUS": "status",
+    "ROST_SURFACE": "surface",
+    "LENGTH": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "STATUS <> '0'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.25,
+    36.12,
+    -115.1,
+    36.22
+   ],
+   "features_in_probe": 163
+  }
+ },
+ {
+  "name": "nv-ccsd-elementary-zones",
+  "state": "NV",
+  "title": "Elementary school zones (Clark County SD, 2026-27)",
+  "title_es": "Zonas de escuelas primarias (Distrito Escolar de Clark, 2026-27)",
+  "description": "Which Clark County School District elementary school serves each address for the 2026-27 school year, with the school's address. Magnet and choice schools are not shown; confirm with CCSD Zoning before enrolling.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Clark County School District (via City of Las Vegas GIS)",
+  "license": "Clark County School District (via City of Las Vegas GIS) public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/F1v0ufATbBQScMtY/arcgis/rest/services/CCSD_Elementary_Att_K5_SY2026_Polygons/FeatureServer/2",
+   "fields": {
+    "FULLNAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "ZIPCODE": "zip",
+    "SCH_TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.3,
+    36.05,
+    -115.05,
+    36.25
+   ],
+   "features_in_probe": 131
+  }
+ },
+ {
+  "name": "nv-ccsd-middle-zones",
+  "state": "NV",
+  "title": "Middle school zones (Clark County SD, 2026-27)",
+  "title_es": "Zonas de escuelas secundarias (Distrito Escolar de Clark, 2026-27)",
+  "description": "Which Clark County School District middle school serves each address for the 2026-27 school year, with the school's address. Magnet and choice schools are not shown; confirm with CCSD Zoning before enrolling.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Clark County School District (via City of Las Vegas GIS)",
+  "license": "Clark County School District (via City of Las Vegas GIS) public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/F1v0ufATbBQScMtY/arcgis/rest/services/CCSD_Middle_Att_SY2026_Polygons/FeatureServer/2",
+   "fields": {
+    "FULLNAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "ZIPCODE": "zip",
+    "SCH_TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.3,
+    36.05,
+    -115.05,
+    36.25
+   ],
+   "features_in_probe": 37
+  }
+ },
+ {
+  "name": "nv-ccsd-high-zones",
+  "state": "NV",
+  "title": "High school zones (Clark County SD, 2026-27)",
+  "title_es": "Zonas de preparatorias (Distrito Escolar de Clark, 2026-27)",
+  "description": "Which Clark County School District high school serves each address for the 2026-27 school year, with the school's address. Magnet and choice schools are not shown; confirm with CCSD Zoning before enrolling.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Clark County School District (via City of Las Vegas GIS)",
+  "license": "Clark County School District (via City of Las Vegas GIS) public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/F1v0ufATbBQScMtY/arcgis/rest/services/CCSD_High_Att_SY2026_Polygons/FeatureServer/2",
+   "fields": {
+    "FULLNAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "ZIPCODE": "zip",
+    "SCH_TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.3,
+    36.05,
+    -115.05,
+    36.25
+   ],
+   "features_in_probe": 26
+  }
+ },
+ {
+  "name": "nv-clark-cooling-stations",
+  "state": "NV",
+  "title": "Cooling stations (Clark County)",
+  "title_es": "Centros para refrescarse (Clark County)",
+  "description": "Places in Southern Nevada where anyone can get out of the heat during summer heat events: community and recreation centers, shelters and other sites, with hours, days and what they allow (for example pets). Call ahead outside the summer season.",
+  "group": "help",
+  "category": "point",
+  "source": "Clark County Social Service",
+  "license": "Clark County Social Service public ArcGIS service",
+  "view": {
+   "url": "https://maps.clarkcountynv.gov/arcgis/rest/services/SocialServices/Cooling_Stations/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Phone": "phone",
+    "Accomadations": "notes",
+    "Hours1": "hours",
+    "Days1": "days",
+    "Hours2": "hours_2",
+    "Days2": "days_2"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.3,
+    36.05,
+    -115.05,
+    36.25
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "nv-clark-commission-districts",
+  "state": "NV",
+  "title": "County commission districts (Clark County)",
+  "title_es": "Distritos de la comisión del condado (Clark County)",
+  "description": "Which of the seven Clark County Commission districts (A-G) you live in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Clark County Election Department",
+  "license": "Clark County Election Department public ArcGIS service",
+  "view": {
+   "url": "https://maps.clarkcountynv.gov/arcgis/rest/services/Elections/Commissioner_Districts/FeatureServer/0",
+   "fields": {
+    "COMMISSION": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.3,
+    36.05,
+    -115.05,
+    36.25
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "nv-henderson-zoning",
+  "state": "NV",
+  "title": "Zoning (Henderson)",
+  "title_es": "Zonificación (Henderson)",
+  "description": "City of Henderson zoning districts (for example RS-6 single-family, CC community commercial, PS public/semi-public), with acreage and allowed density where set.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Henderson (via Clark County GIS)",
+  "license": "City of Henderson (via Clark County GIS) public ArcGIS service",
+  "view": {
+   "url": "https://maps.cityofhenderson.com/arcgis/rest/services/public/Zoning/MapServer/9",
+   "fields": {
+    "COMZONE": "zoning",
+    "ACRES": "acres",
+    "DENSITY": "density"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.08,
+    36.01,
+    -115.01,
+    36.045
+   ],
+   "features_in_probe": 335
+  }
+ },
+ {
+  "name": "nv-north-las-vegas-zoning",
+  "state": "NV",
+  "title": "Zoning (North Las Vegas)",
+  "title_es": "Zonificación (North Las Vegas)",
+  "description": "City of North Las Vegas zoning districts with the zone's full name (for example R-1 single family low density, M-2 general industrial) and acreage.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of North Las Vegas (via Clark County GIS)",
+  "license": "City of North Las Vegas (via Clark County GIS) public ArcGIS service",
+  "view": {
+   "url": "https://maps.clarkcountynv.gov/arcgis/rest/services/OpenData/PlanningandZoning/MapServer/10",
+   "fields": {
+    "ZONING": "zoning",
+    "ZONEDESC": "kind",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.18,
+    36.2,
+    -115.08,
+    36.28
+   ],
+   "features_in_probe": 687
+  }
+ },
+ {
+  "name": "nv-las-vegas-zoning",
+  "state": "NV",
+  "title": "Zoning by parcel (Las Vegas)",
+  "title_es": "Zonificación por parcela (Las Vegas)",
+  "description": "City of Las Vegas zoning for each parcel (for example R-1 single family, C-1 limited commercial), the newer development-code zone where assigned, and the ward.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Las Vegas Planning",
+  "license": "City of Las Vegas Planning public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/F1v0ufATbBQScMtY/arcgis/rest/services/ZONING/FeatureServer/5",
+   "fields": {
+    "ZONE": "zoning",
+    "DESCRIPTION": "kind",
+    "UDC_ZONE": "code",
+    "WARD": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.16,
+    36.165,
+    -115.14,
+    36.175
+   ],
+   "features_in_probe": 327
+  }
+ },
+ {
+  "name": "nv-henderson-wards",
+  "state": "NV",
+  "title": "City council wards (Henderson)",
+  "title_es": "Distritos del concejo municipal (Henderson)",
+  "description": "Which of the four City of Henderson council wards you live in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Henderson",
+  "license": "City of Henderson public ArcGIS service",
+  "view": {
+   "url": "https://maps.cityofhenderson.com/arcgis/rest/services/public/OpenDataAdministrativeBoundaries/MapServer/2",
+   "fields": {
+    "WARD": "district",
+    "WARDNAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.08,
+    36.01,
+    -115.01,
+    36.045
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "nv-henderson-watering-days",
+  "state": "NV",
+  "title": "Landscape watering days (Henderson)",
+  "title_es": "Días de riego (Henderson)",
+  "description": "Your Henderson watering group and the days you may water your yard in each season under Southern Nevada drought rules.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Henderson Utility Services",
+  "license": "City of Henderson Utility Services public ArcGIS service",
+  "view": {
+   "url": "https://maps.cityofhenderson.com/arcgis/rest/services/public/OpenDataAdministrativeBoundaries/MapServer/8",
+   "fields": {
+    "WTR_GROUP": "group",
+    "WINTER": "winter",
+    "SPRING": "spring",
+    "SUMMER": "summer",
+    "FALL": "fall"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.08,
+    36.01,
+    -115.01,
+    36.045
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "nv-henderson-transportation-projects",
+  "state": "NV",
+  "title": "Street & transportation projects (Henderson)",
+  "title_es": "Proyectos de calles y transporte (Henderson)",
+  "description": "City of Henderson capital improvement projects for streets, lighting and traffic: what is being built, where, its status and expected start and finish.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Henderson Public Works",
+  "license": "City of Henderson Public Works public ArcGIS service",
+  "view": {
+   "url": "https://maps.cityofhenderson.com/arcgis/rest/services/public/CIP/MapServer/1",
+   "fields": {
+    "PROJECT_NAME": "name",
+    "DESCRIPTION": "notes",
+    "LOCATION_DESCRIPTION": "location",
+    "PROJECT_STATUS": "status",
+    "PROJECT_PHASE": "phase",
+    "BUDGET_YEAR": "budget_year",
+    "START_DATE": "start",
+    "COMPLETION_DATE": "end"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.1,
+    35.98,
+    -114.95,
+    36.07
+   ],
+   "features_in_probe": 150
+  }
+ },
+ {
+  "name": "nv-henderson-parks",
+  "state": "NV",
+  "title": "Parks & recreation centers (Henderson)",
+  "title_es": "Parques y centros recreativos (Henderson)",
+  "description": "City of Henderson parks and recreation centers with address, size and amenities: playground, restrooms, dog park, pool, splash pad, pickleball and ball fields.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Henderson Parks & Recreation",
+  "license": "City of Henderson Parks & Recreation public ArcGIS service",
+  "view": {
+   "url": "https://maps.cityofhenderson.com/arcgis/rest/services/public/OpenDataRecreation/MapServer/6",
+   "fields": {
+    "NAME": "name",
+    "FACILITY": "facility",
+    "ADDRESS": "address",
+    "TYPE": "kind",
+    "ACRES": "acres",
+    "PLAYGRND": "playground",
+    "RESTROOMS": "restrooms",
+    "DOGPARK": "dog_park",
+    "SWIMMING": "pool",
+    "WATERPLAY": "splash_pad",
+    "PICKLEBALL": "pickleball",
+    "BALLFLDS": "ball_fields"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.08,
+    36.01,
+    -115.01,
+    36.045
+   ],
+   "features_in_probe": 26
+  }
+ },
+ {
+  "name": "nv-henderson-trails",
+  "state": "NV",
+  "title": "Trails (Henderson)",
+  "title_es": "Senderos (Henderson)",
+  "description": "Existing City of Henderson trails and paths with surface, allowed uses, length and difficulty.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Henderson Parks & Recreation",
+  "license": "City of Henderson Parks & Recreation public ArcGIS service",
+  "view": {
+   "url": "https://maps.cityofhenderson.com/arcgis/rest/services/public/OpenDataRecreation/MapServer/2",
+   "fields": {
+    "NAME": "name",
+    "STATUS": "status",
+    "TYPE": "surface",
+    "TRAIL_USE": "uses",
+    "MILES": "miles",
+    "DIFFICULTY": "difficulty"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -115.08,
+    36.01,
+    -115.01,
+    36.045
+   ],
+   "features_in_probe": 129
+  }
+ },
+ {
+  "name": "nv-washoe-early-voting-drop-boxes",
+  "state": "NV",
+  "title": "Early voting & ballot drop-off (Washoe, Nov 2026)",
+  "title_es": "Votación anticipada y entrega de boletas (Washoe, nov. 2026)",
+  "description": "Washoe County early-voting sites and ballot drop-off locations for the November 2026 general election. In-person = you can vote there; drop-off = you can leave a mail ballot.",
+  "group": "civic",
+  "category": "point",
+  "source": "Washoe County Registrar of Voters",
+  "license": "Washoe County Registrar of Voters public ArcGIS service",
+  "view": {
+   "url": "https://wcgisweb.washoecounty.us/arcgis/rest/services/ROV/ROV_POLL_PLACES/MapServer/0",
+   "fields": {
+    "POLLPLACE": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "ZIP": "zip",
+    "InPerson": "in_person",
+    "DropOff": "drop_off",
+    "Election_cycle": "election"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "Election_cycle LIKE '2026_General%'",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.95,
+    39.4,
+    -119.65,
+    39.65
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "nv-washoe-elementary-zones",
+  "state": "NV",
+  "title": "Elementary school zones (Washoe County SD)",
+  "title_es": "Zonas de escuelas primarias (Distrito Escolar de Washoe)",
+  "description": "Which Washoe County School District elementary school is zoned for each address in Reno, Sparks and the rest of Washoe County.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Washoe County GIS / Washoe County School District",
+  "license": "Washoe County GIS / Washoe County School District public ArcGIS service",
+  "view": {
+   "url": "https://wcgisweb.washoecounty.us/arcgis/rest/services/OpenData/OpenData/FeatureServer/111",
+   "fields": {
+    "NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.85,
+    39.48,
+    -119.75,
+    39.56
+   ],
+   "features_in_probe": 32
+  }
+ },
+ {
+  "name": "nv-washoe-middle-zones",
+  "state": "NV",
+  "title": "Middle school zones (Washoe County SD)",
+  "title_es": "Zonas de escuelas secundarias (Distrito Escolar de Washoe)",
+  "description": "Which Washoe County School District middle school is zoned for each address in Reno, Sparks and the rest of Washoe County.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Washoe County GIS / Washoe County School District",
+  "license": "Washoe County GIS / Washoe County School District public ArcGIS service",
+  "view": {
+   "url": "https://wcgisweb.washoecounty.us/arcgis/rest/services/OpenData/OpenData/FeatureServer/113",
+   "fields": {
+    "NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.85,
+    39.48,
+    -119.75,
+    39.56
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "nv-washoe-high-zones",
+  "state": "NV",
+  "title": "High school zones (Washoe County SD)",
+  "title_es": "Zonas de preparatorias (Distrito Escolar de Washoe)",
+  "description": "Which Washoe County School District high school is zoned for each address in Reno, Sparks and the rest of Washoe County.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Washoe County GIS / Washoe County School District",
+  "license": "Washoe County GIS / Washoe County School District public ArcGIS service",
+  "view": {
+   "url": "https://wcgisweb.washoecounty.us/arcgis/rest/services/OpenData/OpenData/FeatureServer/112",
+   "fields": {
+    "NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.85,
+    39.48,
+    -119.75,
+    39.56
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "nv-reno-wards",
+  "state": "NV",
+  "title": "City council wards (Reno)",
+  "title_es": "Distritos del concejo municipal (Reno)",
+  "description": "Which of the six City of Reno council wards you live in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Washoe County GIS",
+  "license": "Washoe County GIS public ArcGIS service",
+  "view": {
+   "url": "https://wcgisweb.washoecounty.us/arcgis/rest/services/OpenData/OpenData/FeatureServer/122",
+   "fields": {
+    "RWARD": "district",
+    "R_WARD": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.85,
+    39.48,
+    -119.75,
+    39.56
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "nv-sparks-wards",
+  "state": "NV",
+  "title": "City council wards (Sparks)",
+  "title_es": "Distritos del concejo municipal (Sparks)",
+  "description": "Which of the five City of Sparks council wards you live in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Washoe County GIS",
+  "license": "Washoe County GIS public ArcGIS service",
+  "view": {
+   "url": "https://wcgisweb.washoecounty.us/arcgis/rest/services/OpenData/OpenData/FeatureServer/121",
+   "fields": {
+    "SWARD": "district",
+    "S_WARD": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.78,
+    39.52,
+    -119.7,
+    39.58
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "nv-washoe-fire-districts",
+  "state": "NV",
+  "title": "Fire protection districts (Washoe County)",
+  "title_es": "Distritos de protección contra incendios (Washoe)",
+  "description": "Which fire department or fire protection district covers each part of Washoe County (Reno, Sparks, Truckee Meadows FPD, North Lake Tahoe FPD, rural volunteer areas).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Washoe County GIS",
+  "license": "Washoe County GIS public ArcGIS service",
+  "view": {
+   "url": "https://wcgisweb.washoecounty.us/arcgis/rest/services/OpenData/OpenData/FeatureServer/150",
+   "fields": {
+    "District": "name",
+    "SQ_MILES": "sq_miles"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.85,
+    39.48,
+    -119.75,
+    39.56
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "nv-washoe-commission-districts",
+  "state": "NV",
+  "title": "County commission districts (Washoe County)",
+  "title_es": "Distritos de la comisión del condado (Washoe)",
+  "description": "Which of the five Washoe County Commission districts you live in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Washoe County GIS",
+  "license": "Washoe County GIS public ArcGIS service",
+  "view": {
+   "url": "https://wcgisweb.washoecounty.us/arcgis/rest/services/OpenData/OpenData/FeatureServer/4",
+   "fields": {
+    "DISTRICT": "district",
+    "SQ_MI": "sq_miles"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.85,
+    39.48,
+    -119.75,
+    39.56
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "nv-reno-zoning",
+  "state": "NV",
+  "title": "Zoning by parcel (Reno)",
+  "title_es": "Zonificación por parcela (Reno)",
+  "description": "City of Reno zoning for each parcel (for example MF-14 multi-family, 14 units per acre), any overlay district and whether gaming is allowed.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Reno",
+  "license": "City of Reno public ArcGIS service",
+  "view": {
+   "url": "https://services5.arcgis.com/RjM4BJrv5ZkqP4XC/arcgis/rest/services/Zoning_Designations_Hub/FeatureServer/0",
+   "fields": {
+    "NEW_Zoning": "zoning",
+    "NEW_Z_ABBR": "code",
+    "NEW_OVERLA": "overlay",
+    "GAMING": "gaming",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.83,
+    39.515,
+    -119.8125,
+    39.5227
+   ],
+   "features_in_probe": 1143
+  }
+ },
+ {
+  "name": "nv-reno-master-plan",
+  "state": "NV",
+  "title": "Master plan land use (Reno)",
+  "title_es": "Uso de suelo del plan maestro (Reno)",
+  "description": "What the City of Reno master plan (ReImagine Reno) calls for on each parcel, such as single-family neighborhood, mixed-use or industrial.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Reno",
+  "license": "City of Reno public ArcGIS service",
+  "view": {
+   "url": "https://services5.arcgis.com/RjM4BJrv5ZkqP4XC/arcgis/rest/services/Master_Plan_Land_Use_Hub/FeatureServer/0",
+   "fields": {
+    "LU_Name": "kind",
+    "LU_Abbr": "code",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.83,
+    39.515,
+    -119.8125,
+    39.5227
+   ],
+   "features_in_probe": 1141
+  }
+ },
+ {
+  "name": "nv-reno-parks",
+  "state": "NV",
+  "title": "City parks (Reno)",
+  "title_es": "Parques de la ciudad (Reno)",
+  "description": "City of Reno parks and open space with address, size and park type.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Reno Parks & Recreation",
+  "license": "City of Reno Parks & Recreation public ArcGIS service",
+  "view": {
+   "url": "https://services5.arcgis.com/RjM4BJrv5ZkqP4XC/arcgis/rest/services/Parks_Hub/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "ZIP": "zip",
+    "TOT_ACRES": "acres",
+    "PARK_TYPE": "kind",
+    "FAC_OWN": "owner"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.85,
+    39.48,
+    -119.75,
+    39.56
+   ],
+   "features_in_probe": 77
+  }
+ },
+ {
+  "name": "nv-carson-city-zoning",
+  "state": "NV",
+  "title": "Zoning (Carson City)",
+  "title_es": "Zonificación (Carson City)",
+  "description": "Carson City zoning districts with the zone's full name.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Carson City GIS",
+  "license": "Carson City GIS public ArcGIS service",
+  "view": {
+   "url": "https://portal.carsoncity.gov/server/rest/services/CarsonCity/CarsonCityNV_OpenData/MapServer/15",
+   "fields": {
+    "ZONECODE": "zoning",
+    "LABEL": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.8,
+    39.13,
+    -119.72,
+    39.2
+   ],
+   "features_in_probe": 304
+  }
+ },
+ {
+  "name": "nv-carson-city-master-plan",
+  "state": "NV",
+  "title": "Master plan land use (Carson City)",
+  "title_es": "Uso de suelo del plan maestro (Carson City)",
+  "description": "What the Carson City master plan calls for in each area, such as corridor mixed-use, commercial/industrial or conservation reserve.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Carson City GIS",
+  "license": "Carson City GIS public ArcGIS service",
+  "view": {
+   "url": "https://portal.carsoncity.gov/server/rest/services/CarsonCity/CarsonCityNV_OpenData/MapServer/14",
+   "fields": {
+    "LU_Label": "kind",
+    "LU_Code": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.8,
+    39.13,
+    -119.72,
+    39.2
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "nv-carson-city-wards",
+  "state": "NV",
+  "title": "Board of Supervisors wards (Carson City)",
+  "title_es": "Distritos de la Junta de Supervisores (Carson City)",
+  "description": "Which of the four Carson City Board of Supervisors wards you live in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Carson City GIS",
+  "license": "Carson City GIS public ArcGIS service",
+  "view": {
+   "url": "https://portal.carsoncity.gov/server/rest/services/CarsonCity/CarsonCityNV_OpenData/MapServer/28",
+   "fields": {
+    "Ward": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.8,
+    39.13,
+    -119.72,
+    39.2
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "nv-carson-city-parks",
+  "state": "NV",
+  "title": "Parks & open space (Carson City)",
+  "title_es": "Parques y espacios abiertos (Carson City)",
+  "description": "Carson City parks, sports complexes and open space with address, a description of amenities and whether dogs are allowed.",
+  "group": "nature",
+  "category": "park",
+  "source": "Carson City Parks, Recreation & Open Space",
+  "license": "Carson City Parks, Recreation & Open Space public ArcGIS service",
+  "view": {
+   "url": "https://portal.carsoncity.gov/server/rest/services/CarsonCity/CarsonCityNV_OpenData/MapServer/6",
+   "fields": {
+    "PARK_NAME": "name",
+    "PARK_ADD": "address",
+    "CATEGORY": "kind",
+    "PARK_DESC": "notes",
+    "DOG": "dogs"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -119.8,
+    39.13,
+    -119.72,
+    39.2
+   ],
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "co-denver-council-districts",
+  "state": "CO",
+  "title": "City Council districts (Denver)",
+  "title_es": "Distritos del Concejo Municipal (Denver)",
+  "description": "Which of Denver's 11 City Council districts you live in, with a link to the district office page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City and County of Denver",
+  "license": "City and County of Denver public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ADMN_COUNCILDIST_A/FeatureServer/3",
+   "fields": {
+    "DIST_NUM": "district",
+    "URL_LINK": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.7,
+    -104.94,
+    39.76
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "co-denver-street-sweeping",
+  "state": "CO",
+  "title": "Street sweeping schedule (Denver)",
+  "title_es": "Horario de barrido de calles (Denver)",
+  "description": "When Denver sweeps the streets in each area: the months, which week of the month and which weekdays, and whether the route is posted (cars must move or be ticketed).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City and County of Denver",
+  "license": "City and County of Denver public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ADMN_STREETSWEEPSCHEDULE_A/FeatureServer/17",
+   "fields": {
+    "MONTHS": "months",
+    "WEEK": "week_of_month",
+    "DAYS": "days",
+    "POSTED": "posted_no_parking"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.7,
+    -104.94,
+    39.76
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "co-denver-trash-days",
+  "state": "CO",
+  "title": "Trash, recycling & compost day (Denver)",
+  "title_es": "Día de basura, reciclaje y composta (Denver)",
+  "description": "Denver Solid Waste pickup days for each block. Codes: MO/TU/WE/TH/FR = weekday; recycling MA/MB, TA/TB, WA/WB, HA/HB (Thursday), FA/FB = that weekday on A or B weeks (every other week).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City and County of Denver",
+  "license": "City and County of Denver public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ADMN_SOLIDWASTECOLLECTION_A/FeatureServer/311",
+   "fields": {
+    "TRASH_DAY": "trash_day",
+    "RECYCLE_DAY": "recycle_day",
+    "COMPOST_DAY": "compost_day",
+    "TRASH_SERVICE": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.97,
+    39.72,
+    -104.95,
+    39.74
+   ],
+   "features_in_probe": 445
+  }
+ },
+ {
+  "name": "co-denver-parks",
+  "state": "CO",
+  "title": "Parks (Denver)",
+  "title_es": "Parques (Denver)",
+  "description": "Denver Parks & Recreation parkland: park name, type and class, size, address and the facilities on site.",
+  "group": "places",
+  "category": "park",
+  "source": "City and County of Denver",
+  "license": "City and County of Denver public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_PARK_PARKLAND_A/FeatureServer/87",
+   "fields": {
+    "FORMAL_NAME": "name",
+    "PARK_TYPE": "kind",
+    "PARK_CLASS": "park_class",
+    "GIS_ACRES": "acres",
+    "ADDRESS_LINE1": "address",
+    "FACILITIES": "amenities"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.7,
+    -104.94,
+    39.76
+   ],
+   "features_in_probe": 54
+  }
+ },
+ {
+  "name": "co-denver-historic-districts",
+  "state": "CO",
+  "title": "Historic landmark districts (Denver)",
+  "title_es": "Distritos históricos (Denver)",
+  "description": "Denver's designated historic landmark districts, where exterior changes and demolitions need design review; with the period of significance and the ordinance that created each.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City and County of Denver",
+  "license": "City and County of Denver public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_HIST_LANDMARKDISTRICT_A/FeatureServer/68",
+   "fields": {
+    "DIST_NAME": "name",
+    "PERIOD_SIGNIFICANT": "period",
+    "ORD_NUM": "ordinance",
+    "NOTES": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.7,
+    -104.94,
+    39.76
+   ],
+   "features_in_probe": 52
+  }
+ },
+ {
+  "name": "co-denver-rec-centers",
+  "state": "CO",
+  "title": "Recreation centers (Denver)",
+  "title_es": "Centros recreativos (Denver)",
+  "description": "Denver recreation centers with address, phone, hours, facilities (pools, gyms, weight rooms) and programs offered.",
+  "group": "places",
+  "category": "point",
+  "source": "City and County of Denver",
+  "license": "City and County of Denver public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_PARK_RECCENTER_P/FeatureServer/92",
+   "fields": {
+    "REC_NAME": "name",
+    "ADDRESS_LINE1": "address",
+    "PHONE": "phone",
+    "HOURS": "hours",
+    "REC_TYPE": "kind",
+    "MARKETED_FACILITIES": "amenities",
+    "MARKETED_PROGRAMS": "programs"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.7,
+    -104.94,
+    39.76
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "co-denver-street-permits",
+  "state": "CO",
+  "title": "Street & lane closures by permit (Denver)",
+  "title_es": "Cierres de calles y carriles con permiso (Denver)",
+  "description": "Current Denver right-of-way permits that close a street, lane, sidewalk, bike lane or parking lane (utility work, construction staging): what is closed, between which streets, why, and the permit dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City and County of Denver",
+  "license": "City and County of Denver public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_DEV_STREETOCCUPANCYPPERMITS_L/FeatureServer/297",
+   "fields": {
+    "ASIT_TYPE": "kind",
+    "STREET": "street",
+    "FROM_STREET": "from_street",
+    "TO_STREET": "to_street",
+    "PURPOSE": "purpose",
+    "LOCATION_DETAILS": "notes",
+    "BEGIN_DATE": "start",
+    "END_DATE": "end",
+    "PERMIT_NUMBER": "permit"
+   },
+   "geometry": "line",
+   "min_zoom": 13,
+   "where": "END_DATE >= CURRENT_TIMESTAMP",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.7,
+    -104.94,
+    39.76
+   ],
+   "features_in_probe": 214
+  }
+ },
+ {
+  "name": "co-denver-parcels",
+  "state": "CO",
+  "title": "Parcels (Denver)",
+  "title_es": "Parcelas (Denver)",
+  "description": "Denver property parcels with the assessor schedule number, land-use class, zoning, lot size and assessed and appraised values (no owner names).",
+  "group": "housing",
+  "category": "landuse",
+  "source": "City and County of Denver Assessor",
+  "license": "City and County of Denver Assessor public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_PROP_PARCELS_A/FeatureServer/245",
+   "fields": {
+    "SCHEDNUM": "parcel_id",
+    "D_CLASS_CN": "land_use",
+    "ZONE_ID": "zoning",
+    "LAND_AREA": "land_sqft",
+    "ASSESSED_TOTAL_VALUE_LOCAL": "assessed_value",
+    "APPRAISED_TOTAL_VALUE": "appraised_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.97,
+    39.73,
+    -104.965,
+    39.735
+   ],
+   "features_in_probe": 131
+  }
+ },
+ {
+  "name": "co-denver-warning-sirens",
+  "state": "CO",
+  "title": "Outdoor warning sirens (Denver)",
+  "title_es": "Sirenas de alerta (Denver)",
+  "description": "Denver's outdoor emergency warning sirens (tornadoes and other emergencies). If you hear one, go inside and check local news or alerts.",
+  "group": "hazards",
+  "category": "point",
+  "source": "City and County of Denver Office of Emergency Management",
+  "license": "City and County of Denver Office of Emergency Management public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_EMERG_WARNINGSIRENS_P/FeatureServer/35",
+   "fields": {
+    "LOCATION_NAME": "name",
+    "LOCATION": "address",
+    "SIREN_NUMBER": "number",
+    "POWER_TYPE": "power"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.7,
+    -104.94,
+    39.76
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "co-denver-food-assistance",
+  "state": "CO",
+  "title": "Food pantries & assistance (Denver area)",
+  "title_es": "Despensas y ayuda alimentaria (área de Denver)",
+  "description": "Food pantries and other free food assistance sites mapped by Denver Public Health and Environment, with address and type.",
+  "group": "help",
+  "category": "point",
+  "source": "City and County of Denver",
+  "license": "City and County of Denver public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_HLTH_FOODASSIST_P/FeatureServer/473",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "ZIP": "zip",
+    "TYPE": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.7,
+    -104.94,
+    39.76
+   ],
+   "features_in_probe": 44
+  }
+ },
+ {
+  "name": "co-denver-snow-routes",
+  "state": "CO",
+  "title": "Snow plow routes (Denver)",
+  "title_es": "Rutas de quitanieves (Denver)",
+  "description": "Streets on Denver's snow plow routes and their plowing priority (main arterials are cleared first).",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City and County of Denver",
+  "license": "City and County of Denver public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_TRANS_SNOWROUTE_L/FeatureServer/310",
+   "fields": {
+    "FULLNAME": "street",
+    "FROMNAME": "from_street",
+    "TONAME": "to_street",
+    "PRIORITY": "priority"
+   },
+   "geometry": "line",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.7,
+    -104.94,
+    39.76
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "co-aurora-elementary-attendance",
+  "state": "CO",
+  "title": "Elementary school attendance areas (Aurora)",
+  "title_es": "Zonas de asistencia de escuela primaria (Aurora)",
+  "description": "Which elementary school serves each address in and around Aurora (Aurora Public Schools and Cherry Creek School District, 'CC'). Check with the district before enrolling; boundaries can change.",
+  "group": "people",
+  "category": "boundary",
+  "source": "City of Aurora",
+  "license": "City of Aurora public ArcGIS service",
+  "view": {
+   "url": "https://ags.auroragov.org/aurora/rest/services/OpenData/MapServer/83",
+   "fields": {
+    "ELEMENTARY_NAME": "name",
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.85,
+    39.65,
+    -104.75,
+    39.74
+   ],
+   "features_in_probe": 39
+  }
+ },
+ {
+  "name": "co-aurora-middle-attendance",
+  "state": "CO",
+  "title": "Middle school attendance areas (Aurora)",
+  "title_es": "Zonas de asistencia de escuela secundaria (middle) (Aurora)",
+  "description": "Which middle school serves each address in and around Aurora (Aurora Public Schools and Cherry Creek School District, 'CC'). Check with the district before enrolling; boundaries can change.",
+  "group": "people",
+  "category": "boundary",
+  "source": "City of Aurora",
+  "license": "City of Aurora public ArcGIS service",
+  "view": {
+   "url": "https://ags.auroragov.org/aurora/rest/services/OpenData/MapServer/82",
+   "fields": {
+    "MIDDLESCHOOL_NAME": "name",
+    "DISTRICT_NAME": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.85,
+    39.65,
+    -104.75,
+    39.74
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "co-aurora-high-attendance",
+  "state": "CO",
+  "title": "High school attendance areas (Aurora)",
+  "title_es": "Zonas de asistencia de escuela preparatoria (Aurora)",
+  "description": "Which high school serves each address in and around Aurora (Aurora Public Schools and Cherry Creek School District, 'CC'). Check with the district before enrolling; boundaries can change.",
+  "group": "people",
+  "category": "boundary",
+  "source": "City of Aurora",
+  "license": "City of Aurora public ArcGIS service",
+  "view": {
+   "url": "https://ags.auroragov.org/aurora/rest/services/OpenData/MapServer/81",
+   "fields": {
+    "HIGHSCHOOL_NAME": "name",
+    "DISTRICT_NAME": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.85,
+    39.65,
+    -104.75,
+    39.74
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "co-aurora-council-wards",
+  "state": "CO",
+  "title": "City Council wards (Aurora)",
+  "title_es": "Distritos (wards) del Concejo Municipal (Aurora)",
+  "description": "Which of Aurora's six City Council wards you live in (Aurora also has at-large council members).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Aurora",
+  "license": "City of Aurora public ArcGIS service",
+  "view": {
+   "url": "https://ags.auroragov.org/aurora/rest/services/OpenData/MapServer/22",
+   "fields": {
+    "WARD": "ward",
+    "WARDNUM": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.85,
+    39.65,
+    -104.75,
+    39.74
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "co-aurora-zoning",
+  "state": "CO",
+  "title": "Zoning (Aurora)",
+  "title_es": "Zonificación (Aurora)",
+  "description": "Aurora zoning districts: the zone code, its description and allowed density.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Aurora",
+  "license": "City of Aurora public ArcGIS service",
+  "view": {
+   "url": "https://ags.auroragov.org/aurora/rest/services/OpenData/MapServer/20",
+   "fields": {
+    "DISTRICT_ID": "zoning",
+    "Dist_Name": "description",
+    "DENSITY": "density",
+    "ORDINANCE": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.83,
+    39.68,
+    -104.79,
+    39.71
+   ],
+   "features_in_probe": 189
+  }
+ },
+ {
+  "name": "co-cos-ballot-drop-off",
+  "state": "CO",
+  "title": "Ballot drop-off locations (El Paso County)",
+  "title_es": "Buzones para entregar la boleta (condado de El Paso)",
+  "description": "24-hour ballot drop boxes and in-person drop-off sites in Colorado Springs and El Paso County for the current election, as mapped by the City of Colorado Springs.",
+  "group": "civic",
+  "category": "point",
+  "source": "City of Colorado Springs",
+  "license": "City of Colorado Springs public ArcGIS service",
+  "view": {
+   "url": "https://gis.coloradosprings.gov/arcgis/rest/services/GeneralUse/Elections/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "LocationType": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.85,
+    38.8,
+    -104.75,
+    38.9
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "co-cos-council-districts",
+  "state": "CO",
+  "title": "City Council districts (Colorado Springs)",
+  "title_es": "Distritos del Concejo Municipal (Colorado Springs)",
+  "description": "Which of Colorado Springs' six City Council districts you live in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Colorado Springs",
+  "license": "City of Colorado Springs public ArcGIS service",
+  "view": {
+   "url": "https://gis.coloradosprings.gov/arcgis/rest/services/GeneralUse/CouncilDist/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.85,
+    38.8,
+    -104.75,
+    38.9
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "co-cos-zoning",
+  "state": "CO",
+  "title": "Zoning (Colorado Springs)",
+  "title_es": "Zonificación (Colorado Springs)",
+  "description": "Colorado Springs base zoning districts with the zone code and what it means (residential, mixed-use, business park, planned development, etc.).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Colorado Springs",
+  "license": "City of Colorado Springs public ArcGIS service",
+  "view": {
+   "url": "https://gis.coloradosprings.gov/arcgis/rest/services/GeneralUse/PlanningZoning/MapServer/11",
+   "fields": {
+    "LABEL": "zoning",
+    "DESCRIPT": "description",
+    "area_acre": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.84,
+    38.82,
+    -104.8,
+    38.86
+   ],
+   "features_in_probe": 322
+  }
+ },
+ {
+  "name": "co-cos-parks",
+  "state": "CO",
+  "title": "Parks & open space (Colorado Springs)",
+  "title_es": "Parques y espacios abiertos (Colorado Springs)",
+  "description": "City of Colorado Springs parkland and open space, with park name, acreage and maintenance district.",
+  "group": "places",
+  "category": "park",
+  "source": "City of Colorado Springs",
+  "license": "City of Colorado Springs public ArcGIS service",
+  "view": {
+   "url": "https://gis.coloradosprings.gov/arcgis/rest/services/GeneralUse/ParksRecreation/MapServer/3",
+   "fields": {
+    "PARK_NAME": "name",
+    "PARK_NAME2": "also_known_as",
+    "LOT_ACRES": "acres",
+    "M_DIST": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.85,
+    38.8,
+    -104.75,
+    38.9
+   ],
+   "features_in_probe": 173
+  }
+ },
+ {
+  "name": "co-cos-snow-routes",
+  "state": "CO",
+  "title": "Primary snow routes (Colorado Springs)",
+  "title_es": "Rutas principales de quitanieves (Colorado Springs)",
+  "description": "Colorado Springs primary snow routes, plowed and treated first in a storm: street, the segment covered, and the material used.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Colorado Springs",
+  "license": "City of Colorado Springs public ArcGIS service",
+  "view": {
+   "url": "https://gis.coloradosprings.gov/arcgis/rest/services/Snow/SnowRoutes_PRO/MapServer/1",
+   "fields": {
+    "Street_Name": "street",
+    "Street_Name_From": "from_street",
+    "Street_Name_To": "to_street",
+    "Route_Class": "kind",
+    "MaterialUsed": "material"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.85,
+    38.8,
+    -104.75,
+    38.9
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "co-pikes-peak-evacuation-zones",
+  "state": "CO",
+  "title": "Evacuation zones (El Paso & Teller counties)",
+  "title_es": "Zonas de evacuación (condados de El Paso y Teller)",
+  "description": "Pikes Peak Regional Office of Emergency Management evacuation zones. Learn your zone ID now: in a wildfire or flood, evacuation orders are issued by zone. Shows each zone's bounding streets and current status.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Pikes Peak Regional Office of Emergency Management",
+  "license": "Pikes Peak Regional Office of Emergency Management public ArcGIS service",
+  "view": {
+   "url": "https://services3.arcgis.com/4RbSpZqACDsi1hHk/arcgis/rest/services/Evacuation_Zones/FeatureServer/0",
+   "fields": {
+    "zone_id": "name",
+    "zone_statu": "status",
+    "known_as": "known_as",
+    "north_of": "north_of",
+    "south_of": "south_of",
+    "east_of": "east_of",
+    "west_of": "west_of",
+    "est_popula": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -104.85,
+    38.8,
+    -104.75,
+    38.9
+   ],
+   "features_in_probe": 284
+  }
+ },
+ {
+  "name": "co-boulder-evacuation-zones",
+  "state": "CO",
+  "title": "Emergency alert / evacuation zones (Boulder County)",
+  "title_es": "Zonas de alerta y evacuación (condado de Boulder)",
+  "description": "Boulder County's all-hazard emergency notification zones. Evacuation warnings and orders (wildfire, flood) are sent by zone code, so note yours and sign up for Boulder County alerts.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Boulder County",
+  "license": "Boulder County public ArcGIS service",
+  "view": {
+   "url": "https://maps.bouldercounty.org/arcgis/rest/services/PublicSafety/ALLHAZARD_EVACUATION_POLYGONS/MapServer/0",
+   "fields": {
+    "CODE": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.5,
+    39.95,
+    -105.2,
+    40.15
+   ],
+   "features_in_probe": 120
+  }
+ },
+ {
+  "name": "co-boulder-flood-alert-zones",
+  "state": "CO",
+  "title": "Flood alert zones (Boulder County)",
+  "title_es": "Zonas de alerta por inundación (condado de Boulder)",
+  "description": "Boulder County flood emergency notification areas along creeks (the 100-year floodplain plus a buffer). People inside get flood warnings for that creek.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Boulder County",
+  "license": "Boulder County public ArcGIS service",
+  "view": {
+   "url": "https://maps.bouldercounty.org/arcgis/rest/services/PublicSafety/FLOOD_EMERGENCY_NOTIFICATION/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "DESCRIPTION": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.3,
+    39.98,
+    -105.1,
+    40.1
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "co-boulder-trailheads",
+  "state": "CO",
+  "title": "Open space trailheads (Boulder County)",
+  "title_es": "Inicios de sendero en espacios abiertos (condado de Boulder)",
+  "description": "Boulder County Parks & Open Space trailheads with whether they have parking, restrooms, picnic areas and an info kiosk.",
+  "group": "nature",
+  "category": "point",
+  "source": "Boulder County Parks & Open Space",
+  "license": "Boulder County Parks & Open Space public ArcGIS service",
+  "view": {
+   "url": "https://maps.bouldercounty.org/arcgis/rest/services/ParksOpenSpace/OP_BCPOS_TRAILHEADS/MapServer/0",
+   "fields": {
+    "TrailheadName": "name",
+    "Location": "park",
+    "LocationDescription": "trail",
+    "Parking": "parking",
+    "Restroom": "restroom",
+    "PicnicArea": "picnic",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.3,
+    39.98,
+    -105.1,
+    40.1
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "co-boulder-regional-trails",
+  "state": "CO",
+  "title": "Regional trails (Boulder County)",
+  "title_es": "Senderos regionales (condado de Boulder)",
+  "description": "Regional multi-use trails across Boulder County (e.g. Rock Creek, Coal Creek, LoBo), with segment, surface and who owns and maintains them.",
+  "group": "nature",
+  "category": "park",
+  "source": "Boulder County",
+  "license": "Boulder County public ArcGIS service",
+  "view": {
+   "url": "https://maps.bouldercounty.org/arcgis/rest/services/Transportation/TRAILS_RegionalTrails/MapServer/0",
+   "fields": {
+    "FEAT_NAME": "name",
+    "SEGMENT_NAME": "segment",
+    "TRAIL_CATEGORY": "kind",
+    "PAVETYPE": "surface",
+    "OWNERSHIP": "owner"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.3,
+    39.98,
+    -105.1,
+    40.1
+   ],
+   "features_in_probe": 77
+  }
+ },
+ {
+  "name": "co-boulder-county-zoning",
+  "state": "CO",
+  "title": "Zoning, unincorporated (Boulder County)",
+  "title_es": "Zonificación, áreas no incorporadas (condado de Boulder)",
+  "description": "Boulder County zoning districts for land outside city limits: the zone code and its name (forestry, agricultural, rural residential, business, etc.).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Boulder County",
+  "license": "Boulder County public ArcGIS service",
+  "view": {
+   "url": "https://maps.bouldercounty.org/arcgis/rest/services/PLANNING/LUC_ZoningDistricts/MapServer/0",
+   "fields": {
+    "ZONECLASS": "zoning",
+    "ZONEDESC": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.3,
+    39.98,
+    -105.1,
+    40.1
+   ],
+   "features_in_probe": 122
+  }
+ },
+ {
+  "name": "co-boulder-warning-sirens",
+  "state": "CO",
+  "title": "Outdoor warning sirens (Boulder County)",
+  "title_es": "Sirenas de alerta (condado de Boulder)",
+  "description": "Outdoor emergency warning sirens in Boulder County (flood and severe weather). If you hear one, go inside or to higher ground and check alerts.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Boulder County",
+  "license": "Boulder County public ArcGIS service",
+  "view": {
+   "url": "https://maps.bouldercounty.org/arcgis/rest/services/PublicSafety/WARNING_SIRENS/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "LOCATION": "address",
+    "CITY": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.3,
+    39.98,
+    -105.1,
+    40.1
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "co-douglas-road-alerts",
+  "state": "CO",
+  "title": "Road work & closures (Douglas County)",
+  "title_es": "Obras y cierres de caminos (condado de Douglas)",
+  "description": "Current Douglas County road projects, closures and detours: location, type of work, project and dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Douglas County",
+  "license": "Douglas County public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/seTexOicoRXDvRsJ/arcgis/rest/services/Douglas_County_Road_Alerts_View/FeatureServer/0",
+   "fields": {
+    "Location": "location",
+    "Work_Description": "kind",
+    "Project_Name": "name",
+    "Organization": "agency",
+    "Start_Date": "start",
+    "End_Date": "end"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "Public_View = 'Yes' AND End_Date >= CURRENT_TIMESTAMP",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.1,
+    39.1,
+    -104.6,
+    39.6
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "co-douglas-elementary-boundaries",
+  "state": "CO",
+  "title": "Elementary school boundaries (Douglas County)",
+  "title_es": "Zonas de escuela primaria (condado de Douglas)",
+  "description": "Which Douglas County School District elementary school serves each neighborhood. Confirm with the district; boundaries can change.",
+  "group": "people",
+  "category": "boundary",
+  "source": "Douglas County",
+  "license": "Douglas County public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/seTexOicoRXDvRsJ/arcgis/rest/services/ELEMENTARY_SCHOOL_BNDY_View/FeatureServer/0",
+   "fields": {
+    "ES": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.4,
+    -104.8,
+    39.56
+   ],
+   "features_in_probe": 33
+  }
+ },
+ {
+  "name": "co-douglas-middle-boundaries",
+  "state": "CO",
+  "title": "Middle school boundaries (Douglas County)",
+  "title_es": "Zonas de escuela secundaria (middle) (condado de Douglas)",
+  "description": "Which Douglas County School District middle school serves each neighborhood. Confirm with the district; boundaries can change.",
+  "group": "people",
+  "category": "boundary",
+  "source": "Douglas County",
+  "license": "Douglas County public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/seTexOicoRXDvRsJ/arcgis/rest/services/MIDDLE_SCHOOL_BNDY_View/FeatureServer/0",
+   "fields": {
+    "MS": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.4,
+    -104.8,
+    39.56
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "co-douglas-high-boundaries",
+  "state": "CO",
+  "title": "High school boundaries (Douglas County)",
+  "title_es": "Zonas de escuela preparatoria (condado de Douglas)",
+  "description": "Which Douglas County School District high school serves each neighborhood. Confirm with the district; boundaries can change.",
+  "group": "people",
+  "category": "boundary",
+  "source": "Douglas County",
+  "license": "Douglas County public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/seTexOicoRXDvRsJ/arcgis/rest/services/HIGH_SCHOOL_BNDY_View/FeatureServer/0",
+   "fields": {
+    "HS": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.4,
+    -104.8,
+    39.56
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "co-douglas-zoning",
+  "state": "CO",
+  "title": "Zoning, unincorporated (Douglas County)",
+  "title_es": "Zonificación, áreas no incorporadas (condado de Douglas)",
+  "description": "Douglas County zoning for unincorporated areas (Highlands Ranch, Roxborough, rural areas): zone type, description and planned development name.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Douglas County",
+  "license": "Douglas County public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/seTexOicoRXDvRsJ/arcgis/rest/services/Zoning_View/FeatureServer/0",
+   "fields": {
+    "ZONE_TYPE": "zoning",
+    "FIRST_DESC": "description",
+    "PD_Name": "name",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    39.4,
+    -104.8,
+    39.56
+   ],
+   "features_in_probe": 172
+  }
+ },
+ {
+  "name": "co-fort-collins-projects",
+  "state": "CO",
+  "title": "Road & utility projects (Fort Collins)",
+  "title_es": "Proyectos de calles y servicios (Fort Collins)",
+  "description": "Current and upcoming construction projects coordinated by the City of Fort Collins and partners (Larimer County, utilities): what is being built and the expected start and end dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Fort Collins",
+  "license": "City of Fort Collins public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/dLpFH5mwVvxSN4OE/arcgis/rest/services/Project_Coordination_Projects_view/FeatureServer/0",
+   "fields": {
+    "ProjectName": "name",
+    "DepartmentOrAgency": "agency",
+    "GeneralDescription": "description",
+    "StartDate": "start",
+    "EndDate": "end"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "EndDate >= CURRENT_TIMESTAMP",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.12,
+    40.53,
+    -105.03,
+    40.6
+   ],
+   "features_in_probe": 123
+  }
+ },
+ {
+  "name": "co-fort-collins-historic-districts",
+  "state": "CO",
+  "title": "Historic districts (Fort Collins)",
+  "title_es": "Distritos históricos (Fort Collins)",
+  "description": "Fort Collins historic districts with local and National Register designations (Old Town, Laurel School and others).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Fort Collins",
+  "license": "City of Fort Collins public ArcGIS service",
+  "view": {
+   "url": "https://gis.fortcollins.gov/arcgis/rest/services/HistoricPreservationResources/MapServer/2",
+   "fields": {
+    "NAME": "name",
+    "DESTYPE": "kind",
+    "ORDINANCE": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.12,
+    40.53,
+    -105.03,
+    40.6
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "co-fort-collins-snow-routes",
+  "state": "CO",
+  "title": "Snow plow routes (Fort Collins)",
+  "title_es": "Rutas de quitanieves (Fort Collins)",
+  "description": "Fort Collins streets on plow routes and their priority (priority 1 is cleared first).",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Fort Collins",
+  "license": "City of Fort Collins public ArcGIS service",
+  "view": {
+   "url": "https://gis.fortcollins.gov/arcgis/rest/services/SnowRoutes_Boundaries/MapServer/0",
+   "fields": {
+    "FULLNAME": "street",
+    "ROUTE_TYPE": "kind",
+    "PRIORITY": "priority",
+    "ROUTE_NUM": "route"
+   },
+   "geometry": "line",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.12,
+    40.53,
+    -105.03,
+    40.6
+   ],
+   "features_in_probe": 1561
+  }
+ },
+ {
+  "name": "co-cdot-stip-projects",
+  "state": "CO",
+  "title": "Planned state highway projects (CDOT)",
+  "title_es": "Proyectos planeados en carreteras estatales (CDOT)",
+  "description": "Colorado Department of Transportation projects in the current Statewide Transportation Improvement Program (funded highway, bridge and safety work): project description, highway and project id.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Colorado Department of Transportation",
+  "license": "Colorado Department of Transportation public ArcGIS service",
+  "view": {
+   "url": "https://dtdapps.codot.gov/server/rest/services/Webapps/open_data_sde/FeatureServer/24",
+   "fields": {
+    "SAPPROJECTDESCRIPTION": "name",
+    "ROUTE": "route",
+    "PROJECT_ID": "project"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "CURR_STIP = 'X' AND SAPPROJECTDESCRIPTION IS NOT NULL",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.1,
+    39.6,
+    -104.8,
+    39.85
+   ],
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "wa-tsunami-inundation",
+  "state": "WA",
+  "title": "Tsunami flood area (Cascadia M9.0 quake)",
+  "title_es": "Zona de inundación por tsunami (terremoto Cascadia M9.0)",
+  "description": "Where a tsunami from a magnitude 9.0 Cascadia earthquake is modeled to flood the Washington coast. If you are inside this area and feel a long, strong quake, walk to high ground right away.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Washington Geological Survey (DNR)",
+  "license": "Washington Geological Survey (DNR) public ArcGIS service",
+  "view": {
+   "url": "https://gis.dnr.wa.gov/site3/rest/services/Geology/Tsunami_Hazard/MapServer/29",
+   "fields": {
+    "TSUNAMI_SCENARIO_NAME": "kind",
+    "TSUNAMI_SCENARIO_DESCRIPTION": "notes",
+    "STUDY_TYPE": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -124.2,
+    46.9,
+    -124.05,
+    47.0
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "wa-tsunami-evacuation-routes",
+  "state": "WA",
+  "title": "Tsunami evacuation routes",
+  "title_es": "Rutas de evacuación por tsunami",
+  "description": "Signed routes out of tsunami flood areas to high ground along the coast and Puget Sound.",
+  "group": "hazards",
+  "category": "roadops",
+  "source": "Washington Geological Survey (DNR)",
+  "license": "Washington Geological Survey (DNR) public ArcGIS service",
+  "view": {
+   "url": "https://gis.dnr.wa.gov/site3/rest/services/Geology/Tsunami_Hazard/MapServer/20",
+   "fields": {
+    "ROAD_NAME": "road",
+    "HIGHWAY_NAME": "highway"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -124.1,
+    46.3,
+    -123.9,
+    46.5
+   ],
+   "features_in_probe": 62
+  }
+ },
+ {
+  "name": "wa-tsunami-assembly-areas",
+  "state": "WA",
+  "title": "Tsunami assembly areas & shelters",
+  "title_es": "Puntos de reunión y refugios por tsunami",
+  "description": "High-ground places to gather after a tsunami evacuation, plus shelters and related facilities, with their elevation in feet.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Washington Geological Survey (DNR)",
+  "license": "Washington Geological Survey (DNR) public ArcGIS service",
+  "view": {
+   "url": "https://gis.dnr.wa.gov/site3/rest/services/Geology/Tsunami_Hazard/MapServer/26",
+   "fields": {
+    "SITE_NAME": "name",
+    "SITE_TYPE": "kind",
+    "SITE_DESCRIPTION": "address",
+    "ELEVATION_FT": "elevation_ft"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.7,
+    48.45,
+    -122.55,
+    48.53
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "wa-pierce-lahar-zones",
+  "state": "WA",
+  "title": "Mount Rainier lahar zones (Pierce County)",
+  "title_es": "Zonas de lahar del monte Rainier (condado de Pierce)",
+  "description": "Valleys that Mount Rainier lahars (fast volcanic mudflows) could reach. 'Y' marks which kind: Case I = rare, largest flows; Case II = large flows; Case III = smaller, more frequent flows. Arrival zone letters show roughly how soon a flow could arrive (A = soonest).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Pierce County Emergency Management (from USGS)",
+  "license": "Pierce County Emergency Management (from USGS) public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/arcgis/rest/services/Volcanic_Hazards/FeatureServer/0",
+   "fields": {
+    "CASE_1": "case_i_rare_largest",
+    "CASE_2": "case_ii_large",
+    "CASE_3": "case_iii_frequent",
+    "TIME_ZONE": "arrival_zone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 100,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.25,
+    47.05,
+    -122.15,
+    47.15
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "wa-wdfw-game-units",
+  "state": "WA",
+  "title": "Game management units (hunting)",
+  "title_es": "Unidades de manejo de caza",
+  "description": "WDFW game management units (GMUs) that hunting seasons and rules are set by, for the current license year.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Washington Department of Fish and Wildlife",
+  "license": "Washington Department of Fish and Wildlife public ArcGIS service",
+  "view": {
+   "url": "https://geodataservices.wdfw.wa.gov/arcgis/rest/services/MapServices/SharedReferenceLayers/MapServer/0",
+   "fields": {
+    "GMU_Num": "unit",
+    "GMU_Name": "name",
+    "In_Effect_Desc": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -121.5,
+    46.5,
+    -120.5,
+    47.5
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "wa-pierce-lahar-evacuation-routes",
+  "state": "WA",
+  "title": "Lahar evacuation routes (Pierce County)",
+  "title_es": "Rutas de evacuación por lahar (condado de Pierce)",
+  "description": "Routes to walk or drive out of Mount Rainier lahar (volcanic mudflow) zones in the Puyallup, Carbon and Nisqually valleys.",
+  "group": "hazards",
+  "category": "roadops",
+  "source": "Pierce County",
+  "license": "Pierce County public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/arcgis/rest/services/Lahar_Evacuation_Routes/FeatureServer/0",
+   "fields": {
+    "PUB_SAFE": "city"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 200,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.35,
+    47.15,
+    -122.2,
+    47.22
+   ],
+   "features_in_probe": 95
+  }
+ },
+ {
+  "name": "wa-pierce-ballot-sites",
+  "state": "WA",
+  "title": "Ballot drop boxes & voting centers (Pierce County)",
+  "title_es": "Buzones para boletas y centros de votación (condado de Pierce)",
+  "description": "Where to drop off your ballot or vote in person in Pierce County, and when each site opens and closes for the election.",
+  "group": "civic",
+  "category": "point",
+  "source": "Pierce County Auditor",
+  "license": "Pierce County Auditor public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/arcgis/rest/services/Voting_Centers_and_Ballot_Sites/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Address": "address",
+    "City": "city",
+    "Open_Schedule": "hours",
+    "Close_Schedule": "closes",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.6,
+    47.0,
+    -122.2,
+    47.3
+   ],
+   "features_in_probe": 41
+  }
+ },
+ {
+  "name": "wa-tacoma-capital-projects",
+  "state": "WA",
+  "title": "City projects & construction (Tacoma)",
+  "title_es": "Proyectos y obras de la ciudad (Tacoma)",
+  "description": "Tacoma's planned and active capital projects (streets, bridges, parks, utilities): what is being built, its phase, cost, and construction dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Tacoma",
+  "license": "City of Tacoma public ArcGIS service",
+  "view": {
+   "url": "https://services3.arcgis.com/SCwJH1pD8WSn5T5y/arcgis/rest/services/Tacoma_Capital_Projects/FeatureServer/0",
+   "fields": {
+    "projname": "name",
+    "project_type": "kind",
+    "project_description": "notes",
+    "current_phase": "status",
+    "location_description": "location",
+    "lead_department": "department",
+    "construction_start": "start",
+    "construction_end": "end",
+    "total_estimated_cost": "cost"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.55,
+    47.2,
+    -122.4,
+    47.3
+   ],
+   "features_in_probe": 258
+  }
+ },
+ {
+  "name": "wa-king-ballot-drop-boxes",
+  "state": "WA",
+  "title": "Ballot drop boxes (King County)",
+  "title_es": "Buzones para boletas (condado de King)",
+  "description": "King County Elections' 24-hour ballot drop boxes, with notes on where the box sits and whether it is drive-up.",
+  "group": "civic",
+  "category": "point",
+  "source": "King County Elections",
+  "license": "King County Elections public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/Ej0PsM5Aw677QF1W/arcgis/rest/services/BALLOT_DROPBOX_POINT_2759/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITYZIP": "city",
+    "ZIPCODE": "zip",
+    "DRIVEUP": "drive_up",
+    "DESC_NOTES": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.45,
+    47.5,
+    -122.2,
+    47.75
+   ],
+   "features_in_probe": 37
+  }
+ },
+ {
+  "name": "wa-seattle-council-districts",
+  "state": "WA",
+  "title": "City council districts (Seattle)",
+  "title_es": "Distritos del concejo municipal (Seattle)",
+  "description": "Which of Seattle's seven city council districts you live in.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "King County GIS",
+  "license": "King County GIS public ArcGIS service",
+  "view": {
+   "url": "https://gismaps.kingcounty.gov/arcgis/rest/services/Districts/KingCo_Electoral_Districts/MapServer/4",
+   "fields": {
+    "NAME": "district",
+    "SCCDST": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.45,
+    47.5,
+    -122.2,
+    47.75
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "wa-king-fire-districts",
+  "state": "WA",
+  "title": "Fire protection districts (King County)",
+  "title_es": "Distritos de protección contra incendios (condado de King)",
+  "description": "Which fire protection district covers each area of King County.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "King County GIS",
+  "license": "King County GIS public ArcGIS service",
+  "view": {
+   "url": "https://gismaps.kingcounty.gov/arcgis/rest/services/Districts/KingCo_Electoral_Districts/MapServer/10",
+   "fields": {
+    "NAME": "name",
+    "FIRDST": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.2,
+    47.3,
+    -121.9,
+    47.6
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "wa-king-sandbags",
+  "state": "WA",
+  "title": "Free sandbag pickup (King County)",
+  "title_es": "Sacos de arena gratis (condado de King)",
+  "description": "Where King County residents can pick up sandbags and sand during flood season, with hours and limits.",
+  "group": "help",
+  "category": "point",
+  "source": "King County Water and Land Resources",
+  "license": "King County Water and Land Resources public ArcGIS service",
+  "view": {
+   "url": "https://gismaps.kingcounty.gov/arcgis/rest/services/WLRD/SandbagDistributionLocations/MapServer/0",
+   "fields": {
+    "LOCATION": "address",
+    "LOC_TYPE": "kind",
+    "HOURS": "hours",
+    "AVAILABLE": "notes",
+    "JURIS": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.4,
+    47.4,
+    -121.8,
+    47.7
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "wa-seattle-zoning",
+  "state": "WA",
+  "title": "Zoning (Seattle)",
+  "title_es": "Zonificación (Seattle)",
+  "description": "Seattle's zoning: what can be built on each lot (single family, lowrise, commercial, industrial...), plus historic and housing-affordability overlays.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Seattle (SDCI)",
+  "license": "City of Seattle (SDCI) public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/ZOyb2t4B0UYuYNYH/arcgis/rest/services/Current_Land_Use_Zoning_Detail_2/FeatureServer/0",
+   "fields": {
+    "ZONING": "zoning",
+    "ZONING_DESC": "kind",
+    "CLASS_DESC": "class",
+    "CATEGORY_DESC": "category",
+    "HISTORIC": "historic",
+    "MHA_VALUE": "mha_tier"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.36,
+    47.6,
+    -122.3,
+    47.64
+   ],
+   "features_in_probe": 644
+  }
+ },
+ {
+  "name": "wa-seattle-street-sweeping",
+  "state": "WA",
+  "title": "Street sweeping routes (Seattle)",
+  "title_es": "Rutas de barrido de calles (Seattle)",
+  "description": "Seattle Public Utilities street-sweeping routes, how often they are swept, the schedule, and the next sweep date.",
+  "group": "civic",
+  "category": "roadops",
+  "source": "Seattle Public Utilities",
+  "license": "Seattle Public Utilities public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/ZOyb2t4B0UYuYNYH/arcgis/rest/services/SPU_Street_Sweeping/FeatureServer/2",
+   "fields": {
+    "TITLE": "name",
+    "FREQUENCY_": "frequency",
+    "SCHEDULE": "schedule",
+    "SEASON": "season",
+    "NEXT_SWEEP_DATE": "start"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.4,
+    47.55,
+    -122.25,
+    47.7
+   ],
+   "features_in_probe": 58
+  }
+ },
+ {
+  "name": "wa-seattle-landmarks",
+  "state": "WA",
+  "title": "City landmarks (Seattle)",
+  "title_es": "Monumentos históricos de la ciudad (Seattle)",
+  "description": "Buildings and sites officially designated as Seattle landmarks, with the ordinance and date of designation.",
+  "group": "places",
+  "category": "point",
+  "source": "City of Seattle (SDCI)",
+  "license": "City of Seattle (SDCI) public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/ZOyb2t4B0UYuYNYH/arcgis/rest/services/Landmarks/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "ORDINANCE": "ordinance",
+    "EFF_DATE": "listed"
+   },
+   "geometry": "point",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.36,
+    47.59,
+    -122.3,
+    47.63
+   ],
+   "features_in_probe": 277
+  }
+ },
+ {
+  "name": "wa-seattle-liquefaction",
+  "state": "WA",
+  "title": "Liquefaction-prone areas (Seattle)",
+  "title_es": "Zonas propensas a licuefacción (Seattle)",
+  "description": "Areas where loose, wet soil can turn to liquid in a strong earthquake (a city Environmentally Critical Area); buildings here need extra review.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "City of Seattle (SDCI)",
+  "license": "City of Seattle (SDCI) public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/ZOyb2t4B0UYuYNYH/arcgis/rest/services/ECA_Liquefaction_Prone_Areas/FeatureServer/5",
+   "fields": {
+    "OBJECTID": "id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.36,
+    47.55,
+    -122.3,
+    47.6
+   ],
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "wa-seattle-emergency-hubs",
+  "state": "WA",
+  "title": "Community emergency hubs (Seattle)",
+  "title_es": "Centros comunitarios de emergencia (Seattle)",
+  "description": "Neighborhood gathering places where Seattle residents can share information and help each other after a major disaster.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Seattle Office of Emergency Management",
+  "license": "City of Seattle Office of Emergency Management public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/Ej0PsM5Aw677QF1W/arcgis/rest/services/Seattle_CommunityHubs_view/FeatureServer/0",
+   "fields": {
+    "SiteName": "name",
+    "SiteAddress": "address",
+    "HubTypeRevised": "status",
+    "Sector": "area"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.45,
+    47.5,
+    -122.2,
+    47.75
+   ],
+   "features_in_probe": 126
+  }
+ },
+ {
+  "name": "wa-snohomish-ballot-drop-boxes",
+  "state": "WA",
+  "title": "Ballot drop boxes (Snohomish County)",
+  "title_es": "Buzones para boletas (condado de Snohomish)",
+  "description": "Snohomish County Auditor ballot drop box locations.",
+  "group": "civic",
+  "category": "point",
+  "source": "Snohomish County Auditor",
+  "license": "Snohomish County Auditor public ArcGIS service",
+  "view": {
+   "url": "https://services6.arcgis.com/z6WYi9VRHfgwgtyW/arcgis/rest/services/Snohomish_County_Ballot_Drop_Box/FeatureServer/0",
+   "fields": {
+    "Drop_Box_l": "name",
+    "Street": "address",
+    "City": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.3,
+    47.9,
+    -122.1,
+    48.05
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "wa-snohomish-zoning",
+  "state": "WA",
+  "title": "Zoning (unincorporated Snohomish County)",
+  "title_es": "Zonificación (zonas no incorporadas del condado de Snohomish)",
+  "description": "County zoning outside city limits in Snohomish County: what kind of use and housing density is allowed.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Snohomish County",
+  "license": "Snohomish County public ArcGIS service",
+  "view": {
+   "url": "https://services6.arcgis.com/z6WYi9VRHfgwgtyW/arcgis/rest/services/Zoning/FeatureServer/0",
+   "fields": {
+    "ABBREV": "zoning",
+    "LABEL": "kind",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.25,
+    47.85,
+    -122.1,
+    47.95
+   ],
+   "features_in_probe": 238
+  }
+ },
+ {
+  "name": "wa-snohomish-fire-districts",
+  "state": "WA",
+  "title": "Fire districts (Snohomish County)",
+  "title_es": "Distritos de bomberos (condado de Snohomish)",
+  "description": "Which fire protection district covers each area of Snohomish County.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Snohomish County",
+  "license": "Snohomish County public ArcGIS service",
+  "view": {
+   "url": "https://services6.arcgis.com/z6WYi9VRHfgwgtyW/arcgis/rest/services/Districts_Fire/FeatureServer/0",
+   "fields": {
+    "ENTITY_": "name",
+    "FIRE_DIS_N": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.3,
+    47.8,
+    -121.9,
+    48.1
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "wa-snohomish-parks",
+  "state": "WA",
+  "title": "County parks (Snohomish County)",
+  "title_es": "Parques del condado (Snohomish)",
+  "description": "Snohomish County parks, preserves and open space, by type and whether they are developed.",
+  "group": "nature",
+  "category": "park",
+  "source": "Snohomish County Parks",
+  "license": "Snohomish County Parks public ArcGIS service",
+  "view": {
+   "url": "https://services6.arcgis.com/z6WYi9VRHfgwgtyW/arcgis/rest/services/County_Park/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "CLASS_DESC": "kind",
+    "STATUS": "status",
+    "ACRES_DOC": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.3,
+    47.8,
+    -121.9,
+    48.2
+   ],
+   "features_in_probe": 143
+  }
+ },
+ {
+  "name": "wa-spokane-zoning",
+  "state": "WA",
+  "title": "Zoning (Spokane County)",
+  "title_es": "Zonificación (condado de Spokane)",
+  "description": "Spokane County zoning: what kind of use and housing density is allowed on each area.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Spokane County",
+  "license": "Spokane County public ArcGIS service",
+  "view": {
+   "url": "https://gismo.spokanecounty.org/arcgis/rest/services/OpenData/Planning/MapServer/0",
+   "fields": {
+    "ZONECLASS": "zoning",
+    "ZONEDESC": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -117.45,
+    47.68,
+    -117.35,
+    47.75
+   ],
+   "features_in_probe": 449
+  }
+ },
+ {
+  "name": "wa-spokane-fire-districts",
+  "state": "WA",
+  "title": "Fire districts (Spokane County)",
+  "title_es": "Distritos de bomberos (condado de Spokane)",
+  "description": "Which fire district or city fire department serves each area of Spokane County, including unserved areas.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Spokane County",
+  "license": "Spokane County public ArcGIS service",
+  "view": {
+   "url": "https://gismo.spokanecounty.org/arcgis/rest/services/OpenData/Boundary/MapServer/1",
+   "fields": {
+    "NAME": "name",
+    "SERVICE": "provider"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -117.7,
+    47.4,
+    -117.0,
+    47.9
+   ],
+   "features_in_probe": 24
+  }
+ },
+ {
+  "name": "wa-spokane-road-impacts",
+  "state": "WA",
+  "title": "Road work & closures (Spokane County)",
+  "title_es": "Obras y cierres de caminos (condado de Spokane)",
+  "description": "Current Spokane County road construction and restrictions: what is affected, which lanes, and the start and end dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Spokane County Public Works",
+  "license": "Spokane County Public Works public ArcGIS service",
+  "view": {
+   "url": "https://gismo.spokanecounty.org/arcgis/rest/services/PublicWorks/TravelImpacts/MapServer/2",
+   "fields": {
+    "ProjectName": "name",
+    "TravelImpactCategory": "kind",
+    "RoadName": "road",
+    "BeginDescr": "from",
+    "EndDescr": "to",
+    "TravelImpact": "status",
+    "TravelImpactDetail": "notes",
+    "LanesAffected": "lanes",
+    "TravelImpactStartDate": "start",
+    "TravelImpactEndDate": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -117.7,
+    47.4,
+    -117.0,
+    47.9
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "wa-clark-ballot-drop-boxes",
+  "state": "WA",
+  "title": "Ballot drop boxes (Clark County)",
+  "title_es": "Buzones para boletas (condado de Clark)",
+  "description": "Clark County Elections 24-hour ballot drop boxes, with where the box sits at each site.",
+  "group": "civic",
+  "category": "point",
+  "source": "Clark County",
+  "license": "Clark County public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/ylxwjFBdCPBzP16d/arcgis/rest/services/ElectionBallotDropbox/FeatureServer/0",
+   "fields": {
+    "Location": "name",
+    "Address": "address",
+    "PostalCity": "city",
+    "LocationDetails": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.7,
+    45.55,
+    -122.4,
+    45.75
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "wa-clark-zoning",
+  "state": "WA",
+  "title": "Zoning (Clark County & cities)",
+  "title_es": "Zonificación (condado de Clark y ciudades)",
+  "description": "Zoning across Clark County, including Vancouver and other cities: zone, density, and which jurisdiction sets it.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Clark County",
+  "license": "Clark County public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/ylxwjFBdCPBzP16d/arcgis/rest/services/Zoning/FeatureServer/0",
+   "fields": {
+    "ABBREV": "zoning",
+    "DESCRIPTION": "kind",
+    "ZclsDesc": "class",
+    "UnitsPerAc": "units_per_acre",
+    "Jurisdiction": "city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.6,
+    45.63,
+    -122.55,
+    45.67
+   ],
+   "features_in_probe": 464
+  }
+ },
+ {
+  "name": "wa-clark-fire-districts",
+  "state": "WA",
+  "title": "Fire districts (Clark County)",
+  "title_es": "Distritos de bomberos (condado de Clark)",
+  "description": "Which fire district or department serves each area of Clark County.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Clark County",
+  "license": "Clark County public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/ylxwjFBdCPBzP16d/arcgis/rest/services/FireDistricts/FeatureServer/0",
+   "fields": {
+    "FireDistrict": "name",
+    "FireAgency": "provider"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.7,
+    45.55,
+    -122.3,
+    45.9
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "wa-clark-parks",
+  "state": "WA",
+  "title": "Parks & amenities (Clark County)",
+  "title_es": "Parques y servicios (condado de Clark)",
+  "description": "Parks in Clark County and Vancouver with what each one has: restrooms, playgrounds, boat launch, fishing, off-leash area.",
+  "group": "nature",
+  "category": "park",
+  "source": "Clark County",
+  "license": "Clark County public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/ylxwjFBdCPBzP16d/arcgis/rest/services/ParkLand/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "PARKTYPE_D": "kind",
+    "JurisName": "city",
+    "Restroom": "restrooms",
+    "PlayEquipment": "playground",
+    "BoatLaunch": "boat_launch",
+    "Fishing": "fishing",
+    "OffLeashArea": "off_leash",
+    "Trails": "trails",
+    "Dev": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.7,
+    45.55,
+    -122.4,
+    45.75
+   ],
+   "features_in_probe": 274
+  }
+ },
+ {
+  "name": "wa-yakima-zoning",
+  "state": "WA",
+  "title": "Zoning (Yakima County)",
+  "title_es": "Zonificación (condado de Yakima)",
+  "description": "Yakima County zoning: what kind of use and housing density is allowed in each area.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Yakima County",
+  "license": "Yakima County public ArcGIS service",
+  "view": {
+   "url": "https://services3.arcgis.com/9Qz94N8Zml9hnG84/arcgis/rest/services/CountyZoning/FeatureServer/0",
+   "fields": {
+    "ZONE": "zoning",
+    "Descriptio": "kind",
+    "JURISDICT": "city",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -120.6,
+    46.5,
+    -120.4,
+    46.65
+   ],
+   "features_in_probe": 161
+  }
+ },
+ {
+  "name": "wa-lacey-zoning",
+  "state": "WA",
+  "title": "Zoning (Lacey)",
+  "title_es": "Zonificación (Lacey)",
+  "description": "City of Lacey zoning districts (2026 update).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Lacey",
+  "license": "City of Lacey public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/iupFdNb5KkJ6t83r/arcgis/rest/services/Lacey_Zoning_2026_Update/FeatureServer/1",
+   "fields": {
+    "Name": "zoning"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.85,
+    47.0,
+    -122.75,
+    47.08
+   ],
+   "features_in_probe": 1363
+  }
+ }
+]
