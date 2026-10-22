@@ -3,6 +3,7 @@ import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
+  specRows,
   floodRiskKey,
   freshImage,
   isMissing,
@@ -119,4 +120,20 @@ test("every shipped webcam URL passes the frontend allowlist (backend/frontend l
       if (p.page) expect(safeUrl(p.page, WEBCAM_PAGE_HOSTS), p.page).not.toBeNull();
     }
   }
+});
+
+test.describe("specRows (state layer popups)", () => {
+  const shown = new Set(["name", "address"]);
+  test("labels the remaining fields, Spanish where known, skips links, ids and blanks", () => {
+    const p = { name: "Library", address: "1 Main St", kind: "Library", hours: "9-5", page: "https://x.gov/a", OBJECTID: 3, notes: "N/A", customers_out: 1234 };
+    expect(specRows(p, shown, "en", "en-US")).toEqual([["Kind", "Library"], ["Hours", "9-5"], ["Customers out", "1,234"]]);
+    expect(specRows(p, shown, "es", "es-US").map(([k]) => k)).toEqual(["Tipo", "Horario", "Clientes sin luz"]);
+  });
+  test("epoch dates become dates, years stay bare, long text is cut, max respected", () => {
+    const rows = specRows({ updated: Date.UTC(2026, 5, 1), year_built: 1998, description: "x".repeat(300) }, shown, "en", "en-US");
+    expect(rows[0]).toEqual(["Updated", "Jun 1, 2026"]);
+    expect(rows[1]).toEqual(["Year built", "1998"]);
+    expect(rows[2]![1].length).toBe(198);
+    expect(specRows({ a: 1, b: 2, c: 3 }, shown, "en", "en-US", 2)).toHaveLength(2);
+  });
 });

@@ -216,3 +216,53 @@ export function freshImage(src: string, now = Date.now()): string {
   url.searchParams.set("t", String(Math.floor(now / 60000)));
   return url.href;
 }
+
+/** Spanish labels for the property names researched state layers use most. */
+const SPEC_PROP_ES: Record<string, string> = {
+  kind: "Tipo", status: "Estado", county: "Condado", acres: "Acres", updated: "Actualizado",
+  hours: "Horario", description: "Descripción", manager: "Administra", operator: "Operador",
+  parcel_id: "Parcela", miles: "Millas", year_built: "Año de construcción", capacity: "Capacidad",
+  surface: "Superficie", zip: "Código postal", accessible: "Accesible", area: "Área", water: "Agua",
+  fee: "Costo", access: "Acceso", score: "Puntaje", notes: "Notas", note: "Nota", start: "Inicio",
+  end: "Fin", year: "Año", ramp: "Rampa", zoning: "Zonificación", waterbody: "Cuerpo de agua",
+  region: "Región", parking: "Estacionamiento", agency: "Agencia", info: "Información", route: "Ruta",
+  direction: "Dirección", population: "Población", camping: "Campamento", park: "Parque",
+  species: "Especies", marker: "Marcador", erected: "Colocado", hunting: "Caza", ada: "ADA",
+  road: "Camino", amenities: "Servicios", hiking: "Senderismo", street: "Calle", district: "Distrito",
+  fishing: "Pesca", restrooms: "Baños", restroom: "Baños", units: "Unidades", location: "Ubicación",
+  customers_out: "Clientes sin luz", number: "Número", jurisdiction: "Jurisdicción", phone: "Teléfono",
+  address: "Dirección", city: "Ciudad",
+};
+const SPEC_DATE_PROPS = new Set(["updated", "start", "end", "listed", "erected"]);
+
+/** Extra popup rows for researched state layers (state_layers/*.json): every
+ *  allowlisted property the generic popup doesn't already show, labeled.
+ *  Links and ids are left out; long text is cut. */
+export function specRows(
+  p: Record<string, unknown>,
+  shown: ReadonlySet<string>,
+  lang: "en" | "es",
+  locale: string,
+  max = 8,
+): [string, string][] {
+  const out: [string, string][] = [];
+  for (const [k, v] of Object.entries(p)) {
+    if (out.length >= max) break;
+    if (shown.has(k) || k === "page" || k === "geoid" || /^(object)?id$/i.test(k)) continue;
+    if (isMissing(v) || typeof v === "object" || typeof v === "boolean") continue;
+    const label = lang === "es" && SPEC_PROP_ES[k] ? SPEC_PROP_ES[k]! : (k.charAt(0).toUpperCase() + k.slice(1)).replace(/_/g, " ");
+    let text: string;
+    if (typeof v === "number") {
+      // Esri dates arrive as epoch milliseconds.
+      text = SPEC_DATE_PROPS.has(k) && v > 1e11
+        ? new Date(v).toLocaleDateString(locale, { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" })
+        : /year/.test(k) ? String(v) : v.toLocaleString(locale);
+    } else {
+      text = String(v).trim().replace(/\s+/g, " ");
+      if (/^https?:\/\//i.test(text)) continue;
+      if (text.length > 200) text = `${text.slice(0, 197)}…`;
+    }
+    out.push([label, text]);
+  }
+  return out;
+}

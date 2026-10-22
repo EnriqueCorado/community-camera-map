@@ -18,6 +18,7 @@ import {
   LEGAL_SITE_HOSTS,
   ROAD_PAGE_HOSTS,
   safeUrl,
+  specRows,
   tidy,
   WEBCAM_IMAGE_HOSTS,
   WEBCAM_PAGE_HOSTS,
@@ -2881,11 +2882,20 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
           [t("rowType"), str(pick(["TYPE", "Type"]))],
           [t("rowPhone"), String(pick(["TELEPHONE", "Phone", "phone"]) ?? "")],
           [t("rowHeight"), height != null ? `${fmt(height)} ft` : ""],
+          // Researched state layers: the rest of their allowlisted fields.
+          ...(/^[A-Z]{2}$/.test(info.coverage ?? "") ? specRows(p, GENERIC_SHOWN, lang, locale) : []),
         ],
       };
     }
   }
 }
+
+/** Properties the generic popup already shows (title, address, city, type, phone). */
+const GENERIC_SHOWN: ReadonlySet<string> = new Set([
+  "name", "NAME", "stop_name", "GP_Descr", "GP", "Zone_Descr", "Zone_Label", "Name", "ARPT_NAME", "School", "SCHOOL",
+  "school", "descr", "ADDRESS", "Address", "address", "STREET", "street", "Situs_Address", "CITY", "City", "city",
+  "Situs_City", "TYPE", "Type", "TELEPHONE", "Phone", "phone", "height_ft",
+]);
 
 function zoomCluster(map: maplibregl.Map, source: string, e: LayerMouseEvent) {
   const feature = e.features?.[0];
