@@ -1,11 +1,12 @@
 // The one script on the public help pages (inlined at the end of <body> and
-// allowed by its hash in the page's Content-Security-Policy). Two optional
+// allowed by its hash in the page's Content-Security-Policy). Optional
 // helpers, each shown only when the browser supports it:
 //  - offline (home pages): nothing is stored until "Save all pages" is
 //    tapped; that registers this folder's service worker (help/sw.js or
 //    ayuda/sw.js), and "Remove saved pages" deletes everything again;
 //  - read aloud: reads the page with a voice the browser reports as on-device
 //    (localService). Voices that send text to a server are never used.
+//  - copy (partners page): Copy buttons for the ready-to-share text.
 // Words come from data-* attributes, so the script is the same in every language.
 /* eslint-disable */
 (function () {
@@ -88,6 +89,48 @@
           done();
           show(false);
         }
+      });
+    });
+  }
+
+  // ---------------------------------------------------------------- copy
+  // Partners page: "Copy" puts a ready-to-share paragraph on the clipboard.
+  // Without the Clipboard API the buttons stay hidden; the text can always be
+  // selected by hand, and a failed copy selects it for the reader.
+  var copyButtons = document.querySelectorAll("[data-copy]");
+  if (copyButtons.length && navigator.clipboard && window.isSecureContext) {
+    var statuses = document.querySelectorAll("[data-copy-status]");
+    var copyWord = function (btn, key) {
+      var box = btn.closest("[data-copied]");
+      return ((box && box.getAttribute("data-" + key)) || "").replace("{name}", btn.getAttribute("data-name") || "");
+    };
+    var tell = function (btn, text) {
+      Array.prototype.forEach.call(statuses, function (s) {
+        s.textContent = "";
+      });
+      var mine = btn.parentNode.querySelector("[data-copy-status]");
+      // Set after a beat, so copying the same text twice is announced twice.
+      setTimeout(function () {
+        mine.textContent = text;
+      }, 50);
+    };
+    Array.prototype.forEach.call(copyButtons, function (btn) {
+      btn.hidden = false;
+      btn.addEventListener("click", function () {
+        var text = document.getElementById(btn.getAttribute("data-copy"));
+        navigator.clipboard.writeText((text.textContent || "").trim()).then(
+          function () {
+            tell(btn, copyWord(btn, "copied"));
+          },
+          function () {
+            var range = document.createRange();
+            range.selectNodeContents(text);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            tell(btn, copyWord(btn, "failed"));
+          },
+        );
       });
     });
   }

@@ -108,7 +108,7 @@ export function LegalHelp({ c, onShowOnMap }: { c: HelpCopy; onShowOnMap: (layer
         </>
       )}
 
-      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(LEGAL_FACTS.checked, locale))} items={LEGAL_FACTS.sources} newTab={c.newTab} />
+      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(LEGAL_FACTS.checked, locale))} items={LEGAL_FACTS.sources} newTab={c.newTab} report={{ topic: c.tabLegal, checked: LEGAL_FACTS.checked }} />
     </>
   );
 }

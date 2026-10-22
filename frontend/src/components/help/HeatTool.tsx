@@ -279,7 +279,7 @@ export function HeatTool({ c }: { c: HelpCopy }) {
         </div>
       </div>
 
-      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(HEAT_FACTS.checked, locale))} items={HEAT_FACTS.sources} newTab={c.newTab} />
+      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(HEAT_FACTS.checked, locale))} items={HEAT_FACTS.sources} newTab={c.newTab} report={{ topic: c.workViewHeat, checked: HEAT_FACTS.checked }} />
     </>
   );
 }

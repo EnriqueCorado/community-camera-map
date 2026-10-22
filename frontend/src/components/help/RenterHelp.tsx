@@ -87,7 +87,14 @@ export function RenterHelp({
           {c.rentSeeLegal}
         </button>
       </Result>
-      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(RENT_FACTS.checked, locale))} items={RENT_SOURCES} newTab={c.newTab} />
+      <Sources
+        heading={c.sourcesHeading}
+        checked={c.checkedOn(longDate(RENT_FACTS.checked, locale))}
+        items={RENT_SOURCES}
+        newTab={c.newTab}
+        // One correction link per screen: the eviction tool shows its own.
+        report={view === "eviction" ? undefined : { topic: views.find(([v]) => v === view)?.[1] ?? c.tabRent, checked: RENT_FACTS.checked }}
+      />
     </>
   );
 }

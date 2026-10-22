@@ -49,9 +49,11 @@ function withCsp(html) {
 }
 
 // Each language folder gets its own service worker, so it never touches the
-// map app (outside its scope). Flyers live under help/ but aren't in "Save all".
+// map app (outside its scope). Flyers live under help/ but aren't in "Save all",
+// nor is the partners page (offline: false).
 const SW_FOLDERS = ["help/", "ayuda/"];
-const savedPages = (pages, folder) => pages.filter((p) => p.path.startsWith(folder) && !p.path.startsWith("help/flyers/"));
+const savedPages = (pages, folder) =>
+  pages.filter((p) => p.path.startsWith(folder) && !p.path.startsWith("help/flyers/") && p.offline !== false);
 
 const sha256 = (text) => createHash("sha256").update(text, "utf8").digest("hex");
 

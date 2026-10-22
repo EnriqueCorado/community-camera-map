@@ -106,7 +106,7 @@ export function EvictionTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void 
       <h4>{t.helpTitle}</h4>
       <PlaceList places={[EVICTION_FACTS.places.crla, EVICTION_FACTS.places.selfHelp, EVICTION_FACTS.places.sentinel]} c={c} />
 
-      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(EVICTION_FACTS.checked, locale))} items={EVICTION_SOURCES} newTab={c.newTab} />
+      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(EVICTION_FACTS.checked, locale))} items={EVICTION_SOURCES} newTab={c.newTab} report={{ topic: t.title, checked: EVICTION_FACTS.checked }} />
     </>
   );
 }

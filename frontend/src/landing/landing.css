@@ -322,6 +322,86 @@ main:focus {
   padding-left: 1.2em;
 }
 
+/* footer: corrections and partners links */
+.foot__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+}
+
+/* partners page */
+.never {
+  list-style: none;
+  padding: 0;
+}
+.never li {
+  margin: 0.45em 0;
+  padding-left: 1.5em;
+  text-indent: -1.5em;
+}
+.never li::before {
+  content: "✓ ";
+  display: inline-block;
+  width: 1.5em;
+  text-indent: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+.blurbs__group {
+  margin-top: 2rem;
+}
+.blurb {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem 0.5rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.blurb h3,
+.blurb h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+.blurb__item + .blurb__item {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--line);
+}
+.blurb__lang {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.blurb__text {
+  margin: 0.25rem 0 0.5rem;
+  overflow-wrap: anywhere;
+  /* One tap selects the whole paragraph, for copying by hand. */
+  user-select: all;
+  -webkit-user-select: all;
+}
+.blurb__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  margin: 0;
+}
+.blurb__bar .btn {
+  padding: 0.35em 1em;
+}
+.blurb__done {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.blurb__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin: 0.6rem 0 0.25rem;
+  font-weight: 600;
+}
+
 /* ---------------------------------------------------------------- flyers */
 .is-flyer {
   background: #e6eaee;

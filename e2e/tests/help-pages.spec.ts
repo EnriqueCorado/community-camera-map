@@ -21,6 +21,8 @@ const ALL = [
   ...TOOL_PAGES.es.map((s) => `ayuda/${s}/`),
   "help/flyers/",
   ...FLYERS.map((f) => `help/flyers/${f}/`),
+  "help/partners/",
+  "ayuda/socios/",
 ];
 
 async function expectNoA11yViolations(page: Page) {

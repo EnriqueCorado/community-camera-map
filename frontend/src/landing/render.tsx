@@ -7,11 +7,14 @@ import css from "./landing.css?raw";
 import { nearestModestoFirst, parseOffices } from "../help/legal-dir";
 import { TOOLS } from "./tools";
 import { FLYERS } from "./flyers";
-import { FlyerIndex, FlyerPage, FLYERS_PATH, flyerPath, HomePage, homePath, ToolPageView, toolPath, type Site } from "./Pages";
+import { FlyerIndex, FlyerPage, FLYERS_PATH, flyerPath, HomePage, homePath, PartnersPage, ToolPageView, toolPath, type Site } from "./Pages";
+import { partnersPath } from "./partners";
 
 export interface BuiltPage {
   path: string;
   html: string;
+  /** false: left out of "Save all pages" (it's for organizations, not for use offline). */
+  offline?: false;
 }
 
 export interface RenderOptions {
@@ -34,6 +37,9 @@ export function renderSite({ origin, base, publicBase, repo, legalHelp }: Render
     for (const tool of TOOLS) {
       pages.push(page(toolPath(lang, tool), <ToolPageView site={site} lang={lang} tool={tool} offices={offices} />));
     }
+  }
+  for (const lang of ["en", "es"] as const) {
+    pages.push({ ...page(partnersPath(lang), <PartnersPage site={site} lang={lang} />), offline: false });
   }
   pages.push(page(FLYERS_PATH, <FlyerIndex site={site} flyers={FLYERS} />));
   for (const f of FLYERS) pages.push(page(flyerPath(f), <FlyerPage site={site} f={f} />));

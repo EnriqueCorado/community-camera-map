@@ -254,7 +254,7 @@ export function BenefitsHelp({ c }: { c: HelpCopy }) {
         ))}
       </ul>
 
-      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(BENEFITS_CHECKED, locale))} items={BENEFITS_SOURCES} newTab={c.newTab} />
+      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(BENEFITS_CHECKED, locale))} items={BENEFITS_SOURCES} newTab={c.newTab} report={{ topic: c.benefitsViewScreener, checked: BENEFITS_CHECKED }} />
     </>
   );
 }
