@@ -96,6 +96,31 @@ export const FLYERS: readonly Flyer[] = [
     },
   },
   {
+    id: "citizenship",
+    to: { tool: "citizenship" },
+    layout: "page",
+    side: {
+      en: {
+        headline: "Free citizenship test practice",
+        bullets: [
+          "All 128 official civics questions and answers, in USCIS’s own words.",
+          "Practice tests that work like the real interview.",
+          "Spanish help to study, and listen to each question in English.",
+          "Free classes and help in Stanislaus County.",
+        ],
+      },
+      es: {
+        headline: "Práctica gratis para el examen de ciudadanía",
+        bullets: [
+          "Las 128 preguntas y respuestas oficiales de civismo, con las palabras de USCIS.",
+          "Exámenes de práctica que funcionan como la entrevista de verdad.",
+          "Ayuda en español para estudiar, y escuche cada pregunta en inglés.",
+          "Clases y ayuda gratis en el condado de Stanislaus.",
+        ],
+      },
+    },
+  },
+  {
     id: "renters",
     to: { group: "housing" },
     layout: "page",

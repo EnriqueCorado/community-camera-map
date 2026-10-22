@@ -377,7 +377,17 @@ export function ToolPageView({ site, lang, tool, offices }: { site: Site; lang: 
             <h2 id={`sec-${i}`}>{sec.title[lang]}</h2>
             <ul className="facts">
               {sec.items.map((item) => (
-                <li key={item.en}>{item[lang]}</li>
+                <li key={item.en}>
+                  {/* English the reader must hear in English (read aloud skips it on the Spanish page). */}
+                  {lang === "es" && item.esEn && (
+                    <>
+                      <span lang="en" data-nosay>
+                        {item.esEn}
+                      </span>{" "}
+                    </>
+                  )}
+                  {item[lang]}
+                </li>
               ))}
             </ul>
           </section>

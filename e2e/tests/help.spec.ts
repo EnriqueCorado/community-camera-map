@@ -248,7 +248,7 @@ test("keyboard only: reach the Help panel, every tab, and close it", async ({ pa
   const dialog = page.getByRole("dialog", { name: "Free help" });
   await expect(dialog).toBeVisible();
   await dialog.getByRole("tab", { name: "Medical bills" }).focus();
-  for (const name of ["Renters", "Work", "Benefits", "Legal help"]) {
+  for (const name of ["Renters", "Work", "Benefits", "Immigration", "Legal help"]) {
     await page.keyboard.press("ArrowRight");
     await expect(dialog.getByRole("tab", { name })).toHaveAttribute("aria-selected", "true");
   }

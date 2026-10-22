@@ -6,7 +6,7 @@ import "./help.css";
 import { useI18n } from "../../i18n";
 import { useDialog } from "../../hooks/useDialog";
 import { COPY } from "../../help/copy";
-import { isBenefitsView, isRentView, isWorkView, type HelpTab, type HelpTarget } from "../../help/target";
+import { isBenefitsView, isImmigrationView, isRentView, isWorkView, type HelpTab, type HelpTarget } from "../../help/target";
 import { Tabs } from "./Tabs";
 
 // Each tab is its own download, fetched the first time it's opened: most
@@ -15,6 +15,7 @@ const MedicalHelp = lazy(() => import("./MedicalHelp").then((m) => ({ default: m
 const RenterHelp = lazy(() => import("./RenterHelp").then((m) => ({ default: m.RenterHelp })));
 const WorkHelp = lazy(() => import("./WorkHelp").then((m) => ({ default: m.WorkHelp })));
 const BenefitsTab = lazy(() => import("./BenefitsTab").then((m) => ({ default: m.BenefitsTab })));
+const ImmigrationTab = lazy(() => import("./ImmigrationTab").then((m) => ({ default: m.ImmigrationTab })));
 const LegalHelp = lazy(() => import("./LegalHelp").then((m) => ({ default: m.LegalHelp })));
 
 interface Props {
@@ -37,6 +38,7 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
     { id: "rent", label: c.tabRent },
     { id: "work", label: c.tabWork },
     { id: "benefits", label: c.tabBenefits },
+    { id: "immigration", label: c.tabImmigration },
     { id: "legal", label: c.tabLegal },
   ];
   const go = (t: HelpTarget) => {
@@ -101,6 +103,14 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
                 c={c}
                 view={isBenefitsView(target.view) ? target.view : "screener"}
                 onView={(view) => onTarget({ tab: "benefits", view })}
+              />
+            )}
+            {target.tab === "immigration" && (
+              <ImmigrationTab
+                c={c}
+                view={isImmigrationView(target.view) ? target.view : "rights"}
+                onView={(view) => onTarget({ tab: "immigration", view })}
+                onLegal={() => go({ tab: "legal" })}
               />
             )}
             {target.tab === "legal" && <LegalHelp c={c} onShowOnMap={onShowOnMap} />}

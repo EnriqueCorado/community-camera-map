@@ -1,0 +1,40 @@
+/* Citizenship test practice */
+.hcivics__opts {
+  margin: 0.5rem 0 1rem;
+}
+.hcivics__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.hcivics__card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  background: var(--panel);
+}
+.hcivics__card summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.hcivics__q {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+.hcivics__n {
+  color: var(--muted);
+  font-weight: 600;
+}
+.hcivics__es {
+  color: var(--muted);
+}
+.hcivics__listen {
+  font-size: 1.1em;
+  text-decoration: none;
+}
+.hcivics__marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

@@ -15,6 +15,12 @@ import { BENEFITS_CHECKED, BENEFITS_SOURCES, PROGRAMS, PUBLIC_CHARGE } from "../
 import { WAGES_COPY } from "../help/wages-copy";
 import { MCW_CHECKED, MCW_CONTACTS, MCW_FACTS, MCW_SOURCES } from "../help/medi-cal-work-facts";
 import { MEDI_CAL_WORK_COPY } from "../help/medi-cal-work-copy";
+import { DETENTION_CENTERS, RAPID_RESPONSE, RIGHTS_CHECKED, RIGHTS_FACTS, RIGHTS_SOURCES } from "../help/rights-facts";
+import { RIGHTS_COPY } from "../help/rights-copy";
+import { CIVICS_CHECKED, CIVICS_FACTS, CIVICS_HELP, CIVICS_SOURCES } from "../help/civics-facts";
+import { CIVICS_COPY } from "../help/civics-copy";
+import { CIVICS_QUESTIONS } from "../help/civics-questions";
+import { CIVICS_PARTS } from "../help/civics";
 import { HEAT_COPY } from "../help/heat-copy";
 
 /** A place to call or visit (the shape every facts file's contacts share). */
@@ -39,14 +45,20 @@ export type ToolId =
   | "heat"
   | "benefits"
   | "medi-cal-work"
+  | "know-your-rights"
+  | "citizenship"
   | "legal";
+
+/** A line in a section. `esEn`: an English part shown first on the Spanish page
+ *  (marked lang="en"), e.g. the official civics question the officer asks. */
+export type SectionItem = Bilingual & { esEn?: string };
 
 export interface FactGroup {
   title: Bilingual;
   facts: readonly CitedFact[];
 }
 
-export type GroupId = "health" | "housing" | "work" | "legal";
+export type GroupId = "health" | "housing" | "work" | "immigration" | "legal";
 
 export interface ToolPage {
   id: ToolId;
@@ -62,7 +74,7 @@ export interface ToolPage {
   /** Cited facts, under the same headings the tool uses. */
   groups: readonly FactGroup[];
   /** Extra lists without a citation per line, shown after the facts. */
-  sections?: readonly { title: Bilingual; items: readonly Bilingual[] }[];
+  sections?: readonly { title: Bilingual; items: readonly SectionItem[] }[];
   places: readonly PlaceInfo[];
   sources: readonly SourceRef[];
   checked: string;
@@ -85,6 +97,7 @@ export const GROUPS: { id: GroupId; name: Bilingual; anchor: Bilingual }[] = [
   { id: "health", name: { en: "Health and benefits", es: "Salud y beneficios" }, anchor: { en: "health", es: "salud" } },
   { id: "housing", name: { en: "Renters", es: "Inquilinos" }, anchor: { en: "housing", es: "vivienda" } },
   { id: "work", name: { en: "Work", es: "Trabajo" }, anchor: { en: "work", es: "trabajo" } },
+  { id: "immigration", name: { en: "Immigration", es: "Inmigración" }, anchor: { en: "immigration", es: "inmigracion" } },
   { id: "legal", name: { en: "Legal help", es: "Ayuda legal" }, anchor: { en: "legal", es: "legal" } },
 ];
 
@@ -311,6 +324,77 @@ export const TOOLS: readonly ToolPage[] = [
     places: [HEAT_FACTS.calOshaLine, HEAT_FACTS.modestoOffice, HEAT_FACTS.laborCommissioner],
     sources: HEAT_FACTS.sources,
     checked: HEAT_FACTS.checked,
+  },
+  {
+    id: "know-your-rights",
+    group: "immigration",
+    slug: { en: "know-your-rights", es: "conozca-sus-derechos" },
+    target: { tab: "immigration", view: "rights" },
+    name: { en: RIGHTS_COPY.en.title, es: RIGHTS_COPY.es.title },
+    summary: {
+      en: "What to do if immigration agents come to your door or stop you, free red cards, a family plan, and how to look for someone who was detained.",
+      es: "Qué hacer si los agentes de inmigración llegan a su puerta o lo paran, tarjetas rojas gratis, un plan familiar, y cómo buscar a alguien detenido.",
+    },
+    intro: {
+      en: `${RIGHTS_COPY.en.lead} ${RIGHTS_COPY.en.emergencyTitle}: ${RAPID_RESPONSE.name.en}, ${RAPID_RESPONSE.phone} (${RIGHTS_COPY.en.emergencyText}) ${RIGHTS_COPY.en.call911} ${RIGHTS_COPY.en.emergencyDoor}`,
+      es: `${RIGHTS_COPY.es.lead} ${RIGHTS_COPY.es.emergencyTitle}: ${RAPID_RESPONSE.name.es}, ${RAPID_RESPONSE.phone} (${RIGHTS_COPY.es.emergencyText}) ${RIGHTS_COPY.es.call911} ${RIGHTS_COPY.es.emergencyDoor}`,
+    },
+    groups: [
+      group({ en: RIGHTS_COPY.en.door, es: RIGHTS_COPY.es.door }, RIGHTS_FACTS.door),
+      group({ en: RIGHTS_COPY.en.stopped, es: RIGHTS_COPY.es.stopped }, RIGHTS_FACTS.stopped),
+      group({ en: RIGHTS_COPY.en.recording, es: RIGHTS_COPY.es.recording }, RIGHTS_FACTS.recording),
+      group({ en: RIGHTS_COPY.en.plan, es: RIGHTS_COPY.es.plan }, RIGHTS_FACTS.plan),
+      group({ en: RIGHTS_COPY.en.detained, es: RIGHTS_COPY.es.detained }, RIGHTS_FACTS.detained),
+      group({ en: RIGHTS_COPY.en.california, es: RIGHTS_COPY.es.california }, RIGHTS_FACTS.california),
+      group({ en: RIGHTS_COPY.en.scams, es: RIGHTS_COPY.es.scams }, RIGHTS_FACTS.scams),
+    ],
+    // The emergency line only: detention centers aren't "help", so they get their own section.
+    places: [RAPID_RESPONSE],
+    sections: [
+      {
+        title: { en: RIGHTS_COPY.en.centersTitle, es: RIGHTS_COPY.es.centersTitle },
+        items: [
+          { en: RIGHTS_COPY.en.centersNote, es: RIGHTS_COPY.es.centersNote },
+          ...DETENTION_CENTERS.map((p) => p.note),
+        ],
+      },
+    ],
+    sources: RIGHTS_SOURCES,
+    checked: RIGHTS_CHECKED,
+  },
+  {
+    id: "citizenship",
+    group: "immigration",
+    slug: { en: "citizenship-test", es: "examen-de-ciudadania" },
+    target: { tab: "immigration", view: "citizenship" },
+    name: { en: CIVICS_COPY.en.title, es: CIVICS_COPY.es.title },
+    summary: {
+      en: "All 128 official civics questions and answers, practice tests that work like the real one, and free classes near you.",
+      es: "Las 128 preguntas y respuestas oficiales de civismo, exámenes de práctica como el de verdad, y clases gratis cerca de usted.",
+    },
+    intro: {
+      en: `${CIVICS_COPY.en.lead} All the questions are below, so you can study them here or save this page on your phone.`,
+      es: `${CIVICS_COPY.es.lead} Todas las preguntas están abajo, para estudiarlas aquí o guardar esta página en su teléfono.`,
+    },
+    groups: [group({ en: CIVICS_COPY.en.testTitle, es: CIVICS_COPY.es.testTitle }, CIVICS_FACTS.test), group({ en: CIVICS_COPY.en.feesTitle, es: CIVICS_COPY.es.feesTitle }, CIVICS_FACTS.fees)],
+    // The whole official list: answers in USCIS's English (the test's language),
+    // with the Spanish study translation in the Spanish page where there is one.
+    sections: CIVICS_PARTS.map((p) => ({
+      title: { en: CIVICS_COPY.en.parts[p], es: CIVICS_COPY.es.parts[p] },
+      items: CIVICS_QUESTIONS.filter((q) => q.part === p).map((q) => {
+        const official = `${q.n}. ${q.q} ${q.star ? "★ " : ""}Answer: ${q.a.join("; ")}`;
+        const note = q.note ? CIVICS_FACTS.notes[q.note] : null;
+        return {
+          en: `${official}${q.now ? ` (today: ${q.now.join(", ")})` : ""}${note ? ` ${note.en}` : ""}`,
+          // Spanish page: the official English first (marked as English), then the Spanish study help.
+          esEn: official,
+          es: `${q.es ? `${q.es.q} ${q.es.a.join("; ")}` : ""}${q.now ? ` (hoy: ${q.now.join(", ")})` : ""}${note ? ` ${note.es}` : ""}`,
+        };
+      }),
+    })),
+    places: CIVICS_HELP,
+    sources: CIVICS_SOURCES,
+    checked: CIVICS_CHECKED,
   },
   {
     id: "legal",

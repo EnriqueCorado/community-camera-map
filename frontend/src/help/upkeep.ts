@@ -10,6 +10,8 @@ import { LAB_226_7_RECHECK, MIN_WAGE, WAGE_FACTS } from "./wages-facts";
 import { HEAT_FACTS, LAB_226_7_RECHECK as HEAT_226_7_RECHECK } from "./heat-facts";
 import { BENEFITS_CHECKED, TABLES, TAX, type IncomeTable } from "./benefits-facts";
 import { MCW_CHECKED, MCW_IMMIGRANT_RECHECK, MCW_RECHECK } from "./medi-cal-work-facts";
+import { RIGHTS_CHECKED, RIGHTS_RECHECK } from "./rights-facts";
+import { CIVICS_CHECKED, CIVICS_OFFICIALS_RECHECK } from "./civics-facts";
 import { addDays } from "./dates";
 
 export interface UpkeepItem {
@@ -90,6 +92,18 @@ export function upkeepItems(): UpkeepItem[] {
       task: "Update the state-funded Medi-Cal premium amount (2027-28 May Revision) and the July 1, 2027 changes (dental, refugees' state coverage) in medi-cal-work-facts.ts, then move MCW_IMMIGRANT_RECHECK.",
       source: "https://www.dhcs.ca.gov/medi-cal/updates/medi-cal-changes/",
     },
+    {
+      id: "rights-monthly",
+      due: RIGHTS_RECHECK,
+      task: "Monthly re-check of the know-your-rights page (ICE warrant memo case, SB 627/SB 805/AB 450 rulings, ICE locator, hotline still live, detention centers); update rights-facts.ts and move RIGHTS_RECHECK a month ahead.",
+      source: "https://www.ilrc.org/community-resources/know-your-rights",
+    },
+    {
+      id: "civics-officials",
+      due: CIVICS_OFFICIALS_RECHECK,
+      task: "Update the citizenship test's current officials (new governor 2027-01-04; Speaker and the new congressional districts 2027-01-03) in make_civics.py, and USCIS's official Spanish name lists (#30, #38, #39, #57) in research/civics-es-study.json from uscis.gov/es; regenerate civics-questions.ts and move CIVICS_OFFICIALS_RECHECK.",
+      source: "https://www.uscis.gov/citizenship/testupdates",
+    },
     ...(Object.entries(TABLES) as [string, IncomeTable][]).map(([id, t]) => ({
       id: `benefits-${id}`,
       due: after(t.graceUntil ?? t.to, 1),
@@ -106,6 +120,8 @@ export function upkeepItems(): UpkeepItem[] {
         ["heat", HEAT_FACTS.checked],
         ["benefits", BENEFITS_CHECKED],
         ["medi-cal-work", MCW_CHECKED],
+        ["know-your-rights", RIGHTS_CHECKED],
+        ["citizenship", CIVICS_CHECKED],
       ] as const
     ).map(([id, checked]) => ({
       id: `yearly-${id}`,

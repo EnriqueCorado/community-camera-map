@@ -10,10 +10,10 @@ const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 const LIVE = "https://enriquecorado.github.io/stanislaus-cam-map/";
 
 const TOOL_PAGES = {
-  en: ["hospital-bills", "benefits", "medi-cal-work-rules", "rent-increase", "eviction-notice", "repairs", "security-deposit", "mobile-home-space-rent", "unpaid-wages", "heat-at-work", "legal-aid"],
-  es: ["cuentas-de-hospital", "beneficios", "reglas-de-trabajo-medi-cal", "aumento-de-renta", "aviso-de-desalojo", "reparaciones", "deposito", "renta-de-espacio-casa-movil", "salarios-no-pagados", "calor-en-el-trabajo", "ayuda-legal"],
+  en: ["hospital-bills", "benefits", "medi-cal-work-rules", "rent-increase", "eviction-notice", "repairs", "security-deposit", "mobile-home-space-rent", "unpaid-wages", "heat-at-work", "know-your-rights", "citizenship-test", "legal-aid"],
+  es: ["cuentas-de-hospital", "beneficios", "reglas-de-trabajo-medi-cal", "aumento-de-renta", "aviso-de-desalojo", "reparaciones", "deposito", "renta-de-espacio-casa-movil", "salarios-no-pagados", "calor-en-el-trabajo", "conozca-sus-derechos", "examen-de-ciudadania", "ayuda-legal"],
 };
-const FLYERS = ["general", "hospital-bills", "medi-cal", "renters", "workers", "cards"];
+const FLYERS = ["general", "hospital-bills", "medi-cal", "citizenship", "renters", "workers", "cards"];
 const ALL = [
   "help/",
   "ayuda/",
@@ -151,6 +151,7 @@ test("flyer QR codes decode to the live pages, and each flyer prints on one lett
     general: [`${LIVE}help/`, `${LIVE}ayuda/`],
     "hospital-bills": [`${LIVE}help/hospital-bills/`, `${LIVE}ayuda/cuentas-de-hospital/`],
     "medi-cal": [`${LIVE}help/medi-cal-work-rules/`, `${LIVE}ayuda/reglas-de-trabajo-medi-cal/`],
+    citizenship: [`${LIVE}help/citizenship-test/`, `${LIVE}ayuda/examen-de-ciudadania/`],
     renters: [`${LIVE}help/#housing`, `${LIVE}ayuda/#vivienda`],
     workers: [`${LIVE}help/#work`, `${LIVE}ayuda/#trabajo`],
   };
@@ -213,6 +214,14 @@ test("rules keep their headings, so conditional rules never read as always-on", 
   await page.goto("ayuda/aumento-de-renta/");
   const exempt = page.locator("section", { has: page.getByRole("heading", { name: "Viviendas que el límite no cubre" }) });
   await expect(exempt).toContainText("Dormitorios");
+});
+
+test("the Spanish citizenship page marks the official English as English, with today's notes", async ({ page }) => {
+  await page.goto("ayuda/examen-de-ciudadania/");
+  const item = page.locator("li", { hasText: "29. Name your U.S. representative." });
+  await expect(item.locator('span[lang="en"]')).toContainText("29. Name your U.S. representative. Answer:");
+  await expect(item).toContainText("house.gov"); // depends on your address
+  await expect(page.locator('li span[lang="en"]')).toHaveCount(128);
 });
 
 test("home page groups link every tool page, and the Print button prints", async ({ page }) => {
