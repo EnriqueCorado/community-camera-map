@@ -1,0 +1,3123 @@
+[
+ {
+  "name": "wv-precincts-polling-places",
+  "state": "WV",
+  "title": "Voting precincts & polling places (West Virginia)",
+  "title_es": "Precintos electorales y lugares de votación (Virginia Occidental)",
+  "description": "Your 2026 voting precinct and the polling place assigned to it (name and street address), from the statewide election boundary file.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "West Virginia Secretary of State / WV GIS Technical Center",
+  "view": {
+   "url": "https://services.wvgis.wvu.edu/arcgis/rest/services/Boundaries/WV_Election_Layers/MapServer/3",
+   "fields": {
+    "LONGNAME": "name",
+    "County_Name": "county",
+    "USER_POLL_NAME": "polling_place",
+    "USER_POLL_STREET_NO": "poll_number",
+    "USER_POLL_STREET": "poll_street",
+    "USER_POLL_CITY": "city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.5089,
+    37.8666,
+    -80.7511,
+    38.8334
+   ],
+   "features_in_probe": 530
+  }
+ },
+ {
+  "name": "wv-magisterial-districts",
+  "state": "WV",
+  "title": "Magisterial districts (West Virginia)",
+  "title_es": "Distritos magisteriales (Virginia Occidental)",
+  "description": "County magisterial districts (2026), which set county commission seats and some local election contests.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "West Virginia Secretary of State / WV GIS Technical Center",
+  "view": {
+   "url": "https://services.wvgis.wvu.edu/arcgis/rest/services/Boundaries/WV_Election_Layers/MapServer/9",
+   "fields": {
+    "LONGNAME": "name",
+    "County_Name": "county",
+    "DISTRICT": "number"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -85.1456,
+    36.4164,
+    -78.1144,
+    40.2836
+   ],
+   "features_in_probe": 182
+  }
+ },
+ {
+  "name": "wv-municipal-boundaries",
+  "state": "WV",
+  "title": "City & town limits (West Virginia)",
+  "title_es": "Límites de ciudades y pueblos (Virginia Occidental)",
+  "description": "Incorporated city and town limits, with whether each town takes part in the National Flood Insurance Program.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "WV GIS Technical Center (WV Flood Tool)",
+  "view": {
+   "url": "https://services.wvgis.wvu.edu/arcgis/rest/services/Boundaries/wv_political_boundary/MapServer/1",
+   "fields": {
+    "Name_Label": "name",
+    "County_Name": "county",
+    "NFIP_Status": "nfip",
+    "CRS_Class": "crs_class"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -83.3878,
+    37.3832,
+    -79.8722,
+    39.3168
+   ],
+   "features_in_probe": 140
+  }
+ },
+ {
+  "name": "wv-landslide-points",
+  "state": "WV",
+  "title": "Mapped landslides (West Virginia)",
+  "title_es": "Deslizamientos de tierra mapeados (Virginia Occidental)",
+  "description": "Old and recent landslides spotted in lidar elevation data and field checks; clusters show slopes that tend to slide.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "WV GIS Technical Center / WV Geological & Economic Survey",
+  "view": {
+   "url": "https://services.wvgis.wvu.edu/arcgis/rest/services/Hazards/Landslide_Historical_Data_Inventory/MapServer/8",
+   "fields": {
+    "TypeOfMovement": "kind",
+    "DateIdentified": "identified",
+    "Field_Verified": "field_verified",
+    "In_Floodplain": "in_floodplain"
+   },
+   "geometry": "point",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.7399,
+    38.2896,
+    -81.5201,
+    38.4104
+   ],
+   "features_in_probe": 609
+  }
+ },
+ {
+  "name": "wv-stocked-trout-streams",
+  "state": "WV",
+  "title": "Stocked trout streams (West Virginia)",
+  "title_es": "Arroyos con truchas sembradas (Virginia Occidental)",
+  "description": "Streams the DNR stocks with trout, with the stocked stretch, season and regulation type.",
+  "group": "nature",
+  "category": "park",
+  "source": "West Virginia Division of Natural Resources",
+  "view": {
+   "url": "https://services9.arcgis.com/SQbkdxLkuQJuLGtx/arcgis/rest/services/West_Virginia_Stocked_Trout_Streams/FeatureServer/33",
+   "fields": {
+    "Name": "name",
+    "RegType": "kind",
+    "LenSeason": "season",
+    "StockExtent": "description",
+    "NearCity": "city",
+    "County_1": "county",
+    "Hatchery": "hatchery",
+    "Mileage": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -83.8156,
+    36.6664,
+    -76.7844,
+    40.5336
+   ],
+   "features_in_probe": 160
+  }
+ },
+ {
+  "name": "wv-public-fishing-lakes",
+  "state": "WV",
+  "title": "Public fishing lakes (West Virginia)",
+  "title_es": "Lagos públicos de pesca (Virginia Occidental)",
+  "description": "Lakes open to public fishing, with size, boating rules, camping and which fish are stocked.",
+  "group": "nature",
+  "category": "park",
+  "source": "West Virginia Division of Natural Resources",
+  "view": {
+   "url": "https://services9.arcgis.com/SQbkdxLkuQJuLGtx/arcgis/rest/services/West_Virginia_Public_Fishing_Lakes/FeatureServer/29",
+   "fields": {
+    "LakeName": "name",
+    "County_1": "county",
+    "Reg_Acres": "acres",
+    "Owner": "operator",
+    "Boating": "boating",
+    "Camping": "camping",
+    "NightFishing": "night_fishing",
+    "ADA_Acc": "accessible",
+    "Trout": "trout",
+    "LrgmthBass": "largemouth_bass",
+    "ChanCatfish": "catfish"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -83.3878,
+    37.3832,
+    -79.8722,
+    39.3168
+   ],
+   "features_in_probe": 77
+  }
+ },
+ {
+  "name": "wv-shooting-ranges",
+  "state": "WV",
+  "title": "Public shooting ranges (West Virginia)",
+  "title_es": "Campos de tiro públicos (Virginia Occidental)",
+  "description": "DNR public shooting and archery ranges with distances, facilities and open hours.",
+  "group": "nature",
+  "category": "point",
+  "source": "West Virginia Division of Natural Resources",
+  "view": {
+   "url": "https://services9.arcgis.com/SQbkdxLkuQJuLGtx/arcgis/rest/services/Public_Shooting_Ranges_view/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "County": "county",
+    "Manager": "manager",
+    "Firearm": "firearm",
+    "Archery": "archery",
+    "Distance_Yards": "yards",
+    "Covered": "covered",
+    "Restroom": "restroom",
+    "ADA_Accessible": "accessible",
+    "Hours_MF": "hours",
+    "Hours_Sat": "hours_sat",
+    "Hours_Sun": "hours_sun"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -88.6612,
+    34.4828,
+    -74.5987,
+    42.2172
+   ],
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "wv-dnr-campsites",
+  "state": "WV",
+  "title": "WMA & state forest campsites (West Virginia)",
+  "title_es": "Campamentos en áreas silvestres y bosques estatales (Virginia Occidental)",
+  "description": "Campgrounds and primitive campsites on DNR wildlife management areas, state forests and parks.",
+  "group": "nature",
+  "category": "point",
+  "source": "West Virginia Division of Natural Resources",
+  "view": {
+   "url": "https://services9.arcgis.com/SQbkdxLkuQJuLGtx/arcgis/rest/services/West_Virginia_Camping_Areas/FeatureServer/40",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Subtype": "subtype"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.9578,
+    37.3332,
+    -78.4422,
+    39.2668
+   ],
+   "features_in_probe": 153
+  }
+ },
+ {
+  "name": "wv-abandoned-mine-hazards",
+  "state": "WV",
+  "title": "Abandoned mine land hazards (West Virginia)",
+  "title_es": "Peligros de minas abandonadas (Virginia Occidental)",
+  "description": "Inventoried hazards left by pre-1977 coal mining: subsidence, open portals, highwalls, dangerous piles and impoundments.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "WV Department of Environmental Protection, Office of Abandoned Mine Lands",
+  "view": {
+   "url": "https://tagis.dep.wv.gov/arcgis/rest/services/WVDEP_enterprise/abandoned_mine_lands/MapServer/3",
+   "fields": {
+    "padname": "name",
+    "probkey": "kind",
+    "status": "status",
+    "padnumber": "site_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.8497,
+    38.2292,
+    -81.4103,
+    38.4708
+   ],
+   "features_in_probe": 77
+  }
+ },
+ {
+  "name": "wv-dam-inundation-areas",
+  "state": "WV",
+  "title": "Dam failure flood areas (West Virginia)",
+  "title_es": "Áreas de inundación por falla de presa (Virginia Occidental)",
+  "description": "Land that would flood if a regulated dam failed, from DEP Dam Safety emergency action plans.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "WV Department of Environmental Protection, Dam Safety",
+  "view": {
+   "url": "https://tagis.dep.wv.gov/arcgis/rest/services/WVDEP_enterprise/dam_safety/MapServer/2",
+   "fields": {
+    "nid": "dam_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.5089,
+    37.8666,
+    -80.7511,
+    38.8334
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "wv-active-gas-wells",
+  "state": "WV",
+  "title": "Active oil & gas wells (West Virginia)",
+  "title_es": "Pozos activos de petróleo y gas (Virginia Occidental)",
+  "description": "Permitted oil and gas wells DEP lists as active, with well type, use and the responsible operator.",
+  "group": "infra",
+  "category": "point",
+  "source": "WV Department of Environmental Protection, Office of Oil and Gas",
+  "view": {
+   "url": "https://tagis.dep.wv.gov/arcgis/rest/services/WVDEP_enterprise/oil_gas/MapServer/1",
+   "fields": {
+    "api": "api",
+    "welltype": "kind",
+    "welluse": "use",
+    "wellstatus": "status",
+    "respparty": "operator",
+    "issuedate": "permit_date"
+   },
+   "geometry": "point",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.5099,
+    39.2396,
+    -80.2901,
+    39.3604
+   ],
+   "features_in_probe": 1247
+  }
+ },
+ {
+  "name": "wv-voluntary-remediation-sites",
+  "state": "WV",
+  "title": "Voluntary cleanup sites (West Virginia)",
+  "title_es": "Sitios de limpieza voluntaria (Virginia Occidental)",
+  "description": "Contaminated properties in DEP's Voluntary Remediation Program, with the contaminant and project status.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "WV Department of Environmental Protection, Office of Environmental Remediation",
+  "view": {
+   "url": "https://tagis.dep.wv.gov/arcgis/rest/services/WVDEP_enterprise/environmental_remediation/MapServer/2",
+   "fields": {
+    "proj_name": "name",
+    "contamination": "contamination",
+    "proj_status": "status",
+    "size_acres": "acres",
+    "issue_date": "start"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -83.3878,
+    37.3832,
+    -79.8722,
+    39.3168
+   ],
+   "features_in_probe": 218
+  }
+ },
+ {
+  "name": "de-municipalities",
+  "state": "DE",
+  "title": "City & town limits (Delaware)",
+  "title_es": "Límites de ciudades y pueblos (Delaware)",
+  "description": "Incorporated municipalities with a link to each town's website.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Delaware FirstMap (Office of State Planning Coordination)",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Boundaries/DE_Boundaries/FeatureServer/3",
+   "fields": {
+    "NAME": "name",
+    "WEBSITE": "page",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -79.0356,
+    37.2264,
+    -72.0044,
+    41.0936
+   ],
+   "features_in_probe": 57
+  }
+ },
+ {
+  "name": "de-election-districts",
+  "state": "DE",
+  "title": "Election districts (Delaware)",
+  "title_es": "Distritos electorales (Delaware)",
+  "description": "Representative-district / election-district areas (RD-ED) that decide where you vote.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Delaware Department of Elections via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Boundaries/DE_Political_Boundaries/FeatureServer/0",
+   "fields": {
+    "RDED": "name",
+    "DISTRICT": "district",
+    "POPULATION": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -76.4289,
+    39.2566,
+    -74.6711,
+    40.2234
+   ],
+   "features_in_probe": 330
+  }
+ },
+ {
+  "name": "de-kindergarten-feeder",
+  "state": "DE",
+  "title": "Kindergarten school assignment 2026-27 (Delaware)",
+  "title_es": "Escuela asignada para kínder 2026-27 (Delaware)",
+  "description": "Which public school serves kindergarten at each address for the 2026-27 school year (feeder pattern).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Delaware Department of Education via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Society/DE_Schools/FeatureServer/17",
+   "fields": {
+    "SCHOOL": "name",
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -76.4289,
+    39.2566,
+    -74.6711,
+    40.2234
+   ],
+   "features_in_probe": 68
+  }
+ },
+ {
+  "name": "de-high-school-feeder",
+  "state": "DE",
+  "title": "9th-grade school assignment 2026-27 (Delaware)",
+  "title_es": "Escuela asignada para 9.º grado 2026-27 (Delaware)",
+  "description": "Which public high school serves 9th grade at each address for the 2026-27 school year (feeder pattern).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Delaware Department of Education via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Society/DE_Schools/FeatureServer/26",
+   "fields": {
+    "SCHOOL": "name",
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -76.4289,
+    39.2566,
+    -74.6711,
+    40.2234
+   ],
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "de-fire-districts",
+  "state": "DE",
+  "title": "Fire company districts (Delaware)",
+  "title_es": "Distritos de bomberos (Delaware)",
+  "description": "The volunteer fire company that covers each area, with its station number, address and phone.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Delaware State Fire Prevention Commission via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Society/DE_Fire_Districts/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "STATION": "station",
+    "ADDRESS": "address",
+    "TELE": "phone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -77.2778,
+    38.1932,
+    -73.7622,
+    40.1268
+   ],
+   "features_in_probe": 63
+  }
+ },
+ {
+  "name": "de-wildlife-area-safety-zones",
+  "state": "DE",
+  "title": "Wildlife area refuges & safety zones (Delaware)",
+  "title_es": "Refugios y zonas de seguridad en áreas silvestres (Delaware)",
+  "description": "Parts of state wildlife areas closed to hunting (refuges and safety zones).",
+  "group": "nature",
+  "category": "park",
+  "source": "Delaware DNREC Division of Fish & Wildlife via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Society/DE_Wildlife/FeatureServer/5",
+   "fields": {
+    "ZONEFUNCTI": "kind",
+    "AREA_NAME": "name",
+    "TRACT_NAME": "tract"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -75.9595,
+    38.9183,
+    -75.0805,
+    39.4017
+   ],
+   "features_in_probe": 37
+  }
+ },
+ {
+  "name": "de-water-utility-areas",
+  "state": "DE",
+  "title": "Water utility service areas (Delaware)",
+  "title_es": "Áreas de servicio de agua potable (Delaware)",
+  "description": "Which regulated water company holds the right to serve each area (Certificates of Public Convenience and Necessity).",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Delaware Public Service Commission via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Boundaries/DE_CPCN/FeatureServer/0",
+   "fields": {
+    "SERVICE_A": "name",
+    "COMPANY1": "operator",
+    "CPCN_": "certificate",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -75.9895,
+    39.4983,
+    -75.1105,
+    39.9817
+   ],
+   "features_in_probe": 147
+  }
+ },
+ {
+  "name": "de-wastewater-utility-areas",
+  "state": "DE",
+  "title": "Wastewater utility service areas (Delaware)",
+  "title_es": "Áreas de servicio de aguas residuales (Delaware)",
+  "description": "Which regulated sewer company holds the right to serve each area (wastewater CPCNs).",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Delaware Public Service Commission via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Boundaries/DE_CPCN/FeatureServer/1",
+   "fields": {
+    "SERVICEARE": "name",
+    "WWUTILITY": "operator",
+    "CPCN": "certificate"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -75.6395,
+    38.4083,
+    -74.7605,
+    38.8917
+   ],
+   "features_in_probe": 263
+  }
+ },
+ {
+  "name": "de-development-applications",
+  "state": "DE",
+  "title": "Approved development applications (Delaware)",
+  "title_es": "Solicitudes de desarrollo aprobadas (Delaware)",
+  "description": "Residential and commercial projects approved by local governments since 2020, with homes or square feet planned.",
+  "group": "growth",
+  "category": "point",
+  "source": "Delaware Office of State Planning Coordination via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/PlanningCadastre/DE_Planning_Development/FeatureServer/2",
+   "fields": {
+    "NOTES": "name",
+    "RECTYPE": "kind",
+    "JURISDICTION": "jurisdiction",
+    "R_UNITS": "units",
+    "NR_SF": "sqft",
+    "P_YEAR": "year",
+    "PARCEL_ID": "parcel_id"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "P_YEAR >= '2020'",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -75.9895,
+    39.4983,
+    -75.1105,
+    39.9817
+   ],
+   "features_in_probe": 355
+  }
+ },
+ {
+  "name": "de-ncc-development-activity",
+  "state": "DE",
+  "title": "Development applications (New Castle County)",
+  "title_es": "Solicitudes de desarrollo (condado de New Castle)",
+  "description": "Active and recent land-development plans filed with New Castle County, with what is proposed and the plan's status.",
+  "group": "growth",
+  "category": "info",
+  "source": "New Castle County Department of Land Use",
+  "view": {
+   "url": "https://gis.nccde.org/entserver/rest/services/Foundation/LandUse_Theme/MapServer/3",
+   "fields": {
+    "projname": "name",
+    "aptype": "kind",
+    "worktype": "work",
+    "descript": "status",
+    "apno": "case",
+    "comments": "description",
+    "apdttm": "filed"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -75.6599,
+    39.6796,
+    -75.4401,
+    39.8004
+   ],
+   "features_in_probe": 862
+  }
+ },
+ {
+  "name": "de-ncc-zoning",
+  "state": "DE",
+  "title": "Zoning (New Castle County)",
+  "title_es": "Zonificación (condado de New Castle)",
+  "description": "Unincorporated New Castle County zoning districts and character areas, with a link to the code section.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "New Castle County Department of Land Use",
+  "view": {
+   "url": "https://gis.nccde.org/entserver/rest/services/Foundation/LandUse_Theme/MapServer/11",
+   "fields": {
+    "CODE": "zoning",
+    "DESCRIPTION": "name",
+    "GENERIC_DESCRIPTION": "kind",
+    "CharacterArea": "area",
+    "ACRES": "acres",
+    "URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -75.6599,
+    39.6796,
+    -75.4401,
+    39.8004
+   ],
+   "features_in_probe": 540
+  }
+ },
+ {
+  "name": "de-ncc-future-land-use",
+  "state": "DE",
+  "title": "Future land use (New Castle County)",
+  "title_es": "Uso de suelo futuro (condado de New Castle)",
+  "description": "The comprehensive plan's intended future use and density for each area of New Castle County.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "New Castle County Department of Land Use",
+  "view": {
+   "url": "https://gis.nccde.org/entserver/rest/services/Foundation/LandUse_Theme/MapServer/6",
+   "fields": {
+    "GROWTH_ARE": "kind",
+    "DENSITY": "density",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -75.7697,
+    39.6192,
+    -75.3303,
+    39.8608
+   ],
+   "features_in_probe": 1156
+  }
+ },
+ {
+  "name": "de-kent-zoning",
+  "state": "DE",
+  "title": "Zoning (Kent County)",
+  "title_es": "Zonificación (condado de Kent)",
+  "description": "Kent County zoning districts for unincorporated areas, linked to the zoning code.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Kent County Levy Court, Planning Services",
+  "view": {
+   "url": "https://gis.kentcountyde.gov/server/rest/services/LandUse/PlanningData/FeatureServer/0",
+   "fields": {
+    "ZONEUSE": "zoning",
+    "Acres": "acres",
+    "ZoningCodeSection": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -75.7397,
+    39.0392,
+    -75.3003,
+    39.2808
+   ],
+   "features_in_probe": 78
+  }
+ },
+ {
+  "name": "de-state-strategies",
+  "state": "DE",
+  "title": "State investment strategy levels (Delaware)",
+  "title_es": "Niveles de estrategia de inversión estatal (Delaware)",
+  "description": "2025 Strategies for State Policies and Spending: level 1-2 areas are where the state backs growth, level 4 is rural/protected.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Delaware Office of State Planning Coordination via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/PlanningCadastre/DE_State_Strategies/FeatureServer/0",
+   "fields": {
+    "STRAT_LEVEL": "level",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -75.6299,
+    39.0996,
+    -75.4101,
+    39.2204
+   ],
+   "features_in_probe": 480
+  }
+ },
+ {
+  "name": "de-land-use-2022",
+  "state": "DE",
+  "title": "Land use & land cover 2022 (Delaware)",
+  "title_es": "Uso y cobertura del suelo 2022 (Delaware)",
+  "description": "What each piece of land was used for in 2022 (homes, farms, forest, commercial, wetlands), mapped from aerial photos.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Delaware Office of State Planning Coordination via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/PlanningCadastre/DE_LULC/FeatureServer/4",
+   "fields": {
+    "LULC_CATEGORY2022": "kind",
+    "LULC_CODE2022": "code",
+    "COUNTY": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -75.5749,
+    39.1298,
+    -75.4651,
+    39.1902
+   ],
+   "features_in_probe": 890
+  }
+ },
+ {
+  "name": "de-cleanup-sites",
+  "state": "DE",
+  "title": "Contaminated site cleanups (Delaware)",
+  "title_es": "Limpieza de sitios contaminados (Delaware)",
+  "description": "Brownfields, voluntary cleanups and other sites in DNREC's Remediation Section, open or closed.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Delaware DNREC Remediation Section via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Environmental/DE_DNREC_Facilities/FeatureServer/4",
+   "fields": {
+    "Site_Name": "name",
+    "Site_Category": "kind",
+    "Open_Closed": "status",
+    "Site_ID": "site_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -75.9895,
+    39.4983,
+    -75.1105,
+    39.9817
+   ],
+   "features_in_probe": 866
+  }
+ },
+ {
+  "name": "de-frequently-flooded-roads",
+  "state": "DE",
+  "title": "Frequently flooded roads (Delaware)",
+  "title_es": "Carreteras que se inundan con frecuencia (Delaware)",
+  "description": "Road stretches DelDOT records as flooding often, with a priority score for fixes.",
+  "group": "hazards",
+  "category": "roadops",
+  "source": "Delaware Department of Transportation via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Transportation/DE_Roadways_Other/FeatureServer/2",
+   "fields": {
+    "ROAD_NAME": "name",
+    "RD_TYPE": "kind",
+    "ROAD": "route",
+    "TOTALSCORE": "score",
+    "PRIORITYPERCENTAGECLASS": "priority"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -76.3989,
+    38.6766,
+    -74.6411,
+    39.6434
+   ],
+   "features_in_probe": 385
+  }
+ },
+ {
+  "name": "de-paving-current",
+  "state": "DE",
+  "title": "Paving projects this year (Delaware)",
+  "title_es": "Proyectos de pavimentación de este año (Delaware)",
+  "description": "Roads on DelDOT's current paving and chip-seal program, from where to where.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Delaware Department of Transportation via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Transportation/DE_Assets/FeatureServer/18",
+   "fields": {
+    "ROAD_NAME": "name",
+    "TYPE": "kind",
+    "BEGIN_DESCRIPTION": "start",
+    "END_DESCRIPTION": "end",
+    "LENGTH": "miles",
+    "YEAR": "year"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -77.2778,
+    38.1932,
+    -73.7622,
+    40.1268
+   ],
+   "features_in_probe": 136
+  }
+ },
+ {
+  "name": "de-evacuation-zones",
+  "state": "DE",
+  "title": "Coastal evacuation zones (Delaware)",
+  "title_es": "Zonas de evacuación costera (Delaware)",
+  "description": "Hurricane and coastal-storm evacuation zones by county; Zone A leaves first.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Delaware Emergency Management Agency (DEMA)",
+  "view": {
+   "url": "https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/Map/FeatureServer/0",
+   "fields": {
+    "Zone": "kind",
+    "County_Zon": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -76.9578,
+    37.7332,
+    -73.4422,
+    39.6668
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "de-tax-ditches",
+  "state": "DE",
+  "title": "Tax ditch drainage areas (Delaware)",
+  "title_es": "Áreas de zanjas de drenaje (Delaware)",
+  "description": "Areas served by tax ditches, the landowner-run drainage districts; their channels have legal right-of-way.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Delaware DNREC Drainage Program via FirstMap",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Hydrology/DE_TaxDitch/FeatureServer/2",
+   "fields": {
+    "NAMLITL": "name",
+    "NAMBIG": "watershed",
+    "DITCH": "ditch_id",
+    "COUNTY1": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -75.8895,
+    38.5083,
+    -75.0105,
+    38.9917
+   ],
+   "features_in_probe": 155
+  }
+ },
+ {
+  "name": "sc-voter-precincts",
+  "state": "SC",
+  "title": "Voting precincts (South Carolina)",
+  "title_es": "Precintos electorales (Carolina del Sur)",
+  "description": "Your voting precinct, with a link to the county voter registration and elections office.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "SC Revenue and Fiscal Affairs Office",
+  "view": {
+   "url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/Voter_Precincts/FeatureServer/0",
+   "fields": {
+    "PName": "name",
+    "PCode": "code",
+    "Local_Voter_Reg": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.9089,
+    33.5166,
+    -80.1511,
+    34.4834
+   ],
+   "features_in_probe": 551
+  }
+ },
+ {
+  "name": "sc-municipalities",
+  "state": "SC",
+  "title": "City & town limits (South Carolina)",
+  "title_es": "Límites de ciudades y pueblos (Carolina del Sur)",
+  "description": "Incorporated city and town limits kept current by the state's Revenue and Fiscal Affairs Office.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "SC Revenue and Fiscal Affairs Office",
+  "view": {
+   "url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/Municipalities/FeatureServer/0",
+   "fields": {
+    "CNAME": "name",
+    "COUNTY_NAM": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.5456,
+    32.0664,
+    -77.5144,
+    35.9336
+   ],
+   "features_in_probe": 272
+  }
+ },
+ {
+  "name": "sc-magistrate-districts",
+  "state": "SC",
+  "title": "Magistrate court districts (South Carolina)",
+  "title_es": "Distritos de juzgados de magistrado (Carolina del Sur)",
+  "description": "Summary (magistrate) court districts that handle small claims, evictions and minor offenses.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "SC Revenue and Fiscal Affairs Office",
+  "view": {
+   "url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/Magistrate_Districts/FeatureServer/0",
+   "fields": {
+    "Magistrate": "name",
+    "County": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.5456,
+    32.0664,
+    -77.5144,
+    35.9336
+   ],
+   "features_in_probe": 150
+  }
+ },
+ {
+  "name": "sc-charleston-zoning",
+  "state": "SC",
+  "title": "Zoning (City of Charleston)",
+  "title_es": "Zonificación (ciudad de Charleston)",
+  "description": "City of Charleston base zoning districts, updated daily, with ordinance and PUD names.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Charleston GIS",
+  "view": {
+   "url": "https://services2.arcgis.com/tQaXW7Zb1Vphzvgd/arcgis/rest/services/Base_Zoning/FeatureServer/0",
+   "fields": {
+    "ZONE_BASE": "zoning",
+    "ORDNO": "ordinance",
+    "PUD_NAME": "pud"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -79.9675,
+    32.7649,
+    -79.9125,
+    32.7951
+   ],
+   "features_in_probe": 778
+  }
+ },
+ {
+  "name": "sc-charleston-historic-districts",
+  "state": "SC",
+  "title": "Historic districts (City of Charleston)",
+  "title_es": "Distritos históricos (ciudad de Charleston)",
+  "description": "Old and Historic District and related districts where exterior changes need Board of Architectural Review approval.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Charleston GIS",
+  "view": {
+   "url": "https://services2.arcgis.com/tQaXW7Zb1Vphzvgd/arcgis/rest/services/Old_and_Historic_District/FeatureServer/0",
+   "fields": {
+    "District": "name",
+    "ORDNO": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.3795,
+    32.5383,
+    -79.5005,
+    33.0217
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "sc-impaired-waters",
+  "state": "SC",
+  "title": "Impaired waters 2024 (South Carolina)",
+  "title_es": "Aguas contaminadas 2024 (Carolina del Sur)",
+  "description": "Monitoring stations on the 2024 303(d) list: streams, lakes and beaches that fail water-quality standards, and why.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "SC Department of Environmental Services (formerly DHEC)",
+  "view": {
+   "url": "https://services5.arcgis.com/58qCc1fmGmckNO5d/arcgis/rest/services/Impaired_Waters___303(d)_2024/FeatureServer/0",
+   "fields": {
+    "DESCRIPT": "name",
+    "IMPAIRMENT": "kind",
+    "USE_": "use",
+    "STATUS": "status",
+    "STATION": "station",
+    "MULTI_TYPE": "site_type",
+    "BASIN": "basin",
+    "COUNTY": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "STATUS = 'IMPAIRED'",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.7878,
+    33.0332,
+    -79.2722,
+    34.9668
+   ],
+   "features_in_probe": 707
+  }
+ },
+ {
+  "name": "sc-nuclear-evacuation-zones",
+  "state": "SC",
+  "title": "Nuclear plant evacuation zones (South Carolina)",
+  "title_es": "Zonas de evacuación de plantas nucleares (Carolina del Sur)",
+  "description": "Emergency planning zones around nuclear plants serving SC, with the reception center evacuees go to.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "SC Emergency Management Division (Radiological Emergency Preparedness)",
+  "view": {
+   "url": "https://services1.arcgis.com/TXIoeSnCA2m7KVZj/arcgis/rest/services/SC_REP_EVAC_ZONE/FeatureServer/0",
+   "fields": {
+    "Evac_Zone": "name",
+    "REP": "plant",
+    "RecCenter": "reception_center",
+    "Zone_Pop": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.8156,
+    32.3664,
+    -77.7844,
+    36.2336
+   ],
+   "features_in_probe": 78
+  }
+ },
+ {
+  "name": "sc-electric-cooperatives",
+  "state": "SC",
+  "title": "Electric cooperative service areas (South Carolina)",
+  "title_es": "Áreas de servicio de cooperativas eléctricas (Carolina del Sur)",
+  "description": "Which electric cooperative serves each area, so you know who to call in an outage.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "SC Emergency Management Division",
+  "view": {
+   "url": "https://services1.arcgis.com/TXIoeSnCA2m7KVZj/arcgis/rest/services/SC_utilityserviceareas/FeatureServer/0",
+   "fields": {
+    "Name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -95.0925,
+    26.2656,
+    -66.9675,
+    41.7344
+   ],
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "sc-electric-utilities",
+  "state": "SC",
+  "title": "Major electric utility service areas (South Carolina)",
+  "title_es": "Áreas de servicio de las principales eléctricas (Carolina del Sur)",
+  "description": "Service territories of the big investor-owned and state power companies (Duke, Dominion, Santee Cooper).",
+  "group": "infra",
+  "category": "boundary",
+  "source": "SC Emergency Management Division",
+  "view": {
+   "url": "https://services1.arcgis.com/TXIoeSnCA2m7KVZj/arcgis/rest/services/SC_utilityserviceareas/FeatureServer/1",
+   "fields": {
+    "Provider": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -95.0925,
+    26.2656,
+    -66.9675,
+    41.7344
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "sc-lake-murray-dam-inundation",
+  "state": "SC",
+  "title": "Lake Murray dam failure flood area (South Carolina)",
+  "title_es": "Área de inundación por falla de la presa del lago Murray (Carolina del Sur)",
+  "description": "Area that would flood downstream (including Columbia) if the Lake Murray (Saluda) dam failed.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "SC Emergency Management Division",
+  "view": {
+   "url": "https://services1.arcgis.com/TXIoeSnCA2m7KVZj/arcgis/rest/services/LakeMurrayDam_Inundation/FeatureServer/0",
+   "fields": {
+    "Dam_Name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.5456,
+    32.0664,
+    -77.5144,
+    35.9336
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "sc-horry-beach-access",
+  "state": "SC",
+  "title": "Public beach access (Horry County)",
+  "title_es": "Accesos públicos a la playa (condado de Horry)",
+  "description": "County beach accesses with parking, accessible parking, showers, bike racks and mobility mats.",
+  "group": "nature",
+  "category": "point",
+  "source": "Horry County Government",
+  "view": {
+   "url": "https://services1.arcgis.com/If0JkGr8ABreBTuS/arcgis/rest/services/Beach_Access/FeatureServer/0",
+   "fields": {
+    "BeachAccessName": "name",
+    "BeachAccessNumber": "number",
+    "ParkingSpaces": "parking",
+    "HCParkingSpaces": "accessible_parking",
+    "ShowerTower": "shower",
+    "BikeRack": "bike_rack",
+    "ADA_Mat": "ada_mat",
+    "RipCurrentSign": "rip_current_sign"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -79.2095,
+    33.5483,
+    -78.3305,
+    34.0317
+   ],
+   "features_in_probe": 24
+  }
+ },
+ {
+  "name": "sc-horry-road-projects",
+  "state": "SC",
+  "title": "RIDE road projects (Horry County)",
+  "title_es": "Proyectos viales RIDE (condado de Horry)",
+  "description": "County road-widening, paving and bridge projects from the RIDE sales-tax programs, with status and budget.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Horry County Government",
+  "view": {
+   "url": "https://services1.arcgis.com/If0JkGr8ABreBTuS/arcgis/rest/services/Road_Projects_View/FeatureServer/0",
+   "fields": {
+    "ProjectName": "name",
+    "Status": "status",
+    "Type": "kind",
+    "ProgramSource": "program",
+    "Budget": "cost",
+    "EstimatedStart": "start",
+    "EstimatedComp": "end",
+    "ProjectPage": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.6478,
+    32.7332,
+    -77.1322,
+    34.6668
+   ],
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "sc-horry-supplemental-flood-zone",
+  "state": "SC",
+  "title": "Supplemental flood zone (Horry County)",
+  "title_es": "Zona de inundación suplementaria (condado de Horry)",
+  "description": "County-regulated flood zone beyond FEMA's maps where new buildings must be raised to the listed elevation.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Horry County Government",
+  "view": {
+   "url": "https://services1.arcgis.com/If0JkGr8ABreBTuS/arcgis/rest/services/Regulated_Supplemental_Flood_Zone/FeatureServer/17",
+   "fields": {
+    "Comment": "name",
+    "BFESubzone": "elevation_ft",
+    "Watershed": "watershed"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -79.7689,
+    33.2166,
+    -78.0111,
+    34.1834
+   ],
+   "features_in_probe": 39
+  }
+ },
+ {
+  "name": "ga-evacuation-zones",
+  "state": "GA",
+  "title": "Hurricane evacuation zones (Georgia)",
+  "title_es": "Zonas de evacuación por huracán (Georgia)",
+  "description": "Coastal Georgia hurricane evacuation zones from GEMA; Zone A leaves first.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Georgia Emergency Management and Homeland Security Agency (GEMA/HS)",
+  "view": {
+   "url": "https://services1.arcgis.com/2iUE8l8JKrP2tygQ/arcgis/rest/services/Georgia_Hurricane_Evacuation_Zones/FeatureServer/11",
+   "fields": {
+    "Zone": "kind",
+    "County": "county",
+    "AreaAcres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8578,
+    31.0832,
+    -79.3422,
+    33.0168
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "ga-fulton-parcels",
+  "state": "GA",
+  "title": "Parcels (Fulton County)",
+  "title_es": "Parcelas (condado de Fulton)",
+  "description": "Fulton County tax parcels with parcel ID, land-use and property class codes and acreage (updated daily).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Fulton County GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/AQDHTHDrZzfsFsB5/arcgis/rest/services/Tax_Parcels/FeatureServer/0",
+   "fields": {
+    "ParcelID": "parcel_id",
+    "LUCode": "land_use",
+    "ClassCode": "class",
+    "LandAcres": "acres",
+    "TaxDist": "tax_district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.3969,
+    33.7462,
+    -84.3831,
+    33.7538
+   ],
+   "features_in_probe": 426
+  }
+ },
+ {
+  "name": "ga-dekalb-parcels",
+  "state": "GA",
+  "title": "Parcels (DeKalb County)",
+  "title_es": "Parcelas (condado de DeKalb)",
+  "description": "DeKalb County tax parcels with zoning, land use, property class and 2025 assessed and appraised values.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "DeKalb County GIS",
+  "view": {
+   "url": "https://services2.arcgis.com/IxVN2oUE9EYLSnPE/arcgis/rest/services/Tax_Parcels_2025/FeatureServer/0",
+   "fields": {
+    "ParcelID": "parcel_id",
+    "ZONING": "zoning",
+    "LANDUSE": "land_use",
+    "PROPERTY_CLASS": "class",
+    "ASSESSED_VALUE": "assessed_value",
+    "APPRAISED_VALUE": "market_value",
+    "TAXYR": "year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.2569,
+    33.7762,
+    -84.2431,
+    33.7838
+   ],
+   "features_in_probe": 696
+  }
+ },
+ {
+  "name": "ga-gwinnett-parcels",
+  "state": "GA",
+  "title": "Parcels (Gwinnett County)",
+  "title_es": "Parcelas (condado de Gwinnett)",
+  "description": "Gwinnett County parcels with parcel number, type and calculated acreage.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Gwinnett County GIS",
+  "view": {
+   "url": "https://services3.arcgis.com/RfpmnkSAQleRbndX/arcgis/rest/services/Property_and_Tax/FeatureServer/0",
+   "fields": {
+    "PIN": "parcel_id",
+    "PARCELTYPE": "kind",
+    "CALCULATEDACREAGE": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.0137,
+    33.9424,
+    -83.9863,
+    33.9576
+   ],
+   "features_in_probe": 1225
+  }
+ },
+ {
+  "name": "ga-gwinnett-zoning",
+  "state": "GA",
+  "title": "Zoning (Gwinnett County)",
+  "title_es": "Zonificación (condado de Gwinnett)",
+  "description": "Zoning districts across Gwinnett County and its cities.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Gwinnett County GIS",
+  "view": {
+   "url": "https://services3.arcgis.com/RfpmnkSAQleRbndX/arcgis/rest/services/Property_and_Tax/FeatureServer/1",
+   "fields": {
+    "TYPE": "zoning",
+    "JURISDICTION": "jurisdiction"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.0549,
+    33.9198,
+    -83.9451,
+    33.9802
+   ],
+   "features_in_probe": 1219
+  }
+ },
+ {
+  "name": "ga-atlanta-zoning",
+  "state": "GA",
+  "title": "Zoning (City of Atlanta)",
+  "title_es": "Zonificación (ciudad de Atlanta)",
+  "description": "Current City of Atlanta zoning districts with a link to the zoning ordinance chapter.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Atlanta Department of City Planning",
+  "view": {
+   "url": "https://gis.atlantaga.gov/dpcd/rest/services/LandUsePlanning/LandUsePlanning/MapServer/0",
+   "fields": {
+    "ZONECLASS": "zoning",
+    "ZONEDESC": "page",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "STATUS = 'Current'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.4449,
+    33.7198,
+    -84.3351,
+    33.7802
+   ],
+   "features_in_probe": 1244
+  }
+ },
+ {
+  "name": "ga-atlanta-npus",
+  "state": "GA",
+  "title": "Neighborhood Planning Units (Atlanta)",
+  "title_es": "Unidades de Planificación Vecinal (Atlanta)",
+  "description": "Atlanta's 25 NPUs, the citizen councils that review zoning, liquor licenses and city plans.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Atlanta Department of City Planning",
+  "view": {
+   "url": "https://gis.atlantaga.gov/dpcd/rest/services/AdministrativeArea/GeopoliticalArea/MapServer/2",
+   "fields": {
+    "NAME": "name",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -85.2689,
+    33.2666,
+    -83.5111,
+    34.2334
+   ],
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "ga-gwinnett-polling-places",
+  "state": "GA",
+  "title": "Polling places (Gwinnett County)",
+  "title_es": "Lugares de votación (condado de Gwinnett)",
+  "description": "Election-day polling place for each Gwinnett precinct.",
+  "group": "civic",
+  "category": "point",
+  "source": "Gwinnett County Voter Registrations and Elections / GIS",
+  "view": {
+   "url": "https://services3.arcgis.com/RfpmnkSAQleRbndX/arcgis/rest/services/Administrative/FeatureServer/0",
+   "fields": {
+    "LOCATION": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "PRECINCT_NAME": "precinct"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.8789,
+    33.4666,
+    -83.1211,
+    34.4334
+   ],
+   "features_in_probe": 156
+  }
+ },
+ {
+  "name": "ga-fulton-polling-places",
+  "state": "GA",
+  "title": "Polling places (Fulton County)",
+  "title_es": "Lugares de votación (condado de Fulton)",
+  "description": "Election-day polling place for each Fulton County precinct.",
+  "group": "civic",
+  "category": "point",
+  "source": "Fulton County Registration and Elections / GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/AQDHTHDrZzfsFsB5/arcgis/rest/services/Voting_Polls/FeatureServer/0",
+   "fields": {
+    "Location": "name",
+    "Address": "address",
+    "Precinct": "precinct"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -85.2689,
+    33.2666,
+    -83.5111,
+    34.2334
+   ],
+   "features_in_probe": 437
+  }
+ },
+ {
+  "name": "ga-savannah-polling-places",
+  "state": "GA",
+  "title": "Polling places (Chatham County)",
+  "title_es": "Lugares de votación (condado de Chatham)",
+  "description": "Election-day polling places in Savannah and Chatham County.",
+  "group": "civic",
+  "category": "point",
+  "source": "SAGIS (Savannah Area Geographic Information System)",
+  "view": {
+   "url": "https://pub.sagis.org/arcgis/rest/services/OpenData/Community/MapServer/18",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Precinct": "precinct"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.9789,
+    31.5666,
+    -80.2211,
+    32.5334
+   ],
+   "features_in_probe": 85
+  }
+ },
+ {
+  "name": "ga-gwinnett-school-zones",
+  "state": "GA",
+  "title": "School attendance zones (Gwinnett County)",
+  "title_es": "Zonas escolares (condado de Gwinnett)",
+  "description": "Gwinnett County Public Schools elementary zones and the middle and high school each one feeds.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Gwinnett County Public Schools Planning",
+  "view": {
+   "url": "https://services3.arcgis.com/zSucPGJ1G50mN5oB/arcgis/rest/services/Elementary_School_Zones/FeatureServer/0",
+   "fields": {
+    "Elementary": "name",
+    "Middle": "middle",
+    "High": "high"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.8789,
+    33.4666,
+    -83.1211,
+    34.4334
+   ],
+   "features_in_probe": 82
+  }
+ },
+ {
+  "name": "ga-savannah-school-zones",
+  "state": "GA",
+  "title": "Elementary school zones (Savannah-Chatham)",
+  "title_es": "Zonas de escuelas primarias (Savannah-Chatham)",
+  "description": "Savannah-Chatham County Public School System elementary attendance zones.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "SAGIS / Savannah-Chatham County Public School System",
+  "view": {
+   "url": "https://pub.sagis.org/arcgis/rest/services/OpenData/Community/MapServer/16",
+   "fields": {
+    "NAME": "name",
+    "GRADES": "grades"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.9789,
+    31.5666,
+    -80.2211,
+    32.5334
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "ga-dekalb-land-use",
+  "state": "GA",
+  "title": "Current land use (DeKalb County)",
+  "title_es": "Uso de suelo actual (condado de DeKalb)",
+  "description": "Land-use category of each area of unincorporated DeKalb County.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "DeKalb County GIS",
+  "view": {
+   "url": "https://services2.arcgis.com/IxVN2oUE9EYLSnPE/arcgis/rest/services/LandUseOD/FeatureServer/0",
+   "fields": {
+    "LANDUSECODE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.3049,
+    33.7498,
+    -84.1951,
+    33.8102
+   ],
+   "features_in_probe": 841
+  }
+ },
+ {
+  "name": "ga-atlanta-street-projects",
+  "state": "GA",
+  "title": "Active street projects (City of Atlanta)",
+  "title_es": "Obras viales activas (ciudad de Atlanta)",
+  "description": "Active Renew Atlanta / TSPLOST paving, sidewalk and street projects, with dates and limits.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Atlanta Department of Transportation (ATLDOT)",
+  "view": {
+   "url": "https://services2.arcgis.com/zLeajbicrDRLQcny/arcgis/rest/services/RenewAtlantaTSPLOSTProjects/FeatureServer/0",
+   "fields": {
+    "FUNDING_PROJECT_NAME": "name",
+    "PROJECT_TYPE": "kind",
+    "STATUS_NAME": "status",
+    "CONSTRUCTION_START_DATE": "start",
+    "CONSTRUCTION_COMPLETION_DATE": "end",
+    "PROJECT_DESCRIPTION": "description",
+    "FROM_STREET": "from_street",
+    "TO_STREET": "to_street",
+    "NEIGHBORHOOD": "neighborhood"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "PROJECT_STATUS = 'Active'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.6097,
+    33.6292,
+    -84.1703,
+    33.8708
+   ],
+   "features_in_probe": 1233
+  }
+ },
+ {
+  "name": "ga-atlanta-parks",
+  "state": "GA",
+  "title": "City parks (Atlanta)",
+  "title_es": "Parques de la ciudad (Atlanta)",
+  "description": "Official City of Atlanta parks with size, type and amenities (playgrounds, courts, pools, restrooms).",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Atlanta Department of Parks and Recreation",
+  "view": {
+   "url": "https://services6.arcgis.com/QmEXbya2dRd48yU4/arcgis/rest/services/City_of_Atlanta_Parks_2026_View/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "CLASS_2020": "kind",
+    "ACRE_PRMP": "acres",
+    "NEIGHBOR": "neighborhood",
+    "NAV_ADDR": "address",
+    "AMN_SUMMARY": "amenities",
+    "PublicAccess": "access"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.6097,
+    33.6292,
+    -84.1703,
+    33.8708
+   ],
+   "features_in_probe": 381
+  }
+ },
+ {
+  "name": "ga-atlanta-trails",
+  "state": "GA",
+  "title": "Trails & bike lanes (Atlanta)",
+  "title_es": "Senderos y ciclovías (Atlanta)",
+  "description": "Existing, under-construction and planned trails, multi-use paths and bike lanes in the city.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Atlanta Department of Parks and Recreation / ATLDOT (TrailsATL)",
+  "view": {
+   "url": "https://services6.arcgis.com/QmEXbya2dRd48yU4/arcgis/rest/services/TrailsATL_Authoritative_view/FeatureServer/0",
+   "fields": {
+    "Trail_Name_Original": "name",
+    "Trail_Class": "kind",
+    "Development_Status": "status",
+    "Design_Type": "design",
+    "Managed_by": "manager"
+   },
+   "geometry": "line",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.4999,
+    33.6896,
+    -84.2801,
+    33.8104
+   ],
+   "features_in_probe": 1188
+  }
+ },
+ {
+  "name": "al-jefferson-parcels",
+  "state": "AL",
+  "title": "Parcels (Jefferson County)",
+  "title_es": "Parcelas (condado de Jefferson)",
+  "description": "Jefferson County (Birmingham area) parcels with parcel ID, acreage, assessed value and property class.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Jefferson County Commission GIS",
+  "view": {
+   "url": "https://jccgis.jccal.org/server/rest/services/Basemap/Parcels/MapServer/0",
+   "fields": {
+    "PARCELID": "parcel_id",
+    "GIS_ACRES": "acres",
+    "AssdValue": "assessed_value",
+    "Cls": "class",
+    "CITY": "city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -86.8069,
+    33.5162,
+    -86.7931,
+    33.5238
+   ],
+   "features_in_probe": 1206
+  }
+ },
+ {
+  "name": "al-jefferson-zoning",
+  "state": "AL",
+  "title": "Zoning (Jefferson County, unincorporated)",
+  "title_es": "Zonificación (condado de Jefferson, no incorporado)",
+  "description": "County zoning districts outside city limits, with the rezoning case number and date.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Jefferson County Department of Development Services",
+  "view": {
+   "url": "https://jccgis.jccal.org/server/rest/services/DDS/Zoning/MapServer/3",
+   "fields": {
+    "ZNCODE": "zoning",
+    "CASENUMB": "case",
+    "DATE_ZACTION": "changed"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.0599,
+    33.3896,
+    -86.8401,
+    33.5104
+   ],
+   "features_in_probe": 856
+  }
+ },
+ {
+  "name": "al-jefferson-future-land-use",
+  "state": "AL",
+  "title": "Future land use (Jefferson County)",
+  "title_es": "Uso de suelo futuro (condado de Jefferson)",
+  "description": "The county comprehensive plan's intended future use for each parcel in unincorporated Jefferson County.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Jefferson County Department of Development Services",
+  "view": {
+   "url": "https://jccgis.jccal.org/server/rest/services/DDS/FutureLandUse/MapServer/2",
+   "fields": {
+    "FLU_Type": "kind",
+    "Acreage": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.0049,
+    33.4198,
+    -86.8951,
+    33.4802
+   ],
+   "features_in_probe": 711
+  }
+ },
+ {
+  "name": "al-jefferson-warning-sirens",
+  "state": "AL",
+  "title": "Outdoor warning sirens (Jefferson County)",
+  "title_es": "Sirenas de alerta exterior (condado de Jefferson)",
+  "description": "Tornado/outdoor warning sirens run by Jefferson County EMA. Sirens are for people outdoors; indoors, use a weather radio or phone alerts.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Jefferson County Emergency Management Agency",
+  "view": {
+   "url": "https://jccgis.jccal.org/server/rest/services/Basemap/Public_Safety/MapServer/1",
+   "fields": {
+    "Siren__": "number",
+    "Physical_Address": "address"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.6789,
+    33.0366,
+    -85.9211,
+    34.0034
+   ],
+   "features_in_probe": 255
+  }
+ },
+ {
+  "name": "al-mobile-parcels",
+  "state": "AL",
+  "title": "Parcels (Mobile County)",
+  "title_es": "Parcelas (condado de Mobile)",
+  "description": "Mobile County tax parcels with parcel number and acreage.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Mobile County Revenue Commission",
+  "view": {
+   "url": "https://services8.arcgis.com/HND1NcQt6vgOGn1z/arcgis/rest/services/MCRC_Public_Parcels/FeatureServer/0",
+   "fields": {
+    "Parcel_Number": "parcel_id",
+    "Acreage": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -88.0869,
+    30.6862,
+    -88.0731,
+    30.6938
+   ],
+   "features_in_probe": 616
+  }
+ },
+ {
+  "name": "al-baldwin-road-notices",
+  "state": "AL",
+  "title": "County road closures (Baldwin County)",
+  "title_es": "Cierres de caminos del condado (Baldwin)",
+  "description": "Live Baldwin County Highway Department notices of county roads that are closed or impassable, and until when.",
+  "group": "live",
+  "category": "roadops",
+  "source": "Baldwin County Highway Department",
+  "view": {
+   "url": "https://gisportal.baldwincountyal.gov/server/rest/services/Highway_Public/BaldwinHighwayPublicGIS_Data/MapServer/0",
+   "fields": {
+    "RoadStatus": "status",
+    "ProjectStatus": "project_status",
+    "AdvisoryDescription": "description",
+    "ImpassableFrom": "start",
+    "ImpassableTo": "end",
+    "Comment": "notes"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -91.2156,
+    28.6664,
+    -84.1844,
+    32.5336
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "al-baldwin-road-projects",
+  "state": "AL",
+  "title": "County road projects (Baldwin County)",
+  "title_es": "Proyectos viales del condado (Baldwin)",
+  "description": "Baldwin County road paving and construction projects with type, funding and construction dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Baldwin County Highway Department",
+  "view": {
+   "url": "https://gisportal.baldwincountyal.gov/server/rest/services/Highway_Public/BaldwinHighwayPublicGIS_Data/MapServer/1",
+   "fields": {
+    "Title": "name",
+    "ProjectType": "kind",
+    "Description": "description",
+    "WorkProjectStatus": "status",
+    "FundingSource": "funding",
+    "ConstructionStartDate": "start",
+    "ConstructionEndDate": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "DisplayStatus = 'Public'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -89.4578,
+    29.6332,
+    -85.9422,
+    31.5668
+   ],
+   "features_in_probe": 44
+  }
+ },
+ {
+  "name": "al-coastal-public-access",
+  "state": "AL",
+  "title": "Coastal public access sites (Alabama)",
+  "title_es": "Accesos públicos a la costa (Alabama)",
+  "description": "Beach, boat-launch and shoreline public access sites in Mobile and Baldwin counties.",
+  "group": "nature",
+  "category": "point",
+  "source": "Alabama Department of Conservation and Natural Resources, State Lands Coastal Section",
+  "view": {
+   "url": "https://services7.arcgis.com/jcVUvxpWnajErgCr/arcgis/rest/services/Alabama_Public_Access_Sites/FeatureServer/0",
+   "fields": {
+    "Site_Name": "name",
+    "Address": "address",
+    "City": "city",
+    "County": "county",
+    "Watershed": "waterbody",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -89.6578,
+    29.5332,
+    -86.1422,
+    31.4668
+   ],
+   "features_in_probe": 242
+  }
+ },
+ {
+  "name": "al-aldot-projects",
+  "state": "AL",
+  "title": "ALDOT construction projects (Alabama)",
+  "title_es": "Obras de construcción de ALDOT (Alabama)",
+  "description": "State highway construction projects with the type of work, expected completion, cost and traffic impact.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Alabama Department of Transportation",
+  "view": {
+   "url": "https://services.arcgis.com/LZzQi3xDiclG6XvQ/arcgis/rest/services/CPMS_Project_Location/FeatureServer/0",
+   "fields": {
+    "title": "name",
+    "type_of_work": "kind",
+    "route": "route",
+    "region_county": "county",
+    "project_start": "start",
+    "project_completion": "end",
+    "project_cost": "cost",
+    "impact": "description"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -90.3156,
+    31.5864,
+    -83.2844,
+    35.4536
+   ],
+   "features_in_probe": 145
+  }
+ },
+ {
+  "name": "al-huntsville-city-limits",
+  "state": "AL",
+  "title": "City limits (Huntsville)",
+  "title_es": "Límites de la ciudad (Huntsville)",
+  "description": "Current Huntsville city limits, updated after each annexation.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Huntsville GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/FsRunHWuiGXWVv3B/arcgis/rest/services/CityLimits/FeatureServer/0",
+   "fields": {
+    "CityName": "name",
+    "Eff_Date": "effective"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -88.3478,
+    33.7632,
+    -84.8322,
+    35.6968
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "al-huntsville-rezonings",
+  "state": "AL",
+  "title": "Rezonings (Huntsville)",
+  "title_es": "Cambios de zonificación (Huntsville)",
+  "description": "Areas rezoned by Huntsville ordinance, with the new and previous zoning and effective date.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Huntsville Planning",
+  "view": {
+   "url": "https://services1.arcgis.com/FsRunHWuiGXWVv3B/arcgis/rest/services/ZoningDistricts/FeatureServer/0",
+   "fields": {
+    "Zoning": "zoning",
+    "PreviouslyZoned": "previous",
+    "Ordinance": "ordinance",
+    "EffectiveDate": "date",
+    "Name": "name",
+    "Acreage": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -86.8097,
+    34.6092,
+    -86.3703,
+    34.8508
+   ],
+   "features_in_probe": 495
+  }
+ },
+ {
+  "name": "al-huntsville-historic-districts",
+  "state": "AL",
+  "title": "Historic districts (Huntsville)",
+  "title_es": "Distritos históricos (Huntsville)",
+  "description": "Locally designated historic districts (Twickenham, Old Town and others) with design review rules.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Huntsville Historic Preservation",
+  "view": {
+   "url": "https://services1.arcgis.com/FsRunHWuiGXWVv3B/arcgis/rest/services/HistoricDistricts/FeatureServer/0",
+   "fields": {
+    "District": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -86.8097,
+    34.6092,
+    -86.3703,
+    34.8508
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ms-hurricane-evacuation-routes",
+  "state": "MS",
+  "title": "Hurricane evacuation routes (Mississippi)",
+  "title_es": "Rutas de evacuación por huracán (Mississippi)",
+  "description": "Highways MEMA and MDOT designate for leaving the coast before a hurricane, including contraflow segments.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Mississippi Emergency Management Agency (MEMA) / MDOT",
+  "view": {
+   "url": "https://services1.arcgis.com/fI7ToVSY6ywRM8Si/arcgis/rest/services/Hurricane_Evacuation_Routes/FeatureServer/0",
+   "fields": {
+    "ROAD_NAME": "name",
+    "ROAD_CLASS": "kind",
+    "COUNTERFLO": "contraflow",
+    "Route": "route"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -93.6956,
+    30.3664,
+    -86.6644,
+    34.2336
+   ],
+   "features_in_probe": 1284
+  }
+ },
+ {
+  "name": "ms-grand-gulf-evacuation-zones",
+  "state": "MS",
+  "title": "Grand Gulf nuclear plant evacuation zones (Mississippi)",
+  "title_es": "Zonas de evacuación de la planta nuclear Grand Gulf (Mississippi)",
+  "description": "Emergency planning zones around the Grand Gulf Nuclear Station near Port Gibson; listen for your zone number.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Mississippi Emergency Management Agency (MEMA)",
+  "view": {
+   "url": "https://services1.arcgis.com/fI7ToVSY6ywRM8Si/arcgis/rest/services/GGNS_Zones_view/FeatureServer/0",
+   "fields": {
+    "EPZ": "name",
+    "Pop2010": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -92.8078,
+    31.0332,
+    -89.2922,
+    32.9668
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "ms-beach-advisories",
+  "state": "MS",
+  "title": "Beach water advisories (Mississippi)",
+  "title_es": "Alertas de calidad del agua en playas (Mississippi)",
+  "description": "Coastal beach monitoring stations and whether MDEQ currently has a swimming advisory or closure for bacteria.",
+  "group": "live",
+  "category": "hazard",
+  "source": "Mississippi Department of Environmental Quality (MDEQ)",
+  "view": {
+   "url": "https://mgis19.mdeq.ms.gov/arcgis/rest/services/Hosted/BeachMonitoringView/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "location": "location",
+    "county": "county",
+    "isadvisory": "advisory",
+    "isclosure": "closure",
+    "advisorydesc": "advisory_info",
+    "closuredesc": "closure_info",
+    "startdate": "start",
+    "lastsampledate": "updated",
+    "eventtype": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "active = 1",
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -92.6056,
+    28.4664,
+    -85.5744,
+    32.3336
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "ms-fish-consumption-advisories",
+  "state": "MS",
+  "title": "Fish consumption advisories (Mississippi)",
+  "title_es": "Advertencias sobre consumo de pescado (Mississippi)",
+  "description": "Rivers and streams where MDEQ advises limiting or avoiding eating certain fish, and the cause (mostly mercury).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Mississippi Department of Environmental Quality (MDEQ)",
+  "view": {
+   "url": "https://mgis19.mdeq.ms.gov/arcgis/rest/services/Hosted/Fish_Consumption_Advisories_Streams/FeatureServer/0",
+   "fields": {
+    "gnis_name": "name",
+    "fishconsumptionadvisory": "status",
+    "fish_cause_1": "cause",
+    "water_type": "kind",
+    "hu_12_name": "watershed"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -93.6956,
+    30.3664,
+    -86.6644,
+    34.2336
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "ms-dam-inundation-areas",
+  "state": "MS",
+  "title": "Dam failure flood areas (Mississippi)",
+  "title_es": "Áreas de inundación por falla de presa (Mississippi)",
+  "description": "Land that would flood if a mapped dam failed, with the dam's name, height and storage.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Mississippi Department of Environmental Quality (MDEQ) Dam Safety",
+  "view": {
+   "url": "https://mgis19.mdeq.ms.gov/arcgis/rest/services/Hosted/Dam_Inundation_Areas/FeatureServer/3",
+   "fields": {
+    "damname": "name",
+    "county": "county",
+    "damheight": "height_ft",
+    "maxstorage": "storage_acre_ft",
+    "stateid": "dam_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -91.0589,
+    31.8166,
+    -89.3011,
+    32.7834
+   ],
+   "features_in_probe": 87
+  }
+ },
+ {
+  "name": "ms-electric-utility-areas",
+  "state": "MS",
+  "title": "Electric utility service areas (Mississippi)",
+  "title_es": "Áreas de servicio eléctrico (Mississippi)",
+  "description": "Which electric utility or power association is certificated to serve each area (PSC certificate map, 2018).",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Mississippi Emergency Management Agency (from MS Public Service Commission certificates)",
+  "view": {
+   "url": "https://services1.arcgis.com/fI7ToVSY6ywRM8Si/arcgis/rest/services/EPA_Statewide_Electric_Districts/FeatureServer/0",
+   "fields": {
+    "UTILITY_NA": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -93.6956,
+    30.3664,
+    -86.6644,
+    34.2336
+   ],
+   "features_in_probe": 250
+  }
+ },
+ {
+  "name": "ms-harrison-evacuation-zone-a",
+  "state": "MS",
+  "title": "Hurricane evacuation zone A (Harrison County)",
+  "title_es": "Zona de evacuación por huracán A (condado de Harrison)",
+  "description": "Harrison County hurricane evacuation Zone A (closest to the water; leaves first).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Harrison County Emergency Management / GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/HMvCOUg20YqJBIY9/arcgis/rest/services/Evacuation_Zones/FeatureServer/4",
+   "fields": {
+    "Zone": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -90.8478,
+    29.4332,
+    -87.3322,
+    31.3668
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "ms-harrison-evacuation-zone-b",
+  "state": "MS",
+  "title": "Hurricane evacuation zone B (Harrison County)",
+  "title_es": "Zona de evacuación por huracán B (condado de Harrison)",
+  "description": "Harrison County hurricane evacuation Zone B; it is ordered out after the lower zones.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Harrison County Emergency Management / GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/HMvCOUg20YqJBIY9/arcgis/rest/services/Evacuation_Zones/FeatureServer/5",
+   "fields": {
+    "ZONE_": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -90.8478,
+    29.4332,
+    -87.3322,
+    31.3668
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "ms-harrison-evacuation-zone-c",
+  "state": "MS",
+  "title": "Hurricane evacuation zone C (Harrison County)",
+  "title_es": "Zona de evacuación por huracán C (condado de Harrison)",
+  "description": "Harrison County hurricane evacuation Zone C; it is ordered out after the lower zones.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Harrison County Emergency Management / GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/HMvCOUg20YqJBIY9/arcgis/rest/services/Evacuation_Zones/FeatureServer/6",
+   "fields": {
+    "Zone": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -90.8478,
+    29.4332,
+    -87.3322,
+    31.3668
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "ms-harrison-polling-places",
+  "state": "MS",
+  "title": "Polling places (Harrison County)",
+  "title_es": "Lugares de votación (condado de Harrison)",
+  "description": "Election-day polling place for each Harrison County precinct (Gulfport, Biloxi and county).",
+  "group": "civic",
+  "category": "point",
+  "source": "Harrison County Election Commission / GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/HMvCOUg20YqJBIY9/arcgis/rest/services/Polling_Places/FeatureServer/0",
+   "fields": {
+    "location": "name",
+    "poll_locat": "address",
+    "poll": "precinct",
+    "District": "district"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -89.9689,
+    29.9166,
+    -88.2111,
+    30.8834
+   ],
+   "features_in_probe": 49
+  }
+ },
+ {
+  "name": "ms-harrison-zoning",
+  "state": "MS",
+  "title": "Zoning (Harrison County, unincorporated)",
+  "title_es": "Zonificación (condado de Harrison, no incorporado)",
+  "description": "County zoning by parcel outside city limits, with the latest rezoning case and the prior zone.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Harrison County Zoning / GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/HMvCOUg20YqJBIY9/arcgis/rest/services/HarrisonMS_PLSS_Zoning/FeatureServer/35",
+   "fields": {
+    "ZONE": "zoning",
+    "ORIGZONE": "previous",
+    "CASENO": "case",
+    "DATECHG": "changed",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -89.1775,
+    30.4649,
+    -89.1225,
+    30.4951
+   ],
+   "features_in_probe": 1031
+  }
+ },
+ {
+  "name": "ms-harrison-city-limits",
+  "state": "MS",
+  "title": "City limits (Harrison County)",
+  "title_es": "Límites municipales (condado de Harrison)",
+  "description": "Current limits of Gulfport, Biloxi, Long Beach, Pass Christian and D'Iberville.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Harrison County GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/HMvCOUg20YqJBIY9/arcgis/rest/services/City_Limits/FeatureServer/0",
+   "fields": {
+    "NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -90.8478,
+    29.4332,
+    -87.3322,
+    31.3668
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ms-gulfport-zoning",
+  "state": "MS",
+  "title": "Zoning (Gulfport)",
+  "title_es": "Zonificación (Gulfport)",
+  "description": "City of Gulfport zoning districts (traditional code) with ordinance, case and short-term-rental rules.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Gulfport GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/pOPaG0zaJUnBvD2F/arcgis/rest/services/COG_Zoning1/FeatureServer/4",
+   "fields": {
+    "ZONE_NAME": "zoning",
+    "ORD_NUM": "ordinance",
+    "CASE_NUM": "case",
+    "STRental": "short_term_rental",
+    "Note": "note",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -89.1999,
+    30.3396,
+    -88.9801,
+    30.4604
+   ],
+   "features_in_probe": 408
+  }
+ },
+ {
+  "name": "ms-gulfport-capital-projects",
+  "state": "MS",
+  "title": "Capital projects (Gulfport)",
+  "title_es": "Proyectos de obras públicas (Gulfport)",
+  "description": "City of Gulfport street, sidewalk, drainage and utility projects with phase, cost and dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Gulfport GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/pOPaG0zaJUnBvD2F/arcgis/rest/services/COG_CapImpProj26/FeatureServer/1",
+   "fields": {
+    "Project_Name": "name",
+    "Project_Type": "kind",
+    "Location": "location",
+    "Phase": "status",
+    "Cost": "cost",
+    "Start_Date": "start",
+    "Estimated_Finish_Date": "end",
+    "Project_Description": "description",
+    "Funding_Source": "funding"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -89.5295,
+    30.1583,
+    -88.6505,
+    30.6417
+   ],
+   "features_in_probe": 40
+  }
+ },
+ {
+  "name": "ms-gulfport-parks",
+  "state": "MS",
+  "title": "City parks (Gulfport)",
+  "title_es": "Parques de la ciudad (Gulfport)",
+  "description": "Parks run by the City of Gulfport, with address and size.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Gulfport GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/pOPaG0zaJUnBvD2F/arcgis/rest/services/COG_ParksPiersCityServices/FeatureServer/5",
+   "fields": {
+    "DESCRIPT": "name",
+    "LOCATION": "address",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -89.3097,
+    30.2792,
+    -88.8703,
+    30.5208
+   ],
+   "features_in_probe": 64
+  }
+ },
+ {
+  "name": "ms-gulfport-trash-days",
+  "state": "MS",
+  "title": "Garbage & recycling days (Gulfport)",
+  "title_es": "Días de basura y reciclaje (Gulfport)",
+  "description": "Which days garbage and recycling are picked up in each Gulfport collection zone.",
+  "group": "infra",
+  "category": "info",
+  "source": "City of Gulfport",
+  "view": {
+   "url": "https://services1.arcgis.com/pOPaG0zaJUnBvD2F/arcgis/rest/services/COG_Garbage/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "GarbageDay": "garbage_day",
+    "RecycleDay": "recycle_day"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -89.5295,
+    30.1583,
+    -88.6505,
+    30.6417
+   ],
+   "features_in_probe": 2
+  }
+ }
+]
