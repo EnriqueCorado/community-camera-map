@@ -1,0 +1,5972 @@
+[
+ {
+  "name": "ca-lacounty-parcels",
+  "state": "CA",
+  "title": "Parcels (Los Angeles County)",
+  "title_es": "Parcelas (condado de Los Ángeles)",
+  "description": "Every property lot in Los Angeles County from the Assessor: the parcel number (AIN), what the land is used for, and the assessed land and building values on the latest tax roll. Condo buildings show as one lot (individual units are left out). Zoom in close to see lots.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "Los Angeles County Assessor / Enterprise GIS (LA County Parcel Map Service)",
+  "view": {
+   "url": "https://cache.gis.lacounty.gov/cache/rest/services/LACounty_Cache/LACounty_Parcel/MapServer/0",
+   "fields": {
+    "AIN": "parcel_id",
+    "UseType": "land_use",
+    "UseDescription": "description",
+    "Roll_Year": "year",
+    "Roll_LandValue": "land_value",
+    "Roll_ImpValue": "improvement_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "ParcelTypeCode <> 1"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.308,
+    34.0566,
+    -118.292,
+    34.0654
+   ],
+   "features_in_probe": 638
+  }
+ },
+ {
+  "name": "ca-lacounty-zoning",
+  "state": "CA",
+  "title": "Zoning (unincorporated Los Angeles County)",
+  "title_es": "Zonificación (zonas no incorporadas del condado de Los Ángeles)",
+  "description": "Zoning for the parts of Los Angeles County outside any city (East LA, Altadena, Florence-Firestone, Antelope Valley and more): the zone code, what it means, and the community. Inside a city, check that city's zoning instead.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Los Angeles County Department of Regional Planning (Open Data)",
+  "view": {
+   "url": "https://arcgis.gis.lacounty.gov/arcgis/rest/services/DRP/Open_Data/MapServer/3",
+   "fields": {
+    "ZONE": "zoning",
+    "Z_DESC": "description",
+    "Z_CATEGORY": "kind",
+    "NAME": "community",
+    "PLNG_AREA": "area"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.2344,
+    33.9946,
+    -118.1056,
+    34.0654
+   ],
+   "features_in_probe": 1368
+  }
+ },
+ {
+  "name": "ca-lacounty-general-plan",
+  "state": "CA",
+  "title": "General plan land use (unincorporated Los Angeles County)",
+  "title_es": "Uso de suelo del plan general (zonas no incorporadas del condado de Los Ángeles)",
+  "description": "What the County's General Plan 2035 says each area outside city limits should be used for in the future (homes at what density, commercial, industrial, open space).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Los Angeles County Department of Regional Planning (General Plan 2035)",
+  "view": {
+   "url": "https://arcgis.gis.lacounty.gov/arcgis/rest/services/DRP/Open_Data/MapServer/8",
+   "fields": {
+    "PLAN_LEG": "land_use",
+    "PLAN_": "code",
+    "COMM_NAME": "community"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.2344,
+    33.9946,
+    -118.1056,
+    34.0654
+   ],
+   "features_in_probe": 1347
+  }
+ },
+ {
+  "name": "ca-lacounty-vote-centers",
+  "state": "CA",
+  "title": "Vote centers (Los Angeles County, current election)",
+  "title_es": "Centros de votación (condado de Los Ángeles, elección actual)",
+  "description": "Where to vote in person in the current Los Angeles County election. Any registered county voter can use any vote center; some open 11 days before Election Day and others 4 days before. Check lavote.gov for hours.",
+  "group": "civic",
+  "category": "point",
+  "source": "Los Angeles County Registrar-Recorder/County Clerk (Election Vote Centers - Current, public view)",
+  "view": {
+   "url": "https://services.arcgis.com/RmCCgQtiZLDCtblq/arcgis/rest/services/Election_Vote_Centers_(Current_Public)_view/FeatureServer/2",
+   "fields": {
+    "PC_BuildingName": "name",
+    "PC_RoomArea": "room",
+    "PC_BuildingFullAddress": "address",
+    "PC_BuildingCity": "city",
+    "PC_ServiceAreaType": "open_days",
+    "Election_Name": "election",
+    "Election_Year": "year"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.3146,
+    32.9172,
+    -116.1954,
+    35.1828
+   ],
+   "features_in_probe": 646
+  }
+ },
+ {
+  "name": "ca-lacounty-ballot-drop-boxes",
+  "state": "CA",
+  "title": "Ballot drop boxes (Los Angeles County)",
+  "title_es": "Buzones para boletas (condado de Los Ángeles)",
+  "description": "Official drop boxes for your vote-by-mail ballot in the current Los Angeles County election. No stamp needed.",
+  "group": "civic",
+  "category": "point",
+  "source": "Los Angeles County Registrar-Recorder/County Clerk (Election Drop Box Locations - Current)",
+  "view": {
+   "url": "https://services.arcgis.com/RmCCgQtiZLDCtblq/arcgis/rest/services/Election_VBMLocations_Current/FeatureServer/1",
+   "fields": {
+    "PC_BuildingName": "name",
+    "PC_BuildingFullAddress": "address",
+    "PC_BuildingCity": "city",
+    "PC_Hours_as_of_Date": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.3146,
+    32.9172,
+    -116.1954,
+    35.1828
+   ],
+   "features_in_probe": 431
+  }
+ },
+ {
+  "name": "ca-lacounty-alert-zones",
+  "state": "CA",
+  "title": "Active evacuation alerts (Los Angeles County)",
+  "title_es": "Alertas de evacuación activas (condado de Los Ángeles)",
+  "description": "Evacuation orders and warnings in effect now for Los Angeles County zones (Genasys Protect), from the County Office of Emergency Management. Empty means no active alert. Always follow official instructions and Alert LA County messages.",
+  "group": "live",
+  "category": "hazard",
+  "source": "Los Angeles County Office of Emergency Management (Genasys emergency alert warning areas)",
+  "view": {
+   "url": "https://services.arcgis.com/RmCCgQtiZLDCtblq/arcgis/rest/services/GENASYS_Alert_Warning_Area_NEW_view/FeatureServer/0",
+   "fields": {
+    "MapLabel": "name",
+    "SpanishLabel": "name_es",
+    "AlertReason": "kind",
+    "ActiveStat": "status",
+    "AlertMessage": "description",
+    "Details": "details",
+    "SpanishDet": "details_es",
+    "IncidentNm": "incident",
+    "zone_id": "zone",
+    "last_update": "updated",
+    "url": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "refresh_s": 300
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -126.5383,
+    29.7689,
+    -110.0617,
+    38.8311
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "ca-lacounty-historic-resources",
+  "state": "CA",
+  "title": "Historic landmarks (unincorporated Los Angeles County)",
+  "title_es": "Monumentos históricos (zonas no incorporadas del condado de Los Ángeles)",
+  "description": "County-designated landmarks and state/national historic listings in unincorporated Los Angeles County, with the year built, when it was designated, and a link to the County's documents.",
+  "group": "places",
+  "category": "landuse",
+  "source": "Los Angeles County Department of Regional Planning (Historic Resources)",
+  "view": {
+   "url": "https://arcgis.gis.lacounty.gov/arcgis/rest/services/DRP/Open_Data/MapServer/35",
+   "fields": {
+    "Name": "name",
+    "Source": "kind",
+    "Address_Location": "address",
+    "Year_Built": "year_built",
+    "Year_Designated": "year",
+    "City_Unin_Community": "community",
+    "File_Location": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.2987,
+    34.1092,
+    -118.0413,
+    34.2508
+   ],
+   "features_in_probe": 763
+  }
+ },
+ {
+  "name": "ca-lacounty-street-sweeping",
+  "state": "CA",
+  "title": "Street sweeping (unincorporated Los Angeles County)",
+  "title_es": "Barrido de calles (zonas no incorporadas del condado de Los Ángeles)",
+  "description": "Street sweeping day and time for County-maintained streets outside city limits. Where it says posted, move your car or risk a ticket.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Los Angeles County Public Works, Road Maintenance Division (Street Sweeping Routes)",
+  "view": {
+   "url": "https://services.arcgis.com/RmCCgQtiZLDCtblq/arcgis/rest/services/Los_Angeles_County_Public_Works_Road_Maintenance_Division_Street_Sweeping_Routes/FeatureServer/0",
+   "fields": {
+    "SCHEDULE": "day",
+    "TIME": "hours",
+    "FREQUENCY": "frequency",
+    "POSTED": "posted",
+    "ROUTE_NUMBER": "route"
+   },
+   "geometry": "line",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.1861,
+    34.0212,
+    -118.1539,
+    34.0388
+   ],
+   "features_in_probe": 968
+  }
+ },
+ {
+  "name": "ca-lacounty-ecological-areas",
+  "state": "CA",
+  "title": "Significant ecological areas (Los Angeles County)",
+  "title_es": "Áreas ecológicas importantes (condado de Los Ángeles)",
+  "description": "Areas the County protects for rare plants, animals and habitat. Building here needs extra review.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Los Angeles County Department of Regional Planning (Significant Ecological Areas)",
+  "view": {
+   "url": "https://arcgis.gis.lacounty.gov/arcgis/rest/services/DRP/Open_Data/MapServer/12",
+   "fields": {
+    "SEA_NAME": "name",
+    "SEA_TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.3596,
+    33.1672,
+    -116.2404,
+    35.4328
+   ],
+   "features_in_probe": 392
+  }
+ },
+ {
+  "name": "ca-la-zoning",
+  "state": "CA",
+  "title": "Zoning (City of Los Angeles)",
+  "title_es": "Zonificación (ciudad de Los Ángeles)",
+  "description": "Zoning for every lot in the City of Los Angeles: the full zone string (for example R1-1 or C2-1VL) and its general category. Check ZIMAS for overlays and case details.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Los Angeles Department of City Planning (Zoning)",
+  "view": {
+   "url": "https://services5.arcgis.com/7nsPwEMP38bSkCjy/arcgis/rest/services/Zoning/FeatureServer/15",
+   "fields": {
+    "Zoning": "zoning",
+    "CATEGORY": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.2711,
+    34.0412,
+    -118.2389,
+    34.0588
+   ],
+   "features_in_probe": 515
+  }
+ },
+ {
+  "name": "ca-la-general-plan",
+  "state": "CA",
+  "title": "General plan land use (City of Los Angeles)",
+  "title_es": "Uso de suelo del plan general (ciudad de Los Ángeles)",
+  "description": "What the City's General Plan and community plans say each area should be used for (homes at what density, commercial, industrial, open space), by community plan area.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Los Angeles Department of City Planning (General Plan Land Use)",
+  "view": {
+   "url": "https://services5.arcgis.com/7nsPwEMP38bSkCjy/arcgis/rest/services/General_Plan_Land_Use/FeatureServer/1",
+   "fields": {
+    "GPLU_DESC": "land_use",
+    "LU_LABEL": "kind",
+    "CPA": "plan_area"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.2711,
+    34.0412,
+    -118.2389,
+    34.0588
+   ],
+   "features_in_probe": 493
+  }
+ },
+ {
+  "name": "ca-la-hpoz",
+  "state": "CA",
+  "title": "Historic districts (HPOZ, City of Los Angeles)",
+  "title_es": "Distritos históricos (HPOZ, ciudad de Los Ángeles)",
+  "description": "Historic Preservation Overlay Zones: neighborhoods where exterior changes to homes and buildings need review by the City's Office of Historic Resources.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Los Angeles Department of City Planning (Historic Preservation Overlay Zones)",
+  "view": {
+   "url": "https://services5.arcgis.com/7nsPwEMP38bSkCjy/arcgis/rest/services/Historic_Preservation_Overlay_Zones/FeatureServer/5",
+   "fields": {
+    "NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.2848,
+    33.4836,
+    -117.2252,
+    34.6164
+   ],
+   "features_in_probe": 36
+  }
+ },
+ {
+  "name": "ca-la-historic-monuments",
+  "state": "CA",
+  "title": "Historic-Cultural Monuments (City of Los Angeles)",
+  "title_es": "Monumentos históricos y culturales (ciudad de Los Ángeles)",
+  "description": "Buildings and places the City has declared Historic-Cultural Monuments, with the monument number, address and date designated.",
+  "group": "places",
+  "category": "landuse",
+  "source": "City of Los Angeles Department of City Planning (Historic Cultural Monuments)",
+  "view": {
+   "url": "https://services5.arcgis.com/7nsPwEMP38bSkCjy/arcgis/rest/services/Historic_Cultural_Monuments/FeatureServer/4",
+   "fields": {
+    "NAME": "name",
+    "MNT_NUM": "number",
+    "LOCATION": "address",
+    "DATE_ACTIVE": "year",
+    "HIST_TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.3837,
+    33.9792,
+    -118.1263,
+    34.1208
+   ],
+   "features_in_probe": 1006
+  }
+ },
+ {
+  "name": "ca-la-specific-plans",
+  "state": "CA",
+  "title": "Specific plan areas (City of Los Angeles)",
+  "title_es": "Áreas de planes específicos (ciudad de Los Ángeles)",
+  "description": "Areas with their own special zoning rules (specific plans) on top of the regular zoning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Los Angeles Department of City Planning (Specific Plan Areas)",
+  "view": {
+   "url": "https://services5.arcgis.com/7nsPwEMP38bSkCjy/arcgis/rest/services/Specific_Plan_Areas/FeatureServer/6",
+   "fields": {
+    "SPA_NM": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.2848,
+    33.4836,
+    -117.2252,
+    34.6164
+   ],
+   "features_in_probe": 61
+  }
+ },
+ {
+  "name": "ca-la-council-districts",
+  "state": "CA",
+  "title": "City council districts (City of Los Angeles)",
+  "title_es": "Distritos del concejo municipal (ciudad de Los Ángeles)",
+  "description": "The 15 Los Angeles City Council districts, with a link to each council office.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Los Angeles Bureau of Engineering (Council Districts, official)",
+  "view": {
+   "url": "https://services1.arcgis.com/PTh9WC0Sf2WS7AAq/arcgis/rest/services/Council_Districts_2022/FeatureServer/130",
+   "fields": {
+    "CD": "district",
+    "CD_Label": "name",
+    "NLA_URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.3146,
+    32.9172,
+    -116.1954,
+    35.1828
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "ca-la-neighborhood-councils",
+  "state": "CA",
+  "title": "Neighborhood councils (City of Los Angeles)",
+  "title_es": "Concejos vecinales (ciudad de Los Ángeles)",
+  "description": "The 99 certified neighborhood councils: elected volunteer boards that advise the City on local issues. Anyone who lives, works or owns property there can take part.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Los Angeles Department of Neighborhood Empowerment (EmpowerLA)",
+  "view": {
+   "url": "https://services5.arcgis.com/7nsPwEMP38bSkCjy/arcgis/rest/services/Neighborhood_Council_Boundaries_2018_City_of_Los_Angeles/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Region": "region",
+    "Website_URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.2848,
+    33.4836,
+    -117.2252,
+    34.6164
+   ],
+   "features_in_probe": 99
+  }
+ },
+ {
+  "name": "ca-la-street-sweeping",
+  "state": "CA",
+  "title": "Posted street sweeping (City of Los Angeles)",
+  "title_es": "Barrido de calles con letreros (ciudad de Los Ángeles)",
+  "description": "Posted street sweeping routes: the day, time and which weeks of the month the street is swept. Move your car during the posted hours to avoid a ticket.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Los Angeles Bureau of Street Services (StreetsLA, Posted Street Sweeping Routes)",
+  "view": {
+   "url": "https://services1.arcgis.com/PTh9WC0Sf2WS7AAq/arcgis/rest/services/Posted_Street_Sweeping_Routes_Update/FeatureServer/0",
+   "fields": {
+    "Route": "route",
+    "Posted_Day": "day",
+    "Posted_Time": "hours",
+    "Weeks_Number": "weeks",
+    "Odd_Even": "side",
+    "Boundaries": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.5124,
+    33.9084,
+    -117.9976,
+    34.1916
+   ],
+   "features_in_probe": 681
+  }
+ },
+ {
+  "name": "ca-la-cooling-centers",
+  "state": "CA",
+  "title": "Cooling and heating centers (City of Los Angeles)",
+  "title_es": "Centros de enfriamiento y calefacción (ciudad de Los Ángeles)",
+  "description": "City recreation and senior centers that open as cooling, heating or clean-air relief centers during heat waves, cold snaps and smoke. Call ahead: they open only when activated.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Los Angeles Department of Recreation and Parks",
+  "view": {
+   "url": "https://services7.arcgis.com/DSSF7DFVxfZsz379/arcgis/rest/services/Cooling_Heating_Centers_City_of_Los_Angeles/FeatureServer/0",
+   "fields": {
+    "FacilityName": "name",
+    "Address": "address",
+    "AltFacPhone": "phone",
+    "FacilityWebsite": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.3146,
+    32.9172,
+    -116.1954,
+    35.1828
+   ],
+   "features_in_probe": 35
+  }
+ },
+ {
+  "name": "ca-la-cooling-centers-open",
+  "state": "CA",
+  "title": "Cooling and heating centers open now (City of Los Angeles)",
+  "title_es": "Centros de enfriamiento y calefacción abiertos ahora (ciudad de Los Ángeles)",
+  "description": "Relief centers the City has activated right now for heat, cold or poor air quality, with today's hours. Empty means none are activated.",
+  "group": "live",
+  "category": "point",
+  "source": "City of Los Angeles Department of Recreation and Parks (Activated Cooling, Heating & Air Quality Relief Centers)",
+  "view": {
+   "url": "https://services7.arcgis.com/DSSF7DFVxfZsz379/arcgis/rest/services/Activated_Cooling_Heating_Centers_City_of_Los_Angeles/FeatureServer/0",
+   "fields": {
+    "FacilityName": "name",
+    "Address": "address",
+    "HoursOfOperation": "hours",
+    "EVENTNM": "event",
+    "AltFacPhone": "phone",
+    "FacilityWebsite": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.3146,
+    32.9172,
+    -116.1954,
+    35.1828
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "ca-la-pools",
+  "state": "CA",
+  "title": "Public pools today (City of Los Angeles)",
+  "title_es": "Albercas públicas hoy (ciudad de Los Ángeles)",
+  "description": "City pools and aquatic centers with today's open or closed status, hours and closure reason, updated daily by Recreation and Parks.",
+  "group": "places",
+  "category": "point",
+  "source": "City of Los Angeles Department of Recreation and Parks (Daily Pool Operations Report)",
+  "view": {
+   "url": "https://services7.arcgis.com/DSSF7DFVxfZsz379/arcgis/rest/services/LARAP_Daily_Pool_Operations_Report_v2_Public/FeatureServer/0",
+   "fields": {
+    "Aquatic_Center": "name",
+    "Address": "address",
+    "Status": "status",
+    "Pool_Closure_Reason": "notes",
+    "Note": "note",
+    "Weekday_Hours": "hours",
+    "Weekend_Hours": "weekend_hours",
+    "Type": "kind",
+    "Phone_Number": "phone",
+    "Last_Updated": "updated",
+    "Link": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.3146,
+    32.9172,
+    -116.1954,
+    35.1828
+   ],
+   "features_in_probe": 78
+  }
+ },
+ {
+  "name": "ca-la-parks",
+  "state": "CA",
+  "title": "City parks (City of Los Angeles)",
+  "title_es": "Parques municipales (ciudad de Los Ángeles)",
+  "description": "Parks run by the City of Los Angeles Department of Recreation and Parks, with the park type, address and size.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Los Angeles Department of Recreation and Parks (via GeoHub)",
+  "view": {
+   "url": "https://maps.lacity.org/lahub/rest/services/Recreation_and_Parks_Department/MapServer/5",
+   "fields": {
+    "Name": "name",
+    "Park_Class": "kind",
+    "Address": "address",
+    "Area_Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.7699,
+    33.7668,
+    -117.7401,
+    34.3332
+   ],
+   "features_in_probe": 540
+  }
+ },
+ {
+  "name": "ca-la-capital-projects",
+  "state": "CA",
+  "title": "Public works projects (City of Los Angeles)",
+  "title_es": "Obras públicas (ciudad de Los Ángeles)",
+  "description": "Active City construction projects (streets, storm drains, buildings, parks) from the Bureau of Engineering: what is being built, its phase, percent complete, dates and cost.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Los Angeles Bureau of Engineering (Citywide Capital Improvement Projects)",
+  "view": {
+   "url": "https://maps.lacity.org/lahub/rest/services/Citywide_CIP/MapServer/0",
+   "fields": {
+    "ProjectTitle": "name",
+    "ProgramName": "kind",
+    "CurrentPhaseDescription": "status",
+    "ConstPercComp": "percent_complete",
+    "StartDate": "start",
+    "EndDate": "end",
+    "ConstructionCost": "cost"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "ProjectActive = 1"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.7699,
+    33.7668,
+    -117.7401,
+    34.3332
+   ],
+   "features_in_probe": 450
+  }
+ },
+ {
+  "name": "ca-la-street-resurfacing",
+  "state": "CA",
+  "title": "Scheduled street repaving (City of Los Angeles)",
+  "title_es": "Repavimentación de calles programada (ciudad de Los Ángeles)",
+  "description": "Street segments StreetsLA has scheduled for resurfacing, with the fiscal year and month. Expect lane closures and no-parking signs before the work.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Los Angeles Bureau of Street Services (Scheduled Proposed Street Resurfacing Projects)",
+  "view": {
+   "url": "https://maps.lacity.org/lahub/rest/services/Bureau_of_Street_Services/MapServer/8",
+   "fields": {
+    "STREET": "street",
+    "ST_FROM": "from_street",
+    "ST_TO": "to_street",
+    "FISCALY": "year",
+    "SCHEDULE": "month"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.7699,
+    33.7668,
+    -117.7401,
+    34.3332
+   ],
+   "features_in_probe": 99
+  }
+ },
+ {
+  "name": "ca-long-beach-zoning",
+  "state": "CA",
+  "title": "Zoning (Long Beach)",
+  "title_es": "Zonificación (Long Beach)",
+  "description": "City of Long Beach zoning districts, with any planned-development subarea, specific-plan district and overlay. Published weekly from the City's GIS.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Long Beach Development Services (Zoning)",
+  "view": {
+   "url": "https://services6.arcgis.com/yCArG7wGXGyWLqav/arcgis/rest/services/Zoning/FeatureServer/0",
+   "fields": {
+    "ZONING_SYMBOL": "zoning",
+    "SP_DISTRICT": "specific_plan",
+    "PD_SUBAREA": "subarea",
+    "OVERLAY": "overlay",
+    "ORD_NO": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.3187,
+    33.7192,
+    -118.0613,
+    33.8608
+   ],
+   "features_in_probe": 1015
+  }
+ },
+ {
+  "name": "ca-long-beach-general-plan",
+  "state": "CA",
+  "title": "General plan place types (Long Beach 2040)",
+  "title_es": "Tipos de lugar del plan general (Long Beach 2040)",
+  "description": "The Long Beach 2040 General Plan land use 'place types': what each area is planned to become (neighborhoods, corridors, centers, industrial, open space).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Long Beach Development Services (LongBeach2040 General Plan)",
+  "view": {
+   "url": "https://services6.arcgis.com/yCArG7wGXGyWLqav/arcgis/rest/services/LongBeach2040_General_Plan/FeatureServer/0",
+   "fields": {
+    "LANDUSE_ELEMENT_ANNO": "land_use",
+    "LANDUSE_ELEMENT": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.4474,
+    33.6484,
+    -117.9326,
+    33.9316
+   ],
+   "features_in_probe": 410
+  }
+ },
+ {
+  "name": "ca-long-beach-council-districts",
+  "state": "CA",
+  "title": "City council districts (Long Beach)",
+  "title_es": "Distritos del concejo municipal (Long Beach)",
+  "description": "The nine Long Beach City Council districts and their population.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Long Beach (Council Districts)",
+  "view": {
+   "url": "https://services6.arcgis.com/yCArG7wGXGyWLqav/arcgis/rest/services/City_of_Long_Beach_Council_Districts/FeatureServer/0",
+   "fields": {
+    "COUNCIL_NUMBER": "district",
+    "POPULATION": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.2198,
+    33.2236,
+    -117.1602,
+    34.3564
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "ca-long-beach-street-sweeping",
+  "state": "CA",
+  "title": "Street sweeping (Long Beach)",
+  "title_es": "Barrido de calles (Long Beach)",
+  "description": "Long Beach street sweeping areas with the sweeping day(s) and hours. Move your car during posted hours.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Long Beach Public Works (Street Sweeping)",
+  "view": {
+   "url": "https://services6.arcgis.com/yCArG7wGXGyWLqav/arcgis/rest/services/Street_Sweeping/FeatureServer/0",
+   "fields": {
+    "DAYS": "day",
+    "HOUR": "hours"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.4474,
+    33.6484,
+    -117.9326,
+    33.9316
+   ],
+   "features_in_probe": 336
+  }
+ },
+ {
+  "name": "ca-long-beach-historic-districts",
+  "state": "CA",
+  "title": "Historic districts (Long Beach)",
+  "title_es": "Distritos históricos (Long Beach)",
+  "description": "Neighborhoods the City of Long Beach protects as historic districts; exterior changes need a Certificate of Appropriateness.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Long Beach Development Services (Historic Districts)",
+  "view": {
+   "url": "https://services6.arcgis.com/yCArG7wGXGyWLqav/arcgis/rest/services/HistoricDistricts/FeatureServer/0",
+   "fields": {
+    "HISTORIC_SITE": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.7049,
+    33.5068,
+    -117.6751,
+    34.0732
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "ca-long-beach-parks",
+  "state": "CA",
+  "title": "Parks and facilities (Long Beach)",
+  "title_es": "Parques e instalaciones (Long Beach)",
+  "description": "Long Beach parks, beaches, open space and recreation facilities, with the type, address and size.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Long Beach Parks, Recreation and Marine (Park Facilities)",
+  "view": {
+   "url": "https://services6.arcgis.com/yCArG7wGXGyWLqav/arcgis/rest/services/Park_Facilities/FeatureServer/0",
+   "fields": {
+    "PK_NAME": "name",
+    "PK_TYPE": "kind",
+    "PK_ADDRESS": "address",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.7049,
+    33.5068,
+    -117.6751,
+    34.0732
+   ],
+   "features_in_probe": 232
+  }
+ },
+ {
+  "name": "ca-long-beach-eviction-filings",
+  "state": "CA",
+  "title": "Eviction court filings by tract (Long Beach)",
+  "title_es": "Demandas de desalojo por sector censal (Long Beach)",
+  "description": "How many unlawful detainer (eviction) cases were filed in court each year in each Long Beach census tract, from LA Superior Court data, plus affordable units and housing vouchers in the tract. Renters facing eviction can get free help from the City's Right to Counsel program.",
+  "group": "housing",
+  "category": "info",
+  "source": "City of Long Beach (Unlawful Detainer data from Los Angeles Superior Court)",
+  "view": {
+   "url": "https://services6.arcgis.com/yCArG7wGXGyWLqav/arcgis/rest/services/Unlawful_Detainer/FeatureServer/0",
+   "fields": {
+    "Census_Tract": "tract",
+    "F2023": "filings_2023",
+    "F2024": "filings_2024",
+    "F2025": "filings_2025",
+    "F2026": "filings_2026",
+    "Grand_Total": "total",
+    "Affordable_Projects_total_units": "affordable_units",
+    "Total_Housing_Choice_Vouchers": "vouchers"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.2198,
+    33.2236,
+    -117.1602,
+    34.3564
+   ],
+   "features_in_probe": 113
+  }
+ },
+ {
+  "name": "ca-ventura-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (Ventura County)",
+  "title_es": "Distritos de supervisores (condado de Ventura)",
+  "description": "The five Ventura County Board of Supervisors districts, with a link to each supervisor's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "County of Ventura GIS (Supervisorial Districts)",
+  "view": {
+   "url": "https://services2.arcgis.com/XJ5Tb7dTYtAMoyYT/arcgis/rest/services/Supervisorial_Districts/FeatureServer/2",
+   "fields": {
+    "NUMBER_": "district",
+    "ORDINAL": "name",
+    "HYPERLINK": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.2191,
+    32.1345,
+    -114.9809,
+    36.6655
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-ventura-county-zoning",
+  "state": "CA",
+  "title": "Zoning (unincorporated Ventura County)",
+  "title_es": "Zonificación (zonas no incorporadas del condado de Ventura)",
+  "description": "Zoning outside city limits in Ventura County: the zone (with minimum lot size) and what it means. Inside a city, check that city's zoning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of Ventura Resource Management Agency (Zone Designation)",
+  "view": {
+   "url": "https://maps.ventura.org/arcgis/rest/services/DataDownloads/LandUse/MapServer/2",
+   "fields": {
+    "zone": "zoning",
+    "definition": "description",
+    "base_zone": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.2287,
+    34.2292,
+    -118.9713,
+    34.3708
+   ],
+   "features_in_probe": 60
+  }
+ },
+ {
+  "name": "ca-ventura-county-general-plan",
+  "state": "CA",
+  "title": "General plan land use (unincorporated Ventura County)",
+  "title_es": "Uso de suelo del plan general (zonas no incorporadas del condado de Ventura)",
+  "description": "What the Ventura County 2040 General Plan designates each area outside cities for (agricultural, open space, rural, existing community), with acreage.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of Ventura Resource Management Agency (General Plan)",
+  "view": {
+   "url": "https://maps.ventura.org/arcgis/rest/services/DataDownloads/LandUse/MapServer/1",
+   "fields": {
+    "genplandes": "land_use",
+    "type": "kind",
+    "f2040gp": "designation",
+    "acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.3574,
+    34.1584,
+    -118.8426,
+    34.4416
+   ],
+   "features_in_probe": 1146
+  }
+ },
+ {
+  "name": "ca-ventura-oxnard-zoning",
+  "state": "CA",
+  "title": "Zoning (Oxnard)",
+  "title_es": "Zonificación (Oxnard)",
+  "description": "City of Oxnard zoning districts with the zone code and description.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of Ventura GIS (city zoning compilation, City of Oxnard data)",
+  "view": {
+   "url": "https://services2.arcgis.com/XJ5Tb7dTYtAMoyYT/arcgis/rest/services/Zoning_Ventura_Cities/FeatureServer/2",
+   "fields": {
+    "MinLabel": "zoning",
+    "ZoneDescri": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.2122,
+    34.1823,
+    -119.1478,
+    34.2177
+   ],
+   "features_in_probe": 1259
+  }
+ },
+ {
+  "name": "ca-ventura-city-zoning",
+  "state": "CA",
+  "title": "Zoning (City of Ventura)",
+  "title_es": "Zonificación (ciudad de Ventura)",
+  "description": "City of San Buenaventura (Ventura) zoning with the zone, its description and any specific plan.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of Ventura GIS (city zoning compilation, City of Ventura data)",
+  "view": {
+   "url": "https://services2.arcgis.com/XJ5Tb7dTYtAMoyYT/arcgis/rest/services/Zoning_Ventura_Cities/FeatureServer/1",
+   "fields": {
+    "ZONE": "zoning",
+    "ZONEDESC": "description",
+    "PLAN_": "plan"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.2622,
+    34.2523,
+    -119.1978,
+    34.2877
+   ],
+   "features_in_probe": 1047
+  }
+ },
+ {
+  "name": "ca-ventura-thousand-oaks-zoning",
+  "state": "CA",
+  "title": "Zoning (Thousand Oaks)",
+  "title_es": "Zonificación (Thousand Oaks)",
+  "description": "City of Thousand Oaks zoning with the full zone string and primary zone.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of Ventura GIS (city zoning compilation, City of Thousand Oaks data)",
+  "view": {
+   "url": "https://services2.arcgis.com/XJ5Tb7dTYtAMoyYT/arcgis/rest/services/Zoning_Ventura_Cities/FeatureServer/4",
+   "fields": {
+    "ZONING": "zoning",
+    "PRIMARY_ZO": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.0974,
+    34.0484,
+    -118.5826,
+    34.3316
+   ],
+   "features_in_probe": 699
+  }
+ },
+ {
+  "name": "ca-ventura-simi-valley-zoning",
+  "state": "CA",
+  "title": "Zoning (Simi Valley)",
+  "title_es": "Zonificación (Simi Valley)",
+  "description": "City of Simi Valley zoning with the zone, sub-zone and a link to the zoning document.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of Ventura GIS (city zoning compilation, City of Simi Valley data)",
+  "view": {
+   "url": "https://services2.arcgis.com/XJ5Tb7dTYtAMoyYT/arcgis/rest/services/Zoning_Ventura_Cities/FeatureServer/5",
+   "fields": {
+    "ZONE_SYM": "zoning",
+    "ZONE_DES": "description",
+    "SUBZONE_DES": "subzone",
+    "Online_Document": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.7822,
+    34.2523,
+    -118.7178,
+    34.2877
+   ],
+   "features_in_probe": 710
+  }
+ },
+ {
+  "name": "ca-ventura-city-evacuation-areas",
+  "state": "CA",
+  "title": "Active evacuation areas (City of Ventura)",
+  "title_es": "Áreas de evacuación activas (ciudad de Ventura)",
+  "description": "Evacuation orders and warnings the City of Ventura Emergency Operations Center has in effect now. Empty means none are active. Follow VC Alert and official instructions.",
+  "group": "live",
+  "category": "hazard",
+  "source": "City of Ventura Office of Emergency Services (EOC Evacuation Areas, public)",
+  "view": {
+   "url": "https://services.arcgis.com/dBVj4EXO3IdRPOqb/arcgis/rest/services/COV_EOC_Evacuation_Areas_Public/FeatureServer/1",
+   "fields": {
+    "EvacZone": "name",
+    "Status": "status",
+    "EvacType": "kind",
+    "StartDate": "start",
+    "EndDate": "end",
+    "NotesPublic": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "refresh_s": 300
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.2896,
+    33.1372,
+    -117.1704,
+    35.4028
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "ca-ventura-county-services",
+  "state": "CA",
+  "title": "County offices and services (Ventura County)",
+  "title_es": "Oficinas y servicios del condado (condado de Ventura)",
+  "description": "Ventura County government offices and public services (health, social services, animal services, libraries and more) with address, phone and website.",
+  "group": "help",
+  "category": "point",
+  "source": "County of Ventura (County Services)",
+  "view": {
+   "url": "https://services2.arcgis.com/XJ5Tb7dTYtAMoyYT/arcgis/rest/services/County%20Services%20W%20District/FeatureServer/0",
+   "fields": {
+    "Service_Name_Orig": "name",
+    "Category_Orig": "kind",
+    "Full_Address_New": "address",
+    "City_Orig": "city",
+    "Phone_Number": "phone",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.2396,
+    33.1172,
+    -117.1204,
+    35.3828
+   ],
+   "features_in_probe": 255
+  }
+ },
+ {
+  "name": "ca-ventura-oxnard-council-districts",
+  "state": "CA",
+  "title": "City council districts (Oxnard)",
+  "title_es": "Distritos del concejo municipal (Oxnard)",
+  "description": "The six City of Oxnard council districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "County of Ventura GIS (Political boundaries)",
+  "view": {
+   "url": "https://maps.ventura.org/arcgis/rest/services/DataDownloads/Political/MapServer/13",
+   "fields": {
+    "district": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.2098,
+    33.6336,
+    -118.1502,
+    34.7664
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "ca-ventura-city-council-districts",
+  "state": "CA",
+  "title": "City council districts (City of Ventura)",
+  "title_es": "Distritos del concejo municipal (ciudad de Ventura)",
+  "description": "The seven City of Ventura council districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "County of Ventura GIS (Political boundaries)",
+  "view": {
+   "url": "https://maps.ventura.org/arcgis/rest/services/DataDownloads/Political/MapServer/17",
+   "fields": {
+    "district": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.2598,
+    33.7036,
+    -118.2002,
+    34.8364
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "ca-san-diego-county-vote-centers",
+  "state": "CA",
+  "title": "Vote centers, Nov 3 2026 (San Diego County)",
+  "title_es": "Centros de votación, 3 de nov. de 2026 (condado de San Diego)",
+  "description": "Every vote center for the November 3, 2026 election in San Diego County: name, address and whether it opens 11 days or 4 days before Election Day. Any registered voter in the county can vote at any vote center. Check sdvote.com for hours.",
+  "group": "civic",
+  "category": "point",
+  "source": "San Diego County Registrar of Voters via SanGIS (Vote_Centers_2026_11_03)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/Vote_Centers_2026_11_03/FeatureServer/0",
+   "fields": {
+    "vc_site": "name",
+    "vc_addrs": "address",
+    "vc_city": "city",
+    "vc_zip": "zip",
+    "vc_type": "kind",
+    "days": "days_open",
+    "accessible": "accessible"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.6,
+    32.5,
+    -116.1,
+    33.5
+   ],
+   "features_in_probe": 221
+  }
+ },
+ {
+  "name": "ca-san-diego-county-ballot-drop-boxes",
+  "state": "CA",
+  "title": "Ballot drop boxes, Nov 3 2026 (San Diego County)",
+  "title_es": "Buzones para boletas, 3 de nov. de 2026 (condado de San Diego)",
+  "description": "Official ballot drop boxes for the November 3, 2026 election in San Diego County, with the building, address and the hours the box is open. Drop off your signed mail ballot by 8 p.m. on Election Day.",
+  "group": "civic",
+  "category": "point",
+  "source": "San Diego County Registrar of Voters via SanGIS (Ballot_Drop_Boxes_2026_11_03)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/Ballot_Drop_Boxes_2026_11_03/FeatureServer/0",
+   "fields": {
+    "building": "name",
+    "address": "address",
+    "city": "city",
+    "zip": "zip",
+    "hours": "hours",
+    "poll_type": "kind",
+    "note": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.6,
+    32.5,
+    -116.1,
+    33.5
+   ],
+   "features_in_probe": 154
+  }
+ },
+ {
+  "name": "ca-san-diego-county-evacuation-zones",
+  "state": "CA",
+  "title": "Evacuation zones (San Diego County)",
+  "title_es": "Zonas de evacuación (condado de San Diego)",
+  "description": "The pre-planned evacuation zones the county uses in fire, flood and other emergency orders (Genasys zone IDs such as SDC-0189). Look up your zone now so you recognize it in an alert; this map does not show live orders - check the county emergency site or Genasys Protect during an emergency.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "County of San Diego Office of Emergency Services via SanGIS (Evacuation_Zones)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/Evacuation_Zones/FeatureServer/0",
+   "fields": {
+    "label": "name",
+    "zone_id": "zone_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.4,
+    32.6,
+    -116.9,
+    32.95
+   ],
+   "features_in_probe": 765
+  }
+ },
+ {
+  "name": "ca-san-diego-zoning",
+  "state": "CA",
+  "title": "Zoning (City of San Diego)",
+  "title_es": "Zonificación (ciudad de San Diego)",
+  "description": "Base zoning for the City of San Diego: the zone name (for example RS-1-7 single-family or CC-3-9 community commercial), with the ordinance number and date it took effect. Check the Municipal Code or Development Services before you build or buy.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of San Diego Development Services via SanGIS (Zoning_Base_SD)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/Zoning_Base_SD/FeatureServer/0",
+   "fields": {
+    "zone_name": "zoning",
+    "ordnum": "ordinance",
+    "imp_date": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.2244,
+    32.6878,
+    -117.0956,
+    32.7522
+   ],
+   "features_in_probe": 621
+  }
+ },
+ {
+  "name": "ca-san-diego-county-zoning-unincorporated",
+  "state": "CA",
+  "title": "Zoning, unincorporated areas (San Diego County)",
+  "title_es": "Zonificación de zonas no incorporadas (condado de San Diego)",
+  "description": "County zoning for the unincorporated communities (Spring Valley, Lakeside, Ramona, Fallbrook, Alpine...): the use regulation (such as RS, A70, C36), with density, minimum lot size, building type and height codes. Cities have their own zoning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of San Diego Planning & Development Services via SanGIS (Zoning_Unincorporated)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/Zoning_Unincorporated/FeatureServer/0",
+   "fields": {
+    "useregs": "zoning",
+    "legend": "kind",
+    "density": "density",
+    "lot": "min_lot",
+    "buildtype": "building_type",
+    "height": "height",
+    "animalregs": "animals",
+    "ordinance_no": "ordinance",
+    "adoptdate": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.05,
+    32.68,
+    -116.79,
+    32.81
+   ],
+   "features_in_probe": 968
+  }
+ },
+ {
+  "name": "ca-san-diego-general-plan",
+  "state": "CA",
+  "title": "General plan land use (City of San Diego)",
+  "title_es": "Plan general: uso de suelo (ciudad de San Diego)",
+  "description": "What each piece of the City of San Diego is planned to become under its community plans: residential, commercial, industrial, parks and open space, with the planned housing density range (homes per acre).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of San Diego Planning Department via SanGIS (General_Plan_Land_Use_SD)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/General_Plan_Land_Use_SD/FeatureServer/0",
+   "fields": {
+    "plan_desc": "land_use",
+    "gp_lu_desc": "kind",
+    "plan_name": "community",
+    "density_low": "density_min",
+    "density_hi": "density_max"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.1711,
+    32.712,
+    -117.1389,
+    32.728
+   ],
+   "features_in_probe": 292
+  }
+ },
+ {
+  "name": "ca-san-diego-county-parcels",
+  "state": "CA",
+  "title": "Parcels (San Diego County)",
+  "title_es": "Parcelas (condado de San Diego)",
+  "description": "Property parcels countywide with the assessor parcel number (APN), acreage, land-use code and the assessed land and improvement values. Owner names are not shown.",
+  "group": "places",
+  "category": "landuse",
+  "source": "San Diego County Assessor via SanGIS (Parcels)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/Parcels/FeatureServer/0",
+   "fields": {
+    "apn": "parcel_id",
+    "acreage": "acres",
+    "asr_landuse": "land_use",
+    "nucleus_use_cd": "use_code",
+    "asr_land": "land_value",
+    "asr_impr": "improvement_value",
+    "asr_total": "assessed_value",
+    "situs_juris": "jurisdiction"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.153,
+    32.718,
+    -117.145,
+    32.722
+   ],
+   "features_in_probe": 64
+  }
+ },
+ {
+  "name": "ca-san-diego-county-council-districts",
+  "state": "CA",
+  "title": "City council districts (San Diego County cities)",
+  "title_es": "Distritos del concejo municipal (ciudades del condado de San Diego)",
+  "description": "City council districts for every city in San Diego County that elects by district (San Diego, Chula Vista, Escondido, Oceanside and more), with a link to the city's council page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "SanGIS / SANDAG (Council_Districts)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/Council_Districts/FeatureServer/0",
+   "fields": {
+    "district": "district",
+    "jur_name": "city",
+    "website": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.6,
+    32.5,
+    -116.1,
+    33.5
+   ],
+   "features_in_probe": 62
+  }
+ },
+ {
+  "name": "ca-san-diego-county-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (San Diego County)",
+  "title_es": "Distritos de supervisores (condado de San Diego)",
+  "description": "The five County Board of Supervisors districts, with a link to each district's office page. Your supervisor votes on county services such as health, social services, jails and unincorporated-area planning.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "County of San Diego via SanGIS (Supervisor_Districts)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/Supervisor_Districts/FeatureServer/0",
+   "fields": {
+    "distno": "district",
+    "website": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.6,
+    32.5,
+    -116.1,
+    33.5
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-san-diego-historic-districts",
+  "state": "CA",
+  "title": "Historic districts (City of San Diego)",
+  "title_es": "Distritos históricos (ciudad de San Diego)",
+  "description": "Designated historic districts in the City of San Diego (such as North Park, Mission Hills, Burlingame). Exterior changes to buildings in a district may need historic review.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of San Diego Historical Resources Board via SanGIS (Historic_Districts_SD)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/Historic_Districts_SD/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "type": "kind",
+    "reso_number": "resolution",
+    "chrid_link": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.4,
+    32.6,
+    -116.9,
+    32.95
+   ],
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "ca-san-diego-capital-projects",
+  "state": "CA",
+  "title": "Capital improvement projects (City of San Diego)",
+  "title_es": "Proyectos de obras públicas (ciudad de San Diego)",
+  "description": "City of San Diego construction projects for parks, libraries, fire stations, storm drains and other public facilities: project name, status (design, construction...), start date and what is being built.",
+  "group": "growth",
+  "category": "roadops",
+  "source": "City of San Diego Engineering & Capital Projects via SanGIS (CIP_Poly_SD)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/CIP_Poly_SD/FeatureServer/0",
+   "fields": {
+    "title": "name",
+    "cip_stat": "status",
+    "asset_type": "kind",
+    "start_cnst": "start",
+    "comp_area": "community",
+    "cncl_dist": "district",
+    "desc_text": "description",
+    "cip_id": "project_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.4,
+    32.6,
+    -116.9,
+    32.95
+   ],
+   "features_in_probe": 189
+  }
+ },
+ {
+  "name": "ca-san-diego-county-road-resurfacing",
+  "state": "CA",
+  "title": "Road resurfacing projects (unincorporated San Diego County)",
+  "title_es": "Proyectos de repavimentación (zonas no incorporadas del condado de San Diego)",
+  "description": "County road segments scheduled for repaving or sealing in unincorporated San Diego County: street, from/to cross streets, treatment, status and the planned construction season. Expect lane closures while crews work.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "County of San Diego Public Works via SanGIS (Roads_Resurfacing_Projects)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/Roads_Resurfacing_Projects/FeatureServer/0",
+   "fields": {
+    "roadname": "road",
+    "beglocatio": "from",
+    "endlocatio": "to",
+    "treatmenth": "kind",
+    "status": "status",
+    "conststart": "start",
+    "constfinish": "end",
+    "communityg": "community",
+    "miles": "miles",
+    "currentpci": "pavement_score"
+   },
+   "geometry": "line",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.0144,
+    32.7178,
+    -116.8856,
+    32.7822
+   ],
+   "features_in_probe": 1013
+  }
+ },
+ {
+  "name": "ca-san-diego-county-parks",
+  "state": "CA",
+  "title": "Parks (San Diego County, all agencies)",
+  "title_es": "Parques (condado de San Diego, todas las agencias)",
+  "description": "Parks and recreation areas across San Diego County from cities, the county, the state and federal agencies: name, type, owner and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "SanGIS / SANDAG regional parks inventory (Parks)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/Parks/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "park_type": "kind",
+    "ownership": "manager",
+    "gis_acres": "acres",
+    "location": "location"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.4,
+    32.6,
+    -116.9,
+    32.95
+   ],
+   "features_in_probe": 537
+  }
+ },
+ {
+  "name": "ca-san-diego-county-naloxone",
+  "state": "CA",
+  "title": "Naloxone (Narcan) pickup sites (San Diego County)",
+  "title_es": "Dónde conseguir naloxona (Narcan) (condado de San Diego)",
+  "description": "Places in San Diego County that hand out naloxone (Narcan), the nasal spray that reverses an opioid overdose. Usually free and no ID needed; call ahead to confirm hours.",
+  "group": "help",
+  "category": "point",
+  "source": "County of San Diego Health & Human Services Agency via SanGIS (Naloxone_Distribution_Locations)",
+  "view": {
+   "url": "https://geo.sandag.org/server/rest/services/Hosted/Naloxone_Distribution_Locations/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "hours": "hours",
+    "phone_number": "phone",
+    "directions": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.6,
+    32.5,
+    -116.1,
+    33.5
+   ],
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "ca-orange-vote-centers",
+  "state": "CA",
+  "title": "Vote centers, Nov 3 2026 (Orange County)",
+  "title_es": "Centros de votación, 3 de nov. de 2026 (condado de Orange)",
+  "description": "Every Orange County vote center for the November 3, 2026 election, with dates and hours, cross streets, accessibility and which languages have in-person help. Any Orange County voter can use any vote center.",
+  "group": "civic",
+  "category": "point",
+  "source": "Orange County Registrar of Voters (2026_GE_Vote_Centers_PUBLIC)",
+  "view": {
+   "url": "https://services3.arcgis.com/slX5MYawmKdsiRUf/arcgis/rest/services/2026_GE_Vote_Centers_PUBLIC/FeatureServer/4590",
+   "fields": {
+    "Site_Name": "name",
+    "Site_Address": "address",
+    "Site_City": "city",
+    "Site_Zipcode": "zip",
+    "Major_Cross_Streets": "cross_streets",
+    "VC_Type": "kind",
+    "VC_11_Day": "dates_11_day",
+    "VC_11_Hours": "hours_11_day",
+    "VC_4_Day": "dates_4_day",
+    "VC_4_Hours": "hours_4_day",
+    "VC_Election_Hours": "election_day_hours",
+    "ADA": "accessible",
+    "Lang_Spanish_Yes": "spanish",
+    "Lang_Vietnamese_Yes": "vietnamese",
+    "Lang_Korean_Yes": "korean",
+    "Lang_Chinese_Yes": "chinese",
+    "Site_Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.15,
+    33.38,
+    -117.4,
+    33.95
+   ],
+   "features_in_probe": 197
+  }
+ },
+ {
+  "name": "ca-orange-ballot-drop-boxes",
+  "state": "CA",
+  "title": "Ballot drop boxes, Nov 3 2026 (Orange County)",
+  "title_es": "Buzones para boletas, 3 de nov. de 2026 (condado de Orange)",
+  "description": "Official Orange County ballot drop boxes for the November 3, 2026 election: site, address, cross streets and whether it is walk-up or drive-up. Boxes close at 8 p.m. on Election Day.",
+  "group": "civic",
+  "category": "point",
+  "source": "Orange County Registrar of Voters (2026_GE_Ballot_Drop_Box_PUBLIC)",
+  "view": {
+   "url": "https://services3.arcgis.com/slX5MYawmKdsiRUf/arcgis/rest/services/2026_GE_Ballot_Drop_Box_PUBLIC/FeatureServer/4537",
+   "fields": {
+    "Site_Name": "name",
+    "Site_Address": "address",
+    "Site_City": "city",
+    "Site_Zipcode": "zip",
+    "Major_Cross_Streets": "cross_streets",
+    "BDB_Type": "kind",
+    "ADA": "accessible",
+    "Site_Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.15,
+    33.38,
+    -117.4,
+    33.95
+   ],
+   "features_in_probe": 128
+  }
+ },
+ {
+  "name": "ca-orange-zoning-unincorporated",
+  "state": "CA",
+  "title": "Zoning, unincorporated areas (Orange County)",
+  "title_es": "Zonificación de zonas no incorporadas (condado de Orange)",
+  "description": "County zoning for unincorporated Orange County (canyons, Ladera Ranch, Rossmoor, Midway City...): zone code, category and description. Each city has its own zoning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "OC Public Works / OC Development Services (Zoning_Boundaries)",
+  "view": {
+   "url": "https://ocgis.com/arcpub/rest/services/Map_Layers/Zoning_Boundaries/MapServer/0",
+   "fields": {
+    "ZONECLASS": "zoning",
+    "CATEGORY": "kind",
+    "DESCRIPTIO": "description",
+    "ZONE_AND_H": "zone_detail"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.0,
+    33.4,
+    -117.4,
+    33.9
+   ],
+   "features_in_probe": 418
+  }
+ },
+ {
+  "name": "ca-orange-general-plan",
+  "state": "CA",
+  "title": "General plan land use, unincorporated (Orange County)",
+  "title_es": "Plan general: uso de suelo, zonas no incorporadas (condado de Orange)",
+  "description": "The County of Orange General Plan land-use designations for unincorporated areas (open space, suburban residential, community residential...), with acreage.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "OC Development Services via OC Public Works (General_Plan)",
+  "view": {
+   "url": "https://ocgis.com/arcpub/rest/services/Map_Layers/General_Plan/MapServer/0",
+   "fields": {
+    "LUE_DES": "land_use",
+    "CATEGORY": "kind",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.1,
+    33.35,
+    -117.4,
+    33.95
+   ],
+   "features_in_probe": 220
+  }
+ },
+ {
+  "name": "ca-orange-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (Orange County)",
+  "title_es": "Distritos de supervisores (condado de Orange)",
+  "description": "The five Orange County Board of Supervisors districts. Your supervisor votes on county health, social services, the sheriff, John Wayne Airport and unincorporated-area planning.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "OC Public Works (Supervisorial_Districts)",
+  "view": {
+   "url": "https://ocgis.com/arcpub/rest/services/Map_Layers/Supervisorial_Districts/MapServer/0",
+   "fields": {
+    "Label": "name",
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.15,
+    33.38,
+    -117.4,
+    33.95
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-anaheim-zoning",
+  "state": "CA",
+  "title": "Zoning (Anaheim)",
+  "title_es": "Zonificación (Anaheim)",
+  "description": "City of Anaheim zoning: zone code and plain description (for example RS-2 single-family, 7,200 sq ft minimum lot), the ordinance that set it and a link to the zoning code.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Anaheim GIS Open Data (OpenData2 Zoning)",
+  "view": {
+   "url": "https://gis.anaheim.net/map/rest/services/OpenData2/FeatureServer/59",
+   "fields": {
+    "ZONING": "zoning",
+    "ZONINGDES": "description",
+    "ORDINANCENO": "ordinance",
+    "ORDEFFECTDATE": "updated",
+    "CODELINK": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.9261,
+    33.827,
+    -117.8939,
+    33.843
+   ],
+   "features_in_probe": 444
+  }
+ },
+ {
+  "name": "ca-anaheim-general-plan",
+  "state": "CA",
+  "title": "General plan land use (Anaheim)",
+  "title_es": "Plan general: uso de suelo (Anaheim)",
+  "description": "Anaheim General Plan land-use designations: what each area is planned to be (residential densities, commercial, mixed use, industrial, parks), with the council resolution that adopted it.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Anaheim GIS Open Data (OpenData2 General Plan Land Use)",
+  "view": {
+   "url": "https://gis.anaheim.net/map/rest/services/OpenData2/FeatureServer/58",
+   "fields": {
+    "LANDUSE": "land_use",
+    "GP_LU": "code",
+    "MU_TYPE": "mixed_use",
+    "CC_RESNO": "resolution",
+    "EFFECTDATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.9744,
+    33.8028,
+    -117.8456,
+    33.8672
+   ],
+   "features_in_probe": 924
+  }
+ },
+ {
+  "name": "ca-anaheim-street-sweeping",
+  "state": "CA",
+  "title": "Street sweeping days (Anaheim)",
+  "title_es": "Días de barrido de calles (Anaheim)",
+  "description": "Which day (and morning or afternoon) the street sweeper comes in each Anaheim neighborhood. Move your car to avoid a ticket; check posted signs for exact times.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Anaheim Public Works (OpenData2 Street Sweeping)",
+  "view": {
+   "url": "https://gis.anaheim.net/map/rest/services/OpenData2/FeatureServer/14",
+   "fields": {
+    "SWEEP_DAY": "day"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.1,
+    33.7,
+    -117.6,
+    33.95
+   ],
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "ca-anaheim-trash-days",
+  "state": "CA",
+  "title": "Trash pickup days (Anaheim)",
+  "title_es": "Días de recolección de basura (Anaheim)",
+  "description": "The weekday trash, recycling and green waste are collected in each part of Anaheim.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "City of Anaheim Public Works (OpenData2 Trash Collection Days)",
+  "view": {
+   "url": "https://gis.anaheim.net/map/rest/services/OpenData2/FeatureServer/15",
+   "fields": {
+    "DAY": "day"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.1,
+    33.7,
+    -117.6,
+    33.95
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "ca-anaheim-council-districts",
+  "state": "CA",
+  "title": "City council districts (Anaheim)",
+  "title_es": "Distritos del concejo municipal (Anaheim)",
+  "description": "Anaheim's six City Council districts, with a link to each district's council page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Anaheim GIS Open Data (OpenData2 Council Districts)",
+  "view": {
+   "url": "https://gis.anaheim.net/map/rest/services/OpenData2/FeatureServer/46",
+   "fields": {
+    "DISTRICT": "district",
+    "Website": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.1,
+    33.7,
+    -117.6,
+    33.95
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "ca-anaheim-historic-districts",
+  "state": "CA",
+  "title": "Historic districts (Anaheim)",
+  "title_es": "Distritos históricos (Anaheim)",
+  "description": "Anaheim's historic districts and their status (such as the Historic Colony neighborhoods). Changes to homes there may need design review.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Anaheim Planning (OpenData2 Historic Districts)",
+  "view": {
+   "url": "https://gis.anaheim.net/map/rest/services/OpenData2/FeatureServer/0",
+   "fields": {
+    "DISTRICTNAME": "name",
+    "DISTRICTTYPE": "kind",
+    "STATUS": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.1,
+    33.7,
+    -117.6,
+    33.95
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "ca-anaheim-hills-evacuation-zones",
+  "state": "CA",
+  "title": "Evacuation zones, Anaheim Hills (Anaheim)",
+  "title_es": "Zonas de evacuación de Anaheim Hills (Anaheim)",
+  "description": "Anaheim Hills wildfire evacuation zones (Zone 1, Zone 2...) with each zone's neighborhood name and a link to its evacuation flyer. Know your zone before a fire; follow official orders during one.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "City of Anaheim Fire & Rescue / Emergency Management (EvacuationAreas_AnaheimHills)",
+  "view": {
+   "url": "https://services3.arcgis.com/hPs600I3X0RTaaaq/arcgis/rest/services/EvacuationAreas_AnaheimHills/FeatureServer/1",
+   "fields": {
+    "EvacuationZone": "name",
+    "EvacuationZoneName": "area",
+    "WebsiteURL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -118.1,
+    33.7,
+    -117.6,
+    33.95
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "ca-santa-ana-zoning",
+  "state": "CA",
+  "title": "Zoning (Santa Ana)",
+  "title_es": "Zonificación (Santa Ana)",
+  "description": "City of Santa Ana zoning districts: zone class and description, overlay and suffixes, and the ordinance that set it.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Santa Ana Planning & Building Agency (PBA_ZoningClassifications)",
+  "view": {
+   "url": "https://gis.santa-ana.org/server/rest/services/Public/PBA_ZoningClassifications/FeatureServer/0",
+   "fields": {
+    "ZONECLASS": "zoning",
+    "ZONEDESC": "description",
+    "ZONEOVERLAY": "overlay",
+    "ZONESUFFIX": "suffix",
+    "ORD_NO": "ordinance",
+    "ORD_DATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.8861,
+    33.737,
+    -117.8539,
+    33.753
+   ],
+   "features_in_probe": 560
+  }
+ },
+ {
+  "name": "ca-irvine-zoning",
+  "state": "CA",
+  "title": "Zoning (Irvine)",
+  "title_es": "Zonificación (Irvine)",
+  "description": "City of Irvine zoning districts: zone number and description, planning area, and a link to that section of the zoning code.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Irvine Community Development (ZoningDistricts)",
+  "view": {
+   "url": "https://services2.arcgis.com/3mkVbLdbLBFHrfbK/arcgis/rest/services/ZoningDistricts/FeatureServer/20",
+   "fields": {
+    "ZONING": "zoning",
+    "DESCRIPTION": "description",
+    "PLANAREA": "planning_area",
+    "URL": "page",
+    "Acreage": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.8322,
+    33.6639,
+    -117.7678,
+    33.6961
+   ],
+   "features_in_probe": 495
+  }
+ },
+ {
+  "name": "ca-irvine-street-sweeping",
+  "state": "CA",
+  "title": "Street sweeping schedule (Irvine)",
+  "title_es": "Horario de barrido de calles (Irvine)",
+  "description": "When each Irvine street is swept: day of the week, which weeks of the month and the time window. Park off the street during that window.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Irvine Public Works (StreetSweepingCenterlines_2025)",
+  "view": {
+   "url": "https://services2.arcgis.com/3mkVbLdbLBFHrfbK/arcgis/rest/services/StreetSweepingCenterlines_2025/FeatureServer/210",
+   "fields": {
+    "STREET_NAME": "street",
+    "CONTRACTOR_DAY": "day",
+    "CONTRACTOR_WEEK": "weeks",
+    "CONTRACTOR_TIME": "time",
+    "IN_HOUSE_STAFF_DAY": "day_city_crew",
+    "IN_HOUSE_WEEK": "weeks_city_crew",
+    "IN_HOUSE_STAFF_TIME": "time_city_crew"
+   },
+   "geometry": "line",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.8161,
+    33.672,
+    -117.7839,
+    33.688
+   ],
+   "features_in_probe": 411
+  }
+ },
+ {
+  "name": "ca-riverside-street-sweeping",
+  "state": "CA",
+  "title": "Street sweeping days (City of Riverside)",
+  "title_es": "Días de barrido de calles (ciudad de Riverside)",
+  "description": "Which day the street sweeper comes in each City of Riverside zone. Move your car the night before; posted signs have exact times.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Riverside Public Works (Street_Sweeping_Zones)",
+  "view": {
+   "url": "https://services.arcgis.com/Fu2oOWg1Aw7azh41/arcgis/rest/services/Street_Sweeping_Zones/FeatureServer/0",
+   "fields": {
+    "StreetSweepDay": "day",
+    "StreetSweepZone": "zone",
+    "StreetSweepRoute": "route",
+    "LastUpdated": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.6,
+    33.82,
+    -117.1,
+    34.05
+   ],
+   "features_in_probe": 136
+  }
+ },
+ {
+  "name": "ca-riverside-trash-zones",
+  "state": "CA",
+  "title": "Trash pickup zones (City of Riverside)",
+  "title_es": "Zonas de recolección de basura (ciudad de Riverside)",
+  "description": "City of Riverside solid-waste collection zones (who picks up your trash and the service type).",
+  "group": "infra",
+  "category": "boundary",
+  "source": "City of Riverside Public Works (Trash_Zones)",
+  "view": {
+   "url": "https://services.arcgis.com/Fu2oOWg1Aw7azh41/arcgis/rest/services/Trash_Zones/FeatureServer/0",
+   "fields": {
+    "ZoneName": "name",
+    "ServiceType": "kind",
+    "LastUpdated": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.6,
+    33.82,
+    -117.1,
+    34.05
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-riverside-zoning",
+  "state": "CA",
+  "title": "Zoning (City of Riverside)",
+  "title_es": "Zonificación (ciudad de Riverside)",
+  "description": "City of Riverside zoning: base zone and description, overlay zones and a link to the zoning code.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Riverside Community & Economic Development (RivODCityZoning)",
+  "view": {
+   "url": "https://services.arcgis.com/Fu2oOWg1Aw7azh41/arcgis/rest/services/RivODCityZoning/FeatureServer/1",
+   "fields": {
+    "ZoneAbbreviation": "zoning",
+    "ZoneDescription": "description",
+    "CombinedOverlayZones": "overlay",
+    "ZoneCodeLabel": "label",
+    "Hyperlink": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.4222,
+    33.9339,
+    -117.3578,
+    33.9661
+   ],
+   "features_in_probe": 1110
+  }
+ },
+ {
+  "name": "ca-riverside-general-plan",
+  "state": "CA",
+  "title": "General plan land use (City of Riverside)",
+  "title_es": "Plan general: uso de suelo (ciudad de Riverside)",
+  "description": "City of Riverside General Plan land-use designations, with the maximum homes per acre and floor-area ratio allowed.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Riverside Planning (Riverside_GeneralPlan)",
+  "view": {
+   "url": "https://services.arcgis.com/Fu2oOWg1Aw7azh41/arcgis/rest/services/Riverside_GeneralPlan/FeatureServer/0",
+   "fields": {
+    "GenPlanLandUseName": "land_use",
+    "GenPlanLandUseAbrev": "code",
+    "MaxDwellingUnitAcre": "max_units_acre",
+    "MaxFARAcre": "max_far",
+    "CombinedMaxDensity": "max_density",
+    "Notes": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.4222,
+    33.9339,
+    -117.3578,
+    33.9661
+   ],
+   "features_in_probe": 722
+  }
+ },
+ {
+  "name": "ca-riverside-county-vote-centers",
+  "state": "CA",
+  "title": "Vote centers, Nov 3 2026 (Riverside County)",
+  "title_es": "Centros de votación, 3 de nov. de 2026 (condado de Riverside)",
+  "description": "Riverside County vote centers for the November 3, 2026 election, with the room, address and opening dates and hours. Any county voter can vote at any vote center.",
+  "group": "civic",
+  "category": "point",
+  "source": "Riverside County Registrar of Voters (ROVER_Core_2026)",
+  "view": {
+   "url": "https://services1.arcgis.com/pWmBUdSlVpXStHU6/arcgis/rest/services/ROVER_Core_2026/FeatureServer/0",
+   "fields": {
+    "Voting_Location_Name": "name",
+    "Location": "location",
+    "Address": "address",
+    "Municipality": "city",
+    "szHours": "hours",
+    "VotingFacilityType": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.7,
+    33.4,
+    -115.4,
+    34.1
+   ],
+   "features_in_probe": 150
+  }
+ },
+ {
+  "name": "ca-riverside-county-zoning",
+  "state": "CA",
+  "title": "Zoning, unincorporated areas (Riverside County)",
+  "title_es": "Zonificación de zonas no incorporadas (condado de Riverside)",
+  "description": "Riverside County zoning for unincorporated communities (zone code such as R-1, A-1, C-1/C-P) and the change-of-zone case number. Cities have their own zoning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Riverside County TLMA Planning / RCIT GIS Open Data (Planning: Zoning)",
+  "view": {
+   "url": "https://gis.countyofriverside.us/arcgis_mapping/rest/services/OpenData/Planning/MapServer/1",
+   "fields": {
+    "ZONING": "zoning",
+    "CZNUMBER": "case_number"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.3644,
+    33.7978,
+    -117.2356,
+    33.8622
+   ],
+   "features_in_probe": 623
+  }
+ },
+ {
+  "name": "ca-riverside-county-parcels",
+  "state": "CA",
+  "title": "Parcels (Riverside County)",
+  "title_es": "Parcelas (condado de Riverside)",
+  "description": "Property parcels countywide with the assessor parcel number (APN), property class (land use), acreage and assessed land and structure values. Owner names and mailing addresses are not shown.",
+  "group": "places",
+  "category": "landuse",
+  "source": "Riverside County Assessor-County Clerk-Recorder / RCIT GIS Open Data (PARCELS_CREST)",
+  "view": {
+   "url": "https://gis.countyofriverside.us/arcgis_mapping/rest/services/OpenData/Assessor/MapServer/50",
+   "fields": {
+    "APN": "parcel_id",
+    "CLASS_CODE": "land_use",
+    "ACREAGE": "acres",
+    "LAND": "land_value",
+    "STRUCTURES": "improvement_value",
+    "CITY": "city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.384,
+    33.979,
+    -117.368,
+    33.987
+   ],
+   "features_in_probe": 868
+  }
+ },
+ {
+  "name": "ca-riverside-county-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (Riverside County)",
+  "title_es": "Distritos de supervisores (condado de Riverside)",
+  "description": "The five Riverside County Board of Supervisors districts. Your supervisor votes on county health, social services, the sheriff and unincorporated-area planning.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Riverside County RCIT GIS Open Data (SupervisorialDistricts)",
+  "view": {
+   "url": "https://gis.countyofriverside.us/arcgis_mapping/rest/services/OpenData/SupervisorialDistricts/MapServer/0",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.7,
+    33.4,
+    -115.4,
+    34.1
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-san-bernardino-parcels",
+  "state": "CA",
+  "title": "Parcels (San Bernardino County)",
+  "title_es": "Parcelas (condado de San Bernardino)",
+  "description": "Property parcels countywide with the assessor parcel number, acreage, property use, zoning, and assessed land and improvement values. Owner names are not shown.",
+  "group": "places",
+  "category": "landuse",
+  "source": "San Bernardino County Assessor / Innovation & Technology (Parcels with Redacted Owner Name)",
+  "view": {
+   "url": "https://services.arcgis.com/aA3snZwJfFkVyDuP/arcgis/rest/services/Parcels_for_San_Bernardino_County/FeatureServer/0",
+   "fields": {
+    "ParcelNumber": "parcel_id",
+    "Acreage": "acres",
+    "AssessDescription": "land_use",
+    "Zoning": "zoning",
+    "ZoningDescription": "zoning_description",
+    "LandValue": "land_value",
+    "ImprovementValue": "improvement_value",
+    "Jurisdiction": "jurisdiction"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.297,
+    34.099,
+    -117.281,
+    34.107
+   ],
+   "features_in_probe": 529
+  }
+ },
+ {
+  "name": "ca-san-bernardino-zoning",
+  "state": "CA",
+  "title": "Zoning, unincorporated areas (San Bernardino County)",
+  "title_es": "Zonificación de zonas no incorporadas (condado de San Bernardino)",
+  "description": "San Bernardino County zoning districts for unincorporated areas (Phelan, Lucerne Valley, Lake Arrowhead, Bloomington...): zone label, land-use district and community plan.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "San Bernardino County Land Use Services (LUS/Zoning_Districts)",
+  "view": {
+   "url": "https://maps.sbcounty.gov/gis/rest/services/LUS/Zoning_Districts/MapServer/0",
+   "fields": {
+    "LABEL": "zoning",
+    "ZONING": "zone_code",
+    "LUD": "land_use_district",
+    "COMMUNITYPLAN": "community"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.6,
+    34.3,
+    -117.1,
+    34.55
+   ],
+   "features_in_probe": 279
+  }
+ },
+ {
+  "name": "ca-san-bernardino-land-use",
+  "state": "CA",
+  "title": "General plan land use categories (San Bernardino County)",
+  "title_es": "Categorías de uso de suelo del plan general (condado de San Bernardino)",
+  "description": "Countywide Plan land-use categories adopted in 2020 for unincorporated San Bernardino County (rural living, very low density residential, commercial, open space...).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "San Bernardino County Land Use Services (LUS/Land_Use_Categories_Public)",
+  "view": {
+   "url": "https://maps.sbcounty.gov/gis/rest/services/LUS/Land_Use_Categories_Public/FeatureServer/1",
+   "fields": {
+    "LUC_LABEL": "land_use",
+    "LUC": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.6,
+    34.3,
+    -117.1,
+    34.55
+   ],
+   "features_in_probe": 292
+  }
+ },
+ {
+  "name": "ca-san-bernardino-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (San Bernardino County)",
+  "title_es": "Distritos de supervisores (condado de San Bernardino)",
+  "description": "The five San Bernardino County Board of Supervisors districts (2021 lines from the 2020 Census).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "County of San Bernardino (Supervisorial Districts 2020 Census)",
+  "view": {
+   "url": "https://services.arcgis.com/aA3snZwJfFkVyDuP/arcgis/rest/services/Supervisorial_Districts_2020_Census/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "district",
+    "SQ_MILES": "square_miles"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -117.8,
+    34.0,
+    -116.0,
+    34.7
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-santa-barbara-evacuation-zones",
+  "state": "CA",
+  "title": "Evacuation zones (Santa Barbara County)",
+  "title_es": "Zonas de evacuación (condado de Santa Bárbara)",
+  "description": "Santa Barbara County's Genasys evacuation zones (zone IDs such as GOL-607), with the bordering streets and a link to the zone's live status page on Genasys Protect. The status shown here may be out of date - during an emergency always open the zone link or readysbc.org.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "County of Santa Barbara Office of Emergency Management (COSB Current Emergency Zones)",
+  "view": {
+   "url": "https://services9.arcgis.com/ztLwtMXzJMy86yJE/arcgis/rest/services/COSB_Current_Emergency_Zones/FeatureServer/4",
+   "fields": {
+    "zone_id": "zone_id",
+    "known_as": "name",
+    "north_of": "north_of",
+    "south_of": "south_of",
+    "east_of": "east_of",
+    "west_of": "west_of",
+    "zone_status": "status",
+    "url": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.2,
+    34.3,
+    -119.2,
+    34.6
+   ],
+   "features_in_probe": 280
+  }
+ },
+ {
+  "name": "ca-santa-barbara-zoning",
+  "state": "CA",
+  "title": "Zoning, unincorporated areas (Santa Barbara County)",
+  "title_es": "Zonificación de zonas no incorporadas (condado de Santa Bárbara)",
+  "description": "Santa Barbara County zoning for unincorporated areas (Montecito, Isla Vista, Orcutt, Santa Ynez Valley...): zone code, general class and description, and units per acre where set.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of Santa Barbara Planning & Development (zoning_polys_LUZO)",
+  "view": {
+   "url": "https://services.arcgis.com/KkJhFbLnXVqahKz2/arcgis/rest/services/zoning_polys_LUZO/FeatureServer/1",
+   "fields": {
+    "ZONING": "zoning",
+    "ZonDescrip": "description",
+    "GEN_CLASS": "kind",
+    "GEN_TYPE": "type",
+    "ZonUnPerAc": "units_per_acre",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.95,
+    34.38,
+    -119.45,
+    34.5
+   ],
+   "features_in_probe": 569
+  }
+ },
+ {
+  "name": "ca-santa-barbara-land-use",
+  "state": "CA",
+  "title": "General plan land use, unincorporated (Santa Barbara County)",
+  "title_es": "Plan general: uso de suelo, zonas no incorporadas (condado de Santa Bárbara)",
+  "description": "Santa Barbara County Comprehensive Plan land-use designations for unincorporated areas, with a description and acreage.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of Santa Barbara Planning & Development (land_use_poly_LUZO)",
+  "view": {
+   "url": "https://services.arcgis.com/KkJhFbLnXVqahKz2/arcgis/rest/services/land_use_poly_LUZO/FeatureServer/0",
+   "fields": {
+    "LAND_USE": "land_use",
+    "LU_Descrip": "description",
+    "GEN_CLASS": "kind",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.95,
+    34.38,
+    -119.45,
+    34.5
+   ],
+   "features_in_probe": 580
+  }
+ },
+ {
+  "name": "ca-santa-barbara-historic-landmarks",
+  "state": "CA",
+  "title": "County historic landmarks (Santa Barbara County)",
+  "title_es": "Monumentos históricos del condado (condado de Santa Bárbara)",
+  "description": "Places designated as County Historic Landmarks by the Santa Barbara County Historic Landmarks Advisory Commission, with the landmark number, location and date designated.",
+  "group": "places",
+  "category": "point",
+  "source": "County of Santa Barbara Planning & Development / HLAC (Historic_Landmarks)",
+  "view": {
+   "url": "https://services.arcgis.com/KkJhFbLnXVqahKz2/arcgis/rest/services/Historic_Landmarks/FeatureServer/1",
+   "fields": {
+    "Name": "name",
+    "LandmarkNo": "number",
+    "Location": "location",
+    "Descriptio": "description",
+    "DateDesign": "year"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.7,
+    34.3,
+    -119.4,
+    35.0
+   ],
+   "features_in_probe": 55
+  }
+ },
+ {
+  "name": "ca-sf-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (San Francisco)",
+  "title_es": "Distritos de supervisores (San Francisco)",
+  "description": "The 11 Board of Supervisors districts of the City and County of San Francisco. Your district supervisor is your local representative on city laws, budget and services.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City and County of San Francisco (DataSF, Current Supervisor Districts)",
+  "license": "DataSF open data (PDDL)",
+  "view": {
+   "url": "https://services.arcgis.com/Zs2aNLFN00jrS4gG/arcgis/rest/services/Current_Supervisor_Districts_from_DataSF_pulled_nightly_/FeatureServer/0",
+   "fields": {
+    "sup_dist_num": "district",
+    "sup_dist_name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.52,
+    37.7,
+    -122.35,
+    37.83
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "ca-sf-street-sweeping",
+  "state": "CA",
+  "title": "Street sweeping schedule (San Francisco)",
+  "title_es": "Horario de barrido de calles (San Francisco)",
+  "description": "Which day and hours each side of each block is swept, and which weeks of the month. Move your car before the posted time to avoid a ticket; most blocks are not swept on holidays.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "San Francisco Public Works (DataSF, Street Sweeping Schedule)",
+  "license": "DataSF open data (PDDL)",
+  "view": {
+   "url": "https://services.arcgis.com/Zs2aNLFN00jrS4gG/arcgis/rest/services/Street_Sweeping_Schedule_from_DataSF_pulled_weekly_/FeatureServer/0",
+   "fields": {
+    "corridor": "street",
+    "limits": "location",
+    "blockside": "side",
+    "fullname": "schedule",
+    "weekday": "day",
+    "fromhour": "from_hour",
+    "tohour": "to_hour",
+    "week1": "week1",
+    "week2": "week2",
+    "week3": "week3",
+    "week4": "week4",
+    "week5": "week5",
+    "holidays": "holidays"
+   },
+   "geometry": "line",
+   "min_zoom": 18
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.416,
+    37.782,
+    -122.408,
+    37.786
+   ],
+   "features_in_probe": 697
+  }
+ },
+ {
+  "name": "ca-sf-street-closures",
+  "state": "CA",
+  "title": "Temporary street closures today (San Francisco)",
+  "title_es": "Cierres temporales de calles hoy (San Francisco)",
+  "description": "Streets closed right now for permitted events, shared spaces, construction and other temporary uses, from SFMTA's ISCOTT permits. Shows only closures whose permit window includes the current time.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "San Francisco Municipal Transportation Agency (DataSF, Temporary Street Closures)",
+  "license": "DataSF open data (PDDL)",
+  "view": {
+   "url": "https://services.arcgis.com/Zs2aNLFN00jrS4gG/arcgis/rest/services/Temporary_Street_Closures_from_DataSF_pulled_daily_/FeatureServer/0",
+   "fields": {
+    "street": "street",
+    "loc_desc": "location",
+    "type": "kind",
+    "veh_imp": "impact",
+    "status": "status",
+    "start_dt": "start",
+    "end_dt": "end",
+    "info": "notes"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "start_dt <= CURRENT_TIMESTAMP AND end_dt >= CURRENT_TIMESTAMP",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.52,
+    37.7,
+    -122.35,
+    37.83
+   ],
+   "features_in_probe": 42
+  }
+ },
+ {
+  "name": "ca-sf-parcels-zoning",
+  "state": "CA",
+  "title": "Parcels and zoning (San Francisco)",
+  "title_es": "Lotes y zonificación (San Francisco)",
+  "description": "Every active San Francisco parcel (block/lot number) with its zoning code and zoning district, neighborhood and supervisor district. Check the Planning Code before building or opening a business.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "San Francisco Planning / Assessor-Recorder (DataSF, Active Parcels)",
+  "license": "DataSF open data (PDDL)",
+  "view": {
+   "url": "https://services.arcgis.com/Zs2aNLFN00jrS4gG/arcgis/rest/services/Active_Parcels_from_DataSF_pulled_daily_/FeatureServer/0",
+   "fields": {
+    "mapblklot": "parcel_id",
+    "zoning_code": "zoning",
+    "zoning_district": "description",
+    "analysis_neighborhood": "area",
+    "supervisor_district": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.416,
+    37.782,
+    -122.408,
+    37.786
+   ],
+   "features_in_probe": 968
+  }
+ },
+ {
+  "name": "ca-sf-affordable-housing",
+  "state": "CA",
+  "title": "Affordable housing buildings (San Francisco)",
+  "title_es": "Edificios de vivienda asequible (San Francisco)",
+  "description": "Income-restricted affordable housing in the city's portfolio (Mayor's Office of Housing and Community Development): building name, address, number of affordable units, and units set aside for seniors or formerly homeless people. Apply through DAHLIA, the city's housing portal.",
+  "group": "housing",
+  "category": "point",
+  "source": "San Francisco Mayor's Office of Housing and Community Development (DataSF, MOHCD Affordable Housing Portfolio)",
+  "license": "DataSF open data (PDDL)",
+  "view": {
+   "url": "https://services.arcgis.com/Zs2aNLFN00jrS4gG/arcgis/rest/services/MOHCD_Affordable_Housing_Portfolio_from_DataSF_pulled_weekly_/FeatureServer/0",
+   "fields": {
+    "development_name": "name",
+    "marketing_address": "address",
+    "marketing_zip_code": "zip",
+    "planning_neighborhood": "area",
+    "tenure": "kind",
+    "project_status": "status",
+    "total_project_units": "units",
+    "income_restricted_resid_units": "affordable_units",
+    "senior_units_rollup": "senior_units",
+    "homeless_units_rollup": "homeless_units",
+    "housing_program_program_name": "program"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.52,
+    37.7,
+    -122.35,
+    37.83
+   ],
+   "features_in_probe": 845
+  }
+ },
+ {
+  "name": "ca-oakland-zoning",
+  "state": "CA",
+  "title": "Zoning (Oakland)",
+  "title_es": "Zonificación (Oakland)",
+  "description": "Oakland's base zoning districts (residential, commercial, industrial, open space...), as effective July 1, 2026. Check the Oakland Planning Code before building or buying.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Oakland Planning & Building (Zoning, Ord. 13875, effective 2026-07-01)",
+  "license": "City of Oakland open data",
+  "view": {
+   "url": "https://services.arcgis.com/9tC74aDHuml0x5Yz/arcgis/rest/services/Zoning_Group_Layers_/FeatureServer/0",
+   "fields": {
+    "BASEZONE": "zoning",
+    "OVERLAY": "overlay",
+    "ORDINANCE": "ordinance",
+    "LASTUPDATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.33,
+    37.77,
+    -122.18,
+    37.84
+   ],
+   "features_in_probe": 747
+  }
+ },
+ {
+  "name": "ca-oakland-general-plan",
+  "state": "CA",
+  "title": "General plan land use (Oakland)",
+  "title_es": "Uso de suelo del plan general (Oakland)",
+  "description": "Oakland's adopted general plan land-use designations (the long-range plan for what each area should become), effective December 2024.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Oakland Planning & Building (General Plan, Res. 90542)",
+  "license": "City of Oakland open data",
+  "view": {
+   "url": "https://services.arcgis.com/9tC74aDHuml0x5Yz/arcgis/rest/services/General_Plan_Eff20241217_Res90542/FeatureServer/0",
+   "fields": {
+    "GPLANCODE": "land_use",
+    "CLASSIFN": "description",
+    "RESOLUTION": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.36,
+    37.73,
+    -122.12,
+    37.86
+   ],
+   "features_in_probe": 493
+  }
+ },
+ {
+  "name": "ca-oakland-council-districts",
+  "state": "CA",
+  "title": "City council districts (Oakland)",
+  "title_es": "Distritos del concejo municipal (Oakland)",
+  "description": "Oakland's seven city council districts (2022 redistricting), with a link to your council member's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Oakland (Council Districts 2022 Revised)",
+  "license": "City of Oakland open data",
+  "view": {
+   "url": "https://services.arcgis.com/9tC74aDHuml0x5Yz/arcgis/rest/services/CouncilDistrict_2022_Revised/FeatureServer/0",
+   "fields": {
+    "NAME": "district",
+    "FULLNAME": "name",
+    "URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.36,
+    37.7,
+    -122.1,
+    37.89
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "ca-alameda-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (Alameda County)",
+  "title_es": "Distritos de supervisores (condado de Alameda)",
+  "description": "The five Alameda County Board of Supervisors districts. Your supervisor represents you on county services such as health, social services, unincorporated roads and the sheriff.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Alameda County Information Technology Department (Board of Supervisors District Lines)",
+  "license": "Alameda County open data",
+  "view": {
+   "url": "https://services5.arcgis.com/ROBnTHSNjoZ2Wm1P/arcgis/rest/services/Board_of_Supervisors_District_Lines/FeatureServer/0",
+   "fields": {
+    "DISTRICT_ID": "district",
+    "Dist_name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.35,
+    37.45,
+    -121.45,
+    37.91
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-alameda-city-council-districts",
+  "state": "CA",
+  "title": "City council districts (Alameda County cities)",
+  "title_es": "Distritos de concejos municipales (ciudades del condado de Alameda)",
+  "description": "Council districts for the Alameda County cities that elect council members by district (Oakland, Berkeley, Fremont, Hayward, San Leandro and others), as used by the Registrar of Voters.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Alameda County Registrar of Voters / ITD (City Council Districts)",
+  "license": "Alameda County open data",
+  "view": {
+   "url": "https://services5.arcgis.com/ROBnTHSNjoZ2Wm1P/arcgis/rest/services/City_Council_Districts/FeatureServer/0",
+   "fields": {
+    "DIST_NAME": "name",
+    "DISTRICT_ID": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.35,
+    37.45,
+    -121.45,
+    37.91
+   ],
+   "features_in_probe": 49
+  }
+ },
+ {
+  "name": "ca-alameda-vote-centers",
+  "state": "CA",
+  "title": "Vote centers, Nov 3 2026 election (Alameda County)",
+  "title_es": "Centros de votación, elección del 3 de nov. de 2026 (condado de Alameda)",
+  "description": "Where to vote in person in Alameda County for the November 3, 2026 General Election: any vote center works for any county voter. 'Voting days' tells you whether the site is open 11 days or only the last 4 days. Confirm hours with the Registrar of Voters.",
+  "group": "civic",
+  "category": "point",
+  "source": "Alameda County Registrar of Voters (Vote Centers 2026-11-03, updated 2026-09-29)",
+  "license": "Alameda County open data",
+  "view": {
+   "url": "https://services5.arcgis.com/ROBnTHSNjoZ2Wm1P/arcgis/rest/services/MapVote_Centers_20261103_update_09_29_26/FeatureServer/0",
+   "fields": {
+    "Location": "name",
+    "Address": "address",
+    "City": "city",
+    "Voting_Day": "voting_days",
+    "VC_ID": "site_id"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.35,
+    37.45,
+    -121.45,
+    37.91
+   ],
+   "features_in_probe": 101
+  }
+ },
+ {
+  "name": "ca-alameda-parcels",
+  "state": "CA",
+  "title": "Parcels (Alameda County)",
+  "title_es": "Lotes (condado de Alameda)",
+  "description": "Assessor parcels in Alameda County with the parcel number (APN), land-use code and the assessed land and improvement values for the current roll. Owner information is not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Alameda County Assessor's Office (Parcel Boundaries, 2026)",
+  "license": "Alameda County open data",
+  "view": {
+   "url": "https://services5.arcgis.com/ROBnTHSNjoZ2Wm1P/arcgis/rest/services/Parcels/FeatureServer/0",
+   "fields": {
+    "APN": "parcel_id",
+    "UseCode": "land_use",
+    "Land": "land_value",
+    "Imps": "improvement_value",
+    "SitusCity": "city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.274,
+    37.802,
+    -122.266,
+    37.806
+   ],
+   "features_in_probe": 276
+  }
+ },
+ {
+  "name": "ca-santa-clara-county-general-plan",
+  "state": "CA",
+  "title": "General plan land use (unincorporated Santa Clara County)",
+  "title_es": "Uso de suelo del plan general (zonas no incorporadas del condado de Santa Clara)",
+  "description": "Santa Clara County's general plan designations for unincorporated land (hillsides, ranchlands, rural residential, agriculture). Cities such as San José have their own general plans.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of Santa Clara Department of Planning and Development (Planning Office Data Service)",
+  "license": "County of Santa Clara open data",
+  "view": {
+   "url": "https://services2.arcgis.com/tcv2cMrq63AgvbHF/arcgis/rest/services/PlanningOfficeDataService2/FeatureServer/0",
+   "fields": {
+    "GEN_PLAN": "land_use",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.2,
+    36.9,
+    -121.2,
+    37.5
+   ],
+   "features_in_probe": 291
+  }
+ },
+ {
+  "name": "ca-santa-clara-county-zoning",
+  "state": "CA",
+  "title": "Zoning (unincorporated Santa Clara County)",
+  "title_es": "Zonificación (zonas no incorporadas del condado de Santa Clara)",
+  "description": "Zoning districts for unincorporated Santa Clara County, with the base zone and combining districts (scenic road, hillside, design review and others). Inside a city, check that city's zoning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of Santa Clara Department of Planning and Development (Planning Office Data Service)",
+  "license": "County of Santa Clara open data",
+  "view": {
+   "url": "https://services2.arcgis.com/tcv2cMrq63AgvbHF/arcgis/rest/services/PlanningOfficeDataService2/FeatureServer/1",
+   "fields": {
+    "Zoning": "zoning",
+    "BaseZone": "kind",
+    "LotSizeZone": "min_lot"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.2,
+    37.0,
+    -121.7,
+    37.4
+   ],
+   "features_in_probe": 617
+  }
+ },
+ {
+  "name": "ca-santa-clara-county-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (Santa Clara County)",
+  "title_es": "Distritos de supervisores (condado de Santa Clara)",
+  "description": "The five Santa Clara County Board of Supervisors districts (2021 boundaries). Your supervisor represents you on county health, social services, the county hospital system and unincorporated areas.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "County of Santa Clara Department of Planning and Development (Planning Office Data Service)",
+  "license": "County of Santa Clara open data",
+  "view": {
+   "url": "https://services2.arcgis.com/tcv2cMrq63AgvbHF/arcgis/rest/services/PlanningOfficeDataService2/FeatureServer/5",
+   "fields": {
+    "DISTRICT": "district",
+    "SQ_MILES": "square_miles"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.2,
+    36.9,
+    -121.2,
+    37.5
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-santa-clara-county-fire-districts",
+  "state": "CA",
+  "title": "Fire protection districts (Santa Clara County)",
+  "title_es": "Distritos de protección contra incendios (condado de Santa Clara)",
+  "description": "Which fire protection district covers each area of Santa Clara County (for example County Fire, South Santa Clara County Fire, Saratoga Fire).",
+  "group": "infra",
+  "category": "boundary",
+  "source": "County of Santa Clara Department of Planning and Development / LAFCO (Planning Office Data Service)",
+  "license": "County of Santa Clara open data",
+  "view": {
+   "url": "https://services2.arcgis.com/tcv2cMrq63AgvbHF/arcgis/rest/services/PlanningOfficeDataService2/FeatureServer/14",
+   "fields": {
+    "DISTRICT_NAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.2,
+    36.9,
+    -121.2,
+    37.5
+   ],
+   "features_in_probe": 41
+  }
+ },
+ {
+  "name": "ca-san-jose-zoning",
+  "state": "CA",
+  "title": "Zoning (San José)",
+  "title_es": "Zonificación (San José)",
+  "description": "San José zoning districts, including planned-development (PD) zonings with their allowed use and density. Check the San José Municipal Code (Title 20) before building.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of San José Planning, Building & Code Enforcement (Open Data Service)",
+  "license": "City of San José open data",
+  "view": {
+   "url": "https://geo.sanjoseca.gov/server/rest/services/OPN/OPN_OpenDataService/MapServer/401",
+   "fields": {
+    "ZONINGABBREV": "zoning",
+    "ZONING": "description",
+    "PDUSE": "pd_use",
+    "PDDENSITY": "density",
+    "REZONINGFILE": "file_number"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.904,
+    37.328,
+    -121.872,
+    37.344
+   ],
+   "features_in_probe": 559
+  }
+ },
+ {
+  "name": "ca-san-jose-general-plan",
+  "state": "CA",
+  "title": "General Plan 2040 land use (San José)",
+  "title_es": "Uso de suelo del Plan General 2040 (San José)",
+  "description": "Envision San José 2040 general plan land-use designations: what each area is planned to become (neighborhoods, urban villages, employment lands, open space).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of San José Planning, Building & Code Enforcement (Open Data Service)",
+  "license": "City of San José open data",
+  "view": {
+   "url": "https://geo.sanjoseca.gov/server/rest/services/OPN/OPN_OpenDataService/MapServer/404",
+   "fields": {
+    "GPDESIGNATION": "land_use",
+    "GPABBREVIATION": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.92,
+    37.32,
+    -121.856,
+    37.352
+   ],
+   "features_in_probe": 1351
+  }
+ },
+ {
+  "name": "ca-san-jose-council-districts",
+  "state": "CA",
+  "title": "City council districts (San José)",
+  "title_es": "Distritos del concejo municipal (San José)",
+  "description": "San José's 10 city council districts, with population and a link to your council member's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of San José (Open Data Service, City Council Districts)",
+  "license": "City of San José open data",
+  "view": {
+   "url": "https://geo.sanjoseca.gov/server/rest/services/OPN/OPN_OpenDataService/MapServer/120",
+   "fields": {
+    "DISTRICT": "district",
+    "POPULATION": "population",
+    "DISTRICTURL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.05,
+    37.12,
+    -121.58,
+    37.47
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "ca-san-jose-road-closures",
+  "state": "CA",
+  "title": "Road and lane closures now (San José)",
+  "title_es": "Cierres de calles y carriles ahora (San José)",
+  "description": "Streets with lane shifts or closures right now for construction and development projects permitted by the City of San José, with the type of traffic impact and dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of San José Department of Public Works / Transportation (Road Closures)",
+  "license": "City of San José open data",
+  "view": {
+   "url": "https://geo.sanjoseca.gov/server/rest/services/OPN/OPN_OpenDataService/MapServer/521",
+   "fields": {
+    "PROJECTTYPE": "kind",
+    "PROJECTPHASE": "status",
+    "TRAFFICIMPACTPRIMARY": "impact",
+    "WAZETYPE": "closure",
+    "CUSTOMPROJECTDESCRIPTION": "description",
+    "CROSSSTREET1": "from_street",
+    "CROSSSTREET2": "to_street",
+    "IMPACTSTARTDATE": "start",
+    "IMPACTENDDATE": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "IMPACTSTARTDATE <= CURRENT_TIMESTAMP AND IMPACTENDDATE >= CURRENT_TIMESTAMP",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.05,
+    37.12,
+    -121.58,
+    37.47
+   ],
+   "features_in_probe": 221
+  }
+ },
+ {
+  "name": "ca-san-jose-street-sweeping",
+  "state": "CA",
+  "title": "Residential street sweeping (San José)",
+  "title_es": "Barrido de calles residenciales (San José)",
+  "description": "Which day of the month each residential street is swept and the scheduled hours. Where signs are posted, move your car to avoid a ticket.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of San José Environmental Services (Residential Street Sweeping Routes)",
+  "license": "City of San José open data",
+  "view": {
+   "url": "https://geo.sanjoseca.gov/server/rest/services/OPN/OPN_OpenDataService/MapServer/515",
+   "fields": {
+    "ROADNAME": "street",
+    "ROADFROM": "from_street",
+    "ROADTO": "to_street",
+    "APPWEEKDAY": "schedule",
+    "APPSCHEDULEDTIME": "hours",
+    "APPPUBLICPOSTEDTIMES": "posted_times",
+    "SIDEOFROAD": "side",
+    "SWEEPSPERMONTH": "sweeps_per_month"
+   },
+   "geometry": "line",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.92,
+    37.32,
+    -121.86,
+    37.35
+   ],
+   "features_in_probe": 972
+  }
+ },
+ {
+  "name": "ca-san-jose-historic-areas",
+  "state": "CA",
+  "title": "Historic districts (San José)",
+  "title_es": "Distritos históricos (San José)",
+  "description": "City landmark districts, conservation areas and National Register districts in San José. Exterior changes to buildings here may need historic review.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of San José Planning, Building & Code Enforcement (Historic Area)",
+  "license": "City of San José open data",
+  "view": {
+   "url": "https://geo.sanjoseca.gov/server/rest/services/OPN/OPN_OpenDataService/MapServer/408",
+   "fields": {
+    "NAME": "name",
+    "AREATYPE2": "kind",
+    "AREATYPE": "status",
+    "DESCRIPTION": "description",
+    "LINK": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.05,
+    37.12,
+    -121.58,
+    37.47
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "ca-contra-costa-general-plan",
+  "state": "CA",
+  "title": "General plan land use (Contra Costa County)",
+  "title_es": "Uso de suelo del plan general (condado de Contra Costa)",
+  "description": "Contra Costa County general plan land-use designations with the allowed housing density, mostly for unincorporated areas.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Contra Costa County Department of Conservation and Development (General Plan Land Use Element)",
+  "license": "Contra Costa County public GIS data",
+  "view": {
+   "url": "https://gis.cccounty.us/arcgis/rest/services/_Authoritative/General_Plan/MapServer/14",
+   "fields": {
+    "GPLU_DESG": "land_use",
+    "GP_TEXT": "description",
+    "GP_Density": "density"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.35,
+    37.9,
+    -121.85,
+    38.05
+   ],
+   "features_in_probe": 702
+  }
+ },
+ {
+  "name": "ca-contra-costa-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (Contra Costa County)",
+  "title_es": "Distritos de supervisores (condado de Contra Costa)",
+  "description": "The five Contra Costa County Board of Supervisors districts, with each district office's address.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Contra Costa County Department of Information Technology (Board of Supervisor Districts)",
+  "license": "Contra Costa County public GIS data",
+  "view": {
+   "url": "https://gis.cccounty.us/arcgis/rest/services/_Authoritative/Board_of_Supervisor_Districts/MapServer/21",
+   "fields": {
+    "SUP_DIST": "district",
+    "OFFICE": "address"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.45,
+    37.7,
+    -121.5,
+    38.1
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-contra-costa-parcels",
+  "state": "CA",
+  "title": "Parcels (Contra Costa County)",
+  "title_es": "Lotes (condado de Contra Costa)",
+  "description": "Assessor parcels in Contra Costa County with the parcel number (APN), acreage, land-use description and assessed land and improvement values. Owner information is not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Contra Costa County Assessor / DoIT (Assessment Parcels)",
+  "license": "Contra Costa County public GIS data",
+  "view": {
+   "url": "https://gis.cccounty.us/arcgis/rest/services/CCMAP/Assessment_Parcels_ArcPro/MapServer/0",
+   "fields": {
+    "APN": "parcel_id",
+    "ACREAGE": "acres",
+    "Description": "land_use",
+    "LAND_VALUE": "land_value",
+    "IMP_VAL": "improvement_value",
+    "s_city": "city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.068,
+    37.896,
+    -122.052,
+    37.904
+   ],
+   "features_in_probe": 1529
+  }
+ },
+ {
+  "name": "ca-contra-costa-weather-relief-centers",
+  "state": "CA",
+  "title": "Open heat & cold relief centers (Contra Costa County)",
+  "title_es": "Centros abiertos de alivio por calor y frío (condado de Contra Costa)",
+  "description": "Cooling and warming centers that Contra Costa County has listed as open, with hours, weekend opening and whether pets are allowed. Often empty outside heat waves and cold snaps.",
+  "group": "help",
+  "category": "point",
+  "source": "Contra Costa County Office of Emergency Services (Weather Relief Centers, active view)",
+  "license": "Contra Costa County public data",
+  "view": {
+   "url": "https://services3.arcgis.com/42Dx6OWonqK9LoEE/arcgis/rest/services/Contra_Costa_Weather_Relief_Centers_Survey_(Active_View)/FeatureServer/1",
+   "fields": {
+    "facility_name": "name",
+    "facility_address": "address",
+    "facility_status": "status",
+    "hours_open": "opens",
+    "hours_closed": "closes",
+    "open_weekend": "weekends",
+    "pet_friendly": "pets",
+    "additional_display_info": "notes",
+    "additional_display_info_sp": "notes_es"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.45,
+    37.7,
+    -121.5,
+    38.1
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "ca-san-mateo-evacuation-zones",
+  "state": "CA",
+  "title": "Evacuation zones (San Mateo County)",
+  "title_es": "Zonas de evacuación (condado de San Mateo)",
+  "description": "San Mateo County's Genasys (Zonehaven) evacuation zones. Learn your zone ID now: in an emergency, orders and warnings are announced by zone. Check live status at protect.genasys.com or SMC Alert.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "County of San Mateo GIS / Office of Emergency Services (Zonehaven evacuation zones)",
+  "license": "County of San Mateo public data",
+  "view": {
+   "url": "https://services.arcgis.com/yq3FgOI44hYHAFVZ/arcgis/rest/services/ZoneHaven_SMCEvacuationZones/FeatureServer/0",
+   "fields": {
+    "ZONE_SHORT": "name",
+    "ZONE_IDENT": "zone_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.55,
+    37.4,
+    -122.1,
+    37.7
+   ],
+   "features_in_probe": 257
+  }
+ },
+ {
+  "name": "ca-san-mateo-zoning",
+  "state": "CA",
+  "title": "Zoning (unincorporated San Mateo County)",
+  "title_es": "Zonificación (zonas no incorporadas del condado de San Mateo)",
+  "description": "County zoning for unincorporated San Mateo County (coastside, mid-coast, rural and unincorporated neighborhoods). Inside a city, check that city's zoning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of San Mateo Planning and Building Department (Planning layers)",
+  "license": "County of San Mateo public data",
+  "view": {
+   "url": "https://gis.smcgov.org/maps/rest/services/PLANNING/PLN_LAYERS_DMZ/MapServer/26",
+   "fields": {
+    "PLN_ZONE": "zoning",
+    "JURIS": "jurisdiction",
+    "ORDINANCE_NO": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.55,
+    37.1,
+    -122.1,
+    37.7
+   ],
+   "features_in_probe": 423
+  }
+ },
+ {
+  "name": "ca-san-mateo-general-plan",
+  "state": "CA",
+  "title": "General plan land use (unincorporated San Mateo County)",
+  "title_es": "Uso de suelo del plan general (zonas no incorporadas del condado de San Mateo)",
+  "description": "San Mateo County general plan land-use designations for unincorporated land: rural, agriculture, timber, recreation and urban residential areas.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of San Mateo Planning and Building Department (Planning layers)",
+  "license": "County of San Mateo public data",
+  "view": {
+   "url": "https://gis.smcgov.org/maps/rest/services/PLANNING/PLN_LAYERS_DMZ/MapServer/14",
+   "fields": {
+    "LANDUSE_DESCRIPTION": "land_use",
+    "LANDUSE_TYPE": "kind",
+    "GP_LANDUSE": "area"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.55,
+    37.1,
+    -122.1,
+    37.7
+   ],
+   "features_in_probe": 423
+  }
+ },
+ {
+  "name": "ca-sonoma-evacuation-zones",
+  "state": "CA",
+  "title": "Evacuation zones (Sonoma County)",
+  "title_es": "Zonas de evacuación (condado de Sonoma)",
+  "description": "Sonoma County and city evacuation zones, with the zone number, its boundaries in plain words (also in Spanish), its current status and a printable map. Know your zone: evacuation orders are given by zone through SoCoAlert.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Sonoma County Department of Emergency Management (Emergency Zones, public view)",
+  "license": "Sonoma County public data",
+  "view": {
+   "url": "https://services1.arcgis.com/P5Mv5GY5S66M8Z1Q/arcgis/rest/services/Sonoma_County_Evacuation_Areas_public/FeatureServer/0",
+   "fields": {
+    "ZoneNumber": "name",
+    "Jurisdiction": "jurisdiction",
+    "zone_status": "status",
+    "Summary": "description",
+    "Summary_es": "description_es",
+    "Description_1": "boundary_1",
+    "Description_2": "boundary_2",
+    "Description_3": "boundary_3",
+    "Description_4": "boundary_4",
+    "PDFMap": "page",
+    "PDFMap_es": "page_es"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.2,
+    38.2,
+    -122.4,
+    38.7
+   ],
+   "features_in_probe": 302
+  }
+ },
+ {
+  "name": "ca-sonoma-parcels",
+  "state": "CA",
+  "title": "Parcels (Sonoma County)",
+  "title_es": "Lotes (condado de Sonoma)",
+  "description": "Assessor parcels in Sonoma County with the parcel number (APN), land use, lot size in acres, and assessed land and structure values for the current roll year. Owner information is not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Sonoma County Clerk-Recorder-Assessor (Parcels Public)",
+  "license": "Sonoma County public data",
+  "view": {
+   "url": "https://socogis.sonomacounty.ca.gov/map/rest/services/CRAPublic/ParcelsPublic/FeatureServer/0",
+   "fields": {
+    "APN": "parcel_id",
+    "UseCodeDescription": "land_use",
+    "UseCodeType": "kind",
+    "LandSizeAcres": "acres",
+    "Value601RollYear": "year",
+    "Value601Land": "land_value",
+    "Value601Structure": "improvement_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.723,
+    38.436,
+    -122.707,
+    38.444
+   ],
+   "features_in_probe": 788
+  }
+ },
+ {
+  "name": "ca-sonoma-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (Sonoma County)",
+  "title_es": "Distritos de supervisores (condado de Sonoma)",
+  "description": "The five Sonoma County Board of Supervisors districts. Your supervisor represents you on county services, unincorporated roads, land use and fire recovery.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Permit Sonoma GIS (Supervisor Districts)",
+  "license": "Sonoma County public data",
+  "view": {
+   "url": "https://services1.arcgis.com/P5Mv5GY5S66M8Z1Q/arcgis/rest/services/Supervisor_Districts/FeatureServer/0",
+   "fields": {
+    "DISTRICT_NO": "district",
+    "DISTRICT": "name",
+    "SQ_MILE": "square_miles"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.55,
+    38.1,
+    -122.35,
+    38.85
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-sonoma-fire-districts",
+  "state": "CA",
+  "title": "Fire districts (Sonoma County)",
+  "title_es": "Distritos de bomberos (condado de Sonoma)",
+  "description": "Which fire agency protects each part of Sonoma County and which agency responds there.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Sonoma County GIS (Fire Districts)",
+  "license": "Sonoma County public data",
+  "view": {
+   "url": "https://socogis.sonomacounty.ca.gov/map/rest/services/BASEPublic/Fire_Districts/FeatureServer/0",
+   "fields": {
+    "Agency": "name",
+    "RespondingAgency": "operator",
+    "AgencyAbbr": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.2,
+    38.2,
+    -122.4,
+    38.7
+   ],
+   "features_in_probe": 92
+  }
+ },
+ {
+  "name": "ca-sonoma-road-paving",
+  "state": "CA",
+  "title": "Road paving projects this year (Sonoma County)",
+  "title_es": "Proyectos de pavimentación este año (condado de Sonoma)",
+  "description": "County-maintained roads scheduled for repaving or other pavement work this year, with location, treatment, status and estimated cost. Expect lane closures and delays during work.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Sonoma County Public Infrastructure (Road Paving Projects, current year)",
+  "license": "Sonoma County public data",
+  "view": {
+   "url": "https://socogis.sonomacounty.ca.gov/map/rest/services/TPWPublic/Projects_Road_Paving_Current_Year/FeatureServer/0",
+   "fields": {
+    "RoadName": "name",
+    "Location": "location",
+    "Treatment": "kind",
+    "Status": "status",
+    "Title": "description",
+    "YearText": "year",
+    "Cost": "cost",
+    "WebURL": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.55,
+    38.1,
+    -122.35,
+    38.85
+   ],
+   "features_in_probe": 36
+  }
+ },
+ {
+  "name": "ca-sacramento-county-parcels",
+  "state": "CA",
+  "title": "Parcels (Sacramento County)",
+  "title_es": "Parcelas (condado de Sacramento)",
+  "description": "Every property lot in Sacramento County with its parcel number (APN), lot size and the assessor's land-use category. Owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Sacramento County Department of Technology GIS (open data)",
+  "view": {
+   "url": "https://services1.arcgis.com/5NARefyPVtAeuJPU/arcgis/rest/services/Parcels/FeatureServer/0",
+   "fields": {
+    "APN": "parcel_id",
+    "LOT_SIZE": "lot_sqft",
+    "LU_GENERAL": "land_use",
+    "LU_SPECIF": "kind",
+    "LU_DETAIL": "detail",
+    "JURISDICTION": "jurisdiction"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.498,
+    38.57,
+    -121.482,
+    38.58
+   ],
+   "features_in_probe": 1414
+  }
+ },
+ {
+  "name": "ca-sacramento-county-zoning",
+  "state": "CA",
+  "title": "Zoning (unincorporated Sacramento County)",
+  "title_es": "Zonificación (zonas no incorporadas del condado de Sacramento)",
+  "description": "County zoning for areas outside city limits (Arden-Arcade, Carmichael, Fair Oaks, North Highlands, Rio Linda and more): the zone code, what it means, and any overlay. Cities have their own zoning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Sacramento County Department of Technology GIS (open data)",
+  "view": {
+   "url": "https://services1.arcgis.com/5NARefyPVtAeuJPU/arcgis/rest/services/Zoning/FeatureServer/0",
+   "fields": {
+    "ZONE_CODE": "zoning",
+    "DESCRIPTION": "description",
+    "B_ZONE": "base_zone",
+    "OVERLAY_1": "overlay",
+    "OVERLAY_2": "overlay_2",
+    "JURISDICTION": "jurisdiction"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.62,
+    38.5,
+    -121.36,
+    38.65
+   ],
+   "features_in_probe": 686
+  }
+ },
+ {
+  "name": "ca-sacramento-county-general-plan",
+  "state": "CA",
+  "title": "General plan land use (Sacramento County)",
+  "title_es": "Uso de suelo del plan general (condado de Sacramento)",
+  "description": "What the Sacramento County 2030 General Plan says each unincorporated area should become (homes, commercial, industry, farmland, open space).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Sacramento County Department of Technology GIS (open data)",
+  "view": {
+   "url": "https://services1.arcgis.com/5NARefyPVtAeuJPU/arcgis/rest/services/GeneralPlan/FeatureServer/0",
+   "fields": {
+    "LU_DESC": "name",
+    "LANDUSE_1": "kind",
+    "PROJECT": "project",
+    "DATE_ADOPT": "adopted"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.49,
+    37.975,
+    -120.49,
+    39.175
+   ],
+   "features_in_probe": 115
+  }
+ },
+ {
+  "name": "ca-sacramento-county-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (Sacramento County)",
+  "title_es": "Distritos de supervisores (condado de Sacramento)",
+  "description": "The five Board of Supervisors districts. Find which district you live in to know who represents you at the county.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Sacramento County Department of Technology GIS (open data)",
+  "view": {
+   "url": "https://services1.arcgis.com/5NARefyPVtAeuJPU/arcgis/rest/services/SupervisorDistricts/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -125.49,
+    36.175,
+    -117.49,
+    40.975
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-sacramento-county-evacuation-zones",
+  "state": "CA",
+  "title": "Evacuation zones (Sacramento County)",
+  "title_es": "Zonas de evacuación (condado de Sacramento)",
+  "description": "Sacramento County's pre-planned evacuation zones. Learn your zone number now: during a flood or fire, officials order evacuations by zone. Each zone links to its map with the main evacuation routes.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Sacramento County Office of Emergency Services",
+  "view": {
+   "url": "https://services1.arcgis.com/5NARefyPVtAeuJPU/arcgis/rest/services/Evacuation_Zones_WFL1/FeatureServer/0",
+   "fields": {
+    "Zone": "number",
+    "ZoneName": "name",
+    "Description": "description",
+    "MapLink": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.49,
+    37.375,
+    -119.49,
+    39.775
+   ],
+   "features_in_probe": 97
+  }
+ },
+ {
+  "name": "ca-sacramento-county-emergency-shelters",
+  "state": "CA",
+  "title": "Possible emergency shelter sites (Sacramento County)",
+  "title_es": "Posibles sitios de refugio de emergencia (condado de Sacramento)",
+  "description": "Schools, community centers and other buildings the county has reviewed as possible emergency shelters, with capacity and whether pets are allowed. These are not open unless the county announces it; check sacramentoready.saccounty.gov during an emergency.",
+  "group": "help",
+  "category": "point",
+  "source": "Sacramento County Office of Emergency Services",
+  "view": {
+   "url": "https://services1.arcgis.com/5NARefyPVtAeuJPU/arcgis/rest/services/Emergency_Shelters/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "status": "status",
+    "shelter_capacity": "capacity",
+    "evac_capacity": "evac_capacity",
+    "pet_friendly": "pets",
+    "ada_compliant": "accessible",
+    "backup_generator": "generator"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.49,
+    37.375,
+    -119.49,
+    39.775
+   ],
+   "features_in_probe": 288
+  }
+ },
+ {
+  "name": "ca-sacramento-county-fire-districts",
+  "state": "CA",
+  "title": "Fire districts (Sacramento County)",
+  "title_es": "Distritos de bomberos (condado de Sacramento)",
+  "description": "Which fire protection district or city fire department serves each area of Sacramento County, with a link to the agency.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Sacramento County Department of Technology GIS (open data)",
+  "view": {
+   "url": "https://services1.arcgis.com/5NARefyPVtAeuJPU/arcgis/rest/services/FireDistricts/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "name",
+    "LINKS": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -125.49,
+    36.175,
+    -117.49,
+    40.975
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "ca-sacramento-county-water-providers",
+  "state": "CA",
+  "title": "Water providers (Sacramento County)",
+  "title_es": "Proveedores de agua (condado de Sacramento)",
+  "description": "Which water district or city utility delivers tap water to each area, with its phone number, website and where to report water waste.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Sacramento County Department of Technology GIS (open data)",
+  "view": {
+   "url": "https://services1.arcgis.com/5NARefyPVtAeuJPU/arcgis/rest/services/WaterPurveyors/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "name",
+    "PHONE_NUMBER": "phone",
+    "LINKS": "page",
+    "REPORT_WASTE": "report_waste"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.49,
+    37.375,
+    -119.49,
+    39.775
+   ],
+   "features_in_probe": 53
+  }
+ },
+ {
+  "name": "ca-sacramento-county-reclamation-districts",
+  "state": "CA",
+  "title": "Levee (reclamation) districts (Sacramento County)",
+  "title_es": "Distritos de diques (reclamación) (condado de Sacramento)",
+  "description": "Local reclamation districts that maintain levees and drainage in the Delta and along the rivers. If you live behind a levee, this is the agency that keeps it up.",
+  "group": "hazards",
+  "category": "boundary",
+  "source": "Sacramento County Department of Technology GIS (open data)",
+  "view": {
+   "url": "https://services1.arcgis.com/5NARefyPVtAeuJPU/arcgis/rest/services/Reclamation_Districts/FeatureServer/0",
+   "fields": {
+    "DISTRICT_NAME": "name",
+    "DISTRICT": "number",
+    "WEB_ADDRESS": "page",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -125.49,
+    36.175,
+    -117.49,
+    40.975
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "ca-sacramento-county-hazardous-waste-dropoff",
+  "state": "CA",
+  "title": "Household hazardous waste drop-off (Sacramento County)",
+  "title_es": "Entrega de desechos peligrosos del hogar (condado de Sacramento)",
+  "description": "Free drop-off sites for paint, batteries, motor oil, chemicals, electronics and other household hazardous waste, with hours and what they accept.",
+  "group": "infra",
+  "category": "point",
+  "source": "Sacramento County Department of Waste Management & Recycling",
+  "view": {
+   "url": "https://services1.arcgis.com/5NARefyPVtAeuJPU/arcgis/rest/services/HHW_Locations/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Operating_": "hours",
+    "Operating1": "hours_2",
+    "AcceptableItems": "accepts",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -125.49,
+    36.175,
+    -117.49,
+    40.975
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-sacramento-county-parks",
+  "state": "CA",
+  "title": "Parks (Sacramento County)",
+  "title_es": "Parques (condado de Sacramento)",
+  "description": "County and park-district parks across Sacramento County with the district that runs each one and its address.",
+  "group": "nature",
+  "category": "park",
+  "source": "Sacramento County Department of Technology GIS (open data)",
+  "view": {
+   "url": "https://services1.arcgis.com/5NARefyPVtAeuJPU/arcgis/rest/services/Parks_and_Recreation/FeatureServer/0",
+   "fields": {
+    "PARK": "name",
+    "PARK_ADDRESS": "address",
+    "LONG_DISTRICT": "manager",
+    "DESCRIPTION": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.99,
+    38.275,
+    -120.99,
+    38.875
+   ],
+   "features_in_probe": 725
+  }
+ },
+ {
+  "name": "ca-sacramento-zoning",
+  "state": "CA",
+  "title": "Zoning (City of Sacramento)",
+  "title_es": "Zonificación (ciudad de Sacramento)",
+  "description": "City of Sacramento zoning: the zone, what it allows, special planning districts and overlays, with a link to the zoning code section.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Sacramento Open Data (GIS)",
+  "view": {
+   "url": "https://services5.arcgis.com/54falWtcpty3V47Z/arcgis/rest/services/Zoning/FeatureServer/0",
+   "fields": {
+    "ZONE": "zoning",
+    "DESCRIPTION": "description",
+    "BASE_ZONE": "base_zone",
+    "OVERLAY": "overlay",
+    "SPDNAME": "special_district",
+    "PUDNAME": "pud",
+    "ORDINANCE": "ordinance",
+    "URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.5065,
+    38.565,
+    -121.4735,
+    38.585
+   ],
+   "features_in_probe": 926
+  }
+ },
+ {
+  "name": "ca-sacramento-general-plan",
+  "state": "CA",
+  "title": "2040 General Plan land use (City of Sacramento)",
+  "title_es": "Uso de suelo del Plan General 2040 (ciudad de Sacramento)",
+  "description": "What the city's 2040 General Plan designates for each lot, with the allowed building intensity (floor-area ratio) and minimum housing density.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Sacramento Open Data (GIS)",
+  "view": {
+   "url": "https://services5.arcgis.com/54falWtcpty3V47Z/arcgis/rest/services/General_Plan/FeatureServer/0",
+   "fields": {
+    "GPLU": "land_use",
+    "APN": "parcel_id",
+    "ACRES_DB": "acres",
+    "PROP_MINDE": "min_density",
+    "FAR_MIN": "far_min",
+    "FAR_MAX": "far_max",
+    "URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.498,
+    38.57,
+    -121.482,
+    38.58
+   ],
+   "features_in_probe": 1082
+  }
+ },
+ {
+  "name": "ca-sacramento-council-districts",
+  "state": "CA",
+  "title": "City council districts (Sacramento)",
+  "title_es": "Distritos del concejo municipal (Sacramento)",
+  "description": "The eight Sacramento City Council districts. Find your district number to see who represents you at City Hall.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Sacramento Open Data (GIS)",
+  "view": {
+   "url": "https://services5.arcgis.com/54falWtcpty3V47Z/arcgis/rest/services/Council_Districts/FeatureServer/0",
+   "fields": {
+    "DISTNUM": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.49,
+    37.375,
+    -119.49,
+    39.775
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "ca-sacramento-historic-districts",
+  "state": "CA",
+  "title": "Historic districts (City of Sacramento)",
+  "title_es": "Distritos históricos (ciudad de Sacramento)",
+  "description": "Sacramento's listed and proposed historic districts. Exterior changes to buildings here need preservation review.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Sacramento Open Data (GIS)",
+  "view": {
+   "url": "https://services5.arcgis.com/54falWtcpty3V47Z/arcgis/rest/services/Historic_Districts/FeatureServer/0",
+   "fields": {
+    "DIST_NAME": "name",
+    "STAGE": "status",
+    "ORDINANCE": "ordinance",
+    "CCDATE": "listed"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.99,
+    38.275,
+    -120.99,
+    38.875
+   ],
+   "features_in_probe": 32
+  }
+ },
+ {
+  "name": "ca-sacramento-road-closures",
+  "state": "CA",
+  "title": "Street closures (City of Sacramento)",
+  "title_es": "Cierres de calles (ciudad de Sacramento)",
+  "description": "Current city street and lane closures for construction and events, with the reason, the dates and the detour.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Sacramento Public Works",
+  "view": {
+   "url": "https://services5.arcgis.com/54falWtcpty3V47Z/arcgis/rest/services/RoadClosures_Public_View/FeatureServer/1",
+   "fields": {
+    "street": "road",
+    "reason": "kind",
+    "laneimpact": "impact",
+    "description": "description",
+    "starttime": "start",
+    "endtime": "end",
+    "altroute": "detour",
+    "url": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "refresh_s": 1800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.49,
+    37.975,
+    -120.49,
+    39.175
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "ca-sacramento-capital-projects",
+  "state": "CA",
+  "title": "Public works projects (City of Sacramento)",
+  "title_es": "Proyectos de obras públicas (ciudad de Sacramento)",
+  "description": "Planned and active City of Sacramento public works projects (street paving, utilities, parks, transportation) with the phase, year and project page.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Sacramento Public Works (right-of-way projects)",
+  "view": {
+   "url": "https://services5.arcgis.com/54falWtcpty3V47Z/arcgis/rest/services/PWCIP_Poly/FeatureServer/0",
+   "fields": {
+    "project_name_full": "name",
+    "facility_type": "kind",
+    "ProjectPhase": "status",
+    "ProjectYear": "year",
+    "start_date": "start",
+    "end_date": "end",
+    "description_full": "description",
+    "project_url": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.99,
+    38.275,
+    -120.99,
+    38.875
+   ],
+   "features_in_probe": 384
+  }
+ },
+ {
+  "name": "ca-sacramento-parks",
+  "state": "CA",
+  "title": "City parks (Sacramento)",
+  "title_es": "Parques de la ciudad (Sacramento)",
+  "description": "City of Sacramento parks with type, address and whether free Wi-Fi is available.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Sacramento Open Data (GIS)",
+  "view": {
+   "url": "https://services5.arcgis.com/54falWtcpty3V47Z/arcgis/rest/services/Parks/FeatureServer/0",
+   "fields": {
+    "PARKNAME": "name",
+    "TYPE": "kind",
+    "ADDRESS": "address",
+    "STATUS": "status",
+    "WIFISTATUS": "wifi",
+    "COUNCIL_DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.99,
+    38.275,
+    -120.99,
+    38.875
+   ],
+   "features_in_probe": 267
+  }
+ },
+ {
+  "name": "ca-fresno-county-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (Fresno County)",
+  "title_es": "Distritos de supervisores (condado de Fresno)",
+  "description": "The five Fresno County Board of Supervisors districts, from the county elections office.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "County of Fresno Information Services / Elections GIS",
+  "view": {
+   "url": "https://services3.arcgis.com/ibgDyuD2DLBge82s/arcgis/rest/services/ELECTIONS_SUPERVISOR_DISTRICTS_VW/FeatureServer/23",
+   "fields": {
+    "NM_SUPRDIST": "name",
+    "SUPRDIST_": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.79,
+    34.37,
+    -115.79,
+    39.17
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-fresno-county-irrigation-districts",
+  "state": "CA",
+  "title": "Irrigation districts (Fresno County)",
+  "title_es": "Distritos de riego (condado de Fresno)",
+  "description": "Irrigation and water districts in Fresno County, including their election divisions.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "County of Fresno Information Services / Elections GIS",
+  "view": {
+   "url": "https://services3.arcgis.com/ibgDyuD2DLBge82s/arcgis/rest/services/ELECTIONS_IRRIGATION_DISTRICTS_VW/FeatureServer/45",
+   "fields": {
+    "NM_IRRGDIST": "name",
+    "NM_DIVNDIST": "division"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.79,
+    34.37,
+    -115.79,
+    39.17
+   ],
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "ca-fresno-county-fire-districts",
+  "state": "CA",
+  "title": "Fire districts (Fresno County)",
+  "title_es": "Distritos de bomberos (condado de Fresno)",
+  "description": "Fire protection districts with elected boards in Fresno County.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "County of Fresno Information Services / Elections GIS",
+  "view": {
+   "url": "https://services3.arcgis.com/ibgDyuD2DLBge82s/arcgis/rest/services/ELECTIONS_FIRE_DISTRICTS_VW/FeatureServer/41",
+   "fields": {
+    "NM_FIREDIST": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.79,
+    34.37,
+    -115.79,
+    39.17
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "ca-fresno-county-evacuation-zones",
+  "state": "CA",
+  "title": "Evacuation zones (Fresno County)",
+  "title_es": "Zonas de evacuación (condado de Fresno)",
+  "description": "Fresno County Sheriff's evacuation zones. Learn your zone code now: during a fire or flood, evacuation orders and warnings are issued by zone.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Fresno County Sheriff's Office / County of Fresno",
+  "view": {
+   "url": "https://services3.arcgis.com/ibgDyuD2DLBge82s/arcgis/rest/services/Evacuation_Zones/FeatureServer/5",
+   "fields": {
+    "Name": "name",
+    "PopupInfo": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.79,
+    35.57,
+    -117.79,
+    37.97
+   ],
+   "features_in_probe": 376
+  }
+ },
+ {
+  "name": "ca-fresno-county-cooling-centers",
+  "state": "CA",
+  "title": "Cooling centers (Fresno County)",
+  "title_es": "Centros de enfriamiento (condado de Fresno)",
+  "description": "Air-conditioned places to get out of the heat across Fresno County (community centers, libraries, splash pads). They open during heat events only; call ahead for hours.",
+  "group": "help",
+  "category": "point",
+  "source": "County of Fresno Department of Public Health",
+  "view": {
+   "url": "https://services3.arcgis.com/ibgDyuD2DLBge82s/arcgis/rest/services/Cooling_Centers/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Community": "city",
+    "Details": "kind",
+    "Contact": "phone",
+    "TransitNotes": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.79,
+    34.37,
+    -115.79,
+    39.17
+   ],
+   "features_in_probe": 36
+  }
+ },
+ {
+  "name": "ca-fresno-parcels",
+  "state": "CA",
+  "title": "Parcels (City of Fresno)",
+  "title_es": "Parcelas (ciudad de Fresno)",
+  "description": "Every lot in and around Fresno with its parcel number, lot size, zoning, existing and planned land use, council district, school district and street-sweeping day. Owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Fresno GIS (GIS Hub)",
+  "view": {
+   "url": "https://services2.arcgis.com/WkBUojyNPhsWOk1W/arcgis/rest/services/Parcels_GIS_Hub/FeatureServer/11",
+   "fields": {
+    "APN": "parcel_id",
+    "LotArea": "lot_sqft",
+    "Zoning": "zoning",
+    "ZoningText": "zoning_name",
+    "ExistingLandUseText": "land_use",
+    "PlannedLandUseText": "planned_use",
+    "CouncilDistrict": "district",
+    "SchoolDistrict": "school_district",
+    "SweepDay": "sweep_day",
+    "InsideCity": "inside_city"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.798,
+    36.765,
+    -119.782,
+    36.775
+   ],
+   "features_in_probe": 936
+  }
+ },
+ {
+  "name": "ca-fresno-general-plan",
+  "state": "CA",
+  "title": "General plan land use (City of Fresno)",
+  "title_es": "Uso de suelo del plan general (ciudad de Fresno)",
+  "description": "What Fresno's General Plan designates for each area (residential densities, commercial, employment, open space), with the plan amendment and adoption date.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Fresno GIS (GIS Hub)",
+  "view": {
+   "url": "https://services2.arcgis.com/WkBUojyNPhsWOk1W/arcgis/rest/services/Planned_Land_Use_GIS_Hub/FeatureServer/25",
+   "fields": {
+    "Description": "land_use",
+    "PlannedLandUse": "kind",
+    "PlanAmendmentNo": "amendment",
+    "DateAdopted": "adopted",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.8065,
+    36.76,
+    -119.7735,
+    36.78
+   ],
+   "features_in_probe": 560
+  }
+ },
+ {
+  "name": "ca-fresno-council-districts",
+  "state": "CA",
+  "title": "City council districts (Fresno)",
+  "title_es": "Distritos del concejo municipal (Fresno)",
+  "description": "The seven Fresno City Council districts, with a link to each district's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Fresno GIS (GIS Hub)",
+  "view": {
+   "url": "https://services2.arcgis.com/WkBUojyNPhsWOk1W/arcgis/rest/services/Council_Districts_GIS_Hub/FeatureServer/20",
+   "fields": {
+    "DistrictLabel": "name",
+    "DistrictNumber": "district",
+    "DistrictWebsite": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.79,
+    35.57,
+    -117.79,
+    37.97
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "ca-fresno-street-sweeping",
+  "state": "CA",
+  "title": "Street sweeping days (City of Fresno)",
+  "title_es": "Días de barrido de calles (ciudad de Fresno)",
+  "description": "Which week and day of the month the city sweeps residential streets in your neighborhood (for example, \"Third Wednesday\"). Move your car to avoid a ticket.",
+  "group": "infra",
+  "category": "info",
+  "source": "City of Fresno Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/WkBUojyNPhsWOk1W/arcgis/rest/services/Residential_Street_Sweeping_GIS_Hub/FeatureServer/33",
+   "fields": {
+    "SweepLabel": "name",
+    "SweepDay": "kind",
+    "SweepRoute": "route",
+    "Comment": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.29,
+    36.47,
+    -119.29,
+    37.07
+   ],
+   "features_in_probe": 121
+  }
+ },
+ {
+  "name": "ca-fresno-trash-day",
+  "state": "CA",
+  "title": "Trash pickup day (City of Fresno)",
+  "title_es": "Día de recolección de basura (ciudad de Fresno)",
+  "description": "Your residential garbage, recycling and green-waste collection day in the City of Fresno.",
+  "group": "infra",
+  "category": "info",
+  "source": "City of Fresno Department of Public Utilities - Solid Waste",
+  "view": {
+   "url": "https://services2.arcgis.com/WkBUojyNPhsWOk1W/arcgis/rest/services/Solid_Waste_Service_Day_GIS_Hub/FeatureServer/34",
+   "fields": {
+    "ServiceDay": "garbage_day"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.79,
+    36.17,
+    -118.79,
+    37.37
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ca-fresno-road-closures",
+  "state": "CA",
+  "title": "Road closures (City of Fresno)",
+  "title_es": "Cierres de calles (ciudad de Fresno)",
+  "description": "Current and upcoming City of Fresno road and lane closures for construction and special events, with dates and whether the closure is all day.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Fresno Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/WkBUojyNPhsWOk1W/arcgis/rest/services/Road_Closure_Limits_GIS_Hub/FeatureServer/28",
+   "fields": {
+    "Type": "kind",
+    "Status": "status",
+    "TimeOfDay": "hours",
+    "StartDate": "start",
+    "EndDate": "end",
+    "HighImpact": "high_impact"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "EndDate >= CURRENT_DATE",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.79,
+    36.17,
+    -118.79,
+    37.37
+   ],
+   "features_in_probe": 500
+  }
+ },
+ {
+  "name": "ca-fresno-capital-projects",
+  "state": "CA",
+  "title": "City projects (City of Fresno)",
+  "title_es": "Proyectos de la ciudad (Fresno)",
+  "description": "City of Fresno capital projects (streets, parks, water, airport, public buildings) with the department, current phase, scope and expected completion.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Fresno Capital Projects",
+  "view": {
+   "url": "https://services2.arcgis.com/WkBUojyNPhsWOk1W/arcgis/rest/services/COF_PROJECTAREA_PUBLIC_V3/FeatureServer/24",
+   "fields": {
+    "ProjectName": "name",
+    "Department": "agency",
+    "ProjectType": "kind",
+    "Curr_Phase": "status",
+    "ProjectStatus": "project_status",
+    "Scope": "description",
+    "District": "district",
+    "completion_date": "end"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.29,
+    36.47,
+    -119.29,
+    37.07
+   ],
+   "features_in_probe": 758
+  }
+ },
+ {
+  "name": "ca-fresno-parks",
+  "state": "CA",
+  "title": "City parks (Fresno)",
+  "title_es": "Parques de la ciudad (Fresno)",
+  "description": "City of Fresno parks with the park type, address, size and year built.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Fresno GIS (GIS Hub)",
+  "view": {
+   "url": "https://services2.arcgis.com/WkBUojyNPhsWOk1W/arcgis/rest/services/Parks__GIS_Hub/FeatureServer/32",
+   "fields": {
+    "ParkNameFull": "name",
+    "ParkType": "kind",
+    "Address": "address",
+    "Acres": "acres",
+    "YrBuilt": "year_built",
+    "CouncilDistrict": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.29,
+    36.47,
+    -119.29,
+    37.07
+   ],
+   "features_in_probe": 83
+  }
+ },
+ {
+  "name": "ca-fresno-historic-districts",
+  "state": "CA",
+  "title": "Historic districts (City of Fresno)",
+  "title_es": "Distritos históricos (ciudad de Fresno)",
+  "description": "Fresno's designated and potential historic districts, with their status and description.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Fresno Historic Preservation",
+  "view": {
+   "url": "https://services2.arcgis.com/WkBUojyNPhsWOk1W/arcgis/rest/services/Historic_Districts/FeatureServer/28",
+   "fields": {
+    "District": "name",
+    "Status": "status",
+    "Description": "info",
+    "Status_Year": "listed"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.29,
+    36.47,
+    -119.29,
+    37.07
+   ],
+   "features_in_probe": 64
+  }
+ },
+ {
+  "name": "ca-kern-zoning",
+  "state": "CA",
+  "title": "Zoning (unincorporated Kern County)",
+  "title_es": "Zonificación (zonas no incorporadas del condado de Kern)",
+  "description": "Kern County zoning outside city limits: the zone code(s) and any combining zone, case number and notes. Cities such as Bakersfield have their own zoning.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Kern County Planning & Natural Resources / KernGIS",
+  "view": {
+   "url": "https://services5.arcgis.com/Y8jwjGUWbRjuqpG5/arcgis/rest/services/Kern_County_Zoning/FeatureServer/0",
+   "fields": {
+    "Comb_Zn": "zoning",
+    "Zn_Cd1": "base_zone",
+    "Dscrptn": "description",
+    "Case_Num": "case",
+    "Notes": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.085,
+    35.33,
+    -118.955,
+    35.41
+   ],
+   "features_in_probe": 1274
+  }
+ },
+ {
+  "name": "ca-kern-general-plan",
+  "state": "CA",
+  "title": "General plan land use (Kern County)",
+  "title_es": "Uso de suelo del plan general (condado de Kern)",
+  "description": "What the Kern County General Plan (and specific plans) designate for each area, including hazard designations such as flood or steep slopes.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Kern County Planning & Natural Resources / KernGIS",
+  "view": {
+   "url": "https://services5.arcgis.com/Y8jwjGUWbRjuqpG5/arcgis/rest/services/kc_general_plan/FeatureServer/0",
+   "fields": {
+    "LU_DESC": "land_use",
+    "GP_DESIG": "kind",
+    "SP_NAME": "specific_plan",
+    "SP_DESIG": "specific_plan_code",
+    "HAZ_DESC": "hazard",
+    "Resolution": "resolution"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.085,
+    35.33,
+    -118.955,
+    35.41
+   ],
+   "features_in_probe": 184
+  }
+ },
+ {
+  "name": "ca-kern-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (Kern County)",
+  "title_es": "Distritos de supervisores (condado de Kern)",
+  "description": "The five Kern County Board of Supervisors districts (2021 boundaries).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Kern County Planning & Natural Resources / KernGIS",
+  "view": {
+   "url": "https://services5.arcgis.com/Y8jwjGUWbRjuqpG5/arcgis/rest/services/Supervisorial_Districts_2021/FeatureServer/0",
+   "fields": {
+    "POLIT_DESC": "name",
+    "JURIS_ID": "district",
+    "MiSq": "square_miles"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -126.02,
+    31.37,
+    -112.02,
+    39.37
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-kern-parcels",
+  "state": "CA",
+  "title": "Parcels (Kern County)",
+  "title_es": "Parcelas (condado de Kern)",
+  "description": "Kern County Assessor land parcels (2026 roll) with parcel number and acreage. Owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Kern County Assessor / KernGIS",
+  "view": {
+   "url": "https://services5.arcgis.com/Y8jwjGUWbRjuqpG5/arcgis/rest/services/Assessor_Parcels_Land_2026_gdb/FeatureServer/0",
+   "fields": {
+    "APN_LABEL": "parcel_id",
+    "SHAPE_ACRE": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.028,
+    35.365,
+    -119.012,
+    35.375
+   ],
+   "features_in_probe": 881
+  }
+ },
+ {
+  "name": "ca-bakersfield-wards",
+  "state": "CA",
+  "title": "City council wards (Bakersfield)",
+  "title_es": "Distritos (wards) del concejo municipal (Bakersfield)",
+  "description": "The seven Bakersfield City Council wards, with a link to your council member's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Bakersfield GIS",
+  "view": {
+   "url": "https://gis.bakersfieldcity.us/webmaps/rest/services/General/Boundary/MapServer/5",
+   "fields": {
+    "WARD_ID": "name",
+    "LINK": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.02,
+    34.17,
+    -117.02,
+    36.57
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "ca-bakersfield-zoning",
+  "state": "CA",
+  "title": "Zoning (Bakersfield)",
+  "title_es": "Zonificación (Bakersfield)",
+  "description": "City of Bakersfield zoning: the zone code and what it allows, plus specific plan where one applies.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Bakersfield GIS",
+  "view": {
+   "url": "https://gis.bakersfieldcity.us/webmaps/rest/services/General/LandUse/MapServer/7",
+   "fields": {
+    "ZONE": "zoning",
+    "DESCRIPTION": "description",
+    "SpecificPlan": "specific_plan",
+    "ACRES": "acres",
+    "JURISDICTION": "jurisdiction"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.0365,
+    35.36,
+    -119.0035,
+    35.38
+   ],
+   "features_in_probe": 735
+  }
+ },
+ {
+  "name": "ca-bakersfield-general-plan",
+  "state": "CA",
+  "title": "General plan land use (Metropolitan Bakersfield)",
+  "title_es": "Uso de suelo del plan general (área metropolitana de Bakersfield)",
+  "description": "Metropolitan Bakersfield General Plan land-use designations (residential densities, commercial, industrial, open space).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Bakersfield GIS",
+  "view": {
+   "url": "https://gis.bakersfieldcity.us/webmaps/rest/services/General/LandUse/MapServer/6",
+   "fields": {
+    "Description1": "land_use",
+    "Description2": "density",
+    "LANDUSE": "kind",
+    "MUNICIP_ID": "jurisdiction",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.0365,
+    35.36,
+    -119.0035,
+    35.38
+   ],
+   "features_in_probe": 654
+  }
+ },
+ {
+  "name": "ca-bakersfield-parks",
+  "state": "CA",
+  "title": "Parks (Bakersfield)",
+  "title_es": "Parques (Bakersfield)",
+  "description": "Parks and recreation areas in Bakersfield with the managing agency and a link for details.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Bakersfield GIS",
+  "view": {
+   "url": "https://gis.bakersfieldcity.us/webmaps/rest/services/General/ParksAndRecreation/MapServer/1",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "AGENCY_ID": "manager",
+    "PARK_STATUS": "status",
+    "LINK": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.52,
+    35.07,
+    -118.52,
+    35.67
+   ],
+   "features_in_probe": 136
+  }
+ },
+ {
+  "name": "ca-bakersfield-street-sweeping",
+  "state": "CA",
+  "title": "Street sweeping days (Bakersfield)",
+  "title_es": "Días de barrido de calles (Bakersfield)",
+  "description": "Which week of the month and day the city sweeps your street (for example, week three, Friday).",
+  "group": "infra",
+  "category": "info",
+  "source": "City of Bakersfield Public Works - Streets",
+  "view": {
+   "url": "https://gis.bakersfieldcity.us/webmaps/rest/services/General/StreetMaintenance/MapServer/1",
+   "fields": {
+    "IDENTIFIER": "name",
+    "SWEEPWEEK": "week",
+    "SWEEPDAY": "day",
+    "SWEEPAREA": "area"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.52,
+    35.07,
+    -118.52,
+    35.67
+   ],
+   "features_in_probe": 147
+  }
+ },
+ {
+  "name": "ca-bakersfield-trash-day",
+  "state": "CA",
+  "title": "Trash cart pickup day (Bakersfield)",
+  "title_es": "Día de recolección del bote de basura (Bakersfield)",
+  "description": "The day your tan (trash) cart is collected in Bakersfield city and county service areas.",
+  "group": "infra",
+  "category": "info",
+  "source": "City of Bakersfield Solid Waste",
+  "view": {
+   "url": "https://gis.bakersfieldcity.us/webmaps/rest/services/General/Solidwaste/MapServer/3",
+   "fields": {
+    "DAYS": "garbage_day",
+    "ROUTE": "route",
+    "JURISDICTION": "jurisdiction"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -119.52,
+    35.07,
+    -118.52,
+    35.67
+   ],
+   "features_in_probe": 208
+  }
+ },
+ {
+  "name": "ca-san-joaquin-parcels",
+  "state": "CA",
+  "title": "Parcels (San Joaquin County)",
+  "title_es": "Parcelas (condado de San Joaquín)",
+  "description": "Every parcel in San Joaquin County with its number, size, assessor use category and 2026 assessed land and improvement values. Owner names and mailing addresses are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "San Joaquin County Assessor / Public Works GIS",
+  "view": {
+   "url": "https://services2.arcgis.com/GQhSReJEO6f7tsvy/arcgis/rest/services/Parcels/FeatureServer/0",
+   "fields": {
+    "APN": "parcel_id",
+    "LANDSIZE_ACRES": "acres",
+    "DESCRIPTION": "land_use",
+    "CATEGORY": "kind",
+    "LAND_VALUE": "land_value",
+    "IMPROVEMENT_VALUE": "assessed_value",
+    "VALUE_ROLL_YEAR": "year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.278,
+    37.945,
+    -121.262,
+    37.955
+   ],
+   "features_in_probe": 1026
+  }
+ },
+ {
+  "name": "ca-san-joaquin-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (San Joaquin County)",
+  "title_es": "Distritos de supervisores (condado de San Joaquín)",
+  "description": "The five San Joaquin County Board of Supervisors districts, with a link to each district's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "San Joaquin County Public Works GIS",
+  "view": {
+   "url": "https://services2.arcgis.com/GQhSReJEO6f7tsvy/arcgis/rest/services/Supervisorial_Districts/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "district",
+    "SDWEBURL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -125.27,
+    35.55,
+    -117.27,
+    40.35
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-san-joaquin-polling-places-2026",
+  "state": "CA",
+  "title": "Polling places, Nov 2026 election (San Joaquin County)",
+  "title_es": "Lugares de votación, elección de noviembre 2026 (condado de San Joaquín)",
+  "description": "Where to vote in person in the November 3, 2026 general election in San Joaquin County, by precinct. Confirm your assigned location on your sample ballot or with the Registrar of Voters.",
+  "group": "civic",
+  "category": "point",
+  "source": "San Joaquin County Registrar of Voters",
+  "view": {
+   "url": "https://services2.arcgis.com/GQhSReJEO6f7tsvy/arcgis/rest/services/26_GEN_MAP_WEB_WFL1/FeatureServer/0",
+   "fields": {
+    "USER_Name": "name",
+    "USER_Address": "address",
+    "USER_City": "city",
+    "USER_Location_Type": "kind",
+    "USER_Precinct": "precinct"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.27,
+    36.75,
+    -119.27,
+    39.15
+   ],
+   "features_in_probe": 159
+  }
+ },
+ {
+  "name": "ca-san-joaquin-ballot-drop-boxes-2026",
+  "state": "CA",
+  "title": "Ballot drop boxes, Nov 2026 election (San Joaquin County)",
+  "title_es": "Buzones para boletas, elección de noviembre 2026 (condado de San Joaquín)",
+  "description": "Official 24-hour and staffed ballot drop boxes for the November 3, 2026 general election, with hours.",
+  "group": "civic",
+  "category": "point",
+  "source": "San Joaquin County Registrar of Voters",
+  "view": {
+   "url": "https://services2.arcgis.com/GQhSReJEO6f7tsvy/arcgis/rest/services/26_GEN_MAP_WEB_WFL1/FeatureServer/28",
+   "fields": {
+    "USER_Location_Name": "name",
+    "USER_Location_Address": "address",
+    "USER_Drop_Box_City": "city",
+    "USER_Hours": "hours",
+    "USER_Description": "description"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -125.27,
+    35.55,
+    -117.27,
+    40.35
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "ca-san-joaquin-evacuation-zones",
+  "state": "CA",
+  "title": "Evacuation zones (San Joaquin County)",
+  "title_es": "Zonas de evacuación (condado de San Joaquín)",
+  "description": "San Joaquin County OES evacuation zones (August 2024). Know your zone code: during floods or fires, orders and warnings are issued by zone.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "San Joaquin County Office of Emergency Services",
+  "view": {
+   "url": "https://services2.arcgis.com/GQhSReJEO6f7tsvy/arcgis/rest/services/SAN_JOAQUIN_COUNTY_OES_EVACUATION_ROUTES_AND_ZONES___2024_WFL1/FeatureServer/2",
+   "fields": {
+    "name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.27,
+    37.35,
+    -120.27,
+    38.55
+   ],
+   "features_in_probe": 452
+  }
+ },
+ {
+  "name": "ca-san-joaquin-scheduled-road-closures",
+  "state": "CA",
+  "title": "Scheduled road closures (San Joaquin County)",
+  "title_es": "Cierres programados de caminos (condado de San Joaquín)",
+  "description": "Active scheduled closures on county roads (construction, railroad repairs, events) with location, reason and expected reopening.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "San Joaquin County Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/GQhSReJEO6f7tsvy/arcgis/rest/services/ScheduledRoadClosures/FeatureServer/0",
+   "fields": {
+    "ROAD": "road",
+    "LOCATION": "location",
+    "REASON": "kind",
+    "SCHEDULED_CLOSE": "start",
+    "SCHEDULED_OPEN": "end",
+    "STATUS": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "STATUS = 'Active'",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.27,
+    36.75,
+    -119.27,
+    39.15
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "ca-san-joaquin-emergency-road-closures",
+  "state": "CA",
+  "title": "Emergency road closures (San Joaquin County)",
+  "title_es": "Cierres de emergencia de caminos (condado de San Joaquín)",
+  "description": "County roads closed right now for flooding, crashes or other emergencies. Usually empty; fills in during storms.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "San Joaquin County Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/GQhSReJEO6f7tsvy/arcgis/rest/services/EmergencyRoadClosures/FeatureServer/0",
+   "fields": {
+    "ROAD": "road",
+    "LOCATION": "location",
+    "REASON": "kind",
+    "STATUS": "status",
+    "DATE_CLOSED": "start",
+    "DATE_PLANNED_OPEN": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "STATUS <> 'Reopened'",
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.27,
+    36.75,
+    -119.27,
+    39.15
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "ca-san-joaquin-road-projects",
+  "state": "CA",
+  "title": "Upcoming road projects (San Joaquin County)",
+  "title_es": "Próximos proyectos de caminos (condado de San Joaquín)",
+  "description": "Programmed county road projects (repaving, bridges, safety improvements) with limits, length, funding and expected construction start.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "San Joaquin County Public Works - Design Engineering",
+  "view": {
+   "url": "https://services2.arcgis.com/GQhSReJEO6f7tsvy/arcgis/rest/services/FutureProgrammedProjects/FeatureServer/2",
+   "fields": {
+    "PROJECTNAME": "name",
+    "PROJECTTYPE": "kind",
+    "LIMITFROM": "from",
+    "LIMITTO": "to",
+    "MILES": "miles",
+    "FUNDINGSOURCE": "funding",
+    "BEGINCONSTRUCTION": "start",
+    "AMOUNT": "cost"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.27,
+    36.75,
+    -119.27,
+    39.15
+   ],
+   "features_in_probe": 77
+  }
+ },
+ {
+  "name": "ca-san-joaquin-reclamation-districts",
+  "state": "CA",
+  "title": "Levee (reclamation) districts (San Joaquin County)",
+  "title_es": "Distritos de diques (reclamación) (condado de San Joaquín)",
+  "description": "Delta reclamation districts that maintain levees and drainage for each island and tract. If you live or farm behind a levee, this is the district responsible for it.",
+  "group": "hazards",
+  "category": "boundary",
+  "source": "San Joaquin County Public Works GIS",
+  "view": {
+   "url": "https://services2.arcgis.com/GQhSReJEO6f7tsvy/arcgis/rest/services/ReclamationDistricts/FeatureServer/0",
+   "fields": {
+    "RD_LONG": "name",
+    "RD_NUMBER": "number",
+    "RD_PLACE": "place"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.27,
+    36.75,
+    -119.27,
+    39.15
+   ],
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "ca-san-joaquin-irrigation-districts",
+  "state": "CA",
+  "title": "Irrigation & water districts (San Joaquin County)",
+  "title_es": "Distritos de riego y agua (condado de San Joaquín)",
+  "description": "Irrigation and water districts serving farms and towns in San Joaquin County.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "San Joaquin County Public Works GIS",
+  "view": {
+   "url": "https://services2.arcgis.com/GQhSReJEO6f7tsvy/arcgis/rest/services/IrrigationDistricts/FeatureServer/0",
+   "fields": {
+    "FULLNAME": "name",
+    "DISTRICT": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -125.27,
+    35.55,
+    -117.27,
+    40.35
+   ],
+   "features_in_probe": 64
+  }
+ },
+ {
+  "name": "ca-stockton-zoning",
+  "state": "CA",
+  "title": "Zoning (Stockton)",
+  "title_es": "Zonificación (Stockton)",
+  "description": "City of Stockton zoning districts.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Stockton GIS (GeoHub)",
+  "view": {
+   "url": "https://gisportal.stocktonca.gov/arcgis2/rest/services/GeoHub/GeoHub/MapServer/7",
+   "fields": {
+    "ZONE": "zoning"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.3065,
+    37.95,
+    -121.2735,
+    37.97
+   ],
+   "features_in_probe": 602
+  }
+ },
+ {
+  "name": "ca-stockton-general-plan",
+  "state": "CA",
+  "title": "2040 General Plan land use (Stockton)",
+  "title_es": "Uso de suelo del Plan General 2040 (Stockton)",
+  "description": "Land-use designations from Envision Stockton 2040 (the city's general plan).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Stockton GIS (GeoHub)",
+  "view": {
+   "url": "https://gisportal.stocktonca.gov/arcgis2/rest/services/GeoHub/GeoHub/MapServer/5",
+   "fields": {
+    "DESIGNATION": "land_use"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.42,
+    37.885,
+    -121.16,
+    38.035
+   ],
+   "features_in_probe": 988
+  }
+ },
+ {
+  "name": "ca-stockton-council-districts",
+  "state": "CA",
+  "title": "City council districts (Stockton)",
+  "title_es": "Distritos del concejo municipal (Stockton)",
+  "description": "The six Stockton City Council districts, with a link to each district's page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Stockton GIS (GeoHub)",
+  "view": {
+   "url": "https://gisportal.stocktonca.gov/arcgis2/rest/services/GeoHub/GeoHub/MapServer/4",
+   "fields": {
+    "District": "district",
+    "URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -123.29,
+    36.76,
+    -119.29,
+    39.16
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "ca-stockton-parks",
+  "state": "CA",
+  "title": "Parks (Stockton)",
+  "title_es": "Parques (Stockton)",
+  "description": "City of Stockton parks with their address.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Stockton GIS (GeoHub)",
+  "view": {
+   "url": "https://gisportal.stocktonca.gov/arcgis2/rest/services/GeoHub/GeoHub/MapServer/12",
+   "fields": {
+    "NAME": "name",
+    "Address": "address",
+    "Location": "location"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.79,
+    37.66,
+    -120.79,
+    38.26
+   ],
+   "features_in_probe": 92
+  }
+ },
+ {
+  "name": "ca-merced-county-zoning",
+  "state": "CA",
+  "title": "Zoning (unincorporated Merced County)",
+  "title_es": "Zonificación (zonas no incorporadas del condado de Merced)",
+  "description": "Merced County zoning outside city limits, with the zone name, community, and links to the use regulations and development standards.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of Merced GIS",
+  "view": {
+   "url": "https://gis.countyofmerced.com/server/rest/services/County_of_Merced_Zoning_Designations/MapServer/0",
+   "fields": {
+    "ZONE": "zoning",
+    "ZONENAME": "description",
+    "ZONE_TYPE": "kind",
+    "COMMUNITY": "community",
+    "Use_Regs": "page",
+    "Dev_Stnds": "standards"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -121.48,
+    36.7,
+    -119.48,
+    37.9
+   ],
+   "features_in_probe": 777
+  }
+ },
+ {
+  "name": "ca-merced-county-supervisor-districts",
+  "state": "CA",
+  "title": "Supervisor districts (Merced County)",
+  "title_es": "Distritos de supervisores (condado de Merced)",
+  "description": "The five Merced County Board of Supervisors districts, with a link to each district page.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "County of Merced GIS",
+  "view": {
+   "url": "https://gis.countyofmerced.com/server/rest/services/Supervisor_Disticts/MapServer/45",
+   "fields": {
+    "District": "district",
+    "URL_LINK": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -124.48,
+    34.9,
+    -116.48,
+    39.7
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ca-merced-county-parcels",
+  "state": "CA",
+  "title": "Parcels (Merced County)",
+  "title_es": "Parcelas (condado de Merced)",
+  "description": "Merced County assessor parcels with parcel number and acreage. Owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "County of Merced Assessor / GIS",
+  "view": {
+   "url": "https://gis.countyofmerced.com/server/rest/services/Assessment_Parcels/MapServer/42",
+   "fields": {
+    "PARCEL_NO": "parcel_id",
+    "GIS_ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.488,
+    37.295,
+    -120.472,
+    37.305
+   ],
+   "features_in_probe": 836
+  }
+ },
+ {
+  "name": "ca-merced-county-irrigation-districts",
+  "state": "CA",
+  "title": "Irrigation districts (Merced County)",
+  "title_es": "Distritos de riego (condado de Merced)",
+  "description": "Irrigation and water districts in Merced County, from LAFCO records.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Merced County LAFCO / County of Merced GIS",
+  "view": {
+   "url": "https://gis.countyofmerced.com/server/rest/services/Agriculture_Irrigation_Districts/MapServer/7",
+   "fields": {
+    "ORG_NAME": "name",
+    "DIST_TYPE_GRP": "kind",
+    "GIS_ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -124.48,
+    34.9,
+    -116.48,
+    39.7
+   ],
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "ca-merced-parcels",
+  "state": "CA",
+  "title": "Parcels (City of Merced)",
+  "title_es": "Parcelas (ciudad de Merced)",
+  "description": "City of Merced parcels with parcel number, acreage, assessor land use, zoning and FEMA flood zone. Owner names and mailing addresses are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Merced GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/wsz3l3tjYd5awPqD/arcgis/rest/services/City_Parcel_Datasets/FeatureServer/0",
+   "fields": {
+    "AS400APN": "parcel_id",
+    "GIS_ACRES": "acres",
+    "USENAME": "land_use",
+    "ZONE": "zoning",
+    "ZONENAME": "zoning_name",
+    "FLD_ZONE": "flood_zone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -120.488,
+    37.295,
+    -120.472,
+    37.305
+   ],
+   "features_in_probe": 836
+  }
+ },
+ {
+  "name": "ca-merced-council-districts",
+  "state": "CA",
+  "title": "City council districts (Merced)",
+  "title_es": "Distritos del concejo municipal (Merced)",
+  "description": "The six City of Merced council districts, with the adopting ordinance and district map.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Merced GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/wsz3l3tjYd5awPqD/arcgis/rest/services/Council_Member_Location_Lookup/FeatureServer/1",
+   "fields": {
+    "District": "district",
+    "LinkToMap": "page",
+    "OrdinanceNum": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -122.48,
+    36.1,
+    -118.48,
+    38.5
+   ],
+   "features_in_probe": 6
+  }
+ }
+]
