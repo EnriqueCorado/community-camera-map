@@ -2092,7 +2092,7 @@
   "title": "Groundwater restricted areas (Oregon)",
   "title_es": "Áreas con restricción de agua subterránea (Oregón)",
   "description": "Areas where Oregon limits new groundwater wells because water levels are declining, with the uses still allowed.",
-  "group": "weather",
+  "group": "hazards",
   "category": "hazard",
   "source": "Oregon Water Resources Department (Oregon GEOHub)",
   "license": "Oregon Water Resources Department (Oregon GEOHub) public ArcGIS service",

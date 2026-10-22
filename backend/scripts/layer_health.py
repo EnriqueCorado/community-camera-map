@@ -41,6 +41,7 @@ UA = "community-camera-map/layer-health (+https://github.com/EnriqueCorado/commu
 STALE_AFTER = dt.timedelta(days=3 * 365)
 STATUSES = ("broken", "empty", "stale", "ok")
 MAX_BODY = 60_000  # GitHub issue bodies stop at 65,536 characters
+MAX_BYTES = 64 * 2**20  # a map page of 2,000 simplified features is far smaller
 
 # Data that doesn't go out of date: lines on a map that stay put for years.
 STATIC_CATEGORIES = {"boundary", "landuse", "park", "perimeter"}
@@ -252,6 +253,10 @@ def sample_query(spec: dict, bbox: list[float]) -> dict[str, str]:
     return params
 
 
+class ResponseTooLarge(httpx.HTTPError):
+    """A reply bigger than MAX_BYTES (reported like any other failed fetch)."""
+
+
 async def _get(client: httpx.AsyncClient, url: str, params: dict) -> tuple[dict | str, str]:
     """(parsed body or why not, Access-Control-Allow-Origin); one retry on a
     network error, 429, 5xx or an ArcGIS error (often a busy server's 500
@@ -261,14 +266,20 @@ async def _get(client: httpx.AsyncClient, url: str, params: dict) -> tuple[dict 
         if attempt:
             await asyncio.sleep(5)
         try:
-            r = await client.get(url, params=params, headers={"Origin": ORIGIN})
+            async with client.stream("GET", url, params=params, headers={"Origin": ORIGIN}) as r:
+                body = bytearray()
+                async for chunk in r.aiter_bytes():
+                    body += chunk
+                    if len(body) > MAX_BYTES:  # a misbehaving server can't exhaust memory
+                        raise ResponseTooLarge(f"over {MAX_BYTES // 2**20} MB")
         except httpx.HTTPError as exc:
             why = f"no answer ({type(exc).__name__})"
             continue
         if r.status_code == 429 or r.status_code >= 500:
             why = f"HTTP {r.status_code}"
             continue
-        why, acao = parse(r.status_code, r.text), r.headers.get("access-control-allow-origin", "")
+        text = body.decode(r.encoding or "utf-8", errors="replace")
+        why, acao = parse(r.status_code, text), r.headers.get("access-control-allow-origin", "")
         if not (isinstance(why, str) and why.startswith("ArcGIS error")):
             break
     return why, acao
