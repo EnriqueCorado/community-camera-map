@@ -2217,6 +2217,11 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
       ],
     };
   }
+  if (info.name === "legal-aid-areas") {
+    // Help-offices pack polygons share the services popup (services-pack.ts).
+    const sp = servicePopup(info.name, p, lang, locale, tidy);
+    return { ...base, ...sp, title: sp.title || kind };
+  }
   switch (info.category) {
     case "space": {
       const isIss = info.name === "iss";

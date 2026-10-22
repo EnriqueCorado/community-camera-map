@@ -39,7 +39,8 @@ test("college links go to College Navigator only for a real IPEDS id", () => {
 
 test("every pack link host is https-allowlisted and every layer has a color", () => {
   for (const h of SERVICE_LINK_HOSTS) expect(WEBCAM_PAGE_HOSTS).toContain(h);
-  expect(SERVICE_LINK_HOSTS.every((h) => /\.(gov|org)$/.test(h))).toBe(true);
+  // USPS is federal but lives on usps.com.
+  expect(SERVICE_LINK_HOSTS.every((h) => /\.(gov|org)$/.test(h) || h === "tools.usps.com")).toBe(true);
   expect(Object.keys(SERVICE_COLORS).length).toBeGreaterThanOrEqual(14);
 });
 
@@ -73,4 +74,20 @@ test("hand-kept offices link only to their official source page", () => {
   expect(row(court.rows, "Nota")).toContain("1-800-898-7180");
   expect(safeUrl(court.link?.href, WEBCAM_PAGE_HOSTS)).toBe("https://www.justice.gov/eoir/sacramento-immigration-court");
   expect(servicePopup("immigration-offices", { n: "X", t: "ice", pg: "https://evil.example/" }, "en", "en-US", tidy).link).toBeUndefined();
+});
+
+test("help offices: SSA hours and resident stations, LSC areas show program, phone and website", () => {
+  const ssa = servicePopup("social-security-offices", { n: "Social Security - Modesto", t: "Resident station (limited services)", d: "Mon-Fri 9:00 AM-4:00 PM", p: "(866) 331-7132" }, "es", "es-US", tidy);
+  expect(row(ssa.rows, "Horario")).toBe("Mon-Fri 9:00 AM-4:00 PM");
+  expect(row(ssa.rows, "Tipo")).toBe("Oficina auxiliar (servicios limitados)");
+  expect(ssa.link?.href).toBe("https://secure.ssa.gov/ICON/main.jsp");
+  const lsc = servicePopup("legal-aid-areas", { name: "California Rural Legal Assistance", phone: "(800) 337-0690", web: "https://www.crla.org/", area: "CA-31" }, "en", "en-US", tidy);
+  expect(lsc.title).toBe("California Rural Legal Assistance");
+  expect(row(lsc.rows, "Phone")).toBe("(800) 337-0690");
+  expect(row(lsc.rows, "Website")).toBe("crla.org");
+  expect(lsc.link?.href).toContain("lsc.gov");
+  // Only https websites are shown.
+  expect(row(servicePopup("legal-aid-areas", { name: "X", web: "javascript:alert(1)" }, "en", "en-US", tidy).rows, "Website")).toBe("");
+  for (const n of ["social-security-offices", "legal-aid-areas", "post-offices"]) expect(SERVICE_COLORS[n]).toMatch(/^#[0-9a-f]{6}$/);
+  expect(SERVICE_LINK_HOSTS).toEqual(expect.arrayContaining(["secure.ssa.gov", "www.lsc.gov", "tools.usps.com"]));
 });

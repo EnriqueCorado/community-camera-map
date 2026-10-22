@@ -24,6 +24,9 @@ export const SERVICE_COLORS: Record<string, string> = {
   "va-facilities": "#334155",
   "border-ports": "#b45309",
   "summer-meals": "#ea580c",
+  "social-security-offices": "#0369a1",
+  "legal-aid-areas": "#0f766e",
+  "post-offices": "#475569",
 };
 
 type Bi = [en: string, es: string];
@@ -54,6 +57,9 @@ const LINKS: Record<string, [string, Bi]> = {
   "va-facilities": ["https://www.va.gov/find-locations/", ["Find VA locations", "Buscar centros del VA"]],
   "border-ports": ["https://bwt.cbp.gov/", ["Border wait times (CBP)", "Tiempos de espera en la frontera (CBP)"]],
   "summer-meals": ["https://www.fns.usda.gov/summer/sitefinder", ["USDA summer meal site finder", "Buscador de comidas de verano (USDA)"]],
+  "social-security-offices": ["https://secure.ssa.gov/ICON/main.jsp", ["Social Security office locator", "Buscador de oficinas del Seguro Social"]],
+  "legal-aid-areas": ["https://www.lsc.gov/about-lsc/what-legal-aid/get-legal-help", ["Find legal aid (LSC)", "Buscar ayuda legal (LSC)"]],
+  "post-offices": ["https://tools.usps.com/locations/", ["USPS location finder (hours)", "Buscador de oficinas de USPS (horario)"]],
 };
 const COLLEGE_NAVIGATOR = "https://nces.ed.gov/collegenavigator/?id=";
 /** Hand-kept immigration offices link to the official page each row came from. */
@@ -92,6 +98,18 @@ const NOTES: Record<string, Bi> = {
     "Solicite aquí vivienda pública o vales de Sección 8 (las listas de espera pueden estar cerradas).",
   ],
   "summer-meals": ["Free meals for kids and teens 18 and under.", "Comidas gratis para niños y jóvenes de 18 años o menos."],
+  "social-security-offices": [
+    "Many services are faster online at ssa.gov or by phone: 1-800-772-1213 (Spanish available).",
+    "Muchos trámites son más rápidos en ssa.gov o por teléfono: 1-800-772-1213 (hay servicio en español).",
+  ],
+  "legal-aid-areas": [
+    "Free civil legal help (eviction, benefits, family, domestic violence) for people with low incomes. Call the intake line.",
+    "Ayuda legal civil gratuita (desalojos, beneficios, familia, violencia doméstica) para personas de bajos ingresos. Llame a la línea de admisión.",
+  ],
+  "post-offices": [
+    "Many post offices also accept passport applications; check the USPS finder.",
+    "Muchas oficinas de correos también aceptan solicitudes de pasaporte; consulte el buscador de USPS.",
+  ],
 };
 
 /** Notes for the hand-kept offices, by kind. */
@@ -129,6 +147,8 @@ const LABELS: Record<string, Bi> = {
   population: ["People held (daily average)", "Personas detenidas (promedio diario)"],
   dates: ["Dates", "Fechas"],
   days: ["Days", "Días"],
+  hours: ["Hours", "Horario"],
+  website: ["Website", "Sitio web"],
   breakfast: ["Breakfast", "Desayuno"],
   lunch: ["Lunch", "Almuerzo"],
   location: ["Location", "Ubicación"],
@@ -191,6 +211,9 @@ const TYPES: Record<string, Record<string, Bi>> = {
   },
 };
 TYPES["early-head-start"] = TYPES["head-start"]!;
+TYPES["social-security-offices"] = {
+  "Resident station (limited services)": ["Resident station (limited services)", "Oficina auxiliar (servicios limitados)"],
+};
 TYPES["immigration-offices"] = {
   court: ["Immigration court", "Corte de inmigración"],
   ice: ["ICE field office (ERO)", "Oficina de campo de ICE (ERO)"],
@@ -239,6 +262,10 @@ export function servicePopup(
     .filter(Boolean)
     .map((x) => (i ? (LANG_ES[x] ?? x) : x))
     .join(", ");
+  if (layer === "legal-aid-areas") {
+    // LSC service areas keep the tool's own names: name · phone · web.
+    p = { n: p.name, p: p.phone, web: p.web };
+  }
   const city = [str(p.c), raw(p.s).length === 2 ? raw(p.s) : str(p.s)].filter(Boolean).join(", ");
   const pop = typeof p.pop === "number" ? p.pop.toLocaleString(locale) : "";
   const both = p.t === "both" ? (layer === "mental-health" ? L("bothMh") : L("bothSu")) : "";
@@ -260,9 +287,10 @@ export function servicePopup(
     [L("fieldOffice"), raw(p.fo)],
     [L("population"), pop],
     [L("dates"), p.d0 != null || p.d1 != null ? [date(p.d0), date(p.d1)].filter(Boolean).join(" – ") : ""],
-    [L("days"), str(p.d)],
+    [layer === "social-security-offices" ? L("hours") : L("days"), layer === "social-security-offices" ? raw(p.d) : str(p.d)],
     [L("breakfast"), raw(p.bt)],
     [L("lunch"), raw(p.lt)],
+    [L("website"), /^https:\/\/[^\s]+$/.test(raw(p.web)) ? raw(p.web).replace(/^https:\/\/(www\.)?/, "").replace(/\/$/, "") : ""],
     [L("location"), p.x === 1 ? L("approx") : ""],
     [L("note"), (layer === "immigration-offices" ? OFFICE_NOTES[raw(p.t)]?.[i] : NOTES[layer]?.[i]) ?? ""],
   ];
