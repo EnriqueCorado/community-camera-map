@@ -168,7 +168,10 @@ self.addEventListener("fetch", function (event) {
     caches.open(CACHE).then(function (cache) {
       return cache.match(MARKER).then(function (saved) {
         if (!saved) return fetch(req); // nothing saved: behave like a normal page load
-        var network = fetch(req);
+        // Always ask the site (a 304 when nothing changed), never the browser's
+        // own short-term cache: offline, that would show a page without the
+        // "saved copy" banner. Redirects (…/page → …/page/) go back to the browser.
+        var network = fetch(req.url, { cache: "no-cache", credentials: "same-origin", redirect: "manual" });
         // Keep the saved copy current (verified), and drop pages the site removed.
         event.waitUntil(
           network
