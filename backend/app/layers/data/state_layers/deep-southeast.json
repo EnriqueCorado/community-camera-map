@@ -749,115 +749,6 @@
   }
  },
  {
-  "name": "de-ncc-development-activity",
-  "state": "DE",
-  "title": "Development applications (New Castle County)",
-  "title_es": "Solicitudes de desarrollo (condado de New Castle)",
-  "description": "Active and recent land-development plans filed with New Castle County, with what is proposed and the plan's status.",
-  "group": "growth",
-  "category": "info",
-  "source": "New Castle County Department of Land Use",
-  "view": {
-   "url": "https://gis.nccde.org/entserver/rest/services/Foundation/LandUse_Theme/MapServer/3",
-   "fields": {
-    "projname": "name",
-    "aptype": "kind",
-    "worktype": "work",
-    "descript": "status",
-    "apno": "case",
-    "comments": "description",
-    "apdttm": "filed"
-   },
-   "geometry": "polygon",
-   "min_zoom": 13,
-   "where": "1=1",
-   "max_features": 2000,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-22",
-   "cors": true,
-   "bbox": [
-    -75.6599,
-    39.6796,
-    -75.4401,
-    39.8004
-   ],
-   "features_in_probe": 862
-  }
- },
- {
-  "name": "de-ncc-zoning",
-  "state": "DE",
-  "title": "Zoning (New Castle County)",
-  "title_es": "Zonificación (condado de New Castle)",
-  "description": "Unincorporated New Castle County zoning districts and character areas, with a link to the code section.",
-  "group": "planning",
-  "category": "landuse",
-  "source": "New Castle County Department of Land Use",
-  "view": {
-   "url": "https://gis.nccde.org/entserver/rest/services/Foundation/LandUse_Theme/MapServer/11",
-   "fields": {
-    "CODE": "zoning",
-    "DESCRIPTION": "name",
-    "GENERIC_DESCRIPTION": "kind",
-    "CharacterArea": "area",
-    "ACRES": "acres",
-    "URL": "page"
-   },
-   "geometry": "polygon",
-   "min_zoom": 13,
-   "where": "1=1",
-   "max_features": 2000,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-22",
-   "cors": true,
-   "bbox": [
-    -75.6599,
-    39.6796,
-    -75.4401,
-    39.8004
-   ],
-   "features_in_probe": 540
-  }
- },
- {
-  "name": "de-ncc-future-land-use",
-  "state": "DE",
-  "title": "Future land use (New Castle County)",
-  "title_es": "Uso de suelo futuro (condado de New Castle)",
-  "description": "The comprehensive plan's intended future use and density for each area of New Castle County.",
-  "group": "planning",
-  "category": "landuse",
-  "source": "New Castle County Department of Land Use",
-  "view": {
-   "url": "https://gis.nccde.org/entserver/rest/services/Foundation/LandUse_Theme/MapServer/6",
-   "fields": {
-    "GROWTH_ARE": "kind",
-    "DENSITY": "density",
-    "ACRES": "acres"
-   },
-   "geometry": "polygon",
-   "min_zoom": 12,
-   "where": "1=1",
-   "max_features": 2000,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-22",
-   "cors": true,
-   "bbox": [
-    -75.7697,
-    39.6192,
-    -75.3303,
-    39.8608
-   ],
-   "features_in_probe": 1156
-  }
- },
- {
   "name": "de-kent-zoning",
   "state": "DE",
   "title": "Zoning (Kent County)",
@@ -1793,39 +1684,6 @@
   }
  },
  {
-  "name": "ga-atlanta-npus",
-  "state": "GA",
-  "title": "Neighborhood Planning Units (Atlanta)",
-  "title_es": "Unidades de Planificación Vecinal (Atlanta)",
-  "description": "Atlanta's 25 NPUs, the citizen councils that review zoning, liquor licenses and city plans.",
-  "group": "civic",
-  "category": "boundary",
-  "source": "City of Atlanta Department of City Planning",
-  "view": {
-   "url": "https://gis.atlantaga.gov/dpcd/rest/services/AdministrativeArea/GeopoliticalArea/MapServer/2",
-   "fields": {
-    "NAME": "name",
-    "ACRES": "acres"
-   },
-   "geometry": "polygon",
-   "min_zoom": 10,
-   "where": "1=1",
-   "max_features": 2000,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-22",
-   "cors": true,
-   "bbox": [
-    -85.2689,
-    33.2666,
-    -83.5111,
-    34.2334
-   ],
-   "features_in_probe": 25
-  }
- },
- {
   "name": "ga-gwinnett-polling-places",
   "state": "GA",
   "title": "Polling places (Gwinnett County)",
@@ -2209,39 +2067,6 @@
     33.5104
    ],
    "features_in_probe": 856
-  }
- },
- {
-  "name": "al-jefferson-future-land-use",
-  "state": "AL",
-  "title": "Future land use (Jefferson County)",
-  "title_es": "Uso de suelo futuro (condado de Jefferson)",
-  "description": "The county comprehensive plan's intended future use for each parcel in unincorporated Jefferson County.",
-  "group": "planning",
-  "category": "landuse",
-  "source": "Jefferson County Department of Development Services",
-  "view": {
-   "url": "https://jccgis.jccal.org/server/rest/services/DDS/FutureLandUse/MapServer/2",
-   "fields": {
-    "FLU_Type": "kind",
-    "Acreage": "acres"
-   },
-   "geometry": "polygon",
-   "min_zoom": 14,
-   "where": "1=1",
-   "max_features": 2000,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-22",
-   "cors": true,
-   "bbox": [
-    -87.0049,
-    33.4198,
-    -86.8951,
-    33.4802
-   ],
-   "features_in_probe": 711
   }
  },
  {

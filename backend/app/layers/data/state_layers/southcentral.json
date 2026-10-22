@@ -277,45 +277,6 @@
   }
  },
  {
-  "name": "tx-water-service-areas",
-  "state": "TX",
-  "title": "Public water system service areas (Texas)",
-  "title_es": "Áreas de servicio de agua potable (Texas)",
-  "description": "Which public water system serves an area, from TWDB's water service boundary viewer.",
-  "group": "infra",
-  "category": "boundary",
-  "source": "Texas Water Development Board (TWDB)",
-  "license": "Texas state public information (Tex. Gov't Code ch. 552); attribution requested",
-  "view": {
-   "url": "https://services.twdb.texas.gov/arcgis/rest/services/PWS/Public_Water_Service_Areas/MapServer/0",
-   "fields": {
-    "PWSName": "name",
-    "PWSId": "pws_id",
-    "Source": "kind",
-    "LUpDateTime": "updated"
-   },
-   "geometry": "polygon",
-   "min_zoom": 11,
-   "where": "1=1",
-   "max_features": 2000,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -98.6,
-    29.35,
-    -98.4,
-    29.55
-   ],
-   "count": 6,
-   "kb": 45,
-   "max_record_count": 10000,
-   "features_in_probe": 6
-  }
- },
- {
   "name": "tx-tfs-wildfires",
   "state": "TX",
   "title": "Wildfires, last 30 days (Texas A&M Forest Service)",
@@ -3672,47 +3633,6 @@
   }
  },
  {
-  "name": "ms-parcels",
-  "state": "MS",
-  "title": "Parcels (Mississippi)",
-  "title_es": "Parcelas (Misisipi)",
-  "description": "Statewide parcel polygons compiled by MDEQ from county tax assessors (2023 tax year; owner names omitted).",
-  "group": "planning",
-  "category": "landuse",
-  "source": "Mississippi Department of Environmental Quality (MDEQ), Office of Geology / county assessors",
-  "license": "Public government data; credit MDEQ and county assessors",
-  "view": {
-   "url": "https://mgis19.mdeq.ms.gov/arcgis/rest/services/GeologyParcelAndFloodGIS/Parcels_Statewide_2023/MapServer/3",
-   "fields": {
-    "PARNO": "parcel_id",
-    "SITEADD": "address",
-    "SCITY": "city",
-    "CNTYNAME": "county",
-    "TAXACRES": "acres",
-    "TAXYEAR": "updated"
-   },
-   "geometry": "polygon",
-   "min_zoom": 16,
-   "where": "1=1",
-   "max_features": 1500,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -90.19,
-    32.295,
-    -90.18,
-    32.3
-   ],
-   "count": 253,
-   "kb": 1237,
-   "max_record_count": 2000,
-   "features_in_probe": 253
-  }
- },
- {
   "name": "ms-county-safe-rooms",
   "state": "MS",
   "title": "County storm safe rooms (Mississippi)",
@@ -3831,43 +3751,6 @@
    "kb": 9,
    "max_record_count": 2000,
    "features_in_probe": 41
-  }
- },
- {
-  "name": "al-active-wildfires",
-  "state": "AL",
-  "title": "Active wildfires (Alabama)",
-  "title_es": "Incendios forestales activos (Alabama)",
-  "description": "Wildfires the Alabama Forestry Commission currently lists as active (includes small fires NIFC may not show).",
-  "group": "live",
-  "category": "hazard",
-  "source": "Alabama Forestry Commission",
-  "license": "State of Alabama; public record, attribution requested",
-  "view": {
-   "url": "https://gis.forestry.alabama.gov/arcgis/rest/services/AFCEnterprise/OnlyActiveFireForPublic/MapServer/0",
-   "fields": {
-    "Name": "name",
-    "County": "county"
-   },
-   "geometry": "point",
-   "min_zoom": 6,
-   "where": "1=1",
-   "max_features": 1000,
-   "refresh_s": 900
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -88.5,
-    30.1,
-    -84.8,
-    35.1
-   ],
-   "count": 4,
-   "kb": 0.6,
-   "max_record_count": 1000,
-   "features_in_probe": 4
   }
  },
  {

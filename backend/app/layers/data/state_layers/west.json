@@ -7004,50 +7004,6 @@
   }
  },
  {
-  "name": "co-parcels",
-  "state": "CO",
-  "title": "Parcels (Colorado)",
-  "title_es": "Parcelas (Colorado)",
-  "description": "Colorado Public Parcels composite from the 44 of 64 counties that share data: situs address, land use, zoning, appraised value and assessor link (owner and sale fields omitted).",
-  "group": "planning",
-  "category": "landuse",
-  "source": "Colorado Governor's Office of Information Technology (OIT) GIS / county assessors",
-  "license": "Public (State of Colorado open data; no warranty, attribution requested)",
-  "view": {
-   "url": "https://gis.colorado.gov/public/rest/services/Address_and_Parcel/Colorado_Public_Parcels/MapServer/0",
-   "fields": {
-    "parcel_id": "name",
-    "situsAdd": "address",
-    "sitAddCty": "city",
-    "landUseDsc": "kind",
-    "zoningDesc": "zoning",
-    "apprValTot": "total_value",
-    "landAcres": "acres",
-    "countyName": "county",
-    "URL": "page"
-   },
-   "geometry": "polygon",
-   "min_zoom": 16,
-   "where": "1=1",
-   "max_features": 2000,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -104.995,
-    39.735,
-    -104.98,
-    39.745
-   ],
-   "count": 1585,
-   "kb": 661.8,
-   "max_record_count": 2000,
-   "features_in_probe": 1585
-  }
- },
- {
   "name": "co-polling-locations",
   "state": "CO",
   "title": "Voting centers and drop boxes (Colorado)",
@@ -7566,45 +7522,6 @@
    "kb": 114.7,
    "max_record_count": 2000,
    "features_in_probe": 397
-  }
- },
- {
-  "name": "nm-wifi-hotspots",
-  "state": "NM",
-  "title": "Public Wi-Fi hotspots (New Mexico)",
-  "title_es": "Puntos de Wi-Fi público (Nuevo México)",
-  "description": "Public Wi-Fi hotspots at libraries, schools, chapter houses and businesses compiled by the New Mexico broadband office.",
-  "group": "help",
-  "category": "point",
-  "source": "New Mexico Office of Broadband Access and Expansion (DoIT)",
-  "license": "Public (State of New Mexico DoIT)",
-  "view": {
-   "url": "https://gis.doit.nm.gov/nmgis/rest/services/Hotspots/WiFi_Hotspots/MapServer/0",
-   "fields": {
-    "Site_Name": "name",
-    "Address": "address",
-    "City": "city",
-    "Facility_Type": "kind",
-    "LastUpdated": "updated"
-   },
-   "geometry": "point",
-   "min_zoom": 8,
-   "where": "1=1",
-   "max_features": 2000
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -107.2,
-    34.7,
-    -106.2,
-    35.5
-   ],
-   "count": 23,
-   "kb": 6.0,
-   "max_record_count": 2000,
-   "features_in_probe": 23
   }
  },
  {

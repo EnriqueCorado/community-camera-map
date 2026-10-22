@@ -2020,45 +2020,6 @@
   }
  },
  {
-  "name": "mo-st-louis-lra-properties",
-  "state": "MO",
-  "title": "Land bank lots & buildings for sale (St. Louis LRA)",
-  "title_es": "Lotes y edificios del banco de tierras en venta (LRA de St. Louis)",
-  "description": "Properties owned by the City of St. Louis Land Reutilization Authority that are available to buy, many vacant lots (some eligible as side lots for neighbors). Apply through the city's LRA.",
-  "group": "housing",
-  "category": "landuse",
-  "source": "City of St. Louis Land Reutilization Authority (LRA)",
-  "license": "City of St. Louis public map service",
-  "view": {
-   "url": "https://maps6.stlouis-mo.gov/arcgis/rest/services/LRA_Properties/MapServer/0",
-   "fields": {
-    "ParcelId": "parcel_id",
-    "ADDRESS": "address",
-    "Status": "status",
-    "Usage": "kind",
-    "SQFT": "land_sqft",
-    "Class": "class",
-    "SideLotEligible": "side_lot",
-    "Description": "description"
-   },
-   "geometry": "polygon",
-   "min_zoom": 16,
-   "where": "LRA = 'YES' AND Status = 'Available'",
-   "max_features": 2000,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-22",
-   "bbox": [
-    -90.255,
-    38.665,
-    -90.235,
-    38.677
-   ],
-   "features_in_probe": 629
-  }
- },
- {
   "name": "mo-springfield-zoning",
   "state": "MO",
   "title": "Zoning (City of Springfield, Missouri)",

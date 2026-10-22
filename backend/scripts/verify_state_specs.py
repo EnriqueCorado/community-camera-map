@@ -49,6 +49,28 @@ def editable(meta: dict) -> bool:
     return bool(caps & _EDITS)
 
 
+def feature_service_urls(url: str) -> list[str]:
+    """The editable endpoints behind a layer URL: a MapServer serves the same
+    data as its FeatureServer twin, so an edit there shows here too."""
+    root, _, layer = url.rpartition("/")
+    base = root.rsplit("/", 1)[0]
+    return [f"{base}/FeatureServer", f"{base}/FeatureServer/{layer}"]
+
+
+async def edit_exposure(client: httpx.AsyncClient, url: str, meta: dict) -> str | None:
+    """Why the data behind `url` is anonymously editable, else None."""
+    if editable(meta):
+        return f"anonymously editable ({meta.get('capabilities')})"
+    for u in feature_service_urls(url):
+        try:
+            m = (await client.get(u, params={"f": "json"})).json()
+        except (httpx.HTTPError, ValueError):
+            continue  # no FeatureServer twin (plain MapServer): nothing to edit
+        if isinstance(m, dict) and "error" not in m and editable(m):
+            return f"anonymously editable via {u.rsplit('/rest/services/', 1)[-1]}"
+    return None
+
+
 async def check(client: httpx.AsyncClient, spec: dict) -> str | None:
     """None if the spec is good, else why not."""
     try:
@@ -64,8 +86,8 @@ async def check(client: httpx.AsyncClient, spec: dict) -> str | None:
         return f"metadata: {type(exc).__name__}"
     if "error" in meta:
         return f"metadata error: {str(meta['error'])[:80]}"
-    if editable(meta):
-        return f"anonymously editable ({meta.get('capabilities')}); use a read-only view"
+    if why := await edit_exposure(client, v["url"], meta):
+        return f"{why}; use a separate read-only copy"
     have = {f["name"] for f in meta.get("fields") or []}
     missing = [f for f in v["fields"] if f not in have]
     if missing:
