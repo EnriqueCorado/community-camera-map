@@ -394,6 +394,9 @@ and grant applications. It counts uses, not people.
   page. To show a number there without a visitor request, read it at build time.
 - *Off by default:* with no `COUNTER_URL` repo variable the build has no counter, and the pages' CSP
   allows no connections at all.
+- *On since 2026-10-22:* storage is the free Upstash Redis store `community-counter` (sfo1), connected
+  to `stanislaus-flights` in Production; `COUNTER_URL` = `https://stanislaus-flights.vercel.app/api/count`.
+  To turn it off: `gh variable delete COUNTER_URL`, then rebuild.
 
 Set it up (once):
 1. Vercel dashboard → project `stanislaus-flights` → Storage → Create Database → Upstash for Redis,
