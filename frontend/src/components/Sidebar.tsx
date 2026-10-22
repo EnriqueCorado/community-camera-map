@@ -122,7 +122,7 @@ const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
       ["cameras", ["fire-cameras", "river-cameras", "windy-webcams"]],
       ["live", ["flights", "buses", "transit-vehicles", "iss", "satellites", "trains"]],
       ["weather", ["weather-now", "air-now", "rain-radar", "satellite", "weather-alerts", "air-quality", "road-weather", "smoke-haze"]],
-      ["hazards", ["heat-risk", "fire-weather", "smoke-forecast", "storm-reports", "river-gauges", "drought", "reservoirs", "groundwater", "volcanoes", "fatal-crashes", "wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
+      ["hazards", ["heat-risk", "fire-weather", "smoke-forecast", "storm-reports", "river-gauges", "drought", "reservoirs", "groundwater", "groundwater-usa", "volcanoes", "fatal-crashes", "wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
       ["roads", ["lane-closures", "message-signs", "chain-controls", "transit-routes", "transit-stops", "amtrak", "airports", "railroads"]],
       ["places", ["cooling-centers", "shelters", "sandbags", "mobile-home-parks", "mobile-home-parks-usa", "food-banks", "clinics", "hospitals", "pharmacies", "community-centers", "libraries", "farmers-markets", "law-enforcement", "fire-stations", "schools", "parks", "playgrounds", "aed", "drinking-water", "restrooms", "ev-chargers", "free-wifi"]],
       ["help", ["legal-help"]],
@@ -364,7 +364,7 @@ export function Sidebar({
   const reservoirsOn = layers.overlays["reservoirs"] ?? false;
   const votingOn = layers.overlays["voting"] ?? false;
   const wastewaterOn = layers.overlays["wastewater"] ?? false;
-  const groundwaterOn = layers.overlays["groundwater"] ?? false;
+  const groundwaterOn = (layers.overlays["groundwater"] || layers.overlays["groundwater-usa"]) ?? false;
   const gaugesOn = layers.overlays["river-gauges"] ?? false;
   const firewxOn = layers.overlays["fire-weather"] ?? false;
   const stormsOn = layers.overlays["storm-reports"] ?? false;

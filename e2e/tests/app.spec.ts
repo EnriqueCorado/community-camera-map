@@ -399,3 +399,11 @@ test("flights refresh themselves while the layer is on", async ({ page }) => {
   await page.clock.fastForward(60_000);
   expect(calls).toBe(after);
 });
+
+test("US groundwater wells show the depth legend", async ({ page }) => {
+  await page.goto("/");
+  await waitForMap(page);
+  await expect(page.locator("#gw-legend")).toHaveCount(0);
+  await page.getByText("Groundwater levels (US wells)", { exact: true }).click();
+  await expect(page.locator("#gw-legend")).toBeVisible();
+});
