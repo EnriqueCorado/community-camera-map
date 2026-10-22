@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { PRESETS } from "../../frontend/src/presets";
 
 const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
 
@@ -574,7 +575,6 @@ test("live transit vehicles: only agencies in view are polled; train popup in Sp
 
 test("quick view turns on its layers, and every preset layer exists", async ({ page, request }) => {
   const names = new Set(((await (await request.get("/api/layers")).json()) as { name: string }[]).map((l) => l.name));
-  const { PRESETS } = await import("../../frontend/src/presets");
   for (const p of PRESETS) for (const n of p.overlays) expect(names.has(n), `${p.id}: ${n}`).toBe(true);
   await page.goto("/");
   await ready(page);
