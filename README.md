@@ -365,14 +365,19 @@ and grant applications. It counts uses, not people.
   `page:<tool id>:<lang>` or `app:<tab>/<view>:<lang>`). Nothing else: no IP address, user agent,
   referrer, cookie, ID or exact time. Our code reads only the event, Origin, DNT, Sec-GPC and
   User-Agent (to drop bots and our own headless test runs) and logs only storage errors.
-- *Sent:* a bodiless `POST /api/count?e=<event>` with `credentials: "omit"` and no referrer, once per
-  page view or tool (per page load), never retried. Browsers with Do Not Track or Global Privacy
+- *Sent:* `POST /api/count` with the event as a short text body (never in the URL, which request
+  logs keep), `credentials: "omit"` and no referrer, once per page view or tool (per page load),
+  never retried. It's a CORS "simple" request (no preflight), so browsers send the real Origin. Browsers with Do Not Track or Global Privacy
   Control send nothing, and the server ignores those headers' requests too.
 - *Fixed list:* the server accepts only the events in `EVENTS`, so nothing else can ride along.
   `e2e/tests/unit-counter.spec.ts` fails when a new tool or view isn't in the list: add it there and
   redeploy the relay.
 - *Vercel* (which runs it) keeps its own request logs, with IP address and browser, for 1 hour on the
-  Hobby plan, the same as for the flights relay. The pages and the panel say counting happens, in
+  Hobby plan, the same as for the flights relay. They show only `POST /api/count`, not which tool.
+  **Never add a log drain to this project**, and keep the plan's log retention short.
+- *Abuse:* the counts are unverified (anyone can send allowed events); say so wherever totals are
+  shown. The firewall rule below limits each visitor; a per-instance cap (600 a minute) is only a
+  backstop. The pages and the panel say counting happens, in
   English and Spanish, only when it's on.
 - *Totals:* `GET /api/count` returns the last 24 months as JSON (cached 1 hour), e.g. for the partners
   page. To show a number there without a visitor request, read it at build time.

@@ -145,9 +145,10 @@
   var counter = body.getAttribute("data-counter");
   var counted = body.getAttribute("data-count");
   if (counter && counted && window.fetch && navigator.doNotTrack !== "1" && navigator.globalPrivacyControl !== true) {
-    fetch(counter + "?e=" + encodeURIComponent(counted), {
+    fetch(counter, {
       method: "POST",
-      mode: "no-cors",
+      mode: "cors",
+      body: counted,
       credentials: "omit",
       referrerPolicy: "no-referrer",
       keepalive: true,
@@ -162,7 +163,7 @@
   if (shareBox) {
     var url = shareBox.getAttribute("data-url");
     var said = shareBox.querySelector("[role=status]");
-    var copyBtn = shareBox.querySelector("[data-copy]");
+    var copyBtn = shareBox.querySelector("[data-share-copy]");
     var nativeBtn = shareBox.querySelector("[data-native]");
     if (navigator.clipboard && navigator.clipboard.writeText) {
       copyBtn.hidden = false;

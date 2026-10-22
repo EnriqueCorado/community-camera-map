@@ -108,7 +108,7 @@ test("add and remove people: focus follows, limits hold, and it's announced", as
   await expect(contacts.getByRole("button", { name: "Add another (contact)" })).toHaveCount(0);
 });
 
-test("erase everything asks first; answers survive switching views but not leaving the tab", async ({ page }) => {
+test("erase everything asks first; answers survive switching views and tabs, but not closing Free Help", async ({ page }) => {
   const dialog = await open(page);
   const caregiver = section(page, "Back-up caregiver for the children");
   await caregiver.getByLabel("Name", { exact: true }).fill("Tía Marta");
@@ -132,9 +132,18 @@ test("erase everything asks first; answers survive switching views but not leavi
   await expect(dialog.getByRole("heading", { name: "Make a family emergency plan" })).toBeFocused();
   await expect(dialog.getByRole("status").filter({ hasText: "Everything you typed was erased." })).toHaveCount(1);
 
-  // Leaving the tab erases it.
+  // A look at another tab (or another tool from "Not sure where to start?") keeps it.
   await caregiver.getByLabel("Name", { exact: true }).fill("Tía Marta");
   await dialog.getByRole("tab", { name: "Renters" }).click();
+  await expect(dialog.getByRole("textbox", { name: "Name", exact: true })).toHaveCount(0); // hidden while away
+  await dialog.getByRole("tab", { name: "Immigration" }).click();
+  await dialog.getByRole("button", { name: "Family emergency plan" }).click();
+  await expect(section(page, "Back-up caregiver for the children").getByLabel("Name", { exact: true })).toHaveValue("Tía Marta");
+
+  // Closing Free Help erases it.
+  await dialog.getByRole("button", { name: "Close" }).click();
+  await expect(dialog).toBeHidden();
+  await page.getByRole("button", { name: /Free help/ }).click();
   await dialog.getByRole("tab", { name: "Immigration" }).click();
   await dialog.getByRole("button", { name: "Family emergency plan" }).click();
   await expect(section(page, "Back-up caregiver for the children").getByLabel("Name", { exact: true })).toHaveValue("");
@@ -156,6 +165,8 @@ test("nothing typed is sent or saved, and the browser is asked not to remember i
   const fields = dialog.locator(".hplan input:not([type=checkbox]), .hplan textarea");
   expect(await fields.count()).toBeGreaterThan(20);
   for (const a of await fields.evaluateAll((els) => els.map((e) => e.getAttribute("autocomplete")))) expect(a).toBe("off");
+  // No spell check or writing assistant either: some send what's typed to their servers.
+  for (const a of await fields.evaluateAll((els) => els.map((e) => [e.getAttribute("spellcheck"), e.getAttribute("data-gramm")].join()))) expect(a).toBe("false,false");
 });
 
 test("closing the page with a plan typed asks first", async ({ page }) => {

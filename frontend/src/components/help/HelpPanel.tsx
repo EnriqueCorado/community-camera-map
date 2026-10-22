@@ -2,7 +2,7 @@
 // (full screen on phones). Nothing typed here is stored or sent anywhere:
 // state lives in these components and is gone when the panel closes. (When
 // the usage counter is on, only "this tool was opened" is sent: help/count.ts.)
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import "./help.css";
 import { useI18n } from "../../i18n";
 import { useDialog } from "../../hooks/useDialog";
@@ -42,6 +42,11 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
   const ref = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   useDialog(ref, onClose, { modal: true });
+  // Once opened, the Immigration tab stays mounted (hidden when another tab is
+  // shown), so a family plan being typed survives a look at another tool. It's
+  // still erased when the panel closes or the page is left.
+  const [keepImmigration, setKeepImmigration] = useState(false);
+  if (target.tab === "immigration" && !keepImmigration) setKeepImmigration(true);
 
   const countId = appCountId(target);
   useEffect(() => {
@@ -133,13 +138,15 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
                 onLegal={() => go({ tab: "legal" })}
               />
             )}
-            {target.tab === "immigration" && (
-              <ImmigrationTab
-                c={c}
-                view={isImmigrationView(target.view) ? target.view : "rights"}
-                onView={(view) => onTarget({ tab: "immigration", view })}
-                onLegal={() => go({ tab: "legal" })}
-              />
+            {keepImmigration && (
+              <div hidden={target.tab !== "immigration"}>
+                <ImmigrationTab
+                  c={c}
+                  view={isImmigrationView(target.view) ? target.view : "rights"}
+                  onView={(view) => onTarget({ tab: "immigration", view })}
+                  onLegal={() => go({ tab: "legal" })}
+                />
+              </div>
             )}
             {target.tab === "legal" && <LegalHelp c={c} onShowOnMap={onShowOnMap} />}
           </Suspense>

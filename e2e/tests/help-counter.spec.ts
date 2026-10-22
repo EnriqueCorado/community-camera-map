@@ -23,7 +23,7 @@ test.beforeEach(async ({ page }) => {
   test.skip(!html.includes(`data-counter="${COUNTER}"`), `needs a build with VITE_COUNTER_URL=${COUNTER}`);
 });
 
-test("a public page sends one bare count: no body, cookies or referrer", async ({ page, context }) => {
+test("a public page sends one count: the event in the body, from the real origin, no cookies or referrer", async ({ page, context }) => {
   // A cookie for the counter's host must never be sent (credentials: omit).
   await context.addCookies([{ name: "id", value: "SECRET", domain: "counter.invalid", path: "/", secure: true }]);
   const sent = await record(page);
@@ -31,9 +31,11 @@ test("a public page sends one bare count: no body, cookies or referrer", async (
   await expect.poll(() => sent.length).toBe(1);
   const r = sent[0]!;
   expect(r.method()).toBe("POST");
-  expect(r.url()).toBe(`${COUNTER}?e=page%3Aeviction%3Aes`);
-  expect(r.postData() ?? "").toBe("");
+  // The URL is the same for every page (logs keep URLs); the event is the body.
+  expect(r.url()).toBe(COUNTER);
+  expect(r.postData()).toBe("page:eviction:es");
   const headers = await r.allHeaders();
+  expect(headers.origin).toBe(new URL(page.url()).origin);
   expect(headers.cookie).toBeUndefined();
   expect(headers.referer).toBeUndefined();
   // The page's CSP lets it reach the counter's origin and nothing else.
@@ -43,7 +45,8 @@ test("a public page sends one bare count: no body, cookies or referrer", async (
   await expect(page.locator(".foot")).toContainText("Contamos cuántas veces se abre cada página");
   await page.goto("help/");
   await expect.poll(() => sent.length).toBe(2);
-  expect(sent[1]!.url()).toBe(`${COUNTER}?e=page%3Ahome%3Aen`);
+  expect(sent[1]!.url()).toBe(COUNTER);
+  expect(sent[1]!.postData()).toBe("page:home:en");
 });
 
 test("flyers aren't counted (they're made for paper)", async ({ page }) => {
@@ -78,13 +81,13 @@ test("the map app counts each Help tool once per page load, and never what's typ
   await page.goto("./#help=rent&hv=eviction");
   const dialog = page.getByRole("dialog", { name: "Free help" });
   await expect(dialog).toBeVisible();
-  await expect.poll(() => sent.map((r) => r.url())).toEqual([`${COUNTER}?e=app%3Arent%2Feviction%3Aen`]);
+  await expect.poll(() => sent.map((r) => [r.url(), r.postData()])).toEqual([[COUNTER, "app:rent/eviction:en"]]);
   await expect(dialog).toContainText("We count how many times each tool is opened");
   await dialog.getByRole("button", { name: /rent increase legal/i }).click();
   await dialog.getByRole("button", { name: /eviction notice/i }).click();
   await dialog.getByRole("tab", { name: "Work" }).click();
   await expect
-    .poll(() => sent.map((r) => decodeURIComponent(new URL(r.url()).searchParams.get("e") ?? "")))
+    .poll(() => sent.map((r) => r.postData()))
     .toEqual(["app:rent/eviction:en", "app:rent/rent:en", "app:work/wages:en"]);
   const typed = "95354";
   await dialog.getByRole("tab", { name: "Renters" }).click();
@@ -94,8 +97,8 @@ test("the map app counts each Help tool once per page load, and never what's typ
   await page.waitForTimeout(300);
   expect(sent).toHaveLength(3); // already counted: nothing new
   for (const r of sent) {
-    expect(r.url()).not.toContain(typed);
-    expect(r.postData() ?? "").toBe("");
+    expect(r.url()).toBe(COUNTER);
+    expect(r.postData() ?? "").not.toContain(typed);
     expect((await r.allHeaders()).referer).toBeUndefined();
   }
 });

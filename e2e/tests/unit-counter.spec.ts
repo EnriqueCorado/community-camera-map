@@ -13,10 +13,11 @@ const URL_BASE = "https://stanislaus-flights.vercel.app/api/count";
 const NOV = Date.UTC(2026, 10, 14, 23, 59, 59); // 2026-11-14, late evening UTC
 const VIEWS: Partial<Record<HelpTab, readonly string[]>> = { rent: RENT_VIEWS, work: WORK_VIEWS, benefits: BENEFITS_VIEWS, immigration: IMMIGRATION_VIEWS };
 
-const post = (e: string | null, headers: Record<string, string> = {}, search?: string) =>
-  new Request(`${URL_BASE}${search ?? (e === null ? "" : `?e=${encodeURIComponent(e)}`)}`, {
+const post = (e: string | null, headers: Record<string, string> = {}, search = "") =>
+  new Request(`${URL_BASE}${search}`, {
     method: "POST",
     headers: { Origin: SITE_ORIGIN, ...headers },
+    body: e ?? undefined,
   });
 
 /** Every event the site can send today. */
@@ -44,30 +45,31 @@ test.describe("the fixed list of events", () => {
   });
 
   test("anything else is refused", () => {
-    const u = (search: string, path = "/api/count") => new URL(`https://x.example${path}${search}`);
-    expect(parseEvent(u("?e=page:rent:es"))).toBe("page:rent:es");
-    expect(parseEvent(u("?e=page%3Arent%3Aes"))).toBe("page:rent:es");
-    expect(parseEvent(u("?e=app:rent%2Feviction:en"))).toBe("app:rent/eviction:en");
+    const u = (search = "", path = "/api/count") => new URL(`https://x.example${path}${search}`);
+    expect(parseEvent(u(), "page:rent:es")).toBe("page:rent:es");
+    expect(parseEvent(u(), "app:rent/eviction:en")).toBe("app:rent/eviction:en");
     for (const bad of [
       "",
-      "?e=",
-      "?e=page:rent",
-      "?e=page:rent:fr",
-      "?e=page:Rent:es",
-      "?e=page:rent:es:95354", // a ZIP code riding along
-      "?e=page:rent:es&zip=95354",
-      "?zip=95354&e=page:rent:es",
-      "?e=page:rent:es&e=page:rent:es",
-      "?e=page:rent-increase:es", // the slug, not the tool id
-      "?e=app:rent:en", // Renters always has a view
-      "?e=page:" + "a".repeat(200) + ":es",
-      "?e=%E0%A4%A", // broken escape
-      "?e=page:home:es%00",
+      "page:rent",
+      "page:rent:fr",
+      "page:Rent:es",
+      "page:rent:es:95354", // a ZIP code riding along
+      "page:rent:es\n",
+      " page:rent:es",
+      "page:rent:es page:rent:es",
+      "page%3Arent%3Aes", // the body is plain text, never decoded
+      "page:rent-increase:es", // the slug, not the tool id
+      "app:rent:en", // Renters always has a view
+      "page:" + "a".repeat(200) + ":es",
+      "page:home:es\u0000",
     ]) {
-      expect(parseEvent(u(bad)), bad).toBeNull();
+      expect(parseEvent(u(), bad), JSON.stringify(bad)).toBeNull();
     }
-    expect(parseEvent(u("?e=page:rent:es", "/api/count/"))).toBeNull();
-    expect(parseEvent(u("?e=page:rent:es", "/api/flights"))).toBeNull();
+    // The event never rides in the URL (logs keep URLs): any query string is refused.
+    expect(parseEvent(u("?e=page:rent:es"), "page:rent:es")).toBeNull();
+    expect(parseEvent(u("?zip=95354"), "page:rent:es")).toBeNull();
+    expect(parseEvent(u("", "/api/count/"), "page:rent:es")).toBeNull();
+    expect(parseEvent(u("", "/api/flights"), "page:rent:es")).toBeNull();
   });
 });
 
@@ -145,17 +147,20 @@ test.describe("counting", () => {
     let t = NOV;
     const { count, totals } = createCounter(store, () => t);
     expect((await count(post("page:home:en", { Origin: "https://evil.example" }))).status).toBe(403);
-    const noOrigin = new Request(`${URL_BASE}?e=page:home:en`, { method: "POST" });
+    const noOrigin = new Request(URL_BASE, { method: "POST", body: "page:home:en" });
     expect((await count(noOrigin)).status).toBe(403);
     expect((await count(post("page:nope:en"))).status).toBe(400);
     expect((await count(post(null))).status).toBe(400);
     expect(store.dump()).toEqual({});
-    // At most 120 a minute per instance; the rest are dropped (still a 204).
-    for (let i = 0; i < 130; i++) await count(post("page:home:en"));
-    expect(store.dump()["2026-11"]!["page:home:en"]).toBe(120);
+    expect((await count(post("page:home:en", {}, "?e=page:home:en"))).status).toBe(400);
+    expect((await count(post("page:home:en", { "Content-Length": "5000" }))).status).toBe(400);
+    expect(store.dump()).toEqual({});
+    // At most 600 a minute per instance (a backstop); the rest are dropped (still a 204).
+    for (let i = 0; i < 610; i++) await count(post("page:home:en"));
+    expect(store.dump()["2026-11"]!["page:home:en"]).toBe(600);
     t += 60_000;
     await count(post("page:home:en"));
-    expect(store.dump()["2026-11"]!["page:home:en"]).toBe(121);
+    expect(store.dump()["2026-11"]!["page:home:en"]).toBe(601);
     expect((await totals(new Request(`${URL_BASE}?x=1`))).status).toBe(404);
   });
 
@@ -216,7 +221,7 @@ test.describe("browser side", () => {
     expect(isHelpView("work", "medi-cal")).toBe(false);
   });
 
-  test("sends only the event: a bodiless POST, no cookies, no referrer, no retries", async () => {
+  test("sends only the event, in the body: no cookies, no referrer, no retries, nothing in the URL", async () => {
     const calls: { url: string; init: RequestInit }[] = [];
     const fake = (async (url: string, init: RequestInit) => {
       calls.push({ url, init });
@@ -225,8 +230,8 @@ test.describe("browser side", () => {
     sendCount(URL_BASE, "app:rent/eviction:es", fake);
     await new Promise((r) => setTimeout(r, 10));
     expect(calls).toHaveLength(1);
-    expect(calls[0]!.url).toBe(`${URL_BASE}?e=app%3Arent%2Feviction%3Aes`);
-    expect(calls[0]!.init).toEqual({ method: "POST", mode: "no-cors", credentials: "omit", referrerPolicy: "no-referrer", keepalive: true, cache: "no-store" });
-    expect(parseEvent(new URL(calls[0]!.url))).toBe("app:rent/eviction:es");
+    expect(calls[0]!.url).toBe(URL_BASE);
+    expect(calls[0]!.init).toEqual({ method: "POST", mode: "cors", body: "app:rent/eviction:es", credentials: "omit", referrerPolicy: "no-referrer", keepalive: true, cache: "no-store" });
+    expect(parseEvent(new URL(calls[0]!.url), String(calls[0]!.init.body))).toBe("app:rent/eviction:es");
   });
 });

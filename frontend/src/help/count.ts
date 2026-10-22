@@ -30,10 +30,14 @@ export function mayCount(nav: { doNotTrack?: string | null; globalPrivacyControl
 }
 
 /** Send one count, once, and forget it (no retries, errors ignored). */
+// The event goes in the body (logs keep URLs, not bodies). A text body with no
+// custom headers is a CORS "simple" request: no preflight, and the browser
+// always sends the real Origin, which the counter checks.
 export function sendCount(url: string, event: string, fetchImpl: typeof fetch = fetch): void {
-  fetchImpl(`${url}?e=${encodeURIComponent(event)}`, {
+  fetchImpl(url, {
     method: "POST",
-    mode: "no-cors",
+    mode: "cors",
+    body: event,
     credentials: "omit",
     referrerPolicy: "no-referrer",
     keepalive: true,

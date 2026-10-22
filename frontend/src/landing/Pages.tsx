@@ -329,7 +329,7 @@ function ShareBox({ site, lang, path, title, page }: { site: Site; lang: Lang; p
         <a className="btn btn--quiet" href={whatsappHref(text, url)}>
           {t.whatsapp}
         </a>
-        <button type="button" className="btn btn--quiet" data-copy hidden>
+        <button type="button" className="btn btn--quiet" data-share-copy hidden>
           {t.copy}
         </button>
         <button type="button" className="btn btn--quiet" data-native hidden>

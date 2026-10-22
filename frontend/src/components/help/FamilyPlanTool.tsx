@@ -29,22 +29,9 @@ import "./family-plan.css";
 
 type Paper = { mode: "filled" | "blank"; lang: Lang };
 
-/** The plan's state, kept by the Immigration tab. Warns before the page is
- *  closed or reloaded while anything is typed, since it can't be recovered. */
-export function useFamilyPlan(): [PlanState, Dispatch<SetStateAction<PlanState>>] {
-  const [plan, setPlan] = useState<PlanState>(emptyPlan);
-  const dirty = hasContent(plan);
-  useEffect(() => {
-    if (!dirty) return;
-    const warn = (e: BeforeUnloadEvent) => {
-      e.preventDefault();
-      e.returnValue = "";
-    };
-    window.addEventListener("beforeunload", warn);
-    return () => window.removeEventListener("beforeunload", warn);
-  }, [dirty]);
-  return [plan, setPlan];
-}
+/** What's typed stays on the device: no autofill, and no spell check or
+ *  writing assistant (some send the text to their servers). */
+const PRIVATE_FIELD = { autoComplete: "off", spellCheck: false, autoCorrect: "off", autoCapitalize: "off", "data-gramm": "false" } as const;
 
 export function FamilyPlanTool({
   c,
@@ -239,7 +226,7 @@ function PlanSectionForm({
                 className="hf__input"
                 rows={3}
                 maxLength={MULTILINE_MAX}
-                autoComplete="off"
+                {...PRIVATE_FIELD}
                 data-entry={j === 0 ? `${s.id}-${i}` : undefined}
                 value={list[i]![f.id] ?? ""}
                 onChange={(e) => setPlan((old) => setField(old, s.id, i, f.id, e.target.value))}
@@ -252,7 +239,7 @@ function PlanSectionForm({
                 type={f.kind === "tel" ? "tel" : "text"}
                 inputMode={f.kind === "tel" ? "tel" : undefined}
                 maxLength={TEXT_MAX}
-                autoComplete="off"
+                {...PRIVATE_FIELD}
                 data-entry={j === 0 ? `${s.id}-${i}` : undefined}
                 value={list[i]![f.id] ?? ""}
                 onChange={(e) => setPlan((old) => setField(old, s.id, i, f.id, e.target.value))}

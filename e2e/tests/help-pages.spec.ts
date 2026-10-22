@@ -36,7 +36,10 @@ test.beforeEach(async ({ page }) => {
   test.skip(!(await res.text()).includes('class="hero"'), "the Free help pages exist only in a build (vite preview or the live site)");
 });
 
-test("every page loads with one h1, the right language, and a canonical link", async ({ page }) => {
+test("every page loads with one h1, the right language, a canonical link, and no script errors", async ({ page, context }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(`${page.url()}: ${e.message}`));
   for (const path of ALL) {
     const res = await page.goto(path);
     expect(res?.status(), path).toBe(200);
@@ -47,7 +50,11 @@ test("every page loads with one h1, the right language, and a canonical link", a
     expect((await page.title()).length, path).toBeGreaterThan(10);
     const description = await page.locator('meta[name="description"]').getAttribute("content");
     expect(description?.length ?? 0, path).toBeGreaterThan(40);
+    // The page script's Copy and Share buttons (when the page has them) work without errors.
+    const copy = page.locator("[data-share-copy]:visible, [data-copy]:visible").first();
+    if (await copy.count()) await copy.click();
   }
+  expect(errors).toEqual([]);
 });
 
 test("each page's language switch goes to the same page in the other language", async ({ page }) => {
@@ -79,7 +86,9 @@ test("no broken links between the pages", async ({ page, request }) => {
 
 test("pages make no requests beyond the page itself, and the browser enforces it", async ({ page }) => {
   // A build with the usage counter: answer for it here (tests aren't visitors).
-  await page.route("**/api/count?e=*", (route) => route.fulfill({ status: 204 }));
+  await page.route("**/api/count", (route) =>
+    route.fulfill({ status: 204, headers: { "Access-Control-Allow-Origin": new URL(route.request().headers().origin ?? "http://x").origin } }),
+  );
   const blocked: string[] = [];
   page.on("console", (m) => m.type() === "error" && blocked.push(m.text()));
   for (const path of ALL) {
@@ -92,7 +101,7 @@ test("pages make no requests beyond the page itself, and the browser enforces it
     // The page itself, plus (in help/ and ayuda/) its own folder's offline worker,
     // plus, when the build has the anonymous usage counter, one count to it.
     const counter = await page.locator("body").getAttribute("data-counter");
-    const counts = counter ? urls.filter((u) => u.startsWith(`${counter}?e=`)) : [];
+    const counts = counter ? urls.filter((u) => u === counter) : [];
     expect(counts.length, path).toBeLessThanOrEqual(1);
     const others = urls.filter((u) => u !== page.url() && !counts.includes(u) && !/\/(help|ayuda)\/sw\.js$/.test(new URL(u).pathname));
     expect(others, path).toEqual([]);

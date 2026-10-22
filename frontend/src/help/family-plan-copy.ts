@@ -44,7 +44,7 @@ export interface FamilyPlanCopy {
 const en: FamilyPlanCopy = {
   title: "Make a family emergency plan",
   lead: "Write down who can care for your children, who to call, and where your documents are, so your family knows what to do if you are detained or can’t come home. Then print it or save it as a PDF and give a copy to your caregiver. Free, with no sign-up.",
-  private: "What you type stays on this device and is never sent anywhere. It is erased when you leave the Immigration tab or close this page, so print or save it first.",
+  private: "What you type stays on this device and is never sent anywhere. It is erased when you close Free Help or this page, so print or save it first.",
   sensitive: "This plan can hold private information. Write only what your caregiver needs, and keep the paper as safe as your documents.",
   emergency: "If agents are at your door right now, go to Know your rights.",
   rightsLink: "Know your rights",
@@ -82,7 +82,7 @@ const en: FamilyPlanCopy = {
 const es: FamilyPlanCopy = {
   title: "Haga un plan familiar de emergencia",
   lead: "Anote quién puede cuidar a sus hijos, a quién llamar y dónde están sus documentos, para que su familia sepa qué hacer si lo detienen o no puede regresar a casa. Luego imprímalo o guárdelo como PDF y dele una copia a su cuidador. Gratis y sin registrarse.",
-  private: "Lo que escribe se queda en este aparato y nunca se envía a ninguna parte. Se borra al salir de la pestaña de Inmigración o al cerrar esta página, así que imprímalo o guárdelo antes.",
+  private: "Lo que escribe se queda en este aparato y nunca se envía a ninguna parte. Se borra al cerrar Ayuda gratis o esta página, así que imprímalo o guárdelo antes.",
   sensitive: "Este plan puede tener información privada. Escriba solo lo que su cuidador necesita, y guarde el papel tan seguro como sus documentos.",
   emergency: "Si hay agentes en su puerta ahora mismo, vaya a Conozca sus derechos.",
   rightsLink: "Conozca sus derechos",

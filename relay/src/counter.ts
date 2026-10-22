@@ -1,8 +1,10 @@
 // Usage counter: how many times each free-help page or tool was opened, one
 // number per page per month, so partners and grant makers can see the tools
 // are used. It counts uses, not people.
-//   POST /api/count?e=page:rent:es       count one page view (204, no body)
-//   POST /api/count?e=app:rent/eviction:en  count one tool opened in the map app
+//   POST /api/count  body "page:rent:es"         count one page view (204)
+//   POST /api/count  body "app:rent/eviction:en"  count one tool opened in the map app
+// The event rides in the body, not the URL, so request logs (which keep the
+// URL next to the IP) never say which tool someone opened.
 //   GET  /api/count                      the totals, as JSON
 //
 // Privacy (the site's rule: no visitor data, ever):
@@ -69,7 +71,7 @@ export const EVENTS: ReadonlySet<string> = new Set(
 );
 
 const NOT_A_VISITOR = /HeadlessChrome|bot\b|crawl|spider|slurp|Playwright|curl\/|python-|Go-http/i;
-const MAX_PER_MINUTE = 120; // per instance; the firewall limits each visitor
+const MAX_PER_MINUTE = 600; // per instance, only a backstop: the firewall limits each visitor
 const MONTHS_SHOWN = 24;
 
 /** Where the counters live (Upstash Redis in production, memory in tests). */
@@ -145,18 +147,22 @@ export function recentMonths(t: number, months = MONTHS_SHOWN): string[] {
   return out;
 }
 
-/** The event a POST asks to count, or null unless it's exactly `?e=<one of EVENTS>`. */
-export function parseEvent(url: URL): string | null {
-  if (url.pathname !== "/api/count") return null;
-  const m = /^\?e=([\w%:/-]{1,80})$/.exec(url.search);
-  if (!m) return null;
-  let e: string;
+/** The event a POST asks to count: the body must be exactly one of EVENTS, sent to
+ *  /api/count with no query string. Anything else is null. */
+export function parseEvent(url: URL, body: string): string | null {
+  if (url.pathname !== "/api/count" || url.search !== "") return null;
+  return body.length <= 80 && EVENTS.has(body) ? body : null;
+}
+
+/** The request body, if it's small (an event name); "" otherwise. */
+async function smallBody(request: Request): Promise<string> {
+  // Refuse big bodies before reading them (when the size is declared).
+  if (Number(request.headers.get("Content-Length") ?? "0") > 80) return "";
   try {
-    e = decodeURIComponent(m[1]!);
+    return (await request.text()).slice(0, 81);
   } catch {
-    return null;
+    return "";
   }
-  return EVENTS.has(e) ? e : null;
 }
 
 export function createCounter(store: CountStore | null, now: () => number = Date.now) {
@@ -166,7 +172,7 @@ export function createCounter(store: CountStore | null, now: () => number = Date
   const empty = (status: number) => new Response(null, { status, headers: { "Cache-Control": "no-store", ...cors } });
 
   async function count(request: Request): Promise<Response> {
-    const event = parseEvent(new URL(request.url));
+    const event = parseEvent(new URL(request.url), await smallBody(request));
     if (!event) return empty(400);
     if (request.headers.get("Origin") !== SITE_ORIGIN) return empty(403);
     if (request.headers.get("DNT") === "1" || request.headers.get("Sec-GPC") === "1") return empty(204);
