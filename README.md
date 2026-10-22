@@ -23,7 +23,8 @@ happening in their neighborhood:
 > OpenStreetMap**. This project does not access the private or law-enforcement
 > ALPR *systems* themselves (Flock, Vigilant), only their publicly-mapped
 > locations. No personal data is collected; the site is static and has no
-> accounts or tracking.
+> accounts or tracking (the free-help pages keep only anonymous per-page monthly
+> counts; see "Usage counter").
 
 ## Stack
 
@@ -357,6 +358,44 @@ cd relay && npm ci && vercel login && npm run deploy   # project: stanislaus-fli
 gh variable set FLIGHTS_RELAY_URL --body "https://stanislaus-flights.vercel.app/api/flights"
 ```
 
+**Usage counter** (`relay/src/counter.ts`, `relay/api/count.ts`; browser side in `help/count.ts` and
+`landing/client.js`): how many times each free-help page or tool was opened, per month, for partners
+and grant applications. It counts uses, not people.
+- *Stored:* one number per event per UTC month, in Upstash Redis (hash `count:<YYYY-MM>`, field
+  `page:<tool id>:<lang>` or `app:<tab>/<view>:<lang>`). Nothing else: no IP address, user agent,
+  referrer, cookie, ID or exact time. Our code reads only the event, Origin, DNT, Sec-GPC and
+  User-Agent (to drop bots and our own headless test runs) and logs only storage errors.
+- *Sent:* a bodiless `POST /api/count?e=<event>` with `credentials: "omit"` and no referrer, once per
+  page view or tool (per page load), never retried. Browsers with Do Not Track or Global Privacy
+  Control send nothing, and the server ignores those headers' requests too.
+- *Fixed list:* the server accepts only the events in `EVENTS`, so nothing else can ride along.
+  `e2e/tests/unit-counter.spec.ts` fails when a new tool or view isn't in the list: add it there and
+  redeploy the relay.
+- *Vercel* (which runs it) keeps its own request logs, with IP address and browser, for 1 hour on the
+  Hobby plan, the same as for the flights relay. The pages and the panel say counting happens, in
+  English and Spanish, only when it's on.
+- *Totals:* `GET /api/count` returns the last 24 months as JSON (cached 1 hour), e.g. for the partners
+  page. To show a number there without a visitor request, read it at build time.
+- *Off by default:* with no `COUNTER_URL` repo variable the build has no counter, and the pages' CSP
+  allows no connections at all.
+
+Set it up (once):
+1. Vercel dashboard → project `stanislaus-flights` → Storage → Create Database → Upstash for Redis,
+   **Free** plan (500K commands a month; going over stops counting instead of billing), region
+   closest to `sfo1`, connected to Production. That adds `KV_REST_API_URL` / `KV_REST_API_TOKEN`
+   (or `UPSTASH_REDIS_REST_*`; either works).
+2. Vercel → Firewall → rate-limit rule: path equals `/api/count`, 20 requests per 60 s, key IP,
+   action Deny (the platform applies it; our code never sees IPs). Hobby allows **one** rate-limit
+   rule per project: if the flights relay already has one, add `/api/count` to it as a second
+   condition group (OR) rather than replacing it.
+3. Deploy and point the site at it:
+```bash
+cd relay && npm ci && vercel login && npm run deploy   # project: stanislaus-flights
+gh variable set COUNTER_URL --body "https://stanislaus-flights.vercel.app/api/count"
+```
+4. Check: `curl -s https://stanislaus-flights.vercel.app/api/count` (totals JSON) after the next
+   Pages build. To turn it off, delete the `COUNTER_URL` variable (pages stop counting on the next build).
+
 **Keeping the public site live:** `.github/workflows/pages.yml` runs every 15 minutes. It calls
 `backend/scripts/refresh_live.py`, which re-fetches the keyless live layers (flights, fires,
 quakes, alerts, closures, signs, gauges; plus haze and webcam lists hourly) and then rebuilds
@@ -435,8 +474,9 @@ Each tool opens directly with `#help=<tab>&hv=<tool>` (e.g. `#lang=es&help=rent&
 (`/help/…`) and Spanish (`/ayuda/…`), plus bilingual printable flyers with QR codes
 (`/help/flyers/…`, letter size). `npm run build` renders them after the app build
 (`scripts/prerender.mjs`, React on the server) from the same facts files, so they never drift from
-the tools. No scripts beyond the saved theme and the Print button, and no requests beyond the page
-itself. `e2e/tests/help-pages.spec.ts` (run against `vite preview` or the live site) checks links,
+the tools. No scripts beyond the saved theme, the Print button and the page script, and no requests
+beyond the page itself (and, when the usage counter is on, one anonymous count; the CSP allows
+nothing else). `e2e/tests/help-pages.spec.ts` (run against `vite preview` or the live site) checks links,
 hreflang, WCAG, phone width, that each QR code decodes to the live page, and that each flyer prints
 on one page. Flyers avoid figures that change yearly, so printed copies stay correct.
 

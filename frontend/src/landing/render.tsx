@@ -24,12 +24,14 @@ export interface RenderOptions {
   repo: string;
   /** The legal-help map layer (public/data/layers/legal-help.geojson). */
   legalHelp: GeoJSON.FeatureCollection;
+  /** The anonymous usage counter's URL, or "" for none. */
+  counter?: string;
 }
 
 const page = (path: string, el: ReactElement): BuiltPage => ({ path, html: `<!doctype html>${renderToStaticMarkup(el)}` });
 
-export function renderSite({ origin, base, publicBase, repo, legalHelp }: RenderOptions): BuiltPage[] {
-  const site: Site = { origin, base, publicBase, repo, css };
+export function renderSite({ origin, base, publicBase, repo, legalHelp, counter = "" }: RenderOptions): BuiltPage[] {
+  const site: Site = { origin, base, publicBase, repo, css, counter };
   const offices = parseOffices(legalHelp).sort(nearestModestoFirst);
   const pages: BuiltPage[] = [];
   for (const lang of ["en", "es"] as const) {

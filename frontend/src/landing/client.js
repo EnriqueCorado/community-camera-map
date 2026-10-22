@@ -1,6 +1,7 @@
 // The one script on the public help pages (inlined at the end of <body> and
 // allowed by its hash in the page's Content-Security-Policy). Optional
-// helpers, each shown only when the browser supports it:
+// helpers, each shown only when the browser supports it, and (when the build
+// has one) the anonymous usage counter:
 //  - offline (home pages): nothing is stored until "Save all pages" is
 //    tapped; that registers this folder's service worker (help/sw.js or
 //    ayuda/sw.js), and "Remove saved pages" deletes everything again;
@@ -133,6 +134,24 @@
         );
       });
     });
+  }
+
+  // --------------------------------------------------------------- count
+  // The anonymous usage counter (README: "Usage counter"), when this build has
+  // one: one "this page was opened", with no cookies, no referrer and nothing
+  // about the visitor. Browsers sending Do Not Track or Global Privacy Control
+  // aren't counted. Fire and forget: no retries.
+  var counter = body.getAttribute("data-counter");
+  var counted = body.getAttribute("data-count");
+  if (counter && counted && window.fetch && navigator.doNotTrack !== "1" && navigator.globalPrivacyControl !== true) {
+    fetch(counter + "?e=" + encodeURIComponent(counted), {
+      method: "POST",
+      mode: "no-cors",
+      credentials: "omit",
+      referrerPolicy: "no-referrer",
+      keepalive: true,
+      cache: "no-store",
+    }).catch(function () {});
   }
 
   // ---------------------------------------------------------- read aloud

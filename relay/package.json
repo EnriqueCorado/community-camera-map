@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.2.0",
   "type": "module",
-  "description": "Tiny Vercel Function: real-time, privacy-filtered flights for the static map.",
+  "description": "Tiny Vercel Functions for the static map: real-time, privacy-filtered flights, and an anonymous usage counter.",
   "engines": { "node": "22.x" },
   "scripts": {
     "deploy": "vercel deploy --prod",

@@ -488,6 +488,9 @@ jobs:
           # Real-time flights relay (relay/, a Vercel Function). Empty = the
           # site falls back to the 15-minute flights snapshot.
           VITE_FLIGHTS_URL: ${{ vars.FLIGHTS_RELAY_URL }}
+          # Anonymous usage counter (relay/api/count.ts). Empty = no counting,
+          # and the help pages' CSP allows no connections at all.
+          VITE_COUNTER_URL: ${{ vars.COUNTER_URL }}
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
           path: frontend/dist
