@@ -3396,7 +3396,6 @@
    "url": "https://gis.ohiodnr.gov/arcgis/rest/services/DOG_Services/Oilgas_Wells_public/MapServer/12",
    "fields": {
     "API_WELLNO": "well_id",
-    "WELL_NM": "name",
     "WL_STATUS_DESC": "status",
     "WL_CNTY": "county",
     "WL_TWP": "township",
