@@ -51,7 +51,7 @@ test("farm week: daily and weekly overtime, what was paid, and the total", async
   // 40 regular x $17.25 = $690; 19 overtime (10 daily + 8 weekly + 1) x $25.875 = $491.625 -> $491.62.
   await expect(table.getByRole("row", { name: /Regular hours at \$17\.25/ }).getByRole("cell").first()).toHaveText("40");
   await expect(amountIn(table, /Regular hours/)).toHaveText("$690");
-  await expect(table.getByRole("row", { name: /Overtime at 1\.5 times \(\$25\.875\)/ }).getByRole("cell").first()).toHaveText("19");
+  await expect(table.getByRole("row", { name: /Overtime at 1\.5 × \$17\.25/ }).getByRole("cell").first()).toHaveText("19");
   await expect(amountIn(table, /Overtime at 1\.5/)).toHaveText("$491.62");
   await expect(amountIn(table, "What these hours should have paid")).toHaveText("$1,181.62");
   await expect(amountIn(table, "Minus what you were paid")).toHaveText("− $1,000");
@@ -79,7 +79,7 @@ test("double time and the 7th day of the workweek", async ({ page }) => {
   // Days 1-6: 48 regular -> 40 + 8 weekly OT; day 1 adds 4 OT + 1 DT; day 7 adds 8 OT + 2 DT.
   await expect(table.getByRole("row", { name: /Regular hours/ }).getByRole("cell").first()).toHaveText("40");
   await expect(table.getByRole("row", { name: /Overtime/ }).getByRole("cell").first()).toHaveText("20");
-  await expect(table.getByRole("row", { name: /Double time at 2 times \(\$40\.00\)/ }).getByRole("cell").first()).toHaveText("3");
+  await expect(table.getByRole("row", { name: /Double time at 2 × \$20/ }).getByRole("cell").first()).toHaveText("3");
   await expect(amountIn(table, "What these hours should have paid")).toHaveText("$1,520"); // 800 + 600 + 120
   await expect(dialog.getByText(/so Sun counts as the 7th day/)).toBeVisible();
   // Starting the workweek on Sunday relabels the boxes: the 7th box is now Saturday.

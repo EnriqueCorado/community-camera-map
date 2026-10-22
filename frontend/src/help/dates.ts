@@ -31,8 +31,14 @@ export function addDays(iso: string, n: number): string | null {
 /** Today's date in California (deadlines are counted in local court days,
  *  whatever time zone the visitor's device is set to). */
 export function todayIso(now: Date = new Date()): string {
-  // en-CA formats as YYYY-MM-DD.
-  return now.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Los_Angeles",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(now);
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+  return `${get("year")}-${get("month")}-${get("day")}`;
 }
 
 /** A long, localized date ("October 19, 2026" / "19 de octubre de 2026"). */

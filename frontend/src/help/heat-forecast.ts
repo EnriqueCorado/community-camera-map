@@ -41,8 +41,8 @@ export function forecastUrl(city: HeatCity): string {
   return `${OPEN_METEO}?${p}`;
 }
 
-// One request per city for the life of the page (the free tier asks for
-// light use, and the high doesn't change much within a visit).
+// One request per city per day (the free tier asks for light use, and the
+// high doesn't change much within a day); a tab left open overnight refetches.
 const cache = new Map<string, Promise<DailyForecast>>();
 
 /** Forecast for one of HEAT_CITIES. Rejects on network/HTTP/parse errors;
@@ -50,9 +50,11 @@ const cache = new Map<string, Promise<DailyForecast>>();
 export function getForecast(cityId: string): Promise<DailyForecast> {
   const city = HEAT_CITIES.find((c) => c.id === cityId);
   if (!city) return Promise.reject(new Error("unknown city"));
-  const hit = cache.get(city.id);
+  const key = `${city.id}|${todayInCalifornia()}`;
+  const hit = cache.get(key);
   if (hit) return hit;
-  const p = fetch(forecastUrl(city), { credentials: "omit", referrerPolicy: "no-referrer" })
+  // A hung request must not leave the card loading forever.
+  const p = fetch(forecastUrl(city), { credentials: "omit", referrerPolicy: "no-referrer", signal: AbortSignal.timeout(10_000) })
     .then((r) => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json() as Promise<unknown>;
@@ -62,7 +64,7 @@ export function getForecast(cityId: string): Promise<DailyForecast> {
       if (!f || f.todayHigh == null) throw new Error("bad forecast");
       return f;
     });
-  cache.set(city.id, p);
-  p.catch(() => cache.delete(city.id));
+  cache.set(key, p);
+  p.catch(() => cache.delete(key));
   return p;
 }

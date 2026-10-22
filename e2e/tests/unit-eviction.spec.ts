@@ -320,9 +320,12 @@ test.describe("urgency, copy and facts", () => {
     expect(daysLeft("2026-10-26", "2026-10-28")).toBe(2);
   });
 
-  test("todayIso uses the visitor's local date", () => {
-    expect(todayIso(new Date(2026, 9, 26, 23, 59))).toBe("2026-10-26");
-    expect(todayIso(new Date(2026, 9, 27, 0, 1))).toBe("2026-10-27");
+  test("todayIso is California's date, whatever the device's time zone", () => {
+    // 06:59 UTC on Oct 27 is still 11:59 pm Oct 26 in California (PDT, UTC-7).
+    expect(todayIso(new Date(Date.UTC(2026, 9, 27, 6, 59)))).toBe("2026-10-26");
+    expect(todayIso(new Date(Date.UTC(2026, 9, 27, 7, 1)))).toBe("2026-10-27");
+    // Winter (PST, UTC-8).
+    expect(todayIso(new Date(Date.UTC(2027, 0, 1, 7, 59)))).toBe("2026-12-31");
   });
 
   test("both languages have every string", () => {

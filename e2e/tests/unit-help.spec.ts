@@ -405,7 +405,12 @@ test.describe("misc helpers", () => {
     expect(parseMoney("$1,250.50")).toBe(1250.5);
     expect(parseMoney("1250")).toBe(1250);
     expect(parseMoney("-5")).toBeNull();
-    expect(parseMoney("12.345")).toBeNull();
+    expect(parseMoney("12.34.5")).toBeNull();
+    expect(parseMoney("16,90")).toBe(16.9); // Spanish decimal comma
+    expect(parseMoney("16,9")).toBe(16.9);
+    expect(parseMoney("1.250,50")).toBe(1250.5);
+    expect(parseMoney("1,250.50")).toBe(1250.5);
+    expect(parseMoney("1,25,0")).toBeNull();
     expect(parseMoney("abc")).toBeNull();
     expect(formatMoney(1300, "en-US")).toBe("$1,300");
     expect(formatMoney(1340.73, "en-US")).toBe("$1,340.73");

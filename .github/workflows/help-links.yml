@@ -1,6 +1,7 @@
 # Weekly upkeep check for the free Help tools: every link they cite (hospital
 # policies, statutes, offices) still answers, and the AG's rent-cap page still
-# shows the cap the site uses. On failure it opens (or comments on) an issue.
+# shows the cap the site uses. On failure a separate job, which holds the only
+# token that can write, opens (or comments on) an issue.
 name: Help tools link check
 
 on:
@@ -10,30 +11,52 @@ on:
 
 permissions:
   contents: read
-  issues: write
 
 jobs:
   links:
     runs-on: ubuntu-latest
+    outputs:
+      failed: ${{ steps.check.outcome == 'failure' }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
       - name: Install test runner
         working-directory: e2e
-        run: npm ci
+        # The check only uses HTTP requests: no browsers, no install scripts.
+        run: npm ci --ignore-scripts
       - name: Check links
         id: check
         working-directory: e2e
+        shell: bash # -eo pipefail: a failing test fails the step despite tee
         run: LINKS=1 npx playwright test tests/help-links.spec.ts --reporter=line 2>&1 | tee ../links.log
         continue-on-error: true
-      - name: Open an issue if anything broke
-        if: steps.check.outcome == 'failure'
+      - if: steps.check.outcome == 'failure'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: links-log
+          path: links.log
+
+  report:
+    needs: links
+    if: needs.links.outputs.failed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: links-log
+      - name: Open or update the issue
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           title="Help tools: broken links or outdated rent cap"
-          body="$(printf 'The weekly Help tools check failed (run %s).\n\n```\n%s\n```' "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "$(tail -c 60000 links.log)")"
+          # Keep only the test's own summary lines; never paste fetched pages.
+          summary="$(grep -E '^\s*(Broken links|[0-9]{3} https://|no answer https://|Blocked|oag\.ca\.gov)' links.log | tr -d '`' | head -100)"
+          body="$(printf 'The weekly Help tools check failed: %s\n\n~~~\n%s\n~~~\n' "$RUN_URL" "$summary")"
           existing="$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number')"
           if [ -n "$existing" ]; then gh issue comment "$existing" --body "$body"; else gh issue create --title "$title" --body "$body"; fi
           exit 1

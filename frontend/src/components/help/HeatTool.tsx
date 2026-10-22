@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { useI18n } from "../../i18n";
 import type { HelpCopy } from "../../help/copy";
-import type { Fact } from "../../help/facts";
 import { HEAT_COPY, type HeatCopy } from "../../help/heat-copy";
 import { HEAT_FACTS, type HeatContact, type HeatRule, type Symptoms } from "../../help/heat-facts";
 import "./heat.css";
 import { HEAT_CITIES, getForecast } from "../../help/heat-forecast";
 import { heatRules, parseTemp, type DailyForecast, type Setting, type Tier, type WorkType } from "../../help/heat";
 import { longDate } from "../../help/dates";
-import { Choice, ExtLink, Field, Phone, Result, Sources, type Tone } from "./ui";
+import { Choice, ExtLink, Field, Phone, Result, Sources, type Tone, FactList } from "./ui";
 
 type Forecast = { city: string; status: "loading" } | { city: string; status: "error" } | { city: string; status: "ok"; data: DailyForecast };
 
@@ -46,7 +45,8 @@ export function HeatTool({ c }: { c: HelpCopy }) {
   }, [city, attempt]);
 
   const forecast = fc?.status === "ok" ? fc.data : null;
-  const forecastHigh = forecast?.todayHigh != null ? Math.round(forecast.todayHigh) : null;
+  // Rules use the raw forecast (80.4°F is over 80); round only for display.
+  const forecastHigh = forecast?.todayHigh ?? null;
   const site = parseTemp(typed);
   const typedBad = typed.trim() !== "" && site == null;
   // A typed worksite reading wins; the forecast is only a stand-in.
@@ -285,18 +285,6 @@ export function HeatTool({ c }: { c: HelpCopy }) {
 
 const lowerFirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 
-function FactList({ facts }: { facts: readonly Fact[] }) {
-  const { lang } = useI18n();
-  return (
-    <ul>
-      {facts.map((f) => (
-        <li key={f.id}>
-          {f[lang]} <span className="hf__hint">({f.cite})</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 function SymptomLists({ s, h }: { s: Symptoms; h: HeatCopy }) {
   const { lang } = useI18n();

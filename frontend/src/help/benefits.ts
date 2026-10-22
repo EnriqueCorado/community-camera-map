@@ -235,9 +235,12 @@ function mediCalKids(a: Answers): ProgramResult {
 }
 
 function mediCalPregnant(a: Answers): ProgramResult {
-  const c = check("mediCalPregnant", a);
+  // Medi-Cal counts a pregnant person's expected baby in the household
+  // (42 CFR §435.603(b)); one baby assumed — twins only raise the limit.
+  const withBaby = { ...a, size: a.size + 1 };
+  const c = check("mediCalPregnant", withBaby);
   if (within(c.cmp)) return incomeResult("medi-cal-pregnant", c);
-  const m = check("mcap", a);
+  const m = check("mcap", withBaby);
   if (within(m.cmp)) {
     return { id: "medi-cal-pregnant", verdict: "maybe", reasons: [{ kind: "income", check: c }, { kind: "mcap", check: m }], table: "mcap" };
   }

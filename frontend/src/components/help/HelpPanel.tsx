@@ -74,12 +74,11 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
             <RenterHelp
               c={c}
               mobileHome={!!target.mobileHome}
-              eviction={!!target.eviction}
               onMobileHome={(mobileHome) => go({ tab: "rent", mobileHome })}
               onLegal={() => go({ tab: "legal" })}
             />
           )}
-          {target.tab === "work" && <WorkHelp c={c} heat={!!target.heat} onLegal={() => go({ tab: "legal" })} />}
+          {target.tab === "work" && <WorkHelp c={c} onLegal={() => go({ tab: "legal" })} />}
           {target.tab === "benefits" && <BenefitsHelp c={c} />}
           {target.tab === "legal" && <LegalHelp c={c} onShowOnMap={onShowOnMap} />}
           <p className="hdisclaimer">{c.disclaimer}</p>

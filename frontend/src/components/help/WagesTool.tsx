@@ -6,7 +6,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useI18n } from "../../i18n";
 import type { HelpCopy } from "../../help/copy";
-import type { Fact } from "../../help/facts";
 import { dayNumber, longDate, todayIso } from "../../help/dates";
 import { formatMoney, parseMoney } from "../../help/money";
 import {
@@ -28,7 +27,7 @@ import {
 import { MIN_WAGE, OT_RULES, WAGE_FACTS, WAGE_SOURCES } from "../../help/wages-facts";
 import { WAGES_COPY } from "../../help/wages-copy";
 import { wageLetter, type WageSummary } from "../../help/wages-letter";
-import { Choice, ExtLink, Field, MoneyInput, Phone, Result, Sources } from "./ui";
+import { Choice, ExtLink, Field, MoneyInput, Phone, Result, Sources, FactList } from "./ui";
 import { LetterBuilder } from "./LetterBuilder";
 import "./wages.css";
 
@@ -86,10 +85,18 @@ export function WagesTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) 
     setWeeks((old) => [...old, EMPTY_WEEK()]);
   };
   const addRef = useRef<HTMLButtonElement>(null);
+  const refocusAdd = useRef(false);
   const removeWeek = (wi: number) => {
     setWeeks((old) => old.filter((_, i) => i !== wi));
-    addRef.current?.focus(); // the Remove button is gone: keep keyboard focus nearby
+    // The Remove button is gone; at the week limit the Add button only
+    // reappears after this render, so focus it once it exists.
+    refocusAdd.current = true;
   };
+  useEffect(() => {
+    if (!refocusAdd.current) return;
+    refocusAdd.current = false;
+    addRef.current?.focus();
+  }, [weeks.length]);
 
   const minutes = weeks.map((wk) => wk.map(parseHours));
   const badHours = minutes.some((wk) => wk.some((m) => m == null));
@@ -103,6 +110,8 @@ export function WagesTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) 
   const badPaid = paidNum == null;
   const paidCents = toCents(paidNum ?? 0);
   const rateUsed = rateCents ?? minWage; // value hours at the minimum when no hourly rate
+  // Break premiums and the late-pay penalty are owed at no less than the minimum wage.
+  const premiumRate = rateUsed == null ? null : Math.max(rateUsed, minWage ?? 0);
 
   const wages =
     picked && !badHours && !badRate && !badPaid && paid.trim() !== "" && totalMinutes > 0
@@ -117,7 +126,7 @@ export function WagesTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) 
   const mealDays = parseCount(meal);
   const restDays = parseCount(rest);
   const badCount = breaksApply && (mealDays == null || restDays == null);
-  const prem = breaksApply && rateUsed != null && !badCount ? breakPremiums(mealDays ?? 0, restDays ?? 0, rateUsed) : null;
+  const prem = breaksApply && premiumRate != null && !badCount ? breakPremiums(mealDays ?? 0, restDays ?? 0, premiumRate) : null;
 
   const [ending, setEnding] = useState<EndPick | null>(null);
   const [lastDay, setLastDay] = useState("");
@@ -130,8 +139,8 @@ export function WagesTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) 
   const paidN = finalPaid === "yes" ? dayNumber(paidOn) : finalPaid === "no" ? dayNumber(today) : null;
   const badPaidOn = ended && lastN != null && finalPaid === "yes" && paidN != null && paidN < lastN;
   const penalty =
-    ended && lastN != null && paidN != null && !badPaidOn && usualMin != null && usualMin > 0 && rateUsed != null
-      ? waitingPenalty(dailyWageCents(rateUsed, usualMin), daysLate(lastN, ending, paidN), WAGE_FACTS.penaltyMaxDays)
+    ended && lastN != null && paidN != null && !badPaidOn && usualMin != null && usualMin > 0 && premiumRate != null
+      ? waitingPenalty(dailyWageCents(premiumRate, usualMin), daysLate(lastN, ending, paidN), WAGE_FACTS.penaltyMaxDays)
       : null;
 
   const mealCents = prem?.mealCents ?? 0;
@@ -469,7 +478,7 @@ export function WagesTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) 
 
       <h3>{w.claimTitle}</h3>
       <p>{w.claimIntro}</p>
-      <FactList facts={WAGE_FACTS.claim} lang={lang} />
+      <FactList facts={WAGE_FACTS.claim} />
       <div className="hcard hcard--inset">
         <h4>{WAGE_FACTS.office.name[lang]}</h4>
         <p className="hdir__meta">{WAGE_FACTS.office.address}</p>
@@ -510,7 +519,7 @@ export function WagesTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) 
       </ul>
 
       <h3>{w.retaliationTitle}</h3>
-      <FactList facts={WAGE_FACTS.retaliation} lang={lang} />
+      <FactList facts={WAGE_FACTS.retaliation} />
       <p>
         <ExtLink href={WAGE_FACTS.forms.retaliation} newTab={c.newTab}>
           {w.retaliationLink}
@@ -539,13 +548,13 @@ export function WagesTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) 
 
       <h3>{w.rulesHeading}</h3>
       <h4>{w.rulesOvertime}</h4>
-      <FactList facts={WAGE_FACTS.overtime} lang={lang} />
+      <FactList facts={WAGE_FACTS.overtime} />
       <h4>{w.rulesMinWage}</h4>
-      <FactList facts={WAGE_FACTS.minWage} lang={lang} />
+      <FactList facts={WAGE_FACTS.minWage} />
       <h4>{w.rulesBreaks}</h4>
-      <FactList facts={WAGE_FACTS.breaks} lang={lang} />
+      <FactList facts={WAGE_FACTS.breaks} />
       <h4>{w.rulesFinal}</h4>
-      <FactList facts={WAGE_FACTS.finalPay} lang={lang} />
+      <FactList facts={WAGE_FACTS.finalPay} />
 
       <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(WAGE_FACTS.checked, locale))} items={WAGE_SOURCES} newTab={c.newTab} />
     </>
@@ -565,15 +574,4 @@ function Row({ item, cite, hours, amount, kind }: { item: string; cite?: string;
   );
 }
 
-function FactList({ facts, lang }: { facts: readonly Fact[]; lang: "en" | "es" }) {
-  return (
-    <ul>
-      {facts.map((f) => (
-        <li key={f.id}>
-          {f[lang]} <span className="hf__hint">({f.cite})</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
 

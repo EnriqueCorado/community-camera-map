@@ -26,6 +26,7 @@ export const LAB_226_7_RECHECK = "2027-01-01";
 /** State minimum wage by calendar year, in cents (no Stanislaus city or the
  *  county has a local minimum wage). */
 export const MIN_WAGE: { year: number; cents: number; cite: string }[] = [
+  { year: 2025, cents: 1650, cite: "Lab. Code §1182.12 (DIR minimum wage FAQ, checked 2026-10-21)" },
   { year: 2026, cents: 1690, cite: "Lab. Code §1182.12; IWC Wage Order 14 §4(A)(1)" },
   { year: 2027, cents: 1740, cite: "Lab. Code §1182.12(d)" },
 ];

@@ -9,10 +9,6 @@ export interface HelpTarget {
   hospitalId?: string;
   /** Renters: open the mobile home (space rent) path. */
   mobileHome?: boolean;
-  /** Renters: open the eviction-notice deadline helper. */
-  eviction?: boolean;
-  /** Work: open the heat-safety card instead of unpaid wages. */
-  heat?: boolean;
 }
 
 export function isHelpTab(v: unknown): v is HelpTab {

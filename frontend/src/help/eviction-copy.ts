@@ -148,6 +148,8 @@ const en: EvictionCopy = {
       "A Section 8 notice must give reasons and 10 days to talk it over with the landlord. A 90-day notice after foreclosure may not end a lease signed before the sale.",
     disputedHoliday:
       "Farmworkers Day 2027 is listed on two different dates. We counted both as normal court days, so your real deadline may be one court day later. Don’t wait.",
+    deadlineMaybeClosed:
+      "The court may be closed on this date (it is one of the two listed dates for Farmworkers Day). File on the court day before.",
   },
   countTitle: "Count my days",
   countStart: (d) => `The day you got it (${d}) does not count.`,
@@ -264,6 +266,8 @@ const es: EvictionCopy = {
       "Un aviso de Sección 8 debe dar las razones y 10 días para hablarlo con el dueño. Un aviso de 90 días después de una ejecución hipotecaria quizá no termine un contrato firmado antes de la venta.",
     disputedHoliday:
       "El Día de los Trabajadores del Campo de 2027 aparece en dos fechas distintas. Contamos ambas como días hábiles normales, así que su plazo real podría ser un día hábil después. No espere.",
+    deadlineMaybeClosed:
+      "Es posible que la corte esté cerrada ese día (es una de las dos fechas que aparecen para el Día del Trabajador Agrícola). Presente sus papeles el día hábil de la corte anterior.",
   },
   countTitle: "Contar mis días",
   countStart: (d) => `El día en que lo recibió (${d}) no cuenta.`,

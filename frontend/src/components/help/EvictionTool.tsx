@@ -9,8 +9,7 @@ import { COURT_HOLIDAYS_SOURCE } from "../../help/court-days";
 import { daysLeft, evictionDeadline, urgency, DELIVERIES, NOTICE_KINDS, type Deadline, type Delivery, type NoticeKind } from "../../help/eviction";
 import { EVICTION_FACTS, EVICTION_SOURCES, type Place } from "../../help/eviction-facts";
 import { EVICTION_COPY, type EvictionCopy, type KindOrUnsure } from "../../help/eviction-copy";
-import type { Fact } from "../../help/facts";
-import { Choice, ExtLink, Field, Phone, Result, Sources, type Tone } from "./ui";
+import { Choice, ExtLink, Field, Phone, Result, Sources, type Tone, FactList } from "./ui";
 import "./eviction.css";
 
 /** "Wednesday, October 28, 2026" in the page language. */
@@ -149,7 +148,18 @@ function DeadlineView({ r, t, today, locale, newTab }: { r: Deadline; t: Evictio
       </Result>
     );
   }
-  const left = daysLeft(today, r.deadline) ?? 0;
+  const leftOrNull = daysLeft(today, r.deadline);
+  if (leftOrNull == null) {
+    return (
+      <Result tone="bad" title={t.callNowTitle}>
+        <p>{t.callNowText}</p>
+        <p>
+          <strong>CRLA</strong> <Phone number={EVICTION_FACTS.places.crla.phone} />
+        </p>
+      </Result>
+    );
+  }
+  const left = leftOrNull;
   const u = urgency(left);
   const tone: Tone = u === "later" ? "warn" : "bad";
   const when = u === "passed" ? t.passed(-left) : u === "today" ? t.today : left === 1 ? t.tomorrow : t.inDays(left);
@@ -271,18 +281,6 @@ function NextSteps({ notice, t, c }: { notice: NoticeKind; t: EvictionCopy; c: H
   );
 }
 
-function FactList({ facts }: { facts: readonly Fact[] }) {
-  const lang = useI18n().lang;
-  return (
-    <ul>
-      {facts.map((x) => (
-        <li key={x.id}>
-          {x[lang]} <span className="hf__hint">({x.cite})</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 function PlaceList({ places, c }: { places: readonly Place[]; c: HelpCopy }) {
   const lang = useI18n().lang;

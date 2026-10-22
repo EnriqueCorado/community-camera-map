@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useI18n } from "../../i18n";
 import type { HelpCopy } from "../../help/copy";
-import { DEPOSIT_FACTS, MOBILE_FACTS, RENT_FACTS, RENT_SOURCES, REPAIR_FACTS, type Contact, type Fact } from "../../help/facts";
+import { DEPOSIT_FACTS, MOBILE_FACTS, RENT_FACTS, RENT_SOURCES, REPAIR_FACTS, type Contact } from "../../help/facts";
 import { checkIncrease, coverage, type CoverageAnswers, type HomeType, type YesNo } from "../../help/rent-cap";
 import { addDays, longDate } from "../../help/dates";
 import { formatMoney, parseMoney } from "../../help/money";
 import { depositLetter, repairLetter } from "../../help/letters";
 import { builtAge, lookupAddress, type ParcelMatch } from "../../help/parcels";
-import { Choice, ExtLink, Field, MoneyInput, Phone, Result, Sources } from "./ui";
+import { Choice, ExtLink, Field, MoneyInput, Phone, Result, Sources, FactList } from "./ui";
 import { LetterBuilder } from "./LetterBuilder";
 import { EvictionTool } from "./EvictionTool";
 
@@ -16,19 +16,16 @@ type View = "rent" | "eviction" | "repairs" | "deposit" | "mobile";
 export function RenterHelp({
   c,
   mobileHome,
-  eviction,
   onMobileHome,
   onLegal,
 }: {
   c: HelpCopy;
   mobileHome: boolean;
-  /** Open on the eviction-notice deadline helper. */
-  eviction: boolean;
   onMobileHome: (on: boolean) => void;
   onLegal: () => void;
 }) {
   const { lang, locale } = useI18n();
-  const [view, setView] = useState<View>(mobileHome ? "mobile" : eviction ? "eviction" : "rent");
+  const [view, setView] = useState<View>(mobileHome ? "mobile" : "rent");
   useEffect(() => {
     if (mobileHome) setView("mobile");
   }, [mobileHome]);
@@ -106,18 +103,6 @@ export function RenterHelp({
 
 const useLang = () => useI18n().lang;
 
-function FactList({ facts }: { facts: readonly Fact[] }) {
-  const lang = useLang();
-  return (
-    <ul>
-      {facts.map((f) => (
-        <li key={f.id}>
-          {f[lang]} <span className="hf__hint">({f.cite})</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 function ContactList({ contacts, c }: { contacts: readonly Contact[]; c: HelpCopy }) {
   const lang = useLang();

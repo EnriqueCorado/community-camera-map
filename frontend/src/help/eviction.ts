@@ -35,7 +35,8 @@ export type NoteId =
   | "summonsComplete" // left/posted court papers: service complete after 10 days
   | "tenancyEndsLater" // 30/60/90: the later of this and the notice's date
   | "subsidized90" // 90-day: Section 8 rules, 10 days to discuss
-  | "disputedHoliday"; // a disputed court holiday was counted as a court day
+  | "disputedHoliday" // a disputed court holiday was counted as a court day
+  | "deadlineMaybeClosed"; // the deadline itself is a disputed holiday: court may be closed
 
 /** Court days vs calendar days, and how many, per the research. */
 export const RULES: Record<NoticeKind, { days: number; count: "court" | "calendar" }> = {
@@ -93,14 +94,14 @@ export function evictionDeadline(kind: NoticeKind, delivery: Delivery, startIso:
       const count = countCourtDays(complete, rule.days);
       if (!count) return { ok: false, reason: "out-of-range" };
       notes.push("summonsComplete");
-      if (count.disputed.length) notes.push("disputedHoliday");
+      if (count.disputed.length) notes.push(...disputedNotes(count.end, count.disputed));
       return { ok: true, kind, delivery, start: startIso, serviceComplete: complete, deadline: count.end, method: "calendar-then-court", days: rule.days, count, notes };
     }
     const count = countCourtDays(startIso, rule.days);
     if (!count) return { ok: false, reason: "out-of-range" };
     if (delivery === "mailed") notes.push("summonsMail");
     if (delivery === "electronic") notes.push("notValidService");
-    if (count.disputed.length) notes.push("disputedHoliday");
+    if (count.disputed.length) notes.push(...disputedNotes(count.end, count.disputed));
     return { ok: true, kind, delivery, start: startIso, deadline: count.end, method: "court", days: rule.days, count, notes };
   }
 
@@ -114,8 +115,14 @@ export function evictionDeadline(kind: NoticeKind, delivery: Delivery, startIso:
   if (delivery === "electronic") notes.push("notValidService");
   if (kind === "30-day" || kind === "60-day" || kind === "90-day") notes.push("tenancyEndsLater");
   if (kind === "90-day") notes.push("subsidized90");
-  if (count.disputed.length) notes.push("disputedHoliday");
+  if (count.disputed.length) notes.push(...disputedNotes(count.end, count.disputed));
   return { ok: true, kind, delivery, start: startIso, deadline: count.end, method: rule.count, days: rule.days, count, notes };
+}
+
+/** Notes for disputed holidays in the count; if the deadline itself is one,
+ *  the court may be closed that day, so say to file the court day before. */
+function disputedNotes(deadline: string, disputed: readonly { date: string }[]): NoteId[] {
+  return disputed.some((h) => h.date === deadline) ? ["disputedHoliday", "deadlineMaybeClosed"] : ["disputedHoliday"];
 }
 
 export type Urgency = "passed" | "today" | "soon" | "later";

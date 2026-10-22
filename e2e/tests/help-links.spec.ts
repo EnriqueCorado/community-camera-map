@@ -71,5 +71,6 @@ test("every cited link still answers", async ({ request }) => {
 test("the Attorney General's rent-cap page still shows our current cap", async ({ request }) => {
   const latest = RENT_FACTS.periods.at(-1)!;
   const html = await (await request.get("https://oag.ca.gov/rentcaps", { timeout: 30_000 })).text();
-  expect(html, `oag.ca.gov/rentcaps no longer shows ${latest.maxPct}%`).toContain(`${latest.maxPct}%`);
+  // A boolean, so a failure prints only this message, never the fetched page.
+  expect(html.includes(`${latest.maxPct}%`), `oag.ca.gov/rentcaps no longer shows ${latest.maxPct}%`).toBe(true);
 });

@@ -4,6 +4,7 @@
 // e2e/tests/unit-heat.spec.ts. The rules and their citations live in
 // heat-facts.ts.
 import { HEAT_FACTS, type HeatRule } from "./heat-facts";
+import { todayIso } from "./dates";
 
 export type Setting = "outdoor" | "indoor";
 
@@ -102,11 +103,8 @@ export interface DailyForecast {
   pastAvg: number | null;
 }
 
-/** Today's date in Stanislaus County, as ISO. */
-export function todayInCalifornia(now: Date = new Date()): string {
-  // en-CA formats as YYYY-MM-DD.
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles", year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
-}
+/** Today's date in Stanislaus County, as ISO (one shared definition). */
+export const todayInCalifornia = todayIso;
 
 const num = (v: unknown): number | null => (typeof v === "number" && Number.isFinite(v) ? v : null);
 

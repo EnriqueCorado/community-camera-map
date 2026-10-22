@@ -6,8 +6,8 @@ import { HeatTool } from "./HeatTool";
 type View = "wages" | "heat";
 
 /** Work tab: unpaid wages, and today's heat rules. */
-export function WorkHelp({ c, heat, onLegal }: { c: HelpCopy; heat: boolean; onLegal: () => void }) {
-  const [view, setView] = useState<View>(heat ? "heat" : "wages");
+export function WorkHelp({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) {
+  const [view, setView] = useState<View>("wages");
   const views: [View, string][] = [
     ["wages", c.workViewWages],
     ["heat", c.workViewHeat],

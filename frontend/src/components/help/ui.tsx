@@ -2,6 +2,7 @@
 // controls (no custom widgets) so they work with screen readers, zoom and
 // phone keyboards.
 import { useId, type ReactNode } from "react";
+import { useI18n } from "../../i18n";
 
 export function Field({
   label,
@@ -172,5 +173,27 @@ export function Sources({
       </ul>
       <p className="hf__hint">{checked}</p>
     </details>
+  );
+}
+
+/** A cited fact: plain-language statement in both languages + its source. */
+export interface CitedFact {
+  id: string;
+  cite: string;
+  en: string;
+  es: string;
+}
+
+/** Bulleted facts, each followed by its citation. */
+export function FactList({ facts }: { facts: readonly CitedFact[] }) {
+  const { lang } = useI18n();
+  return (
+    <ul>
+      {facts.map((f) => (
+        <li key={f.id}>
+          {f[lang]} <span className="hf__hint">({f.cite})</span>
+        </li>
+      ))}
+    </ul>
   );
 }
