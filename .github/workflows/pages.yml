@@ -31,9 +31,9 @@ jobs:
   # third-party image decoding; it hands back nothing but the GeoJSON file.
   windy:
     if: github.event_name != 'schedule' || github.event.schedule == '7 * * * *'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
@@ -45,7 +45,7 @@ jobs:
           # Optional; the Windy layer stays "needs API key" without it.
           CAM_WINDY_API_KEY: ${{ secrets.WINDY_API_KEY }}
         run: uv run --locked python scripts/refresh_live.py --only windy-webcams
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: windy-webcams
           path: frontend/public/data/layers/windy-webcams.geojson
@@ -65,9 +65,9 @@ jobs:
   # state per run. A missing or not-yet-approved key just skips that state.
   cameras:
     if: github.event_name != 'schedule' || github.event.schedule == '7 * * * *'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
@@ -87,7 +87,7 @@ jobs:
           CAM_ITERIS_KEY_AZ: ${{ secrets.ITERIS_KEY_AZ }}
           CAM_OHGO_API_KEY: ${{ secrets.OHGO_API_KEY }}
         run: uv run --locked python scripts/bake.py --cameras-only
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: cameras
           path: frontend/public/data/cameras/
@@ -114,7 +114,7 @@ jobs:
         run: |
           rm -f ../frontend/public/data/layers/{work-zones,road-incidents,message-signs-usa,road-weather-usa}.geojson
           uv run --locked python scripts/refresh_live.py --keyed
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: road-ops
           path: |
@@ -132,12 +132,12 @@ jobs:
   #  - history-push: commits those files to the `history` data branch
   history:
     if: github.event.schedule == '12 20 * * *' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: history
           path: history-data
@@ -148,7 +148,7 @@ jobs:
       - name: Snapshot today's layers
         working-directory: backend
         run: uv run --locked python scripts/snapshot_history.py ../history-data
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: history-data
           path: |
@@ -158,14 +158,14 @@ jobs:
 
   history-push:
     needs: history
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: history
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: history-data
           path: incoming
@@ -187,9 +187,9 @@ jobs:
     needs: [windy, cameras, history-push]
     # Run even when the windy/history jobs are skipped (most runs) or fail.
     if: ${{ !cancelled() && needs.windy.result != 'failure' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
@@ -252,7 +252,7 @@ jobs:
         id: cameras-dl
         if: needs.cameras.result == 'success'
         continue-on-error: true
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: cameras
           path: camera-new
@@ -298,7 +298,7 @@ jobs:
         id: roads-dl
         if: needs.cameras.result == 'success'
         continue-on-error: true # no artifact when every road feed failed
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: road-ops
           path: road-ops-in
@@ -392,7 +392,7 @@ jobs:
       # No cached copy yet: start from the seed on the alpr-data branch.
       - name: Fetch plate-reader seed
         if: hashFiles('frontend/public/data/alpr/index.json') == ''
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         continue-on-error: true
         with:
           ref: alpr-data
@@ -449,7 +449,7 @@ jobs:
       - name: Fetch Windy list (if the windy job produced one)
         if: needs.windy.result == 'success'
         continue-on-error: true # no artifact when no key is configured
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: windy-webcams
           path: frontend/public/data/layers
@@ -459,7 +459,7 @@ jobs:
         run: uv run --locked python scripts/refresh_live.py --adopt windy-webcams
       # Saved days for the History slider (read-only checkout of the data branch).
       - name: Fetch history snapshots
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         continue-on-error: true
         with:
           ref: history
@@ -471,7 +471,7 @@ jobs:
           if [ -f history-data/index.json ]; then
             rsync -a --exclude .git --exclude README.md history-data/ frontend/public/data/history/
           fi
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
           cache: npm
@@ -491,7 +491,7 @@ jobs:
           # Anonymous usage counter (relay/api/count.ts). Empty = no counting,
           # and the help pages' CSP allows no connections at all.
           VITE_COUNTER_URL: ${{ vars.COUNTER_URL }}
-      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: frontend/dist
 
@@ -499,7 +499,7 @@ jobs:
     needs: build
     # Skipped jobs upstream (windy/history on most runs) would otherwise skip this.
     if: ${{ !cancelled() && needs.build.result == 'success' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       pages: write
       id-token: write
@@ -508,4 +508,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
