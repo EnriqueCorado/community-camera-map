@@ -51,6 +51,17 @@ export interface LayerInfo {
   title_es?: string | null;
   group?: string | null;
   metric?: MetricSpec | null;
+  classes?: ClassesSpec | null;
+}
+
+/** Categorical colors: paint by one property's value (see colors.ts classesColor). */
+export interface ClassesSpec {
+  field: string;
+  /** Match only the value's first character (zone "AB" counts as A). */
+  prefix: boolean;
+  /** Color for unlisted values (null: leave unpainted). */
+  other: string | null;
+  items: { values: string[]; color: string; label: string; label_es: string }[];
 }
 
 /** Color polygons by one numeric property (see colors.ts metricStops). */

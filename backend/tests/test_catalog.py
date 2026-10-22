@@ -213,3 +213,12 @@ def test_shipped_catalog_marks_every_baked_layer_available():
         if not c["available"] and (service.BAKED_LAYERS / f"{c['name']}.geojson").is_file()
     ]
     assert off == []
+
+
+def test_state_zone_styles_color_a_loaded_property():
+    from app.layers.national.states import STYLES
+
+    for name, cls in STYLES.items():
+        lay = LAYERS[name]  # a style for a removed layer fails here
+        assert cls.field in lay.view.fields.values(), name
+        assert lay.catalog_extras()["classes"]["items"], name

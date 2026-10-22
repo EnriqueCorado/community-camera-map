@@ -104,6 +104,30 @@ class Metric:
         }
 
 
+@dataclass(frozen=True)
+class Classes:
+    """Categorical colors: paint features by one property's value (zones A-F,
+    fire danger Low-Extreme, burn ban yes/no). `items` = (values, color, label,
+    Spanish label); `prefix` matches only the value's first character (so "AB"
+    or "A-N" count as zone A). Unlisted values get `other` (None = unpainted)."""
+
+    field: str
+    items: tuple[tuple[tuple[str, ...], str, str, str], ...]
+    prefix: bool = False
+    other: str | None = None
+
+    def as_json(self) -> dict:
+        return {
+            "field": self.field,
+            "prefix": self.prefix,
+            "other": self.other,
+            "items": [
+                {"values": list(v), "color": c, "label": en, "label_es": es}
+                for v, c, en, es in self.items
+            ],
+        }
+
+
 # Where a layer has data: the home county, the state, the US, or everywhere.
 COVERAGES = ("stanislaus", "california", "usa", "world")
 
@@ -136,6 +160,7 @@ class Layer:
     title_es: str | None = None
     group: str | None = None
     metric: Metric | None = None
+    classes: Classes | None = None
 
     @property
     def has_home_copy(self) -> bool:
@@ -157,6 +182,7 @@ class Layer:
             "title_es": self.title_es,
             "group": self.group,
             "metric": self.metric.as_json() if self.metric else None,
+            "classes": self.classes.as_json() if self.classes else None,
         }
 
 

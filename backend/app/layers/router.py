@@ -34,6 +34,7 @@ class LayerInfo(BaseModel):
     title_es: str | None = None
     group: str | None = None
     metric: dict | None = None
+    classes: dict | None = None
 
 
 @router.get("", summary="List available overlay layers")

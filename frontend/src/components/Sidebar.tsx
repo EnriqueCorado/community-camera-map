@@ -356,6 +356,7 @@ export function Sidebar({
   const healthOn = Object.keys(HEALTH_STOPS).find((n) => layers.overlays[n]);
   // The first catalog-described choropleth that's on picks the legend.
   const metricOn = overlayInfos.find((l) => l.metric && layers.overlays[l.name]);
+  const classesOn = overlayInfos.find((l) => l.classes && layers.overlays[l.name]);
   const droughtOn = layers.overlays["drought"] ?? false;
   const heatOn = layers.overlays["heat-risk"] ?? false;
   const landCoverOn = layers.overlays["land-cover"] ?? false;
@@ -669,6 +670,13 @@ export function Sidebar({
           </div>
         )}
 
+        {classesOn?.classes && (
+          <Legend
+            id="classes-legend"
+            title={title(classesOn)}
+            items={classesOn.classes.items.map((it): [string, string] => [it.color, lang === "es" ? it.label_es : it.label])}
+          />
+        )}
         {metricOn?.metric && (
           <Legend
             id="metric-legend"

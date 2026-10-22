@@ -2,7 +2,7 @@
 import { test, expect } from "@playwright/test";
 import { applyFields, arcgisQueryUrl, chooseSource, covers, exceededLimit, fieldsAt, levelUrl, tractLabel, within, wrapLon, HOME_BBOX, stateName, statesAt, stateViews } from "../../frontend/src/view-logic";
 import type { ViewSpec } from "../../frontend/src/api/client";
-import { RAMPS, fmtMetric, metricStops } from "../../frontend/src/colors";
+import { RAMPS, classesColor, fmtMetric, metricStops } from "../../frontend/src/colors";
 
 const spec = (over: Partial<ViewSpec> = {}): ViewSpec => ({
   kind: "arcgis", url: "https://x.example/FeatureServer/0", fields: { NAME: "name", ADDR: "address" },
@@ -301,4 +301,17 @@ test("state picker: every state/territory, A-Z, framed inside its box", () => {
   const dc = views.find((v) => v.code === "DC")!;
   expect(dc.zoom).toBeGreaterThan(tx.zoom); // small places zoom in further
   expect(views.find((v) => v.code === "AK")!.center[0]).toBe(-152); // not the antimeridian
+});
+
+test("classes: match by value or first character, first color wins, fallback for the rest", () => {
+  const items = [
+    { values: ["A", "1"], color: "#a00", label: "A", label_es: "A" },
+    { values: ["B", "AB"], color: "#b00", label: "B", label_es: "B" }, // "AB" -> "A" already taken
+  ];
+  expect(classesColor({ field: "kind", prefix: true, other: null, items }, "none")).toEqual([
+    "match", ["upcase", ["slice", ["to-string", ["get", "kind"]], 0, 1]], ["A", "1"], "#a00", "B", "#b00", "none",
+  ]);
+  expect(classesColor({ field: "s", prefix: false, other: "#ccc", items: [{ values: ["Burn ban"], color: "#c00", label: "x", label_es: "x" }] }, "none"))
+    .toEqual(["match", ["to-string", ["get", "s"]], "Burn ban", "#c00", "#ccc"]);
+  expect(classesColor({ field: "s", prefix: false, other: null, items: [] }, "none")).toBe("none");
 });

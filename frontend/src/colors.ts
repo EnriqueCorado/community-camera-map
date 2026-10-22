@@ -1,4 +1,4 @@
-import type { MetricSpec } from "./api/client";
+import type { ClassesSpec, MetricSpec } from "./api/client";
 import { SERVICE_COLORS } from "./services-pack";
 // Single source of truth for layer colors, shared by the map and the sidebar
 // legend so the dots on the map always match their legend swatch.
@@ -472,3 +472,19 @@ export const CROP_CLASSES: [string, string, string][] = [
   ["#e8ffbf", "Grassland / pasture", "Pastizal / pasto"],
   ["#9c9c9c", "Developed", "Urbanizado"],
 ];
+
+/** A MapLibre color expression for catalog classes: match the property (or its
+ *  first character, upper-cased) against each item's values. Duplicate values
+ *  keep their first color (MapLibre rejects repeated match labels). */
+export function classesColor(c: ClassesSpec, fallback: string): unknown {
+  const raw = ["to-string", ["get", c.field]];
+  const key = c.prefix ? ["upcase", ["slice", raw, 0, 1]] : raw;
+  const seen = new Set<string>();
+  const arms: unknown[] = [];
+  for (const it of c.items) {
+    const vals = it.values.map((v) => (c.prefix ? v.slice(0, 1).toUpperCase() : v)).filter((v) => v && !seen.has(v));
+    vals.forEach((v) => seen.add(v));
+    if (vals.length) arms.push(vals.length === 1 ? vals[0] : vals, it.color);
+  }
+  return arms.length ? ["match", key, ...arms, c.other ?? fallback] : c.other ?? fallback;
+}

@@ -38,7 +38,7 @@ import type { LegalKind, LegalOffice } from "../help/legal-dir";
 import type { HelpTarget } from "../help/target";
 import {
   CAM, ALPR_CLUSTER, VENDOR_COLORS, OVERLAY_COLOR, CENSUS_STOPS, ENVIRO_STOPS, CENSUS_FIELD, PCT_STOPS,
-  HEALTH_STOPS, metricStops, fmtMetric, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, WVAL_COLORS, WVAL_KEYS,
+  HEALTH_STOPS, metricStops, fmtMetric, classesColor, DROUGHT_COLORS, RESERVOIR_STOPS, VOTING_COLORS, OUTAGE_COLORS, WVAL_COLORS, WVAL_KEYS,
   GROUNDWATER_STOPS, GAUGE_COLORS, FIREWX_COLORS, GAUGE_KEYS, GAUGE_OTHER, FIREWX_KEYS, STORM_KINDS, VOLCANO_COLORS, VOLCANO_KEYS, VOLCANO_ALERT_KEYS, DEV_STAGES,
 } from "../colors";
 
@@ -1574,7 +1574,9 @@ function addOverlay(
         source: src,
         paint: {
           // Catalog-described line metric (e.g. traffic volume): color by value.
-          "line-color": info.metric
+          "line-color": info.classes
+            ? (classesColor(info.classes, accent) as maplibregl.ExpressionSpecification)
+            : info.metric
             ? ([
                 "case",
                 ["==", ["typeof", ["get", info.metric.field]], "null"],
@@ -1628,7 +1630,12 @@ function addOverlay(
       "fill-opacity": 0.6,
     }) as const;
 
-  const fillPaint = info.metric
+  const fillPaint = info.classes
+    ? ({
+        "fill-color": classesColor(info.classes, "rgba(0,0,0,0)") as maplibregl.ExpressionSpecification,
+        "fill-opacity": 0.5,
+      } as const)
+    : info.metric
     ? choropleth(info.metric.field, metricStops(info.metric))
     : info.category === "census"
       ? CENSUS_FIELD[info.name]?.startsWith("pct_")
@@ -1653,7 +1660,7 @@ function addOverlay(
             "fill-opacity":
                 info.category === "landuse" ? 0.22 : info.category === "perimeter" || info.category === "outage-area" ? 0.3 : info.category === "weather" || info.category === "park" ? 0.18 : 0.14,
             };
-  const choroplethCat = !!info.metric || ["census", "enviroscreen", "health", "drought", "firewx"].includes(info.category);
+  const choroplethCat = !!info.metric || !!info.classes || ["census", "enviroscreen", "health", "drought", "firewx"].includes(info.category);
 
   map.addLayer(
     { id: `${src}-fill`, type: "fill", source: src, paint: fillPaint, layout: { visibility: "none" } },

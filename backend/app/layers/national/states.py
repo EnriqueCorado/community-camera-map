@@ -13,9 +13,10 @@ from __future__ import annotations
 
 import json
 import re
+from dataclasses import replace
 from pathlib import Path
 
-from ..service import Layer, View
+from ..service import Classes, Layer, View
 
 SPEC_DIR = Path(__file__).resolve().parent.parent / "data" / "state_layers"
 # USPS code -> {"name", "bbox": [w, s, e, n]} (TIGERweb states, 2-decimal; also
@@ -116,4 +117,73 @@ def load(spec_dir: Path = SPEC_DIR) -> tuple[dict[str, Layer], dict[str, str], s
     return layers, sources, hosts
 
 
+# --- Categorical colors for zone-type state layers (kept here, not in the
+# researched specs, so re-verifying a spec file never drops a style). ---
+_EVAC = (  # hurricane / storm-surge evacuation zones: A (first to leave) -> F
+    (("A", "1"), "#b2182b", "Zone A / 1 (evacuate first)", "Zona A / 1 (evacuar primero)"),
+    (("B", "2"), "#e6553e", "Zone B / 2", "Zona B / 2"),
+    (("C", "3"), "#f4a259", "Zone C / 3", "Zona C / 3"),
+    (("D", "4"), "#f6d55c", "Zone D / 4", "Zona D / 4"),
+    (("E", "5"), "#9fd3c7", "Zone E / 5", "Zona E / 5"),
+    (("F", "6"), "#5aa9e6", "Zone F / 6", "Zona F / 6"),
+    (("G", "7", "H", "I", "J"), "#3d5a98", "Later zones", "Zonas posteriores"),
+)
+_DANGER = (
+    (("LOW", "Low", "1"), "#2b9348", "Low", "Bajo"),
+    (("MODERATE", "Moderate", "2"), "#e9c46a", "Moderate", "Moderado"),
+    (("HIGH", "High", "3"), "#f4a261", "High", "Alto"),
+    (("VERY HIGH", "Very High", "4"), "#e76f51", "Very high", "Muy alto"),
+    (("EXTREME", "Extreme", "5"), "#9d0208", "Extreme", "Extremo"),
+)
+STYLES: dict[str, Classes] = {
+    "fl-evacuation-zones": Classes("kind", _EVAC, prefix=True),
+    "sc-evacuation-zones": Classes("name", _EVAC, prefix=True),
+    "va-evacuation-zones": Classes("name", _EVAC, prefix=True),
+    "ma-hurricane-evacuation-zones": Classes("kind", _EVAC, prefix=True),
+    "ny-nyc-hurricane-evacuation-zones": Classes("kind", _EVAC, prefix=True),
+    "tx-houston-evac-zones": Classes(
+        "kind",
+        (
+            (
+                ("Zip-Zone Coastal",),
+                "#7b0d1e",
+                "Coastal (evacuate first)",
+                "Costera (evacuar primero)",
+            ),
+            (("Zip-Zone A",), "#b2182b", "Zip-Zone A", "Zona A"),
+            (("Zip-Zone B",), "#f4a259", "Zip-Zone B", "Zona B"),
+            (("Zip-Zone C",), "#f6d55c", "Zip-Zone C", "Zona C"),
+        ),
+    ),
+    "wa-fire-danger-burn-bans": Classes("kind", _DANGER),
+    "wi-fire-danger": Classes("status", _DANGER),
+    "or-fire-restrictions": Classes("status", _DANGER),
+    "ok-burn-bans": Classes(
+        "status",
+        ((("County Burn Ban",), "#c1121f", "Burn ban", "Prohibición de quemas"),),
+    ),
+    "fl-burn-bans": Classes(
+        "status",
+        (
+            (("Yard Debris",), "#f4a261", "Yard-debris ban", "Prohibido quemar desechos de jardín"),
+            (("Burn Ban", "Countywide Burn Ban"), "#c1121f", "Burn ban", "Prohibición de quemas"),
+        ),
+    ),
+    "ut-fire-restrictions": Classes(
+        "kind",
+        (
+            (("Stage 1",), "#f4a261", "Stage 1 restrictions", "Restricciones etapa 1"),
+            (("Stage 2",), "#e76f51", "Stage 2 restrictions", "Restricciones etapa 2"),
+            (("Closure",), "#9d0208", "Closure", "Cierre"),
+        ),
+        other="#adb5bd",
+    ),
+}
+
+
+def _styled(layers: dict[str, Layer]) -> dict[str, Layer]:
+    return {n: replace(lay, classes=STYLES[n]) if n in STYLES else lay for n, lay in layers.items()}
+
+
 LAYERS, SOURCES, HOSTS = load() if SPEC_DIR.is_dir() else ({}, {}, set())
+LAYERS = _styled(LAYERS)
