@@ -56,7 +56,7 @@ async def fetch_readers(client: httpx.AsyncClient) -> dict[int, dict]:
 
 async def main() -> None:
     async with httpx.AsyncClient(
-        timeout=150.0, headers={"User-Agent": "stanislaus-cam-map/enrich"}
+        timeout=150.0, headers={"User-Agent": "community-camera-map/enrich"}
     ) as client:
         raw = await fetch_readers(client)
         cities = json.loads(

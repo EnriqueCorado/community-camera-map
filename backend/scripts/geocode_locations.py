@@ -26,7 +26,7 @@ def main(path: Path, state: str = "CA") -> int:
     with httpx.Client(
         timeout=30,
         headers={
-            "User-Agent": "stanislaus-cam-map/geocode (+https://github.com/EnriqueCorado/stanislaus-cam-map)"
+            "User-Agent": "community-camera-map/geocode (+https://github.com/EnriqueCorado/community-camera-map)"
         },
     ) as client:
         for loc in data["locations"]:

@@ -17,8 +17,8 @@ const dist = join(root, "dist");
 // links always point at the public site, even from a local build.
 const base = process.env.VITE_BASE ?? "/";
 const origin = (process.env.SITE_ORIGIN ?? "https://enriquecorado.github.io").replace(/\/$/, "");
-const publicBase = process.env.SITE_BASE ?? "/stanislaus-cam-map/";
-const repo = "https://github.com/EnriqueCorado/stanislaus-cam-map";
+const publicBase = process.env.SITE_BASE ?? "/community-camera-map/";
+const repo = "https://github.com/EnriqueCorado/community-camera-map";
 
 // Every link must be https, a phone or email link, or a path on this site: a
 // bad edit to a facts file fails the build instead of shipping.

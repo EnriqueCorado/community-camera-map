@@ -484,7 +484,7 @@ jobs:
         working-directory: frontend
         env:
           VITE_STATIC: "1"
-          VITE_BASE: /stanislaus-cam-map/
+          VITE_BASE: /community-camera-map/
           # Real-time flights relay (relay/, a Vercel Function). Empty = the
           # site falls back to the 15-minute flights snapshot.
           VITE_FLIGHTS_URL: ${{ vars.FLIGHTS_RELAY_URL }}

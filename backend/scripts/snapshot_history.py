@@ -59,7 +59,7 @@ async def main(root: Path, today: dt.date | None = None) -> int:
     (root / day).mkdir(parents=True, exist_ok=True)
     saved: list[str] = []
     async with httpx.AsyncClient(
-        timeout=60.0, headers={"User-Agent": "stanislaus-cam-map/history"}, follow_redirects=True
+        timeout=60.0, headers={"User-Agent": "community-camera-map/history"}, follow_redirects=True
     ) as client:
         layers = LayerService(settings=get_settings(), client=client, fallback_to_baked=False)
         for name in HISTORY_LAYERS:

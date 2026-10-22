@@ -33,7 +33,7 @@ async def lifespan(app: FastAPI):
     settings = get_settings()
     client = httpx.AsyncClient(
         timeout=settings.http_timeout_seconds,
-        headers={"User-Agent": "stanislaus-cam-map/0.1"},
+        headers={"User-Agent": "community-camera-map/0.1"},
         follow_redirects=True,
     )
     app.state.camera_service = CameraService(settings, client)

@@ -42,8 +42,8 @@ WEEK = 7 * 24 * 3600
 # "Mozilla"; this still names the project honestly.
 UA = {
     "User-Agent": (
-        "Mozilla/5.0 (compatible; stanislaus-cam-map/bake; "
-        "+https://github.com/EnriqueCorado/stanislaus-cam-map)"
+        "Mozilla/5.0 (compatible; community-camera-map/bake; "
+        "+https://github.com/EnriqueCorado/community-camera-map)"
     )
 }
 DATA = Path(__file__).resolve().parent.parent / "data"

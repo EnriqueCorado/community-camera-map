@@ -1,13 +1,13 @@
 // End-to-end: the public "Free help" pages and printable flyers (built by
 // frontend/scripts/prerender.mjs). They exist only in a build, so run this
 // against `vite preview` or the live site, not the dev server:
-//   BASE_URL=http://localhost:4173/stanislaus-cam-map/ npx playwright test help-pages
+//   BASE_URL=http://localhost:4173/community-camera-map/ npx playwright test help-pages
 import { join } from "node:path";
 import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
-const LIVE = "https://enriquecorado.github.io/stanislaus-cam-map/";
+const LIVE = "https://enriquecorado.github.io/community-camera-map/";
 
 const TOOL_PAGES = {
   en: ["hospital-bills", "benefits", "medi-cal-work-rules", "rent-increase", "eviction-notice", "repairs", "security-deposit", "mobile-home-space-rent", "unpaid-wages", "heat-at-work", "know-your-rights", "citizenship-test", "legal-aid"],

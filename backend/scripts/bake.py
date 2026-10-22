@@ -319,7 +319,7 @@ async def main() -> None:
     async with httpx.AsyncClient(
         timeout=90.0,  # generous: one-time build, some layers (FEMA) page slowly
         headers={
-            "User-Agent": "stanislaus-cam-map/bake (+https://enriquecorado.github.io/stanislaus-cam-map/)"
+            "User-Agent": "community-camera-map/bake (+https://enriquecorado.github.io/community-camera-map/)"
         },
         follow_redirects=True,
     ) as client:

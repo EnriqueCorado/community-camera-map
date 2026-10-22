@@ -27,7 +27,7 @@ from app.layers.service import LAYERS  # noqa: E402  (registers the packs)
 from app.layers.national import states  # noqa: E402
 
 ORIGIN = "https://enriquecorado.github.io"
-UA = "stanislaus-cam-map spec verifier (github.com/EnriqueCorado/stanislaus-cam-map)"
+UA = "community-camera-map spec verifier (github.com/EnriqueCorado/community-camera-map)"
 
 
 def _probe_bbox(spec: dict) -> list[float]:

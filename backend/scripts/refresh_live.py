@@ -116,7 +116,7 @@ async def main(names: tuple[str, ...]) -> int:
     ok = 0
     refreshed: list[str] = []
     async with httpx.AsyncClient(
-        timeout=60.0, headers={"User-Agent": "stanislaus-cam-map/refresh"}, follow_redirects=True
+        timeout=60.0, headers={"User-Agent": "community-camera-map/refresh"}, follow_redirects=True
     ) as client:
         layers = LayerService(settings=settings, client=client, fallback_to_baked=False)
         # Registry changes (new layers, titles, views) reach the catalog first,

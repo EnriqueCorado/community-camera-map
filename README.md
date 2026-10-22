@@ -1,6 +1,6 @@
 # Stanislaus Camera Map
 
-**Live: https://enriquecorado.github.io/stanislaus-cam-map/** · English / Español
+**Live: https://enriquecorado.github.io/community-camera-map/** · English / Español
 
 A free, public map of the cameras and civic data around Stanislaus County,
 California, built so anyone can see what's watching the roads and what's
@@ -580,11 +580,11 @@ cd backend && uv run python scripts/bake.py      # re-bake data (uses backend/.e
 cd .. && git add frontend/public/data && git commit -m "Refresh data" && git push
 ```
 Pushing to `main` triggers `.github/workflows/pages.yml`, which builds with
-`VITE_STATIC=1 VITE_BASE=/stanislaus-cam-map/` and publishes to GitHub Pages.
+`VITE_STATIC=1 VITE_BASE=/community-camera-map/` and publishes to GitHub Pages.
 
 Static-site smoke tests (against any served build):
 ```bash
-cd e2e && STATIC_URL=https://<user>.github.io/stanislaus-cam-map npx playwright test tests/static-smoke.spec.ts
+cd e2e && STATIC_URL=https://<user>.github.io/community-camera-map npx playwright test tests/static-smoke.spec.ts
 ```
 
 Notes:

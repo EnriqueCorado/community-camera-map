@@ -175,7 +175,7 @@ def build(records: list[dict]) -> dict[str, dict[str, dict[str, list]]]:
 
 async def main() -> int:
     async with httpx.AsyncClient(
-        timeout=60.0, headers={"User-Agent": "stanislaus-cam-map/parcel-years"}
+        timeout=60.0, headers={"User-Agent": "community-camera-map/parcel-years"}
     ) as client:
         records = await fetch_all(client)
     if len(records) < 100_000:  # the county has ~169k parcels; refuse a partial roll

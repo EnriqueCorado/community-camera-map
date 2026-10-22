@@ -20,7 +20,7 @@ import CLIENT_SCRIPT from "./client.js?raw";
 export interface Site {
   /** "https://example.github.io" (no trailing slash). */
   origin: string;
-  /** Base path of this build, with slashes, for links between pages: "/stanislaus-cam-map/". */
+  /** Base path of this build, with slashes, for links between pages: "/community-camera-map/". */
   base: string;
   /** Base path of the public site, for canonical links and QR codes (always the live site). */
   publicBase: string;

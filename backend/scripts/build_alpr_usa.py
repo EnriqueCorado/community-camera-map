@@ -42,7 +42,7 @@ US_BOXES = (
     (-160.3, 18.9, -154.8, 22.3),
     (-67.3, 17.9, -65.2, 18.6),
 )
-UA = "stanislaus-cam-map/alpr (+https://github.com/EnriqueCorado/stanislaus-cam-map)"
+UA = "community-camera-map/alpr (+https://github.com/EnriqueCorado/community-camera-map)"
 MAX_TILE_BYTES = 50 * 1024 * 1024
 MIN_READERS = 50_000  # far below today's ~145k: a smaller result means a broken download
 KEEP_FRACTION = 0.8  # never publish fewer than 80% of the previous build's readers

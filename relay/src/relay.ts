@@ -38,7 +38,7 @@ const FAIL_BACKOFF_MS = 30_000; // after a failure, don't retry upstream sooner 
 const MAX_UPSTREAM_BYTES = 4 * 1024 * 1024;
 // The data is public; CORS only keeps other sites from hotlinking our quota.
 export const SITE_ORIGIN = "https://enriquecorado.github.io";
-const UA = "stanislaus-cam-map relay (+https://enriquecorado.github.io/stanislaus-cam-map/)";
+const UA = "community-camera-map relay (+https://enriquecorado.github.io/community-camera-map/)";
 
 type Fetch = typeof fetch;
 

@@ -47,7 +47,7 @@ YEAR_AGO_WINDOW = 7  # days either side of a year ago, for the year-ago reading
 PARALLEL = 4  # concurrent USGS requests
 MAX_MB = 24
 UA = {
-    "User-Agent": "stanislaus-cam-map/bake (+https://github.com/EnriqueCorado/stanislaus-cam-map)"
+    "User-Agent": "community-camera-map/bake (+https://github.com/EnriqueCorado/community-camera-map)"
 }
 
 SOURCES: dict[str, str] = {}
