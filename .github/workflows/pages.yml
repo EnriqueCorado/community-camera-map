@@ -233,6 +233,7 @@ jobs:
             frontend/public/data/layers/farmers-markets.geojson
             frontend/public/data/layers/ar-burn-bans.geojson
             frontend/public/data/layers/reservoirs-usa.geojson
+            frontend/public/data/layers/groundwater-usa.geojson
           key: live-data-v2-${{ github.run_id }}
           restore-keys: live-data-v2-
       # The camera list is cached on its own (adding it to the list above would
@@ -443,6 +444,7 @@ jobs:
             frontend/public/data/layers/farmers-markets.geojson
             frontend/public/data/layers/ar-burn-bans.geojson
             frontend/public/data/layers/reservoirs-usa.geojson
+            frontend/public/data/layers/groundwater-usa.geojson
           key: live-data-v2-${{ github.run_id }}
       - name: Fetch Windy list (if the windy job produced one)
         if: needs.windy.result == 'success'

@@ -34,7 +34,7 @@ from bake import SOURCES  # noqa: E402 - sibling script
 
 from app.core.config import get_settings
 from app.layers import service as _registry  # noqa: F401 - loads every pack before one is imported
-from app.layers.national import state_bakes
+from app.layers.national import parity, state_bakes
 from app.layers.national.help_offices import WEEKLY as HELP_OFFICES_WEEKLY
 from app.layers.national.roads import KEYED
 from app.layers.national.services import WEEKLY as SERVICES_WEEKLY
@@ -60,6 +60,7 @@ FAST = (
     "streamflow",
     "road-weather",
     "chain-controls",
+    *parity.FAST,  # ODIN multi-state outages (national/parity.py)
 )
 # Slow-changing, and Overpass servers rate-limit: once a day.
 DAILY = (
@@ -84,6 +85,7 @@ DAILY = (
     "community-centers",
     "farmers-markets",
     *state_bakes.DAILY,  # state feeds (national/state_bakes.py)
+    *parity.DAILY,  # nationwide equivalents of CA-only layers (national/parity.py)
 )
 # Nationwide baked lists that change slowly and take minutes to rebuild
 # (PDF/spreadsheet downloads + Census geocoding): once a week, own cache in CI.

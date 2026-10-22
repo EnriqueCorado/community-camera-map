@@ -1,0 +1,2498 @@
+[
+ {
+  "name": "md-cooling-centers",
+  "state": "MD",
+  "title": "Cooling centers (Maryland)",
+  "title_es": "Centros de enfriamiento (Maryland)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Maryland Department of Health. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Maryland Department of Health",
+  "license": "Maryland Department of Health via ArcGIS Online for Maryland (public)",
+  "view": {
+   "url": "https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/Maryland_Cooling_Centers_by_JurisdictionMDH_Jurisdictions_CoolingCenters_20260710/FeatureServer/16",
+   "fields": {
+    "Cooling_Center": "name",
+    "Location": "address",
+    "Jurisdiction": "county",
+    "Note": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -79.08,
+    39.47,
+    -78.88,
+    39.67
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "ri-cooling-centers",
+  "state": "RI",
+  "title": "Cooling centers (Rhode Island)",
+  "title_es": "Centros de enfriamiento (Rhode Island)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Rhode Island Emergency Management Agency (RIEMA) and RI Department of State Police. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Rhode Island Emergency Management Agency (RIEMA) and RI Department of State Police",
+  "license": "State of Rhode Island public layer (RIEMA, RIDSP)",
+  "view": {
+   "url": "https://services1.arcgis.com/7arM4WYbUOtKu3Zq/arcgis/rest/services/RI_Cooling_Centers_July_2026/FeatureServer/0",
+   "fields": {
+    "USER_Name": "name",
+    "USER_Address": "address",
+    "USER_Municipality": "city",
+    "USER_Monday": "mon",
+    "USER_Tuesday": "tue",
+    "USER_Wednesday": "wed",
+    "USER_Thursday": "thu",
+    "USER_Friday": "fri",
+    "USER_Saturday": "sat",
+    "USER_Sunday": "sun",
+    "USER_Date_Updated": "updated",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -71.43,
+    41.65,
+    -71.23,
+    41.85
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "vt-cooling-sites",
+  "state": "VT",
+  "title": "Cooling centers (Vermont)",
+  "title_es": "Centros de enfriamiento (Vermont)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Vermont Department of Health. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Vermont Department of Health",
+  "license": "Vermont Department of Health public map service",
+  "view": {
+   "url": "https://maps.healthvermont.gov/arcgis/rest/services/VDH/EnvHealthCoolingSites_Public/MapServer/0",
+   "fields": {
+    "SiteName": "name",
+    "SiteType": "kind",
+    "Address": "address",
+    "City": "city",
+    "ContactPhone": "phone",
+    "HoursofOperation": "hours",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -73.31,
+    44.38,
+    -73.12,
+    44.58
+   ],
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "ny-nyc-cooling-centers",
+  "state": "NY",
+  "title": "Cooling centers (New York City)",
+  "title_es": "Centros de enfriamiento (Ciudad de Nueva York)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from NYC Emergency Management. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "NYC Emergency Management",
+  "license": "NYC Emergency Management public layer",
+  "view": {
+   "url": "https://services1.arcgis.com/8cuieNI8NbqQZQVJ/arcgis/rest/services/NYC_Open_Cooling_Centers_Site_Survey_view/FeatureServer/1",
+   "fields": {
+    "Facility_name": "name",
+    "Address": "address",
+    "Borough": "city",
+    "Finder_status": "status",
+    "Operating_agency": "operator"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -74.09,
+    40.65,
+    -73.89,
+    40.85
+   ],
+   "features_in_probe": 218
+  }
+ },
+ {
+  "name": "md-baltimore-cooling-centers",
+  "state": "MD",
+  "title": "Cooling centers (Baltimore)",
+  "title_es": "Centros de enfriamiento (Baltimore)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Baltimore City Health Department (Code Red). Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Baltimore City Health Department (Code Red)",
+  "license": "Baltimore City public layer",
+  "view": {
+   "url": "https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/Code_Red_Cooling_Center_New/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "NGHBRHD": "neighborhood",
+    "Open_Hrs": "hours",
+    "URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -76.67,
+    39.19,
+    -76.47,
+    39.39
+   ],
+   "features_in_probe": 26
+  }
+ },
+ {
+  "name": "nm-albuquerque-cooling-centers",
+  "state": "NM",
+  "title": "Cooling centers (Albuquerque)",
+  "title_es": "Centros de enfriamiento (Albuquerque)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from City of Albuquerque Office of Emergency Management. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Albuquerque Office of Emergency Management",
+  "license": "City of Albuquerque public layer",
+  "view": {
+   "url": "https://services.arcgis.com/CWv1abTnC3urn4bV/arcgis/rest/services/CoolingLocations_OEMAGIS_Public/FeatureServer/0",
+   "fields": {
+    "Location": "name",
+    "Address": "address",
+    "HoursofOperations": "hours",
+    "Contact": "phone",
+    "URLLink": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -106.74,
+    35.0,
+    -106.54,
+    35.2
+   ],
+   "features_in_probe": 91
+  }
+ },
+ {
+  "name": "ca-la-county-cooling-centers",
+  "state": "CA",
+  "title": "Cooling centers (Los Angeles County)",
+  "title_es": "Centros de enfriamiento (condado de Los Ángeles)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Los Angeles County Office of Emergency Management. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Los Angeles County Office of Emergency Management",
+  "license": "Los Angeles County OEM public view",
+  "view": {
+   "url": "https://services.arcgis.com/RmCCgQtiZLDCtblq/arcgis/rest/services/Cooling_Centers_-_Los_Angeles_County_Regional_(Official_-_Updated_July_2022)_(View)/FeatureServer/0",
+   "fields": {
+    "Site_Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Zip_Code": "zip",
+    "Days_Hours_of_Operation": "hours",
+    "Notes": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -118.37,
+    33.82,
+    -118.17,
+    34.02
+   ],
+   "features_in_probe": 37
+  }
+ },
+ {
+  "name": "ca-riverside-county-cooling-centers",
+  "state": "CA",
+  "title": "Cooling centers (Riverside County)",
+  "title_es": "Centros de enfriamiento (condado de Riverside)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from County of Riverside. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "County of Riverside",
+  "license": "County of Riverside public view",
+  "view": {
+   "url": "https://services1.arcgis.com/pWmBUdSlVpXStHU6/arcgis/rest/services/CAP_CoolCenters_0719_PublicView/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Type": "kind",
+    "Hours_of_Operation": "hours",
+    "Phone_Number": "phone",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -116.77,
+    33.45,
+    -116.57,
+    33.66
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "ca-riverside-cooling-centers",
+  "state": "CA",
+  "title": "Cooling centers (City of Riverside)",
+  "title_es": "Centros de enfriamiento (ciudad de Riverside)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from City of Riverside. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Riverside",
+  "license": "City of Riverside (item license: Everyone)",
+  "view": {
+   "url": "https://services.arcgis.com/Fu2oOWg1Aw7azh41/arcgis/rest/services/CoolCenters2018/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "ADDRESS": "address",
+    "TYPE": "kind",
+    "Hours": "hours",
+    "Phone_No": "phone",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "CoolCenter='Yes'",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -117.47,
+    33.78,
+    -117.27,
+    33.98
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "ca-san-diego-county-cool-zones",
+  "state": "CA",
+  "title": "Cooling centers (San Diego County)",
+  "title_es": "Centros de enfriamiento (condado de San Diego)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from County of San Diego HHSA (Cool Zones). Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "County of San Diego HHSA (Cool Zones)",
+  "license": "County of San Diego public layer",
+  "view": {
+   "url": "https://services1.arcgis.com/1vIhDJwtG5eNmiqX/arcgis/rest/services/HLTH_COOL_ZONES_PUBLIC/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "Address": "address",
+    "City": "city",
+    "Phone": "phone",
+    "OperationalHours": "hours",
+    "PetPolicy": "pets",
+    "LINK": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -117.38,
+    32.92,
+    -117.18,
+    33.12
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "ca-san-bernardino-county-cool-places",
+  "state": "CA",
+  "title": "Cooling centers (San Bernardino County)",
+  "title_es": "Centros de enfriamiento (condado de San Bernardino)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from San Bernardino County Department of Public Health. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "San Bernardino County Department of Public Health",
+  "license": "San Bernardino County public layer",
+  "view": {
+   "url": "https://services7.arcgis.com/zaLZMEOGUnUT78nG/arcgis/rest/services/SBC_Cool_Places_ISUW2/FeatureServer/0",
+   "fields": {
+    "Agency_Name": "name",
+    "Address": "address",
+    "Hours": "hours",
+    "Phone_Number_": "phone",
+    "Notes_Guidelines_for_Facility": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -117.51,
+    34.48,
+    -117.31,
+    34.68
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "ca-marin-cooling-centers",
+  "state": "CA",
+  "title": "Cooling centers (Marin County)",
+  "title_es": "Centros de enfriamiento (condado de Marin)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from County of Marin. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "County of Marin",
+  "license": "County of Marin public layer",
+  "view": {
+   "url": "https://services6.arcgis.com/T8eS7sop5hLmgRRH/arcgis/rest/services/Cooling_Centers/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Phone": "phone",
+    "url": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -122.63,
+    37.9,
+    -122.43,
+    38.1
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ca-el-dorado-cooling-centers",
+  "state": "CA",
+  "title": "Cooling centers (El Dorado County)",
+  "title_es": "Centros de enfriamiento (condado de El Dorado)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from County of El Dorado. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "County of El Dorado",
+  "license": "County of El Dorado public layer",
+  "view": {
+   "url": "https://services.arcgis.com/UHg8l1wC48WQyDSO/arcgis/rest/services/CoolingCenters/FeatureServer/0",
+   "fields": {
+    "Facility": "name",
+    "Street": "address",
+    "City": "city",
+    "Phone": "phone",
+    "Mon_Hours": "mon",
+    "Tue_Hours": "tue",
+    "Wed_Hours": "wed",
+    "Thu_Hours": "thu",
+    "Fri_Hours": "fri",
+    "Sat_Hours": "sat",
+    "Sun_Hours": "sun"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -121.11,
+    38.56,
+    -120.91,
+    38.76
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "ca-santa-clara-cooling-centers",
+  "state": "CA",
+  "title": "Cooling centers (City of Santa Clara)",
+  "title_es": "Centros de enfriamiento (ciudad de Santa Clara)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from City of Santa Clara. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Santa Clara",
+  "license": "City of Santa Clara public layer",
+  "view": {
+   "url": "https://services2.arcgis.com/evwJC31SSJVvbZfF/arcgis/rest/services/Cooling_Centers/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Location": "address"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -122.05,
+    37.25,
+    -121.85,
+    37.45
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "tx-harris-county-cooling-centers",
+  "state": "TX",
+  "title": "Cooling centers (Harris County)",
+  "title_es": "Centros de enfriamiento (condado de Harris)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Harris County Office of Homeland Security & Emergency Management. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Harris County Office of Homeland Security & Emergency Management",
+  "license": "Harris County OHSEM (Cooling Centers for public information)",
+  "view": {
+   "url": "https://services7.arcgis.com/S4q5OFlKdQkzQMZw/arcgis/rest/services/Cooling_Centers_(public_view)/FeatureServer/7",
+   "fields": {
+    "Location": "name",
+    "Address": "address",
+    "OperationalHours": "hours",
+    "OpenClosed": "status",
+    "Website": "page",
+    "Note": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -95.26,
+    29.8,
+    -95.06,
+    30.0
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "tx-san-antonio-cooling-centers",
+  "state": "TX",
+  "title": "Cooling centers (San Antonio)",
+  "title_es": "Centros de enfriamiento (San Antonio)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from City of San Antonio. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "City of San Antonio",
+  "license": "City of San Antonio public layer",
+  "view": {
+   "url": "https://services.arcgis.com/g1fRTDLeMgspWrYp/arcgis/rest/services/Cooling_Centers_Viewer/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "PHONE": "phone",
+    "TYPE": "kind",
+    "MONDAY": "mon",
+    "TUESDAY": "tue",
+    "WEDNESDAY": "wed",
+    "THURSDAY": "thu",
+    "FRIDAY": "fri",
+    "SATURDAY": "sat",
+    "SUNDAY": "sun"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "status='Active'",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -98.59,
+    29.33,
+    -98.39,
+    29.53
+   ],
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "tx-dallas-warming-centers",
+  "state": "TX",
+  "title": "Warming centers (Dallas)",
+  "title_es": "Centros de calentamiento (Dallas)",
+  "description": "Public places to warm up during cold weather, from City of Dallas Office of Emergency Management. Call ahead: many open only during cold-weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Dallas Office of Emergency Management",
+  "license": "City of Dallas public layer",
+  "view": {
+   "url": "https://services2.arcgis.com/rwnOSbfKSwyTBcwN/arcgis/rest/services/Warming_Center_Locations/FeatureServer/0",
+   "fields": {
+    "StationName": "name",
+    "Address": "address",
+    "HoursOfOperations": "hours",
+    "TelephoneNumber": "phone",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -96.9,
+    32.68,
+    -96.7,
+    32.88
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "il-lake-county-cooling-warming-centers",
+  "state": "IL",
+  "title": "Cooling & warming centers (Lake County, Illinois)",
+  "title_es": "Centros de enfriamiento y calentamiento (condado de Lake, Illinois)",
+  "description": "Public places to cool off in heat or warm up in cold weather, from Lake County, Illinois Emergency Management. Call ahead: many open only during weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "Lake County, Illinois Emergency Management",
+  "license": "Lake County, Illinois public view",
+  "view": {
+   "url": "https://services3.arcgis.com/HESxeTbDliKKvec2/arcgis/rest/services/Cooling_and_Warming_Centers_of_Lake_County__IEMA_View/FeatureServer/0",
+   "fields": {
+    "Facility_Name": "name",
+    "Facility_Address": "address",
+    "Hours_of_Operation": "hours",
+    "Phone_Number": "phone",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -87.93,
+    42.38,
+    -87.73,
+    42.58
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "il-madison-county-cooling-centers",
+  "state": "IL",
+  "title": "Cooling centers (Madison County, Illinois)",
+  "title_es": "Centros de enfriamiento (condado de Madison, Illinois)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Madison County, Illinois. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Madison County, Illinois",
+  "license": "Madison County, Illinois public layer",
+  "view": {
+   "url": "https://services.arcgis.com/Z0kKj2K728ngqqrp/arcgis/rest/services/CoolingSites/FeatureServer/1",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "PHONE": "phone",
+    "HOURS": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -90.25,
+    38.8,
+    -90.05,
+    39.0
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "il-dupage-county-warming-centers",
+  "state": "IL",
+  "title": "Warming centers (DuPage County)",
+  "title_es": "Centros de calentamiento (condado de DuPage)",
+  "description": "Public places to warm up during cold weather, from DuPage County. Call ahead: many open only during cold-weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "DuPage County",
+  "license": "DuPage County public layer",
+  "view": {
+   "url": "https://services.arcgis.com/neJvtQ4PXvnQ86MJ/arcgis/rest/services/WarmingSites/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Hours": "hours",
+    "Phone": "phone",
+    "Notes": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -88.08,
+    41.83,
+    -87.89,
+    42.03
+   ],
+   "features_in_probe": 35
+  }
+ },
+ {
+  "name": "oh-cuyahoga-county-cooling-centers",
+  "state": "OH",
+  "title": "Cooling centers (Cuyahoga County)",
+  "title_es": "Centros de enfriamiento (condado de Cuyahoga)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Cuyahoga County Office of Emergency Management. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Cuyahoga County Office of Emergency Management",
+  "license": "Cuyahoga County OEM public view",
+  "view": {
+   "url": "https://services7.arcgis.com/GXM8JipKyc0m6HBi/arcgis/rest/services/Warming_and_Cooling_Submittal_view/FeatureServer/0",
+   "fields": {
+    "centername": "name",
+    "pntaddr": "address",
+    "centermuni": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "centertype='cooling'",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -81.62,
+    41.42,
+    -81.42,
+    41.62
+   ],
+   "features_in_probe": 49
+  }
+ },
+ {
+  "name": "oh-columbus-cooling-centers",
+  "state": "OH",
+  "title": "Cooling centers (Columbus)",
+  "title_es": "Centros de enfriamiento (Columbus)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from City of Columbus. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Columbus",
+  "license": "City of Columbus public view",
+  "view": {
+   "url": "https://services1.arcgis.com/9yy6msODkIBzkUXU/arcgis/rest/services/CoolingCenters_view/FeatureServer/0",
+   "fields": {
+    "LABEL": "name",
+    "LAYER_TYPE": "kind",
+    "ADDRESS1": "address",
+    "RegularHours": "hours",
+    "ExtendedHours": "extended_hours",
+    "URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "CoolingCenter_YN='Yes'",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -83.11,
+    39.85,
+    -82.92,
+    40.05
+   ],
+   "features_in_probe": 33
+  }
+ },
+ {
+  "name": "pa-philadelphia-cooling-sites",
+  "state": "PA",
+  "title": "Cooling centers (Philadelphia)",
+  "title_es": "Centros de enfriamiento (Filadelfia)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from City of Philadelphia. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Philadelphia",
+  "license": "City of Philadelphia public view",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/Warming_Cooling_Sites_PUBLICVIEW/FeatureServer/0",
+   "fields": {
+    "site_name": "name",
+    "site_type": "kind",
+    "site_address": "address",
+    "site_hours": "hours",
+    "site_status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "cooling_site='yes'",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -75.28,
+    39.93,
+    -75.08,
+    40.13
+   ],
+   "features_in_probe": 34
+  }
+ },
+ {
+  "name": "pa-philadelphia-warming-sites",
+  "state": "PA",
+  "title": "Warming centers (Philadelphia)",
+  "title_es": "Centros de calentamiento (Filadelfia)",
+  "description": "Public places to warm up during cold weather, from City of Philadelphia. Call ahead: many open only during cold-weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Philadelphia",
+  "license": "City of Philadelphia public view",
+  "view": {
+   "url": "https://services.arcgis.com/fLeGjb7u4uXqeF9q/arcgis/rest/services/Warming_Cooling_Sites_PUBLICVIEW/FeatureServer/0",
+   "fields": {
+    "site_name": "name",
+    "site_type": "kind",
+    "site_address": "address",
+    "site_hours": "hours",
+    "site_status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "warming_site='yes'",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -75.28,
+    39.93,
+    -75.08,
+    40.13
+   ],
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "pa-chester-county-cooling-sites",
+  "state": "PA",
+  "title": "Cooling centers (Chester County)",
+  "title_es": "Centros de enfriamiento (condado de Chester)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Chester County Department of Emergency Services. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Chester County Department of Emergency Services",
+  "license": "Chester County public layer",
+  "view": {
+   "url": "https://services.arcgis.com/G4S1dGvn7PIgYd6Y/arcgis/rest/services/Extreme_Heat_Cooling_Site/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Address_Full": "address",
+    "Hours": "hours",
+    "URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -75.81,
+    39.75,
+    -75.61,
+    39.95
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "pa-chester-county-warming-sites",
+  "state": "PA",
+  "title": "Warming centers (Chester County)",
+  "title_es": "Centros de calentamiento (condado de Chester)",
+  "description": "Public places to warm up during cold weather, from Chester County Department of Emergency Services. Call ahead: many open only during cold-weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "Chester County Department of Emergency Services",
+  "license": "Chester County public layer",
+  "view": {
+   "url": "https://services.arcgis.com/G4S1dGvn7PIgYd6Y/arcgis/rest/services/Extreme_Cold_Warming_Site/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Address": "address",
+    "City": "city",
+    "Hours": "hours",
+    "Contact__Info": "phone"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -76.07,
+    39.85,
+    -75.87,
+    40.05
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "pa-york-county-cooling-centers",
+  "state": "PA",
+  "title": "Cooling centers (York County)",
+  "title_es": "Centros de enfriamiento (condado de York)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from York County Office of Emergency Management. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "York County Office of Emergency Management",
+  "license": "York County public layer",
+  "view": {
+   "url": "https://services1.arcgis.com/bzC4sqfGZJYY5WBz/arcgis/rest/services/York_County_Cooling_Centers/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Access": "hours",
+    "PhoneNumbe": "phone"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -76.82,
+    39.85,
+    -76.62,
+    40.05
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "pa-delaware-county-cooling-warming-centers",
+  "state": "PA",
+  "title": "Cooling & warming centers (Delaware County, Pennsylvania)",
+  "title_es": "Centros de enfriamiento y calentamiento (condado de Delaware, Pensilvania)",
+  "description": "Public places to cool off in heat or warm up in cold weather, from Delaware County, Pennsylvania. Call ahead: many open only during weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "Delaware County, Pennsylvania",
+  "license": "Delaware County, Pennsylvania public layer",
+  "view": {
+   "url": "https://services3.arcgis.com/n2RXARD7dbpeC4OO/arcgis/rest/services/Delaware_County_Heating_and_Cooling_Centers/FeatureServer/0",
+   "fields": {
+    "Site_Name": "name",
+    "Address": "address",
+    "Phone": "phone",
+    "Operational_Hours": "hours",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -75.49,
+    39.74,
+    -75.29,
+    39.94
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "pa-erie-county-warming-shelters",
+  "state": "PA",
+  "title": "Warming centers (Erie County)",
+  "title_es": "Centros de calentamiento (condado de Erie)",
+  "description": "Public places to warm up during cold weather, from Erie County, Pennsylvania. Call ahead: many open only during cold-weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "Erie County, Pennsylvania",
+  "license": "Erie County, Pennsylvania public layer",
+  "view": {
+   "url": "https://services8.arcgis.com/4poIUqCYi9mOOXhk/arcgis/rest/services/Warming_Shelters/FeatureServer/16",
+   "fields": {
+    "USER_Name": "name",
+    "USER_Address": "address",
+    "operhours": "hours",
+    "status1": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -79.73,
+    41.82,
+    -79.53,
+    42.02
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "mn-hennepin-county-cooling-options",
+  "state": "MN",
+  "title": "Cooling centers (Hennepin County)",
+  "title_es": "Centros de enfriamiento (condado de Hennepin)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Hennepin County. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Hennepin County",
+  "license": "Hennepin County public view",
+  "view": {
+   "url": "https://services1.arcgis.com/ziLNoRgqnICUM0q1/arcgis/rest/services/CoolingOption2021_View/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Phone": "phone",
+    "Type": "kind",
+    "Hours": "hours",
+    "Website": "page",
+    "Fee": "fee"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "Status='Active'",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -93.38,
+    44.77,
+    -93.18,
+    44.97
+   ],
+   "features_in_probe": 84
+  }
+ },
+ {
+  "name": "mn-ramsey-county-cooling-libraries",
+  "state": "MN",
+  "title": "Cooling centers (Ramsey County libraries)",
+  "title_es": "Centros de enfriamiento (bibliotecas del condado de Ramsey)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Ramsey County. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Ramsey County",
+  "license": "Ramsey County public layer",
+  "view": {
+   "url": "https://services2.arcgis.com/527XtFVf9JKOTqu5/arcgis/rest/services/CoolingCenters/FeatureServer/2",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "City": "city",
+    "Agency": "operator",
+    "ContactURL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -93.11,
+    44.86,
+    -92.91,
+    45.06
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "ny-niagara-county-cooling-centers",
+  "state": "NY",
+  "title": "Cooling centers (Niagara County)",
+  "title_es": "Centros de enfriamiento (condado de Niagara)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Niagara County. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Niagara County",
+  "license": "Niagara County public view",
+  "view": {
+   "url": "https://services2.arcgis.com/ASaO6mkKxE2fYJAi/arcgis/rest/services/Cooling_Centers_Niagara_2026_-_view_layer/FeatureServer/0",
+   "fields": {
+    "Location_Name": "name",
+    "Location_Type": "kind",
+    "Street_Address": "address",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -78.81,
+    43.24,
+    -78.61,
+    43.44
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "ny-oswego-county-cooling-centers",
+  "state": "NY",
+  "title": "Cooling centers (Oswego County)",
+  "title_es": "Centros de enfriamiento (condado de Oswego)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Oswego County Emergency Management Office. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Oswego County Emergency Management Office",
+  "license": "Oswego County EMO public layer",
+  "view": {
+   "url": "https://services3.arcgis.com/0dC3T96jvK0z64NH/arcgis/rest/services/CoolingCentersJuly2024/FeatureServer/0",
+   "fields": {
+    "Facility": "name",
+    "Street_Address": "address",
+    "Locality": "city",
+    "TYPE": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -76.1,
+    43.41,
+    -75.9,
+    43.61
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "la-new-orleans-heat-relief",
+  "state": "LA",
+  "title": "Cooling centers (New Orleans)",
+  "title_es": "Centros de enfriamiento (Nueva Orleans)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from City of New Orleans. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "City of New Orleans",
+  "license": "City of New Orleans public view (city disclaimer)",
+  "view": {
+   "url": "https://services.arcgis.com/VhMjCzR3cIjEkh7L/arcgis/rest/services/Heat_Relief_Locations_(2024)_Public_View/FeatureServer/13",
+   "fields": {
+    "USER_Name": "name",
+    "USER_Address": "address",
+    "USER_Phone_Number": "phone",
+    "USER_Hours": "hours",
+    "USER_Service__Pool__Cooling_Cen": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "USER_MapVisibility='Yes'",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -90.21,
+    29.9,
+    -90.01,
+    30.11
+   ],
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "fl-broward-county-cooling-centers",
+  "state": "FL",
+  "title": "Cooling centers (Broward County)",
+  "title_es": "Centros de enfriamiento (condado de Broward)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Broward County. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Broward County",
+  "license": "Broward County public layer",
+  "view": {
+   "url": "https://services.arcgis.com/JMAJrTsHNLrSsWf5/arcgis/rest/services/cooling_centers/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "Website_Link": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -80.23,
+    26.13,
+    -80.03,
+    26.33
+   ],
+   "features_in_probe": 24
+  }
+ },
+ {
+  "name": "fl-miami-dade-county-cooling-centers",
+  "state": "FL",
+  "title": "Cooling centers (Miami-Dade County)",
+  "title_es": "Centros de enfriamiento (condado de Miami-Dade)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Miami-Dade County. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Miami-Dade County",
+  "license": "Miami-Dade County public layer",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/Cooling_Centers/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Street": "address",
+    "City_1": "city",
+    "PhoneNumbe": "phone",
+    "Type": "kind",
+    "OperationalHours": "hours",
+    "WebLink": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -80.34,
+    25.63,
+    -80.14,
+    25.83
+   ],
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "fl-miami-cooling-centers",
+  "state": "FL",
+  "title": "Cooling centers (City of Miami)",
+  "title_es": "Centros de enfriamiento (ciudad de Miami)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from City of Miami. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Miami",
+  "license": "City of Miami public layer",
+  "view": {
+   "url": "https://services1.arcgis.com/CvuPhqcTQpZPT9qY/arcgis/rest/services/City_of_Miami_Cooling_Centers/FeatureServer/0",
+   "fields": {
+    "Cooling_Center_Name": "name",
+    "Address": "address",
+    "PhoneNumber": "phone",
+    "HoursofOperation": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -80.38,
+    25.68,
+    -80.18,
+    25.88
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "mo-st-louis-county-cooling-centers",
+  "state": "MO",
+  "title": "Cooling centers (St. Louis County)",
+  "title_es": "Centros de enfriamiento (condado de St. Louis)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from St. Louis County. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "St. Louis County",
+  "license": "St. Louis County public layer",
+  "view": {
+   "url": "https://services2.arcgis.com/w657bnjzrjguNyOy/arcgis/rest/services/Warming_and_Cooling_Centers/FeatureServer/0",
+   "fields": {
+    "USER_Agency": "name",
+    "Place_addr": "address",
+    "USER_Phone": "phone",
+    "USER_Hours": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -90.62,
+    38.49,
+    -90.42,
+    38.69
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "mo-st-louis-county-warming-centers",
+  "state": "MO",
+  "title": "Warming centers (St. Louis County)",
+  "title_es": "Centros de calentamiento (condado de St. Louis)",
+  "description": "Public places to warm up during cold weather, from St. Louis County. Call ahead: many open only during cold-weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "St. Louis County",
+  "license": "St. Louis County public layer",
+  "view": {
+   "url": "https://services2.arcgis.com/w657bnjzrjguNyOy/arcgis/rest/services/Warming_and_Cooling_Centers/FeatureServer/1",
+   "fields": {
+    "Agency": "name",
+    "Address": "address",
+    "USER_Phone_Number": "phone",
+    "USER_Service_Code_Hours": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -90.62,
+    38.49,
+    -90.42,
+    38.69
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "ks-johnson-county-cooling-centers",
+  "state": "KS",
+  "title": "Cooling centers (Johnson County, Kansas)",
+  "title_es": "Centros de enfriamiento (condado de Johnson, Kansas)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Johnson County Department of Health and Environment. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Johnson County Department of Health and Environment",
+  "license": "Johnson County, Kansas public layer",
+  "view": {
+   "url": "https://services.arcgis.com/VI7SIDfzMs53TTMm/arcgis/rest/services/DHE_Cooling_Centers_Public/FeatureServer/0",
+   "fields": {
+    "FacilityName": "name",
+    "Address": "address",
+    "City": "city",
+    "CurrentOpenClosed": "status",
+    "TodayOpeningTime": "opens",
+    "TodayClosingTime": "closes",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -94.76,
+    38.92,
+    -94.56,
+    39.12
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "ne-lincoln-cooling-centers",
+  "state": "NE",
+  "title": "Cooling centers (Lincoln)",
+  "title_es": "Centros de enfriamiento (Lincoln)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from City of Lincoln / Lincoln-Lancaster County. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Lincoln / Lincoln-Lancaster County",
+  "license": "City of Lincoln public layer",
+  "view": {
+   "url": "https://services1.arcgis.com/wpJGOi6N4Rq5cqFv/arcgis/rest/services/Cooling_Center_Locations_-_Lincoln/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Hours": "hours",
+    "Phone_Number": "phone",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -96.8,
+    40.71,
+    -96.6,
+    40.91
+   ],
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "ne-lincoln-warming-centers",
+  "state": "NE",
+  "title": "Warming centers (Lincoln)",
+  "title_es": "Centros de calentamiento (Lincoln)",
+  "description": "Public places to warm up during cold weather, from City of Lincoln / Lincoln-Lancaster County. Call ahead: many open only during cold-weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Lincoln / Lincoln-Lancaster County",
+  "license": "City of Lincoln public layer",
+  "view": {
+   "url": "https://services1.arcgis.com/wpJGOi6N4Rq5cqFv/arcgis/rest/services/Warming_Center_Locations_Map_Ver/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Hours": "hours",
+    "Phone_Number": "phone",
+    "Website": "page",
+    "Notes": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -96.8,
+    40.71,
+    -96.6,
+    40.91
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "wi-milwaukee-cooling-sites",
+  "state": "WI",
+  "title": "Cooling centers (Milwaukee)",
+  "title_es": "Centros de enfriamiento (Milwaukee)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from City of Milwaukee. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Milwaukee",
+  "license": "City of Milwaukee public layer",
+  "view": {
+   "url": "https://services1.arcgis.com/5ly0cVV70qsN8Soc/arcgis/rest/services/MKE_Cooling_Sites_Hosted/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Category": "kind",
+    "Address": "address",
+    "Phone": "phone",
+    "URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -88.03,
+    42.9,
+    -87.83,
+    43.1
+   ],
+   "features_in_probe": 63
+  }
+ },
+ {
+  "name": "nc-cumberland-county-cooling-centers",
+  "state": "NC",
+  "title": "Cooling centers (Cumberland County, North Carolina)",
+  "title_es": "Centros de enfriamiento (condado de Cumberland, Carolina del Norte)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from Cumberland County, North Carolina. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "Cumberland County, North Carolina",
+  "license": "Cumberland County public layer",
+  "view": {
+   "url": "https://services1.arcgis.com/ssJTvu2LI9qRE1oE/arcgis/rest/services/Cooling_Centers/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Hours": "hours",
+    "Facility": "kind",
+    "Phone": "phone"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -79.04,
+    34.93,
+    -78.84,
+    35.13
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "mi-detroit-respite-centers",
+  "state": "MI",
+  "title": "Cooling & warming centers (Detroit)",
+  "title_es": "Centros de enfriamiento y calentamiento (Detroit)",
+  "description": "Public places to cool off in heat or warm up in cold weather, from City of Detroit. Call ahead: many open only during weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Detroit",
+  "license": "City of Detroit public layer",
+  "view": {
+   "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/Warming_Centers/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "type": "kind",
+    "opening_hours": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -83.08,
+    42.29,
+    -82.88,
+    42.49
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "or-multnomah-county-weather-centers",
+  "state": "OR",
+  "title": "Cooling & warming centers (Multnomah County)",
+  "title_es": "Centros de enfriamiento y calentamiento (condado de Multnomah)",
+  "description": "Public places to cool off in heat or warm up in cold weather, from Multnomah County. Call ahead: many open only during weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "Multnomah County",
+  "license": "Multnomah County public layer",
+  "view": {
+   "url": "https://services5.arcgis.com/x7DNZL1YqNQVNykA/arcgis/rest/services/Weather_event_support_centers_worksheet_for_Multnomah_County_/FeatureServer/0",
+   "fields": {
+    "CommonName": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "FacilityType": "kind",
+    "HOURStext": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "Status='Active' AND CommonName<>'test site'",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -122.77,
+    45.47,
+    -122.57,
+    45.67
+   ],
+   "features_in_probe": 42
+  }
+ },
+ {
+  "name": "ma-boston-cooling-centers",
+  "state": "MA",
+  "title": "Cooling centers (Boston)",
+  "title_es": "Centros de enfriamiento (Boston)",
+  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from City of Boston. Call ahead: hours change and some open only during heat advisories.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Boston",
+  "license": "City of Boston public GIS portal",
+  "view": {
+   "url": "https://gisportal.boston.gov/arcgis/rest/services/StoryMaps/CoolingCenters/FeatureServer/0",
+   "fields": {
+    "FullName": "name",
+    "Address": "address",
+    "Telephone": "phone",
+    "Hours": "hours"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -71.16,
+    42.2,
+    -70.96,
+    42.4
+   ],
+   "features_in_probe": 35
+  }
+ },
+ {
+  "name": "ct-bridgeport-warming-centers",
+  "state": "CT",
+  "title": "Warming centers (Bridgeport)",
+  "title_es": "Centros de calentamiento (Bridgeport)",
+  "description": "Public places to warm up during cold weather, from City of Bridgeport. Call ahead: many open only during cold-weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Bridgeport",
+  "license": "City of Bridgeport public layer",
+  "view": {
+   "url": "https://services6.arcgis.com/OW4xtrE9QlSWSIuq/arcgis/rest/services/Warming_Center_Locations/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Status": "status",
+    "Hours_of_Operation": "hours",
+    "Address": "address",
+    "City": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -73.32,
+    41.06,
+    -73.12,
+    41.26
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "ga-clayton-county-warming-shelters",
+  "state": "GA",
+  "title": "Warming centers (Clayton County)",
+  "title_es": "Centros de calentamiento (condado de Clayton)",
+  "description": "Public places to warm up during cold weather, from Clayton County. Call ahead: many open only during cold-weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "Clayton County",
+  "license": "Clayton County public layer",
+  "view": {
+   "url": "https://services5.arcgis.com/m528W8U8YDYeMPrQ/arcgis/rest/services/CC_Warming_Shelters/FeatureServer/14",
+   "fields": {
+    "Name": "name",
+    "Street": "address",
+    "City": "city",
+    "Center_Type": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -84.46,
+    33.41,
+    -84.26,
+    33.61
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "va-newport-news-heating-cooling-sites",
+  "state": "VA",
+  "title": "Cooling & warming centers (Newport News)",
+  "title_es": "Centros de enfriamiento y calentamiento (Newport News)",
+  "description": "Public places to cool off in heat or warm up in cold weather, from City of Newport News. Call ahead: many open only during weather alerts.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Newport News",
+  "license": "City of Newport News public layer",
+  "view": {
+   "url": "https://services6.arcgis.com/SiUAoHzWN11AIADA/arcgis/rest/services/Heating_Cooling_Sites/FeatureServer/0",
+   "fields": {
+    "SiteName": "name",
+    "Address": "address"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "bbox": [
+    -76.65,
+    37.04,
+    -76.45,
+    37.24
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "nc-historical-markers",
+  "state": "NC",
+  "title": "Historical markers (North Carolina)",
+  "title_es": "Marcadores históricos (Carolina del Norte)",
+  "description": "Official historical markers from NC Department of Natural and Cultural Resources, Highway Historical Marker Program (with NCDOT), with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "NC Department of Natural and Cultural Resources, Highway Historical Marker Program (with NCDOT)",
+  "license": "NC DNCR / NCDOT public map service (NCDOT disclaimer)",
+  "view": {
+   "url": "https://gis2.ncdcr.gov/dncrgis/rest/services/NCHHM_Public/NC_Highway_Historical_Markers/MapServer/1",
+   "fields": {
+    "HPOPUB.DBO.NCMarkers.MarkerTitle": "name",
+    "HPOPUB.DBO.NCMarkers.ID": "marker",
+    "HPOPUB.DBO.NCHHM_Markers.MarkerText": "description",
+    "HPOPUB.DBO.NCHHM_Markers.Location": "location",
+    "HPOPUB.DBO.NCHHM_Markers.YearCast": "erected"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -76.71,
+    35.97,
+    -76.51,
+    36.17
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "mi-historical-markers",
+  "state": "MI",
+  "title": "Historical markers (Michigan)",
+  "title_es": "Marcadores históricos (Michigan)",
+  "description": "Official historical markers from Michigan Department of Natural Resources (Michigan Historical Marker program), with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Michigan Department of Natural Resources (Michigan Historical Marker program)",
+  "license": "Michigan DNR public view",
+  "view": {
+   "url": "https://services3.arcgis.com/Jdnp1TjADvSDxMAX/arcgis/rest/services/Historical_Markers_Public_View/FeatureServer/0",
+   "fields": {
+    "markername": "name",
+    "markerid": "marker",
+    "markerdescfront": "description",
+    "erecteddate": "erected"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -83.25,
+    42.48,
+    -83.05,
+    42.68
+   ],
+   "features_in_probe": 32
+  }
+ },
+ {
+  "name": "ut-monuments-markers",
+  "state": "UT",
+  "title": "Historical monuments & markers (Utah)",
+  "title_es": "Monumentos y marcadores históricos (Utah)",
+  "description": "Official historical markers from Utah Division of State History, via UGRC, with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Utah Division of State History, via UGRC",
+  "license": "Utah Geospatial Resource Center (as-is)",
+  "view": {
+   "url": "https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/MonumentsAndMarkers/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Address": "address",
+    "City": "city",
+    "County": "county",
+    "YearPlaced": "erected"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -111.98,
+    40.85,
+    -111.78,
+    41.05
+   ],
+   "features_in_probe": 51
+  }
+ },
+ {
+  "name": "vt-roadside-historic-markers",
+  "state": "VT",
+  "title": "Historical markers (Vermont)",
+  "title_es": "Marcadores históricos (Vermont)",
+  "description": "Official historical markers from Vermont Division for Historic Preservation (ACCD), with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Vermont Division for Historic Preservation (ACCD)",
+  "license": "Vermont ACCD public layer",
+  "view": {
+   "url": "https://services1.arcgis.com/rnCtPMpypTkqwvYT/arcgis/rest/services/VT_RoadsideMarkers/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "description": "description"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -73.52,
+    43.94,
+    -73.32,
+    44.14
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "mt-historical-highway-markers",
+  "state": "MT",
+  "title": "Historical markers (Montana)",
+  "title_es": "Marcadores históricos (Montana)",
+  "description": "Official historical markers from Montana Department of Transportation, with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Montana Department of Transportation",
+  "license": "Montana DOT public map service",
+  "view": {
+   "url": "https://gis.mtmdt.us/server/rest/services/MDTGIS/Historical_Highway_Marker/MapServer/0",
+   "fields": {
+    "TITLE": "name",
+    "MARKER_TYPE": "kind",
+    "STATUS": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -112.4,
+    46.65,
+    -112.2,
+    46.85
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "de-historical-markers",
+  "state": "DE",
+  "title": "Historical markers (Delaware)",
+  "title_es": "Marcadores históricos (Delaware)",
+  "description": "Official historical markers from Delaware Public Archives, via FirstMap, with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Delaware Public Archives, via FirstMap",
+  "license": "State of Delaware FirstMap (state disclaimer)",
+  "view": {
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Society/DE_HistoricMarkers/FeatureServer/0",
+   "fields": {
+    "MARKER_NAME": "name",
+    "MARKER_NUMBER": "marker",
+    "STREET_ADDRESS": "address",
+    "CITY": "city",
+    "CATEGORY": "kind",
+    "WEB_PAGE": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -75.64,
+    39.0,
+    -75.44,
+    39.2
+   ],
+   "features_in_probe": 82
+  }
+ },
+ {
+  "name": "wy-monuments-markers",
+  "state": "WY",
+  "title": "Historical monuments & markers (Wyoming)",
+  "title_es": "Monumentos y marcadores históricos (Wyoming)",
+  "description": "Official historical markers from Wyoming State Parks, Historic Sites & Trails, with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Wyoming State Parks, Historic Sites & Trails",
+  "license": "Wyoming State Parks public layer",
+  "view": {
+   "url": "https://services1.arcgis.com/WOPmQY9FJsLgGOzw/arcgis/rest/services/Wyoming_Monuments___Markers_WFL1/FeatureServer/0",
+   "fields": {
+    "Title": "name",
+    "City": "city",
+    "County": "county",
+    "Information_type": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "Map_Display='YES'",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -105.5,
+    41.03,
+    -105.3,
+    41.23
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "md-historical-markers",
+  "state": "MD",
+  "title": "Historical markers (Maryland)",
+  "title_es": "Marcadores históricos (Maryland)",
+  "description": "Official historical markers from Maryland Historical Trust / MDOT State Highway Administration, with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Maryland Historical Trust / MDOT State Highway Administration",
+  "license": "MDOT SHA (as-is)",
+  "view": {
+   "url": "https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/Marylands_Historical_Markers_(View)/FeatureServer/1",
+   "fields": {
+    "MARKERTITLE": "name",
+    "MARKERNUMBER": "marker",
+    "MARKERTEXT": "description",
+    "SPONSOR": "sponsor",
+    "INSTALLDATE": "erected"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -77.47,
+    38.98,
+    -77.27,
+    39.18
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "oh-historical-markers",
+  "state": "OH",
+  "title": "Historical markers (Ohio)",
+  "title_es": "Marcadores históricos (Ohio)",
+  "description": "Official historical markers from Ohio History Connection, State Historic Preservation Office (Remarkable Ohio), with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Ohio History Connection, State Historic Preservation Office (Remarkable Ohio)",
+  "license": "Ohio SHPO public view",
+  "view": {
+   "url": "https://services8.arcgis.com/Z6dVoqkfD3EzEICs/arcgis/rest/services/Remarkable_Ohio_Markers_PublicView/FeatureServer/10",
+   "fields": {
+    "Title": "name",
+    "County": "county",
+    "Subjects": "kind",
+    "Permalink": "page",
+    "Marker_Text_Final__Side_A_": "description"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -83.65,
+    38.7,
+    -83.45,
+    38.9
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "pa-historical-markers",
+  "state": "PA",
+  "title": "Historical markers (Pennsylvania)",
+  "title_es": "Marcadores históricos (Pensilvania)",
+  "description": "Official historical markers from Pennsylvania Historical and Museum Commission (PHMC), via PASDA, with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Pennsylvania Historical and Museum Commission (PHMC), via PASDA",
+  "license": "PHMC data on PASDA (Penn State), public",
+  "view": {
+   "url": "https://mapservices.pasda.psu.edu/server/rest/services/pasda/PHMC/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "County": "county",
+    "Location": "location",
+    "Dedicated": "erected",
+    "Marker_Typ": "kind",
+    "Marker_Tex": "description"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "Missing_='No'",
+   "max_features": 1000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -76.02,
+    40.23,
+    -75.82,
+    40.44
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "al-historical-markers",
+  "state": "AL",
+  "title": "Historical markers (Alabama)",
+  "title_es": "Marcadores históricos (Alabama)",
+  "description": "Official historical markers from Alabama Historical Commission, with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Alabama Historical Commission",
+  "license": "Alabama Historical Commission public view",
+  "view": {
+   "url": "https://services2.arcgis.com/XBn0Kai3hQ20FeCo/arcgis/rest/services/Historical_Markers_Program_view/FeatureServer/3",
+   "fields": {
+    "MARKER_NAM": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "COUNTY": "county",
+    "YEAR_INSTA": "erected",
+    "MARKER_TYP": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -86.7,
+    32.47,
+    -86.5,
+    32.67
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "wi-wayside-historical-markers",
+  "state": "WI",
+  "title": "Historical markers (Wisconsin waysides)",
+  "title_es": "Marcadores históricos (áreas de descanso de Wisconsin)",
+  "description": "Official historical markers from Wisconsin Department of Transportation, with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Wisconsin Department of Transportation",
+  "license": "WisDOT public map service",
+  "view": {
+   "url": "https://dotmaps.wi.gov/arcgis/rest/services/agohub/HISTORICAL_MARKERS/MapServer/0",
+   "fields": {
+    "SITE_NAME": "name",
+    "PROPERTY_LOCATION": "address",
+    "MUNICIPALITY": "city",
+    "COUNTY": "county"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -92.66,
+    44.81,
+    -92.46,
+    45.01
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "va-henrico-county-historical-markers",
+  "state": "VA",
+  "title": "Historical markers (Henrico County)",
+  "title_es": "Marcadores históricos (condado de Henrico)",
+  "description": "Official historical markers from Henrico County, with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Henrico County",
+  "license": "Henrico County public map service",
+  "view": {
+   "url": "https://portal.henrico.gov/mapping/rest/services/RP/Roadside_Markers_External/FeatureServer/0",
+   "fields": {
+    "Title": "name",
+    "Number": "marker",
+    "Description": "description",
+    "Location": "location",
+    "DateInstalled": "erected"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -77.49,
+    37.48,
+    -77.3,
+    37.68
+   ],
+   "features_in_probe": 114
+  }
+ },
+ {
+  "name": "ky-louisville-historical-markers",
+  "state": "KY",
+  "title": "Historical markers (Louisville / Jefferson County)",
+  "title_es": "Marcadores históricos (Louisville / condado de Jefferson)",
+  "description": "Official historical markers from Louisville/Jefferson County Information Consortium (LOJIC), with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Louisville/Jefferson County Information Consortium (LOJIC)",
+  "license": "LOJIC open data",
+  "view": {
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataDevelopment/MapServer/3",
+   "fields": {
+    "NAME": "name",
+    "MARKER_NUM": "marker",
+    "LOCATION": "location",
+    "DESCRIPTION": "description"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -85.86,
+    38.12,
+    -85.66,
+    38.32
+   ],
+   "features_in_probe": 103
+  }
+ },
+ {
+  "name": "fl-pinellas-county-historical-markers",
+  "state": "FL",
+  "title": "Historical markers (Pinellas County)",
+  "title_es": "Marcadores históricos (condado de Pinellas)",
+  "description": "Official historical markers from Pinellas County, with marker text where the source has it.",
+  "group": "places",
+  "category": "point",
+  "source": "Pinellas County",
+  "license": "Pinellas County public view",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_HistoricMarkers_view/FeatureServer/0",
+   "fields": {
+    "MARKER_NAME": "name",
+    "MARKER_NUMBER": "marker",
+    "MUNICIPALITY": "city",
+    "YEAR_INSTALL": "erected"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": false,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "bbox": [
+    -82.86,
+    28.06,
+    -82.66,
+    28.26
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "us-duke-energy-outages",
+  "state": "US",
+  "title": "Power outages by county (Duke Energy)",
+  "title_es": "Cortes de luz por condado (Duke Energy)",
+  "description": "Counties in Duke Energy's service area (NC, SC, FL, IN, OH, KY) with customers out right now, with the share out and estimated restoration. Updated about every 20 minutes.",
+  "group": "live",
+  "category": "info",
+  "source": "Duke Energy, Distribution Outages (public ArcGIS layer; \"Public, please cite Duke Energy\")",
+  "license": "Public, please cite Duke Energy. Data not for resale.",
+  "view": {
+   "url": "https://services3.arcgis.com/oX5r75R7mapdoI2F/arcgis/rest/services/Duke_Energy_Distribution_Outages_Public/FeatureServer/1",
+   "fields": {
+    "COUNTY_NAME": "name",
+    "STATE_NAME": "state",
+    "CUSTOMER_OUT": "customers_out",
+    "CUSTOMER_SERVED": "customers",
+    "PERCENT_OUT": "pct_out",
+    "ETR": "restore_est"
+   },
+   "geometry": "polygon",
+   "min_zoom": 5,
+   "where": "CUSTOMER_OUT > 0",
+   "max_features": 1000,
+   "simplify": true,
+   "refresh_s": 900
+  },
+  "verified": {
+   "bbox": [
+    -84.5,
+    33.5,
+    -75.5,
+    37.0
+   ],
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "us-duke-energy-outage-areas",
+  "state": "US",
+  "title": "Power outage areas (Duke Energy)",
+  "title_es": "Zonas sin luz (Duke Energy)",
+  "description": "Areas of current Duke Energy outages, with cause, crew status, customers affected and estimated restoration.",
+  "group": "live",
+  "category": "info",
+  "source": "Duke Energy, Distribution Outages (public ArcGIS layer; \"Public, please cite Duke Energy\")",
+  "license": "Public, please cite Duke Energy. Data not for resale.",
+  "view": {
+   "url": "https://services3.arcgis.com/oX5r75R7mapdoI2F/arcgis/rest/services/Duke_Energy_Distribution_Outages_Public/FeatureServer/2",
+   "fields": {
+    "CAUSE": "cause",
+    "CREW_STATUS": "status",
+    "AFFECTED_CUSTOMERS": "customers_out",
+    "START_TIME": "started",
+    "ETR": "restore_est"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "max_features": 2000,
+   "simplify": true,
+   "refresh_s": 900
+  },
+  "verified": {
+   "bbox": [
+    -90.0,
+    25.0,
+    -75.0,
+    42.0
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "md-power-outages",
+  "state": "MD",
+  "title": "Power outages by county (Maryland)",
+  "title_es": "Cortes de luz por condado (Maryland)",
+  "description": "Maryland counties with customers out right now, all major utilities combined, with the share out (Maryland Department of Emergency Management).",
+  "group": "live",
+  "category": "info",
+  "source": "Maryland Department of Emergency Management, power outages by county (State of Maryland)",
+  "license": "The Data can be freely distributed as long as the metadata entry is not modified or deleted. Any data derived from the Data must acknowledge the State of Maryland in the metadata.",
+  "view": {
+   "url": "https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/PowerOutage_CountiesGeneralDEV_Join/FeatureServer/0",
+   "fields": {
+    "COUNTY": "name",
+    "outages": "customers_out",
+    "customers": "customers",
+    "percent_out": "pct_out"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "outages > 0",
+   "max_features": 100,
+   "simplify": true,
+   "refresh_s": 900
+  },
+  "verified": {
+   "bbox": [
+    -79.5,
+    37.9,
+    -75.0,
+    39.8
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "md-power-outages-zip",
+  "state": "MD",
+  "title": "Power outages by ZIP code (Maryland)",
+  "title_es": "Cortes de luz por código postal (Maryland)",
+  "description": "Maryland ZIP codes with customers out right now, all major utilities combined (Maryland Department of Emergency Management).",
+  "group": "live",
+  "category": "info",
+  "source": "Maryland Department of Emergency Management, power outages by ZIP code (State of Maryland)",
+  "license": "The Data can be freely distributed as long as the metadata entry is not modified or deleted. Any data derived from the Data must acknowledge the State of Maryland in the metadata.",
+  "view": {
+   "url": "https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/PowerOutage_ZIP_Codes_5_DigitDEV_Join/FeatureServer/0",
+   "fields": {
+    "ZIPName": "name",
+    "ZIPCODE1": "zip",
+    "outages": "customers_out"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "outages > 0",
+   "max_features": 1000,
+   "simplify": true,
+   "refresh_s": 900
+  },
+  "verified": {
+   "bbox": [
+    -79.5,
+    37.9,
+    -75.0,
+    39.8
+   ],
+   "features_in_probe": 27
+  }
+ }
+]
