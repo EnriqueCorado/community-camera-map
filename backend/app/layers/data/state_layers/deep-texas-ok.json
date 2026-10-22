@@ -687,7 +687,8 @@
     "Existing_Land_Use": "land_use",
     "Vacant": "vacant",
     "PROP_CL": "property_class",
-    "Acerage": "acres"
+    "Acerage": "acres",
+    "Address": "address"
    },
    "geometry": "polygon",
    "min_zoom": 17
@@ -1175,6 +1176,7 @@
    "url": "https://mapit.tarrantcounty.com/arcgis/rest/services/Dynamic/TADParcels/MapServer/0",
    "fields": {
     "ACCOUNT": "account",
+    "SITUS_ADDR": "address",
     "SCHOOL": "school_district",
     "LAND_ACRES": "acres",
     "YEAR_BUILT": "year_built",
@@ -1728,6 +1730,7 @@
    "url": "https://maps.bexar.org/arcgis/rest/services/Parcels/MapServer/0",
    "fields": {
     "PropID": "prop_id",
+    "Situs": "address",
     "Acres": "acres",
     "YrBlt": "year_built",
     "LandVal": "land_value",
@@ -2065,6 +2068,7 @@
    "url": "https://services1.arcgis.com/Xff0bbfp6vwIWmlU/arcgis/rest/services/WCAD_Tax_Parcels/FeatureServer/0",
    "fields": {
     "PARCELID": "parcel_id",
+    "SITEADDRESS": "address",
     "USEDSCRP": "use",
     "STATEDAREA": "acres",
     "RESYRBLT": "year_built",
@@ -2183,6 +2187,7 @@
    "url": "https://gis.elpasotexas.gov/arcgis/rest/services/EPParcels/MapServer/0",
    "fields": {
     "PIDN": "parcel_id",
+    "LOCADDRESS": "address",
     "LEGAL_DESC": "legal"
    },
    "geometry": "polygon",
@@ -2304,6 +2309,7 @@
    "url": "https://services2.arcgis.com/uXyoacYrZTPTKD3R/arcgis/rest/services/CCAD_Parcel_Feature_Set/FeatureServer/4",
    "fields": {
     "propID": "prop_id",
+    "situsConcat": "address",
     "landSizeAcres": "acres",
     "imprvYearBuilt": "year_built",
     "currValMarket": "market_value"
@@ -2394,6 +2400,7 @@
    "url": "https://cobgis.brownsvilletx.gov/arcgis/rest/services/Hosted/CameronCAD_Parcels_05312026/FeatureServer/0",
    "fields": {
     "prop_id": "prop_id",
+    "situsdispl": "address",
     "acres": "acres",
     "yrbuilt": "year_built",
     "market": "market_value"
@@ -2484,6 +2491,7 @@
    "url": "https://services.arcgis.com/HfQs2ClqmipKpmFK/arcgis/rest/services/FBCAD_Public_Parcels_Dec_2024/FeatureServer/0",
    "fields": {
     "PROPNUMBER": "prop_number",
+    "SITUS": "address",
     "LANDSIZEAC": "acres",
     "YEARBUILT": "year_built",
     "TOTALVALUE": "total_value"
