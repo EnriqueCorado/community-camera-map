@@ -13,6 +13,19 @@ import {
   parseWiki,
 } from "./live-parsers";
 import type { Sat } from "./satellites";
+import { MAX_FEED_BYTES } from "./gtfs-rt";
+import {
+  agenciesInView,
+  backoffUntil,
+  gtfsFeatures,
+  parseMbtaVehicles,
+  retryAfterSeconds,
+  shouldPoll,
+  socrataBlobUrl,
+  transitFeatures,
+  type PollState,
+  type TransitAgency,
+} from "./transit-agencies";
 
 type FC = GeoJSON.FeatureCollection;
 
@@ -43,15 +56,78 @@ export interface LiveSource {
 }
 
 class HttpError extends Error {
-  constructor(readonly status: number, host: string) {
+  constructor(readonly status: number, host: string, readonly retryAfter: string | null = null) {
     super(`${status} from ${host}`);
   }
 }
 
-async function getJSON(url: string, signal: AbortSignal, init?: RequestInit): Promise<unknown> {
+async function get(url: string, signal: AbortSignal, init?: RequestInit): Promise<Response> {
   const r = await fetch(url, { ...init, signal });
-  if (!r.ok) throw new HttpError(r.status, new URL(url).host);
-  return r.json();
+  if (!r.ok) throw new HttpError(r.status, new URL(url).host, r.headers.get("Retry-After"));
+  return r;
+}
+
+async function getJSON(url: string, signal: AbortSignal, init?: RequestInit): Promise<unknown> {
+  return (await get(url, signal, init)).json();
+}
+
+// --- Transit vehicles: per-agency polling (see transit-agencies.ts). Each
+// agency's data doesn't depend on the view, so fetches aren't cancelled when
+// the map moves; they're shared, rate-limited and backed off per agency. ---
+const transitState = new Map<string, PollState>();
+const transitInflight = new Map<string, Promise<boolean>>();
+/** Positions older than this aren't shown (a failing feed's last snapshot). */
+const TRANSIT_KEEP_MS = 3 * 60_000;
+
+async function fetchAgency(a: TransitAgency, signal: AbortSignal): Promise<GeoJSON.Feature<GeoJSON.Point>[]> {
+  if (a.format === "mbta-v3") return transitFeatures(parseMbtaVehicles(await getJSON(a.url, signal)), a);
+  const url = a.format === "socrata-blob" ? socrataBlobUrl(a.url, await getJSON(a.url, signal)) : a.url;
+  const r = await get(url, signal);
+  // Refuse an oversized body before downloading it (decodeVehicles re-checks).
+  if (Number(r.headers.get("Content-Length") ?? 0) > MAX_FEED_BYTES) throw new Error("feed too large");
+  return gtfsFeatures(new Uint8Array(await r.arrayBuffer()), a);
+}
+
+/** Fetch an agency's feed if it's due; resolves true when new data arrived. */
+function refreshAgency(a: TransitAgency): Promise<boolean> {
+  const running = transitInflight.get(a.id);
+  if (running) return running;
+  const now = Date.now();
+  const prev = transitState.get(a.id);
+  if (!shouldPoll(a, prev, now)) return Promise.resolve(false);
+  const s: PollState = prev ?? { at: 0, until: 0, failures: 0, data: null, dataAt: 0 };
+  s.at = now;
+  transitState.set(a.id, s);
+  const p = fetchAgency(a, AbortSignal.timeout(20_000))
+    .then((data) => {
+      Object.assign(s, { data, dataAt: Date.now(), failures: 0, until: 0 });
+      return true;
+    })
+    .catch((e: unknown) => {
+      s.failures += 1;
+      const http = e instanceof HttpError ? e : null;
+      s.until = backoffUntil(Date.now(), s.failures, http?.status ?? null, retryAfterSeconds(http?.retryAfter ?? null));
+      return false;
+    })
+    .finally(() => transitInflight.delete(a.id));
+  transitInflight.set(a.id, p);
+  return p;
+}
+
+let transitLast: { key: string; fc: FC } | null = null;
+/** The vehicles of these agencies; the same object while nothing changed, so
+ *  the map isn't re-rendered for a poll that fetched nothing new. */
+function transitInView(list: TransitAgency[]): FC {
+  const now = Date.now();
+  const fresh = list.flatMap((a) => {
+    const s = transitState.get(a.id);
+    return s?.data && now - s.dataAt < TRANSIT_KEEP_MS ? [{ id: a.id, s }] : [];
+  });
+  const key = fresh.map(({ id, s }) => `${id}@${s.dataAt}`).join("|");
+  if (transitLast?.key !== key) {
+    transitLast = { key, fc: { type: "FeatureCollection", features: fresh.flatMap(({ s }) => s.data!) } };
+  }
+  return transitLast.fc;
 }
 
 // CelesTrak asks clients not to re-download a group within its update window
@@ -112,6 +188,19 @@ export const LIVE_SOURCES: Record<string, LiveSource> = {
     refreshMs: 15_000,
     load: async ({ signal }) =>
       parseAvailtecVehicles(await getJSON("https://max.availtec.com/InfoPoint/GTFS-Realtime.ashx?Type=VehiclePosition&debug=true", signal)),
+  },
+  "transit-vehicles": {
+    // Checked every 10 s; each agency is fetched no faster than its own
+    // minimum (20–30 s), so most checks fetch nothing.
+    refreshMs: 10_000,
+    byView: true,
+    minZoom: 11,
+    async load({ bbox, partial }) {
+      const list = agenciesInView(bbox);
+      // Show each agency as soon as it arrives (a slow feed doesn't hold up the rest).
+      await Promise.all(list.map((a) => refreshAgency(a).then((got) => got && partial?.(transitInView(list)))));
+      return transitInView(list);
+    },
   },
   trains: {
     refreshMs: 60_000,

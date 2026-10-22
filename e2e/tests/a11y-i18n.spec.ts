@@ -552,6 +552,26 @@ test("live buses: route popup, Spanish too", async ({ page }) => {
   await expect(popup).toContainText("22 mph");
 });
 
+test("live transit vehicles: only agencies in view are polled; train popup in Spanish", async ({ page }) => {
+  const asked: string[] = [];
+  await page.route(/api-v3\.mbta\.com|api-endpoint\.mta\.info|data\.texas\.gov|rideralerts|passio3|metrotransit|availtec/, (r) => {
+    asked.push(new URL(r.request().url()).host);
+    return r.fulfill({ contentType: "application/vnd.api+json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ data: [
+      { id: "R-1", attributes: { latitude: 42.356, longitude: -71.062, bearing: 90, speed: 8, label: "1812", updated_at: new Date().toISOString() }, relationships: { route: { data: { id: "Red" } } } },
+    ] }) });
+  });
+  await page.goto("/#lang=es&ov=transit-vehicles&v=-71.062,42.356,14");
+  await ready(page);
+  await waitForLayer(page, "ov-transit-vehicles-arrow");
+  expect([...new Set(asked)]).toEqual(["api-v3.mbta.com"]);
+  expect(await clickFeature(page, "ov-transit-vehicles-arrow")).toBe(true);
+  const popup = page.locator(".maplibregl-popup");
+  await expect(popup.locator(".popup__title")).toHaveText("Línea Roja");
+  await expect(popup).toContainText("MBTA (Boston)");
+  await expect(popup).toContainText("18 mph");
+  await expect(popup.getByRole("link", { name: /Rutas y horarios/ })).toHaveAttribute("href", "https://www.mbta.com/");
+});
+
 test("quick view turns on its layers, and every preset layer exists", async ({ page, request }) => {
   const names = new Set(((await (await request.get("/api/layers")).json()) as { name: string }[]).map((l) => l.name));
   const { PRESETS } = await import("../../frontend/src/presets");

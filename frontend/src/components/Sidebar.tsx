@@ -120,7 +120,7 @@ const LAYER_GROUP: Record<string, Group> = Object.fromEntries(
   (
     [
       ["cameras", ["fire-cameras", "river-cameras", "windy-webcams"]],
-      ["live", ["flights", "buses", "iss", "satellites", "trains"]],
+      ["live", ["flights", "buses", "transit-vehicles", "iss", "satellites", "trains"]],
       ["weather", ["weather-now", "air-now", "rain-radar", "satellite", "weather-alerts", "air-quality", "road-weather", "smoke-haze"]],
       ["hazards", ["heat-risk", "fire-weather", "smoke-forecast", "storm-reports", "river-gauges", "drought", "reservoirs", "groundwater", "volcanoes", "fatal-crashes", "wildfire", "wildfire-perimeters", "fire-hotspots", "fire-hazard", "flood", "quakes", "faults", "dams", "superfund", "enviroscreen"]],
       ["roads", ["lane-closures", "message-signs", "chain-controls", "transit-routes", "transit-stops", "amtrak", "airports", "railroads"]],
