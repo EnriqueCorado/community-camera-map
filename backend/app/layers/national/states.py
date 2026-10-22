@@ -145,6 +145,7 @@ STYLES: dict[str, Classes] = {
     "ma-hurricane-evacuation-zones": Classes("kind", _EVAC, prefix=True),
     "ny-nyc-hurricane-evacuation-zones": Classes("kind", _EVAC, prefix=True),
     "de-evacuation-zones": Classes("kind", _EVAC, prefix=True),
+    "nc-evacuation-zones": Classes("kind", _EVAC, prefix=True),
     "ga-evacuation-zones": Classes("kind", _EVAC, prefix=True),
     "ms-harrison-evacuation-zone-a": Classes("kind", _EVAC, prefix=True),
     "ms-harrison-evacuation-zone-b": Classes("kind", _EVAC, prefix=True),
