@@ -12,6 +12,7 @@ import { BENEFITS_CHECKED, TABLES, TAX, type IncomeTable } from "./benefits-fact
 import { MCW_CHECKED, MCW_IMMIGRANT_RECHECK, MCW_RECHECK } from "./medi-cal-work-facts";
 import { RIGHTS_CHECKED, RIGHTS_RECHECK } from "./rights-facts";
 import { CIVICS_CHECKED, CIVICS_OFFICIALS_RECHECK } from "./civics-facts";
+import { LANGUAGES_CHECKED, LANGUAGES_REVIEW_BY } from "./languages-facts";
 import { addDays } from "./dates";
 
 export interface UpkeepItem {
@@ -104,6 +105,12 @@ export function upkeepItems(): UpkeepItem[] {
       task: "Update the citizenship test's current officials (new governor 2027-01-04; Speaker and the new congressional districts 2027-01-03) in make_civics.py, and USCIS's official Spanish name lists (#30, #38, #39, #57) in research/civics-es-study.json from uscis.gov/es; regenerate civics-questions.ts and move CIVICS_OFFICIALS_RECHECK.",
       source: "https://www.uscis.gov/citizenship/testupdates",
     },
+    {
+      id: "languages-review",
+      due: LANGUAGES_REVIEW_BY,
+      task: "Get a native speaker to review the Punjabi and Dari pages and flyers (landing/languages.ts; reviewers in research/languages.md). Remove the “not yet checked” note only after a review; otherwise move LANGUAGES_REVIEW_BY.",
+      source: "https://github.com/EnriqueCorado/community-camera-map/blob/main/frontend/src/landing/languages.ts",
+    },
     ...(Object.entries(TABLES) as [string, IncomeTable][]).map(([id, t]) => ({
       id: `benefits-${id}`,
       due: after(t.graceUntil ?? t.to, 1),
@@ -122,6 +129,7 @@ export function upkeepItems(): UpkeepItem[] {
         ["medi-cal-work", MCW_CHECKED],
         ["know-your-rights", RIGHTS_CHECKED],
         ["citizenship", CIVICS_CHECKED],
+        ["languages", LANGUAGES_CHECKED],
       ] as const
     ).map(([id, checked]) => ({
       id: `yearly-${id}`,

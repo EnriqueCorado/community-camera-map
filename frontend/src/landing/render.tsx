@@ -8,6 +8,8 @@ import { nearestModestoFirst, parseOffices } from "../help/legal-dir";
 import { TOOLS } from "./tools";
 import { FLYERS } from "./flyers";
 import { FlyerIndex, FlyerPage, FLYERS_PATH, flyerPath, HomePage, homePath, ToolPageView, toolPath, type Site } from "./Pages";
+import { LANG_PAGES, langFlyerPath, langPath } from "./languages";
+import { LangFlyerPage, LangHomePage } from "./LangPages";
 
 export interface BuiltPage {
   path: string;
@@ -37,5 +39,9 @@ export function renderSite({ origin, base, publicBase, repo, legalHelp }: Render
   }
   pages.push(page(FLYERS_PATH, <FlyerIndex site={site} flyers={FLYERS} />));
   for (const f of FLYERS) pages.push(page(flyerPath(f), <FlyerPage site={site} f={f} />));
+  for (const p of LANG_PAGES) {
+    pages.push(page(langPath(p), <LangHomePage site={site} page={p} />));
+    pages.push(page(langFlyerPath(p), <LangFlyerPage site={site} page={p} />));
+  }
   return pages;
 }

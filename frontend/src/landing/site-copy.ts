@@ -53,6 +53,8 @@ export interface SiteCopy {
   offlineIphone: string;
   officeLanguages: Fn<[string]>;
   eoir: string;
+  /** Heading for the links to the Punjabi and Dari pages. */
+  otherLanguages: string;
 }
 
 const en: SiteCopy = {
@@ -105,6 +107,7 @@ const en: SiteCopy = {
   offlineIphone: "On an iPhone, add this page to your Home Screen too, or the phone may delete saved pages after a few weeks without a visit.",
   officeLanguages: (l) => `Languages: ${l}`,
   eoir: "Recognized by the U.S. Department of Justice to help with immigration cases",
+  otherLanguages: "Other languages",
 };
 
 const es: SiteCopy = {
@@ -157,6 +160,7 @@ const es: SiteCopy = {
   offlineIphone: "En un iPhone, agregue también esta página a su pantalla de inicio; si no, el teléfono puede borrar las páginas guardadas después de unas semanas sin visitarlas.",
   officeLanguages: (l) => `Idiomas: ${l}`,
   eoir: "Reconocida por el Departamento de Justicia de EE. UU. para ayudar con casos de inmigración",
+  otherLanguages: "Otros idiomas",
 };
 
 export const SITE_COPY: Record<Lang, SiteCopy> = { en, es };
