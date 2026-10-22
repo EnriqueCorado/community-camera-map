@@ -1,0 +1,2727 @@
+[
+ {
+  "name": "mi-voting-precincts-2024",
+  "state": "MI",
+  "title": "Voting precincts (2024)",
+  "title_es": "Precintos electorales (2024)",
+  "description": "Michigan's election precincts as used for the 2024 elections - which township or city precinct you vote in, with registered and active voter counts. Look up your exact polling place at michigan.gov/vote.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Michigan Bureau of Elections (State of Michigan Open Data)",
+  "license": "State of Michigan open data",
+  "view": {
+   "url": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/9",
+   "fields": {
+    "PRECINCTID": "id",
+    "Precinct_Long_Name": "name",
+    "Jurisdiction_Name": "jurisdiction",
+    "WARD": "ward",
+    "PRECINCT": "precinct",
+    "ELECTIONYE": "election_year",
+    "Tabulator_Voter_Assist": "voting_equipment",
+    "Registered_Voters": "registered_voters",
+    "Active_Voters": "active_voters"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.62,
+    42.68,
+    -84.48,
+    42.78
+   ],
+   "features_in_probe": 63
+  }
+ },
+ {
+  "name": "mi-detroit-polling-places",
+  "state": "MI",
+  "title": "Detroit precincts & polling places",
+  "title_es": "Precintos y lugares de votación de Detroit",
+  "description": "City of Detroit election precincts with the polling place for each one - name, address and cross streets. Tap your neighborhood to see where you vote; confirm before election day at michigan.gov/vote.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Detroit Department of Elections (Detroit Open Data)",
+  "view": {
+   "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/election_precincts_2024/FeatureServer/0",
+   "fields": {
+    "election_precinct": "precinct",
+    "polling_place_name": "name",
+    "polling_place_address": "address",
+    "polling_place_cross_street": "cross_streets"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -83.15,
+    42.33,
+    -83.05,
+    42.4
+   ],
+   "features_in_probe": 84
+  }
+ },
+ {
+  "name": "mi-school-districts",
+  "state": "MI",
+  "title": "School districts",
+  "title_es": "Distritos escolares",
+  "description": "Michigan's local public school district boundaries - which district serves an address, and the intermediate school district (ISD) it belongs to.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "State of Michigan (Michigan Geographic Framework)",
+  "license": "State of Michigan open data",
+  "view": {
+   "url": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/michigan_geographic_framework/MapServer/10",
+   "fields": {
+    "NAME": "name",
+    "LABEL": "label",
+    "TYPE": "kind",
+    "DCODE": "district_code",
+    "ISD": "isd",
+    "SQMILES": "square_miles"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.7,
+    42.6,
+    -84.3,
+    42.9
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "mi-drug-take-back",
+  "state": "MI",
+  "title": "Medicine take-back drop-offs",
+  "title_es": "Lugares para desechar medicamentos",
+  "description": "Pharmacies, police stations and other sites in Michigan where you can drop off unused or expired medicine for free and safe disposal - with what each one accepts (pills, liquids, controlled substances, needles).",
+  "group": "help",
+  "category": "point",
+  "source": "Michigan Department of Environment, Great Lakes, and Energy (EGLE)",
+  "license": "EGLE open data",
+  "view": {
+   "url": "https://utility.arcgis.com/usrsvcs/servers/0db3fd7626c245c4a411981263fad596/rest/services/EGLE/DrugTakebackLocationsOpenData/MapServer/0",
+   "fields": {
+    "Facility": "name",
+    "StreetAddress": "address",
+    "City": "city",
+    "ZIPCode": "zip",
+    "PhoneNumber": "phone",
+    "AcceptsAllMeds": "accepts_all_meds",
+    "ControlledSubstances": "controlled_substances",
+    "SolidMeds": "solid_meds",
+    "LiquidMeds": "liquid_meds",
+    "SharpsNeedles": "sharps_needles",
+    "TakeBackWebsite": "website",
+    "Notes": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.0,
+    42.1,
+    -83.5,
+    42.6
+   ],
+   "features_in_probe": 44
+  }
+ },
+ {
+  "name": "mi-detroit-food-help",
+  "state": "MI",
+  "title": "Detroit free food pantries",
+  "title_es": "Despensas de comida gratis en Detroit",
+  "description": "Food pantries and free food distributions in Detroit from the city's food bank finder - with hours and phone numbers. Call ahead; schedules change.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Detroit (Detroit Open Data food bank finder)",
+  "view": {
+   "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/food_bank_finder_data/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Zip_Code": "zip",
+    "Telephone": "phone",
+    "Hours": "hours",
+    "Type": "kind",
+    "neighborhood_name": "neighborhood"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -83.29,
+    42.25,
+    -82.9,
+    42.46
+   ],
+   "features_in_probe": 97
+  }
+ },
+ {
+  "name": "mi-water-wells",
+  "state": "MI",
+  "title": "Water wells (Wellogic)",
+  "title_es": "Pozos de agua (Wellogic)",
+  "description": "Water wells drilled in Michigan from the state's Wellogic database - depth, type (household, irrigation, public supply), status, construction date and the water level found when drilled. Owner names and street addresses are left out.",
+  "group": "infra",
+  "category": "point",
+  "source": "Michigan Department of Environment, Great Lakes, and Energy (EGLE) - Wellogic",
+  "license": "EGLE open data",
+  "view": {
+   "url": "https://gisagoegle.state.mi.us/arcgis/rest/services/EGLE/DwOpenData/MapServer/3",
+   "fields": {
+    "WELLID": "id",
+    "COUNTY": "county",
+    "WELL_DEPTH": "depth_ft",
+    "WELL_TYPE": "kind",
+    "WEL_STATUS": "status",
+    "CONST_DATE": "constructed",
+    "DRILL_METH": "drill_method",
+    "CASE_TYPE": "casing",
+    "CASE_DEPTH": "casing_depth_ft",
+    "SWL": "static_water_level_ft",
+    "FLOWING": "flowing",
+    "AQ_TYPE": "aquifer_type",
+    "LANDSYS": "land_system"
+   },
+   "geometry": "point",
+   "min_zoom": 15,
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -83.73,
+    44.55,
+    -83.69,
+    44.57
+   ],
+   "features_in_probe": 217
+  }
+ },
+ {
+  "name": "mi-high-risk-erosion-zones",
+  "state": "MI",
+  "title": "Great Lakes high-risk erosion areas",
+  "title_es": "Zonas de alto riesgo de erosión en los Grandes Lagos",
+  "description": "Great Lakes shoreline areas Michigan has designated as high-risk for erosion, with the projected 30- and 60-year recession distances (feet). New buildings here must be set back from the bluff.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Michigan Department of Environment, Great Lakes, and Energy (EGLE) - Shorelands Protection (Part 323)",
+  "license": "EGLE open data",
+  "view": {
+   "url": "https://gisagoegle.state.mi.us/arcgis/rest/services/EGLE/WrdOpenData/MapServer/4",
+   "fields": {
+    "HighRiskAreas": "name",
+    "County": "county",
+    "Township": "township",
+    "PRD30": "recession_30yr_ft",
+    "PRD60": "recession_60yr_ft",
+    "StudyDate": "study_date"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.5,
+    41.7,
+    -82.4,
+    47.5
+   ],
+   "features_in_probe": 484
+  }
+ },
+ {
+  "name": "mi-leaking-tanks",
+  "state": "MI",
+  "title": "Leaking underground fuel tanks (open)",
+  "title_es": "Tanques subterráneos de combustible con fugas (abiertos)",
+  "description": "Sites in Michigan with an open, not-yet-closed leak from an underground storage tank (mostly old gas stations), with the risk level EGLE has assigned and whether land-use restrictions apply.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Michigan Department of Environment, Great Lakes, and Energy (EGLE) - Remediation and Redevelopment Division",
+  "license": "EGLE open data",
+  "view": {
+   "url": "https://gisagoegle.state.mi.us/arcgis/rest/services/EGLE/RRDOpenData/MapServer/1",
+   "fields": {
+    "FacilityID": "id",
+    "Address": "address",
+    "City": "city",
+    "County": "county",
+    "Total_Tank": "total_tanks",
+    "Active_Tank": "active_tanks",
+    "Open_Release": "open_releases",
+    "ReleaseStatus": "status",
+    "CurrentClassification": "classification",
+    "RiskCondition": "risk",
+    "Restrictions": "restrictions",
+    "LastUpdated": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 13,
+   "where": "Open_Release > 0",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.62,
+    42.68,
+    -84.48,
+    42.78
+   ],
+   "features_in_probe": 165
+  }
+ },
+ {
+  "name": "mi-mdot-five-year-projects",
+  "state": "MI",
+  "title": "Planned highway projects (MDOT 5-year)",
+  "title_es": "Obras de carretera planeadas (MDOT, 5 años)",
+  "description": "State highway construction planned by MDOT in its Five-Year Transportation Program - what work is planned on which road, the expected construction years and budget.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Michigan Department of Transportation (Five-Year Transportation Program)",
+  "view": {
+   "url": "https://services2.arcgis.com/67lKNkQ2TO1I3lhR/arcgis/rest/services/MdotFiveYearTransportationProgam_2026_2030/FeatureServer/9",
+   "fields": {
+    "JOBNET_ID": "job",
+    "MJR_RTE_NAME": "route",
+    "RPT_LOC_DESC": "location",
+    "RPT_WK_DESC": "description",
+    "WK_TYPE_DESC": "kind",
+    "WK_CAT_DESC": "category",
+    "ANTCP_CNST_YRS": "construction_years",
+    "FSCL_YR": "fiscal_year",
+    "STIP_STAT_DESC": "status",
+    "PHASE_BDGT_AMT": "budget",
+    "CNTY_DESC": "county"
+   },
+   "geometry": "line",
+   "min_zoom": 7,
+   "where": "PHASE_TYPE_ABBRV = 'CON'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -84.7,
+    42.6,
+    -84.4,
+    42.85
+   ],
+   "features_in_probe": 35
+  }
+ },
+ {
+  "name": "mi-detroit-trash-days",
+  "state": "MI",
+  "title": "Detroit trash & recycling day",
+  "title_es": "Día de basura y reciclaje en Detroit",
+  "description": "Which day of the week trash is picked up in each part of Detroit, the recycling week (A or B) and the hauler serving the area.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Detroit Department of Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/WasteCollectionAreas/FeatureServer/0",
+   "fields": {
+    "day": "day",
+    "week": "recycling_week",
+    "contractor": "hauler",
+    "services": "services"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "max_features": 200,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -83.15,
+    42.33,
+    -83.05,
+    42.4
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "mi-grand-rapids-trash-days",
+  "state": "MI",
+  "title": "Grand Rapids trash day",
+  "title_es": "Día de basura en Grand Rapids",
+  "description": "City of Grand Rapids refuse routes - which weekday trash is collected in each part of the city.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Grand Rapids Public Works",
+  "view": {
+   "url": "https://services2.arcgis.com/L81TiOwAPO1ZvU9b/arcgis/rest/services/Refuse_Route_New/FeatureServer/0",
+   "fields": {
+    "ROUTE_DAY": "day",
+    "ROUTETITLE": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "max_features": 500,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.7,
+    42.93,
+    -85.62,
+    42.99
+   ],
+   "features_in_probe": 54
+  }
+ },
+ {
+  "name": "mi-grand-rapids-zoning",
+  "state": "MI",
+  "title": "Grand Rapids zoning",
+  "title_es": "Zonificación de Grand Rapids",
+  "description": "City of Grand Rapids zoning districts - what kind of buildings and uses are allowed on each block (residential, mixed-use, commercial, industrial), updated as rezonings are approved.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Grand Rapids Planning Department",
+  "view": {
+   "url": "https://services2.arcgis.com/L81TiOwAPO1ZvU9b/arcgis/rest/services/Zoning_All_Types/FeatureServer/8",
+   "fields": {
+    "ZONING": "zone",
+    "ZONING_DESC": "description",
+    "NEIGH_TYPE": "neighborhood_type",
+    "NEIGH_DESC": "neighborhood_description",
+    "ZONE_PERMIT": "permit",
+    "LINK": "link"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.7,
+    42.93,
+    -85.62,
+    42.99
+   ],
+   "features_in_probe": 253
+  }
+ },
+ {
+  "name": "mi-detroit-future-land-use",
+  "state": "MI",
+  "title": "Detroit Master Plan future land use",
+  "title_es": "Uso futuro del suelo (Plan Maestro de Detroit)",
+  "description": "What the City of Detroit's Master Plan of Policies says each area should become - neighborhood residential, mixed-use, industrial, parks and more. This guides future rezoning and development decisions.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Detroit Planning and Development Department",
+  "view": {
+   "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/Current_Master_Plan_Future_General_Land_Use_view/FeatureServer/0",
+   "fields": {
+    "MP04": "code",
+    "MP04DESCRI": "land_use"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15,
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -83.07,
+    42.34,
+    -83.04,
+    42.36
+   ],
+   "features_in_probe": 415
+  }
+ },
+ {
+  "name": "mi-deer-management-units",
+  "state": "MI",
+  "title": "Deer management units (hunting)",
+  "title_es": "Unidades de manejo de venado (caza)",
+  "description": "Michigan DNR deer management units - the hunting areas that deer seasons, antlerless licenses and rules are set by. Check the current hunting digest before you go.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Michigan Department of Natural Resources - Wildlife Division",
+  "license": "Michigan DNR open data",
+  "view": {
+   "url": "https://services3.arcgis.com/Jdnp1TjADvSDxMAX/arcgis/rest/services/WILDGameSpeciesManagementUnitsAndZonesOPENDATA/FeatureServer/3",
+   "fields": {
+    "DeerManagementUnit": "unit",
+    "MangementUnitName": "name",
+    "Year": "year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "max_features": 500,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -85.0,
+    43.0,
+    -84.0,
+    44.0
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "mi-family-fishing-spots",
+  "state": "MI",
+  "title": "Family-friendly fishing spots",
+  "title_es": "Lugares de pesca para familias",
+  "description": "Michigan DNR's picks for easy, family-friendly fishing - lakes and ponds with shore or pier fishing, the fish you can catch, parking, fees and whether there are bathrooms.",
+  "group": "nature",
+  "category": "point",
+  "source": "Michigan Department of Natural Resources - Fisheries Division",
+  "license": "Michigan DNR open data",
+  "view": {
+   "url": "https://services3.arcgis.com/Jdnp1TjADvSDxMAX/arcgis/rest/services/family_friendly_fishing_readonly/FeatureServer/0",
+   "fields": {
+    "Waterbody_Name": "name",
+    "Waterbody_Size": "size",
+    "Who_manages_waterbody": "managed_by",
+    "Shore__Pier__Boat_fishing": "fishing_from",
+    "Street_Address": "address",
+    "City___Township": "township",
+    "County": "county",
+    "Hours_of_Operation": "hours",
+    "Parking": "parking",
+    "Entrance_Fee": "fee",
+    "Fish_Species": "fish",
+    "Bait": "bait",
+    "Bathrooms": "bathrooms",
+    "Amenities": "amenities",
+    "Driving_Directions": "directions"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "max_features": 1000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.6,
+    41.7,
+    -82.4,
+    45.9
+   ],
+   "features_in_probe": 224
+  }
+ },
+ {
+  "name": "ia-boat-ramps",
+  "state": "IA",
+  "title": "Boat ramps & water access (Iowa DNR)",
+  "title_es": "Rampas para botes y accesos al agua (Iowa DNR)",
+  "description": "Public boat ramps, docks, paddling (canoe and kayak) put-ins and shore fishing access on Iowa lakes and rivers, from the Iowa DNR recreation inventory.",
+  "group": "nature",
+  "category": "point",
+  "source": "Iowa Department of Natural Resources",
+  "license": "Iowa DNR public map service",
+  "view": {
+   "url": "https://programs.iowadnr.gov/geospatial/rest/services/Recreation/Recreation/MapServer/8",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "County": "county",
+    "RecAssType": "area_type"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "Type IN ('Boat Ramp','Boat Ramp - Gravel','Boat Ramp - Hard Surface','Boat Dock','Paddling Access','Fishing Access','Fishing Dock')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.3,
+    43.3,
+    -95.0,
+    43.5
+   ],
+   "features_in_probe": 73
+  }
+ },
+ {
+  "name": "ia-dnr-campgrounds",
+  "state": "IA",
+  "title": "Campgrounds & cabins (Iowa DNR)",
+  "title_es": "Campamentos y cabañas (Iowa DNR)",
+  "description": "Campgrounds, cabins, cottages, yurts and lodges in Iowa state parks and DNR areas. Reserve through the Iowa state parks reservation system.",
+  "group": "nature",
+  "category": "point",
+  "source": "Iowa Department of Natural Resources",
+  "license": "Iowa DNR public map service",
+  "view": {
+   "url": "https://programs.iowadnr.gov/geospatial/rest/services/Recreation/Recreation/MapServer/8",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "County": "county",
+    "RecAssType": "area_type"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "Type LIKE 'Campground%' OR Type IN ('Cabin','Cottage','Yurt','Lodge','Cabana')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.6,
+    40.3,
+    -90.1,
+    43.6
+   ],
+   "features_in_probe": 299
+  }
+ },
+ {
+  "name": "ia-water-trails",
+  "state": "IA",
+  "title": "Paddling routes / water trails (Iowa DNR)",
+  "title_es": "Rutas para remar / senderos acuáticos (Iowa DNR)",
+  "description": "Canoe and kayak routes on Iowa's major rivers, including designated water trails. Check river levels and watch for low-head dams before you go.",
+  "group": "nature",
+  "category": "park",
+  "source": "Iowa Department of Natural Resources",
+  "license": "Iowa DNR public map service",
+  "view": {
+   "url": "https://programs.iowadnr.gov/geospatial/rest/services/Recreation/Recreation/MapServer/6",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Waterbody": "river"
+   },
+   "geometry": "line",
+   "min_zoom": 7,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -92.0,
+    41.5,
+    -91.0,
+    42.2
+   ],
+   "features_in_probe": 60
+  }
+ },
+ {
+  "name": "ia-trout-streams",
+  "state": "IA",
+  "title": "Trout streams (Iowa DNR)",
+  "title_es": "Arroyos con truchas (Iowa DNR)",
+  "description": "Iowa's trout streams, mostly in the northeast, with stocking (catchable and fingerling), wild-trout and special-regulation notes, and whether camping is nearby. A trout fee is required in addition to a fishing license.",
+  "group": "nature",
+  "category": "park",
+  "source": "Iowa Department of Natural Resources",
+  "license": "Iowa DNR public map service",
+  "view": {
+   "url": "https://programs.iowadnr.gov/geospatial/rest/services/Recreation/Recreation/MapServer/2",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "STOCK_CATC": "stocked_catchable",
+    "STOCK_FING": "stocked_fingerling",
+    "wild_trt": "wild_trout",
+    "SPECIAL_RE": "special_rules",
+    "CAMPING": "camping",
+    "More_Info": "url"
+   },
+   "geometry": "line",
+   "min_zoom": 7,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -92.0,
+    42.8,
+    -91.0,
+    43.5
+   ],
+   "features_in_probe": 99
+  }
+ },
+ {
+  "name": "ia-contaminated-sites",
+  "state": "IA",
+  "title": "Contaminated sites under cleanup (Iowa DNR)",
+  "title_es": "Sitios contaminados en limpieza (Iowa DNR)",
+  "description": "Open Iowa DNR contaminated-site cases: places where hazardous materials or wastes were found or are being assessed or cleaned up (former dry cleaners, grain and fertilizer sites, industrial land, brownfields). Being listed does not mean a health risk today.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Iowa Department of Natural Resources (Contaminated Sites Section, Facility Explorer)",
+  "license": "Iowa DNR public map service",
+  "view": {
+   "url": "https://programs.iowadnr.gov/geospatial/rest/services/OneStop/QueryEnvFacs/MapServer/5",
+   "fields": {
+    "facName": "name",
+    "LocAddress": "address",
+    "CityName": "city",
+    "countyName": "county",
+    "opStatus": "status",
+    "ProgType": "program",
+    "SiteType": "kind",
+    "PIStartDt": "start",
+    "stfacid": "facility_id",
+    "Hyperlink": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "opStatus = 'Open' AND PUBLICVIEW = 1"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.75,
+    41.5,
+    -93.5,
+    41.7
+   ],
+   "features_in_probe": 169
+  }
+ },
+ {
+  "name": "ia-groundwater-capture-zones",
+  "state": "IA",
+  "title": "Public well capture zones (Iowa DNR source water)",
+  "title_es": "Zonas de captación de pozos públicos (agua de origen, Iowa DNR)",
+  "description": "The land areas that feed groundwater to each public water system's wells, with the aquifer, how susceptible it is to contamination and the population served. Spills and wells inside these zones matter most for drinking water.",
+  "group": "infra",
+  "category": "hazard",
+  "source": "Iowa Department of Natural Resources (Source Water Protection Program)",
+  "license": "Iowa DNR public map service",
+  "view": {
+   "url": "https://programs.iowadnr.gov/geospatial/rest/services/waterquality/Sourcewater/MapServer/4",
+   "fields": {
+    "PWS_NAME": "system",
+    "PWS_ID": "system_id",
+    "POP_SERVED": "population_served",
+    "AQUIFER": "aquifer",
+    "SWP_SUSC": "susceptibility",
+    "CAP_ZONE": "zone",
+    "ACRES": "acres",
+    "LAST_EDIT": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.75,
+    41.5,
+    -93.5,
+    41.7
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "ia-dot-five-year-projects",
+  "state": "IA",
+  "title": "Planned highway projects 2027-2031 (Iowa DOT)",
+  "title_es": "Proyectos de carreteras planeados 2027-2031 (Iowa DOT)",
+  "description": "Highway and bridge projects in the Iowa DOT Five-Year Transportation Improvement Program: what work is planned, where, which years, and the programmed cost (in thousands of dollars).",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Iowa Department of Transportation (Five-Year Program)",
+  "license": "Iowa DOT public view",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Iowa_DOT_Five_Year_Program_Project_Data_V2_Public_VIEW/FeatureServer/0",
+   "fields": {
+    "RouteID": "route",
+    "Project_Location": "location",
+    "Work_Type": "kind",
+    "SummaryWorkType": "work",
+    "SummaryYears": "years",
+    "Program": "program",
+    "County": "county",
+    "AmountTotal": "cost_thousands",
+    "Project_Code": "number"
+   },
+   "geometry": "line",
+   "min_zoom": 6,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -94.0,
+    41.3,
+    -93.3,
+    41.9
+   ],
+   "features_in_probe": 40
+  }
+ },
+ {
+  "name": "ia-linn-snowplow-routes",
+  "state": "IA",
+  "title": "Snowplow passes (Linn County roads)",
+  "title_es": "Pasadas de quitanieves (caminos del condado de Linn)",
+  "description": "Linn County secondary (rural county) roads with when a county plow truck last passed, how many passes, and whether the route is done. Updated live from the trucks' GPS; city streets and state highways are not included.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Linn County, Iowa Secondary Roads (AVL)",
+  "license": "Linn County GIS public view",
+  "view": {
+   "url": "https://services.arcgis.com/i14SLLmXo7Hn9vNc/arcgis/rest/services/SecondaryRoadsAVLSnowRoute/FeatureServer/0",
+   "fields": {
+    "RouteBase": "route",
+    "RouteNumber": "route_number",
+    "District": "district",
+    "HardSurface": "paved",
+    "LastPass": "last_pass",
+    "PassCount": "passes",
+    "RouteComplete": "complete",
+    "Updated": "updated"
+   },
+   "geometry": "line",
+   "min_zoom": 13,
+   "simplify": true,
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.75,
+    42.0,
+    -91.55,
+    42.15
+   ],
+   "features_in_probe": 1533
+  }
+ },
+ {
+  "name": "ia-drivers-license-offices",
+  "state": "IA",
+  "title": "Driver's license offices (county treasurers)",
+  "title_es": "Oficinas de licencias de conducir (tesoreros del condado)",
+  "description": "County treasurer offices that issue Iowa driver's licenses and IDs, with hours and whether they give CDL skills tests. Many need an appointment; check the notes. (Iowa DOT also runs a few state service centers in larger cities.)",
+  "group": "civic",
+  "category": "point",
+  "source": "Iowa Department of Transportation (Motor Vehicle Division)",
+  "license": "Iowa DOT public view",
+  "view": {
+   "url": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/DLSv2_View/FeatureServer/1",
+   "fields": {
+    "station_name": "name",
+    "address": "address",
+    "city": "city",
+    "zip": "zip",
+    "phone": "phone",
+    "hours_mon": "mon",
+    "hours_tues": "tue",
+    "hours_wed": "wed",
+    "hours_thurs": "thu",
+    "hours_fri": "fri",
+    "hours_sat": "sat",
+    "notes": "notes",
+    "CDL": "cdl_testing",
+    "StatusNote": "status",
+    "url_dl": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.6,
+    40.3,
+    -90.1,
+    43.6
+   ],
+   "features_in_probe": 87
+  }
+ },
+ {
+  "name": "ia-johnson-polling-places",
+  "state": "IA",
+  "title": "Polling places (Johnson County)",
+  "title_es": "Lugares de votación (condado de Johnson)",
+  "description": "Election Day polling places in Johnson County (Iowa City, Coralville, North Liberty and rural precincts), with the precinct that votes at each. Confirm yours with the Johnson County Auditor before you go.",
+  "group": "civic",
+  "category": "point",
+  "source": "Johnson County, Iowa Auditor / GIS",
+  "license": "Johnson County GIS public map service",
+  "view": {
+   "url": "https://gis.johnsoncountyiowa.gov/arcgis/rest/services/ElectionPollingPlaces/MapServer/0",
+   "fields": {
+    "BUILDING": "name",
+    "ADDRESS": "address",
+    "PRECT_NAME": "precinct",
+    "PRECT_ID": "precinct_id",
+    "PRECINCT_SPLIT": "precinct_split",
+    "POLLINGID": "polling_id"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.65,
+    41.6,
+    -91.45,
+    41.75
+   ],
+   "features_in_probe": 74
+  }
+ },
+ {
+  "name": "ia-johnson-food-pantries",
+  "state": "IA",
+  "title": "Food pantries & free meals (Johnson County)",
+  "title_es": "Despensas de alimentos y comidas gratis (condado de Johnson)",
+  "description": "Food pantries and meal programs in Johnson County with daily hours, services and who can use them (some serve only certain towns or students).",
+  "group": "help",
+  "category": "point",
+  "source": "Johnson County, Iowa Public Health",
+  "license": "Johnson County GIS public map service",
+  "view": {
+   "url": "https://gis.johnsoncountyiowa.gov/arcgis/rest/services/PH_Food_Assistance/MapServer/0",
+   "fields": {
+    "Organization": "name",
+    "Category": "kind",
+    "SubType": "subtype",
+    "ServicesProvided": "services",
+    "ResourceAddress": "address",
+    "ResourceCity": "city",
+    "fullphone": "phone",
+    "MondayHours": "mon",
+    "TuesdayHours": "tue",
+    "WednesdayHours": "wed",
+    "ThursdayHours": "thu",
+    "FridayHours": "fri",
+    "SaturdayHours": "sat",
+    "SundayHours": "sun",
+    "AccessType": "who_can_use",
+    "TotalNotes": "notes",
+    "Website": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.65,
+    41.6,
+    -91.45,
+    41.75
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "ia-johnson-child-care-centers",
+  "state": "IA",
+  "title": "Licensed child care centers (Johnson County)",
+  "title_es": "Centros de cuidado infantil con licencia (condado de Johnson)",
+  "description": "State-licensed child care centers and preschools in Johnson County with licensed capacity (home-based providers are not shown).",
+  "group": "help",
+  "category": "point",
+  "source": "Johnson County, Iowa Public Health (Iowa HHS licensing data)",
+  "license": "Johnson County GIS public map service",
+  "view": {
+   "url": "https://gis.johnsoncountyiowa.gov/arcgis/rest/services/PH_Childcare/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Address": "address",
+    "Address_City": "city",
+    "Capacity": "capacity"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "Type = 'Licensed Center'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.65,
+    41.6,
+    -91.45,
+    41.75
+   ],
+   "features_in_probe": 67
+  }
+ },
+ {
+  "name": "ia-dsm-zoning",
+  "state": "IA",
+  "title": "Zoning (City of Des Moines)",
+  "title_es": "Zonificación (ciudad de Des Moines)",
+  "description": "Des Moines zoning districts - what kinds of buildings and uses are allowed by right - with planned-unit-development names and the approving ordinance.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Des Moines (Development Services / GIS)",
+  "license": "City of Des Moines public view",
+  "view": {
+   "url": "https://services.arcgis.com/HT7H9QGiZQoRJDpJ/arcgis/rest/services/Zoning_Districts_view/FeatureServer/0",
+   "fields": {
+    "ZoneType": "kind",
+    "PUDName": "pud",
+    "Condition": "condition",
+    "OrdinanceNbr": "ordinance",
+    "ApprovedDate": "approved",
+    "Acres": "acres",
+    "Hyperlink": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.64,
+    41.57,
+    -93.6,
+    41.6
+   ],
+   "features_in_probe": 757
+  }
+ },
+ {
+  "name": "ia-dsm-emergency-sirens",
+  "state": "IA",
+  "title": "Outdoor warning sirens (Des Moines metro)",
+  "title_es": "Sirenas de alerta exteriores (área metropolitana de Des Moines)",
+  "description": "Outdoor tornado and emergency warning sirens around the Des Moines metro, with the city that runs each and its audible radius in feet. Sirens are meant for people outdoors; indoors, use a weather radio or phone alerts.",
+  "group": "hazards",
+  "category": "point",
+  "source": "City of Des Moines GIS / Polk County Emergency Management",
+  "license": "City of Des Moines public view",
+  "view": {
+   "url": "https://services.arcgis.com/HT7H9QGiZQoRJDpJ/arcgis/rest/services/Emergency_Sirens_view/FeatureServer/0",
+   "fields": {
+    "SirenIDLocal": "siren_id",
+    "Address": "address",
+    "City": "city",
+    "LocationDescription": "location",
+    "Owner": "operator",
+    "Radius": "radius_ft",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.75,
+    41.5,
+    -93.5,
+    41.7
+   ],
+   "features_in_probe": 95
+  }
+ },
+ {
+  "name": "ia-linn-parcels",
+  "state": "IA",
+  "title": "Parcels (Linn County)",
+  "title_es": "Parcelas (condado de Linn)",
+  "description": "Property parcels in Linn County (Cedar Rapids, Marion and rural Linn) with the parcel number, property class, acres and assessed value. Owner names are not shown.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Linn County, Iowa GIS / Assessors",
+  "license": "Linn County GIS public view",
+  "view": {
+   "url": "https://services.arcgis.com/i14SLLmXo7Hn9vNc/arcgis/rest/services/RealEstateParcel/FeatureServer/0",
+   "fields": {
+    "GPN": "parcel_id",
+    "Class": "land_use",
+    "Acres": "acres",
+    "AssessmentYear": "assessment_year",
+    "ValueAssessedLand": "assessed_land",
+    "ValueAssessedImproved": "assessed_buildings",
+    "ValueAssessedTotal": "assessed_total",
+    "CityTownship": "city_township"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.67,
+    41.97,
+    -91.66,
+    41.98
+   ],
+   "features_in_probe": 725
+  }
+ },
+ {
+  "name": "ne-natural-resources-districts",
+  "state": "NE",
+  "title": "Natural Resources Districts (NRDs)",
+  "title_es": "Distritos de Recursos Naturales (NRD)",
+  "description": "Nebraska's 23 Natural Resources Districts - the local agencies that manage groundwater, flood control, soil conservation and well permits where you live.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Nebraska Department of Natural Resources via NebraskaMAP (gis.ne.gov)",
+  "license": "State of Nebraska public GIS service",
+  "view": {
+   "url": "https://gis.ne.gov/Enterprise/rest/services/NaturalResourcesDistrictBoundaries/MapServer/0",
+   "fields": {
+    "NRD_Name": "name",
+    "NRD_Num": "number"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.0,
+    40.6,
+    -96.4,
+    41.0
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ne-fire-districts",
+  "state": "NE",
+  "title": "Fire district response areas (911)",
+  "title_es": "Zonas de respuesta de bomberos (911)",
+  "description": "Which fire department answers a 911 call for each part of Nebraska, from the statewide Next Generation 911 map.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Nebraska Public Service Commission NG911 via NebraskaMAP (gis.ne.gov)",
+  "license": "State of Nebraska public GIS service",
+  "view": {
+   "url": "https://gis.ne.gov/Enterprise/rest/services/Fire_District_Response_Areas/MapServer/0",
+   "fields": {
+    "DsplayName": "name",
+    "Agency_ID": "agency",
+    "DateUpdate": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.0,
+    40.6,
+    -96.4,
+    41.0
+   ],
+   "features_in_probe": 31
+  }
+ },
+ {
+  "name": "ne-ems-districts",
+  "state": "NE",
+  "title": "Ambulance (EMS) response areas (911)",
+  "title_es": "Zonas de respuesta de ambulancias (911)",
+  "description": "Which ambulance / rescue service answers a 911 medical call for each part of Nebraska, from the statewide Next Generation 911 map.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Nebraska Public Service Commission NG911 via NebraskaMAP (gis.ne.gov)",
+  "license": "State of Nebraska public GIS service",
+  "view": {
+   "url": "https://gis.ne.gov/Enterprise/rest/services/Rescue_District_Response_Area/MapServer/0",
+   "fields": {
+    "DsplayName": "name",
+    "Agency_ID": "agency",
+    "DateUpdate": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.0,
+    40.6,
+    -96.4,
+    41.0
+   ],
+   "features_in_probe": 33
+  }
+ },
+ {
+  "name": "ne-wellhead-protection-areas",
+  "state": "NE",
+  "title": "Wellhead protection areas (town drinking water)",
+  "title_es": "Zonas de protección de pozos (agua potable del pueblo)",
+  "description": "Land around public drinking-water wells where towns and NRDs limit activities that could pollute the groundwater.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Nebraska Department of Water, Energy, and Environment via NebraskaMAP (gis.ne.gov)",
+  "license": "State of Nebraska public GIS service",
+  "view": {
+   "url": "https://gis.ne.gov/Enterprise/rest/services/Wellhead_Protection_Areas/MapServer/0",
+   "fields": {
+    "PWS_Name": "name",
+    "NE_ID": "system_id",
+    "NRD": "nrd",
+    "County": "county",
+    "Sq_Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -98.6,
+    40.5,
+    -98.0,
+    41.0
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "ne-ice-jam-reports",
+  "state": "NE",
+  "title": "River ice jam reports",
+  "title_es": "Reportes de atascos de hielo en ríos",
+  "description": "Field reports of river ice and ice jams (a flood risk in late winter) from the state's ice-jam watch program, last two winters.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Nebraska Department of Natural Resources and NEMA ice jam reporting program (gis.ne.gov)",
+  "license": "State of Nebraska public GIS service",
+  "view": {
+   "url": "https://gis.ne.gov/Agency/rest/services/IceJamReports/MapServer/0",
+   "fields": {
+    "river_name": "river",
+    "county": "county",
+    "Location": "site",
+    "created_date": "reported",
+    "moving_ice_types": "ice_type",
+    "pct_channel_open": "pct_open",
+    "pct_channelsurface_ice_cover": "pct_moving_ice",
+    "gage_reading_ft": "gage_ft",
+    "bankfull_ft": "bankfull_ft",
+    "cause": "cause",
+    "jam_length_mi": "jam_miles",
+    "air_temp_f": "air_temp_f"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "created_date >= DATE '2024-10-01'",
+   "max_features": 2000,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.0,
+    40.8,
+    -95.8,
+    41.6
+   ],
+   "features_in_probe": 99
+  }
+ },
+ {
+  "name": "ne-cooper-nuclear-evacuation-zones",
+  "state": "NE",
+  "title": "Cooper Nuclear Station evacuation zones",
+  "title_es": "Zonas de evacuación de la planta nuclear Cooper",
+  "description": "Numbered emergency planning zones around Cooper Nuclear Station near Brownville. In an emergency, officials order evacuation or sheltering by zone number.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Nebraska Emergency Management Agency / DHHS via NebraskaMAP (gis.ne.gov)",
+  "license": "State of Nebraska public GIS service",
+  "view": {
+   "url": "https://gis.ne.gov/Agency/rest/services/Cooper_Nuclear_Station/MapServer/8",
+   "fields": {
+    "ZONE_DESCRIPTION": "zone",
+    "COUNTY_NAME_PROP": "county",
+    "CURRENT_POP": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -95.9,
+    40.2,
+    -95.4,
+    40.6
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "ne-local-health-departments",
+  "state": "NE",
+  "title": "Local health departments (service areas)",
+  "title_es": "Departamentos de salud locales (zonas de servicio)",
+  "description": "Which local public health department serves each county - for vaccines, health screenings, disease reports and environmental health.",
+  "group": "help",
+  "category": "boundary",
+  "source": "Nebraska DHHS Division of Public Health via NebraskaMAP (gis.ne.gov)",
+  "license": "State of Nebraska public GIS service",
+  "view": {
+   "url": "https://gis.ne.gov/Agency/rest/services/DHHS_Local_Health_Departments/MapServer/0",
+   "fields": {
+    "LHD_NAME": "name",
+    "ORG_URL": "url",
+    "SUM_Total_Population": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.0,
+    40.6,
+    -96.4,
+    41.0
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ne-open-fields-and-waters",
+  "state": "NE",
+  "title": "Open Fields and Waters (walk-in hunting & fishing, 2026-27)",
+  "title_es": "Open Fields and Waters (caza y pesca a pie en terreno privado, 2026-27)",
+  "description": "Private land enrolled in Game and Parks' Open Fields and Waters program for the 2026-27 season - open to public walk-in hunting, trapping or fishing. Check the area's rules before you go.",
+  "group": "nature",
+  "category": "park",
+  "source": "Nebraska Game and Parks Commission",
+  "license": "NGPC public view layer",
+  "view": {
+   "url": "https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/OFW_2026_2027_QA_Web_Map_View/FeatureServer/0",
+   "fields": {
+    "ProgramBou": "kind",
+    "County": "county",
+    "District": "district",
+    "ContractAcres": "acres",
+    "ContractStreamMiles": "stream_miles",
+    "ContractNu": "area_number"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "simplify": true,
+   "refresh_s": 86400
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -101.2,
+    40.0,
+    -100.4,
+    40.5
+   ],
+   "features_in_probe": 88
+  }
+ },
+ {
+  "name": "ne-paddle-launches",
+  "state": "NE",
+  "title": "Canoe & kayak launches",
+  "title_es": "Puntos para botar canoas y kayaks",
+  "description": "Paddle-craft launch sites at Game and Parks lakes and rivers, with whether the launch is open, shore or dock launch, and accessibility.",
+  "group": "nature",
+  "category": "point",
+  "source": "Nebraska Game and Parks Commission",
+  "license": "NGPC public view layer",
+  "view": {
+   "url": "https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/Paddle_Craft_Launch_View_Layer_for_Public_Web_Map/FeatureServer/1",
+   "fields": {
+    "Paddle_AreaName": "name",
+    "Paddle_Waterbody": "waterbody",
+    "Paddle_County": "county",
+    "Ramp_Status": "status",
+    "Season": "seasonal_closure",
+    "ShoreLaunch": "shore_launch",
+    "DockLaunch": "dock_launch",
+    "ADAAccess": "ada",
+    "Paddle_Substrate": "surface",
+    "AccessType": "access",
+    "Water_Trail": "water_trail",
+    "Paddle_GoogleLink": "directions"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "refresh_s": 86400
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.0,
+    40.6,
+    -96.4,
+    41.0
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ne-aquatic-invasive-species",
+  "state": "NE",
+  "title": "Lakes with invasive species (zebra mussels, milfoil...)",
+  "title_es": "Lagos con especies invasoras (mejillón cebra, milenrama...)",
+  "description": "Game and Parks testing results for aquatic invasive species at public lakes - zebra mussels, Eurasian watermilfoil, curly-leaf pondweed, white perch and others. Clean, drain and dry your boat.",
+  "group": "nature",
+  "category": "hazard",
+  "source": "Nebraska Game and Parks Commission aquatic invasive species program",
+  "license": "NGPC public view layer",
+  "view": {
+   "url": "https://services5.arcgis.com/IOshH1zLrIieqrNk/arcgis/rest/services/AIS_Map_WFL1/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "AIS_Present": "invasives_present",
+    "ZM_Status": "zebra_mussel",
+    "MYSP2_Status": "eurasian_watermilfoil",
+    "POCR3_Status": "curlyleaf_pondweed",
+    "WHP_Status": "white_perch",
+    "NAMI_Status": "brittle_naiad",
+    "RUSTY_Status": "invasive_crayfish",
+    "Acres_Text": "acres"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.0,
+    40.6,
+    -96.4,
+    41.0
+   ],
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "ne-omaha-warning-sirens",
+  "state": "NE",
+  "title": "Outdoor warning sirens (Omaha / Douglas County)",
+  "title_es": "Sirenas de alerta exterior (Omaha / condado de Douglas)",
+  "description": "Outdoor tornado and severe-weather warning sirens in Douglas County. Sirens are for people outdoors - indoors, use a weather radio or phone alerts.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Douglas County / City of Omaha GIS (DOGIS)",
+  "license": "Douglas County public GIS service",
+  "view": {
+   "url": "https://dcgis.org/server/rest/services/Outdoor_Warning_Sirens/MapServer/0",
+   "fields": {
+    "sid": "name",
+    "siren_id": "siren_id",
+    "location": "location",
+    "rotate": "rotating",
+    "power": "power",
+    "photo": "photo"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.2,
+    41.2,
+    -95.9,
+    41.35
+   ],
+   "features_in_probe": 87
+  }
+ },
+ {
+  "name": "ne-omaha-zoning",
+  "state": "NE",
+  "title": "Zoning (City of Omaha)",
+  "title_es": "Zonificación (ciudad de Omaha)",
+  "description": "City of Omaha zoning districts - what can be built on each lot (homes, shops, industry), plus overlay flags like floodway and landmark.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Omaha Planning Department via Douglas County GIS (DOGIS)",
+  "license": "Douglas County public GIS service",
+  "view": {
+   "url": "https://dcgis.org/server/rest/services/Hosted/Zoning_Omaha_view/FeatureServer/0",
+   "fields": {
+    "zoneclass": "zone",
+    "zonedesc": "description",
+    "zoning": "zoning",
+    "zoning_height": "height_limit",
+    "pud_flag": "planned_unit",
+    "md_flag": "mixed_use",
+    "fw_flag": "floodway",
+    "ff_flag": "flood_fringe",
+    "local_land": "local_landmark",
+    "codelink": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "max_features": 1000,
+   "simplify": true,
+   "refresh_s": 86400
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.0,
+    41.25,
+    -95.97,
+    41.27
+   ],
+   "features_in_probe": 863
+  }
+ },
+ {
+  "name": "ne-sarpy-zoning",
+  "state": "NE",
+  "title": "Zoning (Sarpy County & its cities)",
+  "title_es": "Zonificación (condado de Sarpy y sus ciudades)",
+  "description": "Zoning districts in Sarpy County, Bellevue, Papillion, La Vista, Gretna and Springfield - what can be built where, with a link to each city's zoning rules.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Sarpy County GIS (geodata.sarpy.gov)",
+  "license": "Sarpy County public GIS service",
+  "view": {
+   "url": "https://geodata.sarpy.gov/arcgis/rest/services/Planning/ZoningDynamic/MapServer/1",
+   "fields": {
+    "SarpyLGT.GIS.ZoningDistrict.ZONECLASS": "zone",
+    "SarpyLGT.GIS.ZoningDistrict.ZONEDESC": "description",
+    "SarpyLGT.GIS.ZoningOrdinanceURL.JurisdictionName": "jurisdiction",
+    "SarpyLGT.GIS.ZoningOrdinanceURL.ZoningOrdURL": "rules",
+    "SarpyLGT.GIS.ZoningDistrict.LASTUPDATE": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "simplify": true,
+   "refresh_s": 86400
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.1,
+    41.13,
+    -96.05,
+    41.16
+   ],
+   "features_in_probe": 77
+  }
+ },
+ {
+  "name": "ne-lincoln-polling-places",
+  "state": "NE",
+  "title": "Polling places (Lincoln / Lancaster County)",
+  "title_es": "Lugares de votación (Lincoln / condado de Lancaster)",
+  "description": "Election-day polling place for each Lancaster County precinct, with which door to use. Confirm your polling place with the Election Commissioner before you vote.",
+  "group": "civic",
+  "category": "point",
+  "source": "Lancaster County Election Commissioner via Lincoln-Lancaster County GIS",
+  "license": "Lincoln/Lancaster County public GIS service",
+  "view": {
+   "url": "https://gis.lincoln.ne.gov/public/rest/services/ElectionCommission/PollingPlaces/MapServer/0",
+   "fields": {
+    "PollingPlaceName": "name",
+    "PollingPlaceAddress": "address",
+    "City": "city",
+    "PrecinctName": "precinct",
+    "LocationSpecifics": "entrance"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "refresh_s": 86400
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.8,
+    40.75,
+    -96.6,
+    40.87
+   ],
+   "features_in_probe": 145
+  }
+ },
+ {
+  "name": "ne-lincoln-snow-routes",
+  "state": "NE",
+  "title": "Snow emergency routes (Lincoln)",
+  "title_es": "Rutas de emergencia por nieve (Lincoln)",
+  "description": "City of Lincoln snow routes - plowed first, and during a snow emergency you can't park on them.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Lincoln Transportation and Utilities - Street Maintenance",
+  "license": "Lincoln/Lancaster County public GIS service",
+  "view": {
+   "url": "https://gis.lincoln.ne.gov/public/rest/services/LTUStreetMaintenance/SnowRoutes/MapServer/0",
+   "fields": {
+    "STREET": "street",
+    "FROM_": "from",
+    "TO_": "to",
+    "ROUTE_TYPE": "kind",
+    "ROUTE_NO": "route"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.8,
+    40.75,
+    -96.6,
+    40.87
+   ],
+   "features_in_probe": 396
+  }
+ },
+ {
+  "name": "nc-evacuation-zones",
+  "state": "NC",
+  "title": "Hurricane evacuation zones (Know Your Zone)",
+  "title_es": "Zonas de evacuación por huracán (Conozca su zona)",
+  "description": "North Carolina's coastal 'Know Your Zone' hurricane evacuation zones. When officials order an evacuation they call it by zone letter, starting with Zone A; find your zone before a storm.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "North Carolina Emergency Management (ReadyNC Know Your Zone)",
+  "license": "NCEM public feature service",
+  "view": {
+   "url": "https://services1.arcgis.com/YBWrN5qiESVpqi92/arcgis/rest/services/NC_Evacuation_Zones/FeatureServer/0",
+   "fields": {
+    "Zone": "kind",
+    "NAME": "county"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -77.0,
+    34.5,
+    -76.0,
+    35.5
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "nc-hurricane-evacuation-routes",
+  "state": "NC",
+  "title": "Hurricane evacuation routes",
+  "title_es": "Rutas de evacuación por huracán",
+  "description": "The highways North Carolina Emergency Management designates for leaving the coast ahead of a hurricane.",
+  "group": "hazards",
+  "category": "roadops",
+  "source": "North Carolina Emergency Management (ReadyNC)",
+  "license": "NCEM public map service",
+  "view": {
+   "url": "https://spartagis.ncem.org/arcgis/rest/services/Public/ReadyNC_EvacuationRoutesZones/MapServer/0",
+   "fields": {
+    "FNAME": "name",
+    "RTTYPTXT1": "route_type",
+    "RTNUM1": "route_number"
+   },
+   "geometry": "line",
+   "min_zoom": 7,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -78.0,
+    34.0,
+    -77.5,
+    34.4
+   ],
+   "features_in_probe": 209
+  }
+ },
+ {
+  "name": "nc-nuclear-evacuation-zones",
+  "state": "NC",
+  "title": "Nuclear plant evacuation zones",
+  "title_es": "Zonas de evacuación de plantas nucleares",
+  "description": "Evacuation zones around North Carolina's nuclear power plants (Brunswick, Harris, McGuire, Catawba). In an emergency, officials tell people which lettered zones should leave or shelter in place.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "North Carolina Emergency Management (ReadyNC)",
+  "license": "NCEM public map service",
+  "view": {
+   "url": "https://spartagis.ncem.org/arcgis/rest/services/Public/ReadyNC_EvacuationRoutesZones/MapServer/1",
+   "fields": {
+    "ZoneName": "kind",
+    "Descript": "description",
+    "Site": "plant_area"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -78.2,
+    33.8,
+    -77.8,
+    34.1
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "nc-stip-projects",
+  "state": "NC",
+  "title": "Funded highway projects (NCDOT STIP 2026-2035)",
+  "title_es": "Proyectos de carreteras financiados (STIP de NCDOT 2026-2035)",
+  "description": "Road, bridge and interchange projects in North Carolina's 10-year transportation plan that have funding, with the planned right-of-way and construction years, estimated cost and current status notes (such as 'under construction').",
+  "group": "roads",
+  "category": "roadops",
+  "source": "North Carolina Department of Transportation (STIP)",
+  "license": "NCDOT public map service",
+  "view": {
+   "url": "https://gis11.services.ncdot.gov/arcgis/rest/services/NCDOT_STIP/MapServer/1",
+   "fields": {
+    "TIP": "number",
+    "Route": "route",
+    "Description": "description",
+    "Category": "category",
+    "Mode": "mode",
+    "RightOfWayYear": "right_of_way_year",
+    "ConstructionYear": "construction_year",
+    "COMMENT": "status",
+    "ProjectCost": "cost",
+    "Counties": "counties"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "where": "ConstructionYear <> 'NOT FUNDED'",
+   "max_features": 1000,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -78.8,
+    35.6,
+    -78.4,
+    36.0
+   ],
+   "features_in_probe": 133
+  }
+ },
+ {
+  "name": "nc-bridge-projects",
+  "state": "NC",
+  "title": "Bridge replacement & repair projects (NCDOT)",
+  "title_es": "Proyectos de reemplazo y reparación de puentes (NCDOT)",
+  "description": "NCDOT bridge and culvert projects outside the big STIP program that are planned or under way: which bridge, what work, when it is let to contract, when work began and the expected finish.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "North Carolina Department of Transportation (Project Management, non-STIP structure projects)",
+  "license": "NCDOT public feature service",
+  "view": {
+   "url": "https://services.arcgis.com/NuWFvHYDMVmmxMeM/arcgis/rest/services/PNM_Non_STIP_Structure_Projects/FeatureServer/0",
+   "fields": {
+    "PROJECT_ID": "number",
+    "DESCRIPTION": "description",
+    "TYPE_OF_WORK": "kind",
+    "STRUCTURE_NUMBER": "bridge_number",
+    "COUNTY_DESCRIPTION": "county",
+    "LETTING_DATE": "letting",
+    "WORK_BEGAN": "start",
+    "COMPLETION_DATE": "end",
+    "ACTUAL_PROGRESS": "progress"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "COMPLETION_DATE IS NULL OR COMPLETION_DATE > CURRENT_TIMESTAMP",
+   "refresh_s": 86400
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.2,
+    35.4,
+    -79.4,
+    35.9
+   ],
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "nc-municipal-boundaries",
+  "state": "NC",
+  "title": "City & town limits and ETJs (NC OneMap)",
+  "title_es": "Límites de ciudades y pueblos y ETJ (NC OneMap)",
+  "description": "North Carolina's official city and town boundaries, plus each town's extraterritorial jurisdiction (ETJ) - land outside town limits where the town still controls zoning. Kept current with annexations.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "NC OneMap / NC Center for Geographic Information and Analysis (municipal boundaries)",
+  "license": "NC OneMap public feature service",
+  "view": {
+   "url": "https://services5.arcgis.com/mSDBiLWaIfH92NqI/arcgis/rest/services/North_Carolina_Municipalities/FeatureServer/0",
+   "fields": {
+    "MunicipalName": "name",
+    "CensusType": "kind",
+    "County": "county",
+    "Incorporation": "incorporated",
+    "LastUpdate": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -78.8,
+    35.6,
+    -78.4,
+    36.0
+   ],
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "nc-wake-polling-places",
+  "state": "NC",
+  "title": "Election Day polling places (Wake County)",
+  "title_es": "Lugares de votación el día de la elección (condado de Wake)",
+  "description": "Where each Wake County precinct votes on Election Day (Raleigh, Cary, Apex and the rest of the county). Early voting sites differ; check the Board of Elections before you go.",
+  "group": "civic",
+  "category": "point",
+  "source": "Wake County Board of Elections / Wake County GIS",
+  "license": "Wake County public feature service",
+  "view": {
+   "url": "https://maps.wake.gov/arcgis/rest/services/Electoral/PollingPlaces/FeatureServer/0",
+   "fields": {
+    "POLL_PL": "name",
+    "PRECINCT": "precinct",
+    "ST_NUMBER": "street_number",
+    "ST_NAME": "street",
+    "CITY": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "refresh_s": 86400
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -78.8,
+    35.7,
+    -78.5,
+    35.9
+   ],
+   "features_in_probe": 114
+  }
+ },
+ {
+  "name": "nc-mecklenburg-polling-places",
+  "state": "NC",
+  "title": "Election Day polling places (Mecklenburg County)",
+  "title_es": "Lugares de votación el día de la elección (condado de Mecklenburg)",
+  "description": "Where each Mecklenburg County precinct (Charlotte and nearby towns) votes on Election Day, with the room inside the building. Early voting sites differ; check the Board of Elections before you go.",
+  "group": "civic",
+  "category": "point",
+  "source": "Mecklenburg County Board of Elections / Mecklenburg County GIS",
+  "license": "Mecklenburg County public feature service",
+  "view": {
+   "url": "https://meckgis.mecklenburgcountync.gov/server/rest/services/VoterPollingLocations/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "precno": "precinct",
+    "address": "address",
+    "city": "city",
+    "location": "room",
+    "type": "access"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "refresh_s": 86400
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.95,
+    35.1,
+    -80.7,
+    35.35
+   ],
+   "features_in_probe": 140
+  }
+ },
+ {
+  "name": "nc-charlotte-trash-days",
+  "state": "NC",
+  "title": "Trash, recycling & yard waste days (Charlotte)",
+  "title_es": "Días de basura, reciclaje y desechos de jardín (Charlotte)",
+  "description": "City of Charlotte collection routes: which weekday garbage, recycling (and which color week), yard waste and bulky items are picked up. Areas overlap - tap a spot to see every service there.",
+  "group": "civic",
+  "category": "info",
+  "source": "City of Charlotte Solid Waste Services",
+  "license": "City of Charlotte public feature service",
+  "view": {
+   "url": "https://services.arcgis.com/9Nl857LBlQVyzq54/arcgis/rest/services/Solid_Waste_Collection/FeatureServer/0",
+   "fields": {
+    "WORK_ZONE": "kind",
+    "WORK_DAY": "day",
+    "ROUTE_NOTE": "note",
+    "SERVED_BY": "served_by"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.9,
+    35.15,
+    -80.75,
+    35.3
+   ],
+   "features_in_probe": 376
+  }
+ },
+ {
+  "name": "nc-durham-trash-days",
+  "state": "NC",
+  "title": "Trash, recycling & yard waste days (Durham)",
+  "title_es": "Días de basura, reciclaje y desechos de jardín (Durham)",
+  "description": "City of Durham pickup schedule by area: garbage day, which recycling week, and when to set out yard waste and bulky items.",
+  "group": "civic",
+  "category": "info",
+  "source": "City of Durham Solid Waste Management / Durham City-County GIS",
+  "license": "Durham public feature service",
+  "view": {
+   "url": "https://services2.arcgis.com/G5vR3cOjh6g2Ed8E/arcgis/rest/services/Administrative/FeatureServer/6",
+   "fields": {
+    "SW_DAY": "garbage",
+    "REC_DAY": "recycling",
+    "WEEKTEXT": "recycling_week",
+    "YW_DAY": "yard_waste",
+    "YW_BULKY": "bulky",
+    "LOCALGOV": "served_by"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -79.0,
+    35.9,
+    -78.8,
+    36.1
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "nc-raleigh-zoning",
+  "state": "NC",
+  "title": "Zoning (Raleigh)",
+  "title_es": "Zonificación (Raleigh)",
+  "description": "City of Raleigh zoning districts under the Unified Development Ordinance: the district, height limit, frontage, whether it has rezoning conditions, and the rezoning case.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Raleigh Planning and Development",
+  "license": "City of Raleigh public map service",
+  "view": {
+   "url": "https://maps.raleighnc.gov/arcgis/rest/services/Planning/Zoning/MapServer/0",
+   "fields": {
+    "ZONING": "zoning",
+    "ZONE_TYPE_DECODE": "district",
+    "HEIGHT": "height_stories",
+    "FRONTAGE_DECODE": "frontage",
+    "CONDITIONAL": "conditional",
+    "ZONE_CASE": "case",
+    "EFF_DATE": "effective",
+    "COND_LINK": "conditions_link"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -78.65,
+    35.77,
+    -78.62,
+    35.79
+   ],
+   "features_in_probe": 339
+  }
+ },
+ {
+  "name": "nc-durham-zoning",
+  "state": "NC",
+  "title": "Zoning (Durham city & county)",
+  "title_es": "Zonificación (ciudad y condado de Durham)",
+  "description": "Zoning districts for the City and County of Durham under the Unified Development Ordinance, with the rezoning case number and acreage.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Durham City-County Planning Department",
+  "license": "Durham public feature service",
+  "view": {
+   "url": "https://services2.arcgis.com/G5vR3cOjh6g2Ed8E/arcgis/rest/services/Planning/FeatureServer/12",
+   "fields": {
+    "ZONE_CODE": "zoning",
+    "UDO_LEGEND": "district",
+    "ZONE_GEN": "general",
+    "CASE_NO": "case",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -78.92,
+    35.98,
+    -78.88,
+    36.01
+   ],
+   "features_in_probe": 254
+  }
+ },
+ {
+  "name": "nc-wake-parks-open-space",
+  "state": "NC",
+  "title": "Parks, greenways & open space (Wake County)",
+  "title_es": "Parques, greenways y espacios abiertos (condado de Wake)",
+  "description": "Public parks, greenway corridors, game lands and protected open space across Wake County and its towns, with acreage and which government it belongs to.",
+  "group": "nature",
+  "category": "park",
+  "source": "Wake County GIS (open space inventory)",
+  "license": "Wake County public map service",
+  "view": {
+   "url": "https://maps.wake.gov/arcgis/rest/services/OpenSpace/OpenSpace/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "JURISDICTION": "jurisdiction",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "TYPE IN ('PARK','GREENWAY','OPEN SPACE','GAMELAND')",
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -78.75,
+    35.7,
+    -78.55,
+    35.9
+   ],
+   "features_in_probe": 527
+  }
+ },
+ {
+  "name": "nc-groundwater-wells",
+  "state": "NC",
+  "title": "Groundwater monitoring wells (NC DWR)",
+  "title_es": "Pozos de monitoreo de agua subterránea (NC DWR)",
+  "description": "The state's network of groundwater monitoring wells: which aquifer each taps, how deep it is, and a link to its water-level history.",
+  "group": "infra",
+  "category": "point",
+  "source": "NC Department of Environmental Quality, Division of Water Resources (groundwater monitoring network)",
+  "license": "NCDEQ public feature service",
+  "view": {
+   "url": "https://services2.arcgis.com/kCu40SDxsCGcuUWO/arcgis/rest/services/dwractivewells_wl/FeatureServer/0",
+   "fields": {
+    "Quad": "station",
+    "County": "county",
+    "Aquifer": "aquifer",
+    "River_Basin": "river_basin",
+    "Depth__ft_": "depth_ft",
+    "Screened_Interval__ft_bgs_": "screened_ft",
+    "Date_Constructed": "built",
+    "active": "status",
+    "Water_Levels": "water_levels_link"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -77.5,
+    35.0,
+    -76.5,
+    36.0
+   ],
+   "features_in_probe": 249
+  }
+ },
+ {
+  "name": "nc-charlotte-child-care-centers",
+  "state": "NC",
+  "title": "Licensed child care centers (Mecklenburg County)",
+  "title_es": "Centros de cuidado infantil con licencia (condado de Mecklenburg)",
+  "description": "Licensed child care centers and summer day camps in Charlotte and Mecklenburg County, with the state star-rated license type and whether they accept child care subsidy. Family child care homes are left out.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Charlotte Planning (from NC DHHS Division of Child Development and Early Education licenses)",
+  "license": "City of Charlotte public map service",
+  "view": {
+   "url": "https://gis.charlottenc.gov/arcgis/rest/services/PLN/DayCare/MapServer/0",
+   "fields": {
+    "FacilityName": "name",
+    "ADDRESS": "address",
+    "City": "city",
+    "Zip": "zip",
+    "PHONE": "phone",
+    "LicenseType": "license",
+    "StatePermitNumber": "license_number",
+    "SubsidyApproved": "subsidy"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "LicenseType IN ('Center','Five Star Center License','Four Star Center License','Three Star Center License','GS 110-106','Summer Day Camp License')",
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.95,
+    35.1,
+    -80.7,
+    35.35
+   ],
+   "features_in_probe": 352
+  }
+ },
+ {
+  "name": "la-evacuation-routes",
+  "state": "LA",
+  "title": "Hurricane evacuation routes (DOTD)",
+  "title_es": "Rutas de evacuación por huracán (DOTD)",
+  "description": "Highways Louisiana DOTD designates as evacuation routes. Type 1 are the main interstate routes out; type 2 are the connecting state and U.S. highways that feed them.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Louisiana Department of Transportation and Development (Roads and Highways open data)",
+  "license": "LADOTD open data (public)",
+  "view": {
+   "url": "https://gis.dotd.la.gov/road/rest/services/Roads_and_Highways_OpenData/MapServer/60",
+   "fields": {
+    "RouteID": "route",
+    "EvacuationRouteType": "kind",
+    "DataYear": "year"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "ToDate IS NULL",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.3,
+    29.8,
+    -89.8,
+    30.7
+   ],
+   "features_in_probe": 376
+  }
+ },
+ {
+  "name": "la-hurricane-evacuation-phases",
+  "state": "LA",
+  "title": "Hurricane evacuation phases (GOHSEP)",
+  "title_es": "Fases de evacuación por huracán (GOHSEP)",
+  "description": "Louisiana's staged hurricane evacuation areas. Phase I (coast, outside the levees) leaves about 50 hours before tropical-storm winds, Phase II about 40 hours, Phase III (New Orleans and Baton Rouge areas) about 30 hours. Always follow your parish's official order.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Governor's Office of Homeland Security and Emergency Preparedness (GOHSEP), Louisiana Citizen Awareness & Disaster Evacuation Guide",
+  "license": "Public; GOHSEP",
+  "view": {
+   "url": "https://services1.arcgis.com/fXHQyq63u0UsTeSM/arcgis/rest/services/Hurricane_Evacuation_Phases_GOHSEP_2016A/FeatureServer/1",
+   "fields": {
+    "Phase": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "max_features": 100,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.5,
+    29.3,
+    -89.5,
+    30.6
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "la-fish-advisories",
+  "state": "LA",
+  "title": "Fish consumption & swimming advisories (LDEQ)",
+  "title_es": "Advertencias sobre consumo de pescado y baño (LDEQ)",
+  "description": "Waters where the state advises limiting or avoiding eating fish or shellfish (mercury, PCBs, dioxin and more), and sometimes swimming, with what to avoid and how many meals are safe.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Louisiana Department of Environmental Quality and Louisiana Department of Health",
+  "license": "Public; LDEQ",
+  "view": {
+   "url": "https://services1.arcgis.com/9rICeNyq0Isx42vD/arcgis/rest/services/Fish_Advisories_Polygons_2026_(Public_View)_/FeatureServer/0",
+   "fields": {
+    "Waterbody_": "name",
+    "Advisory_T": "kind",
+    "Causative_": "pollutant",
+    "AdvisoryRec": "advice",
+    "Area_Descr": "area",
+    "Parishes": "parish",
+    "Date_Estab": "issued"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "max_features": 500,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -94.0,
+    29.0,
+    -89.0,
+    33.0
+   ],
+   "features_in_probe": 61
+  }
+ },
+ {
+  "name": "la-freshwater-artificial-reefs",
+  "state": "LA",
+  "title": "Freshwater fishing reefs (LDWF)",
+  "title_es": "Arrecifes artificiales de agua dulce para pesca (LDWF)",
+  "description": "Brush piles, pallets and other fish-attracting structures the Louisiana Department of Wildlife and Fisheries placed in lakes, with depth and the fish they hold (often crappie and catfish).",
+  "group": "nature",
+  "category": "point",
+  "source": "Louisiana Department of Wildlife and Fisheries (LDWF)",
+  "license": "Public; LDWF",
+  "view": {
+   "url": "https://services1.arcgis.com/6euNCaGPCgCzgAVF/arcgis/rest/services/FreshwaterArtificialReefs10092026/FeatureServer/0",
+   "fields": {
+    "Reef_Name": "name",
+    "Waterbody": "waterbody",
+    "Target_Species": "species",
+    "Depth": "depth",
+    "Description": "description",
+    "Deployment": "deployed",
+    "Permanent__Y_N_": "permanent"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -94.0,
+    29.9,
+    -90.0,
+    33.0
+   ],
+   "features_in_probe": 209
+  }
+ },
+ {
+  "name": "la-scenic-rivers",
+  "state": "LA",
+  "title": "Natural and Scenic Rivers (LDWF)",
+  "title_es": "Ríos naturales y escénicos (LDWF)",
+  "description": "Streams protected under the Louisiana Natural and Scenic Rivers System, where channel changes, clearing and some construction need a state permit.",
+  "group": "nature",
+  "category": "park",
+  "source": "Louisiana Department of Wildlife and Fisheries (LDWF) Scenic Rivers Program",
+  "license": "Public; LDWF",
+  "view": {
+   "url": "https://services1.arcgis.com/6euNCaGPCgCzgAVF/arcgis/rest/services/Scenic_Rivers/FeatureServer/0",
+   "fields": {
+    "NAME_1": "name",
+    "PARISHES_1": "parish",
+    "Description_1": "description",
+    "Website_1": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 7,
+   "max_features": 500,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.0,
+    30.2,
+    -89.6,
+    31.1
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "la-stocked-fishing-ponds",
+  "state": "LA",
+  "title": "Stocked fishing spots (LDWF)",
+  "title_es": "Lugares de pesca con peces sembrados (LDWF)",
+  "description": "Ponds, lakes and spillways the state stocks with fish, with what was stocked, other fish there, hours, cost to fish and amenities.",
+  "group": "nature",
+  "category": "point",
+  "source": "Louisiana Department of Wildlife and Fisheries (LDWF)",
+  "license": "Public; LDWF",
+  "view": {
+   "url": "https://services1.arcgis.com/6euNCaGPCgCzgAVF/arcgis/rest/services/Stocked_Ponds/FeatureServer/0",
+   "fields": {
+    "Site_Name": "name",
+    "City": "city",
+    "Stocked_Fi": "species",
+    "Other_Avai": "other_fish",
+    "Hours": "hours",
+    "Access___5": "access",
+    "Amenities_": "amenities",
+    "Website": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "max_features": 500,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -94.0,
+    29.0,
+    -89.0,
+    33.0
+   ],
+   "features_in_probe": 74
+  }
+ },
+ {
+  "name": "la-nola-parcels",
+  "state": "LA",
+  "title": "Property parcels (New Orleans)",
+  "title_es": "Parcelas de propiedad (Nueva Orleans)",
+  "description": "Orleans Parish tax parcels with the assessor's parcel number (GEOPIN) and size in acres (no owner data).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of New Orleans Enterprise GIS / Orleans Parish Assessor",
+  "license": "Public government data; credit City of New Orleans",
+  "view": {
+   "url": "https://maps.nola.gov/server/rest/services/Assessor/Landbase_Layers/MapServer/0",
+   "fields": {
+    "GEOPIN": "parcel_id",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.075,
+    29.955,
+    -90.07,
+    29.96
+   ],
+   "features_in_probe": 120
+  }
+ },
+ {
+  "name": "la-nola-road-closures",
+  "state": "LA",
+  "title": "Street closures (New Orleans)",
+  "title_es": "Cierres de calles (Nueva Orleans)",
+  "description": "Current New Orleans street closures from the city's roadwork program: which street, why, which lanes, and when it should reopen.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of New Orleans Department of Public Works",
+  "license": "Public government data; credit City of New Orleans",
+  "view": {
+   "url": "https://services.arcgis.com/VhMjCzR3cIjEkh7L/arcgis/rest/services/RoadClosures_public_d64b604e4bd2425eb4652a3e77ad8a34/FeatureServer/1",
+   "fields": {
+    "street": "name",
+    "ClosureType": "kind",
+    "reason": "reason",
+    "laneimpact": "lanes",
+    "direction": "direction",
+    "description": "description",
+    "altroute": "detour",
+    "starttime": "start",
+    "endtime": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "endtime IS NULL OR endtime > CURRENT_TIMESTAMP",
+   "max_features": 1000,
+   "simplify": true,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.2,
+    29.88,
+    -89.9,
+    30.07
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "la-nola-infrastructure-projects",
+  "state": "LA",
+  "title": "Street & utility construction projects (New Orleans)",
+  "title_es": "Obras de calles y servicios públicos (Nueva Orleans)",
+  "description": "Planned and active street, drainage and utility projects in New Orleans from the city's infrastructure coordination map: who is doing the work, what it is, status and dates.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of New Orleans Infrastructure Coordination (Department of Public Works)",
+  "license": "Public government data; credit City of New Orleans",
+  "view": {
+   "url": "https://services.arcgis.com/VhMjCzR3cIjEkh7L/arcgis/rest/services/ICC_Project_Corridors_Public_View/FeatureServer/10",
+   "fields": {
+    "ProjectName": "name",
+    "ManagingEntity": "agency",
+    "ProjectDescription": "description",
+    "ProjetCategory": "kind",
+    "ProjectStatus": "status",
+    "StartTime": "start",
+    "EndTime": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "EndTime IS NULL OR EndTime > CURRENT_TIMESTAMP",
+   "max_features": 1000,
+   "simplify": true,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.2,
+    29.88,
+    -89.9,
+    30.07
+   ],
+   "features_in_probe": 58
+  }
+ },
+ {
+  "name": "la-ebr-polling-places",
+  "state": "LA",
+  "title": "Polling places (East Baton Rouge)",
+  "title_es": "Lugares de votación (East Baton Rouge)",
+  "description": "Election-day polling place for each East Baton Rouge Parish precinct.",
+  "group": "civic",
+  "category": "point",
+  "source": "East Baton Rouge City-Parish (EBRGIS) / Registrar of Voters",
+  "license": "Public government data; credit EBRGIS",
+  "view": {
+   "url": "https://maps.brla.gov/gis/rest/services/Infrastructure/Polling_Place/MapServer/0",
+   "fields": {
+    "LOCATION": "name",
+    "FULL_ADDRESS": "address",
+    "CITY": "city",
+    "PRECINCT": "precinct"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "max_features": 1000,
+   "simplify": false
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.3,
+    30.3,
+    -90.9,
+    30.7
+   ],
+   "features_in_probe": 140
+  }
+ },
+ {
+  "name": "la-ebr-brec-parks",
+  "state": "LA",
+  "title": "BREC parks (East Baton Rouge)",
+  "title_es": "Parques BREC (East Baton Rouge)",
+  "description": "Parks run by BREC, the East Baton Rouge recreation and parks commission, with size and what each has: playground, pool, splash pad, dog park, trails, fishing, courts and more.",
+  "group": "nature",
+  "category": "park",
+  "source": "Recreation and Park Commission for the Parish of East Baton Rouge (BREC) via EBRGIS",
+  "license": "Public government data; credit EBRGIS",
+  "view": {
+   "url": "https://maps.brla.gov/gis/rest/services/Infrastructure/BREC_Park/MapServer/0",
+   "fields": {
+    "FACILITY_NAME": "name",
+    "CLASSIFICATION": "kind",
+    "FULL_ADDRESS": "address",
+    "ACREAGE": "acres",
+    "PLAYGROUND": "playground",
+    "SWIMMING_POOL": "pool",
+    "SPLASH_PAD": "splash_pad",
+    "DOG_PARK": "dog_park",
+    "RECREATION_CENTER": "rec_center",
+    "WALKING_LOOP_OUTDOOR": "walking_loop",
+    "NATURE_TRAILS": "nature_trails",
+    "FISHING_ACCESS": "fishing",
+    "CANOE_KAYAK_LAUNCH": "kayak_launch",
+    "PAVILION": "pavilion",
+    "BASKETBALL_OUTDOOR": "basketball",
+    "TENNIS_COURTS": "tennis",
+    "SOCCER_FIELD": "soccer",
+    "SKATE_PARK": "skate_park",
+    "DISC_GOLF": "disc_golf"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "max_features": 1000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.3,
+    30.3,
+    -90.9,
+    30.7
+   ],
+   "features_in_probe": 176
+  }
+ },
+ {
+  "name": "la-ebr-garbage-days",
+  "state": "LA",
+  "title": "Garbage pickup days (East Baton Rouge)",
+  "title_es": "Días de recolección de basura (East Baton Rouge)",
+  "description": "Which days household garbage is collected in each East Baton Rouge Parish service area.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "East Baton Rouge City-Parish Environmental Services (EBRGIS)",
+  "license": "Public government data; credit EBRGIS",
+  "view": {
+   "url": "https://maps.brla.gov/gis/rest/services/Governmental_Units/Garbage_Service/MapServer/0",
+   "fields": {
+    "SERVICEDAY": "trash_day",
+    "SERVICEAREA": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "max_features": 500,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.3,
+    30.3,
+    -90.9,
+    30.7
+   ],
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "la-ebr-road-closures",
+  "state": "LA",
+  "title": "Road & bridge closures (East Baton Rouge)",
+  "title_es": "Cierres de calles y puentes (East Baton Rouge)",
+  "description": "Current East Baton Rouge Parish road and bridge closures for construction and repairs, with cross streets, detours and expected end date.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "East Baton Rouge City-Parish Department of Transportation and Drainage (EBRGIS)",
+  "license": "Public government data; credit EBRGIS",
+  "view": {
+   "url": "https://maps.brla.gov/gis/rest/services/Transportation/Road_Closures/MapServer/0",
+   "fields": {
+    "STREET": "name",
+    "TYPE": "kind",
+    "DESCRIPTION": "description",
+    "FROM_CROSS_STREET": "from_street",
+    "END_CROSS_STREET": "to_street",
+    "FULL_CLOSURE": "closure",
+    "DIRECTION": "direction",
+    "SEVERITY": "severity",
+    "ALT_ROUTE": "detour",
+    "AGENCY": "agency",
+    "CITY": "city",
+    "SIDEWALK": "sidewalk_closed",
+    "START_DATE": "start",
+    "END_DATE": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "END_DATE IS NULL OR END_DATE > CURRENT_TIMESTAMP",
+   "max_features": 1000,
+   "simplify": true,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.3,
+    30.3,
+    -90.9,
+    30.7
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "la-shreveport-caddo-zoning",
+  "state": "LA",
+  "title": "Zoning by parcel (Shreveport & Caddo Parish)",
+  "title_es": "Zonificación por parcela (Shreveport y Caddo Parish)",
+  "description": "Official zoning district for every parcel in Shreveport and unincorporated Caddo Parish, with the previous district and a link to what uses each district allows.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Shreveport-Caddo Metropolitan Planning Commission (City of Shreveport GIS)",
+  "license": "Public government data; credit Shreveport-Caddo MPC",
+  "view": {
+   "url": "https://services3.arcgis.com/cEsSI6IR59h5UGE4/arcgis/rest/services/MPC_Zoning06022026_view/FeatureServer/32",
+   "fields": {
+    "GEOGNO": "parcel_id",
+    "TWNTAX": "city",
+    "BASE_ZONE": "zoning",
+    "PRV_ZONE": "previous_zoning",
+    "ShreveUses": "uses_city",
+    "CaddoUses": "uses_parish"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -93.76,
+    32.49,
+    -93.755,
+    32.495
+   ],
+   "features_in_probe": 51
+  }
+ },
+ {
+  "name": "la-ebr-fire-districts",
+  "state": "LA",
+  "title": "Fire districts (East Baton Rouge)",
+  "title_es": "Distritos de bomberos (East Baton Rouge)",
+  "description": "Which fire department covers each part of East Baton Rouge Parish, including areas with no fire district.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Baton Rouge / Parish of East Baton Rouge (EBRGIS)",
+  "view": {
+   "url": "https://maps.brla.gov/gis/rest/services/Governmental_Units/Fire_District/MapServer/0",
+   "fields": {
+    "FIRE_DISTRICT_DESC": "name",
+    "FIRE_DISTRICT_NO": "number"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "simplify": true,
+   "refresh_s": 604800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -91.3,
+    30.3,
+    -90.9,
+    30.7
+   ],
+   "features_in_probe": 13
+  }
+ }
+]
