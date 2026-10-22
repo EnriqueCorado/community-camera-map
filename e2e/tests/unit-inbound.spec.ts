@@ -78,7 +78,8 @@ test.describe("signature", () => {
 test("addresses: the plain address, or nothing", () => {
   expect(address("María López <maria@example.net>")).toBe("maria@example.net");
   expect(address("maria@example.net")).toBe("maria@example.net");
-  for (const bad of ["", "maria", "a@b", "a b@c.org", "x@y.org\r\nBcc: z@w.org", 42, null]) expect(address(bad), String(bad)).toBeNull();
+  for (const bad of ["", "maria", "a@b", "a b@c.org", "x@y.org\r\nBcc: z@w.org", "gro.elgoog\u202e@evil.com", "ma\u200bria@example.net", "ñ@example.net", 42, null])
+    expect(address(bad), JSON.stringify(bad)).toBeNull();
 });
 
 test("needs every setting, or it does nothing", async () => {
@@ -110,7 +111,7 @@ test("a signed notice forwards the email once, Reply-To the sender, nothing logg
   expect(sent.from).toBe(CONFIG.forwardFrom);
   expect(sent.to).toEqual(["volunteer@example.org"]);
   expect(sent.reply_to).toBe("maria@example.net");
-  expect(sent.subject).toBe("Fwd: Correction: Free tax help (checked October 22, 2026)");
+  expect(sent.subject).toBe("Fwd from maria@example.net: Correction: Free tax help (checked October 22, 2026)");
   expect(sent.headers).toEqual({ "Auto-Submitted": "auto-forwarded" });
   expect(sent.text).toContain("The VITA site moved.");
   expect(sent.text).toContain("Sender address: maria@example.net");
@@ -140,7 +141,7 @@ test("never forwards its own forwards, cleans the subject, and makes Resend retr
   const odd = fakeResend({ ...MAIL, from: "not an address", subject: "Hi\r\nBcc: x@y.org\u202e", html: undefined, attachments: [{ id: "a" }] });
   await createInbound(CONFIG, odd.impl, () => NOW)(notice(received()));
   const sent = JSON.parse(String(odd.calls[1]!.init!.body));
-  expect(sent.subject).toBe("Fwd: Hi Bcc: x@y.org");
+  expect(sent.subject).toBe("[UNVERIFIED SENDER] Fwd from unknown sender: Hi Bcc: x@y.org");
   expect(sent.reply_to).toBeUndefined();
   expect(sent.html).toBeUndefined();
   expect(sent.text).toContain("1 attachment(s) not forwarded");
@@ -176,7 +177,7 @@ test("a sender their domain doesn't vouch for is marked, sent as text only, with
     const spoof = fakeResend({ ...MAIL, from: "USCIS <alerts@uscis.gov>", html: "<style>p{display:none}</style><p>Click here</p>", authentication });
     expect((await createInbound(CONFIG, spoof.impl, () => NOW)(notice(received()))).status).toBe(204);
     const sent = lastSent(spoof.calls);
-    expect(sent.subject.startsWith("[UNVERIFIED SENDER] Fwd: "), JSON.stringify(authentication)).toBe(true);
+    expect(sent.subject, JSON.stringify(authentication)).toBe("[UNVERIFIED SENDER] Fwd from alerts@uscis.gov: Correction: Free tax help (checked October 22, 2026)");
     expect(sent.reply_to).toBeUndefined();
     expect(sent.html).toBeUndefined();
     expect(sent.text).toContain("UNVERIFIED SENDER");
@@ -201,4 +202,15 @@ test("auto-replies and mail for other addresses aren't forwarded", async () => {
   const ours = fakeResend({ ...MAIL, to: ["Sales <sales@example.com>"], cc: ["Corrections@Example.com"] });
   await createInbound(only, ours.impl, () => NOW)(notice(received()));
   expect(ours.calls).toHaveLength(2);
+});
+
+test("a From with more than one address is never trusted, even with DMARC pass", async () => {
+  for (const from of ['"help@stancounty.com" <evil@x.org>', "evil@x.org, maria@example.net", "Maria <maria@example.net>, <evil@x.org>"]) {
+    const two = fakeResend({ ...MAIL, from });
+    await createInbound(CONFIG, two.impl, () => NOW)(notice(received()));
+    const sent = lastSent(two.calls);
+    expect(sent.subject.startsWith("[UNVERIFIED SENDER] "), from).toBe(true);
+    expect(sent.reply_to, from).toBeUndefined();
+    expect(sent.html, from).toBeUndefined();
+  }
 });

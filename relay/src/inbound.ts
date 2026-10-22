@@ -87,7 +87,8 @@ export function address(s: unknown): string | null {
   if (typeof s !== "string") return null;
   const m = /<([^<>\s]+)>\s*$/.exec(s);
   const a = (m ? m[1]! : s).trim();
-  return /^[^\s@<>"',;]{1,64}@[A-Za-z0-9.-]{1,253}\.[A-Za-z]{2,}$/.test(a) ? a : null;
+  // Plain ASCII only (RFC 5322 atext): no invisible or direction-changing characters.
+  return /^[A-Za-z0-9!#$%&*+/=?^_`{|}~.-]{1,64}@[A-Za-z0-9.-]{1,253}\.[A-Za-z]{2,}$/.test(a) ? a : null;
 }
 
 /** One line, without control or invisible formatting characters (bidi overrides
@@ -126,8 +127,12 @@ export function isAutomatic(headers: unknown): boolean {
   );
 }
 
-/** Did the sender's domain vouch for the From address (DMARC pass)? */
-export const verifiedSender = (auth: Received["authentication"]) => auth?.dmarc === "pass";
+/** Did the sender's domain vouch for the From address? DMARC checks the From
+ *  header's domain, so it only means something when From holds exactly one
+ *  mailbox (one "@", no list): otherwise the check and the address shown could
+ *  be about different domains. */
+export const verifiedSender = (from: unknown, auth: Received["authentication"]) =>
+  auth?.dmarc === "pass" && typeof from === "string" && (from.match(/@/g) ?? []).length === 1 && !from.includes(",") && address(from) !== null;
 
 export function createInbound(config: InboundConfig | null, fetchImpl: typeof fetch = fetch, now: () => number = Date.now) {
   const empty = (status: number) => new Response(null, { status, headers: { "Cache-Control": "no-store" } });
@@ -170,11 +175,11 @@ export function createInbound(config: InboundConfig | null, fetchImpl: typeof fe
         const rcpts = [...list(mail.to), ...list(mail.cc), ...list(mail.received_for)].map((a) => address(a)?.toLowerCase());
         if (!rcpts.some((a) => a && config.forwardFor!.includes(a))) return empty(204);
       }
-      const trusted = verifiedSender(mail.authentication);
+      const trusted = verifiedSender(mail.from, mail.authentication);
       const auth = mail.authentication ?? {};
       const checks = `SPF ${String(auth.spf ?? "unknown")}, DKIM ${String(auth.dkim ?? "unknown")}, DMARC ${String(auth.dmarc ?? "unknown")}`;
 
-      const to = (Array.isArray(mail.to) ? mail.to : [mail.to]).map(address).filter(Boolean).join(", ") || "the site";
+      const to = list(mail.to).map(address).filter(Boolean).join(", ") || "the site";
       const files = Array.isArray(mail.attachments) ? mail.attachments.length : 0;
       const note =
         `Forwarded from ${to}. Sender address: ${sender ?? "unknown"} (name shown: "${typeof mail.from === "string" ? oneLine(mail.from).slice(0, 120) : ""}"). ${checks}.` +
@@ -197,7 +202,9 @@ export function createInbound(config: InboundConfig | null, fetchImpl: typeof fe
             from: config.forwardFrom,
             to: [config.forwardTo],
             ...(replyTo ? { reply_to: replyTo } : {}),
-            subject: `${trusted ? "" : "[UNVERIFIED SENDER] "}Fwd: ${subject}`,
+            // Who sent it and whether that's verified go in the subject: the one
+            // place the forwarded HTML can't restyle.
+            subject: `${trusted ? "" : "[UNVERIFIED SENDER] "}Fwd from ${sender ?? "unknown sender"}: ${subject}`,
             // RFC 3834: our copy is automatic, so auto-responders won't answer it.
             headers: { "Auto-Submitted": "auto-forwarded" },
             text: `${note}\n\n${text || (html ? "(This message has only an HTML version; open it in Resend to see it.)" : "(empty message)")}`,
