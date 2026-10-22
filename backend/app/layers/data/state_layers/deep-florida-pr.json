@@ -1,0 +1,5688 @@
+[
+ {
+  "name": "fl-miami-dade-zoning",
+  "state": "FL",
+  "title": "Zoning (unincorporated Miami-Dade)",
+  "title_es": "Zonificación (zonas no incorporadas de Miami-Dade)",
+  "description": "County zoning for the parts of Miami-Dade outside any city: the zone code and what it allows (homes, business, industry, agriculture). Inside a city, see the municipal zoning layer.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Miami-Dade County (Open Data Hub) - Regulatory and Economic Resources",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/ZonepolyU_gdb/FeatureServer/0",
+   "fields": {
+    "ZONE": "zoning",
+    "ZONE_DESC": "description",
+    "OVLY": "overlay"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 1543
+  }
+ },
+ {
+  "name": "fl-miami-dade-municipal-zoning",
+  "state": "FL",
+  "title": "Zoning (cities in Miami-Dade)",
+  "title_es": "Zonificación (municipios de Miami-Dade)",
+  "description": "Zoning inside Miami-Dade's cities and towns as reported to the County: the city, zone code, description, density, minimum lot size and height limit.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Miami-Dade County (Open Data Hub)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/MunicipalZone_gdb/FeatureServer/0",
+   "fields": {
+    "MUNICNAME": "city",
+    "ZONE": "zoning",
+    "ZONEDESC": "description",
+    "DENSITY": "density_units_acre",
+    "MINLOTSIZE": "min_lot_sqft",
+    "MAXHEIGHT": "max_height_stories",
+    "GENRLLUTYPE": "general_use"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-miami-dade-future-land-use",
+  "state": "FL",
+  "title": "Future land use plan (Miami-Dade)",
+  "title_es": "Plan de uso futuro del suelo (Miami-Dade)",
+  "description": "The County's Comprehensive Development Master Plan map: what each area is planned to become (homes at what density, business, industry, parks, agriculture).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Miami-Dade County (Open Data Hub)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/Landuse_gdb/FeatureServer/0",
+   "fields": {
+    "DESCRIPTION": "land_use",
+    "ACREAGE": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 983
+  }
+ },
+ {
+  "name": "fl-miami-dade-commission-districts",
+  "state": "FL",
+  "title": "County commission districts (Miami-Dade)",
+  "title_es": "Distritos de la Comisión del Condado (Miami-Dade)",
+  "description": "The 13 Miami-Dade County Commission districts: find which district you live in to know who represents you on the County Commission.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Miami-Dade County (Open Data Hub)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/CommissionDistrict_gdb/FeatureServer/0",
+   "fields": {
+    "ID": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "fl-miami-dade-elementary-school-zones",
+  "state": "FL",
+  "title": "Elementary school attendance zones (Miami-Dade)",
+  "title_es": "Zonas de asistencia escolar primaria (Miami-Dade)",
+  "description": "Miami-Dade County Public Schools elementary school boundaries: which neighborhood school a home is zoned for, with the school's address and grades.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Miami-Dade County (Open Data Hub) / Miami-Dade County Public Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/ElementaryAttendanceBoundary_gdb/FeatureServer/0",
+   "fields": {
+    "NAME": "school",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "GRADES": "grades",
+    "PHONE": "phone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 109
+  }
+ },
+ {
+  "name": "fl-miami-dade-middle-school-zones",
+  "state": "FL",
+  "title": "Middle school attendance zones (Miami-Dade)",
+  "title_es": "Zonas de asistencia escolar intermedia (Miami-Dade)",
+  "description": "Miami-Dade County Public Schools middle school boundaries: which neighborhood school a home is zoned for, with the school's address and grades.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Miami-Dade County (Open Data Hub) / Miami-Dade County Public Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/MiddleAttendanceBoundary_gdb/FeatureServer/0",
+   "fields": {
+    "NAME": "school",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "GRADES": "grades",
+    "PHONE": "phone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "fl-miami-dade-high-school-zones",
+  "state": "FL",
+  "title": "High school attendance zones (Miami-Dade)",
+  "title_es": "Zonas de asistencia escolar secundaria (Miami-Dade)",
+  "description": "Miami-Dade County Public Schools high school boundaries: which neighborhood school a home is zoned for, with the school's address and grades.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Miami-Dade County (Open Data Hub) / Miami-Dade County Public Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/HighAttendanceBoundary_gdb/FeatureServer/0",
+   "fields": {
+    "NAME": "school",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "GRADES": "grades",
+    "PHONE": "phone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "fl-miami-dade-polling-places",
+  "state": "FL",
+  "title": "Election Day polling places (Miami-Dade)",
+  "title_es": "Lugares de votación el día de las elecciones (Miami-Dade)",
+  "description": "Where each Miami-Dade precinct votes on Election Day (Nov. 3, 2026), from the Elections Department: precinct number, site and address. Check votemiamidade.gov for your assigned site before you go.",
+  "group": "civic",
+  "category": "point",
+  "source": "Miami-Dade Elections Department",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/PollingPlace_gdb/FeatureServer/0",
+   "fields": {
+    "PRECINCT": "precinct",
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "ZIPCODE": "zip"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 305
+  }
+ },
+ {
+  "name": "fl-miami-dade-early-voting",
+  "state": "FL",
+  "title": "Early voting sites and ballot drop boxes (Miami-Dade)",
+  "title_es": "Votación anticipada y buzones de boletas (Miami-Dade)",
+  "description": "Miami-Dade early voting centers for the Nov. 3, 2026 general election, whether each has a vote-by-mail ballot drop box and where it is, and accessibility.",
+  "group": "civic",
+  "category": "point",
+  "source": "Miami-Dade Elections Department",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/VotingLocations_currentwait/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "type": "kind",
+    "fulladdr": "address",
+    "municipality": "city",
+    "earlyvoting": "early_voting",
+    "dropbox": "drop_box",
+    "boxlocation": "drop_box_location",
+    "operdays": "days",
+    "handicap": "accessible",
+    "agencyurl": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "fl-miami-dade-garbage-days",
+  "state": "FL",
+  "title": "Garbage pickup days (Miami-Dade)",
+  "title_es": "Días de recogida de basura (Miami-Dade)",
+  "description": "Which days the County's Solid Waste department collects household garbage on each route (unincorporated areas and contract cities).",
+  "group": "infra",
+  "category": "info",
+  "source": "Miami-Dade County (Open Data Hub) - Solid Waste Management",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/GarbagePickupRoute_gdb/FeatureServer/0",
+   "fields": {
+    "WEEKDAYS": "days",
+    "ROUTE": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 334
+  }
+ },
+ {
+  "name": "fl-miami-dade-recycling-days",
+  "state": "FL",
+  "title": "Recycling pickup days (Miami-Dade)",
+  "title_es": "Días de recogida de reciclaje (Miami-Dade)",
+  "description": "Recycling collection day and week (A or B) for each County recycling route.",
+  "group": "infra",
+  "category": "info",
+  "source": "Miami-Dade County (Open Data Hub) - Solid Waste Management",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/RecyclingRoute_gdb/FeatureServer/0",
+   "fields": {
+    "WEEKDAY": "day",
+    "PICKUPWEEK": "week",
+    "DESCRIPTION": "service_area",
+    "ROUTE": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 115
+  }
+ },
+ {
+  "name": "fl-miami-dade-historic-districts",
+  "state": "FL",
+  "title": "Historic districts (Miami-Dade County)",
+  "title_es": "Distritos históricos (condado de Miami-Dade)",
+  "description": "County-designated historic districts, where exterior changes need historic preservation review.",
+  "group": "places",
+  "category": "boundary",
+  "source": "Miami-Dade County (Open Data Hub) - Office of Historic Preservation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/HistoricDistrict_gdb/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "fl-miami-dade-parcels",
+  "state": "FL",
+  "title": "Parcels (Miami-Dade)",
+  "title_es": "Parcelas (Miami-Dade)",
+  "description": "Every property lot from the Property Appraiser: folio number, land use class, lot size and assessed value. Zoom in close to see lots.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "Miami-Dade County Property Appraiser (Open Data Hub)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/PaParcelView_gdb/FeatureServer/0",
+   "fields": {
+    "FOLIO": "folio",
+    "DOR_DESC": "land_use",
+    "LOT_SIZE": "lot_sqft",
+    "ASSESSED_VAL_CUR": "assessed_value",
+    "ASSESSMENT_YEAR_CUR": "year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.24,
+    25.76,
+    -80.19,
+    25.79
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-miami-dade-fire-station-areas",
+  "state": "FL",
+  "title": "Fire station first-due areas (Miami-Dade Fire Rescue)",
+  "title_es": "Áreas de respuesta de estaciones de bomberos (Miami-Dade)",
+  "description": "Which Miami-Dade Fire Rescue station responds first to each area, with its battalion.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Miami-Dade County (Open Data Hub) - Fire Rescue",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/FireDistrictStationTerritory_gdb/FeatureServer/0",
+   "fields": {
+    "STATIONID": "station",
+    "BATTALION": "battalion",
+    "DIVISION": "division"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "fl-miami-dade-wellfield-protection",
+  "state": "FL",
+  "title": "Wellfield protection areas (Miami-Dade)",
+  "title_es": "Áreas de protección de pozos de agua (Miami-Dade)",
+  "description": "Zones around public drinking-water wellfields where land uses that could pollute the aquifer are restricted, by travel time to the wells.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Miami-Dade County (Open Data Hub) - Environmental Resources Management",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/WellFieldProtectionArea_gdb/FeatureServer/0",
+   "fields": {
+    "NAME": "wellfield",
+    "TRAVELTIME": "travel_time"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 26
+  }
+ },
+ {
+  "name": "fl-miami-dade-water-outages",
+  "state": "FL",
+  "title": "Water outages and main repairs (Miami-Dade, live)",
+  "title_es": "Cortes de agua y reparaciones (Miami-Dade, en vivo)",
+  "description": "Current Water and Sewer Department service interruptions and main repairs, with the estimated time service is restored (in English and Spanish).",
+  "group": "live",
+  "category": "info",
+  "source": "Miami-Dade Water and Sewer Department",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/WaterOutageView/FeatureServer/0",
+   "fields": {
+    "ADDRESS": "location",
+    "DESCRIPTION": "description",
+    "FullMessageEnglish": "message",
+    "FullMessageSpanish": "mensaje",
+    "ESTRESDATE": "estimated_restore",
+    "Comments": "comments"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "fl-miami-dade-road-projects",
+  "state": "FL",
+  "title": "Road and utility construction underway (Miami-Dade)",
+  "title_es": "Obras viales y de servicios en curso (Miami-Dade)",
+  "description": "Roadway and utility projects that the County's utility coordination office lists as under construction or about to start, with the agency doing the work.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Miami-Dade County (Open Data Hub) - Transportation and Public Works",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/RoadWayImprovement_gdb/FeatureServer/0",
+   "fields": {
+    "AGENCY": "agency",
+    "LOCATION": "location",
+    "PROJECT": "project",
+    "STATUS": "status",
+    "CONSTDATE": "construction_date"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "STATUS IN ('Under construction','UWS work during','Utility Work Notice')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 71
+  }
+ },
+ {
+  "name": "fl-miami-dade-cdds",
+  "state": "FL",
+  "title": "Community development districts (Miami-Dade)",
+  "title_es": "Distritos de desarrollo comunitario (Miami-Dade)",
+  "description": "Special taxing districts (CDDs) that pay for roads, water and amenities in newer developments; homes inside pay an extra assessment.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Miami-Dade County (Open Data Hub)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/CommunityDevelopmentDistrict_gdb/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ORD_NO": "ordinance",
+    "EXHBT_LINK": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 26
+  }
+ },
+ {
+  "name": "fl-miami-dade-city-parks",
+  "state": "FL",
+  "title": "City and town parks (Miami-Dade)",
+  "title_es": "Parques municipales (Miami-Dade)",
+  "description": "Parks run by Miami-Dade's cities and towns: name, address, kind of park, size and managing city.",
+  "group": "nature",
+  "category": "park",
+  "source": "Miami-Dade County (Open Data Hub)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/MunicipalPark_gdb/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "CLASS": "kind",
+    "TOTACRE": "acres",
+    "MNGTAGCY": "managed_by"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 208
+  }
+ },
+ {
+  "name": "fl-miami-dade-food-water-sites",
+  "state": "FL",
+  "title": "Emergency food and water sites (Miami-Dade, open now)",
+  "title_es": "Puntos de comida y agua de emergencia (Miami-Dade, abiertos)",
+  "description": "Food and water distribution points the County's emergency operations center has open right now (after storms and other emergencies), with hours.",
+  "group": "help",
+  "category": "point",
+  "source": "Miami-Dade Office of Emergency Management (WebEOC)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/FoodandWaterESF11_Open/FeatureServer/0",
+   "fields": {
+    "label": "name",
+    "address": "address",
+    "city": "city",
+    "food_water_type": "kind",
+    "hours_of_operation_from": "opens",
+    "hours_of_operation_to": "closes",
+    "status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.45,
+    25.7,
+    -80.2,
+    25.88
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "fl-broward-elementary-school-zones",
+  "state": "FL",
+  "title": "Elementary school boundaries (Broward)",
+  "title_es": "Zonas de escuelas primarias (Broward)",
+  "description": "Broward County Public Schools elementary attendance boundaries: which neighborhood school a home is assigned to.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Broward County GIS (BCGIS) / Broward County Public Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/JMAJrTsHNLrSsWf5/arcgis/rest/services/ElemSchoolBoundaries/FeatureServer/9",
+   "fields": {
+    "NAME": "school",
+    "SCHOOLTYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.3,
+    26.05,
+    -80.1,
+    26.2
+   ],
+   "features_in_probe": 57
+  }
+ },
+ {
+  "name": "fl-broward-middle-school-zones",
+  "state": "FL",
+  "title": "Middle school boundaries (Broward)",
+  "title_es": "Zonas de escuelas intermedias (Broward)",
+  "description": "Broward County Public Schools middle school attendance boundaries.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Broward County GIS (BCGIS) / Broward County Public Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/JMAJrTsHNLrSsWf5/arcgis/rest/services/MiddleSchoolBoundaries/FeatureServer/10",
+   "fields": {
+    "NAME": "school",
+    "SCHOOLTYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.3,
+    26.05,
+    -80.1,
+    26.2
+   ],
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "fl-broward-precincts",
+  "state": "FL",
+  "title": "Voting precincts 2026 (Broward)",
+  "title_es": "Precintos electorales 2026 (Broward)",
+  "description": "Broward's 2026 voting precincts from the Supervisor of Elections; your precinct decides your Election Day polling place.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Broward County Supervisor of Elections / BCGIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/JMAJrTsHNLrSsWf5/arcgis/rest/services/VoterPrecincts2026/FeatureServer/3",
+   "fields": {
+    "PRECINCT": "precinct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.3,
+    26.05,
+    -80.1,
+    26.2
+   ],
+   "features_in_probe": 143
+  }
+ },
+ {
+  "name": "fl-broward-voting-locations",
+  "state": "FL",
+  "title": "Polling places, early voting and drop boxes (Broward)",
+  "title_es": "Lugares de votación, votación anticipada y buzones (Broward)",
+  "description": "Every Broward voting location for the Nov. 3, 2026 general election: Election Day polling places, early voting sites with dates and hours, and ballot drop box locations.",
+  "group": "civic",
+  "category": "point",
+  "source": "Broward County Supervisor of Elections",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/JMAJrTsHNLrSsWf5/arcgis/rest/services/VotingLocations_currentwait_25135677cecf426483e4c6d93e58db0a/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "type": "kind",
+    "fulladdr": "address",
+    "municipality": "city",
+    "operhours": "hours",
+    "earlyvoting": "early_voting",
+    "earlyvotingoperhours": "early_voting_hours",
+    "boxlocdesc": "drop_box",
+    "accessible": "accessible",
+    "agencyurl": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "publicview = 'Yes'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.3,
+    26.05,
+    -80.1,
+    26.2
+   ],
+   "features_in_probe": 136
+  }
+ },
+ {
+  "name": "fl-broward-shelters",
+  "state": "FL",
+  "title": "Hurricane evacuation shelters (Broward)",
+  "title_es": "Refugios de evacuación por huracán (Broward)",
+  "description": "Broward County emergency shelters, the type (general, pet-friendly, special needs) and whether each is open right now.",
+  "group": "help",
+  "category": "point",
+  "source": "Broward County Emergency Management (WebEOC)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/JMAJrTsHNLrSsWf5/arcgis/rest/services/Shelters_Public_View/FeatureServer/0",
+   "fields": {
+    "label": "name",
+    "full_address": "address",
+    "shelter_type": "kind",
+    "shelter_status": "status",
+    "Pet_Occupancy": "pets_sheltered",
+    "petcapacity": "pet_capacity"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.3,
+    26.05,
+    -80.1,
+    26.2
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "fl-broward-bmsd-zoning",
+  "state": "FL",
+  "title": "Zoning (unincorporated Broward)",
+  "title_es": "Zonificación (zonas no incorporadas de Broward)",
+  "description": "Zoning in the Broward Municipal Services District (the unincorporated neighborhoods the County governs directly): zone code, what it allows and acreage.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Broward County GIS (BCGIS) - Urban Planning",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/JMAJrTsHNLrSsWf5/arcgis/rest/services/Broward_Municipal_Service_District_Zoning/FeatureServer/2",
+   "fields": {
+    "ZONING": "zoning",
+    "DESCRIPTION": "description",
+    "AREANAME": "area",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.3,
+    26.05,
+    -80.1,
+    26.2
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-broward-bmsd-garbage-days",
+  "state": "FL",
+  "title": "Garbage, bulk and recycling days (unincorporated Broward)",
+  "title_es": "Días de basura, objetos grandes y reciclaje (Broward no incorporado)",
+  "description": "Pickup days for garbage, bulk trash and recycling in the Broward Municipal Services District neighborhoods.",
+  "group": "infra",
+  "category": "info",
+  "source": "Broward County GIS (BCGIS)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/JMAJrTsHNLrSsWf5/arcgis/rest/services/BMSDGarbageServiceDays/FeatureServer/12",
+   "fields": {
+    "NAME": "neighborhood",
+    "GARBAGE": "garbage",
+    "BULK_": "bulk",
+    "RECYCLING": "recycling"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.3,
+    26.05,
+    -80.1,
+    26.2
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "fl-broward-parcels",
+  "state": "FL",
+  "title": "Parcels (Broward)",
+  "title_es": "Parcelas (Broward)",
+  "description": "Every property lot on the Broward Property Appraiser's tax roll: folio number, use code and just (market) land and building values. Zoom in close to see lots.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "Broward County Property Appraiser / BCGIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/JMAJrTsHNLrSsWf5/arcgis/rest/services/PARCEL_POLY_BCPA_TAXROLL/FeatureServer/0",
+   "fields": {
+    "FOLIO": "folio",
+    "USE_CODE": "use_code",
+    "JUST_LAND_VALUE": "land_value",
+    "JUST_BUILDING_VALUE": "building_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.16,
+    26.11,
+    -80.12,
+    26.14
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-broward-county-parks",
+  "state": "FL",
+  "title": "County parks (Broward)",
+  "title_es": "Parques del condado (Broward)",
+  "description": "Broward County parks and their address, type and size.",
+  "group": "nature",
+  "category": "park",
+  "source": "Broward County GIS (BCGIS) - Parks and Recreation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/JMAJrTsHNLrSsWf5/arcgis/rest/services/Broward_County_Parks/FeatureServer/7",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS1": "address",
+    "CITY": "city",
+    "PARK_TYPE": "kind",
+    "ACRESGIS": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.3,
+    26.05,
+    -80.1,
+    26.2
+   ],
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "fl-broward-commission-districts",
+  "state": "FL",
+  "title": "County commission districts (Broward)",
+  "title_es": "Distritos de la Comisión del Condado (Broward)",
+  "description": "The nine Broward County Commission districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Broward County GIS (BCGIS)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/JMAJrTsHNLrSsWf5/arcgis/rest/services/OpenDataCommissionDistricts/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.3,
+    26.05,
+    -80.1,
+    26.2
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "fl-broward-wellfield-zones",
+  "state": "FL",
+  "title": "Wellfield protection zones (Broward)",
+  "title_es": "Zonas de protección de pozos de agua (Broward)",
+  "description": "Zones around Broward's public drinking-water wells where hazardous materials are restricted.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Broward County GIS (BCGIS) - Environmental Protection",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/JMAJrTsHNLrSsWf5/arcgis/rest/services/WellfieldProtectionZones/FeatureServer/0",
+   "fields": {
+    "ZONE": "zone",
+    "LABEL": "label"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.3,
+    26.05,
+    -80.1,
+    26.2
+   ],
+   "features_in_probe": 1827
+  }
+ },
+ {
+  "name": "fl-palm-beach-elementary-school-zones",
+  "state": "FL",
+  "title": "Elementary school attendance zones (Palm Beach County)",
+  "title_es": "Zonas de asistencia escolar primaria (condado de Palm Beach)",
+  "description": "School District of Palm Beach County elementary school boundaries: which school a home is zoned for.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Palm Beach County ISS GIS (Open Data) / School District of Palm Beach County",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.co.palm-beach.fl.us/arcgis/rest/services/OpenData/Education_Open_Data/MapServer/2",
+   "fields": {
+    "NAME": "school",
+    "MSID": "school_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 36
+  }
+ },
+ {
+  "name": "fl-palm-beach-middle-school-zones",
+  "state": "FL",
+  "title": "Middle school attendance zones (Palm Beach County)",
+  "title_es": "Zonas de asistencia escolar intermedia (condado de Palm Beach)",
+  "description": "School District of Palm Beach County middle school boundaries: which school a home is zoned for.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Palm Beach County ISS GIS (Open Data) / School District of Palm Beach County",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.co.palm-beach.fl.us/arcgis/rest/services/OpenData/Education_Open_Data/MapServer/3",
+   "fields": {
+    "NAME": "school",
+    "MSID": "school_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "fl-palm-beach-high-school-zones",
+  "state": "FL",
+  "title": "High school attendance zones (Palm Beach County)",
+  "title_es": "Zonas de asistencia escolar secundaria (condado de Palm Beach)",
+  "description": "School District of Palm Beach County high school boundaries: which school a home is zoned for.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Palm Beach County ISS GIS (Open Data) / School District of Palm Beach County",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.co.palm-beach.fl.us/arcgis/rest/services/OpenData/Education_Open_Data/MapServer/4",
+   "fields": {
+    "NAME": "school",
+    "MSID": "school_id"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "fl-palm-beach-commission-districts",
+  "state": "FL",
+  "title": "County commission districts (Palm Beach)",
+  "title_es": "Distritos de la Comisión del Condado (Palm Beach)",
+  "description": "The seven Palm Beach County Commission districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Palm Beach County ISS GIS (Open Data)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.co.palm-beach.fl.us/arcgis/rest/services/OpenData/Government_Open_Data/MapServer/4",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "fl-palm-beach-future-land-use",
+  "state": "FL",
+  "title": "Future land use (unincorporated Palm Beach County)",
+  "title_es": "Uso futuro del suelo (Palm Beach no incorporado)",
+  "description": "The County Comprehensive Plan's future land use designations for unincorporated Palm Beach County.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Palm Beach County ISS GIS (Open Data) - Planning",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.co.palm-beach.fl.us/arcgis/rest/services/OpenData/Planning_Open_Data/MapServer/6",
+   "fields": {
+    "FLU_CODE": "code",
+    "FLU_DESC": "land_use",
+    "FNAME": "category"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 383
+  }
+ },
+ {
+  "name": "fl-palm-beach-zoning",
+  "state": "FL",
+  "title": "Zoning (unincorporated Palm Beach County)",
+  "title_es": "Zonificación (Palm Beach no incorporado)",
+  "description": "County zoning districts for unincorporated Palm Beach County.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Palm Beach County ISS GIS (Open Data) - Zoning",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.co.palm-beach.fl.us/arcgis/rest/services/OpenData/Planning_Open_Data/MapServer/9",
+   "fields": {
+    "FCODE": "zoning",
+    "FNAME": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 542
+  }
+ },
+ {
+  "name": "fl-palm-beach-county-parks",
+  "state": "FL",
+  "title": "County parks (Palm Beach)",
+  "title_es": "Parques del condado (Palm Beach)",
+  "description": "Palm Beach County parks.",
+  "group": "nature",
+  "category": "park",
+  "source": "Palm Beach County ISS GIS (Open Data) - Parks and Recreation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.co.palm-beach.fl.us/arcgis/rest/services/OpenData/Parks_and_Recreation_Open_Data/MapServer/1",
+   "fields": {
+    "FNAME": "name",
+    "FCODE": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "fl-palm-beach-city-parks",
+  "state": "FL",
+  "title": "City parks (Palm Beach County)",
+  "title_es": "Parques municipales (condado de Palm Beach)",
+  "description": "Parks run by the cities and towns of Palm Beach County.",
+  "group": "nature",
+  "category": "park",
+  "source": "Palm Beach County ISS GIS (Open Data)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.co.palm-beach.fl.us/arcgis/rest/services/OpenData/Parks_and_Recreation_Open_Data/MapServer/0",
+   "fields": {
+    "FNAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 104
+  }
+ },
+ {
+  "name": "fl-palm-beach-natural-areas",
+  "state": "FL",
+  "title": "Natural areas (Palm Beach County)",
+  "title_es": "Áreas naturales (condado de Palm Beach)",
+  "description": "County-managed natural areas open for hiking, birding and paddling.",
+  "group": "nature",
+  "category": "park",
+  "source": "Palm Beach County ISS GIS (Open Data) - Environmental Resources Management",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.co.palm-beach.fl.us/arcgis/rest/services/OpenData/Environment_Open_Data/MapServer/15",
+   "fields": {
+    "FNAME": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "fl-palm-beach-wellfield-zones",
+  "state": "FL",
+  "title": "Wellfield protection zones (Palm Beach County)",
+  "title_es": "Zonas de protección de pozos de agua (Palm Beach)",
+  "description": "Zones 1-4 around public drinking-water wells where hazardous materials are restricted (zone 1 is closest to the well).",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Palm Beach County ISS GIS (Open Data) - Environmental Resources Management",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.co.palm-beach.fl.us/arcgis/rest/services/OpenData/Environment_Open_Data/MapServer/10",
+   "fields": {
+    "FNAME": "zone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 456
+  }
+ },
+ {
+  "name": "fl-palm-beach-polling-places",
+  "state": "FL",
+  "title": "Election Day polling places (Palm Beach County)",
+  "title_es": "Lugares de votación el día de las elecciones (Palm Beach)",
+  "description": "Where each Palm Beach County precinct votes on Election Day, Nov. 3, 2026, from the Supervisor of Elections.",
+  "group": "civic",
+  "category": "point",
+  "source": "Palm Beach County Supervisor of Elections",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services1.arcgis.com/ZWOoUZbtaYePLlPw/arcgis/rest/services/Current_Election_Day_Polling_Locations/FeatureServer/1",
+   "fields": {
+    "Place_Name": "name",
+    "Precinct": "precinct",
+    "Full_Precincts": "precincts"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 142
+  }
+ },
+ {
+  "name": "fl-palm-beach-early-voting",
+  "state": "FL",
+  "title": "Early voting sites (Palm Beach County)",
+  "title_es": "Sitios de votación anticipada (Palm Beach)",
+  "description": "Early voting locations for the Nov. 3, 2026 general election in Palm Beach County.",
+  "group": "civic",
+  "category": "point",
+  "source": "Palm Beach County Supervisor of Elections",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services1.arcgis.com/ZWOoUZbtaYePLlPw/arcgis/rest/services/Current_Early_Voting_Sites/FeatureServer/2",
+   "fields": {
+    "Name": "name"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "fl-palm-beach-parcels",
+  "state": "FL",
+  "title": "Parcels (Palm Beach County)",
+  "title_es": "Parcelas (condado de Palm Beach)",
+  "description": "Every property lot from the Property Appraiser: parcel number, city, property use, acreage and assessed value. Zoom in close to see lots.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "Palm Beach County Property Appraiser",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services1.arcgis.com/ZWOoUZbtaYePLlPw/arcgis/rest/services/Parcels_and_Property_Details_WebMercator/FeatureServer/0",
+   "fields": {
+    "PARID": "parcel_id",
+    "MUNICIPALITY": "city",
+    "PROPERTY_USE": "land_use",
+    "ACRES": "acres",
+    "ASSESSED_VAL": "assessed_value",
+    "TOTAL_MARKET": "market_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.08,
+    26.7,
+    -80.05,
+    26.72
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-palm-beach-historical-markers",
+  "state": "FL",
+  "title": "Historical markers (Palm Beach County parks)",
+  "title_es": "Marcadores históricos (parques del condado de Palm Beach)",
+  "description": "Historical markers, monuments and memorials in Palm Beach County parks.",
+  "group": "places",
+  "category": "point",
+  "source": "Palm Beach County Parks and Recreation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services1.arcgis.com/ZWOoUZbtaYePLlPw/arcgis/rest/services/Historical_Markers/FeatureServer/0",
+   "fields": {
+    "TopText": "name",
+    "Park": "park",
+    "Type": "kind",
+    "Year2": "year"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.15,
+    26.6,
+    -80.03,
+    26.75
+   ],
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "fl-orange-boat-ramps",
+  "state": "FL",
+  "title": "County boat ramps (Orange County)",
+  "title_es": "Rampas para botes del condado (Orange)",
+  "description": "Orange County-run boat ramps and which lake each reaches.",
+  "group": "nature",
+  "category": "point",
+  "source": "Orange County, FL GIS (Open Data) - Parks and Recreation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/6",
+   "fields": {
+    "RAMP_NAME": "name",
+    "CITY": "city",
+    "COMMENTS": "access",
+    "LINK": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "fl-orange-commission-districts",
+  "state": "FL",
+  "title": "County commission districts (Orange County)",
+  "title_es": "Distritos de la Comisión del Condado (Orange)",
+  "description": "The six Orange County Commission districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Orange County, FL GIS (Open Data)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/11",
+   "fields": {
+    "DIST": "district",
+    "COMM_URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "fl-orange-future-land-use",
+  "state": "FL",
+  "title": "Future land use (Orange County)",
+  "title_es": "Uso futuro del suelo (condado de Orange)",
+  "description": "The County Comprehensive Plan future land use map (code and label, e.g. LDR = low-density residential).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Orange County, FL GIS (Open Data) - Planning",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/21",
+   "fields": {
+    "LABEL": "land_use",
+    "LAND_USE": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-orange-zoning",
+  "state": "FL",
+  "title": "Zoning (Orange County)",
+  "title_es": "Zonificación (condado de Orange)",
+  "description": "Orange County zoning districts and planned developments.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Orange County, FL GIS (Open Data) - Zoning",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/51",
+   "fields": {
+    "ZONING": "zoning",
+    "PD_NAME": "planned_development",
+    "JURISDICTION": "jurisdiction"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-orange-parks",
+  "state": "FL",
+  "title": "Parks (Orange County)",
+  "title_es": "Parques (condado de Orange)",
+  "description": "Parks across Orange County with address, kind and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "Orange County, FL GIS (Open Data) - Parks and Recreation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/37",
+   "fields": {
+    "PARK_NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "PARK_TYPE": "kind",
+    "ACRES": "acres",
+    "JURISDICTION": "managed_by"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 160
+  }
+ },
+ {
+  "name": "fl-orange-trails",
+  "state": "FL",
+  "title": "Park trails (Orange County)",
+  "title_es": "Senderos de parques (condado de Orange)",
+  "description": "Trails in Orange County parks, including the Cady Way and West Orange trails, with length.",
+  "group": "nature",
+  "category": "park",
+  "source": "Orange County, FL GIS (Open Data) - Parks and Recreation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/38",
+   "fields": {
+    "TRAIL_NAME": "name",
+    "LENGTH_MILE": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 31
+  }
+ },
+ {
+  "name": "fl-orange-parcels",
+  "state": "FL",
+  "title": "Parcels (Orange County)",
+  "title_es": "Parcelas (condado de Orange)",
+  "description": "Every property lot from the Property Appraiser: parcel ID, use code, acreage and assessed and market value. Individual condo units are left out (the building lot shows). Zoom in close to see lots.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "Orange County Property Appraiser / Orange County GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/56",
+   "fields": {
+    "PARCEL": "parcel_id",
+    "DOR_CODE": "use_code",
+    "ACREAGE": "acres",
+    "TOTAL_ASSD": "assessed_value",
+    "TOTAL_MKT": "market_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "CONDO_FLAG IS NULL OR CONDO_FLAG <> 'C'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.39,
+    28.53,
+    -81.36,
+    28.55
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-orange-garbage-days",
+  "state": "FL",
+  "title": "Garbage pickup days (unincorporated Orange County)",
+  "title_es": "Días de recogida de basura (Orange no incorporado)",
+  "description": "Garbage collection day(s) and hauler for each route in unincorporated Orange County (M=Monday, T=Tuesday, W=Wednesday, R=Thursday, F=Friday).",
+  "group": "infra",
+  "category": "info",
+  "source": "Orange County, FL GIS (Open Data) - Solid Waste",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/84",
+   "fields": {
+    "G_PUP_DAYS": "garbage_days",
+    "HAULER_NME": "hauler",
+    "ROUTE": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 45
+  }
+ },
+ {
+  "name": "fl-orange-recycling-days",
+  "state": "FL",
+  "title": "Recycling pickup days (unincorporated Orange County)",
+  "title_es": "Días de recogida de reciclaje (Orange no incorporado)",
+  "description": "Recycling collection day(s) and hauler for each route in unincorporated Orange County (M=Monday, T=Tuesday, W=Wednesday, R=Thursday, F=Friday).",
+  "group": "infra",
+  "category": "info",
+  "source": "Orange County, FL GIS (Open Data) - Solid Waste",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/85",
+   "fields": {
+    "R_PUP_DAYS": "recycling_days",
+    "HAULER_NME": "hauler",
+    "ROUTE": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 37
+  }
+ },
+ {
+  "name": "fl-orange-yard-waste-days",
+  "state": "FL",
+  "title": "Yard waste pickup days (unincorporated Orange County)",
+  "title_es": "Días de recogida de desechos de jardín (Orange no incorporado)",
+  "description": "Yard waste collection day(s) and hauler for each route in unincorporated Orange County (M=Monday, T=Tuesday, W=Wednesday, R=Thursday, F=Friday).",
+  "group": "infra",
+  "category": "info",
+  "source": "Orange County, FL GIS (Open Data) - Solid Waste",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/86",
+   "fields": {
+    "Y_PUP_DAYS": "yard_waste_days",
+    "HAULER_NME": "hauler",
+    "ROUTE": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "fl-orlando-zoning",
+  "state": "FL",
+  "title": "Zoning (City of Orlando)",
+  "title_es": "Zonificación (ciudad de Orlando)",
+  "description": "City of Orlando zoning districts.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Orange County, FL GIS (Open Data) / City of Orlando",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/82",
+   "fields": {
+    "ZONING": "zoning",
+    "PD_NAME": "planned_development"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 1579
+  }
+ },
+ {
+  "name": "fl-orlando-future-land-use",
+  "state": "FL",
+  "title": "Future land use (City of Orlando)",
+  "title_es": "Uso futuro del suelo (ciudad de Orlando)",
+  "description": "City of Orlando Growth Management Plan future land use.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Orange County, FL GIS (Open Data) / City of Orlando",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/83",
+   "fields": {
+    "LANDUSETYPE": "land_use"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 923
+  }
+ },
+ {
+  "name": "fl-orlando-historic-districts",
+  "state": "FL",
+  "title": "Historic districts (City of Orlando)",
+  "title_es": "Distritos históricos (ciudad de Orlando)",
+  "description": "Orlando's locally designated historic districts (e.g. Lake Eola Heights, Lake Cherokee).",
+  "group": "places",
+  "category": "boundary",
+  "source": "Orange County, FL GIS (Open Data) / City of Orlando",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/81",
+   "fields": {
+    "HIST_DIST": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "fl-orlando-commission-districts",
+  "state": "FL",
+  "title": "City commission districts (Orlando)",
+  "title_es": "Distritos de la Comisión de la ciudad (Orlando)",
+  "description": "The six Orlando City Council (Commission) districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Orange County, FL GIS (Open Data) / City of Orlando",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/72",
+   "fields": {
+    "COMMISSIONERDISTRICTID": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "fl-orange-high-school-zones",
+  "state": "FL",
+  "title": "High school attendance zones (Orange County)",
+  "title_es": "Zonas de escuelas secundarias (condado de Orange)",
+  "description": "Orange County Public Schools high school boundaries.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Orange County, FL GIS (Open Data) / Orange County Public Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/90",
+   "fields": {
+    "SCHOOL": "school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "fl-orange-elementary-school-zones",
+  "state": "FL",
+  "title": "Elementary school attendance zones (Orange County)",
+  "title_es": "Zonas de escuelas primarias (condado de Orange)",
+  "description": "Orange County Public Schools elementary school boundaries.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Orange County, FL GIS (Open Data) / Orange County Public Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data/MapServer/91",
+   "fields": {
+    "SCHOOL": "school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 57
+  }
+ },
+ {
+  "name": "fl-orange-middle-school-zones",
+  "state": "FL",
+  "title": "Middle school attendance zones (Orange County)",
+  "title_es": "Zonas de escuelas intermedias (condado de Orange)",
+  "description": "Orange County Public Schools middle school boundaries.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Orange County, FL GIS (Open Data) / Orange County Public Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data2/MapServer/15",
+   "fields": {
+    "SCHOOL": "school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "fl-orange-lake-levels",
+  "state": "FL",
+  "title": "Lake levels (Orange County)",
+  "title_es": "Niveles de los lagos (condado de Orange)",
+  "description": "Latest water-level readings for Orange County lakes (feet above sea level) next to each lake's normal high water and 100-year flood elevation.",
+  "group": "weather",
+  "category": "info",
+  "source": "Orange County, FL GIS (Open Data) - Environmental Protection Division",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ocgis4.ocfl.net/arcgis/rest/services/AGOL_Open_Data2/MapServer/12",
+   "fields": {
+    "LAKENAME": "lake",
+    "CR_READING": "level_ft",
+    "CR_READING_DATE": "reading_date",
+    "NHWE": "normal_high_ft",
+    "YR_100": "flood_100yr_ft"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 46
+  }
+ },
+ {
+  "name": "fl-orange-early-voting",
+  "state": "FL",
+  "title": "Early voting sites (Orange County)",
+  "title_es": "Sitios de votación anticipada (condado de Orange)",
+  "description": "Early voting locations for the Nov. 3, 2026 general election from the Orange County Supervisor of Elections.",
+  "group": "civic",
+  "category": "point",
+  "source": "Orange County Supervisor of Elections",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services8.arcgis.com/KROpZDerJ9MICPIU/arcgis/rest/services/OCSOE_Early_Voting_Sites/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "city": "city",
+    "zipcode": "zip"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "fl-orange-polling-places",
+  "state": "FL",
+  "title": "Election Day polling places (Orange County)",
+  "title_es": "Lugares de votación el día de las elecciones (Orange)",
+  "description": "Where each Orange County precinct votes on Election Day, Nov. 3, 2026.",
+  "group": "civic",
+  "category": "point",
+  "source": "Orange County Supervisor of Elections",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services8.arcgis.com/KROpZDerJ9MICPIU/arcgis/rest/services/OCSOE_Polling_Places/FeatureServer/0",
+   "fields": {
+    "Precinct": "precinct",
+    "PollingPlace": "name",
+    "FullAddress": "address",
+    "Municipal_City": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 73
+  }
+ },
+ {
+  "name": "fl-orange-special-districts",
+  "state": "FL",
+  "title": "Special taxing districts (Orange County)",
+  "title_es": "Distritos especiales de impuestos (condado de Orange)",
+  "description": "Community development districts and other special districts that add their own assessments to property tax bills.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Orange County Supervisor of Elections",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services8.arcgis.com/KROpZDerJ9MICPIU/arcgis/rest/services/Special_Districts/FeatureServer/0",
+   "fields": {
+    "Description": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.45,
+    28.45,
+    -81.3,
+    28.6
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "fl-hillsborough-commission-districts",
+  "state": "FL",
+  "title": "County commission districts (Hillsborough)",
+  "title_es": "Distritos de la Comisión del Condado (Hillsborough)",
+  "description": "Hillsborough County's four single-member commission districts (three more commissioners are elected countywide).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Hillsborough County GIS (Open Data)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/apTfC6SUmnNfnxuF/arcgis/rest/services/Commissioner_Districts_2023/FeatureServer/0",
+   "fields": {
+    "District": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "fl-hillsborough-shelters",
+  "state": "FL",
+  "title": "Shelters, cold-weather shelters and cooling centers (Hillsborough)",
+  "title_es": "Refugios, refugios para el frío y centros de enfriamiento (Hillsborough)",
+  "description": "Hillsborough County emergency shelters with their current status, capacity and space left, pet-friendly and accessibility notes, and which ones act as cold-weather shelters, warming or cooling centers.",
+  "group": "help",
+  "category": "point",
+  "source": "Hillsborough County Emergency Management (WebEOC)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/apTfC6SUmnNfnxuF/arcgis/rest/services/Shelters_2026/FeatureServer/0",
+   "fields": {
+    "shelter_name": "name",
+    "address": "address",
+    "status": "status",
+    "capacity": "capacity",
+    "availability": "spaces_left",
+    "pet_friendly": "pets",
+    "ada_compliant": "accessible",
+    "functional_needs": "special_needs",
+    "cold_shelter": "cold_shelter",
+    "warming_center": "warming_center",
+    "cooling_center": "cooling_center",
+    "shelter_comments": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "fl-hillsborough-parks",
+  "state": "FL",
+  "title": "Parks, boat ramps and recreation sites (Hillsborough)",
+  "title_es": "Parques, rampas para botes y sitios recreativos (Hillsborough)",
+  "description": "Hillsborough County parks and recreation properties with address and main uses (boat ramp, playground, sports, nature).",
+  "group": "nature",
+  "category": "park",
+  "source": "Hillsborough County GIS (Open Data) - Parks and Recreation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/apTfC6SUmnNfnxuF/arcgis/rest/services/Parks_and_Recreation/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDR": "address",
+    "USES": "uses"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "fl-hillsborough-preserve-trails",
+  "state": "FL",
+  "title": "Nature preserve trails (Hillsborough)",
+  "title_es": "Senderos de reservas naturales (Hillsborough)",
+  "description": "Trails in the County's ELAPP nature preserves: surface, length and whether hiking, biking, horses or paddling are allowed.",
+  "group": "nature",
+  "category": "park",
+  "source": "Hillsborough County GIS (Open Data) - Conservation and Environmental Lands Management",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/apTfC6SUmnNfnxuF/arcgis/rest/services/ELM_PublicTrails_202404/FeatureServer/0",
+   "fields": {
+    "Site_Name": "preserve",
+    "SURFACE": "surface",
+    "LENGTH_MIL": "miles",
+    "HIKING": "hiking",
+    "BIKING": "biking",
+    "EQUESTRIAN": "horses",
+    "PADDLING": "paddling",
+    "Seasonal": "seasonal"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "fl-hillsborough-historic-resources",
+  "state": "FL",
+  "title": "Historic resources (unincorporated Hillsborough)",
+  "title_es": "Recursos históricos (Hillsborough no incorporado)",
+  "description": "Historic buildings and sites the County tracks, and whether each is a designated landmark.",
+  "group": "places",
+  "category": "point",
+  "source": "Hillsborough County GIS (Open Data) - Development Services (Historic Preservation)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/apTfC6SUmnNfnxuF/arcgis/rest/services/Historic_Resources/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "TYPE": "status",
+    "AREA": "community"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "fl-hillsborough-zoning",
+  "state": "FL",
+  "title": "Zoning (Hillsborough County)",
+  "title_es": "Zonificación (condado de Hillsborough)",
+  "description": "Zoning for every area of Hillsborough County as mapped by the Property Appraiser (2026): zone code and description.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Hillsborough County Property Appraiser",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/apTfC6SUmnNfnxuF/arcgis/rest/services/HCPA_Zoning_2026/FeatureServer/0",
+   "fields": {
+    "ZONE_ONLY": "zoning",
+    "DESCR": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-hillsborough-parcels",
+  "state": "FL",
+  "title": "Parcels (Hillsborough)",
+  "title_es": "Parcelas (Hillsborough)",
+  "description": "Every property lot from the Property Appraiser (updated daily): folio, use code, acreage and just and assessed value. Zoom in close to see lots.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "Hillsborough County Property Appraiser",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/apTfC6SUmnNfnxuF/arcgis/rest/services/HCPA_Parcels_Daily/FeatureServer/0",
+   "fields": {
+    "FOLIO": "folio",
+    "DOR_C": "use_code",
+    "ACREAGE": "acres",
+    "JUST": "just_value",
+    "ASD_VAL": "assessed_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.47,
+    27.94,
+    -82.44,
+    27.96
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-hillsborough-cdds",
+  "state": "FL",
+  "title": "Community development districts (Hillsborough)",
+  "title_es": "Distritos de desarrollo comunitario (Hillsborough)",
+  "description": "Special taxing districts (CDDs) in Hillsborough County that add an assessment to property tax bills.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Hillsborough County Property Appraiser",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/apTfC6SUmnNfnxuF/arcgis/rest/services/HCPA_Special_Districts/FeatureServer/0",
+   "fields": {
+    "SP_NAME": "name",
+    "DIST_TP": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "fl-hillsborough-early-voting",
+  "state": "FL",
+  "title": "Early voting sites with wait times (Hillsborough)",
+  "title_es": "Votación anticipada con tiempos de espera (Hillsborough)",
+  "description": "Hillsborough early voting sites for the Nov. 3, 2026 election (Oct. 19 - Nov. 1), their hours and the current wait.",
+  "group": "civic",
+  "category": "point",
+  "source": "Hillsborough County Supervisor of Elections",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/apTfC6SUmnNfnxuF/arcgis/rest/services/Early_Voting_Sites_2025_View_Layer/FeatureServer/0",
+   "fields": {
+    "Facility_Name": "name",
+    "Facility_Address": "address",
+    "EV_Active": "status",
+    "Wait_Time": "wait",
+    "Early_Voting_Start_Date": "starts",
+    "Early_Voting_End_Date": "ends",
+    "Early_Voting_Start_Time": "opens",
+    "Early_Voting_End_Time": "closes"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "fl-hillsborough-precincts",
+  "state": "FL",
+  "title": "Voting precincts 2026 (Hillsborough)",
+  "title_es": "Precintos electorales 2026 (Hillsborough)",
+  "description": "Hillsborough County's 2026 voting precincts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Hillsborough County Supervisor of Elections",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/apTfC6SUmnNfnxuF/arcgis/rest/services/HCSOE_2026_Precincts/FeatureServer/0",
+   "fields": {
+    "PRECINCT": "precinct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 125
+  }
+ },
+ {
+  "name": "fl-hillsborough-fire-districts",
+  "state": "FL",
+  "title": "Fire service districts (Hillsborough)",
+  "title_es": "Distritos de bomberos (Hillsborough)",
+  "description": "Which fire department covers each part of Hillsborough County.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Hillsborough County GIS (Open Data) - Fire Rescue",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/apTfC6SUmnNfnxuF/arcgis/rest/services/FireDistricts/FeatureServer/0",
+   "fields": {
+    "FIRE": "fire_department"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "fl-tampa-zoning",
+  "state": "FL",
+  "title": "Zoning (City of Tampa)",
+  "title_es": "Zonificación (ciudad de Tampa)",
+  "description": "City of Tampa zoning districts and the ordinance or rezoning case behind each.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Tampa GIS (Open Data) - Planning",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://arcgis.tampagov.net/arcgis/rest/services/OpenData/Planning/MapServer/28",
+   "fields": {
+    "ZONECLASS": "zoning",
+    "ZONEDESC": "description",
+    "REFERENCE": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-tampa-historic-districts",
+  "state": "FL",
+  "title": "Local historic districts (Tampa)",
+  "title_es": "Distritos históricos locales (Tampa)",
+  "description": "Tampa's locally designated historic districts (Ybor City, Hyde Park, Seminole Heights, Tampa Heights).",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Tampa GIS (Open Data) - Historic Preservation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://arcgis.tampagov.net/arcgis/rest/services/OpenData/Planning/MapServer/1",
+   "fields": {
+    "HISTORIC_BNDY": "name",
+    "LIST_YR": "year_listed"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "fl-tampa-historic-landmarks",
+  "state": "FL",
+  "title": "Local historic landmarks (Tampa)",
+  "title_es": "Monumentos históricos locales (Tampa)",
+  "description": "Individually designated City of Tampa landmarks, like Ybor cigar factories.",
+  "group": "places",
+  "category": "point",
+  "source": "City of Tampa GIS (Open Data) - Historic Preservation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://arcgis.tampagov.net/arcgis/rest/services/OpenData/Planning/MapServer/29",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "ORD_DATE": "designated"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 101
+  }
+ },
+ {
+  "name": "fl-tampa-council-districts",
+  "state": "FL",
+  "title": "City council districts (Tampa)",
+  "title_es": "Distritos del Concejo Municipal (Tampa)",
+  "description": "Tampa's four single-member City Council districts (three more members are elected citywide).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Tampa GIS (Open Data)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://arcgis.tampagov.net/arcgis/rest/services/OpenData/Boundary/MapServer/0",
+   "fields": {
+    "NAME": "district",
+    "DISTRICTURL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "fl-tampa-capital-projects",
+  "state": "FL",
+  "title": "Capital projects (City of Tampa)",
+  "title_es": "Proyectos de obras públicas (ciudad de Tampa)",
+  "description": "City of Tampa capital improvement projects (stormwater, streets, parks, water): what is being built, why, the phase, status, budget and neighborhood.",
+  "group": "growth",
+  "category": "roadops",
+  "source": "City of Tampa GIS (Open Data)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://arcgis.tampagov.net/arcgis/rest/services/OpenData/CapitalProjects/MapServer/0",
+   "fields": {
+    "projname": "name",
+    "projdesc": "description",
+    "projtype": "kind",
+    "rationale": "why",
+    "projphase": "phase",
+    "status": "status",
+    "estcost": "estimated_cost",
+    "fiscalyr": "fiscal_year",
+    "Neighborhood": "neighborhood"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "ShowPublic = 'Yes'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 169
+  }
+ },
+ {
+  "name": "fl-tampa-trash-days",
+  "state": "FL",
+  "title": "Trash pickup days (City of Tampa)",
+  "title_es": "Días de recogida de basura (ciudad de Tampa)",
+  "description": "Which day(s) the City of Tampa collects trash in each area.",
+  "group": "infra",
+  "category": "info",
+  "source": "City of Tampa GIS (Open Data) - Solid Waste",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://arcgis.tampagov.net/arcgis/rest/services/OpenData/SolidWaste/MapServer/2",
+   "fields": {
+    "NAME": "day",
+    "COLLECTIONDAYS": "days",
+    "SCHEDULE": "schedule"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 77
+  }
+ },
+ {
+  "name": "fl-tampa-recycling-days",
+  "state": "FL",
+  "title": "Recycling pickup days (City of Tampa)",
+  "title_es": "Días de recogida de reciclaje (ciudad de Tampa)",
+  "description": "Which day(s) the City of Tampa collects recycling in each area.",
+  "group": "infra",
+  "category": "info",
+  "source": "City of Tampa GIS (Open Data) - Solid Waste",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://arcgis.tampagov.net/arcgis/rest/services/OpenData/SolidWaste/MapServer/3",
+   "fields": {
+    "NAME": "day",
+    "COLLECTIONDAYS": "days",
+    "SCHEDULE": "schedule"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 59
+  }
+ },
+ {
+  "name": "fl-tampa-yard-waste-days",
+  "state": "FL",
+  "title": "Yard waste pickup days (City of Tampa)",
+  "title_es": "Días de recogida de desechos de jardín (ciudad de Tampa)",
+  "description": "Which day(s) the City of Tampa collects yard waste in each area.",
+  "group": "infra",
+  "category": "info",
+  "source": "City of Tampa GIS (Open Data) - Solid Waste",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://arcgis.tampagov.net/arcgis/rest/services/OpenData/SolidWaste/MapServer/4",
+   "fields": {
+    "NAME": "day",
+    "COLLECTIONDAYS": "days",
+    "SCHEDULE": "schedule"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 39
+  }
+ },
+ {
+  "name": "fl-tampa-parks",
+  "state": "FL",
+  "title": "City parks (Tampa)",
+  "title_es": "Parques de la ciudad (Tampa)",
+  "description": "City of Tampa parks with address and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Tampa GIS (Open Data) - Parks and Recreation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://arcgis.tampagov.net/arcgis/rest/services/OpenData/Location/MapServer/10",
+   "fields": {
+    "PARKNAME": "name",
+    "SITADDR": "address",
+    "ACRES": "acres",
+    "WEBSITE": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 181
+  }
+ },
+ {
+  "name": "fl-tampa-bike-lanes",
+  "state": "FL",
+  "title": "Bike lanes (City of Tampa)",
+  "title_es": "Carriles para bicicletas (ciudad de Tampa)",
+  "description": "Bike lanes and cycle tracks on City of Tampa streets.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Tampa GIS (Open Data) - Mobility",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://arcgis.tampagov.net/arcgis/rest/services/OpenData/Transportation/MapServer/0",
+   "fields": {
+    "ROADWAY": "street",
+    "FROM_ST": "from",
+    "TO_ST": "to",
+    "CYCLETRACK": "protected"
+   },
+   "geometry": "line",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.55,
+    27.9,
+    -82.4,
+    28.05
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-pinellas-commission-districts",
+  "state": "FL",
+  "title": "County commission districts (Pinellas)",
+  "title_es": "Distritos de la Comisión del Condado (Pinellas)",
+  "description": "Pinellas County's four single-member commission districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Pinellas County Enterprise GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_BCCSingleMemberDistrict_view/FeatureServer/0",
+   "fields": {
+    "NAME": "district",
+    "DISTRICTURL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "fl-pinellas-road-closures",
+  "state": "FL",
+  "title": "Road closures (Pinellas, live)",
+  "title_es": "Cierres de calles (Pinellas, en vivo)",
+  "description": "Current road and lane closures reported by Pinellas County Public Works and partners, with dates and detours.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Pinellas County Enterprise GIS - Public Works",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_Road_Closures_view/FeatureServer/0",
+   "fields": {
+    "BLOCKNM": "name",
+    "LOCDESC": "location",
+    "BLOCKTYPE": "kind",
+    "FULLCLOSE": "full_closure",
+    "DIRECTION": "direction",
+    "STARTDATE": "starts",
+    "ENDDATE": "ends",
+    "ALTROUTE": "detour",
+    "STATUS": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "fl-pinellas-shelters",
+  "state": "FL",
+  "title": "Hurricane evacuation shelters (Pinellas)",
+  "title_es": "Refugios de evacuación por huracán (Pinellas)",
+  "description": "Pinellas County Emergency Management shelters: kind (general, pet-friendly, special needs), address, capacity and which evacuation levels open them.",
+  "group": "help",
+  "category": "point",
+  "source": "Pinellas County Emergency Management",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_PCEM_Shelters_view/FeatureServer/0",
+   "fields": {
+    "FACNAME": "name",
+    "FACSUBTYPE": "kind",
+    "FULLADDR": "address",
+    "CAPACITY": "capacity",
+    "SITENOTES": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "fl-pinellas-zoning",
+  "state": "FL",
+  "title": "Zoning (unincorporated Pinellas)",
+  "title_es": "Zonificación (Pinellas no incorporado)",
+  "description": "County zoning for unincorporated Pinellas County.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Pinellas County Enterprise GIS - Housing and Community Development",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_Zoning2019_view/FeatureServer/0",
+   "fields": {
+    "ZONECLASS": "zoning",
+    "ZONEDESC": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "fl-pinellas-parks",
+  "state": "FL",
+  "title": "County parks and preserves (Pinellas)",
+  "title_es": "Parques y reservas del condado (Pinellas)",
+  "description": "Pinellas County parks, preserves, marinas and beach access sites.",
+  "group": "nature",
+  "category": "park",
+  "source": "Pinellas County Enterprise GIS - Parks and Conservation Resources",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_ParkBoundaries_view/FeatureServer/0",
+   "fields": {
+    "SITE_NAME": "name",
+    "SITETYPE": "kind",
+    "ADDRESS": "address",
+    "GISACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "fl-pinellas-park-trails",
+  "state": "FL",
+  "title": "Park trails (Pinellas)",
+  "title_es": "Senderos de parques (Pinellas)",
+  "description": "Trails in Pinellas County parks: surface, difficulty and whether hiking, mountain biking or horses are allowed.",
+  "group": "nature",
+  "category": "park",
+  "source": "Pinellas County Enterprise GIS - Parks and Conservation Resources",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_ParkTrail_view/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "SURFTYPE": "surface",
+    "SKILLLEVEL": "difficulty",
+    "HIKING": "hiking",
+    "MTBCYCLE": "mountain_bike",
+    "EQUESTRIAN": "horses"
+   },
+   "geometry": "line",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "fl-pinellas-trail",
+  "state": "FL",
+  "title": "Pinellas Trail",
+  "title_es": "Sendero Pinellas Trail",
+  "description": "The Fred Marquis Pinellas Trail and its segments, from Tarpon Springs to St. Petersburg.",
+  "group": "nature",
+  "category": "park",
+  "source": "Pinellas County Enterprise GIS - Public Works",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_PinellasTrail_view/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "FROMSTREET": "from",
+    "TOSTREET": "to",
+    "SURFACETYPE": "surface",
+    "LIFECYCLESTATUS": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "fl-pinellas-fire-districts",
+  "state": "FL",
+  "title": "Fire districts (Pinellas)",
+  "title_es": "Distritos de bomberos (Pinellas)",
+  "description": "Which fire department serves each Pinellas fire district.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Pinellas County Enterprise GIS - Safety and Emergency Services",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_PSSFireDistrict_view/FeatureServer/0",
+   "fields": {
+    "NAME": "district",
+    "PROVIDER": "fire_department",
+    "TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "fl-pinellas-precincts",
+  "state": "FL",
+  "title": "Voting precincts (Pinellas)",
+  "title_es": "Precintos electorales (Pinellas)",
+  "description": "Pinellas County voting precincts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Pinellas County Supervisor of Elections / EGIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_VotingPrecinct_view/FeatureServer/0",
+   "fields": {
+    "PRECINCTID": "precinct"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 95
+  }
+ },
+ {
+  "name": "fl-pinellas-recycling-sites",
+  "state": "FL",
+  "title": "Recycling drop-off sites (Pinellas)",
+  "title_es": "Puntos de reciclaje (Pinellas)",
+  "description": "Public recycling drop-off centers and mulch sites in Pinellas County: hours and what they accept.",
+  "group": "infra",
+  "category": "point",
+  "source": "Pinellas County Enterprise GIS - Solid Waste",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_RecycleSite_view/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "FEATURECODE": "kind",
+    "FULLADDR": "address",
+    "OPERDAYS": "days",
+    "OPERHOURS": "hours",
+    "RECYCLED_ITEMS": "accepts"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "fl-pinellas-transportation-projects",
+  "state": "FL",
+  "title": "Transportation improvement projects (Pinellas)",
+  "title_es": "Proyectos de mejoras de transporte (Pinellas)",
+  "description": "Road, bridge, trail and transit projects in the Forward Pinellas Transportation Improvement Program: phase, cost and expected completion.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Forward Pinellas / Pinellas County EGIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_TIPProjects_view/FeatureServer/0",
+   "fields": {
+    "PROJECT_NA": "name",
+    "TIPTYPE": "kind",
+    "DESCRIPTION": "description",
+    "PROJECTPHASE": "phase",
+    "PROJECTTOTALCOST": "total_cost",
+    "CONSTCOMPLETEDATE": "completion"
+   },
+   "geometry": "line",
+   "min_zoom": 9,
+   "where": "DISPLAY_YN = 'Y'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "fl-pinellas-national-register-districts",
+  "state": "FL",
+  "title": "National Register historic districts (Pinellas)",
+  "title_es": "Distritos históricos del Registro Nacional (Pinellas)",
+  "description": "National Register of Historic Places districts in Pinellas County.",
+  "group": "places",
+  "category": "boundary",
+  "source": "Pinellas County Enterprise GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/f5HgUpxURgEzTccH/arcgis/rest/services/Pinellas_NRHP_HistoricDistricts_view/FeatureServer/0",
+   "fields": {
+    "RESNAME": "name",
+    "ACREAGE": "acreage",
+    "COMMENTS": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "fl-jacksonville-parcels",
+  "state": "FL",
+  "title": "Parcels with zoning and land use (Jacksonville / Duval)",
+  "title_es": "Parcelas con zonificación y uso del suelo (Jacksonville / Duval)",
+  "description": "Every Duval County property lot: real estate number, acreage, zoning, future land use category and flood zone. Zoom in close to see lots.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "City of Jacksonville GIS (Property Appraiser data)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.coj.net/coj/rest/services/CityBiz/Parcels/MapServer/0",
+   "fields": {
+    "RE": "parcel_id",
+    "ACRES": "acres",
+    "ZON_LABEL": "zoning",
+    "LND_LABEL": "land_use",
+    "FLD_ZONE": "flood_zone",
+    "PUSE": "use_code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.67,
+    30.31,
+    -81.64,
+    30.33
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-jacksonville-capital-projects",
+  "state": "FL",
+  "title": "Capital improvement projects (Jacksonville)",
+  "title_es": "Proyectos de obras públicas (Jacksonville)",
+  "description": "City of Jacksonville capital projects (roads, drainage, parks, buildings): what is being built, phase and council district.",
+  "group": "growth",
+  "category": "roadops",
+  "source": "City of Jacksonville GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.coj.net/coj/rest/services/CapitalProjects/CapitalProjects/MapServer/2",
+   "fields": {
+    "PROJNAME": "name",
+    "PROJCAT": "kind",
+    "PROJPHASE": "phase",
+    "PROJDESC": "description",
+    "COUNCILDIS": "council_district",
+    "CPAC": "planning_area"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.75,
+    30.25,
+    -81.55,
+    30.4
+   ],
+   "features_in_probe": 163
+  }
+ },
+ {
+  "name": "fl-jacksonville-council-districts",
+  "state": "FL",
+  "title": "City council districts (Jacksonville)",
+  "title_es": "Distritos del Concejo Municipal (Jacksonville)",
+  "description": "Jacksonville's 14 City Council districts (five more members are elected at large).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Jacksonville GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.coj.net/coj/rest/services/CapitalProjects/CapitalProjects/MapServer/0",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.75,
+    30.25,
+    -81.55,
+    30.4
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "fl-jacksonville-septic-phase-out",
+  "state": "FL",
+  "title": "Septic tank phase-out areas (Jacksonville)",
+  "title_es": "Áreas de eliminación de tanques sépticos (Jacksonville)",
+  "description": "Neighborhoods where the City and JEA are replacing septic tanks with sewer, with project status and how many homes are connected.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "City of Jacksonville GIS / JEA",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps.coj.net/coj/rest/services/SepticTanks/STPO_Public/MapServer/0",
+   "fields": {
+    "STPO_ZONE_NAME": "area",
+    "STATUS": "status",
+    "PHASED_OUT": "homes_connected",
+    "EXISTING": "septic_left"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.75,
+    30.25,
+    -81.55,
+    30.4
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "fl-lee-parks",
+  "state": "FL",
+  "title": "County parks and preserves (Lee)",
+  "title_es": "Parques y reservas del condado (Lee)",
+  "description": "Lee County parks, beach parks and Conservation 20/20 preserves with address and size.",
+  "group": "nature",
+  "category": "park",
+  "source": "Lee County GIS - Parks and Recreation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/CGParks/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "TYPE": "kind",
+    "SiteAddress": "address",
+    "SiteCity": "city",
+    "Acres": "acres",
+    "URL": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.95,
+    26.55,
+    -81.8,
+    26.68
+   ],
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "fl-lee-trails",
+  "state": "FL",
+  "title": "Preserve and park trails (Lee)",
+  "title_es": "Senderos de reservas y parques (Lee)",
+  "description": "Trails in Lee County parks and preserves: surface, who can use them and length.",
+  "group": "nature",
+  "category": "park",
+  "source": "Lee County GIS - Parks and Recreation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/CGTrails/FeatureServer/0",
+   "fields": {
+    "Preserve_Name": "preserve",
+    "Type": "surface",
+    "User_Group": "users",
+    "ADA": "accessible",
+    "Miles": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.95,
+    26.55,
+    -81.8,
+    26.68
+   ],
+   "features_in_probe": 33
+  }
+ },
+ {
+  "name": "fl-lee-commission-districts",
+  "state": "FL",
+  "title": "County commission districts (Lee)",
+  "title_es": "Distritos de la Comisión del Condado (Lee)",
+  "description": "The five Lee County Commission districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Lee County GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/Current_Commission_Districts/FeatureServer/0",
+   "fields": {
+    "District": "district",
+    "Website": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.95,
+    26.55,
+    -81.8,
+    26.68
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "fl-lee-shelters",
+  "state": "FL",
+  "title": "Emergency public shelters (Lee)",
+  "title_es": "Refugios públicos de emergencia (Lee)",
+  "description": "Lee County emergency shelters, their role (primary or backup), floor elevation and capacity.",
+  "group": "help",
+  "category": "point",
+  "source": "Lee County Emergency Management",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/EmergencyPublicShelters/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "MISC2": "role",
+    "MISC1": "elevation",
+    "Capacity": "capacity",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.95,
+    26.55,
+    -81.8,
+    26.68
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "fl-lee-fire-districts",
+  "state": "FL",
+  "title": "Fire districts (Lee)",
+  "title_es": "Distritos de bomberos (Lee)",
+  "description": "Lee County's independent fire districts and their main office.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Lee County GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/FireDistricts/FeatureServer/0",
+   "fields": {
+    "FIREDISTRICT": "district",
+    "ADDRESS": "office",
+    "CITY": "city",
+    "PHONE": "phone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.95,
+    26.55,
+    -81.8,
+    26.68
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "fl-lee-future-land-use",
+  "state": "FL",
+  "title": "Future land use (Lee County)",
+  "title_es": "Uso futuro del suelo (condado de Lee)",
+  "description": "Lee Plan future land use categories.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Lee County GIS - Community Development",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/FutureLandUse/FeatureServer/0",
+   "fields": {
+    "LANDUSE": "land_use"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.95,
+    26.55,
+    -81.8,
+    26.68
+   ],
+   "features_in_probe": 178
+  }
+ },
+ {
+  "name": "fl-lee-zoning",
+  "state": "FL",
+  "title": "Zoning (Lee County)",
+  "title_es": "Zonificación (condado de Lee)",
+  "description": "Zoning districts in Lee County.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Lee County GIS - Community Development",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/Zoning/FeatureServer/0",
+   "fields": {
+    "ZONING": "zoning"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.95,
+    26.55,
+    -81.8,
+    26.68
+   ],
+   "features_in_probe": 1713
+  }
+ },
+ {
+  "name": "fl-lee-garbage-days",
+  "state": "FL",
+  "title": "Garbage pickup days (unincorporated Lee)",
+  "title_es": "Días de recogida de basura (Lee no incorporado)",
+  "description": "Garbage collection day and hauler for each area of unincorporated Lee County (M, T, W, R=Thursday, F).",
+  "group": "infra",
+  "category": "info",
+  "source": "Lee County GIS - Solid Waste",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/Garbage/FeatureServer/0",
+   "fields": {
+    "HAULDAY": "day",
+    "HAULER": "hauler",
+    "Type": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.95,
+    26.55,
+    -81.8,
+    26.68
+   ],
+   "features_in_probe": 58
+  }
+ },
+ {
+  "name": "fl-lee-recycling-days",
+  "state": "FL",
+  "title": "Recycling pickup days (unincorporated Lee)",
+  "title_es": "Días de recogida de reciclaje (Lee no incorporado)",
+  "description": "Recycling collection day and hauler for each area of unincorporated Lee County.",
+  "group": "infra",
+  "category": "info",
+  "source": "Lee County GIS - Solid Waste",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/Recycling/FeatureServer/0",
+   "fields": {
+    "HAULDAY": "day",
+    "HAULER": "hauler",
+    "Type": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.95,
+    26.55,
+    -81.8,
+    26.68
+   ],
+   "features_in_probe": 39
+  }
+ },
+ {
+  "name": "fl-lee-parcels",
+  "state": "FL",
+  "title": "Parcels (Lee County)",
+  "title_es": "Parcelas (condado de Lee)",
+  "description": "Every Lee County property lot from the Property Appraiser: STRAP number, land use, zoning, acreage and assessed value. Zoom in close to see lots.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "Lee County Property Appraiser / Lee County GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/Lee_County_Parcels/FeatureServer/0",
+   "fields": {
+    "STRAP": "parcel_id",
+    "LANDUSEDES": "land_use",
+    "ZONING": "zoning",
+    "GISACRES": "acres",
+    "ASSESSED": "assessed_value",
+    "JUST": "just_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.88,
+    26.62,
+    -81.85,
+    26.64
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-lee-wellfield-zones",
+  "state": "FL",
+  "title": "Wellfield protection zones (Lee)",
+  "title_es": "Zonas de protección de pozos de agua (Lee)",
+  "description": "Protection zones around public drinking-water wellfields, by travel time to the wells.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Lee County GIS - Natural Resources",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/WellfieldProtectionZones/FeatureServer/0",
+   "fields": {
+    "Utility": "utility",
+    "Travel_Time": "travel_time"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.95,
+    26.55,
+    -81.8,
+    26.68
+   ],
+   "features_in_probe": 58
+  }
+ },
+ {
+  "name": "fl-lee-permitted-wells",
+  "state": "FL",
+  "title": "Permitted water wells (Lee)",
+  "title_es": "Pozos de agua con permiso (Lee)",
+  "description": "Wells permitted by Lee County: use (drinking, irrigation), casing depth, water level and permit status. No owner information.",
+  "group": "infra",
+  "category": "point",
+  "source": "Lee County GIS - Natural Resources",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/WellsPermittedLeeCounty/FeatureServer/0",
+   "fields": {
+    "WELL_USE": "use",
+    "LAND_USE": "land_use",
+    "CASING_DEPTH": "casing_depth_ft",
+    "STATIC_WATER_LEVEL": "water_level_ft",
+    "ISSUE_DATE": "permit_date",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.88,
+    26.62,
+    -81.85,
+    26.64
+   ],
+   "features_in_probe": 258
+  }
+ },
+ {
+  "name": "fl-lee-road-closures",
+  "state": "FL",
+  "title": "Road closures (Lee County)",
+  "title_es": "Cierres de calles (condado de Lee)",
+  "description": "Current road closures on Lee County roads: street, reason, lanes affected, dates and detour.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Lee County Department of Transportation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/LvWGAAhHwbCJ2GMP/arcgis/rest/services/RoadClosures_public_2314d481f9a94c899df9b9e62958d99b/FeatureServer/1",
+   "fields": {
+    "street": "street",
+    "direction": "direction",
+    "reason": "reason",
+    "laneimpact": "lanes",
+    "description": "description",
+    "starttime": "starts",
+    "endtime": "ends",
+    "altroute": "detour"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.95,
+    26.55,
+    -81.8,
+    26.68
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "fl-polk-parcels",
+  "state": "FL",
+  "title": "Parcels (Polk County)",
+  "title_es": "Parcelas (condado de Polk)",
+  "description": "Every Polk County property lot from the Property Appraiser: parcel ID, use, acreage and assessed and total value. Zoom in close to see lots.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "Polk County Property Appraiser / Polk County GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.polkfl.gov/server/rest/services/Map_Property_Appraiser/MapServer/1",
+   "fields": {
+    "PARCELID": "parcel_id",
+    "DOR_USE_CODE_DESC": "land_use",
+    "TOT_ACREAGE": "acres",
+    "ASSESSVAL": "assessed_value",
+    "TOTALVAL": "total_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.97,
+    28.03,
+    -81.94,
+    28.05
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-polk-commission-districts",
+  "state": "FL",
+  "title": "County commission districts (Polk)",
+  "title_es": "Distritos de la Comisión del Condado (Polk)",
+  "description": "The five Polk County Commission districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Polk County BoCC GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.polkfl.gov/server/rest/services/Commissioners_Redistrict_MIL/MapServer/0",
+   "fields": {
+    "Alternative_Dist_Name": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.0,
+    27.98,
+    -81.9,
+    28.1
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "fl-brevard-zoning",
+  "state": "FL",
+  "title": "Zoning (unincorporated Brevard)",
+  "title_es": "Zonificación (Brevard no incorporado)",
+  "description": "Brevard County zoning classes.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Brevard County BoCC GIS - Planning and Development",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.brevardfl.gov/gissrv/rest/services/Planning_Development/Zoning_WKID2881/MapServer/0",
+   "fields": {
+    "ZONING": "zoning"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.75,
+    28.05,
+    -80.6,
+    28.4
+   ],
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "fl-brevard-future-land-use",
+  "state": "FL",
+  "title": "Future land use (Brevard)",
+  "title_es": "Uso futuro del suelo (Brevard)",
+  "description": "Brevard County Comprehensive Plan future land use (e.g. RES 1:2.5 = one home per 2.5 acres).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Brevard County BoCC GIS - Planning and Development",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.brevardfl.gov/gissrv/rest/services/Planning_Development/FLU_WKID2881/MapServer/0",
+   "fields": {
+    "FLU": "land_use"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.75,
+    28.05,
+    -80.6,
+    28.4
+   ],
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "fl-brevard-commission-districts",
+  "state": "FL",
+  "title": "County commission districts (Brevard)",
+  "title_es": "Distritos de la Comisión del Condado (Brevard)",
+  "description": "The five Brevard County Commission districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Brevard County BoCC GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.brevardfl.gov/gissrv/rest/services/Base_Map/General_WKID2881/MapServer/1",
+   "fields": {
+    "NAME": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.75,
+    28.05,
+    -80.6,
+    28.4
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "fl-brevard-elementary-school-zones",
+  "state": "FL",
+  "title": "Elementary school attendance zones (Brevard)",
+  "title_es": "Zonas de escuelas primaria (Brevard)",
+  "description": "Brevard Public Schools elementary school boundaries (2024-25 map).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Brevard County BoCC GIS / Brevard Public Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/zfDSLldsAGQfwUz9/arcgis/rest/services/Elementary_School_Attendance_Boundary_2024_2025/FeatureServer/0",
+   "fields": {
+    "Elem_Commo": "school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.75,
+    28.05,
+    -80.6,
+    28.4
+   ],
+   "features_in_probe": 32
+  }
+ },
+ {
+  "name": "fl-brevard-middle-school-zones",
+  "state": "FL",
+  "title": "Middle school attendance zones (Brevard)",
+  "title_es": "Zonas de escuelas intermedia (Brevard)",
+  "description": "Brevard Public Schools middle school boundaries (2024-25 map).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Brevard County BoCC GIS / Brevard Public Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/zfDSLldsAGQfwUz9/arcgis/rest/services/Middle_School_Attendance_Boundary_2024_2025/FeatureServer/0",
+   "fields": {
+    "Middle_Com": "school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.75,
+    28.05,
+    -80.6,
+    28.4
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "fl-brevard-high-school-zones",
+  "state": "FL",
+  "title": "High school attendance zones (Brevard)",
+  "title_es": "Zonas de escuelas secundaria (Brevard)",
+  "description": "Brevard Public Schools high school boundaries (2024-25 map).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Brevard County BoCC GIS / Brevard Public Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/zfDSLldsAGQfwUz9/arcgis/rest/services/High_School_Attendance_Boundary_2024_2025/FeatureServer/0",
+   "fields": {
+    "High_Commo": "school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.75,
+    28.05,
+    -80.6,
+    28.4
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "fl-brevard-parks",
+  "state": "FL",
+  "title": "Parks and recreation facilities (Brevard)",
+  "title_es": "Parques e instalaciones recreativas (Brevard)",
+  "description": "Brevard County parks, community centers and pools with address, hours and web page.",
+  "group": "nature",
+  "category": "park",
+  "source": "Brevard County BoCC GIS - Parks and Recreation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/zfDSLldsAGQfwUz9/arcgis/rest/services/SiteFinityParks2AGOLView/FeatureServer/0",
+   "fields": {
+    "Title": "name",
+    "Address_Street": "address",
+    "Address_City": "city",
+    "WorkingHours": "hours",
+    "PageUrl": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.75,
+    28.05,
+    -80.6,
+    28.4
+   ],
+   "features_in_probe": 42
+  }
+ },
+ {
+  "name": "fl-brevard-eel-sanctuaries",
+  "state": "FL",
+  "title": "Environmentally Endangered Lands sanctuaries (Brevard)",
+  "title_es": "Santuarios de Tierras en Peligro Ambiental (Brevard)",
+  "description": "Brevard's EEL Program nature sanctuaries with hours and web page.",
+  "group": "nature",
+  "category": "park",
+  "source": "Brevard County BoCC GIS - EEL Program",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/zfDSLldsAGQfwUz9/arcgis/rest/services/NewSiteFinityParks2AGOL4EELsView/FeatureServer/0",
+   "fields": {
+    "Title": "name",
+    "Address_Street": "address",
+    "Address_City": "city",
+    "WorkingHours": "hours",
+    "PageUrl": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.75,
+    28.05,
+    -80.6,
+    28.4
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "fl-brevard-recycling-locations",
+  "state": "FL",
+  "title": "Where to recycle what (Brevard)",
+  "title_es": "Dónde reciclar cada cosa (Brevard)",
+  "description": "Brevard Solid Waste's Recyclopedia: drop-off places for cans, electronics, batteries, paint and more.",
+  "group": "infra",
+  "category": "point",
+  "source": "Brevard County BoCC GIS - Solid Waste Management",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services2.arcgis.com/zfDSLldsAGQfwUz9/arcgis/rest/services/SW_Recyclopedia_All_view/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "Recycle": "accepts"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.75,
+    28.05,
+    -80.6,
+    28.4
+   ],
+   "features_in_probe": 62
+  }
+ },
+ {
+  "name": "fl-volusia-polling-places",
+  "state": "FL",
+  "title": "Election Day polling places (Volusia)",
+  "title_es": "Lugares de votación el día de las elecciones (Volusia)",
+  "description": "Where each Volusia County precinct votes on Election Day, Nov. 3, 2026.",
+  "group": "civic",
+  "category": "point",
+  "source": "Volusia County Supervisor of Elections / GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps5.vcgov.org/arcgis/rest/services/Election_Voter/MapServer/0",
+   "fields": {
+    "PRECINCT": "precinct",
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITYNAME": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.1,
+    29.15,
+    -81.0,
+    29.25
+   ],
+   "features_in_probe": 37
+  }
+ },
+ {
+  "name": "fl-volusia-early-voting",
+  "state": "FL",
+  "title": "Early voting sites (Volusia)",
+  "title_es": "Sitios de votación anticipada (Volusia)",
+  "description": "Volusia County early voting locations.",
+  "group": "civic",
+  "category": "point",
+  "source": "Volusia County Supervisor of Elections / GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps5.vcgov.org/arcgis/rest/services/Election_Voter/MapServer/8",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITYNAME": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.1,
+    29.15,
+    -81.0,
+    29.25
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "fl-volusia-council-districts",
+  "state": "FL",
+  "title": "County council districts (Volusia)",
+  "title_es": "Distritos del Concejo del Condado (Volusia)",
+  "description": "The five Volusia County Council districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Volusia County GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps5.vcgov.org/arcgis/rest/services/Election_Voter/MapServer/5",
+   "fields": {
+    "COUNCIL": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.1,
+    29.15,
+    -81.0,
+    29.25
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "fl-volusia-precincts",
+  "state": "FL",
+  "title": "Voting precincts (Volusia)",
+  "title_es": "Precintos electorales (Volusia)",
+  "description": "Volusia County precincts, each precinct's polling place, and its districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Volusia County Supervisor of Elections / GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps5.vcgov.org/arcgis/rest/services/Election_Voter/FeatureServer/1",
+   "fields": {
+    "Precinct_Number": "precinct",
+    "PollingPlace": "polling_place",
+    "CityName": "city",
+    "Label_F": "districts"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.1,
+    29.15,
+    -81.0,
+    29.25
+   ],
+   "features_in_probe": 60
+  }
+ },
+ {
+  "name": "fl-volusia-zoning",
+  "state": "FL",
+  "title": "Zoning (unincorporated Volusia)",
+  "title_es": "Zonificación (Volusia no incorporado)",
+  "description": "Volusia County zoning classes and rezoning case numbers.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Volusia County GIS - Planning and Development",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps5.vcgov.org/arcgis/rest/services/Land_Use_Zoning/MapServer/0",
+   "fields": {
+    "ZONCODE": "zoning",
+    "ZONCASE": "case"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.1,
+    29.15,
+    -81.0,
+    29.25
+   ],
+   "features_in_probe": 225
+  }
+ },
+ {
+  "name": "fl-volusia-future-land-use",
+  "state": "FL",
+  "title": "Future land use (Volusia)",
+  "title_es": "Uso futuro del suelo (Volusia)",
+  "description": "Volusia County Comprehensive Plan future land use.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Volusia County GIS - Planning and Development",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps5.vcgov.org/arcgis/rest/services/Land_Use_Zoning/MapServer/1",
+   "fields": {
+    "LUCODE": "land_use",
+    "LUNAME": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.1,
+    29.15,
+    -81.0,
+    29.25
+   ],
+   "features_in_probe": 136
+  }
+ },
+ {
+  "name": "fl-volusia-parcels",
+  "state": "FL",
+  "title": "Parcels (Volusia)",
+  "title_es": "Parcelas (Volusia)",
+  "description": "Every Volusia County property lot: parcel ID, property use, acreage and taxable value. Zoom in close to see lots.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "Volusia County Property Appraiser / GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps5.vcgov.org/arcgis/rest/services/CountywideZoning/MapServer/0",
+   "fields": {
+    "PID": "parcel_id",
+    "PC_DESC": "land_use",
+    "CALCACRES": "acres",
+    "COTXBL": "county_taxable"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.03,
+    29.2,
+    -81.0,
+    29.22
+   ],
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "fl-volusia-parks",
+  "state": "FL",
+  "title": "County parks, piers and beach ramps (Volusia)",
+  "title_es": "Parques, muelles y accesos a la playa (Volusia)",
+  "description": "Volusia County parks, fishing piers and beach access points with amenities (restrooms, playground, pier).",
+  "group": "nature",
+  "category": "park",
+  "source": "Volusia County GIS - Parks, Recreation and Culture",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://maps5.vcgov.org/arcgis/rest/services/Parks/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "CityName": "city",
+    "Type": "kind",
+    "Status": "status",
+    "Restrooms": "restrooms",
+    "Playground": "playground",
+    "Pier": "pier",
+    "URL": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -81.1,
+    29.15,
+    -81.0,
+    29.25
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "fl-leon-zoning",
+  "state": "FL",
+  "title": "Zoning (Tallahassee and Leon County)",
+  "title_es": "Zonificación (Tallahassee y condado de Leon)",
+  "description": "Zoning districts for Tallahassee and unincorporated Leon County.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Tallahassee-Leon County GIS (TLCGIS)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/TLC_OverlayZoning_D_WM/MapServer/0",
+   "fields": {
+    "ZONING": "zoning",
+    "ZONED": "description",
+    "JURISDICTION": "jurisdiction",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.35,
+    30.4,
+    -84.2,
+    30.5
+   ],
+   "features_in_probe": 741
+  }
+ },
+ {
+  "name": "fl-leon-future-land-use",
+  "state": "FL",
+  "title": "Future land use (Tallahassee and Leon County)",
+  "title_es": "Uso futuro del suelo (Tallahassee y Leon)",
+  "description": "Tallahassee-Leon County Comprehensive Plan future land use.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Tallahassee-Leon County GIS (TLCGIS) / Planning Department",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/TLC_OverlayFutureLandUse_D_WM/MapServer/0",
+   "fields": {
+    "LANDUSE": "land_use",
+    "FUTURELU": "code",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.35,
+    30.4,
+    -84.2,
+    30.5
+   ],
+   "features_in_probe": 288
+  }
+ },
+ {
+  "name": "fl-leon-elementary-school-zones",
+  "state": "FL",
+  "title": "Elementary school zones (Leon County)",
+  "title_es": "Zonas de escuelas primaria (condado de Leon)",
+  "description": "Leon County Schools elementary school attendance zones with each school's address and website.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Tallahassee-Leon County GIS (TLCGIS) / Leon County Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/LCSB_ElementarySchoolsandZones_D_WM/MapServer/1",
+   "fields": {
+    "NAME": "school",
+    "ADDRESS": "address",
+    "WEBSITE": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.35,
+    30.4,
+    -84.2,
+    30.5
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "fl-leon-middle-school-zones",
+  "state": "FL",
+  "title": "Middle school zones (Leon County)",
+  "title_es": "Zonas de escuelas intermedia (condado de Leon)",
+  "description": "Leon County Schools middle school attendance zones with each school's address and website.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Tallahassee-Leon County GIS (TLCGIS) / Leon County Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/LCSB_MiddleSchoolsandZones_D_WM/MapServer/1",
+   "fields": {
+    "NAME": "school",
+    "ADDRESS": "address",
+    "WEBSITE": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.35,
+    30.4,
+    -84.2,
+    30.5
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "fl-leon-high-school-zones",
+  "state": "FL",
+  "title": "High school zones (Leon County)",
+  "title_es": "Zonas de escuelas secundaria (condado de Leon)",
+  "description": "Leon County Schools high school attendance zones with each school's address and website.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Tallahassee-Leon County GIS (TLCGIS) / Leon County Schools",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/LCSB_HighSchoolsandZones_D_WM/MapServer/1",
+   "fields": {
+    "NAME": "school",
+    "ADDRESS": "address",
+    "WEBSITE": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.35,
+    30.4,
+    -84.2,
+    30.5
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "fl-leon-polling-places",
+  "state": "FL",
+  "title": "Polling places (Leon County)",
+  "title_es": "Lugares de votación (condado de Leon)",
+  "description": "Election Day polling places from the Leon County Supervisor of Elections.",
+  "group": "civic",
+  "category": "point",
+  "source": "Leon County Supervisor of Elections / TLCGIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/SOE_InterPlacesPublic_D_WM/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADD1": "address",
+    "PCTPARENT": "precinct",
+    "ADA": "accessible"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "ACTIVE = 'Y'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.35,
+    30.4,
+    -84.2,
+    30.5
+   ],
+   "features_in_probe": 47
+  }
+ },
+ {
+  "name": "fl-leon-early-voting",
+  "state": "FL",
+  "title": "Early voting sites (Leon County)",
+  "title_es": "Sitios de votación anticipada (condado de Leon)",
+  "description": "Early voting locations in Leon County.",
+  "group": "civic",
+  "category": "point",
+  "source": "Leon County Supervisor of Elections / TLCGIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/SOE_InterPlacesPublic_D_WM/MapServer/1",
+   "fields": {
+    "NAME": "name",
+    "ADD1": "address"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "where": "ACTIVE = 'Y'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.35,
+    30.4,
+    -84.2,
+    30.5
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "fl-leon-precincts",
+  "state": "FL",
+  "title": "Voting precincts (Leon County)",
+  "title_es": "Precintos electorales (condado de Leon)",
+  "description": "Leon County precincts and each one's polling place.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Leon County Supervisor of Elections / TLCGIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/SOE_DistrictsCurrent_D_WM/MapServer/0",
+   "fields": {
+    "PRECINCT": "precinct",
+    "POLLLOC": "polling_place"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.35,
+    30.4,
+    -84.2,
+    30.5
+   ],
+   "features_in_probe": 92
+  }
+ },
+ {
+  "name": "fl-leon-commission-districts",
+  "state": "FL",
+  "title": "County commission districts (Leon)",
+  "title_es": "Distritos de la Comisión del Condado (Leon)",
+  "description": "The five Leon County Commission districts (two more commissioners are elected at large).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Leon County Supervisor of Elections / TLCGIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/SOE_DistrictsCurrent_D_WM/MapServer/1",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.35,
+    30.4,
+    -84.2,
+    30.5
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "fl-leon-parks",
+  "state": "FL",
+  "title": "Parks (Tallahassee and Leon County)",
+  "title_es": "Parques (Tallahassee y condado de Leon)",
+  "description": "City and County parks with amenities: trails, restrooms, playground, dog park, boat ramp.",
+  "group": "nature",
+  "category": "park",
+  "source": "Tallahassee-Leon County GIS (TLCGIS)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/TLC_OverlayParks_D_WM/MapServer/1",
+   "fields": {
+    "PARKNAME": "name",
+    "ADDRESS": "address",
+    "ACREAGE": "acres",
+    "MANAGER": "managed_by",
+    "TRAILS": "trails",
+    "RESTROOM": "restrooms",
+    "PLAYGROUND": "playground",
+    "DOGPARK": "dog_park",
+    "BOATRAMP": "boat_ramp",
+    "HOTLINK": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.35,
+    30.4,
+    -84.2,
+    30.5
+   ],
+   "features_in_probe": 110
+  }
+ },
+ {
+  "name": "fl-leon-trails",
+  "state": "FL",
+  "title": "Trails (Tallahassee and Leon County)",
+  "title_es": "Senderos (Tallahassee y condado de Leon)",
+  "description": "Hiking, biking and shared-use trails in and around Tallahassee: surface, difficulty, length and status.",
+  "group": "nature",
+  "category": "park",
+  "source": "Tallahassee-Leon County GIS (TLCGIS)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/TLC_OverlayParkTrails_D_WM/MapServer/0",
+   "fields": {
+    "TRAILNAME": "name",
+    "PARKNAME": "park",
+    "SURFACE": "surface",
+    "DIFFICULTY": "difficulty",
+    "MILES": "miles",
+    "STATUS": "status",
+    "HIKING": "hiking",
+    "MTBCYCLE": "mountain_bike"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.35,
+    30.4,
+    -84.2,
+    30.5
+   ],
+   "features_in_probe": 160
+  }
+ },
+ {
+  "name": "fl-leon-canopy-roads",
+  "state": "FL",
+  "title": "Canopy roads (Leon County)",
+  "title_es": "Caminos de dosel (condado de Leon)",
+  "description": "Leon County's protected canopy roads, lined with live oaks, where tree removal and widening are restricted.",
+  "group": "places",
+  "category": "info",
+  "source": "Tallahassee-Leon County GIS (TLCGIS)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/TLC_OverlayCanopyRoads_WM_D/MapServer/0",
+   "fields": {
+    "FULLNAME": "road",
+    "MILES": "miles"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.35,
+    30.4,
+    -84.2,
+    30.5
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "fl-leon-parcels",
+  "state": "FL",
+  "title": "Parcels (Leon County)",
+  "title_es": "Parcelas (condado de Leon)",
+  "description": "Leon County property lots with tax ID and acreage. Zoom in close to see lots.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "Leon County Property Appraiser / TLCGIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://intervector.leoncountyfl.gov/intervector/rest/services/MapServices/TLC_OverlayParcel_D_WM/MapServer/0",
+   "fields": {
+    "TAXID": "parcel_id",
+    "CALC_ACREA": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -84.29,
+    30.43,
+    -84.26,
+    30.45
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-escambia-parks",
+  "state": "FL",
+  "title": "Neighborhood parks (Escambia)",
+  "title_es": "Parques de vecindario (Escambia)",
+  "description": "Escambia County neighborhood parks.",
+  "group": "nature",
+  "category": "park",
+  "source": "Escambia County GIS - Parks and Recreation",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gismaps.myescambia.com/arcgis/rest/services/Escambia_County/MapServer/4",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "TYPE": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.3,
+    30.4,
+    -87.15,
+    30.55
+   ],
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "fl-escambia-boat-access",
+  "state": "FL",
+  "title": "Boat access sites (Escambia)",
+  "title_es": "Accesos para botes (Escambia)",
+  "description": "Public boat ramps and launch sites in Escambia County and the waterbody each reaches.",
+  "group": "nature",
+  "category": "point",
+  "source": "Escambia County GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gismaps.myescambia.com/arcgis/rest/services/Escambia_County/MapServer/7",
+   "fields": {
+    "SITE": "name",
+    "ADDRESS": "address",
+    "WATERBODY": "waterbody"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.3,
+    30.4,
+    -87.15,
+    30.55
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "fl-escambia-snorkel-reefs",
+  "state": "FL",
+  "title": "Snorkeling reefs (Escambia)",
+  "title_es": "Arrecifes para esnórquel (Escambia)",
+  "description": "Near-shore artificial reefs built for snorkeling off Pensacola Beach and Perdido Key.",
+  "group": "nature",
+  "category": "point",
+  "source": "Escambia County GIS - Marine Resources",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gismaps.myescambia.com/arcgis/rest/services/Escambia_County/MapServer/3",
+   "fields": {
+    "Name": "name"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.3,
+    30.4,
+    -87.15,
+    30.55
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "fl-escambia-shelters",
+  "state": "FL",
+  "title": "Hurricane shelters (Escambia)",
+  "title_es": "Refugios para huracanes (Escambia)",
+  "description": "Escambia County hurricane shelters with building, capacity and address. Check local news or Escambia EM for which are open.",
+  "group": "help",
+  "category": "point",
+  "source": "Escambia County Emergency Management",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gismaps.myescambia.com/arcgis/rest/services/Escambia_County/MapServer/12",
+   "fields": {
+    "SHELTERNAM": "name",
+    "SHELTERTYP": "kind",
+    "SHELTERLOC": "building",
+    "CAPACITY": "capacity",
+    "ADDRESS": "address",
+    "CITYSTZIP": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.3,
+    30.4,
+    -87.15,
+    30.55
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "fl-escambia-commission-districts",
+  "state": "FL",
+  "title": "County commission districts (Escambia)",
+  "title_es": "Distritos de la Comisión del Condado (Escambia)",
+  "description": "The five Escambia County Commission districts.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Escambia County GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gismaps.myescambia.com/arcgis/rest/services/Escambia_County/MapServer/29",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.3,
+    30.4,
+    -87.15,
+    30.55
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "fl-escambia-future-land-use",
+  "state": "FL",
+  "title": "Future land use 2030 (Escambia)",
+  "title_es": "Uso futuro del suelo 2030 (Escambia)",
+  "description": "Escambia County 2030 Comprehensive Plan future land use categories.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Escambia County GIS - Development Services",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gismaps.myescambia.com/arcgis/rest/services/Escambia_County/MapServer/42",
+   "fields": {
+    "FLU_LABEL": "land_use"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.3,
+    30.4,
+    -87.15,
+    30.55
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-escambia-zoning",
+  "state": "FL",
+  "title": "Zoning (Escambia)",
+  "title_es": "Zonificación (Escambia)",
+  "description": "Escambia County zoning districts and the latest rezoning case.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Escambia County GIS - Development Services",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gismaps.myescambia.com/arcgis/rest/services/Escambia_County/MapServer/43",
+   "fields": {
+    "ZONING": "zoning",
+    "CASE_NUMBER": "case"
+   },
+   "geometry": "polygon",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.3,
+    30.4,
+    -87.15,
+    30.55
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-escambia-parcels",
+  "state": "FL",
+  "title": "Parcels (Escambia)",
+  "title_es": "Parcelas (Escambia)",
+  "description": "Escambia County property lots: reference number, use code, land size and current market value. Zoom in close to see lots.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "Escambia County Property Appraiser / GIS",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gismaps.myescambia.com/arcgis/rest/services/Escambia_County/MapServer/0",
+   "fields": {
+    "REFNUM": "parcel_id",
+    "DORCD": "use_code",
+    "LANDSIZE": "land_size",
+    "CURRMKT": "market_value"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.23,
+    30.42,
+    -87.2,
+    30.44
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "fl-artificial-reefs",
+  "state": "FL",
+  "title": "Artificial reefs (Florida)",
+  "title_es": "Arrecifes artificiales (Florida)",
+  "description": "Every public artificial reef deployment in Florida waters: what was sunk, when, depth and coordinates, for fishing and diving.",
+  "group": "nature",
+  "category": "point",
+  "source": "Florida Fish and Wildlife Conservation Commission (FWC)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.myfwc.com/mapping/rest/services/Open_Data/Artificial_Reef_Locations_in_Florida/MapServer/12",
+   "fields": {
+    "Name": "name",
+    "Description": "description",
+    "MatDescrip": "material",
+    "DeployDate": "deployed",
+    "Depth": "depth_ft",
+    "County": "county",
+    "Lat_DM": "lat",
+    "Long_DM": "lon"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.6,
+    29.8,
+    -86.8,
+    30.5
+   ],
+   "features_in_probe": 600
+  }
+ },
+ {
+  "name": "fl-red-tide",
+  "state": "FL",
+  "title": "Red tide samples, last 45 days (Florida)",
+  "title_es": "Muestras de marea roja, últimos 45 días (Florida)",
+  "description": "FWC water samples for the red tide organism Karenia brevis over the last 45 days: cells per liter (above 100,000 can cause breathing irritation and fish kills).",
+  "group": "live",
+  "category": "hazard",
+  "source": "Florida Fish and Wildlife Conservation Commission (FWC) - Fish and Wildlife Research Institute",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.myfwc.com/mapping/rest/services/Open_Data/Recent_Harmful_Algal_Bloom__HAB__Events_2024_present/MapServer/7",
+   "fields": {
+    "LOCATION": "location",
+    "SAMPLE_DATE": "sampled",
+    "NAME": "organism",
+    "COUNT_": "cells_per_liter",
+    "DEPTH": "depth_m"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "SAMPLE_DATE >= CURRENT_DATE - 45"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -83.0,
+    26.0,
+    -81.5,
+    28.5
+   ],
+   "features_in_probe": 264
+  }
+ },
+ {
+  "name": "fl-fish-management-areas",
+  "state": "FL",
+  "title": "Fish management areas (Florida)",
+  "title_es": "Áreas de manejo de pesca (Florida)",
+  "description": "Lakes and ponds FWC manages for public freshwater fishing, often with special bag limits.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Florida Fish and Wildlife Conservation Commission (FWC)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.myfwc.com/hosting/rest/services/Open_Data/Fish_Management_Areas_Florida/MapServer/3",
+   "fields": {
+    "NAME": "name",
+    "COUNTY": "county",
+    "REGION": "region"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.5,
+    27.7,
+    -81.2,
+    28.8
+   ],
+   "features_in_probe": 70
+  }
+ },
+ {
+  "name": "fl-manatee-zones",
+  "state": "FL",
+  "title": "Manatee protection speed zones (Florida)",
+  "title_es": "Zonas de velocidad para proteger manatíes (Florida)",
+  "description": "State boat speed zones that protect manatees (slow speed, idle, no entry) and the season each applies.",
+  "group": "nature",
+  "category": "hazard",
+  "source": "Florida Fish and Wildlife Conservation Commission (FWC)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.myfwc.com/hosting/rest/services/Open_Data/State_Manatee_Protection_Zones_in_Florida/MapServer/9",
+   "fields": {
+    "TEXT_68C": "rule",
+    "DATE1_68C": "season",
+    "NOTES_68C": "notes",
+    "COUNTY": "county",
+    "SECT_68C": "rule_section"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.6,
+    25.4,
+    -80.0,
+    26.4
+   ],
+   "features_in_probe": 78
+  }
+ },
+ {
+  "name": "fl-boating-safety-zones",
+  "state": "FL",
+  "title": "Boating safety zones (Florida)",
+  "title_es": "Zonas de seguridad náutica (Florida)",
+  "description": "State boating-restricted areas (slow speed, no wake, idle) near bridges, marinas and channels, and when they apply.",
+  "group": "nature",
+  "category": "hazard",
+  "source": "Florida Fish and Wildlife Conservation Commission (FWC)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.myfwc.com/hosting/rest/services/Open_Data/State_Boating_Safety_Zones_Florida/MapServer/10",
+   "fields": {
+    "AREA_NAME": "name",
+    "RESTRICTION": "restriction",
+    "CON_SHORT": "when",
+    "RULE_NUM": "rule",
+    "HYPERLINK": "page"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.8,
+    27.85,
+    -82.65,
+    28.0
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "fl-algal-bloom-sampling",
+  "state": "FL",
+  "title": "Blue-green algae samples, last 45 days (Florida)",
+  "title_es": "Muestras de algas verdeazules, últimos 45 días (Florida)",
+  "description": "DEP and water management district site visits for blue-green algae blooms in lakes, rivers and canals: whether a bloom was seen, the algae found and toxin results.",
+  "group": "live",
+  "category": "hazard",
+  "source": "Florida Department of Environmental Protection (DEP)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services1.arcgis.com/nRHtyn3uE1kyzoYc/arcgis/rest/services/AlgalBloom_Final_View/FeatureServer/0",
+   "fields": {
+    "locationString": "location",
+    "SampleDateTime": "sampled",
+    "County": "county",
+    "BloomObserved": "bloom_seen",
+    "AlgalIDResult": "algae",
+    "ToxinPresent": "toxin_present",
+    "Microcystin": "microcystin"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "SampleDateTime >= CURRENT_DATE - 45"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.5,
+    27.7,
+    -81.2,
+    28.8
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "fl-beach-water-sampling",
+  "state": "FL",
+  "title": "Beach water-quality sampling sites (Florida)",
+  "title_es": "Sitios de muestreo de calidad del agua en playas (Florida)",
+  "description": "Florida Healthy Beaches Program sampling sites; the link shows the latest bacteria results and any swim advisory.",
+  "group": "nature",
+  "category": "point",
+  "source": "Florida Department of Health - Florida Healthy Beaches Program",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services1.arcgis.com/CY1LXxl9zlJeBuRZ/arcgis/rest/services/FloridaBeachSamplingPoints/FeatureServer/0",
+   "fields": {
+    "SPLocation": "beach",
+    "County": "county",
+    "Active": "active",
+    "Link": "page"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -80.6,
+    25.4,
+    -80.0,
+    26.4
+   ],
+   "features_in_probe": 41
+  }
+ },
+ {
+  "name": "fl-springs",
+  "state": "FL",
+  "title": "Springs (Florida)",
+  "title_es": "Manantiales (Florida)",
+  "description": "Florida's springs mapped by DEP and the water management districts, with county and flow magnitude (1 = largest).",
+  "group": "nature",
+  "category": "point",
+  "source": "Florida Department of Environmental Protection (DEP)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/SPRINGS/MapServer/1",
+   "fields": {
+    "SPRING_NAME": "name",
+    "COUNTY": "county",
+    "MAGNITUDE": "magnitude"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.5,
+    27.7,
+    -81.2,
+    28.8
+   ],
+   "features_in_probe": 85
+  }
+ },
+ {
+  "name": "fl-fdot-construction",
+  "state": "FL",
+  "title": "Active road construction (FDOT)",
+  "title_es": "Obras viales activas (FDOT)",
+  "description": "Florida Department of Transportation construction contracts underway now: what is being done, start and estimated end dates, and cost. Updated nightly.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Florida Department of Transportation (FDOT)",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://gis.fdot.gov/arcgis/rest/services/Active_Construction_Projects/MapServer/1",
+   "fields": {
+    "Description": "description",
+    "StartDate": "starts",
+    "EstEndDate": "estimated_end",
+    "Cost": "cost",
+    "District": "district",
+    "Website": "page"
+   },
+   "geometry": "line",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -82.5,
+    27.7,
+    -81.2,
+    28.8
+   ],
+   "features_in_probe": 478
+  }
+ },
+ {
+  "name": "fl-disaster-distribution-sites",
+  "state": "FL",
+  "title": "Disaster supply sites open now (Florida)",
+  "title_es": "Puntos de ayuda por desastre abiertos (Florida)",
+  "description": "State Emergency Response Team points of distribution (water, food, tarps), comfort stations and disaster recovery centers that are open after a storm, updated in the last three weeks.",
+  "group": "live",
+  "category": "point",
+  "source": "Florida Division of Emergency Management (FDEM) - SERT",
+  "license": "Florida public record (Ch. 119 F.S.); free to use with attribution",
+  "view": {
+   "url": "https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/SERTDistributionSites2024_view/FeatureServer/0",
+   "fields": {
+    "site_name": "name",
+    "site_type": "kind",
+    "site_status": "status",
+    "address": "address",
+    "county": "county",
+    "incidentid": "event",
+    "date_opened": "opened"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "site_status = 'Open' AND public_visibility = 'Show' AND EditDate >= CURRENT_DATE - 21 AND site_type IN ('Point of Distribution','Self Service Point of Distribution','Comfort Station','Disaster Recovery Center')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -87.6,
+    29.8,
+    -86.8,
+    30.5
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "pr-zoning",
+  "state": "PR",
+  "title": "Zoning (calificación) by parcel (Puerto Rico)",
+  "title_es": "Calificación de suelos por finca (Puerto Rico)",
+  "description": "Junta de Planificación zoning for each cadastral parcel: the district code and description, the land classification (urban, rural) and the resolution behind it. Zoom in close to see parcels.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Información pública del Gobierno de Puerto Rico; uso libre con atribución",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Calificaci%C3%B3n/MapServer/228",
+   "fields": {
+    "cali": "zoning",
+    "descrip": "description",
+    "descrip1": "classification",
+    "municipio": "municipio",
+    "barrio": "barrio",
+    "resolucion": "resolution",
+    "vigencia": "effective"
+   },
+   "geometry": "polygon",
+   "min_zoom": 18,
+   "max_features": 500
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -66.08,
+    18.44,
+    -66.06,
+    18.46
+   ],
+   "features_in_probe": 500
+  }
+ },
+ {
+  "name": "pr-barrios",
+  "state": "PR",
+  "title": "Barrios (Puerto Rico)",
+  "title_es": "Barrios (Puerto Rico)",
+  "description": "The 900-plus barrios of Puerto Rico's 78 municipios.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Información pública del Gobierno de Puerto Rico; uso libre con atribución",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Advisory_Maps/Datos_Generales/MapServer/3",
+   "fields": {
+    "BARRIO": "barrio",
+    "MUNICIPIO": "municipio"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -66.12,
+    18.38,
+    -66.02,
+    18.47
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "pr-sectores",
+  "state": "PR",
+  "title": "Communities and sectors (Puerto Rico)",
+  "title_es": "Sectores, urbanizaciones y comunidades (Puerto Rico)",
+  "description": "Names of sectores, urbanizaciones, residenciales and comunidades, with their barrio and municipio.",
+  "group": "civic",
+  "category": "point",
+  "source": "Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Información pública del Gobierno de Puerto Rico; uso libre con atribución",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Advisory_Maps/Datos_Generales/MapServer/0",
+   "fields": {
+    "NOMBRE": "name",
+    "TIPO": "kind",
+    "BARRIO": "barrio",
+    "Municipio": "municipio"
+   },
+   "geometry": "point",
+   "min_zoom": 15
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -66.12,
+    18.38,
+    -66.02,
+    18.47
+   ],
+   "features_in_probe": 1000
+  }
+ },
+ {
+  "name": "pr-watersheds",
+  "state": "PR",
+  "title": "Watersheds (Puerto Rico)",
+  "title_es": "Cuencas hidrográficas (Puerto Rico)",
+  "description": "Puerto Rico's main river basins.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Junta de Planificación de Puerto Rico (SIGE)",
+  "license": "Información pública del Gobierno de Puerto Rico; uso libre con atribución",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Recursos_Naturales__Cuerpos_de_Agua_MIL1/MapServer/9",
+   "fields": {
+    "NOMBRE": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -67.3,
+    17.9,
+    -65.2,
+    18.55
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "pr-health-centers-330",
+  "state": "PR",
+  "title": "Community health centers (CSI 330, Puerto Rico)",
+  "title_es": "Centros de salud 330 (Puerto Rico)",
+  "description": "Federally qualified community health centers (\"Centros 330\") that see patients regardless of insurance or ability to pay.",
+  "group": "help",
+  "category": "point",
+  "source": "Junta de Planificación de Puerto Rico (SIGE) - Instalaciones críticas",
+  "license": "Información pública del Gobierno de Puerto Rico; uso libre con atribución",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Instalaciones_Cr%C3%ADticas_para_Manejo_de_Emergencias_MIL1/MapServer/11",
+   "fields": {
+    "Coorporati": "name",
+    "Addess": "address",
+    "Municipio": "municipio"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -66.12,
+    18.38,
+    -66.02,
+    18.47
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "pr-water-treatment-plants",
+  "state": "PR",
+  "title": "Water filtration plants (Puerto Rico)",
+  "title_es": "Plantas de filtración de agua (Puerto Rico)",
+  "description": "AAA (PRASA) drinking-water filtration plants: capacity, current flow and water source.",
+  "group": "infra",
+  "category": "point",
+  "source": "Junta de Planificación de Puerto Rico (SIGE) / Autoridad de Acueductos y Alcantarillados",
+  "license": "Información pública del Gobierno de Puerto Rico; uso libre con atribución",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Instalaciones_Cr%C3%ADticas_para_Manejo_de_Emergencias_MIL1/MapServer/15",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "WaterSource": "water_source",
+    "CapacityMGD": "capacity_mgd",
+    "FlowMGD": "flow_mgd",
+    "Owner": "operator"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -67.3,
+    17.9,
+    -65.2,
+    18.55
+   ],
+   "features_in_probe": 140
+  }
+ },
+ {
+  "name": "pr-wastewater-plants",
+  "state": "PR",
+  "title": "Wastewater treatment plants (Puerto Rico)",
+  "title_es": "Plantas de alcantarillado sanitario (Puerto Rico)",
+  "description": "AAA (PRASA) sewage treatment plants: treatment type and capacity.",
+  "group": "infra",
+  "category": "point",
+  "source": "Junta de Planificación de Puerto Rico (SIGE) / Autoridad de Acueductos y Alcantarillados",
+  "license": "Información pública del Gobierno de Puerto Rico; uso libre con atribución",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Instalaciones_Cr%C3%ADticas_para_Manejo_de_Emergencias_MIL1/MapServer/14",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "TreatmentType": "treatment",
+    "CapacityMGD": "capacity_mgd",
+    "Owner": "operator"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -67.3,
+    17.9,
+    -65.2,
+    18.55
+   ],
+   "features_in_probe": 61
+  }
+ },
+ {
+  "name": "pr-public-wells",
+  "state": "PR",
+  "title": "Public supply wells (Puerto Rico)",
+  "title_es": "Pozos de abasto público (Puerto Rico)",
+  "description": "AAA (PRASA) drinking-water wells: status, municipio and production. No owner or private-well information.",
+  "group": "infra",
+  "category": "point",
+  "source": "Junta de Planificación de Puerto Rico (SIGE) / Autoridad de Acueductos y Alcantarillados",
+  "license": "Información pública del Gobierno de Puerto Rico; uso libre con atribución",
+  "view": {
+   "url": "https://sigejp.pr.gov/server/rest/services/Recursos_Naturales__Cuerpos_de_Agua_MIL1/MapServer/0",
+   "fields": {
+    "Status": "status",
+    "Municipality": "municipio",
+    "Region": "region",
+    "ActualProduction": "production",
+    "Owner": "operator"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "cors": true,
+   "bbox": [
+    -67.3,
+    17.9,
+    -65.2,
+    18.55
+   ],
+   "features_in_probe": 517
+  }
+ }
+]
