@@ -363,7 +363,10 @@ us" links (`help/report.ts`) and the partners page write to the corrections addr
 mail for the domain and POSTs a signed `email.received` notice to `/api/inbound`; the relay checks the
 Svix signature (5-minute window), fetches the message from Resend and sends a copy to the volunteer
 (`FORWARD_TO`, kept only in the Vercel project's environment) with Reply-To set to the sender.
-Nothing is stored; only error messages are logged; attachments stay in Resend (Emails → Receiving).
+The relay stores nothing and logs only error messages; Resend itself keeps the received messages and
+attachments (Emails → Receiving). Mail whose sender fails DMARC is marked `[UNVERIFIED SENDER]`, sent as
+text only and without Reply-To; auto-replies aren't forwarded. Optional `FORWARD_FOR` limits it to listed
+addresses. Replying from the forwarded copy reveals the volunteer's own address to the sender.
 Environment (Production): `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET`, `FORWARD_TO`, `FORWARD_FROM`.
 
 **Usage counter** (`relay/src/counter.ts`, `relay/api/count.ts`; browser side in `help/count.ts` and

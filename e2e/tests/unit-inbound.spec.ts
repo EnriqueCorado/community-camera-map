@@ -4,7 +4,7 @@
 // nothing from the message is logged.
 import { createHmac } from "node:crypto";
 import { test, expect } from "@playwright/test";
-import { address, createInbound, inboundFromEnv, verifySignature, type InboundConfig } from "../../relay/src/inbound";
+import { address, createInbound, inboundFromEnv, isAutomatic, verifySignature, type InboundConfig } from "../../relay/src/inbound";
 
 const KEY = Buffer.from("test-signing-key-0123456789abcdef");
 const SECRET = `whsec_${KEY.toString("base64")}`;
@@ -26,12 +26,13 @@ function notice(body: string, opts: { id?: string; ts?: number; signature?: stri
 const received = (emailId = "4ef9a417-02e9-4d39-ad75-9611e0fcc33c") => JSON.stringify({ type: "email.received", data: { email_id: emailId } });
 
 /** A fake Resend API: the received email, then the send. */
-function fakeResend(mail: Record<string, unknown>, sendStatus = 200) {
+function fakeResend(mail: Record<string, unknown>, sendStatus: number | number[] = 200) {
   const calls: { url: string; init?: RequestInit }[] = [];
+  const statuses = Array.isArray(sendStatus) ? [...sendStatus] : null;
   const impl = (async (url: string, init?: RequestInit) => {
     calls.push({ url, init });
     if (url.includes("/emails/receiving/")) return Response.json(mail);
-    return new Response("{}", { status: sendStatus });
+    return new Response("{}", { status: statuses ? (statuses.shift() ?? 200) : (sendStatus as number) });
   }) as unknown as typeof fetch;
   return { calls, impl };
 }
@@ -43,7 +44,11 @@ const MAIL = {
   text: "The VITA site moved.",
   html: "<p>The VITA site moved.</p>",
   attachments: [],
+  headers: { "mime-version": "1.0" },
+  authentication: { spf: "pass", dkim: "pass", dmarc: "pass" },
 };
+
+const lastSent = (calls: { url: string; init?: RequestInit }[]) => JSON.parse(String(calls[calls.length - 1]!.init!.body));
 
 test.describe("signature", () => {
   test("accepts Resend's signature and refuses anything else", async () => {
@@ -78,7 +83,8 @@ test("addresses: the plain address, or nothing", () => {
 
 test("needs every setting, or it does nothing", async () => {
   expect(inboundFromEnv({ RESEND_API_KEY: "re_x", RESEND_WEBHOOK_SECRET: SECRET, FORWARD_TO: "a@b.org" })).toBeNull();
-  expect(inboundFromEnv({ RESEND_API_KEY: "re_x", RESEND_WEBHOOK_SECRET: SECRET, FORWARD_TO: "a@b.org", FORWARD_FROM: "c@d.org" })).not.toBeNull();
+  expect(inboundFromEnv({ RESEND_API_KEY: "re_x", RESEND_WEBHOOK_SECRET: SECRET, FORWARD_TO: "a@b.org", FORWARD_FROM: "c@d.org" })?.forwardFor).toEqual([]);
+  expect(inboundFromEnv({ RESEND_API_KEY: "re_x", RESEND_WEBHOOK_SECRET: SECRET, FORWARD_TO: "a@b.org", FORWARD_FROM: "c@d.org", FORWARD_FOR: " Help@X.org, ,b@y.org" })?.forwardFor).toEqual(["help@x.org", "b@y.org"]);
   const { calls, impl } = fakeResend(MAIL);
   expect((await createInbound(null, impl, () => NOW)(notice(received()))).status).toBe(503);
   expect(calls).toEqual([]);
@@ -105,8 +111,10 @@ test("a signed notice forwards the email once, Reply-To the sender, nothing logg
   expect(sent.to).toEqual(["volunteer@example.org"]);
   expect(sent.reply_to).toBe("maria@example.net");
   expect(sent.subject).toBe("Fwd: Correction: Free tax help (checked October 22, 2026)");
+  expect(sent.headers).toEqual({ "Auto-Submitted": "auto-forwarded" });
   expect(sent.text).toContain("The VITA site moved.");
-  expect(sent.text).toContain("María López <maria@example.net>");
+  expect(sent.text).toContain("Sender address: maria@example.net");
+  expect(sent.text).toContain("DMARC pass");
   expect(sent.html).toContain("<p>The VITA site moved.</p>");
   expect(logged).toEqual([]);
 });
@@ -129,13 +137,27 @@ test("never forwards its own forwards, cleans the subject, and makes Resend retr
   expect((await createInbound(CONFIG, self.impl, () => NOW)(notice(received()))).status).toBe(204);
   expect(self.calls).toHaveLength(1); // fetched, not sent
 
-  const odd = fakeResend({ ...MAIL, from: "not an address", subject: "Hi\r\nBcc: x@y.org", html: undefined, attachments: [{ id: "a" }] });
+  const odd = fakeResend({ ...MAIL, from: "not an address", subject: "Hi\r\nBcc: x@y.org\u202e", html: undefined, attachments: [{ id: "a" }] });
   await createInbound(CONFIG, odd.impl, () => NOW)(notice(received()));
   const sent = JSON.parse(String(odd.calls[1]!.init!.body));
   expect(sent.subject).toBe("Fwd: Hi Bcc: x@y.org");
   expect(sent.reply_to).toBeUndefined();
   expect(sent.html).toBeUndefined();
   expect(sent.text).toContain("1 attachment(s) not forwarded");
+
+  // A refusal (e.g. an odd Reply-To) is tried once more without it; other refusals aren't retried.
+  const picky = fakeResend(MAIL, [422, 200]);
+  expect((await createInbound(CONFIG, picky.impl, () => NOW)(notice(received()))).status).toBe(204);
+  expect(picky.calls).toHaveLength(3);
+  expect(lastSent(picky.calls).reply_to).toBeUndefined();
+  const refused = fakeResend(MAIL, 403);
+  const quiet = console.warn;
+  console.warn = () => {};
+  try {
+    expect((await createInbound(CONFIG, refused.impl, () => NOW)(notice(received()))).status).toBe(204);
+  } finally {
+    console.warn = quiet;
+  }
 
   const down = fakeResend(MAIL, 500);
   const logged: string[] = [];
@@ -147,4 +169,36 @@ test("never forwards its own forwards, cleans the subject, and makes Resend retr
     console.warn = warn;
   }
   expect(logged).toEqual(["inbound not forwarded: send 500"]);
+});
+
+test("a sender their domain doesn't vouch for is marked, sent as text only, with no Reply-To", async () => {
+  for (const authentication of [{ spf: "pass", dkim: "fail", dmarc: "fail" }, null, { dmarc: "unknown" }]) {
+    const spoof = fakeResend({ ...MAIL, from: "USCIS <alerts@uscis.gov>", html: "<style>p{display:none}</style><p>Click here</p>", authentication });
+    expect((await createInbound(CONFIG, spoof.impl, () => NOW)(notice(received()))).status).toBe(204);
+    const sent = lastSent(spoof.calls);
+    expect(sent.subject.startsWith("[UNVERIFIED SENDER] Fwd: "), JSON.stringify(authentication)).toBe(true);
+    expect(sent.reply_to).toBeUndefined();
+    expect(sent.html).toBeUndefined();
+    expect(sent.text).toContain("UNVERIFIED SENDER");
+  }
+});
+
+test("auto-replies and mail for other addresses aren't forwarded", async () => {
+  expect(isAutomatic({ "Auto-Submitted": "auto-replied" })).toBe(true);
+  expect(isAutomatic({ "auto-submitted": "no" })).toBe(false);
+  expect(isAutomatic({ Precedence: "bulk" })).toBe(true);
+  expect(isAutomatic({ "X-Autoreply": "yes" })).toBe(true);
+  expect(isAutomatic({ "mime-version": "1.0" })).toBe(false);
+  expect(isAutomatic(null)).toBe(false);
+  const robot = fakeResend({ ...MAIL, headers: { "auto-submitted": "auto-replied" } });
+  expect((await createInbound(CONFIG, robot.impl, () => NOW)(notice(received()))).status).toBe(204);
+  expect(robot.calls).toHaveLength(1);
+
+  const only = { ...CONFIG, forwardFor: ["corrections@example.com"] };
+  const other = fakeResend({ ...MAIL, to: ["sales@example.com"] });
+  await createInbound(only, other.impl, () => NOW)(notice(received()));
+  expect(other.calls).toHaveLength(1);
+  const ours = fakeResend({ ...MAIL, to: ["Sales <sales@example.com>"], cc: ["Corrections@Example.com"] });
+  await createInbound(only, ours.impl, () => NOW)(notice(received()));
+  expect(ours.calls).toHaveLength(2);
 });
