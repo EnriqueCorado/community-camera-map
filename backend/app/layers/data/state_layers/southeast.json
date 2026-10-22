@@ -815,45 +815,6 @@
   }
  },
  {
-  "name": "ga-water-trails",
-  "state": "GA",
-  "title": "Water trails (Georgia)",
-  "title_es": "Rutas acuáticas (Georgia)",
-  "description": "Established and developing paddling water trails (Georgia DNR, 2019).",
-  "group": "nature",
-  "category": "park",
-  "source": "Georgia Department of Natural Resources",
-  "license": "Georgia public record (O.C.G.A. 50-18-70); attribute the agency",
-  "view": {
-   "url": "https://services6.arcgis.com/9QlSLDqa0P1cHLhu/arcgis/rest/services/Georgia_Water_Trails/FeatureServer/0",
-   "fields": {
-    "WT_Name": "name",
-    "Status": "status",
-    "Length_Mi": "miles",
-    "URL": "page"
-   },
-   "geometry": "line",
-   "min_zoom": 11,
-   "where": "1=1",
-   "max_features": 1000,
-   "simplify": false
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -84.8687,
-    33.4846,
-    -83.9073,
-    34.0134
-   ],
-   "count": 5,
-   "kb": 710.5,
-   "max_record_count": 1000,
-   "features_in_probe": 5
-  }
- },
- {
   "name": "sc-evacuation-zones",
   "state": "SC",
   "title": "Hurricane evacuation zones (South Carolina)",

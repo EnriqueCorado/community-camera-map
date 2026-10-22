@@ -277,44 +277,6 @@
   }
  },
  {
-  "name": "sd-gfp-lands",
-  "state": "SD",
-  "title": "Game production & GFP public lands – hunting (South Dakota)",
-  "title_es": "Tierras públicas de GFP para caza (Dakota del Sur)",
-  "description": "Lands managed by South Dakota Game, Fish and Parks, mostly game production areas open to public hunting, plus parks and water access areas.",
-  "group": "nature",
-  "category": "park",
-  "source": "South Dakota Game, Fish and Parks",
-  "license": "SD GFP open data (public); attribute SD GFP",
-  "view": {
-   "url": "https://utility.arcgis.com/usrsvcs/servers/0a01764b6c3b4d13b9af23df1610214b/rest/services/OpenData/SouthDakota_GFPManagedLands/FeatureServer/0",
-   "fields": {
-    "AreaName": "name",
-    "ClassificationCode": "kind",
-    "Division": "operator"
-   },
-   "geometry": "polygon",
-   "min_zoom": 9,
-   "where": "1=1",
-   "max_features": 2000,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -98.4878,
-    42.7436,
-    -94.9722,
-    44.3364
-   ],
-   "count": 208,
-   "kb": 83,
-   "max_record_count": 2000,
-   "features_in_probe": 208
-  }
- },
- {
   "name": "sd-school-public-lands",
   "state": "SD",
   "title": "State school & public lands – open to hunting (South Dakota)",

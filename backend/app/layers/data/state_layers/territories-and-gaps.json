@@ -392,7 +392,7 @@
   "source": "Junta de Planificación de Puerto Rico (SIGE)",
   "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
   "view": {
-   "url": "https://sigejp.pr.gov/server/rest/services/JP_Reglamentario/Sitios_Historicos_JP/FeatureServer/0",
+   "url": "https://sigejp.pr.gov/server/rest/services/JP_Reglamentario/Sitios_Historicos_JP/MapServer/0",
    "fields": {
     "SITIO": "name",
     "Municipio": "city",
@@ -431,7 +431,7 @@
   "source": "Junta de Planificación de Puerto Rico (SIGE)",
   "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
   "view": {
-   "url": "https://sigejp.pr.gov/server/rest/services/JP_Reglamentario/Sitios_Historicos_JP/FeatureServer/1",
+   "url": "https://sigejp.pr.gov/server/rest/services/JP_Reglamentario/Sitios_Historicos_JP/MapServer/1",
    "fields": {
     "ZONA": "name",
     "Resolucion": "resolution"
@@ -1074,45 +1074,6 @@
   }
  },
  {
-  "name": "gu-social-vulnerability",
-  "state": "GU",
-  "title": "Social vulnerability by village (Guam)",
-  "title_es": "Vulnerabilidad social por aldea (Guam)",
-  "description": "CDC-method Social Vulnerability Index for Guam places (2020 population); the national CDC SVI omits Guam.",
-  "group": "people",
-  "category": "info",
-  "source": "Guam Bureau of Statistics and Plans (BSP) GIS",
-  "license": "Public GovGuam data; informational and planning use only (BSP disclaimer) — attribute BSP",
-  "view": {
-   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/CDP%20SVI%20Polygon/FeatureServer/0",
-   "fields": {
-    "NAME": "name",
-    "CDC_SVI": "svi",
-    "ADJ_SVI": "svi_adjusted",
-    "Population_2020": "population"
-   },
-   "geometry": "polygon",
-   "min_zoom": 9,
-   "where": "1=1",
-   "max_features": 2000,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    144.6,
-    13.2,
-    145.0,
-    13.7
-   ],
-   "count": 57,
-   "kb": 27.5,
-   "max_record_count": 2000,
-   "features_in_probe": 57
-  }
- },
- {
   "name": "gu-conservation-areas",
   "state": "GU",
   "title": "Conservation areas (Guam)",
@@ -1374,43 +1335,6 @@
    "kb": 12.2,
    "max_record_count": 2000,
    "features_in_probe": 12
-  }
- },
- {
-  "name": "mp-marine-protected-areas",
-  "state": "MP",
-  "title": "Marine protected areas (Northern Mariana Islands)",
-  "title_es": "Áreas marinas protegidas (Islas Marianas del Norte)",
-  "description": "Marine areas protected by CNMI law and regulation.",
-  "group": "nature",
-  "category": "park",
-  "source": "CNMI Bureau of Environmental and Coastal Quality – Division of Coastal Resources Management (DCRM) / CNMI Division of Fish and Wildlife",
-  "license": "Public CNMI government data — attribute CNMI DCRM / source agency",
-  "view": {
-   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/CNMI_Marine_Protected_Areas/FeatureServer/0",
-   "fields": {
-    "NAME": "name",
-    "AGENCY": "manager"
-   },
-   "geometry": "polygon",
-   "min_zoom": 9,
-   "where": "1=1",
-   "max_features": 1000,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    145.6,
-    14.9,
-    145.9,
-    15.35
-   ],
-   "count": 9,
-   "kb": 5.2,
-   "max_record_count": 1000,
-   "features_in_probe": 9
   }
  },
  {

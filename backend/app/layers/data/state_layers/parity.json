@@ -1323,41 +1323,6 @@
   }
  },
  {
-  "name": "fl-miami-cooling-centers",
-  "state": "FL",
-  "title": "Cooling centers (City of Miami)",
-  "title_es": "Centros de enfriamiento (ciudad de Miami)",
-  "description": "Air-conditioned public places to escape the heat (libraries, community and senior centers), from City of Miami. Call ahead: hours change and some open only during heat advisories.",
-  "group": "help",
-  "category": "point",
-  "source": "City of Miami",
-  "license": "City of Miami public layer",
-  "view": {
-   "url": "https://services1.arcgis.com/CvuPhqcTQpZPT9qY/arcgis/rest/services/City_of_Miami_Cooling_Centers/FeatureServer/0",
-   "fields": {
-    "Cooling_Center_Name": "name",
-    "Address": "address",
-    "PhoneNumber": "phone",
-    "HoursofOperation": "hours"
-   },
-   "geometry": "point",
-   "min_zoom": 10,
-   "where": "1=1",
-   "max_features": 2000,
-   "simplify": false,
-   "refresh_s": 21600
-  },
-  "verified": {
-   "bbox": [
-    -80.38,
-    25.68,
-    -80.18,
-    25.88
-   ],
-   "features_in_probe": 22
-  }
- },
- {
   "name": "mo-st-louis-county-cooling-centers",
   "state": "MO",
   "title": "Cooling centers (St. Louis County)",

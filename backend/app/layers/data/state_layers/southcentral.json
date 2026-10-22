@@ -287,7 +287,7 @@
   "source": "Texas Water Development Board (TWDB)",
   "license": "Texas state public information (Tex. Gov't Code ch. 552); attribution requested",
   "view": {
-   "url": "https://services.twdb.texas.gov/arcgis/rest/services/PWS/Public_Water_Service_Areas/FeatureServer/0",
+   "url": "https://services.twdb.texas.gov/arcgis/rest/services/PWS/Public_Water_Service_Areas/MapServer/0",
    "fields": {
     "PWSName": "name",
     "PWSId": "pws_id",

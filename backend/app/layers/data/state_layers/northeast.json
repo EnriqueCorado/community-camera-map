@@ -1722,7 +1722,7 @@
   "source": "Delaware Office of Child Care Licensing / DSCYF (FirstMap)",
   "license": "Delaware FirstMap open data (public; attribution to FirstMap and source agency)",
   "view": {
-   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Society/DE_ChildCareCenters/FeatureServer/0",
+   "url": "https://enterprise.firstmap.delaware.gov/arcgis/rest/services/Society/DE_ChildCareCenters/MapServer/0",
    "fields": {
     "RSR_RESO_1": "name",
     "ADR_STREET": "address",
@@ -4360,54 +4360,6 @@
    "max_record_count": 2000,
    "exceeded_transfer_limit": false,
    "features_in_probe": 707
-  }
- },
- {
-  "name": "me-food-pantries",
-  "state": "ME",
-  "title": "Food pantries (Maine)",
-  "title_es": "Despensas de alimentos (Maine)",
-  "description": "Food pantries in Maine with phone, website and open days (State of Maine list, 2026).",
-  "group": "help",
-  "category": "point",
-  "source": "State of Maine (Maine GeoLibrary)",
-  "license": "Maine GeoLibrary / State of Maine open data (public; attribution requested)",
-  "view": {
-   "url": "https://services1.arcgis.com/RbMX0mRVOFNTdLzd/arcgis/rest/services/FoodPantries/FeatureServer/7",
-   "fields": {
-    "NAME": "name",
-    "ADDRESS": "address",
-    "TOWN_CITY": "city",
-    "PHONE_NUMBER": "phone",
-    "WEBSITE": "page",
-    "MON": "mon",
-    "TUES": "tue",
-    "WED": "wed",
-    "THURS": "thu",
-    "FRI": "fri",
-    "SAT": "sat"
-   },
-   "geometry": "point",
-   "min_zoom": 9,
-   "where": "1=1",
-   "max_features": 2000,
-   "simplify": false
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -72.1826,
-    42.8652,
-    -68.3374,
-    44.4548
-   ],
-   "zoom": 9,
-   "count": 203,
-   "kb": 70,
-   "max_record_count": 2000,
-   "exceeded_transfer_limit": false,
-   "features_in_probe": 203
   }
  },
  {

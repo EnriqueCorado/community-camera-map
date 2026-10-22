@@ -3041,51 +3041,6 @@
   }
  },
  {
-  "name": "az-heat-relief-statewide",
-  "state": "AZ",
-  "title": "Cooling & hydration sites (Arizona, active)",
-  "title_es": "Centros de enfriamiento e hidratación (Arizona, activos)",
-  "description": "ADHS Statewide Heat Preparedness Network: cooling centers and hydration stations marked active (mostly outside Maricopa County, which has its own network).",
-  "group": "help",
-  "category": "point",
-  "source": "Arizona Department of Health Services (ADHS)",
-  "license": "Public; State of Arizona open data (AZGEO)",
-  "view": {
-   "url": "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZCoolingandHydration/FeatureServer/19",
-   "fields": {
-    "Organization": "name",
-    "Facility": "facility",
-    "Address": "address",
-    "City": "city",
-    "CoolingYN": "cooling",
-    "HydrationYN": "hydration",
-    "Open24seven": "open_24_7",
-    "LocationPhone": "phone",
-    "LocationWebsite": "page",
-    "Date_Updated": "updated"
-   },
-   "geometry": "point",
-   "min_zoom": 8,
-   "where": "SeasonStatus='Active'",
-   "max_features": 2000,
-   "simplify": false
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -114.8,
-    32.4,
-    -114.4,
-    32.8
-   ],
-   "count": 20,
-   "kb": 7.0,
-   "max_record_count": 2000,
-   "features_in_probe": 20
-  }
- },
- {
   "name": "az-hospitals",
   "state": "AZ",
   "title": "State-licensed hospitals (Arizona)",
@@ -4623,43 +4578,6 @@
    "kb": 760.1,
    "max_record_count": 2000,
    "features_in_probe": 2000
-  }
- },
- {
-  "name": "ut-wma",
-  "state": "UT",
-  "title": "Wildlife management areas (Utah)",
-  "title_es": "Áreas de manejo de vida silvestre (Utah)",
-  "description": "Utah Division of Wildlife Resources wildlife management areas (hunting, fishing, wildlife viewing).",
-  "group": "nature",
-  "category": "park",
-  "source": "Utah Division of Wildlife Resources",
-  "license": "Public; State of Utah open data (UGRC terms of use, attribution requested)",
-  "view": {
-   "url": "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/WMA_s/FeatureServer/0",
-   "fields": {
-    "WMA": "name",
-    "Acreage": "acres"
-   },
-   "geometry": "polygon",
-   "min_zoom": 9,
-   "where": "1=1",
-   "max_features": 1000,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -112.1,
-    40.5,
-    -111.6,
-    41.0
-   ],
-   "count": 1,
-   "kb": 1.4,
-   "max_record_count": 1000,
-   "features_in_probe": 1
   }
  },
  {
@@ -7096,7 +7014,7 @@
   "source": "Colorado Governor's Office of Information Technology (OIT) GIS / county assessors",
   "license": "Public (State of Colorado open data; no warranty, attribution requested)",
   "view": {
-   "url": "https://gis.colorado.gov/public/rest/services/Address_and_Parcel/Colorado_Public_Parcels/FeatureServer/0",
+   "url": "https://gis.colorado.gov/public/rest/services/Address_and_Parcel/Colorado_Public_Parcels/MapServer/0",
    "fields": {
     "parcel_id": "name",
     "situsAdd": "address",
@@ -7661,7 +7579,7 @@
   "source": "New Mexico Office of Broadband Access and Expansion (DoIT)",
   "license": "Public (State of New Mexico DoIT)",
   "view": {
-   "url": "https://gis.doit.nm.gov/nmgis/rest/services/Hotspots/WiFi_Hotspots/FeatureServer/0",
+   "url": "https://gis.doit.nm.gov/nmgis/rest/services/Hotspots/WiFi_Hotspots/MapServer/0",
    "fields": {
     "Site_Name": "name",
     "Address": "address",

@@ -2,8 +2,9 @@
 
     uv run python scripts/verify_state_specs.py IN.json OUT.json
 
-For every spec: passes the loader's validation, the service sends CORS for the
-site's origin, a bbox query (the spec's verified bbox, else the state's center)
+For every spec: passes the loader's validation, the layer is read-only for
+anonymous users, the service sends CORS for the site's origin, a bbox query
+(the spec's verified bbox, else the state's center)
 returns GeoJSON, and every allowlisted field exists on the layer. Accepted
 specs are written to OUT (e.g. app/layers/data/state_layers/<region>.json);
 rejects are listed with the reason. Then run scripts/sync_state_specs.py.
@@ -38,6 +39,16 @@ def _probe_bbox(spec: dict) -> list[float]:
     return [cx - 0.1, cy - 0.1, cx + 0.1, cy + 0.1]
 
 
+_EDITS = {"create", "update", "delete", "editing"}
+
+
+def editable(meta: dict) -> bool:
+    """True when the layer offers edits to whoever asked (us: anonymous).
+    Vandals could plant text that the map would then show as official."""
+    caps = {c.strip().lower() for c in str(meta.get("capabilities", "")).split(",")}
+    return bool(caps & _EDITS)
+
+
 async def check(client: httpx.AsyncClient, spec: dict) -> str | None:
     """None if the spec is good, else why not."""
     try:
@@ -53,6 +64,8 @@ async def check(client: httpx.AsyncClient, spec: dict) -> str | None:
         return f"metadata: {type(exc).__name__}"
     if "error" in meta:
         return f"metadata error: {str(meta['error'])[:80]}"
+    if editable(meta):
+        return f"anonymously editable ({meta.get('capabilities')}); use a read-only view"
     have = {f["name"] for f in meta.get("fields") or []}
     missing = [f for f in v["fields"] if f not in have]
     if missing:
