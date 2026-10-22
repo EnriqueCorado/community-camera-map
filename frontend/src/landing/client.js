@@ -1,6 +1,7 @@
 // The one script on the public help pages (inlined at the end of <body> and
-// allowed by its hash in the page's Content-Security-Policy). Two optional
+// allowed by its hash in the page's Content-Security-Policy). Optional
 // helpers, each shown only when the browser supports it:
+//  - share: Copy link and the phone's Share sheet on the "Share this" box;
 //  - offline (home pages): nothing is stored until "Save all pages" is
 //    tapped; that registers this folder's service worker (help/sw.js or
 //    ayuda/sw.js), and "Remove saved pages" deletes everything again;
@@ -90,6 +91,38 @@
         }
       });
     });
+  }
+
+  // --------------------------------------------------------------- share
+  // Copy link (Clipboard API) and the phone's Share sheet, shown only when
+  // the browser has them. The WhatsApp link works without this script.
+  var shareBox = document.querySelector("[data-share]");
+  if (shareBox) {
+    var url = shareBox.getAttribute("data-url");
+    var said = shareBox.querySelector("[role=status]");
+    var copyBtn = shareBox.querySelector("[data-copy]");
+    var nativeBtn = shareBox.querySelector("[data-native]");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      copyBtn.hidden = false;
+      copyBtn.addEventListener("click", function () {
+        navigator.clipboard.writeText(url).then(
+          function () {
+            said.textContent = shareBox.getAttribute("data-copied");
+          },
+          function () {
+            said.textContent = shareBox.getAttribute("data-failed") + " " + url;
+          },
+        );
+      });
+    }
+    if (navigator.share) {
+      nativeBtn.hidden = false;
+      nativeBtn.addEventListener("click", function () {
+        navigator
+          .share({ title: shareBox.getAttribute("data-title"), text: shareBox.getAttribute("data-text"), url: url })
+          .catch(function () {}); // cancelled
+      });
+    }
   }
 
   // ---------------------------------------------------------- read aloud
