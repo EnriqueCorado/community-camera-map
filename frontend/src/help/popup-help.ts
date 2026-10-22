@@ -23,7 +23,7 @@ export function helpFor(layer: string, props: Record<string, unknown>, at: LonLa
       return COVERED_TYPES.has(type) && inCalifornia(at, props) ? { tab: "medical" } : null;
     }
     case "mobile-home-parks":
-      return { tab: "rent", mobileHome: true };
+      return { tab: "rent", view: "mobile" };
     case "legal-help":
       return { tab: "legal" };
     default:

@@ -6,7 +6,7 @@ import "./help.css";
 import { useI18n } from "../../i18n";
 import { useDialog } from "../../hooks/useDialog";
 import { COPY } from "../../help/copy";
-import type { HelpTab, HelpTarget } from "../../help/target";
+import { isRentView, isWorkView, type HelpTab, type HelpTarget } from "../../help/target";
 import { Tabs } from "./Tabs";
 import { MedicalHelp } from "./MedicalHelp";
 import { RenterHelp } from "./RenterHelp";
@@ -73,15 +73,30 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
           {target.tab === "rent" && (
             <RenterHelp
               c={c}
-              mobileHome={!!target.mobileHome}
-              onMobileHome={(mobileHome) => go({ tab: "rent", mobileHome })}
+              view={isRentView(target.view) ? target.view : "rent"}
+              onView={(view) => onTarget({ tab: "rent", view })}
               onLegal={() => go({ tab: "legal" })}
             />
           )}
-          {target.tab === "work" && <WorkHelp c={c} onLegal={() => go({ tab: "legal" })} />}
+          {target.tab === "work" && (
+            <WorkHelp
+              c={c}
+              view={isWorkView(target.view) ? target.view : "wages"}
+              onView={(view) => onTarget({ tab: "work", view })}
+              onLegal={() => go({ tab: "legal" })}
+            />
+          )}
           {target.tab === "benefits" && <BenefitsHelp c={c} />}
           {target.tab === "legal" && <LegalHelp c={c} onShowOnMap={onShowOnMap} />}
           <p className="hdisclaimer">{c.disclaimer}</p>
+          <p className="hdisclaimer">
+            {/* A new tab, so leaving for the flyers doesn't erase what was typed here. */}
+            <a href={`${import.meta.env.BASE_URL}help/flyers/`} target="_blank" rel="noopener">
+              {c.flyers}
+              <span aria-hidden="true"> ↗</span>
+              <span className="sr-only"> ({c.newTab})</span>
+            </a>
+          </p>
         </div>
       </div>
     </div>

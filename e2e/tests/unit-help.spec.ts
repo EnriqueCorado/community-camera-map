@@ -300,7 +300,7 @@ test.describe("which pins get a help button", () => {
     expect(helpFor("hospitals", { TYPE: "GENERAL ACUTE CARE", STATE: "CA" }, [-118.2, 34.05])).toEqual({ tab: "medical" });
     expect(helpFor("hospitals", { TYPE: "GENERAL ACUTE CARE", STATE: "NV" }, [-119.8, 39.5])).toBeNull();
     expect(helpFor("hospitals", { TYPE: "LONG TERM CARE", STATE: "CA" }, [-118.2, 34.05])).toBeNull();
-    expect(helpFor("mobile-home-parks", {}, [-121, 37.6])).toEqual({ tab: "rent", mobileHome: true });
+    expect(helpFor("mobile-home-parks", {}, [-121, 37.6])).toEqual({ tab: "rent", view: "mobile" });
     expect(helpFor("parks", {}, [-121, 37.6])).toBeNull();
   });
 
@@ -422,11 +422,17 @@ test.describe("misc helpers", () => {
     expect(daysBetween("2026-10-31", "2026-11-02")).toBe(2);
   });
 
-  test("the URL carries the open Help tab and nothing typed into it", () => {
+  test("the URL carries the open Help tab and tool, and nothing typed into it", () => {
     const layers = { cameras: true, alpr: false, alprVendors: {}, overlays: {} };
-    const hash = encodeState({ layers, query: "", view: null, help: "rent" });
+    const hash = encodeState({ layers, query: "", view: null, help: { tab: "rent" } });
     expect(hash).toBe("help=rent");
-    expect(decodeState(`#${hash}`, layers).help).toBe("rent");
+    expect(decodeState(`#${hash}`, layers).help).toEqual({ tab: "rent" });
+    expect(encodeState({ layers, query: "", view: null, help: { tab: "rent", view: "eviction" } })).toBe("help=rent&hv=eviction");
+    expect(decodeState("#help=rent&hv=eviction", layers).help).toEqual({ tab: "rent", view: "eviction" });
+    expect(decodeState("#help=work&hv=heat", layers).help).toEqual({ tab: "work", view: "heat" });
+    // A tool from another tab, or an unknown one, is dropped (the tab still opens).
+    expect(decodeState("#help=work&hv=eviction", layers).help).toEqual({ tab: "work" });
+    expect(decodeState("#help=medical&hv=%3Cscript%3E", layers).help).toEqual({ tab: "medical" });
     expect(decodeState("#help=evil", layers).help).toBeUndefined();
   });
 });

@@ -95,7 +95,7 @@ export default function App() {
   // Bumped to ask the map to run "what can see me?" at its center (keyboard path).
   const [coverageCenterTick, setCoverageCenterTick] = useState(0);
   const [showAbout, setShowAbout] = useState(false);
-  const [help, setHelp] = useState<HelpTarget | null>(initial.help ? { tab: initial.help } : null);
+  const [help, setHelp] = useState<HelpTarget | null>(initial.help ?? null);
   const [accessFor, setAccessFor] = useState<Attribution | null>(null);
   const [bakedAt, setBakedAt] = useState<string | null>(null);
   const [liveAt, setLiveAt] = useState<string | null>(null);
@@ -109,7 +109,7 @@ export default function App() {
 
   // Keep the URL hash in sync so the current view is shareable.
   useEffect(() => {
-    const hash = encodeState({ layers, query, view: nearPoint ? preNearView.current : view, lang, help: help?.tab });
+    const hash = encodeState({ layers, query, view: nearPoint ? preNearView.current : view, lang, help: help ?? undefined });
     const next = hash ? `#${hash}` : "";
     if (next !== window.location.hash) {
       window.history.replaceState(null, "", next || window.location.pathname);

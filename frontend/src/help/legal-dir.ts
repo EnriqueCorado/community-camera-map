@@ -1,6 +1,7 @@
 // The free legal help directory, read from the "legal-help" map layer so the
 // list and the map pins are one dataset (backend/app/layers/data/legal_help.json).
 import { api } from "../api/client";
+import { distanceM, type LonLat } from "../near-me-logic";
 
 export type LegalKind =
   | "immigration"
@@ -57,6 +58,11 @@ export function parseOffices(fc: GeoJSON.FeatureCollection): LegalOffice[] {
     ];
   });
 }
+
+const MODESTO: LonLat = [-120.997, 37.639];
+
+/** Sort order: closest to downtown Modesto first, so in-county offices lead. */
+export const nearestModestoFirst = (a: LegalOffice, b: LegalOffice) => distanceM(a.center, MODESTO) - distanceM(b.center, MODESTO);
 
 let cache: Promise<LegalOffice[]> | null = null;
 

@@ -1,0 +1,515 @@
+/* Public "Free help" pages and flyers. Inlined into each page at build time.
+   Same palette as the map app (index.css): light by default, dark when the
+   device asks for it or the reader chose it in the app (html[data-theme]). */
+:root {
+  --bg: #f4f6f8;
+  --panel: #ffffff;
+  --line: #d3dae1;
+  --ink: #16202b;
+  --muted: #4f5c69; /* 6.6:1 on --panel */
+  --accent: #0b7a4c; /* 5.4:1 on white */
+  --accent-ink: #ffffff;
+  --focus: #1f6feb;
+  color-scheme: light;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 112.5%; /* 18px: easier to read for everyone */
+  line-height: 1.55;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1419;
+    --panel: #161c24;
+    --line: #2f3946;
+    --ink: #e7edf3;
+    --muted: #a3afbc;
+    --accent: #35c08b;
+    --accent-ink: #052016;
+    --focus: #79b8ff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1419;
+  --panel: #161c24;
+  --line: #2f3946;
+  --ink: #e7edf3;
+  --muted: #a3afbc;
+  --accent: #35c08b;
+  --accent-ink: #052016;
+  --focus: #79b8ff;
+  color-scheme: dark;
+}
+:root[data-text="large"] {
+  font-size: 133%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+a {
+  color: var(--accent);
+  text-underline-offset: 0.15em;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+}
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+h1 {
+  font-size: 2rem;
+  margin: 0.4em 0 0.5em;
+}
+h2 {
+  font-size: 1.35rem;
+  margin: 2em 0 0.6em;
+}
+.wrap {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+main {
+  overflow-wrap: break-word;
+}
+main:focus {
+  outline: none;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.skip {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  padding: 0.5em 1em;
+  background: var(--panel);
+  border: 2px solid var(--focus);
+  z-index: 10;
+}
+.skip:focus {
+  top: 8px;
+}
+
+/* header and footer */
+.top {
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+.top__in {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3.25rem;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.brand {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+.langlink {
+  font-weight: 600;
+  padding: 0.35em 0.8em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  text-decoration: none;
+}
+.foot {
+  margin-top: 3rem;
+  padding: 1.5rem 0 2.5rem;
+  border-top: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* home */
+.hero {
+  padding: 1.5rem 0 0.5rem;
+}
+.lead {
+  font-size: 1.1rem;
+  max-width: 42rem;
+}
+.promise {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+.promise li {
+  padding: 0.35em 0.8em;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  font-weight: 600;
+}
+.promise li::before {
+  content: "✓ ";
+  color: var(--accent);
+}
+.cards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 12px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  height: 100%;
+  padding: 1rem 1.1rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.card:hover {
+  border-color: var(--accent);
+}
+.card__title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.card__text {
+  color: var(--muted);
+}
+
+/* tool pages */
+.crumbs {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.btn {
+  display: inline-block;
+  padding: 0.7em 1.3em;
+  border-radius: 10px;
+  border: 2px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn:hover {
+  filter: brightness(1.08);
+}
+.btn--quiet {
+  background: transparent;
+  color: var(--accent);
+}
+.open {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin: 1.25rem 0;
+}
+.open__hint,
+.muted,
+.cite {
+  color: var(--muted);
+}
+.cite {
+  font-size: 0.85em;
+}
+.facts li,
+.sources li {
+  margin: 0.45em 0;
+}
+.places {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.place {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  padding: 0.85rem 1rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.place__tags {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.place__links {
+  overflow-wrap: anywhere;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  font-weight: 600;
+}
+.notario {
+  padding: 0.25rem 1.1rem 0.75rem;
+  border-left: 4px solid #b54708;
+  background: var(--panel);
+  border-radius: 0 10px 10px 0;
+}
+.notario h2 {
+  margin-top: 0.75em;
+}
+.sources {
+  overflow-wrap: anywhere;
+}
+.more ul {
+  padding-left: 1.2em;
+}
+
+/* ---------------------------------------------------------------- flyers */
+.is-flyer {
+  background: #e6eaee;
+  color: #111;
+}
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 8.5in;
+  margin: 0 auto;
+  padding: 12px 16px;
+}
+.toolbar a {
+  color: #0b5c3a;
+}
+.is-flyer .btn {
+  background: #0b7a4c;
+  border-color: #0b7a4c;
+  color: #fff;
+}
+.sheet {
+  width: 8.5in;
+  min-height: 11in;
+  max-width: 100%;
+  margin: 0 auto 24px;
+  padding: 0.5in 0.55in;
+  background: #fff;
+  box-shadow: 0 1px 6px rgb(0 0 0 / 0.18);
+  display: flex;
+  flex-direction: column;
+}
+.sheet__cols {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* headline, list, QR: shared rows so both QR codes line up */
+  grid-template-rows: auto 1fr auto;
+  column-gap: 0.45in;
+}
+.sheet__cols .fside + .fside {
+  border-left: 2px solid #0b7a4c;
+  padding-left: 0.45in;
+}
+.fside {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+}
+.fside__head {
+  font-size: 24pt;
+  line-height: 1.12;
+  margin: 0 0 0.25in;
+  color: #0b5c3a;
+}
+.fside__list {
+  margin: 0;
+  padding-left: 1.1em;
+  font-size: 14pt;
+  line-height: 1.32;
+}
+.fside__list li {
+  margin-bottom: 0.1in;
+}
+.fside__qr {
+  padding-top: 0.25in;
+  text-align: center;
+}
+.qr {
+  display: block;
+  width: 2in;
+  height: 2in;
+  margin: 0 auto;
+}
+.fside__scan {
+  margin: 0.08in 0 0;
+  font-weight: 700;
+  font-size: 13pt;
+}
+.fside__url {
+  margin: 0.04in 0 0;
+  font-size: 9.5pt;
+  overflow-wrap: anywhere;
+}
+.sheet__foot {
+  margin-top: 0.25in;
+  padding-top: 0.15in;
+  border-top: 2px solid #0b7a4c;
+  font-size: 11pt;
+}
+.sheet__foot p {
+  margin: 0.05in 0;
+}
+.sheet__note {
+  font-size: 9pt;
+  color: #333;
+}
+/* four cards to cut apart */
+.sheet--cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  padding: 0.5in;
+  gap: 0;
+}
+.fcard {
+  border: 1px dashed #888;
+  padding: 0.25in 0.2in;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto 1fr;
+  column-gap: 0.15in;
+}
+.fcard .fside__head {
+  font-size: 15pt;
+  font-weight: 700;
+  margin-bottom: 0.08in;
+}
+.fcard .fside__list {
+  list-style: none;
+  padding: 0;
+  font-size: 11pt;
+}
+.fcard .fside__qr {
+  align-self: center;
+}
+.fcard .qr {
+  width: 1.45in;
+  height: 1.45in;
+}
+.fcard .fside__scan {
+  font-size: 8.5pt;
+}
+.fcard .fside__url {
+  font-size: 6.5pt;
+}
+
+/* a phone or narrow window: one column, the sheet just fills the width */
+@media screen and (max-width: 8.6in) {
+  .sheet {
+    width: auto;
+    min-height: 0;
+    padding: 24px 16px;
+  }
+  .sheet__cols,
+  .sheet--cards,
+  .fcard {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+  .fside {
+    display: flex;
+    flex-direction: column;
+  }
+  .sheet__cols .fside + .fside {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 2px solid #0b7a4c;
+    padding-top: 24px;
+  }
+  .fside__head {
+    font-size: 1.6rem;
+  }
+  .fside__list {
+    font-size: 1rem;
+  }
+}
+
+/* Ordinary pages print light, with margins. Flyers fill a letter page
+   (their own @page rule, FLYER_PAGE_CSS in Pages.tsx). */
+@page {
+  margin: 0.6in;
+}
+@media print {
+  /* Beats the dark-theme rules above (higher specificity): paper is light. */
+  :root:root:root {
+    --bg: #ffffff;
+    --panel: #ffffff;
+    --line: #c4ccd4;
+    --ink: #000000;
+    --muted: #333333;
+    --accent: #0b5c3a;
+    --accent-ink: #ffffff;
+    color-scheme: light;
+  }
+  .noprint,
+  .skip,
+  .open,
+  .more {
+    display: none !important;
+  }
+  .is-flyer {
+    background: none;
+  }
+  .sheet {
+    margin: 0;
+    box-shadow: none;
+    width: 8.5in;
+    height: 11in;
+  }
+  .is-flyer * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+@media (forced-colors: active) {
+  .btn,
+  .card,
+  .place,
+  .promise li,
+  .langlink {
+    border: 1px solid CanvasText;
+  }
+  /* Scanners need dark modules on light: keep the code as drawn. */
+  .qr {
+    forced-color-adjust: none;
+  }
+}

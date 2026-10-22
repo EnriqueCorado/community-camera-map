@@ -3,13 +3,10 @@ import { useI18n } from "../../i18n";
 import { LEGAL_COST_KEYS, LEGAL_KIND_KEYS } from "../../help/legal-kinds";
 import type { HelpCopy } from "../../help/copy";
 import { LEGAL_FACTS } from "../../help/facts";
-import { loadOffices, type LegalKind, type LegalOffice } from "../../help/legal-dir";
+import { loadOffices, nearestModestoFirst, type LegalKind, type LegalOffice } from "../../help/legal-dir";
 import { longDate } from "../../help/dates";
-import { distanceM, type LonLat } from "../../near-me-logic";
 import { LEGAL_SITE_HOSTS, safeUrl } from "../../popup-logic";
 import { ExtLink, Phone, Result, Sources } from "./ui";
-
-const MODESTO: LonLat = [-120.997, 37.639];
 
 const KIND_ORDER: LegalKind[] = ["immigration", "housing", "court-self-help", "general", "family", "seniors", "workers", "consumer"];
 
@@ -30,10 +27,7 @@ export function LegalHelp({ c, onShowOnMap }: { c: HelpCopy; onShowOnMap: (layer
   }, []);
 
   const kinds = useMemo(() => KIND_ORDER.filter((k) => offices?.some((o) => o.kinds.includes(k))), [offices]);
-  // Closest to downtown Modesto first, so in-county offices lead the list.
-  const shown = (offices ?? [])
-    .filter((o) => kind === "all" || o.kinds.includes(kind))
-    .sort((a, b) => distanceM(a.center, MODESTO) - distanceM(b.center, MODESTO));
+  const shown = (offices ?? []).filter((o) => kind === "all" || o.kinds.includes(kind)).sort(nearestModestoFirst);
 
   return (
     <>

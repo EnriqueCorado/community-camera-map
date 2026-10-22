@@ -1,0 +1,308 @@
+// The public "Free help" pages: one per tool, in English and Spanish. Each page
+// shows the same cited facts, contacts and sources the tool itself uses (from
+// help/*-facts.ts), so a fact is checked and updated in one place. Only the
+// short intro and card summary are written here.
+import type { Lang } from "../i18n";
+import type { Bilingual } from "../help/letter-types";
+import type { HelpTarget } from "../help/target";
+import type { CitedFact, SourceRef } from "../components/help/ui";
+import { COPY, type HelpCopy } from "../help/copy";
+import { DEPOSIT_FACTS, LEGAL_FACTS, MEDICAL_FACTS, MOBILE_FACTS, RENT_FACTS, RENT_SOURCES, REPAIR_FACTS } from "../help/facts";
+import { EVICTION_FACTS, EVICTION_SOURCES } from "../help/eviction-facts";
+import { WAGE_FACTS, WAGE_SOURCES } from "../help/wages-facts";
+import { HEAT_FACTS } from "../help/heat-facts";
+import { BENEFITS_CHECKED, BENEFITS_SOURCES, PROGRAMS, PUBLIC_CHARGE } from "../help/benefits-facts";
+import { WAGES_COPY } from "../help/wages-copy";
+import { HEAT_COPY } from "../help/heat-copy";
+
+/** A place to call or visit (the shape every facts file's contacts share). */
+export interface PlaceInfo {
+  name: Bilingual;
+  phone?: string;
+  email?: string;
+  address?: string;
+  hours?: Bilingual;
+  note?: Bilingual;
+  url?: string;
+}
+
+export type ToolId =
+  | "medical"
+  | "rent"
+  | "eviction"
+  | "repairs"
+  | "deposit"
+  | "mobile"
+  | "wages"
+  | "heat"
+  | "benefits"
+  | "legal";
+
+export interface FactGroup {
+  title: Bilingual;
+  facts: readonly CitedFact[];
+}
+
+export type GroupId = "health" | "housing" | "work" | "legal";
+
+export interface ToolPage {
+  id: ToolId;
+  group: GroupId;
+  /** URL segment under help/ (English) or ayuda/ (Spanish). */
+  slug: Record<Lang, string>;
+  /** Where "Open the free tool" lands in the map's Help panel. */
+  target: HelpTarget;
+  name: Bilingual;
+  /** One line for the home page card and the search-result description. */
+  summary: Bilingual;
+  intro: Bilingual;
+  /** Cited facts, under the same headings the tool uses. */
+  groups: readonly FactGroup[];
+  /** Extra lists without a citation per line, shown after the facts. */
+  sections?: readonly { title: Bilingual; items: readonly Bilingual[] }[];
+  places: readonly PlaceInfo[];
+  sources: readonly SourceRef[];
+  checked: string;
+}
+
+const group = (title: Bilingual, ...lists: (readonly CitedFact[])[]): FactGroup => ({ title, facts: lists.flat() });
+const both = <K extends string>(en: Record<K, unknown>, es: Record<K, unknown>, key: K): Bilingual => ({ en: String(en[key]), es: String(es[key]) });
+const wage = (key: "rulesMinWage" | "rulesOvertime" | "rulesBreaks" | "rulesFinal" | "claimTitle" | "retaliationTitle") => both(WAGES_COPY.en, WAGES_COPY.es, key);
+const heat = (key: "tierIndoor82" | "tierIndoor87" | "payTitle" | "rightsTitle") => both(HEAT_COPY.en, HEAT_COPY.es, key);
+type TextKey = { [K in keyof HelpCopy]: HelpCopy[K] extends string ? K : never }[keyof HelpCopy];
+const copy = (key: TextKey): Bilingual => ({ en: COPY.en[key], es: COPY.es[key] });
+const byId = (facts: readonly CitedFact[], ...ids: string[]) =>
+  ids.map((id) => {
+    const f = facts.find((x) => x.id === id);
+    if (!f) throw new Error(`landing: no fact "${id}"`);
+    return f;
+  });
+
+export const GROUPS: { id: GroupId; name: Bilingual; anchor: Bilingual }[] = [
+  { id: "health", name: { en: "Health and benefits", es: "Salud y beneficios" }, anchor: { en: "health", es: "salud" } },
+  { id: "housing", name: { en: "Renters", es: "Inquilinos" }, anchor: { en: "housing", es: "vivienda" } },
+  { id: "work", name: { en: "Work", es: "Trabajo" }, anchor: { en: "work", es: "trabajo" } },
+  { id: "legal", name: { en: "Legal help", es: "Ayuda legal" }, anchor: { en: "legal", es: "legal" } },
+];
+
+const programs = Object.values(PROGRAMS);
+
+export const TOOLS: readonly ToolPage[] = [
+  {
+    id: "medical",
+    group: "health",
+    slug: { en: "hospital-bills", es: "cuentas-de-hospital" },
+    target: { tab: "medical" },
+    name: { en: "Help with a hospital bill", es: "Ayuda con una cuenta de hospital" },
+    summary: {
+      en: "Free or discounted care at California hospitals, even after the bill comes. Check if you qualify and get a letter to ask for it.",
+      es: "Atención gratis o con descuento en hospitales de California, aun después de recibir la cuenta. Vea si califica y obtenga una carta para pedirla.",
+    },
+    intro: copy("medLead"),
+    groups: [group(copy("medRightsTitle"), MEDICAL_FACTS.rights)],
+    places: [MEDICAL_FACTS.freeHelp, MEDICAL_FACTS.complaint],
+    sources: MEDICAL_FACTS.sources,
+    checked: MEDICAL_FACTS.checked,
+  },
+  {
+    id: "benefits",
+    group: "health",
+    slug: { en: "benefits", es: "beneficios" },
+    target: { tab: "benefits" },
+    name: { en: "Which benefits can my family get?", es: "¿Qué beneficios puede recibir mi familia?" },
+    summary: {
+      en: "CalFresh, Medi-Cal, WIC, utility discounts and tax credits: see what your household may qualify for in about 2 minutes.",
+      es: "CalFresh, Medi-Cal, WIC, descuentos en luz y gas, y créditos de impuestos: vea para qué podría calificar su hogar en unos 2 minutos.",
+    },
+    intro: {
+      en: "Answer a few questions in the free tool to see which programs your household may qualify for. It takes about 2 minutes. It’s an estimate: each program makes the final decision.",
+      es: "Conteste unas preguntas en la herramienta gratis para ver para qué programas podría calificar su hogar. Toma unos 2 minutos. Es un cálculo aproximado: cada programa toma la decisión final.",
+    },
+    groups: [],
+    sections: [
+      {
+        title: { en: "Programs the tool checks", es: "Programas que revisa la herramienta" },
+        items: programs.map((p) => ({ en: `${p.name.en}: ${p.gives.en}`, es: `${p.name.es}: ${p.gives.es}` })),
+      },
+      { title: { en: "Immigration and “public charge”", es: "Inmigración y “carga pública”" }, items: [PUBLIC_CHARGE.text, PUBLIC_CHARGE.caveat] },
+    ],
+    places: [],
+    sources: BENEFITS_SOURCES,
+    checked: BENEFITS_CHECKED,
+  },
+  {
+    id: "rent",
+    group: "housing",
+    slug: { en: "rent-increase", es: "aumento-de-renta" },
+    target: { tab: "rent", view: "rent" },
+    name: copy("rentViewIncrease"),
+    summary: {
+      en: "Check a rent increase against California’s rent cap and notice rules, and look up the year your building was built.",
+      es: "Revise un aumento de renta con el tope de renta de California y las reglas de aviso, y busque el año en que se construyó su edificio.",
+    },
+    intro: {
+      en: "California’s rent cap limits how much most landlords can raise the rent each year, and how much notice they must give. The free tool checks your increase to the cent, tells you if your home may be exempt, and can look up the year your building was built in Stanislaus County records.",
+      es: "El tope de renta de California limita cuánto puede subir la renta cada año la mayoría de los arrendadores, y con cuánto aviso. La herramienta gratis revisa su aumento al centavo, le dice si su vivienda podría estar exenta, y puede buscar el año en que se construyó su edificio en los registros del condado de Stanislaus.",
+    },
+    groups: [group(copy("capTitle"), RENT_FACTS.capRules, RENT_FACTS.notice), group(copy("capExemptionsTitle"), RENT_FACTS.exemptions)],
+    places: [EVICTION_FACTS.places.sentinel],
+    sources: RENT_SOURCES,
+    checked: RENT_FACTS.checked,
+  },
+  {
+    id: "eviction",
+    group: "housing",
+    slug: { en: "eviction-notice", es: "aviso-de-desalojo" },
+    target: { tab: "rent", view: "eviction" },
+    name: copy("rentViewEviction"),
+    summary: {
+      en: "Count your deadline to respond to a notice or court papers, with Stanislaus court holidays, and find free help fast.",
+      es: "Calcule su plazo para responder a un aviso o a papeles de la corte, con los días feriados de la corte de Stanislaus, y encuentre ayuda gratis rápido.",
+    },
+    intro: {
+      en: "A notice from your landlord is not a court order: only a court can order an eviction, and only a sheriff can remove you. But the deadlines are short. Tell the free tool what kind of notice you got and when, and it counts your deadline, skipping weekends and court holidays when the law says to.",
+      es: "Un aviso de su arrendador no es una orden de la corte: solo una corte puede ordenar un desalojo, y solo un sheriff puede sacarlo. Pero los plazos son cortos. Dígale a la herramienta gratis qué tipo de aviso recibió y cuándo, y calcula su fecha límite, sin contar fines de semana ni días feriados de la corte cuando la ley así lo dice.",
+    },
+    groups: [
+      group(
+        { en: "After you get a notice", es: "Después de recibir un aviso" },
+        byId(RENT_FACTS.capRules, "eviction-papers"),
+        // "court-only" is left out: it says "by this date", which needs the tool's answer.
+        EVICTION_FACTS.afterNotice.filter((f) => f.id !== "court-only"),
+      ),
+      group({ en: "Your rights as a tenant", es: "Sus derechos como inquilino" }, EVICTION_FACTS.rights),
+    ],
+    places: [EVICTION_FACTS.places.crla, EVICTION_FACTS.places.selfHelp, EVICTION_FACTS.places.turlock, EVICTION_FACTS.places.sentinel],
+    sources: EVICTION_SOURCES,
+    checked: EVICTION_FACTS.checked,
+  },
+  {
+    id: "repairs",
+    group: "housing",
+    slug: { en: "repairs", es: "reparaciones" },
+    target: { tab: "rent", view: "repairs" },
+    name: copy("rentViewRepairs"),
+    summary: {
+      en: "A free letter asking your landlord for repairs, in English or Spanish, and your rights while you wait.",
+      es: "Una carta gratis para pedirle reparaciones a su arrendador, en inglés o español, y sus derechos mientras espera.",
+    },
+    intro: {
+      en: "Your landlord must keep your home livable. The free tool writes a dated repair request letter, in English or Spanish, that you can print, copy or download, so you have written proof that you asked.",
+      es: "Su arrendador debe mantener su vivienda habitable. La herramienta gratis escribe una carta con fecha para pedir reparaciones, en inglés o español, que puede imprimir, copiar o descargar, para que tenga prueba por escrito de que las pidió.",
+    },
+    groups: [group(copy("repairsTitle"), REPAIR_FACTS.rights)],
+    places: REPAIR_FACTS.codeEnforcement,
+    sources: RENT_SOURCES,
+    checked: RENT_FACTS.checked,
+  },
+  {
+    id: "deposit",
+    group: "housing",
+    slug: { en: "security-deposit", es: "deposito" },
+    target: { tab: "rent", view: "deposit" },
+    name: copy("rentViewDeposit"),
+    summary: {
+      en: "Moved out and didn’t get your deposit back? A free letter asking for it, and the 21-day rule.",
+      es: "¿Se mudó y no le devolvieron su depósito? Una carta gratis para pedirlo, y la regla de los 21 días.",
+    },
+    intro: {
+      en: "After you move out, your landlord has 21 days to return your security deposit or explain every deduction. The free tool writes a letter asking for it, in English or Spanish, based on California law.",
+      es: "Después de que se muda, su arrendador tiene 21 días para devolverle el depósito o explicar cada descuento. La herramienta gratis escribe una carta para pedirlo, en inglés o español, según la ley de California.",
+    },
+    groups: [group(copy("depositTitle"), DEPOSIT_FACTS.rights)],
+    places: [DEPOSIT_FACTS.smallClaims],
+    sources: RENT_SOURCES,
+    checked: RENT_FACTS.checked,
+  },
+  {
+    id: "mobile",
+    group: "housing",
+    slug: { en: "mobile-home-space-rent", es: "renta-de-espacio-casa-movil" },
+    target: { tab: "rent", view: "mobile" },
+    name: copy("rentViewMobile"),
+    summary: {
+      en: "Own your mobile home and rent the space? The rules on space-rent increases in Stanislaus County.",
+      es: "¿Es dueño de su casa móvil y renta el espacio? Las reglas sobre aumentos de la renta del espacio en el condado de Stanislaus.",
+    },
+    intro: copy("mobileLead"),
+    groups: [group(copy("mobileTitle"), MOBILE_FACTS.rights)],
+    places: MOBILE_FACTS.contacts,
+    sources: RENT_SOURCES,
+    checked: RENT_FACTS.checked,
+  },
+  {
+    id: "wages",
+    group: "work",
+    slug: { en: "unpaid-wages", es: "salarios-no-pagados" },
+    target: { tab: "work", view: "wages" },
+    name: copy("workViewWages"),
+    summary: {
+      en: "Overtime, minimum wage, missed breaks and late final pay: see what you may be owed and how to claim it.",
+      es: "Horas extra, salario mínimo, descansos y pago final atrasado: vea lo que le podrían deber y cómo reclamarlo.",
+    },
+    intro: {
+      en: "Find out if you were paid everything you earned: overtime, minimum wage, missed breaks and late final pay. The free tool estimates what you may be owed and shows how to file a free claim with the Labor Commissioner.",
+      es: "Averigüe si le pagaron todo lo que ganó: horas extra, salario mínimo, descansos que no le dieron y el pago final atrasado. La herramienta gratis calcula lo que le podrían deber y le muestra cómo presentar un reclamo gratis ante el Comisionado Laboral.",
+    },
+    groups: [
+      group(wage("rulesMinWage"), WAGE_FACTS.minWage),
+      group(wage("rulesOvertime"), WAGE_FACTS.overtime),
+      group(wage("rulesBreaks"), WAGE_FACTS.breaks),
+      group(wage("rulesFinal"), WAGE_FACTS.finalPay),
+      group(wage("claimTitle"), WAGE_FACTS.claim),
+      group(wage("retaliationTitle"), WAGE_FACTS.retaliation),
+    ],
+    places: [WAGE_FACTS.office, WAGE_FACTS.legalAidAtWork],
+    sources: WAGE_SOURCES,
+    checked: WAGE_FACTS.checked,
+  },
+  {
+    id: "heat",
+    group: "work",
+    slug: { en: "heat-at-work", es: "calor-en-el-trabajo" },
+    target: { tab: "work", view: "heat" },
+    name: copy("workViewHeat"),
+    summary: {
+      en: "The heat rules your employer must follow, outdoors or indoors, and what to do if someone gets sick.",
+      es: "Las reglas de calor que su empleador debe cumplir, afuera o adentro, y qué hacer si alguien se enferma.",
+    },
+    intro: {
+      en: "California has heat rules for work, outdoors and indoors. Here is what employers must do at each temperature. The free tool checks today’s forecast for your city, shows only the rules that apply, and explains what to do if someone gets sick.",
+      es: "California tiene reglas de calor para el trabajo, al aire libre y en interiores. Aquí está lo que los empleadores deben hacer a cada temperatura. La herramienta gratis revisa el pronóstico de hoy para su ciudad, muestra solo las reglas que aplican, y explica qué hacer si alguien se enferma.",
+    },
+    groups: [
+      group({ en: "Outdoors, every work day", es: "Al aire libre, todos los días de trabajo" }, HEAT_FACTS.outdoorAlways),
+      group({ en: "Outdoors, above 80°F", es: "Al aire libre, a más de 80°F" }, HEAT_FACTS.outdoorOver80),
+      group({ en: "Outdoors, at 95°F or more (high-heat rules)", es: "Al aire libre, a 95°F o más (reglas para calor extremo)" }, HEAT_FACTS.outdoorHigh95),
+      group(heat("tierIndoor82"), HEAT_FACTS.indoor82),
+      group(heat("tierIndoor87"), HEAT_FACTS.indoor87),
+      group(heat("payTitle"), HEAT_FACTS.pay),
+      group(heat("rightsTitle"), HEAT_FACTS.rights),
+    ],
+    places: [HEAT_FACTS.calOshaLine, HEAT_FACTS.modestoOffice, HEAT_FACTS.laborCommissioner],
+    sources: HEAT_FACTS.sources,
+    checked: HEAT_FACTS.checked,
+  },
+  {
+    id: "legal",
+    group: "legal",
+    slug: { en: "legal-aid", es: "ayuda-legal" },
+    target: { tab: "legal" },
+    name: { en: "Free and low-cost legal help", es: "Ayuda legal gratis o de bajo costo" },
+    summary: {
+      en: "Legal aid offices near Stanislaus County, and how to avoid fake “notarios”.",
+      es: "Oficinas de ayuda legal cerca del condado de Stanislaus, y cómo evitar a los “notarios” falsos.",
+    },
+    intro: copy("legalLead"),
+    groups: [],
+    places: [],
+    sources: LEGAL_FACTS.sources,
+    checked: LEGAL_FACTS.checked,
+  },
+];
+
+export const toolById = (id: ToolId): ToolPage => {
+  const t = TOOLS.find((x) => x.id === id);
+  if (!t) throw new Error(`landing: no tool "${id}"`);
+  return t;
+};

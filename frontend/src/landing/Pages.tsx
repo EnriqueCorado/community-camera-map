@@ -1,0 +1,478 @@
+// The public "Free help" pages, rendered to static HTML at build time
+// (scripts/prerender.mjs) so they load fast, work without JavaScript and can
+// be found by search engines. Every link is a plain link; the only scripts are
+// the saved theme/text size (read, never written) and the flyer Print button.
+import type { ReactNode } from "react";
+import { translate, type Lang } from "../i18n";
+import { COPY } from "../help/copy";
+import { LEGAL_FACTS } from "../help/facts";
+import { longDate } from "../help/dates";
+import { LEGAL_COST_KEYS, LEGAL_KIND_KEYS } from "../help/legal-kinds";
+import type { LegalOffice } from "../help/legal-dir";
+import type { HelpTarget } from "../help/target";
+import { LEGAL_SITE_HOSTS, safeUrl } from "../popup-logic";
+import { SITE_COPY, type SiteCopy } from "./site-copy";
+import { GROUPS, TOOLS, type PlaceInfo, type ToolPage } from "./tools";
+import { FLYER_COPY, flyerTarget, type Flyer } from "./flyers";
+import { qr } from "./qr";
+
+export interface Site {
+  /** "https://example.github.io" (no trailing slash). */
+  origin: string;
+  /** Base path of this build, with slashes, for links between pages: "/stanislaus-cam-map/". */
+  base: string;
+  /** Base path of the public site, for canonical links and QR codes (always the live site). */
+  publicBase: string;
+  css: string;
+  repo: string;
+}
+
+const LOCALE: Record<Lang, string> = { en: "en-US", es: "es-US" };
+const other = (lang: Lang): Lang => (lang === "en" ? "es" : "en");
+const absolute = (site: Site, path: string) => `${site.origin}${site.publicBase}${path}`;
+
+/** A US phone number as a tel: link, or null for short codes like 211 (shown as text). */
+function telHref(phone: string): string | null {
+  const digits = phone.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, "");
+  return digits.length === 10 ? `tel:+1${digits}` : null;
+}
+
+function PhoneLink({ phone, s }: { phone: string; s: SiteCopy }) {
+  const href = telHref(phone);
+  return href ? (
+    <a href={href} aria-label={s.call(phone)}>
+      {phone}
+    </a>
+  ) : (
+    <span>{phone}</span>
+  );
+}
+
+/** Link into the map app with the Help panel open on `target`, in `lang`. */
+export function appLink(site: Site, lang: Lang, t: HelpTarget): string {
+  const p = new URLSearchParams({ lang, help: t.tab });
+  if (t.view) p.set("hv", t.view);
+  return `${site.base}#${p.toString()}`;
+}
+
+export const toolPath = (lang: Lang, t: ToolPage) => `${SITE_COPY[lang].dir}/${t.slug[lang]}/`;
+export const homePath = (lang: Lang) => `${SITE_COPY[lang].dir}/`;
+export const FLYERS_PATH = "help/flyers/";
+export const flyerPath = (f: Flyer) => `${FLYERS_PATH}${f.id}/`;
+
+// Applies the theme and text size chosen in the map app (same keys as
+// display.ts). Runs before paint so a dark-mode reader never sees a flash.
+const DISPLAY_SCRIPT =
+  'try{var d=document.documentElement,t=localStorage.getItem("scm-theme"),s=localStorage.getItem("scm-text");' +
+  'if(t==="light"||t==="dark")d.dataset.theme=t;if(s==="large")d.dataset.text="large"}catch(e){}';
+const FLYER_PAGE_CSS = "@page{size:letter;margin:0}";
+const PRINT_SCRIPT = 'document.querySelector("[data-print]").addEventListener("click",function(){window.print()})';
+
+interface DocProps {
+  site: Site;
+  lang: Lang;
+  title: string;
+  description: string;
+  path: string;
+  /** The same page in the other language (omitted for bilingual pages). */
+  alternate?: string;
+  /** Flyers are always light (they're made for paper). */
+  print?: boolean;
+  children: ReactNode;
+}
+
+function Doc({ site, lang, title, description, path, alternate, print, children }: DocProps) {
+  const alt = other(lang);
+  return (
+    <html lang={lang} {...(print ? { "data-theme": "light" } : {})}>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Sites we link to aren't told which page sent the visitor. */}
+        <meta name="referrer" content="no-referrer" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={absolute(site, path)} />
+        {alternate && (
+          <>
+            <link rel="alternate" hrefLang={lang} href={absolute(site, path)} />
+            <link rel="alternate" hrefLang={alt} href={absolute(site, alternate)} />
+            <link rel="alternate" hrefLang="x-default" href={absolute(site, lang === "en" ? path : alternate)} />
+          </>
+        )}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={absolute(site, path)} />
+        <meta property="og:locale" content={LOCALE[lang].replace("-", "_")} />
+        <meta name="color-scheme" content={print ? "light" : "light dark"} />
+        {!print && <script dangerouslySetInnerHTML={{ __html: DISPLAY_SCRIPT }} />}
+        <style dangerouslySetInnerHTML={{ __html: print ? `${site.css}${FLYER_PAGE_CSS}` : site.css }} />
+      </head>
+      <body className={print ? "is-flyer" : undefined}>{children}</body>
+    </html>
+  );
+}
+
+function Chrome({ site, lang, alternate, children }: { site: Site; lang: Lang; alternate?: string; children: ReactNode }) {
+  const s = SITE_COPY[lang];
+  const alt = other(lang);
+  return (
+    <>
+      <a className="skip" href="#main">
+        {s.skip}
+      </a>
+      <header className="top">
+        <div className="wrap top__in">
+          <a className="brand" href={`${site.base}${homePath(lang)}`}>
+            {s.siteName}
+          </a>
+          {alternate && (
+            <a className="langlink" href={`${site.base}${alternate}`} hrefLang={alt} lang={alt} aria-label={SITE_COPY[lang].otherLangLabel}>
+              {s.otherLang}
+            </a>
+          )}
+        </div>
+      </header>
+      <main id="main" className="wrap" tabIndex={-1}>
+        {children}
+      </main>
+      <footer className="foot">
+        <div className="wrap">
+          <p>{s.disclaimer}</p>
+          <p>
+            <a href={site.base}>{s.footerMap}</a> {s.footerVolunteer}{" "}
+            <a href={site.repo}>{s.footerSource}</a>
+          </p>
+        </div>
+      </footer>
+    </>
+  );
+}
+
+function OpenTool({ site, lang, tool }: { site: Site; lang: Lang; tool: ToolPage }) {
+  const s = SITE_COPY[lang];
+  return (
+    <p className="open">
+      <a className="btn" href={appLink(site, lang, tool.target)}>
+        {s.open}
+        <span className="vh">: {tool.name[lang]}</span>
+      </a>
+      <span className="open__hint">{s.openHint}</span>
+    </p>
+  );
+}
+
+function Place({ p, lang, s }: { p: PlaceInfo; lang: Lang; s: SiteCopy }) {
+  return (
+    <li className="place">
+      <strong className="place__name">{p.name[lang]}</strong>
+      {p.address && <span>{p.address}</span>}
+      {p.hours && <span>{p.hours[lang]}</span>}
+      {p.note && <span>{p.note[lang]}</span>}
+      <span className="place__links">
+        {p.phone && <PhoneLink phone={p.phone} s={s} />}
+        {p.email && <a href={`mailto:${p.email}`}>{p.email}</a>}
+        {p.url && <a href={p.url}>{s.website}</a>}
+      </span>
+    </li>
+  );
+}
+
+function Office({ o, lang, s }: { o: LegalOffice; lang: Lang; s: SiteCopy }) {
+  const kinds = o.kinds.map((k) => translate(lang, LEGAL_KIND_KEYS[k])).join(" · ");
+  // Same allow-list as the map popup and the Help panel's list.
+  const website = safeUrl(o.website, LEGAL_SITE_HOSTS);
+  return (
+    <li className="place">
+      <strong className="place__name">{o.name}</strong>
+      <span className="place__tags">
+        {translate(lang, LEGAL_COST_KEYS[o.cost])} · {kinds}
+      </span>
+      <span>
+        {o.address}, {o.city} {o.zip}
+      </span>
+      {o.languages.length > 0 && <span>{s.officeLanguages(o.languages.join(", "))}</span>}
+      {o.eoir && <span>{s.eoir}</span>}
+      {o.note[lang] && <span>{o.note[lang]}</span>}
+      <span className="place__links">
+        {o.phone && <PhoneLink phone={o.phone} s={s} />}
+        {website && <a href={website}>{s.website}</a>}
+      </span>
+    </li>
+  );
+}
+
+export function HomePage({ site, lang }: { site: Site; lang: Lang }) {
+  const s = SITE_COPY[lang];
+  const alternate = homePath(other(lang));
+  return (
+    <Doc site={site} lang={lang} title={s.homeTitle} description={s.homeDescription} path={homePath(lang)} alternate={alternate}>
+      <Chrome site={site} lang={lang} alternate={alternate}>
+        <section className="hero" aria-labelledby="hero-title">
+          <h1 id="hero-title">{s.heroTitle}</h1>
+          <p className="lead">{s.heroLead}</p>
+          <ul className="promise" aria-label={s.promiseLabel}>
+            {s.promise.map((p) => (
+              <li key={p}>{p}</li>
+            ))}
+          </ul>
+        </section>
+        {GROUPS.map((g) => (
+          <section key={g.id} id={g.anchor[lang]} className="group" aria-labelledby={`g-${g.id}`}>
+            <h2 id={`g-${g.id}`}>{g.name[lang]}</h2>
+            <ul className="cards">
+              {TOOLS.filter((t) => t.group === g.id).map((t) => (
+                <li key={t.id}>
+                  <a className="card" href={`${site.base}${toolPath(lang, t)}`}>
+                    <span className="card__title">{t.name[lang]}</span>
+                    <span className="card__text">{t.summary[lang]}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+        <section className="group share" aria-labelledby="share">
+          <h2 id="share">{s.flyersTitle}</h2>
+          <p>{s.flyersLead}</p>
+          <p>
+            <a className="btn btn--quiet" href={`${site.base}${FLYERS_PATH}`}>
+              {s.flyersLink}
+            </a>
+          </p>
+        </section>
+      </Chrome>
+    </Doc>
+  );
+}
+
+export function ToolPageView({ site, lang, tool, offices }: { site: Site; lang: Lang; tool: ToolPage; offices: LegalOffice[] }) {
+  const s = SITE_COPY[lang];
+  const c = COPY[lang];
+  const alternate = toolPath(other(lang), tool);
+  const related = TOOLS.filter((t) => t.id !== tool.id && (t.group === tool.group || t.id === "legal"));
+  return (
+    <Doc
+      site={site}
+      lang={lang}
+      title={`${tool.name[lang]} | ${s.siteName}`}
+      description={tool.summary[lang]}
+      path={toolPath(lang, tool)}
+      alternate={alternate}
+    >
+      <Chrome site={site} lang={lang} alternate={alternate}>
+        <nav aria-label={s.breadcrumb} className="crumbs">
+          <a href={`${site.base}${homePath(lang)}`}>{s.home}</a>
+          <span aria-hidden="true"> › </span>
+          <span aria-current="page">{tool.name[lang]}</span>
+        </nav>
+        <h1>{tool.name[lang]}</h1>
+        <p className="lead">{tool.intro[lang]}</p>
+        <OpenTool site={site} lang={lang} tool={tool} />
+
+        {tool.id === "legal" && (
+          <>
+            <section className="notario" aria-labelledby="notario">
+              <h2 id="notario">{c.notarioTitle}</h2>
+              <p>{c.notarioText}</p>
+              <ul>
+                {LEGAL_FACTS.verify.map((v) => (
+                  <li key={v.url}>
+                    <a href={v.url}>{v.label[lang]}</a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+            <section aria-labelledby="offices">
+              <h2 id="offices">{s.officesTitle}</h2>
+              <ul className="places">
+                {offices.map((o) => (
+                  <Office key={o.id} o={o} lang={lang} s={s} />
+                ))}
+              </ul>
+            </section>
+          </>
+        )}
+
+        {tool.groups.map((g, i) => (
+          <section key={g.title.en} aria-labelledby={`law-${i}`}>
+            <h2 id={`law-${i}`}>{g.title[lang]}</h2>
+            <ul className="facts">
+              {g.facts.map((f) => (
+                <li key={f.id}>
+                  {f[lang]} <span className="cite">({f.cite})</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+
+        {tool.sections?.map((sec, i) => (
+          <section key={sec.title.en} aria-labelledby={`sec-${i}`}>
+            <h2 id={`sec-${i}`}>{sec.title[lang]}</h2>
+            <ul className="facts">
+              {sec.items.map((item) => (
+                <li key={item.en}>{item[lang]}</li>
+              ))}
+            </ul>
+          </section>
+        ))}
+
+        {tool.places.length > 0 && (
+          <section aria-labelledby="places">
+            <h2 id="places">{s.placesTitle}</h2>
+            <ul className="places">
+              {tool.places.map((p) => (
+                <Place key={p.name.en} p={p} lang={lang} s={s} />
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <OpenTool site={site} lang={lang} tool={tool} />
+
+        <section aria-labelledby="sources">
+          <h2 id="sources">{s.sourcesTitle}</h2>
+          <ul className="sources">
+            {tool.sources.map((src) => (
+              <li key={src.url}>
+                <a href={src.url}>{src.label}</a>
+              </li>
+            ))}
+          </ul>
+          <p className="muted">{s.checked(longDate(tool.checked, LOCALE[lang]))}</p>
+        </section>
+
+        <nav aria-labelledby="more" className="more">
+          <h2 id="more">{s.otherTools}</h2>
+          <ul>
+            {related.map((t) => (
+              <li key={t.id}>
+                <a href={`${site.base}${toolPath(lang, t)}`}>{t.name[lang]}</a>
+              </li>
+            ))}
+            <li>
+              <a href={`${site.base}${homePath(lang)}`}>{s.home}</a>
+            </li>
+          </ul>
+        </nav>
+      </Chrome>
+    </Doc>
+  );
+}
+
+function QrCode({ url, label }: { url: string; label: string }) {
+  const code = qr(url);
+  return (
+    <svg className="qr" viewBox={`0 0 ${code.size} ${code.size}`} role="img" aria-label={label} shapeRendering="crispEdges">
+      <rect width={code.size} height={code.size} fill="#fff" />
+      <path d={code.path} fill="#000" />
+    </svg>
+  );
+}
+
+/** The printed address under a QR code, without "https://". */
+const shortUrl = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+
+function FlyerSideView({ site, f, lang, small }: { site: Site; f: Flyer; lang: Lang; small?: boolean }) {
+  const side = f.side[lang];
+  const fc = FLYER_COPY[lang];
+  const url = absolute(site, flyerTarget(f, lang, SITE_COPY[lang].dir));
+  return (
+    <div className="fside" lang={lang}>
+      {small ? <p className="fside__head">{side.headline}</p> : <h2 className="fside__head">{side.headline}</h2>}
+      <ul className="fside__list">
+        {side.bullets.map((b) => (
+          <li key={b}>{b}</li>
+        ))}
+      </ul>
+      <div className="fside__qr">
+        <QrCode url={url} label={`QR: ${url}`} />
+        <p className="fside__scan">{fc.scan}</p>
+        <p className="fside__url">{shortUrl(url)}</p>
+      </div>
+    </div>
+  );
+}
+
+export function FlyerPage({ site, f }: { site: Site; f: Flyer }) {
+  const title = `${f.side.en.headline} / ${f.side.es.headline}`;
+  return (
+    <Doc site={site} lang="en" title={title} description={`${FLYER_COPY.en.indexTitle} / ${FLYER_COPY.es.indexTitle}`} path={flyerPath(f)} print>
+      <div className="toolbar noprint">
+        <a href={`${site.base}${FLYERS_PATH}`}>
+          {FLYER_COPY.en.back} / <span lang="es">{FLYER_COPY.es.back}</span>
+        </a>
+        <button type="button" className="btn" data-print>
+          {FLYER_COPY.en.print} / <span lang="es">{FLYER_COPY.es.print}</span>
+        </button>
+      </div>
+      <main className={`sheet sheet--${f.layout}`} aria-labelledby="flyer-title">
+        <h1 id="flyer-title" className="vh">
+          {f.side.en.headline} / <span lang="es">{f.side.es.headline}</span>
+        </h1>
+        {f.layout === "cards" ? (
+          [0, 1, 2, 3].map((i) => (
+            <div className="fcard" key={i} aria-hidden={i > 0 ? true : undefined}>
+              <FlyerSideView site={site} f={f} lang="en" small />
+              <FlyerSideView site={site} f={f} lang="es" small />
+            </div>
+          ))
+        ) : (
+          <>
+            <div className="sheet__cols">
+              <FlyerSideView site={site} f={f} lang="en" />
+              <FlyerSideView site={site} f={f} lang="es" />
+            </div>
+            <div className="sheet__foot">
+              <p>
+                {FLYER_COPY.en.promise} <span lang="es">{FLYER_COPY.es.promise}</span>
+              </p>
+              <p className="sheet__note">
+                {FLYER_COPY.en.note} <span lang="es">{FLYER_COPY.es.note}</span>
+              </p>
+            </div>
+          </>
+        )}
+      </main>
+      <script dangerouslySetInnerHTML={{ __html: PRINT_SCRIPT }} />
+    </Doc>
+  );
+}
+
+export function FlyerIndex({ site, flyers }: { site: Site; flyers: readonly Flyer[] }) {
+  const en = FLYER_COPY.en;
+  const es = FLYER_COPY.es;
+  return (
+    <Doc site={site} lang="en" title={`${en.indexTitle} / ${es.indexTitle}`} description={en.indexLead} path={FLYERS_PATH}>
+      <Chrome site={site} lang="en">
+        <h1>
+          {en.indexTitle} / <span lang="es">{es.indexTitle}</span>
+        </h1>
+        <p className="lead">{en.indexLead}</p>
+        <p className="lead" lang="es">
+          {es.indexLead}
+        </p>
+        <ul className="cards">
+          {flyers.map((f) => (
+            <li key={f.id}>
+              <a className="card" href={`${site.base}${flyerPath(f)}`}>
+                <span className="card__title">{f.side.en.headline}</span>
+                <span className="card__text" lang="es">
+                  {f.side.es.headline}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p>
+          <a href={`${site.base}${homePath("en")}`}>{SITE_COPY.en.home}</a> ·{" "}
+          <a href={`${site.base}${homePath("es")}`} lang="es" hrefLang="es">
+            {SITE_COPY.es.home}
+          </a>
+        </p>
+      </Chrome>
+    </Doc>
+  );
+}

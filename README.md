@@ -410,7 +410,7 @@ uv run python scripts/bake.py
 A bilingual Help panel (sidebar "Free help", popups on hospital / mobile home park / legal-help
 pins, or `#help=medical|rent|legal`). **Nothing typed is stored or sent:** the tools are pure
 functions in `frontend/src/help/` running in the browser, nothing goes to localStorage or the URL
-(only the open tab does), and the only request is the static parcel file named after the street's
+(only the open tab and tool do), and the only request is the static parcel file named after the street's
 first two letters. `e2e/tests/help.spec.ts` checks this.
 
 | Tool | Logic | Facts & sources |
@@ -424,6 +424,17 @@ first two letters. `e2e/tests/help.spec.ts` checks this.
 | Heat at work (Work tab) | `help/heat.ts`, `heat-forecast.ts` | `help/heat-facts.ts` (8 CCR §3395/§3396); Open-Meteo for a fixed city list |
 | Eviction-notice deadlines (Renters) | `help/court-days.ts`, `eviction.ts` | `help/eviction-facts.ts` (CCP §1161/§1167, 2026–27 court holidays) |
 | Benefits screener | `help/benefits.ts` | `help/benefits-facts.ts` (CalFresh, WIC, Medi-Cal, CARE, MID/TID, LIHEAP, LifeLine, CalEITC…) |
+
+Each tool opens directly with `#help=<tab>&hv=<tool>` (e.g. `#lang=es&help=rent&hv=eviction`).
+
+**Public pages and flyers** (`frontend/src/landing/`): plain static pages, one per tool in English
+(`/help/…`) and Spanish (`/ayuda/…`), plus bilingual printable flyers with QR codes
+(`/help/flyers/…`, letter size). `npm run build` renders them after the app build
+(`scripts/prerender.mjs`, React on the server) from the same facts files, so they never drift from
+the tools. No scripts beyond the saved theme and the Print button, and no requests beyond the page
+itself. `e2e/tests/help-pages.spec.ts` (run against `vite preview` or the live site) checks links,
+hreflang, WCAG, phone width, that each QR code decodes to the live page, and that each flyer prints
+on one page. Flyers avoid figures that change yearly, so printed copies stay correct.
 
 **Yearly upkeep** (tests in `e2e/tests/unit-help.spec.ts` fail when these go stale):
 - **By Aug 1:** add the next rent-cap period to `RENT_FACTS.periods` from DIR's April California

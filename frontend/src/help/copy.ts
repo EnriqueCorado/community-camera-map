@@ -22,6 +22,7 @@ export interface HelpCopy {
   workViewHeat: string;
   rentViewEviction: string;
   disclaimer: string;
+  flyers: string;
   loading: string;
   newTab: string;
   website: string;
@@ -186,6 +187,7 @@ const en: HelpCopy = {
   workViewWages: "Unpaid wages",
   workViewHeat: "Heat at work today",
   rentViewEviction: "Got an eviction notice?",
+  flyers: "Share these tools: free printable flyers in English and Spanish",
   disclaimer:
     "This is general information, not legal advice, from public law and official sources (checked dates are shown). Every situation is different. For advice about yours, contact one of the free legal help offices.",
   loading: "Loading…",
@@ -373,6 +375,7 @@ const es: HelpCopy = {
   workViewWages: "Salarios no pagados",
   workViewHeat: "Calor en el trabajo hoy",
   rentViewEviction: "¿Recibió un aviso de desalojo?",
+  flyers: "Comparta estas herramientas: volantes gratis para imprimir, en español e inglés",
   disclaimer:
     "Esta es información general, no consejo legal, tomada de la ley y de fuentes oficiales (se muestra la fecha de revisión). Cada caso es distinto. Para un consejo sobre su caso, comuníquese con una de las oficinas de ayuda legal gratuita.",
   loading: "Cargando…",

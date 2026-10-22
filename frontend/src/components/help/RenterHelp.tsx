@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useI18n } from "../../i18n";
 import type { HelpCopy } from "../../help/copy";
 import { DEPOSIT_FACTS, MOBILE_FACTS, RENT_FACTS, RENT_SOURCES, REPAIR_FACTS, type Contact } from "../../help/facts";
@@ -10,30 +10,21 @@ import { builtAge, lookupAddress, type ParcelMatch } from "../../help/parcels";
 import { Choice, ExtLink, Field, MoneyInput, Phone, Result, Sources, FactList } from "./ui";
 import { LetterBuilder } from "./LetterBuilder";
 import { EvictionTool } from "./EvictionTool";
-
-type View = "rent" | "eviction" | "repairs" | "deposit" | "mobile";
+import type { RentView } from "../../help/target";
 
 export function RenterHelp({
   c,
-  mobileHome,
-  onMobileHome,
+  view,
+  onView,
   onLegal,
 }: {
   c: HelpCopy;
-  mobileHome: boolean;
-  onMobileHome: (on: boolean) => void;
+  view: RentView;
+  onView: (v: RentView) => void;
   onLegal: () => void;
 }) {
   const { lang, locale } = useI18n();
-  const [view, setView] = useState<View>(mobileHome ? "mobile" : "rent");
-  useEffect(() => {
-    if (mobileHome) setView("mobile");
-  }, [mobileHome]);
-  const pick = (v: View) => {
-    setView(v);
-    if ((v === "mobile") !== mobileHome) onMobileHome(v === "mobile");
-  };
-  const views: [View, string][] = [
+  const views: [RentView, string][] = [
     ["rent", c.rentViewIncrease],
     ["eviction", c.rentViewEviction],
     ["repairs", c.rentViewRepairs],
@@ -46,13 +37,13 @@ export function RenterHelp({
       <p className="help__lead">{c.rentLead}</p>
       <div className="hsub" role="group" aria-label={c.rentViewLabel}>
         {views.map(([v, label]) => (
-          <button key={v} type="button" className={`chip${view === v ? " chip--on" : ""}`} aria-pressed={view === v} onClick={() => pick(v)}>
+          <button key={v} type="button" className={`chip${view === v ? " chip--on" : ""}`} aria-pressed={view === v} onClick={() => onView(v)}>
             {label}
           </button>
         ))}
       </div>
 
-      {view === "rent" && <RentIncrease c={c} onMobileOwner={() => pick("mobile")} />}
+      {view === "rent" && <RentIncrease c={c} onMobileOwner={() => onView("mobile")} />}
       {view === "eviction" && <EvictionTool c={c} onLegal={onLegal} />}
       {view === "repairs" && (
         <>
@@ -83,7 +74,7 @@ export function RenterHelp({
           <FactList facts={MOBILE_FACTS.rights} />
           <ContactList contacts={MOBILE_FACTS.contacts} c={c} />
           <p>
-            <button type="button" className="linkbtn" onClick={() => pick("rent")}>
+            <button type="button" className="linkbtn" onClick={() => onView("rent")}>
               {c.mobileRentInstead}
             </button>
           </p>

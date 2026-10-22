@@ -1930,7 +1930,7 @@ function sectionHtml(x: NonNullable<PopupSpec["section"]>): string {
 function helpSection(h: HelpTarget, t: TFn): NonNullable<PopupSpec["section"]> {
   if (h.tab === "medical")
     return { heading: t("helpHospitalHeading"), label: "", text: t("helpHospitalText"), action: t("helpHospitalAction") };
-  if (h.mobileHome)
+  if (h.view === "mobile")
     return { heading: t("helpMobileHeading"), label: "", text: t("helpMobileText"), action: t("helpMobileAction") };
   return { heading: t("helpLegalHeading"), label: "", text: t("helpLegalText"), action: t("helpLegalAction") };
 }

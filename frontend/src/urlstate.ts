@@ -3,7 +3,7 @@
 // camera viewport. Kept tiny and defensive — bad hashes decode to defaults.
 import type { LayerState } from "./components/MapView";
 import type { Lang } from "./i18n";
-import { isHelpTab, type HelpTab } from "./help/target";
+import { isHelpTab, isHelpView, type HelpTarget } from "./help/target";
 
 export interface ShareState {
   layers: LayerState;
@@ -11,8 +11,8 @@ export interface ShareState {
   view: { center: [number, number]; zoom: number } | null;
   /** UI language; only non-default ("es") is written to the URL. */
   lang?: Lang;
-  /** Open Help tab (never anything typed into it). */
-  help?: HelpTab;
+  /** Open Help tab and tool (never anything typed into it). */
+  help?: Pick<HelpTarget, "tab" | "view">;
 }
 
 export function encodeState(s: ShareState): string {
@@ -29,7 +29,10 @@ export function encodeState(s: ShareState): string {
   if (offVendors.length) p.set("voff", offVendors.join("~"));
   if (overlays.length) p.set("ov", overlays.join("~"));
   if (s.query.trim()) p.set("q", s.query.trim());
-  if (s.help) p.set("help", s.help);
+  if (s.help) {
+    p.set("help", s.help.tab);
+    if (s.help.view) p.set("hv", s.help.view);
+  }
   if (s.view) p.set("v", `${s.view.center[0].toFixed(4)},${s.view.center[1].toFixed(4)},${s.view.zoom.toFixed(2)}`);
   return p.toString();
 }
@@ -50,7 +53,9 @@ export function decodeState(hash: string, defaults: LayerState): ShareState {
       view = { center: [lng!, lat!], zoom: z! };
     }
   }
-  const help = p.get("help");
+  const tab = p.get("help");
+  const tool = p.get("hv");
+  const help = isHelpTab(tab) ? { tab, ...(isHelpView(tab, tool) ? { view: tool } : {}) } : undefined;
   return {
     layers: {
       cameras: p.get("cam") !== "0",
@@ -60,6 +65,6 @@ export function decodeState(hash: string, defaults: LayerState): ShareState {
     },
     query: p.get("q") ?? "",
     view,
-    help: isHelpTab(help) ? help : undefined,
+    help,
   };
 }
