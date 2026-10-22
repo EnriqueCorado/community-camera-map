@@ -96,7 +96,14 @@ export const fieldsAt = (spec: ViewSpec, zoom: number): Record<string, string> =
 
 /** Most features a view loads: the spec's cap, or more for a coarse level
  *  (all ~3,200 counties fit; they're simplified hard at that zoom). */
-export const viewCap = (spec: ViewSpec, zoom: number) => (zoom < spec.min_zoom ? 4000 : spec.max);
+export const viewCap = (spec: ViewSpec, zoom: number) =>
+  zoom < spec.min_zoom
+    ? 4000
+    : // a tract choropleth (it has coarser levels) must fill a dense metro at its
+      // first zoom: LA holds ~3,200 tracts at z9 (~70-100 KB gz per 1,000)
+      spec.geometry === "polygon" && spec.levels?.length
+      ? Math.max(spec.max, 5000)
+      : spec.max;
 
 /** Did ArcGIS stop short (more pages to fetch)? It says so at the top level
  *  for f=json and under `properties` for f=geojson. */
@@ -125,7 +132,7 @@ export function arcgisQueryUrl(spec: ViewSpec, bbox: Bbox, zoom: number, offset 
     f: "geojson",
   });
   if (offset > 0) p.set("resultOffset", String(offset));
-  // Polygons: drop detail finer than ~half a screen pixel at this zoom.
+  // Polygons/lines: drop detail finer than ~half a screen pixel at this zoom.
   if (spec.simplify) p.set("maxAllowableOffset", (180 / (512 * 2 ** zoom)).toPrecision(3));
   return `${levelUrl(spec, zoom) ?? spec.url}/query?${p}`;
 }

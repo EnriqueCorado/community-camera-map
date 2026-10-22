@@ -95,6 +95,9 @@ test("levels: states, then counties, then tracts as you zoom in", () => {
   expect(u.pathname).toBe("/FeatureServer/1/query");
   expect(u.searchParams.get("resultOffset")).toBe("1000");
   expect(u.searchParams.get("resultRecordCount")).toBe("4000"); // every county fits
+  // tracts: enough for a dense metro (LA ~3,200 at z9); plain layers keep their cap
+  expect(new URL(arcgisQueryUrl(acs, chicago, 9.5)).searchParams.get("resultRecordCount")).toBe("5000");
+  expect(new URL(arcgisQueryUrl(spec({ max: 1500 }), chicago, 10)).searchParams.get("resultRecordCount")).toBe("1500");
   expect(new URL(arcgisQueryUrl(acs, chicago, 10)).searchParams.has("resultOffset")).toBe(false);
 });
 

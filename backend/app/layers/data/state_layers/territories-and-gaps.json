@@ -37,46 +37,6 @@
   }
  },
  {
-  "name": "pr-zoning",
-  "state": "PR",
-  "title": "Zoning (Puerto Rico)",
-  "title_es": "Calificación de suelos (Puerto Rico)",
-  "description": "Official JP zoning (calificación) and land classification for every parcel in Puerto Rico.",
-  "group": "planning",
-  "category": "landuse",
-  "source": "Junta de Planificación de Puerto Rico (SIGE)",
-  "license": "Public government data (Junta de Planificación); no warranty, informational use — attribute JP",
-  "view": {
-   "url": "https://sigejp.pr.gov/server/rest/services/Calificaci%C3%B3n/MapServer/228",
-   "fields": {
-    "descrip": "name",
-    "cali": "kind",
-    "descrip1": "land_class",
-    "vigencia": "updated",
-    "municipio": "city"
-   },
-   "geometry": "polygon",
-   "min_zoom": 16,
-   "where": "1=1",
-   "max_features": 500,
-   "simplify": true
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -66.08,
-    18.44,
-    -66.05,
-    18.46
-   ],
-   "count": 500,
-   "kb": 90.5,
-   "max_record_count": 500,
-   "features_in_probe": 500
-  }
- },
- {
   "name": "pr-liquefaction",
   "state": "PR",
   "title": "Liquefaction susceptibility (Puerto Rico)",
@@ -1358,7 +1318,7 @@
     "LANDUSECODE": "kind"
    },
    "geometry": "polygon",
-   "min_zoom": 11,
+   "min_zoom": 13,
    "where": "1=1",
    "max_features": 1000,
    "simplify": true
@@ -1939,7 +1899,7 @@
     "B01001_Total_Population": "population"
    },
    "geometry": "polygon",
-   "min_zoom": 9,
+   "min_zoom": 10,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -2175,7 +2135,7 @@
     "STATION_TYPE": "kind"
    },
    "geometry": "point",
-   "min_zoom": 13,
+   "min_zoom": 14,
    "where": "1=1",
    "max_features": 2000,
    "simplify": false

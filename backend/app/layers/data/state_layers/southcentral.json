@@ -100,7 +100,7 @@
     "MODIFIED_DATE": "updated"
    },
    "geometry": "polygon",
-   "min_zoom": 13,
+   "min_zoom": 15,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -178,7 +178,7 @@
     "HISTORIC": "historic"
    },
    "geometry": "polygon",
-   "min_zoom": 13,
+   "min_zoom": 14,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -354,7 +354,7 @@
    "count": 135,
    "kb": 32,
    "max_record_count": 2000,
-   "features_in_probe": 134
+   "features_in_probe": 132
   }
  },
  {
@@ -1793,7 +1793,7 @@
    "count": 1128,
    "kb": 259.0,
    "max_record_count": 2000,
-   "features_in_probe": 1128
+   "features_in_probe": 1129
   }
  },
  {
@@ -2543,7 +2543,7 @@
     "waterbody": "waterbody"
    },
    "geometry": "point",
-   "min_zoom": 10,
+   "min_zoom": 11,
    "where": "1=1",
    "max_features": 200
   },
@@ -3497,7 +3497,7 @@
     "ZONING_TYPE": "kind"
    },
    "geometry": "polygon",
-   "min_zoom": 13,
+   "min_zoom": 14,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -3534,7 +3534,7 @@
     "FUTURE_LAND_USE_CODE": "code"
    },
    "geometry": "polygon",
-   "min_zoom": 12,
+   "min_zoom": 14,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -4177,7 +4177,7 @@
    "count": 8,
    "kb": 3.8,
    "max_record_count": 2000,
-   "features_in_probe": 8
+   "features_in_probe": 11
   }
  },
  {
@@ -4636,7 +4636,7 @@
     "Zip_Code": "zip"
    },
    "geometry": "point",
-   "min_zoom": 17,
+   "min_zoom": 18,
    "where": "1=1",
    "max_features": 2000
   },
@@ -5131,7 +5131,7 @@
    "count": 148,
    "kb": 48.9,
    "max_record_count": 1000,
-   "features_in_probe": 151
+   "features_in_probe": 141
   }
  },
  {
@@ -5154,7 +5154,7 @@
     "PatrolLastDate": "patrolled"
    },
    "geometry": "line",
-   "min_zoom": 11,
+   "min_zoom": 13,
    "where": "1=1",
    "max_features": 2000,
    "refresh_s": 900
