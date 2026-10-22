@@ -54,6 +54,14 @@ export interface LayerInfo {
   classes?: ClassesSpec | null;
 }
 
+/** One state layer in data/catalog/index.json: name, title, Spanish title, USPS code. */
+export interface LayerIndexEntry {
+  n: string;
+  t: string;
+  e?: string;
+  s: string;
+}
+
 /** Categorical colors: paint by one property's value (see colors.ts classesColor). */
 export interface ClassesSpec {
   field: string;
@@ -130,6 +138,9 @@ export const api = {
       : getJSON<LayerInfo[]>(`${API_BASE}/api/layers`).then((layers) => ({ layers, whole: true })),
   /** One state's layers ("TX"), static site only. */
   listStateLayers: (code: string) => getJSON<LayerInfo[]>(`data/catalog/${encodeURIComponent(code)}.json`),
+  /** Every state layer's name, titles and state, static site only (for the
+   *  sidebar's layer search; see catalogIndex in scripts/catalog-split.mjs). */
+  layerIndex: () => getJSON<LayerIndexEntry[]>("data/catalog/index.json"),
   /** Overlay layer GeoJSON. */
   layerUrl: (name: string) =>
     STATIC ? `data/layers/${name}.geojson` : `${API_BASE}/api/layers/${name}`,

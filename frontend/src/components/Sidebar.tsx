@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { api, type LayerInfo } from "../api/client";
+import { api, type LayerIndexEntry, type LayerInfo } from "../api/client";
 import { ago } from "../freshness";
 import type { LayerState } from "./MapView";
 import { matchCamera, type CameraText } from "../camera-data";
@@ -150,6 +150,8 @@ const VENDORS: { id: string; label?: string; labelKey?: Key }[] = [
 ];
 
 const MAX_LIST = 200;
+/** Layer-search results listed under "In other states". */
+const MAX_ELSEWHERE = 30;
 
 interface Props {
   /** How many cameras, from how many agencies (header). */
@@ -393,11 +395,60 @@ export function Sidebar({
   };
   const anyLayerMatch = showTraffic || showAlpr || groups.some(([, items]) => items.length > 0);
 
+  // "In other states": search matches among the layers of states off screen.
+  // The static site loads only on-screen states, so it fetches an index of
+  // every state layer on the first search; the dev API lists them all already.
+  const [stateIndex, setStateIndex] = useState<LayerIndexEntry[]>([]);
+  const indexAsked = useRef(false);
+  useEffect(() => {
+    if (!lq || !api.static || indexAsked.current) return;
+    indexAsked.current = true;
+    api.layerIndex().then(setStateIndex, () => {
+      indexAsked.current = false; // try again on the next keystroke
+    });
+  }, [lq]);
+  const indexTitle = (x: LayerIndexEntry) => (lang === "es" && x.e ? x.e : layerTitle(lang, x.n, x.t));
+  const elsewhere: LayerIndexEntry[] = [];
+  if (lq) {
+    const listed = new Set(groups.flatMap(([, items]) => items.map((l) => l.name)));
+    const loaded = otherOverlays.flatMap((l) =>
+      stateName(l.coverage) ? [{ n: l.name, t: l.title, e: l.title_es ?? undefined, s: l.coverage! }] : [],
+    );
+    for (const x of [...stateIndex, ...loaded]) {
+      // On-screen states' layers are listed above (once their catalog loads).
+      // (A state this build doesn't know, from a stale cached index, is skipped.)
+      if (listed.has(x.n) || here.includes(x.s) || !stateName(x.s) || !matchesQuery(indexTitle(x))) continue;
+      listed.add(x.n);
+      elsewhere.push(x);
+    }
+    elsewhere.sort((a, b) => stateName(a.s)!.localeCompare(stateName(b.s)!) || indexTitle(a).localeCompare(indexTitle(b)));
+  }
+  // Choosing one switches it on and jumps to its state; App then loads that
+  // state's layers, and focus moves to the layer's checkbox when it appears.
+  const pendingFocus = useRef<string | null>(null);
+  useEffect(() => {
+    const name = pendingFocus.current;
+    const box = name ? asideRef.current?.querySelector<HTMLInputElement>(`input[data-layer="${CSS.escape(name)}"]`) : null;
+    if (box) {
+      pendingFocus.current = null;
+      // Only if focus was dropped (the chosen button is gone), never stolen.
+      const at = document.activeElement;
+      if (!at || at === document.body || at.closest(".otherstates")) box.focus();
+    }
+  });
+  const showElsewhere = (x: LayerIndexEntry) => {
+    setOverlay(x.n, true);
+    const v = STATE_VIEWS.find((sv) => sv.code === x.s);
+    if (v) onJump({ label: v.name, center: v.center, zoom: v.zoom });
+    pendingFocus.current = x.n;
+  };
+
   const overlayRow = (l: LayerInfo) => (
           <div key={l.name} className="layerrow">
             <label className={`toggle ${l.available ? "" : "toggle--disabled"}`}>
               <input
                 type="checkbox"
+                data-layer={l.name}
                 disabled={!l.available && !l.view}
                 checked={layers.overlays[l.name] ?? false}
                 onChange={(e) => setOverlay(l.name, e.target.checked)}
@@ -572,7 +623,10 @@ export function Sidebar({
           placeholder={t("findLayer")}
           aria-label={t("findLayerLabel")}
           value={layerQuery}
-          onChange={(e) => setLayerQuery(e.target.value)}
+          onChange={(e) => {
+            setLayerQuery(e.target.value);
+            pendingFocus.current = null; // a new search: don't move focus later
+          }}
         />
         {groups.map(([key, items]) =>
           items.length || (key === "cameras" && (showTraffic || showAlpr)) ? (
@@ -628,7 +682,32 @@ export function Sidebar({
             </div>
           ) : null,
         )}
-        {!anyLayerMatch && <p className="panel__note">{t("noLayerMatch")}</p>}
+        {elsewhere.length > 0 && (
+          <div className="layergroup" role="group" aria-labelledby="lg-elsewhere">
+            <h3 id="lg-elsewhere" className="layergroup__title">
+              {t("otherStatesTitle")}
+            </h3>
+            <ul className="otherstates">
+              {elsewhere.slice(0, MAX_ELSEWHERE).map((x) => (
+                <li key={x.n}>
+                  <button
+                    type="button"
+                    className="camlist__item"
+                    aria-label={t("otherStatesPick", { layer: indexTitle(x), state: stateName(x.s)! })}
+                    onClick={() => showElsewhere(x)}
+                  >
+                    <span className="camlist__name">{indexTitle(x)}</span>
+                    <span className="camlist__meta">{stateName(x.s)}</span>
+                  </button>
+                </li>
+              ))}
+              {elsewhere.length > MAX_ELSEWHERE && (
+                <li className="panel__note">{t("otherStatesMore", { n: fmt(elsewhere.length - MAX_ELSEWHERE) })}</li>
+              )}
+            </ul>
+          </div>
+        )}
+        {!anyLayerMatch && !elsewhere.length && <p className="panel__note">{t("noLayerMatch")}</p>}
 
         {censusOn && (
           <div className="subfilter">

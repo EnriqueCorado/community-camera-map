@@ -1363,6 +1363,13 @@ fieldset.subfilter {
   color: var(--muted);
 }
 
+/* Layer-search matches in states off screen (buttons styled like camera results). */
+.otherstates {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 /* "What's near an address?" */
 .nearme__form { display: flex; gap: 6px; }
 .nearme__form .search { flex: 1; min-width: 0; }
