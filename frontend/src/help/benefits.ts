@@ -81,6 +81,8 @@ export type Reason =
   | { kind: "oldTax" }
   /** WIC counts an unborn baby: within the limit for one more person. */
   | { kind: "unbornCounts"; check: IncomeCheck }
+  /** Medi-Cal counts the expected baby: household size includes it. */
+  | { kind: "babyCounted"; size: number }
   | { kind: "eitcNeedsSsn" }
   | { kind: "earnedZero" }
   | { kind: "earnedAssumption" }
@@ -238,13 +240,13 @@ function mediCalPregnant(a: Answers): ProgramResult {
   // Medi-Cal counts a pregnant person's expected baby in the household
   // (42 CFR §435.603(b)); one baby assumed — twins only raise the limit.
   const withBaby = { ...a, size: a.size + 1 };
+  const baby: Reason = { kind: "babyCounted", size: withBaby.size };
   const c = check("mediCalPregnant", withBaby);
-  if (within(c.cmp)) return incomeResult("medi-cal-pregnant", c);
   const m = check("mcap", withBaby);
-  if (within(m.cmp)) {
-    return { id: "medi-cal-pregnant", verdict: "maybe", reasons: [{ kind: "income", check: c }, { kind: "mcap", check: m }], table: "mcap" };
-  }
-  return incomeResult("medi-cal-pregnant", c);
+  const r: ProgramResult = within(c.cmp) || !within(m.cmp)
+    ? incomeResult("medi-cal-pregnant", c)
+    : { id: "medi-cal-pregnant", verdict: "maybe", reasons: [{ kind: "income", check: c }, { kind: "mcap", check: m }], table: "mcap" };
+  return { ...r, reasons: [baby, ...r.reasons] };
 }
 
 function mediCalAdults(a: Answers): ProgramResult {

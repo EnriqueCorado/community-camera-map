@@ -77,7 +77,7 @@ test("unanswered questions are pending, and bad input is flagged", async ({ page
   const dialog = await openBenefits(page);
   await dialog.getByLabel("Household income before taxes").fill("1500");
   await expect(dialog.getByText(/Answer the rest of the questions to check \d+ more programs\./)).toBeVisible();
-  await dialog.getByLabel("Household income before taxes").fill("12.345");
+  await dialog.getByLabel("Household income before taxes").fill("12.34.5");
   await expect(dialog.getByRole("alert")).toContainText("Enter a dollar amount");
 });
 

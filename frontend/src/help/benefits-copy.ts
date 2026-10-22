@@ -171,6 +171,8 @@ const en: BenefitsCopy = {
         return "Your income is over the limit for adults, but people 65+ or with a disability can qualify through other Medi-Cal programs (those have an asset limit). Ask the county.";
       case "unbornCounts":
         return `WIC may count the unborn baby in your household (ask WIC). ${checkEn(r.check, m)}`;
+      case "babyCounted":
+        return `Medi-Cal counts your expected baby, so your household is ${peopleEn(r.size)} (one more if you’re expecting twins).`;
       case "earnedZero":
         return "It needs some income from work.";
       case "earnedAssumption":
@@ -307,6 +309,8 @@ const es: BenefitsCopy = {
         return "Sus ingresos están por encima del límite para adultos, pero las personas de 65 años o más o con una discapacidad pueden calificar por otros programas de Medi-Cal (tienen un límite de bienes). Pregunte al condado.";
       case "unbornCounts":
         return `WIC puede contar al bebé por nacer en su hogar (pregunte a WIC). ${checkEs(r.check, m)}`;
+      case "babyCounted":
+        return `Medi-Cal cuenta al bebé que espera, así que su hogar es de ${peopleEs(r.size)} (uno más si espera gemelos).`;
       case "earnedZero":
         return "Se necesita algo de ingreso por trabajo.";
       case "earnedAssumption":

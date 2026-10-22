@@ -420,12 +420,24 @@ first two letters. `e2e/tests/help.spec.ts` checks this.
 | "When was it built?" | `help/parcels.ts` | `frontend/public/data/parcels/` (county assessor roll) |
 | Repair / deposit / hospital letters | `help/letters.ts` | cited inline |
 | Legal help directory + layer | `help/legal-dir.ts` | `backend/app/layers/data/legal_help.json` |
+| Unpaid wages (Work tab) | `help/wages.ts` | `help/wages-facts.ts` (Labor Code, IWC orders, DIR) |
+| Heat at work (Work tab) | `help/heat.ts`, `heat-forecast.ts` | `help/heat-facts.ts` (8 CCR §3395/§3396); Open-Meteo for a fixed city list |
+| Eviction-notice deadlines (Renters) | `help/court-days.ts`, `eviction.ts` | `help/eviction-facts.ts` (CCP §1161/§1167, 2026–27 court holidays) |
+| Benefits screener | `help/benefits.ts` | `help/benefits-facts.ts` (CalFresh, WIC, Medi-Cal, CARE, MID/TID, LIHEAP, LifeLine, CalEITC…) |
 
 **Yearly upkeep** (tests in `e2e/tests/unit-help.spec.ts` fail when these go stale):
 - **By Aug 1:** add the next rent-cap period to `RENT_FACTS.periods` from DIR's April California
   CPI (published ~mid-June) and check it against https://oag.ca.gov/rentcaps ("All other counties").
 - **Each January:** update `MEDICAL_FACTS.fpl` from the HHS poverty guidelines.
 - Re-check hospital policies (HCAI), office phone numbers, and the Modesto/Riverbank mobile home rules.
+- **Each January:** minimum wage (`MIN_WAGE`), court holidays for the next year (`court-days.ts`; dates past the
+  table answer "call now"), tax-credit limits; on 2027-01-01 re-read Labor Code §226.7 (`LAB_226_7_RECHECK`) and
+  the unlawful-detainer service rules (AB 747).
+- **Benefits tables** carry their own effective dates (CalFresh Oct 1, WIC Jul 1, CARE/LifeLine Jun 1, …); the
+  unit tests fail when one lapses. Public charge rules changed 2026-09-18; keep that note current.
+- A weekly GitHub Action (`help-links.yml`) checks every cited link and the AG rent-cap page and opens an issue.
+- Display settings (theme, larger text) live in `display.ts`; accessibility tests (`help*.spec.ts`) run axe
+  WCAG 2.2 AA in light and dark, English and Spanish, plus keyboard-only, 320px and forced-colors checks.
 
 ```bash
 cd backend && uv run python scripts/build_parcel_years.py    # re-bake year-built lookups

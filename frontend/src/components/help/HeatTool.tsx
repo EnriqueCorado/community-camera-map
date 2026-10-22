@@ -5,7 +5,7 @@ import { HEAT_COPY, type HeatCopy } from "../../help/heat-copy";
 import { HEAT_FACTS, type HeatContact, type HeatRule, type Symptoms } from "../../help/heat-facts";
 import "./heat.css";
 import { HEAT_CITIES, getForecast } from "../../help/heat-forecast";
-import { heatRules, parseTemp, type DailyForecast, type Setting, type Tier, type WorkType } from "../../help/heat";
+import { displayTemp, heatRules, parseTemp, type DailyForecast, type Setting, type Tier, type WorkType } from "../../help/heat";
 import { longDate } from "../../help/dates";
 import { Choice, ExtLink, Field, Phone, Result, Sources, type Tone, FactList } from "./ui";
 
@@ -54,7 +54,8 @@ export function HeatTool({ c }: { c: HelpCopy }) {
   const fromSite = site != null;
   const ready = temp != null && setting != null && (setting === "indoor" || work != null);
   const res = ready ? heatRules({ tempF: temp, setting, work: work ?? undefined, indoorSpecial: special === "yes" }) : null;
-  const shown = temp != null ? Math.round(temp * 10) / 10 : 0;
+  // A typed reading is shown as typed; a forecast is rounded (see displayTemp).
+  const shown = temp == null ? 0 : fromSite ? Math.round(temp * 10) / 10 : displayTemp(temp);
 
   const tierTitle: Record<Tier, string> = {
     always: h.tierAlways,
@@ -99,12 +100,12 @@ export function HeatTool({ c }: { c: HelpCopy }) {
           {forecast && forecastHigh != null && (
             <>
               <p className="hstat heat__fc">
-                {h.forecastToday(forecastHigh)}{" "}
+                {h.forecastToday(displayTemp(forecastHigh))}{" "}
                 {forecast.tomorrowHigh != null && <span className="heat__tomorrow">{h.forecastTomorrow(Math.round(forecast.tomorrowHigh))}</span>}
               </p>
               {forecast.heatWave && forecast.pastAvg != null && (
                 <Result tone="warn" title={h.heatWaveTitle}>
-                  <p>{h.heatWave(forecastHigh, Math.round(forecast.pastAvg))}</p>
+                  <p>{h.heatWave(displayTemp(forecastHigh), Math.round(forecast.pastAvg))}</p>
                 </Result>
               )}
             </>

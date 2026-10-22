@@ -169,18 +169,19 @@ test.describe("program verdicts", () => {
     expect(verdict(answers({ size: 3, children: 0, youngest: "under5", income: cents(100) }), "wic")).toBe("unlikely"); // stale age answer
   });
 
-  test("Medi-Cal: children 266%, pregnancy 213% then MCAP 322%, adults 138%", () => {
+  test("Medi-Cal: children 266%, pregnancy 213% then MCAP 322% (counting the baby), adults 138%", () => {
     expect(result(answers({ income: cents(1) }), "medi-cal-kids")).toBeUndefined(); // no children
     const fam = { size: 4, children: 2, youngest: "6to18" as const };
     expect(verdict(answers({ ...fam, income: cents(7315) }), "medi-cal-kids")).toBe("likely");
     expect(verdict(answers({ ...fam, income: cents(7315.01) }), "medi-cal-kids")).toBe("unlikely");
 
     expect(result(answers({ income: cents(1) }), "medi-cal-pregnant")).toBeUndefined();
+    // A household of 2 with a pregnancy counts as 3 (42 CFR §435.603(b)).
     const preg = { size: 2, pregnant: "yes" as const };
-    expect(verdict(answers({ ...preg, income: cents(3843) }), "medi-cal-pregnant")).toBe("likely");
-    expect(verdict(answers({ ...preg, income: cents(3843.01) }), "medi-cal-pregnant")).toBe("maybe");
-    expect(verdict(answers({ ...preg, income: cents(5809) }), "medi-cal-pregnant")).toBe("maybe");
-    expect(verdict(answers({ ...preg, income: cents(5809.01) }), "medi-cal-pregnant")).toBe("unlikely");
+    expect(verdict(answers({ ...preg, income: cents(4851) }), "medi-cal-pregnant")).toBe("likely");
+    expect(verdict(answers({ ...preg, income: cents(4851.01) }), "medi-cal-pregnant")).toBe("maybe");
+    expect(verdict(answers({ ...preg, income: cents(7332) }), "medi-cal-pregnant")).toBe("maybe");
+    expect(verdict(answers({ ...preg, income: cents(7332.01) }), "medi-cal-pregnant")).toBe("unlikely");
 
     expect(verdict(answers({ income: cents(1836) }), "medi-cal-adults")).toBe("likely");
     expect(result(answers({ income: cents(1836) }), "medi-cal-adults")?.reasons.map((r) => r.kind)).toContain("statusDepends");

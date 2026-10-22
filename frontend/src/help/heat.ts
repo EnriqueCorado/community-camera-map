@@ -130,3 +130,11 @@ export function parseDailyForecast(json: unknown, today: string): DailyForecast 
     todayHigh == null || pastAvg == null ? null : todayHigh >= T.heatWaveMin && todayHigh >= pastAvg + T.heatWaveAbove;
   return { today, todayHigh, tomorrowHigh, heatWave, pastAvg };
 }
+
+/** A temperature for display: whole degrees, but one decimal near a legal
+ *  threshold so 80.4°F never reads "80°F" next to the over-80 rules. */
+export function displayTemp(t: number): number {
+  const near = [HEAT_FACTS.thresholds.shadeOver, HEAT_FACTS.thresholds.highHeatAt, HEAT_FACTS.thresholds.indoorAt, HEAT_FACTS.thresholds.indoorFullAt]
+    .some((c) => Math.abs(t - c) < 0.5);
+  return near ? Math.round(t * 10) / 10 : Math.round(t);
+}
