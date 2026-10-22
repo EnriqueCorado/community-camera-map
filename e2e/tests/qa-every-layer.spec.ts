@@ -54,11 +54,12 @@ const VIEW: Record<string, string> = {
   hospitals: `${MODESTO},10`, "law-enforcement": `${MODESTO},10`, streamflow: `${MODESTO},9`,
   "food-banks": `${MODESTO},10.5`, clinics: `${MODESTO},10.5`, "community-centers": `${MODESTO},10.5`,
   "farmers-markets": `${MODESTO},10.5`, shelters: `${MODESTO},12`, "county-islands": `${MODESTO},11`,
+  "transit-vehicles": "-71.06,42.356,13", // Boston: no agency polled in Stanislaus (StanRTA is `buses`)
 };
 const COUNTY = "-120.95,37.56,9.3";
 const RASTER = new Set(["rain-radar", "satellite"]);
 // Real data can legitimately be empty at a given moment.
-const MAY_BE_EMPTY = new Set(["buses", "power-outages", "outage-areas", "weather-alerts", "wildfire-perimeters", "free-wifi", "lane-closures", "message-signs", "road-incidents", "flights",
+const MAY_BE_EMPTY = new Set(["buses", "transit-vehicles", "power-outages", "outage-areas", "weather-alerts", "wildfire-perimeters", "free-wifi", "lane-closures", "message-signs", "road-incidents", "flights",
   "quakes", "farmers-markets", "food-banks", "community-centers", "aed"]);
 // Console noise that isn't ours: basemap glyph/sprite fetches, fetches aborted
 // on pan, and third-party HTTP errors (their failures are tracked by the layer
@@ -212,7 +213,7 @@ function qaLayer(layer: { name: string; title: string; available: boolean }) {
 
 // ---------------- Edge cases ----------------
 
-const LIVE_HOSTS = /wheretheiss|celestrak|amtraker|inaturalist|wikipedia|open-meteo|overpass|rainviewer|nasa\.gov|adsbdb|swpc|availtec/;
+const LIVE_HOSTS = /wheretheiss|celestrak|amtraker|inaturalist|wikipedia|open-meteo|overpass|rainviewer|nasa\.gov|adsbdb|swpc|availtec|rideralerts|passio3|mbta|mta\.info|data\.texas\.gov|metrotransit/;
 
 test("edge: every layer on at once stays responsive and error-free", async ({ page }) => {
   test.setTimeout(150_000);

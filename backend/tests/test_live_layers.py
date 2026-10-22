@@ -295,7 +295,24 @@ def test_firms_keeps_only_california_with_clean_fields():
     }
 
 
-BROWSER_LIVE = ["iss", "satellites", "trains", "wildlife", "wikipedia", "weather-now", "air-now"]
+BROWSER_LIVE = [
+    "iss",
+    "satellites",
+    "trains",
+    "wildlife",
+    "wikipedia",
+    "weather-now",
+    "air-now",
+    "transit-vehicles",
+]
+
+
+def test_transit_vehicles_is_a_nationwide_live_layer():
+    lay = LAYERS["transit-vehicles"]
+    extras = lay.catalog_extras()
+    assert lay.client_side and lay.category == "transit"
+    assert extras["coverage"] == "usa" and extras["group"] == "live"
+    assert extras["title_es"] and extras["title_es"] != lay.title
 
 
 def test_osm_places_are_server_side_layers():

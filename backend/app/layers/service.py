@@ -819,6 +819,14 @@ BROWSER_LIVE = (
         "bus",
     ),
     (
+        "transit-vehicles",
+        "Transit vehicles (live)",
+        "Live bus and train positions from ~20 US transit agencies' official keyless feeds "
+        "(Boston, New York commuter rail, Austin, Twin Cities, Louisville and more). "
+        "Zoom in to see them; your browser asks only the agencies in view, directly.",
+        "transit",
+    ),
+    (
         "wildlife",
         "Wildlife sightings",
         "Recent iNaturalist observations where you're looking.",
@@ -843,6 +851,13 @@ BROWSER_LIVE = (
         "aqi",
     ),
 )
+
+
+# Catalog extras for browser-live layers (the older ones are named and
+# grouped by the frontend itself).
+BROWSER_LIVE_EXTRAS: dict[str, dict[str, str]] = {
+    "transit-vehicles": {"title_es": "Vehículos de transporte público (en vivo)", "group": "live"},
+}
 
 
 def _text_transform(url: str, transform: Callable[[str], dict]) -> Loader:
@@ -2482,7 +2497,10 @@ LAYERS: dict[str, Layer] = {
             description=desc,
             category=cat,
             client_side=True,
-            coverage={"trains": "usa", "buses": "stanislaus"}.get(name, "world"),
+            coverage={"trains": "usa", "buses": "stanislaus", "transit-vehicles": "usa"}.get(
+                name, "world"
+            ),
+            **BROWSER_LIVE_EXTRAS.get(name, {}),
         )
         for name, title, desc, cat in BROWSER_LIVE
     },

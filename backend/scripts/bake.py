@@ -48,6 +48,10 @@ OUT = ROOT / "frontend" / "public" / "data"
 SOURCES = {
     "alpr": "https://openstreetmap.org (DeFlock)",
     "buses": "StanRTA real-time feed (Availtec InfoPoint)",
+    "transit-vehicles": (
+        "Each transit agency's official keyless real-time vehicle feed (GTFS-realtime; "
+        "MBTA V3 API; MTA; CapMetro via data.texas.gov), found via the MobilityData catalog"
+    ),
     "wastewater": "CDC National Wastewater Surveillance System (viral activity levels)",
     "air-quality": "US EPA AirNow current monitors (public ArcGIS service)",
     "river-gauges": "NOAA National Water Prediction Service river gauges",

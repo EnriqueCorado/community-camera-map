@@ -27,6 +27,7 @@ import { deadReckon, flightCells, gibsSatelliteUrl, mergeFlights, RAINVIEWER_URL
 import { auroraChance, isAirlineCallsign, parseRoute, type FlightRoute } from "../live-parsers";
 import { LIVE_SOURCES, type LiveCtx } from "../live-sources";
 import { liveSourceFor } from "../view-sources";
+import { TRANSIT_AGENCIES, TRANSIT_SITE_HOSTS } from "../transit-agencies";
 import { HOME_BBOX, within, wrapLon } from "../view-logic";
 import { HISTORY_LAYERS } from "../history";
 import { ALPR_TILE_ZOOM, alprCells, alprIndex, alprNear, alprTile, evictAlprTile, mergeTiles, type AlprIndex } from "../alpr-tiles";
@@ -1072,12 +1073,14 @@ function ensureArrowIcon(map: maplibregl.Map) {
   g.fill();
   map.addImage(ARROW_ICON, g.getImageData(0, 0, size, size), { sdf: true, pixelRatio: 2 });
 }
+/** Trains in the transit-vehicles layer (buses use the layer color). */
+const TRANSIT_RAIL_COLOR = "#7c3aed";
 const HAS_TRACK: maplibregl.ExpressionSpecification = ["==", ["typeof", ["get", "track"]], "number"];
 
 /** Categories always drawn as points, even when the data is momentarily empty. */
 const POINT_CATEGORIES = new Set([
   "flight", "haze", "webcam", "space", "train", "nature", "wiki", "weather-now", "poi", "hotspot",
-  "roadweather", "chain", "superfund", "power", "aqi", "voting", "outage", "crash", "reservoir", "quake", "bus",
+  "roadweather", "chain", "superfund", "power", "aqi", "voting", "outage", "crash", "reservoir", "quake", "bus", "transit",
   "wastewater", "groundwater", "gauge", "storm", "volcano", "dev", "service", "legal",
 ]);
 /** …and these as lines (lane closures can be momentarily empty). */
@@ -1091,6 +1094,7 @@ const LABELS: Record<string, { field: string | maplibregl.ExpressionSpecificatio
   space: { field: "label", minzoom: 4 },
   train: { field: "label", minzoom: 8 },
   bus: { field: "label", minzoom: 11 },
+  transit: { field: "label", minzoom: 12 },
   reservoir: { field: "label", minzoom: 7 },
   roadweather: {
     field: ["case", ["==", ["typeof", ["get", "temp_f"]], "number"], ["concat", ["to-string", ["get", "temp_f"]], "°"], ""],
@@ -1487,9 +1491,11 @@ function addOverlay(
                           ["interpolate", ["linear"], ["get", "pct_full"], ...RESERVOIR_STOPS.flat()],
                           "#94a3b8",
                         ] as unknown as maplibregl.ExpressionSpecification)
+                      : info.category === "transit"
+                        ? (["match", ["get", "mode"], "rail", TRANSIT_RAIL_COLOR, accent] as unknown as maplibregl.ExpressionSpecification)
                       : accent;
-    // Moving things with a heading (planes, buses) are drawn as arrows.
-    const hasHeading = info.category === "flight" || info.category === "bus";
+    // Moving things with a heading (planes, buses, trains) are drawn as arrows.
+    const hasHeading = info.category === "flight" || info.category === "bus" || info.category === "transit";
     map.addLayer(
       {
         id: `${src}-circle`,
@@ -2174,6 +2180,9 @@ const HAZE_KEYS: Record<string, Parameters<TFn>[0]> = {
   night: "hazeNight",
 };
 
+/** Color-named rail lines (MBTA's Red, Orange…) in Spanish. */
+const LINE_COLORS_ES: Record<string, string> = { Red: "Roja", Orange: "Naranja", Blue: "Azul", Green: "Verde" };
+
 function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nState): PopupSpec {
   const { t, lang, locale } = i18n;
   const kind = layerTitle(lang, info.name, info.title);
@@ -2565,6 +2574,30 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
           [t("rowTime"), upd != null ? new Date(upd).toLocaleTimeString(locale, { timeStyle: "short" }) : ""],
         ],
         link: { href: "https://www.stanrta.org/", label: t("busSchedules") },
+      };
+    }
+    case "transit": {
+      const upd = num(p.updated);
+      const rail = p.mode === "rail";
+      // The link comes from our own registry (by agency id), never the feed.
+      const agency = TRANSIT_AGENCIES.find((a) => a.id === p.agency_id);
+      // Color-named lines (MBTA's Red, Orange…) read naturally in Spanish too.
+      const route = lang === "es" && rail ? raw(p.route).replace(/^(Red|Orange|Blue|Green)\b/, (c) => LINE_COLORS_ES[c] ?? c) : raw(p.route);
+      return {
+        ...base,
+        title: route
+          ? t(rail ? "trainLine" : "busRoute", { route })
+          : raw(p.vehicle)
+            ? t(rail ? "trainNumber" : "transitVehicle", { id: raw(p.vehicle) })
+            : kind,
+        rows: [
+          [t("rowOperator"), agency?.name ?? ""],
+          [t(rail ? "rowTrain" : "rowVehicle"), raw(p.route) ? raw(p.vehicle) : ""],
+          [t("rowSpeed"), num(p.speed_mph) != null ? t("mph", { n: fmt(p.speed_mph) }) : ""],
+          [t("rowTime"), upd != null ? new Date(upd).toLocaleTimeString(locale, { timeStyle: "short" }) : ""],
+          [t("rowSource"), agency?.attribution ?? ""],
+        ],
+        link: agency ? { href: agency.site, label: t("transitSchedules"), hosts: TRANSIT_SITE_HOSTS } : undefined,
       };
     }
     case "outage":
