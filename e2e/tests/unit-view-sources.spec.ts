@@ -1,6 +1,7 @@
 // Unit tests for nationwide view loading (no browser).
 import { test, expect } from "@playwright/test";
-import { applyFields, arcgisQueryUrl, chooseSource, covers, exceededLimit, fieldsAt, levelUrl, tractLabel, within, wrapLon, HOME_BBOX, stateName, statesAt, stateViews } from "../../frontend/src/view-logic";
+import { applyFields, arcgisQueryUrl, chooseSource, covers, exceededLimit, fieldsAt, levelUrl, tractLabel, within, wrapLon, HOME_BBOX, stateName, stateOfLayer, statesAt, stateViews } from "../../frontend/src/view-logic";
+import { splitCatalog } from "../../frontend/scripts/catalog-split.mjs";
 import type { ViewSpec } from "../../frontend/src/api/client";
 import { RAMPS, classesColor, fmtMetric, metricStops } from "../../frontend/src/colors";
 
@@ -317,4 +318,24 @@ test("classes: match by value or first character, first color wins, fallback for
   expect(classesColor({ field: "s", prefix: false, other: "#ccc", items: [{ values: ["Burn ban"], color: "#c00", label: "x", label_es: "x" }] }, "none"))
     .toEqual(["match", ["to-string", ["get", "s"]], "Burn ban", "#c00", "#ccc"]);
   expect(classesColor({ field: "s", prefix: false, other: null, items: [] }, "none")).toBe("none");
+});
+
+test("state catalog split: state layers by USPS code, the rest national; layer names map to their state", async () => {
+  const { base, states } = splitCatalog([
+    { name: "flood", coverage: "usa" },
+    { name: "parks", coverage: "stanislaus" },
+    { name: "tx-houston-zoning", coverage: "TX" },
+    { name: "us-duke-energy-outages", coverage: "usa" },
+    { name: "tx-harris-parcels", coverage: "TX" },
+    { name: "ca-lacounty-parcels", coverage: "CA" },
+  ]);
+  expect(base.map((l: { name: string }) => l.name)).toEqual(["flood", "parks", "us-duke-energy-outages"]);
+  expect(Object.keys(states).sort()).toEqual(["CA", "TX"]);
+  expect(states.TX).toHaveLength(2);
+  expect(stateOfLayer("tx-houston-zoning")).toBe("TX");
+  expect(stateOfLayer("ny-nyc-hurricane-evacuation-zones")).toBe("NY");
+  expect(stateOfLayer("us-duke-energy-outages")).toBeUndefined();
+  expect(stateOfLayer("flood")).toBeUndefined();
+  expect(stateOfLayer("census-rent")).toBeUndefined();
+  expect(stateOfLayer("ca1")).toBeUndefined(); // no dash: not a state layer
 });

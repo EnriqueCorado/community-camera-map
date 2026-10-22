@@ -74,3 +74,22 @@ test('static: "what can see me?" works against baked ALPR data', async ({ page }
   await page.locator("canvas.maplibregl-canvas").click({ position: { x: 640, y: 430 } });
   await expect(page.locator(".coverage-result")).toContainText(/plate reader/i, { timeout: 25000 });
 });
+
+test("static: the layer catalog loads per state (national part first, a state when it's on screen)", async ({ page }) => {
+  const files: string[] = [];
+  page.on("request", (r) => {
+    const m = /data\/(catalog\/[A-Za-z]+\.json|layers\.json)/.exec(r.url());
+    if (m) files.push(m[1]!);
+  });
+  await page.goto(BASE + "/");
+  await expect(page.locator("canvas.maplibregl-canvas")).toBeVisible();
+  // Home view (California): the national part and California only.
+  await expect.poll(() => files.slice().sort()).toEqual(["catalog/CA.json", "catalog/base.json"]);
+  // A jump made before the map has finished loading is dropped: retry it.
+  await expect(async () => {
+    await page.getByLabel("Or go to a state").selectOption("TX");
+    await expect.poll(() => files, { timeout: 8000 }).toContain("catalog/TX.json");
+  }).toPass({ timeout: 30000 });
+  await expect(page.getByText(/^This state: .*Texas/)).toBeVisible();
+  expect(files).not.toContain("layers.json");
+});

@@ -119,7 +119,17 @@ export const api = {
         fresh ? NO_CACHE : undefined,
       ),
   } satisfies CameraFiles,
-  listLayers: () => getJSON<LayerInfo[]>(STATIC ? "data/layers.json" : `${API_BASE}/api/layers`),
+  /** The layer catalog. The static site loads the national part here and
+   *  each state's layers with listStateLayers (scripts/split-catalog.mjs);
+   *  `whole` says the full catalog came back (dev API, or no split files). */
+  listLayers: (): Promise<{ layers: LayerInfo[]; whole: boolean }> =>
+    STATIC
+      ? getJSON<LayerInfo[]>("data/catalog/base.json")
+          .then((layers) => ({ layers, whole: false }))
+          .catch(() => getJSON<LayerInfo[]>("data/layers.json").then((layers) => ({ layers, whole: true })))
+      : getJSON<LayerInfo[]>(`${API_BASE}/api/layers`).then((layers) => ({ layers, whole: true })),
+  /** One state's layers ("TX"), static site only. */
+  listStateLayers: (code: string) => getJSON<LayerInfo[]>(`data/catalog/${encodeURIComponent(code)}.json`),
   /** Overlay layer GeoJSON. */
   layerUrl: (name: string) =>
     STATIC ? `data/layers/${name}.geojson` : `${API_BASE}/api/layers/${name}`,

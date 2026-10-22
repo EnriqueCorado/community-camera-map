@@ -15,6 +15,7 @@ import type { HelpTarget } from "./help/target";
 import type { Camera } from "./types";
 import { downloadCameras } from "./download";
 import { pointAt, pointRef, type PointRef } from "./camera-data";
+import { stateOfLayer, statesAt } from "./view-logic";
 
 // The Help tools (forms, letters, long copy) load only when first opened.
 const HelpPanel = lazy(() => import("./components/help/HelpPanel"));
@@ -45,7 +46,7 @@ function readPanelOpen(): boolean {
 export default function App() {
   const { t, lang, locale } = useI18n();
   const state = useCameras();
-  const overlayInfos = useLayers();
+  const { layers: overlayInfos, ensureStates } = useLayers();
 
   // Decode shareable state from the URL hash once, at startup.
   const initial = useMemo(() => decodeState(window.location.hash, INITIAL_LAYERS), []);
@@ -58,6 +59,20 @@ export default function App() {
   const deferredQuery = useDeferredValue(query);
   const [view, setView] = useState<View>(initial.view);
   const [flyTo, setFlyTo] = useState<View>(null);
+  // State layers load per state (useLayers): the states under the map center,
+  // and the state of any state layer that is on (e.g. from a shared link).
+  const centerNow = view?.center ?? initial.view?.center ?? [-120.99, 37.64];
+  const stateKey = [
+    ...new Set([
+      ...statesAt(centerNow),
+      ...Object.keys(layers.overlays).flatMap((n) => (layers.overlays[n] ? (stateOfLayer(n) ?? []) : [])),
+    ]),
+  ]
+    .sort()
+    .join(",");
+  useEffect(() => {
+    if (stateKey) ensureStates(stateKey.split(","));
+  }, [stateKey, ensureStates]);
   const [nearPoint, setNearPoint] = useState<NearPoint | null>(null);
   const [historyDate, setHistoryDate] = useState<string | null>(null);
   // The view before an address search: while a searched place is shown, the
@@ -208,7 +223,7 @@ export default function App() {
         onHelp={() => setHelp({ tab: "medical" })}
         open={panelOpen}
         zoom={view?.zoom ?? initial.view?.zoom ?? 5.4}
-        center={view?.center ?? initial.view?.center ?? [-120.99, 37.64]}
+        center={centerNow}
         nearPoint={nearPoint}
         onNearPoint={pickNear}
         historyDate={historyDate}

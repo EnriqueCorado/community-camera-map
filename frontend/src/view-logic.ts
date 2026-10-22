@@ -296,3 +296,14 @@ export async function loadPages(
   for (const r of rest) if (r.status === "fulfilled") features.push(...r.value.fc.features);
   return { type: "FeatureCollection", features: features.slice(0, cap) };
 }
+
+/** The state a state-pack layer belongs to, from its name ("tx-houston-…" ->
+ *  "TX"); undefined for national layers. Lets a shared link that turns on a
+ *  state layer load that state's catalog (a national layer with a state-like
+ *  prefix, "va-facilities", only costs one extra small fetch). */
+export function stateOfLayer(name: string): string | undefined {
+  const dash = name.indexOf("-");
+  if (dash < 0) return undefined;
+  const code = name.slice(0, dash).toUpperCase();
+  return code.length === 2 && STATE_INFO[code] ? code : undefined;
+}
