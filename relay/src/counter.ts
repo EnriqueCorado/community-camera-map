@@ -38,6 +38,7 @@ export const PAGE_IDS = [
   "legal",
   "family-plan",
   "daca",
+  "taxes",
 ] as const;
 
 /** Help panel tools in the map app: "<tab>" or "<tab>/<view>" (help/target.ts). */
@@ -52,6 +53,7 @@ export const APP_IDS = [
   "work/heat",
   "benefits/screener",
   "benefits/medi-cal",
+  "benefits/taxes",
   "immigration/rights",
   "immigration/citizenship",
   "immigration/plan",

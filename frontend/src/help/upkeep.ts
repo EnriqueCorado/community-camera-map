@@ -14,6 +14,7 @@ import { RIGHTS_CHECKED, RIGHTS_RECHECK } from "./rights-facts";
 import { CIVICS_CHECKED, CIVICS_OFFICIALS_RECHECK } from "./civics-facts";
 import { PLAN_CHECKED } from "./family-plan-facts";
 import { DACA_CHECKED, DACA_RECHECK } from "./daca-facts";
+import { TAXES_CHECKED, TAXES_RECHECK } from "./taxes-facts";
 import { addDays } from "./dates";
 
 export interface UpkeepItem {
@@ -112,6 +113,12 @@ export function upkeepItems(): UpkeepItem[] {
       task: "Monthly re-check of the DACA renewal tool (uscis.gov/DACA alerts on renewals and initial requests, any order from Judge Hanen in Texas v. United States, a final version of the June 2026 work-permit rule RIN 1615-AC98, G-1055 fees, the 120–150 day window, the advance parole alert); update daca-facts.ts and move DACA_RECHECK a month ahead.",
       source: "https://www.uscis.gov/DACA",
     },
+    {
+      id: "taxes-season",
+      due: TAXES_RECHECK,
+      task: "Before tax season: add FTB's 2026 CalEITC table by number of children (CA_CREDITS.caleitcMax in taxes-facts.ts), this season's VITA / AARP Tax-Aide sites and dates in Stanislaus (TAX_PLACES; IRS locator, United Way, 211), the IRS opening day, and the latest in Center for Taxpayer Rights v. IRS (IRS-ICE sharing); then move TAXES_RECHECK.",
+      source: "https://www.ftb.ca.gov/file/personal/credits/caleitc/eligibility-and-credit-information.html",
+    },
     ...(Object.entries(TABLES) as [string, IncomeTable][]).map(([id, t]) => ({
       id: `benefits-${id}`,
       due: after(t.graceUntil ?? t.to, 1),
@@ -132,6 +139,7 @@ export function upkeepItems(): UpkeepItem[] {
         ["citizenship", CIVICS_CHECKED],
         ["family-plan", PLAN_CHECKED],
         ["daca", DACA_CHECKED],
+        ["taxes", TAXES_CHECKED],
       ] as const
     ).map(([id, checked]) => ({
       id: `yearly-${id}`,

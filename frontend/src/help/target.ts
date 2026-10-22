@@ -6,7 +6,7 @@ export const HELP_TABS: HelpTab[] = ["medical", "rent", "work", "benefits", "imm
 /** The tools inside the tabs that have more than one (the chips under the tabs). */
 export const RENT_VIEWS = ["rent", "eviction", "repairs", "deposit", "mobile"] as const;
 export const WORK_VIEWS = ["wages", "heat"] as const;
-export const BENEFITS_VIEWS = ["screener", "medi-cal"] as const;
+export const BENEFITS_VIEWS = ["screener", "medi-cal", "taxes"] as const;
 export const IMMIGRATION_VIEWS = ["rights", "citizenship", "plan", "daca"] as const;
 export type RentView = (typeof RENT_VIEWS)[number];
 export type WorkView = (typeof WORK_VIEWS)[number];

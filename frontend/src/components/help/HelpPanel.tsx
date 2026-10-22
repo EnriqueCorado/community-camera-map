@@ -130,6 +130,7 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
                 c={c}
                 view={isBenefitsView(target.view) ? target.view : "screener"}
                 onView={(view) => onTarget({ tab: "benefits", view })}
+                onLegal={() => go({ tab: "legal" })}
               />
             )}
             {target.tab === "immigration" && (

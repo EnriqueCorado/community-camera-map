@@ -18,6 +18,7 @@ import * as RIGHTS from "../../frontend/src/help/rights-facts";
 import * as CIVICS from "../../frontend/src/help/civics-facts";
 import * as PLAN from "../../frontend/src/help/family-plan-facts";
 import * as DACA from "../../frontend/src/help/daca-facts";
+import * as TAXES from "../../frontend/src/help/taxes-facts";
 
 test.skip(!process.env.LINKS, "network check; run with LINKS=1");
 
@@ -53,6 +54,7 @@ function links(): string[] {
     ...JSON.stringify(CIVICS).match(/https:\/\/[^"\s]+/g) ?? [],
     ...JSON.stringify(PLAN).match(/https:\/\/[^"\s]+/g) ?? [],
     ...JSON.stringify(DACA).match(/https:\/\/[^"\s]+/g) ?? [],
+    ...JSON.stringify(TAXES).match(/https:\/\/[^"\s]+/g) ?? [],
     ...legal.offices.flatMap((o: { website: string; sources: string[] }) => [o.website, ...o.sources]),
   ];
   return [...new Set(all.filter((u): u is string => !!u && u.startsWith("https://")))].sort();
