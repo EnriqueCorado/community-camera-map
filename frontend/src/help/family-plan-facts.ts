@@ -55,8 +55,8 @@ export const PLAN_FACTS: Partial<Record<PlanSectionId, Fact[]>> = {
     {
       id: "caa-expire",
       cite: `${CAA_FORM}; California Courts Self-Help Guide; ILRC`,
-      en: "The official form (new version since January 1, 2026) says it does not expire, but it stops being valid if the child moves out, and the caregiver must tell the school and doctors. The courts’ help page still says to sign a new one each year, so making a fresh one each year is a simple way to stay current. If you have a version from before 2026, make a new one.",
-      es: "El formulario oficial (nueva versión desde el 1 de enero de 2026) dice que no tiene fecha de vencimiento, pero deja de ser válido si el menor ya no vive con el cuidador, y el cuidador debe avisar a la escuela y a los doctores. La página de ayuda de las cortes todavía dice que hay que firmar una nueva cada año, así que hacer una nueva cada año es una forma sencilla de mantenerla al día. Si tiene una versión de antes de 2026, haga una nueva.",
+      en: "The official form (new version since January 1, 2026) says it does not expire, but it stops being valid if the child moves out, and the caregiver must tell the school and doctors. The courts’ help page still says to sign a new one each year, so making a fresh one each year is a simple way to stay current. If you have a version from before 2026, make a new one. If anything on the form changes, such as the caregiver’s address, fill out a new one.",
+      es: "El formulario oficial (nueva versión desde el 1 de enero de 2026) dice que no tiene fecha de vencimiento, pero deja de ser válido si el menor ya no vive con el cuidador, y el cuidador debe avisar a la escuela y a los doctores. La página de ayuda de las cortes todavía dice que hay que firmar una nueva cada año, así que hacer una nueva cada año es una forma sencilla de mantenerla al día. Si tiene una versión de antes de 2026, haga una nueva. Si cambia algo del formulario, como la dirección del cuidador, llene uno nuevo.",
     },
     {
       id: "caa-who",

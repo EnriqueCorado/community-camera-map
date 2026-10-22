@@ -637,3 +637,87 @@ textarea.hf__input {
   color: var(--danger);
   font-weight: 600;
 }
+
+/* "Not sure where to start?" chooser (top of the panel) */
+.hstart {
+  margin: 14px 0 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel-2);
+}
+.hstart > summary {
+  cursor: pointer;
+  padding: 10px 14px;
+  font-weight: 600;
+  color: var(--accent);
+  min-height: 24px;
+}
+.hstart > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+.hstart[open] > summary {
+  border-bottom: 1px solid var(--line);
+}
+.hstart > :not(summary) {
+  margin-left: 14px;
+  margin-right: 14px;
+}
+.hstart__q {
+  font-weight: 600;
+  margin-top: 12px;
+  margin-bottom: 2px;
+}
+.help .hstart__list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  gap: 8px;
+}
+.hstart__opt {
+  width: 100%;
+  height: 100%;
+  min-height: 44px;
+  text-align: left;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.hstart__opt:hover {
+  border-color: var(--accent);
+}
+.hstart__opt:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* "Share this" (end of each tool) */
+.hshare {
+  margin-top: 22px;
+  padding-top: 4px;
+  border-top: 1px solid var(--line);
+}
+.hshare__acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+}
+.hshare__acts a.hbtn {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink);
+  text-decoration: none;
+}
+.hshare__url {
+  width: 100%;
+  margin: 4px 0;
+}

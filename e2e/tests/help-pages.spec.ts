@@ -238,7 +238,7 @@ test("the Spanish citizenship page marks the official English as English, with t
 test("home page groups link every tool page, and the Print button prints", async ({ page }) => {
   await page.goto("ayuda/");
   for (const slug of TOOL_PAGES.es) {
-    await expect(page.locator(`main a[href$="/ayuda/${slug}/"]`), slug).toHaveCount(1);
+    await expect(page.locator(`main .group .cards a[href$="/ayuda/${slug}/"]`), slug).toHaveCount(1);
   }
   await page.goto("help/flyers/general/");
   await page.evaluate(() => {

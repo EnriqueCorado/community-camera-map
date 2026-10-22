@@ -10,6 +10,9 @@ import { COPY } from "../../help/copy";
 import { isBenefitsView, isImmigrationView, isRentView, isWorkView, type HelpTab, type HelpTarget } from "../../help/target";
 import { appCountId, countEvent, mayCount, sendCount } from "../../help/count";
 import { Tabs } from "./Tabs";
+import { StartChooser } from "./StartChooser";
+import { ShareLinks } from "./Share";
+import { pageFor, pagePath } from "../../help/start";
 
 // The anonymous usage counter (help/count.ts); empty = off. Each tool counts
 // once per page load, however often it's reopened.
@@ -60,6 +63,9 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
     onTarget(t);
     bodyRef.current?.scrollTo({ top: 0 });
   };
+  // Share the public page for the tool that's open (it works without the map app).
+  const page = pageFor(target);
+  const shareUrl = page ? new URL(`${import.meta.env.BASE_URL}${pagePath(lang, page)}`, window.location.origin).href : null;
 
   return (
     <div
@@ -89,6 +95,12 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
           aria-labelledby={`help-tab-${target.tab}`}
           tabIndex={0}
         >
+          <StartChooser
+            onChoose={(t) => {
+              go(t);
+              bodyRef.current?.focus();
+            }}
+          />
           <Suspense
             fallback={
               <p className="hf__hint" role="status">
@@ -130,6 +142,7 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
             )}
             {target.tab === "legal" && <LegalHelp c={c} onShowOnMap={onShowOnMap} />}
           </Suspense>
+          {shareUrl && <ShareLinks key={shareUrl} url={shareUrl} title={c.title} newTab={c.newTab} />}
           <p className="hdisclaimer">{c.disclaimer}</p>
           {COUNTER_URL && <p className="hdisclaimer">{c.countNote}</p>}
           <p className="hdisclaimer">

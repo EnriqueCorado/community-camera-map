@@ -7,8 +7,10 @@ import css from "./landing.css?raw";
 import { nearestModestoFirst, parseOffices } from "../help/legal-dir";
 import { TOOLS } from "./tools";
 import { FLYERS } from "./flyers";
-import { FlyerIndex, FlyerPage, FLYERS_PATH, flyerPath, HomePage, homePath, PartnersPage, ToolPageView, toolPath, type Site } from "./Pages";
+import { FlyerIndex, FlyerPage, FLYERS_PATH, flyerPath, HomePage, homePath, PartnersPage, ShortLinkPage, shortPath, ToolPageView, toolPath, type Site } from "./Pages";
 import { partnersPath } from "./partners";
+import { SITE_COPY } from "./site-copy";
+import { SHORT_LINKS, shortTarget } from "../help/start";
 
 export interface BuiltPage {
   path: string;
@@ -45,5 +47,11 @@ export function renderSite({ origin, base, publicBase, repo, legalHelp, counter 
   }
   pages.push(page(FLYERS_PATH, <FlyerIndex site={site} flyers={FLYERS} />));
   for (const f of FLYERS) pages.push(page(flyerPath(f), <FlyerPage site={site} f={f} />));
+  for (const sl of SHORT_LINKS) {
+    const tool = TOOLS.find((t) => t.id === sl.page);
+    if (sl.page !== "home" && !tool) throw new Error(`landing: short link "${sl.slug}" points at no page`);
+    const title = tool ? tool.name[sl.lang] : SITE_COPY[sl.lang].home;
+    pages.push(page(shortPath(sl.slug), <ShortLinkPage site={site} lang={sl.lang} to={shortTarget(sl)} title={title} />));
+  }
   return pages;
 }

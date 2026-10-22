@@ -55,9 +55,9 @@ export const DACA_FACTS = {
     },
     {
       id: "texas",
-      cite: "Texas v. United States (5th Cir., Jan. 17, 2025); National Immigration Forum, updated Oct. 2, 2026",
-      en: "In the Texas court case, the appeals court said DACA work permits can be stopped, but only in Texas, and sent the case back to the judge there. As of October 2, 2026, that judge had not issued a new order, and renewals continue everywhere, Texas included.",
-      es: "En el caso de la corte de Texas, la corte de apelaciones dijo que se pueden detener los permisos de trabajo de DACA, pero solo en Texas, y regresó el caso al juez de allá. Al 2 de octubre de 2026, ese juez no había dado una nueva orden, y las renovaciones siguen en todo el país, incluido Texas.",
+      cite: "Texas v. United States (5th Cir., Jan. 17, 2025); National Immigration Forum; no new order found as of Oct. 22, 2026",
+      en: "In the Texas court case, the appeals court said DACA work permits can be stopped, but only in Texas, and sent the case back to the judge there. That judge has not yet issued a new order (we found none as of October 22, 2026), and renewals continue everywhere, Texas included.",
+      es: "En el caso de la corte de Texas, la corte de apelaciones dijo que se pueden detener los permisos de trabajo de DACA, pero solo en Texas, y regresó el caso al juez de allá. Ese juez todavía no ha dado una nueva orden (no encontramos ninguna al 22 de octubre de 2026), y las renovaciones siguen en todo el país, incluido Texas.",
     },
     {
       id: "proposed-rule",
@@ -119,9 +119,9 @@ export const DACA_FACTS = {
     },
     {
       id: "address",
-      cite: "USCIS, Form I-765 page (alert of Oct. 7, 2026)",
-      en: "If you mail it, check the mailing address on the USCIS Form I-821D page right before you send it: USCIS changed filing locations on October 7, 2026.",
-      es: "Si la manda por correo, revise la dirección en la página del formulario I-821D de USCIS justo antes de enviarla: USCIS cambió los lugares de envío el 7 de octubre de 2026.",
+      cite: "USCIS, Filing Addresses for Form I-821D; Form I-765 instructions (08/21/25)",
+      en: "If you mail it, send all the forms together in one package to the address on USCIS’s “Filing Addresses for Form I-821D” page. Don’t send Form I-765 by itself to the Form I-765 address. Check the address right before you mail it.",
+      es: "Si la manda por correo, envíe todos los formularios juntos en un solo paquete a la dirección de la página “Filing Addresses for Form I-821D” de USCIS. No mande el formulario I-765 por separado a la dirección del I-765. Revise la dirección justo antes de enviarla.",
     },
   ],
   fees: [
@@ -134,16 +134,16 @@ export const DACA_FACTS = {
     {
       id: "exemption",
       cite: "USCIS, DACA fee exemption guidance",
-      en: "There is no regular fee waiver for DACA. A few people with income under 150% of the poverty level can get an exemption: people under 18 who are homeless, in foster care or without family support; people with a serious chronic disability; and people with $10,000 or more in unpaid medical bills from the last 12 months. It must be requested by letter and approved before you file.",
-      es: "No hay exención regular de cuotas para DACA. Algunas personas con ingresos por debajo del 150% del nivel de pobreza pueden pedir una exención: menores de 18 años sin hogar, en hogar de crianza o sin apoyo familiar; personas con una discapacidad crónica grave; y personas con $10,000 o más en cuentas médicas sin pagar de los últimos 12 meses. Hay que pedirla por carta y que la aprueben antes de presentar.",
+      en: "There is no regular fee waiver for DACA. A few people with income under 150% of the poverty level can ask for an exemption: people under 18 who are homeless, in foster care or without family support; people who can’t care for themselves because of a serious chronic disability; and people with $10,000 or more in debt from the last 12 months for unreimbursed medical costs (their own or an immediate family member’s). It must be requested by letter and approved before you file.",
+      es: "No hay una dispensa de cuotas (fee waiver) regular para DACA. Algunas personas con ingresos por debajo del 150% del nivel de pobreza pueden pedir una exención: menores de 18 años sin hogar, en hogar de crianza o sin apoyo familiar; personas que no pueden cuidarse solas por una discapacidad crónica grave; y personas con $10,000 o más en deudas de los últimos 12 meses por gastos médicos no reembolsados (propios o de un familiar inmediato). Hay que pedirla por carta y que la aprueben antes de presentar.",
     },
   ],
   travel: [
     {
       id: "travel",
       cite: "USCIS, Form I-131 page (Matter of Delcarmen-Lara, 29 I&N Dec. 830, BIA Aug. 13, 2026); USCIS DACA FAQ, Q61",
-      en: "Don't leave the United States, even with advance parole (a travel permit), before talking to an immigration lawyer. Since August 13, 2026, a trip on advance parole can trigger a 3- or 10-year bar for people who had more than 180 days of “unlawful presence” before. Leaving without advance parole risks not being let back in.",
-      es: "No salga de Estados Unidos, ni siquiera con advance parole (permiso de viaje), sin hablar antes con un abogado de inmigración. Desde el 13 de agosto de 2026, un viaje con advance parole puede causar un castigo de 3 o 10 años para quienes acumularon más de 180 días de “presencia ilegal” antes. Salir sin advance parole puede hacer que no lo dejen regresar.",
+      en: "Don't leave the United States, even with advance parole (a travel permit), before talking to an immigration lawyer. Since August 13, 2026, a trip on advance parole can trigger a 3- or 10-year bar for people who had more than 180 days of “unlawful presence” before (time without status after turning 18). Leaving without advance parole can end your DACA, keep you from renewing it, and you may not be let back in.",
+      es: "No salga de Estados Unidos, ni siquiera con advance parole (permiso de viaje), sin hablar antes con un abogado de inmigración. Desde el 13 de agosto de 2026, un viaje con advance parole puede causar un castigo de 3 o 10 años para quienes acumularon más de 180 días de “presencia ilegal” antes (tiempo sin estatus después de cumplir 18 años). Salir sin advance parole puede terminar su DACA, impedir que la renueve, y puede que no lo dejen regresar.",
     },
   ],
 } satisfies Record<string, Fact[]>;

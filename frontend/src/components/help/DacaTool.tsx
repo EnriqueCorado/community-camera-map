@@ -111,6 +111,9 @@ export function DacaTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) {
   );
 }
 
+/** Results that tell the person to file now. */
+const FILING = new Set<DacaPlan["status"]>(["file-now", "urgent", "expired-renew"]);
+
 function PlanView({ plan, expires, t, locale }: { plan: DacaPlan; expires: string; t: DacaCopy; locale: string }) {
   const d = (iso: string) => longDate(iso, locale);
   const dates = { opens: d(plan.opens), ideal: d(plan.ideal), expires: d(expires), yearAfter: d(plan.yearAfter) };
@@ -120,6 +123,7 @@ function PlanView({ plan, expires, t, locale }: { plan: DacaPlan; expires: strin
       <p>{t.statusText[plan.status](dates)}</p>
       {/* "Too early" already names the window; once it has passed, its dates would only confuse. */}
       {plan.status === "file-now" && <p>{t.window(dates.opens, dates.ideal)}</p>}
+      {FILING.has(plan.status) && <p>{t.beforeFile}</p>}
       {plan.far && <p role="alert">{t.farDate}</p>}
     </Result>
   );

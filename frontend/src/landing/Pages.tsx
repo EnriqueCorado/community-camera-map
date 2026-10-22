@@ -20,6 +20,8 @@ import { generalBlurb, partnersPath, toolBlurb } from "./partners";
 import { REPORT_COPY, mailto, reportHref } from "../help/report";
 import { qr } from "./qr";
 import CLIENT_SCRIPT from "./client.js?raw";
+import { START_COPY } from "../help/start-copy";
+import { START_CHOICES, SHORT_DIR, pagePath, shortFor, whatsappHref } from "../help/start";
 
 export interface Site {
   /** "https://example.github.io" (no trailing slash). */
@@ -283,6 +285,70 @@ function Office({ o, lang, s }: { o: LegalOffice; lang: Lang; s: SiteCopy }) {
   );
 }
 
+/** "What do you need help with?": everyday problems, each a plain link to its page. */
+function StartList({ site, lang }: { site: Site; lang: Lang }) {
+  const t = START_COPY[lang];
+  return (
+    <section className="group start" aria-labelledby="start">
+      <h2 id="start">{t.startQuestion}</h2>
+      <ul className="choices">
+        {START_CHOICES.map((choice) => (
+          <li key={choice.page}>
+            <a className="choice" href={`${site.base}${pagePath(lang, choice.page)}`}>
+              <span>{choice.label[lang]}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/** "Share this": WhatsApp is a plain link; Copy and Share are added by the page
+ *  script only where the browser supports them. Not read aloud (data-quiet). */
+function ShareBox({ site, lang, path, title, page }: { site: Site; lang: Lang; path: string; title: string; page: string }) {
+  const t = START_COPY[lang];
+  const url = absolute(site, path);
+  const text = t.message(page === "home" ? undefined : title);
+  const short = shortFor(lang, page);
+  return (
+    <section
+      className="group sharebox"
+      aria-labelledby="share-this"
+      data-quiet
+      data-share
+      data-url={url}
+      data-title={title}
+      data-text={text}
+      data-copied={t.copied}
+      data-failed={t.copyFailedPage}
+    >
+      <h2 id="share-this">{t.shareTitle}</h2>
+      <p>{t.sharePageLead}</p>
+      <p className="sharebox__acts">
+        <a className="btn btn--quiet" href={whatsappHref(text, url)}>
+          {t.whatsapp}
+        </a>
+        <button type="button" className="btn btn--quiet" data-copy hidden>
+          {t.copy}
+        </button>
+        <button type="button" className="btn btn--quiet" data-native hidden>
+          {t.native}
+        </button>
+      </p>
+      {short && (
+        <p>
+          {t.shortLink}{" "}
+          <a href={`${site.base}${short}`} className="sharebox__short" data-nosay>
+            {shortUrl(absolute(site, short))}
+          </a>
+        </p>
+      )}
+      <p className="muted" role="status"></p>
+    </section>
+  );
+}
+
 export function HomePage({ site, lang }: { site: Site; lang: Lang }) {
   const s = SITE_COPY[lang];
   const alternate = homePath(other(lang));
@@ -299,6 +365,7 @@ export function HomePage({ site, lang }: { site: Site; lang: Lang }) {
             ))}
           </ul>
         </section>
+        <StartList site={site} lang={lang} />
         {GROUPS.map((g) => (
           <section key={g.id} id={g.anchor[lang]} className="group" aria-labelledby={`g-${g.id}`}>
             <h2 id={`g-${g.id}`}>{g.name[lang]}</h2>
@@ -353,6 +420,7 @@ export function HomePage({ site, lang }: { site: Site; lang: Lang }) {
             </a>
           </p>
         </section>
+        <ShareBox site={site} lang={lang} path={homePath(lang)} title={s.homeTitle} page="home" />
       </Chrome>
     </Doc>
   );
@@ -454,6 +522,8 @@ export function ToolPageView({ site, lang, tool, offices }: { site: Site; lang: 
         )}
 
         <OpenTool site={site} lang={lang} tool={tool} />
+
+        <ShareBox site={site} lang={lang} path={toolPath(lang, tool)} title={tool.name[lang]} page={tool.id} />
 
         <section aria-labelledby="sources" data-quiet>
           <h2 id="sources">{s.sourcesTitle}</h2>
@@ -757,3 +827,30 @@ export function PartnersPage({ site, lang }: { site: Site; lang: Lang }) {
     </Doc>
   );
 }
+/** A short link (/h/renta/): a tiny page that sends the browser on to the real
+ *  one, with a plain link for the rare browser that doesn't follow it. */
+export function ShortLinkPage({ site, lang, to, title }: { site: Site; lang: Lang; to: string; title: string }) {
+  const href = `${site.base}${to}`;
+  return (
+    <html lang={lang}>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="referrer" content="no-referrer" />
+        <meta name="robots" content="noindex" />
+        <meta httpEquiv="refresh" content={`0; url=${href}`} />
+        <title>{title}</title>
+        <link rel="canonical" href={absolute(site, to)} />
+        <meta name="color-scheme" content="light dark" />
+        <style dangerouslySetInnerHTML={{ __html: "body{font:1.125rem/1.5 system-ui,sans-serif;margin:2rem auto;max-width:40rem;padding:0 16px}" }} />
+      </head>
+      <body>
+        <p>
+          <a href={href}>{title}</a>
+        </p>
+      </body>
+    </html>
+  );
+}
+
+export const shortPath = (slug: string) => `${SHORT_DIR}/${slug}/`;

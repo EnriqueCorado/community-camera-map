@@ -156,8 +156,8 @@ export const RIGHTS_FACTS = {
     {
       id: "plan-school-contacts",
       cite: "ILRC Family Plan (Mar 10, 2026); Cal DOJ AB 495 Bulletin",
-      en: "Update your child's emergency contacts at school and child care. Under AB 495, if you can't pick up your child, the school must first use the contacts and instructions you left before calling child welfare services.",
-      es: "Actualice los contactos de emergencia de sus hijos en la escuela y la guardería. Si usted no recoge a sus hijos, la escuela tiene un deber de llamar a los contactos de emergencia antes de llamar al servicio de protección infantil.",
+      en: "Update your child's emergency contacts at school and child care. Under AB 495, if you can't care for your child, the school must first follow the instructions and contacts you left on file; it is told to call child protective services only if that doesn't work.",
+      es: "Actualice los contactos de emergencia de sus hijos en la escuela y la guardería. Según la ley AB 495, si usted no puede cuidar a su hijo, la escuela primero debe seguir las instrucciones y los contactos de emergencia que usted dejó; se le pide llamar al servicio de protección infantil solo si eso no funciona.",
     },
   ] satisfies Fact[],
   detained: [

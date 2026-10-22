@@ -147,7 +147,10 @@ export const PLAN_SECTIONS: readonly PlanSection[] = [
     },
     fields: [
       f("where", "multiline", "Where the documents are, or who has copies", "Dónde están los documentos, o quién tiene copias"),
-      f("aNumber", "text", "Who has a copy of my A-Number (if I have one)", "Quién tiene una copia de mi Número A (si tengo uno)"),
+      f("aNumber", "text", "Who has a copy of my A-Number (if I have one)", "Quién tiene una copia de mi Número A (si tengo uno)", {
+        en: "Your family can use it to find you with ICE’s online detainee locator.",
+        es: "Su familia puede usarlo para encontrarlo con el localizador de detenidos de ICE en internet.",
+      }),
     ],
     todo: [
       { id: "doc-passports", label: { en: "Passports", es: "Pasaportes" } },
