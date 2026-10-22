@@ -1223,7 +1223,10 @@ LAYERS: dict[str, Layer] = {
     "city-limits": Layer(
         name="city-limits",
         title="City limits",
-        description="Incorporated city boundaries in Stanislaus County.",
+        description=(
+            "Incorporated city boundaries (Stanislaus County GIS at home; "
+            "Census places nationwide)."
+        ),
         category="boundary",
         loader=_arcgis("City_Limits_AGOL/FeatureServer/0"),
         view=View(
@@ -1266,7 +1269,7 @@ LAYERS: dict[str, Layer] = {
     "schools": Layer(
         name="schools",
         title="Public schools",
-        description="Public schools (NCES) in Stanislaus County.",
+        description="Public schools nationwide (NCES).",
         category="point",
         loader=_arcgis("Public_School_by_NCES/FeatureServer/0"),
         view=View(
@@ -1357,7 +1360,7 @@ LAYERS: dict[str, Layer] = {
     "hospitals": Layer(
         name="hospitals",
         title="Hospitals",
-        description="Hospitals in Stanislaus County (HIFLD).",
+        description="Hospitals nationwide (HIFLD).",
         category="point",
         loader=_arcgis_url(
             "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Hospitals_hifld/FeatureServer/0",
@@ -1380,7 +1383,7 @@ LAYERS: dict[str, Layer] = {
     "law-enforcement": Layer(
         name="law-enforcement",
         title="Law enforcement",
-        description="Law enforcement facilities in Stanislaus County (HIFLD).",
+        description="Law enforcement facilities nationwide (HIFLD).",
         category="point",
         loader=_arcgis_url(
             "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Local_Law_Enforcement_Locations_RAPT/FeatureServer/0",
@@ -1448,7 +1451,7 @@ LAYERS: dict[str, Layer] = {
     "wildfire": Layer(
         name="wildfire",
         title="Wildfire incidents",
-        description="Active California wildfire incidents (NIFC / WFIGS).",
+        description="Active wildfire incidents nationwide (NIFC / WFIGS).",
         category="fire",
         loader=_arcgis_url(
             f"{NIFC}/WFIGS_Incident_Locations_Current/FeatureServer/0",
@@ -1701,7 +1704,7 @@ LAYERS: dict[str, Layer] = {
     "airports": Layer(
         name="airports",
         title="Airports",
-        description="Public-use airports in Stanislaus County (FAA/NTAD).",
+        description="Public-use airports nationwide (FAA/NTAD).",
         category="point",
         loader=_arcgis_url(
             "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_Aviation_Facilities/FeatureServer/0",
@@ -1719,7 +1722,7 @@ LAYERS: dict[str, Layer] = {
     "amtrak": Layer(
         name="amtrak",
         title="Amtrak stations",
-        description="Amtrak rail stations near Stanislaus County (BTS/NTAD).",
+        description="Amtrak rail stations nationwide (BTS/NTAD).",
         category="point",
         loader=_arcgis_url(
             "https://services2.arcgis.com/aIrBD8yn1TDTEXoz/ArcGIS/rest/services/Amtrak/FeatureServer/0",
@@ -1739,7 +1742,7 @@ LAYERS: dict[str, Layer] = {
     "dams": Layer(
         name="dams",
         title="Dams",
-        description="USACE National Inventory of Dams (California), with hazard class.",
+        description="USACE National Inventory of Dams, with hazard class.",
         category="point",
         loader=_json_transform(
             "https://nid.sec.usace.army.mil/api/query?sy=@stateKey:CA", transforms.nid_dams
@@ -1775,7 +1778,7 @@ LAYERS: dict[str, Layer] = {
     "wildfire-perimeters": Layer(
         name="wildfire-perimeters",
         title="Wildfire perimeters",
-        description="Current wildfire perimeters in California (NIFC WFIGS).",
+        description="Current wildfire perimeters nationwide (NIFC WFIGS).",
         category="perimeter",
         loader=_arcgis_select(
             f"{NIFC}/WFIGS_Interagency_Perimeters_Current/FeatureServer/0",
@@ -1984,8 +1987,11 @@ LAYERS: dict[str, Layer] = {
     ),
     "bridges": Layer(
         name="bridges",
-        title="County bridges",
-        description="Bridges maintained by Stanislaus County.",
+        title="Bridges",
+        description=(
+            "Bridges: county-maintained at home (Stanislaus County GIS), "
+            "the National Bridge Inventory elsewhere."
+        ),
         category="info",
         loader=_arcgis_select(
             f"{ARCGIS_BASE}/Maintained_Bridges/FeatureServer/1",
@@ -2029,7 +2035,7 @@ LAYERS: dict[str, Layer] = {
     "railroads": Layer(
         name="railroads",
         title="Railroads",
-        description="Rail lines in Stanislaus County.",
+        description="Rail lines nationwide (Stanislaus County GIS at home).",
         category="info",
         loader=_arcgis_select(
             f"{ARCGIS_BASE}/Railroads_AGOL/FeatureServer/0",
@@ -2213,7 +2219,7 @@ LAYERS: dict[str, Layer] = {
     "flights": Layer(
         name="flights",
         title="Flights overhead",
-        description="Aircraft broadcasting ADS-B within ~80 nautical miles of Modesto (adsb.fi).",
+        description="Aircraft broadcasting ADS-B around the area on screen (adsb.fi).",
         category="flight",
         loader=_json_transform(
             "https://opendata.adsb.fi/api/v2/lat/37.64/lon/-120.99/dist/80",
@@ -2328,8 +2334,8 @@ LAYERS: dict[str, Layer] = {
     ),
     "snap-stores": Layer(
         name="snap-stores",
-        title="Stores that take CalFresh / EBT",
-        description="Retailers authorized to accept SNAP (CalFresh) benefits (USDA).",
+        title="Stores that take SNAP / EBT",
+        description="Retailers authorized to accept SNAP benefits (CalFresh in California) (USDA).",
         category="point",
         loader=_arcgis_select(
             SNAP_STORES,
