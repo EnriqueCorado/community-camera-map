@@ -373,7 +373,7 @@
     "MANAGEMENT_TYPE": "kind"
    },
    "geometry": "polygon",
-   "min_zoom": 9,
+   "min_zoom": 10,
    "where": "1=1",
    "max_features": 1000,
    "simplify": true
@@ -548,7 +548,7 @@
    "count": 84,
    "kb": 40.2,
    "max_record_count": 2000,
-   "features_in_probe": 80
+   "features_in_probe": 63
   }
  },
  {
@@ -628,7 +628,7 @@
    "count": 509,
    "kb": 153.7,
    "max_record_count": 2000,
-   "features_in_probe": 509
+   "features_in_probe": 512
   }
  },
  {
@@ -1045,7 +1045,7 @@
     "COUNTY": "county"
    },
    "geometry": "polygon",
-   "min_zoom": 15,
+   "min_zoom": 17,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -1830,7 +1830,7 @@
     "FireManagementOption": "name"
    },
    "geometry": "polygon",
-   "min_zoom": 5,
+   "min_zoom": 7,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -2545,7 +2545,7 @@
     "MPDESCRIP": "master_plan"
    },
    "geometry": "polygon",
-   "min_zoom": 15,
+   "min_zoom": 17,
    "where": "1=1",
    "max_features": 1000,
    "simplify": true
@@ -2781,7 +2781,7 @@
     "license_expiration": "license_expires"
    },
    "geometry": "point",
-   "min_zoom": 10,
+   "min_zoom": 11,
    "where": "TYPE='Child Care Center'",
    "max_features": 1000,
    "simplify": false
@@ -3350,7 +3350,7 @@
    "geometry": "point",
    "min_zoom": 7,
    "where": "1=1",
-   "max_features": 2000,
+   "max_features": 4000,
    "simplify": false
   },
   "verified": {
@@ -3365,7 +3365,7 @@
    "count": 1472,
    "kb": 533.4,
    "max_record_count": 2000,
-   "features_in_probe": 1472
+   "features_in_probe": 1530
   }
  },
  {
@@ -3744,7 +3744,7 @@
     "bicyclist_involved": "bicyclist"
    },
    "geometry": "point",
-   "min_zoom": 13,
+   "min_zoom": 14,
    "where": "1=1",
    "max_features": 2000,
    "simplify": false
@@ -4465,7 +4465,7 @@
    "count": 39,
    "kb": 7.6,
    "max_record_count": 1000,
-   "features_in_probe": 37
+   "features_in_probe": 5
   }
  },
  {
@@ -4605,7 +4605,7 @@
     "RecreationArea": "area"
    },
    "geometry": "line",
-   "min_zoom": 12,
+   "min_zoom": 14,
    "where": "1=1",
    "max_features": 2000,
    "simplify": false
@@ -6659,7 +6659,7 @@
     "BldDmgPot": "kind"
    },
    "geometry": "polygon",
-   "min_zoom": 11,
+   "min_zoom": 12,
    "where": "BldDmgPot IN ('Moderate','High','Very High')",
    "max_features": 2000,
    "simplify": true
@@ -6706,7 +6706,7 @@
     "url": "page"
    },
    "geometry": "line",
-   "min_zoom": 12,
+   "min_zoom": 14,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -6907,7 +6907,7 @@
     "ES_S_": "enviroscreen_pct"
    },
    "geometry": "polygon",
-   "min_zoom": 9,
+   "min_zoom": 11,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -7513,7 +7513,7 @@
     "CITY": "city"
    },
    "geometry": "point",
-   "min_zoom": 12,
+   "min_zoom": 13,
    "where": "1=1",
    "max_features": 2000
   },

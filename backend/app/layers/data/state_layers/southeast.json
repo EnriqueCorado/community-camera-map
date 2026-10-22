@@ -77,7 +77,7 @@
    "count": 87,
    "kb": 116.7,
    "max_record_count": 1000,
-   "features_in_probe": 50
+   "features_in_probe": 87
   }
  },
  {
@@ -115,7 +115,7 @@
    "count": 274,
    "kb": 690.2,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 274
   }
  },
  {
@@ -156,7 +156,7 @@
    "count": 172,
    "kb": 42.0,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 172
   }
  },
  {
@@ -195,7 +195,7 @@
    "count": 67,
    "kb": 112.7,
    "max_record_count": 1000,
-   "features_in_probe": 50
+   "features_in_probe": 67
   }
  },
  {
@@ -277,7 +277,7 @@
    "count": 52,
    "kb": 117.7,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 52
   }
  },
  {
@@ -317,7 +317,7 @@
    "count": 336,
    "kb": 138.2,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 336
   }
  },
  {
@@ -398,7 +398,7 @@
    "count": 70,
    "kb": 211.7,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 70
   }
  },
  {
@@ -440,7 +440,7 @@
    "count": 167,
    "kb": 61.9,
    "max_record_count": 2000,
-   "features_in_probe": 47
+   "features_in_probe": 167
   }
  },
  {
@@ -481,7 +481,7 @@
    "count": 261,
    "kb": 633.2,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 261
   }
  },
  {
@@ -523,7 +523,7 @@
    "count": 195,
    "kb": 805.6,
    "max_record_count": 1000,
-   "features_in_probe": 50
+   "features_in_probe": 195
   }
  },
  {
@@ -566,7 +566,7 @@
    "count": 558,
    "kb": 213.5,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 558
   }
  },
  {
@@ -608,7 +608,7 @@
    "count": 140,
    "kb": 48.1,
    "max_record_count": 1000,
-   "features_in_probe": 50
+   "features_in_probe": 152
   }
  },
  {
@@ -648,7 +648,7 @@
    "count": 2000,
    "kb": 545.4,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 2000
   }
  },
  {
@@ -734,7 +734,7 @@
    "count": 183,
    "kb": 43.0,
    "max_record_count": 1000,
-   "features_in_probe": 50
+   "features_in_probe": 183
   }
  },
  {
@@ -771,7 +771,7 @@
    "count": 311,
    "kb": 255.7,
    "max_record_count": 1000,
-   "features_in_probe": 50
+   "features_in_probe": 311
   }
  },
  {
@@ -811,7 +811,7 @@
    "count": 161,
    "kb": 38.5,
    "max_record_count": 1000,
-   "features_in_probe": 50
+   "features_in_probe": 161
   }
  },
  {
@@ -929,7 +929,7 @@
    "count": 580,
    "kb": 134.3,
    "max_record_count": 1000,
-   "features_in_probe": 50
+   "features_in_probe": 580
   }
  },
  {
@@ -971,7 +971,7 @@
    "count": 151,
    "kb": 41.1,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 151
   }
  },
  {
@@ -1012,7 +1012,7 @@
    "count": 168,
    "kb": 41.1,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 168
   }
  },
  {
@@ -1053,7 +1053,7 @@
    "count": 95,
    "kb": 185.9,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 95
   }
  },
  {
@@ -1171,7 +1171,7 @@
    "count": 129,
    "kb": 25.8,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 129
   }
  },
  {
@@ -1197,7 +1197,7 @@
     "reviseyear": "updated"
    },
    "geometry": "polygon",
-   "min_zoom": 15,
+   "min_zoom": 17,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -1214,7 +1214,7 @@
    "count": 1922,
    "kb": 840.6,
    "max_record_count": 5000,
-   "features_in_probe": 50
+   "features_in_probe": 1922
   }
  },
  {
@@ -1235,7 +1235,7 @@
     "county": "county"
    },
    "geometry": "point",
-   "min_zoom": 17,
+   "min_zoom": 18,
    "where": "1=1",
    "max_features": 2000,
    "simplify": false
@@ -1252,7 +1252,7 @@
    "count": 2000,
    "kb": 412.5,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 2000
   }
  },
  {
@@ -1292,7 +1292,7 @@
    "count": 1120,
    "kb": 620.0,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 1120
   }
  },
  {
@@ -1332,7 +1332,7 @@
    "count": 699,
    "kb": 509.7,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 699
   }
  },
  {
@@ -1454,7 +1454,7 @@
    "count": 68,
    "kb": 237.8,
    "max_record_count": 1000,
-   "features_in_probe": 50
+   "features_in_probe": 68
   }
  },
  {
@@ -1534,7 +1534,7 @@
    "count": 74,
    "kb": 25.5,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 74
   }
  },
  {
@@ -1573,7 +1573,7 @@
    "count": 91,
    "kb": 48.5,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 91
   }
  },
  {
@@ -1614,7 +1614,7 @@
    "count": 218,
    "kb": 55.1,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 218
   }
  },
  {
@@ -1652,7 +1652,7 @@
    "count": 353,
    "kb": 441.1,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 353
   }
  },
  {
@@ -1690,7 +1690,7 @@
    "count": 2000,
    "kb": 585.5,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 2000
   }
  },
  {
@@ -1729,7 +1729,7 @@
    "count": 1896,
    "kb": 380.9,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 1896
   }
  },
  {
@@ -1767,7 +1767,7 @@
    "count": 1891,
    "kb": 645.0,
    "max_record_count": 2000,
-   "features_in_probe": 36
+   "features_in_probe": 1891
   }
  },
  {
@@ -1808,7 +1808,7 @@
    "count": 86,
    "kb": 25.8,
    "max_record_count": 2000,
-   "features_in_probe": 47
+   "features_in_probe": 86
   }
  },
  {
@@ -1846,7 +1846,7 @@
    "count": 74,
    "kb": 274.4,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 74
   }
  },
  {
@@ -1925,7 +1925,7 @@
    "count": 1000,
    "kb": 602.8,
    "max_record_count": 1000,
-   "features_in_probe": 50
+   "features_in_probe": 1000
   }
  },
  {
@@ -1964,7 +1964,7 @@
    "count": 52,
    "kb": 49.4,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 52
   }
  },
  {
@@ -2046,7 +2046,7 @@
    "count": 1107,
    "kb": 262.8,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 1107
   }
  },
  {
@@ -2068,7 +2068,7 @@
     "COUNTY": "county_code"
    },
    "geometry": "polygon",
-   "min_zoom": 15,
+   "min_zoom": 16,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -2085,7 +2085,7 @@
    "count": 2000,
    "kb": 680.4,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 2000
   }
  },
  {
@@ -2124,7 +2124,7 @@
    "count": 1042,
    "kb": 194.7,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 1042
   }
  },
  {
@@ -2201,7 +2201,7 @@
    "count": 67,
    "kb": 16.5,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 67
   }
  },
  {
@@ -2279,7 +2279,7 @@
    "count": 66,
    "kb": 338.3,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 66
   }
  },
  {
@@ -2358,7 +2358,7 @@
    "count": 148,
    "kb": 31.9,
    "max_record_count": 2000,
-   "features_in_probe": 50
+   "features_in_probe": 148
   }
  }
 ]

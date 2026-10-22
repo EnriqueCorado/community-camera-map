@@ -125,7 +125,7 @@ export function arcgisQueryUrl(spec: ViewSpec, bbox: Bbox, zoom: number, offset 
     f: "geojson",
   });
   if (offset > 0) p.set("resultOffset", String(offset));
-  // Polygons: drop detail finer than ~half a screen pixel at this zoom.
+  // Polygons/lines: drop detail finer than ~half a screen pixel at this zoom.
   if (spec.simplify) p.set("maxAllowableOffset", (180 / (512 * 2 ** zoom)).toPrecision(3));
   return `${levelUrl(spec, zoom) ?? spec.url}/query?${p}`;
 }

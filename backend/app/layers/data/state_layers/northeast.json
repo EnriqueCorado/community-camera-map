@@ -22,7 +22,7 @@
     "ROLL_YR": "updated"
    },
    "geometry": "polygon",
-   "min_zoom": 16,
+   "min_zoom": 17,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -678,7 +678,7 @@
    "kb": 116,
    "max_record_count": 2000,
    "exceeded_transfer_limit": false,
-   "features_in_probe": 279
+   "features_in_probe": 277
   }
  },
  {
@@ -1562,7 +1562,7 @@
     "pendingbillurl": "page"
    },
    "geometry": "polygon",
-   "min_zoom": 13,
+   "min_zoom": 15,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -1646,7 +1646,7 @@
     "UPDATED": "updated"
    },
    "geometry": "polygon",
-   "min_zoom": 15,
+   "min_zoom": 17,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -2104,7 +2104,7 @@
    "kb": 533,
    "max_record_count": 36000,
    "exceeded_transfer_limit": false,
-   "features_in_probe": 250
+   "features_in_probe": 494
   }
  },
  {
@@ -2170,7 +2170,7 @@
     "PDFLINK": "page"
    },
    "geometry": "polygon",
-   "min_zoom": 14,
+   "min_zoom": 15,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -2273,7 +2273,7 @@
    "kb": 0,
    "max_record_count": 2000,
    "exceeded_transfer_limit": false,
-   "features_in_probe": 2
+   "features_in_probe": 0
   }
  },
  {
@@ -2472,7 +2472,7 @@
     "PERMITNUMBER": "kind"
    },
    "geometry": "point",
-   "min_zoom": 13,
+   "min_zoom": 14,
    "where": "1=1",
    "max_features": 1000,
    "simplify": false
@@ -2816,6 +2816,7 @@
   "view": {
    "url": "https://services1.arcgis.com/6ItOFXGFmdtfeOZb/arcgis/rest/services/CTEJIndex_v2_0/FeatureServer/0",
    "fields": {
+    "NAMELSAD20": "name",
     "GEOID20": "geoid",
     "TOWN_NAME": "city",
     "Percentile": "score",
@@ -3121,7 +3122,7 @@
     "View_Case_in_REACT": "page"
    },
    "geometry": "point",
-   "min_zoom": 12,
+   "min_zoom": 13,
    "where": "1=1",
    "max_features": 2000,
    "simplify": false
@@ -3382,7 +3383,7 @@
     "FY": "updated"
    },
    "geometry": "polygon",
-   "min_zoom": 16,
+   "min_zoom": 17,
    "where": "1=1",
    "max_features": 2000,
    "simplify": true
@@ -3417,6 +3418,7 @@
   "view": {
    "url": "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/EJ2020/FeatureServer/0",
    "fields": {
+    "GEOGRAPHICAREANAME": "name",
     "GEOID": "geoid",
     "MUNICIPALITY": "city",
     "EJ": "status",
@@ -3638,7 +3640,7 @@
     "CONSTRUCTI": "built"
    },
    "geometry": "point",
-   "min_zoom": 15,
+   "min_zoom": 16,
    "where": "DEMOLISHED IS NULL OR DEMOLISHED <> 'Y'",
    "max_features": 2000,
    "simplify": false
@@ -4014,7 +4016,7 @@
   "name": "nh-parcels",
   "state": "NH",
   "title": "Parcels (New Hampshire)",
-  "title_es": "Parcelas (Nueva Hampshire)",
+  "title_es": "Parcelas (Nuevo Hampshire)",
   "description": "NH GRANIT statewide parcel mosaic (towns that share digital parcels) with street address and state land-use code (no owner names shown).",
   "group": "planning",
   "category": "landuse",
@@ -4056,7 +4058,7 @@
   "name": "nh-conservation-lands",
   "state": "NH",
   "title": "Conservation and public lands (New Hampshire)",
-  "title_es": "Tierras de conservación y públicas (Nueva Hampshire)",
+  "title_es": "Tierras de conservación y públicas (Nuevo Hampshire)",
   "description": "GRANIT statewide conservation and public lands (state parks and forests, WMAs, town forests, easements) with public access level.",
   "group": "nature",
   "category": "park",
@@ -4100,7 +4102,7 @@
   "name": "nh-public-water-access",
   "state": "NH",
   "title": "Public water access sites (New Hampshire)",
-  "title_es": "Accesos públicos al agua (Nueva Hampshire)",
+  "title_es": "Accesos públicos al agua (Nuevo Hampshire)",
   "description": "Public access sites to lakes, ponds and rivers (boat ramps, carry-in, shore access) with fees, parking and uses.",
   "group": "nature",
   "category": "point",
@@ -4145,7 +4147,7 @@
   "name": "nh-trails",
   "state": "NH",
   "title": "Trails (New Hampshire)",
-  "title_es": "Senderos (Nueva Hampshire)",
+  "title_es": "Senderos (Nuevo Hampshire)",
   "description": "Statewide trails inventory (hiking, OHRV, snowmobile corridors, rail trails) with allowed uses.",
   "group": "nature",
   "category": "park",
@@ -4190,7 +4192,7 @@
   "name": "nh-recreation-areas",
   "state": "NH",
   "title": "Recreation areas (New Hampshire)",
-  "title_es": "Áreas recreativas (Nueva Hampshire)",
+  "title_es": "Áreas recreativas (Nuevo Hampshire)",
   "description": "Statewide outdoor recreation inventory (state parks, town parks, beaches, campgrounds, ski areas) with operator and activities.",
   "group": "nature",
   "category": "park",

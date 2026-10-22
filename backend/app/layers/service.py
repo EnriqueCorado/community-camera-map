@@ -51,7 +51,7 @@ class View:
     min_zoom: float
     where: str = "1=1"
     max_features: int = 2000
-    simplify: bool = False  # polygons: generalize to the zoom level
+    simplify: bool = False  # polygons/lines: generalize to the zoom level
     refresh_s: int = 1800
     post: str | None = None  # a named browser-side cleanup (see view-logic.ts)
     # The baked copy covers the whole home box (clipped to it, not filtered by
@@ -1418,7 +1418,9 @@ LAYERS: dict[str, Layer] = {
             f"{NIFC}/WFIGS_Incident_Locations_Current/FeatureServer/0",
             {
                 "IncidentName": "IncidentName",
-                "DailyAcres": "DailyAcres",
+                # NIFC renamed DailyAcres -> IncidentSize (2026); the old name
+                # made every view query fail with "'outFields' parameter is invalid".
+                "IncidentSize": "IncidentSize",
                 "PercentContained": "PercentContained",
                 "IncidentTypeCategory": "IncidentTypeCategory",
             },

@@ -75,7 +75,10 @@ def _check(spec: dict, where: str) -> None:
 
 def _layer(spec: dict) -> Layer:
     v = spec["view"]
-    polygon = v["geometry"] == "polygon"
+    # Polygons and lines are generalized to the zoom (maxAllowableOffset):
+    # unsimplified trail/route lines ran 5-40x larger for no visible detail.
+    # (A spec's "simplify": false can't turn this off, as for polygons.)
+    shaped = v["geometry"] in ("polygon", "line")
     return Layer(
         name=spec["name"],
         title=spec["title"],
@@ -89,7 +92,7 @@ def _layer(spec: dict) -> Layer:
             min_zoom=float(v["min_zoom"]),
             where=v.get("where", "1=1"),
             max_features=int(v.get("max_features", 2000)),
-            simplify=polygon or bool(v.get("simplify", False)),
+            simplify=shaped or bool(v.get("simplify", False)),
             refresh_s=int(v.get("refresh_s", 24 * 3600)),
         ),
         title_es=spec["title_es"],
