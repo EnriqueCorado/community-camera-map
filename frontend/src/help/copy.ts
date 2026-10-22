@@ -21,6 +21,7 @@ export interface HelpCopy {
   immigrationViewLabel: string;
   immigrationViewRights: string;
   immigrationViewCitizenship: string;
+  immigrationViewPlan: string;
   workViewLabel: string;
   workViewWages: string;
   workViewHeat: string;
@@ -194,6 +195,7 @@ const en: HelpCopy = {
   immigrationViewLabel: "Choose a topic",
   immigrationViewRights: "Know your rights",
   immigrationViewCitizenship: "Citizenship test practice",
+  immigrationViewPlan: "Family emergency plan",
   workViewLabel: "Choose a topic",
   workViewWages: "Unpaid wages",
   workViewHeat: "Heat at work today",
@@ -389,6 +391,7 @@ const es: HelpCopy = {
   immigrationViewLabel: "Elija un tema",
   immigrationViewRights: "Conozca sus derechos",
   immigrationViewCitizenship: "Práctica para la ciudadanía",
+  immigrationViewPlan: "Plan familiar de emergencia",
   workViewLabel: "Elija un tema",
   workViewWages: "Salarios no pagados",
   workViewHeat: "Calor en el trabajo hoy",
