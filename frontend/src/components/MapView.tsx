@@ -17,6 +17,7 @@ import {
   freshImage,
   isMissing,
   LEGAL_SITE_HOSTS,
+  ROAD_PAGE_HOSTS,
   safeUrl,
   tidy,
   WEBCAM_IMAGE_HOSTS,
@@ -1375,7 +1376,9 @@ function addOverlay(
   const accent = OVERLAY_COLOR[info.name] ?? "#64748b";
   const geomType = firstGeometryType(data, info);
   // Live point layers can legitimately be empty (e.g. no flights right now).
-  const isPoint = geomType.includes("Point") || POINT_CATEGORIES.has(info.category);
+  // Line categories draw their points too (see the line branch below).
+  const isPoint =
+    !LINE_CATEGORIES.has(info.category) && (geomType.includes("Point") || POINT_CATEGORIES.has(info.category));
 
   const bindPopup = (layerId: string) => {
     map.on("click", layerId, (e: LayerMouseEvent) => {
@@ -1567,6 +1570,27 @@ function addOverlay(
       beforeId,
     );
     bindPopup(`${src}-line`);
+    if (info.category === "roadops") {
+      // Road events mix segments and single spots (crashes, short closures).
+      map.addLayer(
+        {
+          id: `${src}-circle`,
+          type: "circle",
+          source: src,
+          filter: ["==", ["geometry-type"], "Point"],
+          paint: {
+            "circle-color": accent,
+            "circle-radius": 5,
+            "circle-opacity": 0.9,
+            "circle-stroke-width": 1.5,
+            "circle-stroke-color": "#fff",
+          },
+          layout: { visibility: "none" },
+        },
+        beforeId,
+      );
+      bindPopup(`${src}-circle`);
+    }
     return;
   }
 
@@ -1922,6 +1946,30 @@ const POI_KEYS: Record<string, Parameters<TFn>[0]> = {
   "farmers-markets": "poiMarket",
 };
 
+/** Road-ops event kinds and WZDx vehicle impacts (backend national/_roads_parse.py). */
+const ROAD_KIND_KEYS: Record<string, Key> = {
+  "work-zone": "roadWorkZone",
+  restriction: "roadRestriction",
+  closure: "roadClosure",
+  crash: "roadCrash",
+  incident: "roadIncident",
+  "special-event": "roadSpecialEvent",
+  weather: "roadWeather",
+};
+const ROAD_IMPACT_KEYS: Record<string, Key> = {
+  "all-lanes-closed": "impactAllClosed",
+  "some-lanes-closed": "impactSomeClosed",
+  "all-lanes-open": "impactAllOpen",
+  "alternating-one-way": "impactOneWay",
+  "some-lanes-closed-merge-left": "impactMergeLeft",
+  "some-lanes-closed-merge-right": "impactMergeRight",
+  "all-lanes-open-shift-left": "impactShift",
+  "all-lanes-open-shift-right": "impactShift",
+  "some-lanes-closed-split": "impactSplit",
+  flagging: "impactFlagging",
+  "temporary-traffic-signal": "impactSignal",
+};
+
 type InfoRow = [Parameters<TFn>[0], string];
 /** Simple layers: which properties to show, in order. "_today" = today's hours. */
 const INFO_FIELDS: Record<string, { rows: InfoRow[]; titleFrom?: string; link?: Parameters<TFn>[0] }> = {
@@ -1934,6 +1982,9 @@ const INFO_FIELDS: Record<string, { rows: InfoRow[]; titleFrom?: string; link?: 
   "historic-places": { rows: [["rowType", "kind"], ["rowAddress", "address"], ["rowCity", "city"], ["rowListed", "listed"]], link: "viewNara" },
   "historical-markers": { rows: [["rowSubtitle", "subtitle"], ["rowErected", "built"], ["rowErectedBy", "erected_by"], ["rowWhere", "where"]], link: "viewHmdb" },
   "mobile-home-parks": { rows: [["rowAddress", "address"], ["rowSpaces", "spaces"]] },
+  // Highway message signs: Caltrans, and the nationwide road-ops pack (roads.py).
+  "message-signs": { rows: [["rowMessage", "message"]] },
+  "message-signs-usa": { rows: [["rowMessage", "message"], ["rowRoad", "road"], ["rowState", "state"], ["rowSource", "source"]] },
   // Hazards / environment / water pack (backend national/hazards.py).
   landslides: { titleFrom: "kind", rows: [["rowSource", "source"]] },
   "smoke-plumes": { rows: [["rowDensity", "density"], ["rowSource", "satellite"], ["rowStarted", "start"], ["rowUntil", "end"]] },
@@ -2581,16 +2632,28 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
             : "";
       return { ...base, title: level ? t("fireLevel", { level }) : kind };
     }
-    case "roadops":
+    case "roadops": {
+      // Caltrans lane closures (type/work/lanes) and the nationwide road-ops
+      // pack (type/impact/detail/direction/start/end/source, roads.py).
+      const type = raw(p.type);
+      const impact = ROAD_IMPACT_KEYS[raw(p.impact)];
+      const when = (v: unknown) => untilText(v, locale);
       return {
         ...base,
         title: str(pick(["route"])) || kind,
         rows: [
-          [t("rowType"), str(pick(["type"])) || t("closure")],
+          [t("rowType"), ROAD_KIND_KEYS[type] ? t(ROAD_KIND_KEYS[type]!) : str(type) || (p.source ? "" : t("closure"))],
           [t("rowWork"), raw(p.work)],
-          [t("rowLanes"), raw(p.lanes)],
+          [t("rowLanes"), [impact ? t(impact) : "", raw(p.lanes)].filter(Boolean).join(" · ")],
+          [t("rowDirection"), translateDirection(t, raw(p.direction))],
+          [t("rowDetail"), raw(p.detail)],
+          [t("rowStarted"), when(p.start)],
+          [t("rowUntil"), when(p.end)],
+          [t("rowSource"), raw(p.source)],
         ],
+        link: p.page ? { href: raw(p.page), label: t("roadInfoMore"), hosts: ROAD_PAGE_HOSTS } : undefined,
       };
+    }
     case "legal": {
       const kinds = raw(p.kinds).split("|").map((k) => LEGAL_KIND_KEYS[k as LegalKind]).filter((k): k is Key => !!k);
       const cost = LEGAL_COST_KEYS[raw(p.cost) as LegalOffice["cost"]] ?? "costVaries";
@@ -2632,8 +2695,10 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
         rows: [
           [t("rowTemp"), num(p.temp_f) != null ? t("tempF", { n: fmt(p.temp_f) }) : ""],
           [t("rowWind"), wind == null ? "" : gust != null && gust > wind ? t("windGust", { mph: fmt(wind), gust: fmt(gust) }) : t("mph", { n: fmt(wind) })],
+          [t("rowSurfaceTemp"), num(p.surface_f) != null ? t("tempF", { n: fmt(p.surface_f) }) : ""],
           [t("rowHumidity"), num(p.humidity) != null ? `${fmt(p.humidity)}%` : ""],
           [t("rowElevation"), num(p.elevation_ft) != null ? t("feet", { n: fmt(p.elevation_ft) }) : ""],
+          [t("rowSource"), raw(p.source)],
         ],
       };
     }

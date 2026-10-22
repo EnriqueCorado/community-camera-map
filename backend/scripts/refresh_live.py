@@ -8,10 +8,13 @@ overwrites a layer's file when the fetch succeeds — on failure the committed
     cd backend && uv run python scripts/refresh_live.py            # fast layers
     cd backend && uv run python scripts/refresh_live.py --hourly   # + haze, webcams
     cd backend && uv run python scripts/refresh_live.py --weekly   # nationwide service lists
+    cd backend && uv run python scripts/refresh_live.py --keyed    # road ops (511 / OHGO keys)
 
 Keys: none needed. The Windy list is refreshed separately in CI
 (`--only windy-webcams`) so its key never shares a process with the step that
-decodes third-party images.
+decodes third-party images. The road-operations layers (KEYED) are baked with
+the Iteris 511 / OHGO keys in CI's isolated `cameras` job only, and handed to
+the build job as plain files (`--adopt`), so the build job never holds a key.
 """
 
 from __future__ import annotations
@@ -31,6 +34,7 @@ from bake import SOURCES  # noqa: E402 - sibling script
 
 from app.core.config import get_settings
 from app.layers import service as _registry  # noqa: F401 - loads every pack before one is imported
+from app.layers.national.roads import KEYED
 from app.layers.national.services import WEEKLY as SERVICES_WEEKLY
 from app.layers.service import LayerService, record_layer_times, sync_catalog
 
@@ -137,26 +141,39 @@ async def main(names: tuple[str, ...]) -> int:
     return 0
 
 
-def adopt(name: str) -> int:
-    """Mark `name` available if a valid FeatureCollection was dropped in place
-    (the Windy list is built in an isolated CI job and handed over as data)."""
-    path = OUT / "layers" / f"{name}.geojson"
-    try:
-        fc = json.loads(path.read_text())
-        ok = fc.get("type") == "FeatureCollection" and isinstance(fc.get("features"), list)
-    except (OSError, ValueError, AttributeError):
-        ok = False
-    if not ok:
-        path.unlink(missing_ok=True)
-        print(f"  no valid {name} artifact; left unavailable")
-        return 0
+def adopt(names: str, src: Path | None = None) -> int:
+    """Mark each of `names` (comma-separated) available if a valid
+    FeatureCollection was dropped in place, or (with `src`) arrived in `src`
+    and is moved in place (the Windy list and the keyed road layers are built in
+    isolated CI jobs and handed over as data). A layer whose file didn't arrive
+    keeps its previous copy, count and time."""
     catalog_path = OUT / "layers.json"
     catalog = json.loads(catalog_path.read_text())
-    for c in catalog:
-        if c["name"] == name:
-            c["available"] = True
+    adopted: list[str] = []
+    for name in names.split(","):
+        path = OUT / "layers" / f"{name}.geojson"
+        incoming = (src / f"{name}.geojson") if src else path
+        try:
+            fc = json.loads(incoming.read_text())
+            ok = fc.get("type") == "FeatureCollection" and isinstance(fc.get("features"), list)
+        except (OSError, ValueError, AttributeError):
+            ok = False
+        if not ok:
+            if name == "windy-webcams":  # no committed copy to fall back on
+                path.unlink(missing_ok=True)
+            print(f"  no valid {name} artifact; kept the previous copy")
+            continue
+        if src:
+            path.write_text(json.dumps(fc, separators=(",", ":")))
+        for c in catalog:
+            if c["name"] == name:
+                c["available"] = True
+                c["count"] = len(fc["features"])
+        adopted.append(name)
+        print(f"  adopted {name}: {len(fc['features'])} features")
     catalog_path.write_text(json.dumps(catalog, separators=(",", ":")))
-    print(f"  adopted {name}: {len(fc['features'])} features")
+    if timed := [n for n in adopted if n != "windy-webcams"]:  # "updated X ago"
+        record_layer_times(timed)
     return 0
 
 
@@ -165,14 +182,20 @@ if __name__ == "__main__":
     ap.add_argument("--hourly", action="store_true", help="also refresh slower/heavier layers")
     ap.add_argument("--daily", action="store_true", help="refresh the OpenStreetMap places")
     ap.add_argument("--weekly", action="store_true", help="refresh the nationwide service lists")
+    ap.add_argument("--keyed", action="store_true", help="refresh the keyed road-ops layers")
     ap.add_argument("--only", help="comma-separated layer names (e.g. windy-webcams)")
-    ap.add_argument("--adopt", help="mark an already-present layer file available (CI artifact)")
+    ap.add_argument(
+        "--adopt", help="mark already-present layer files available (comma-separated; CI artifacts)"
+    )
+    ap.add_argument("--from", dest="src", type=Path, help="--adopt: take the files from this dir")
     args = ap.parse_args()
     if args.adopt:
-        raise SystemExit(adopt(args.adopt))
+        raise SystemExit(adopt(args.adopt, args.src))
     chosen = (
         tuple(args.only.split(","))
         if args.only
+        else KEYED  # CI: only in the isolated job that holds the 511 / OHGO keys
+        if args.keyed
         else WEEKLY + FAST  # the weekly run deploys too
         if args.weekly
         else DAILY + FAST  # the daily run deploys too: keep live layers fresh

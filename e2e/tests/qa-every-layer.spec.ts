@@ -39,6 +39,9 @@ const VIEW: Record<string, string> = {
   "weather-alerts": "-119.5,37.5,5.5", quakes: "-119.5,37.5,5.5", "fire-cameras": "-120.6,37.6,7.5",
   "river-cameras": "-121.6,38.0,8", "road-weather": "-120.5,37.6,6.5", "chain-controls": "-120.0,38.3,7.5",
   "lane-closures": "-121.0,37.6,6.5", "message-signs": "-121.0,37.6,7", dams: "-120.5,37.6,7",
+  // nationwide road operations (Maryland has every kind)
+  "work-zones": "-76.7,39.2,8", "road-incidents": "-76.7,39.2,7", "message-signs-usa": "-76.7,39.2,8",
+  "road-weather-usa": "-76.7,39.2,8",
   satellites: "0,20,1", iss: "0,0,0.6", trains: "-121.0,37.0,6", "rain-radar": "-98,38,3.5", satellite: "-120.6,37.6,7",
   "windy-webcams": "-121.6,37.5,7.5", flights: "-121.0,37.6,8", "smoke-haze": "-120.6,37.7,7.5",
   "air-now": "-120.9,37.6,7", "weather-now": "-120.9,37.6,7", amtrak: "-120.9,37.6,8", airports: "-120.9,37.6,9",
@@ -55,7 +58,7 @@ const VIEW: Record<string, string> = {
 const COUNTY = "-120.95,37.56,9.3";
 const RASTER = new Set(["rain-radar", "satellite"]);
 // Real data can legitimately be empty at a given moment.
-const MAY_BE_EMPTY = new Set(["buses", "power-outages", "outage-areas", "weather-alerts", "wildfire-perimeters", "free-wifi", "lane-closures", "message-signs", "flights",
+const MAY_BE_EMPTY = new Set(["buses", "power-outages", "outage-areas", "weather-alerts", "wildfire-perimeters", "free-wifi", "lane-closures", "message-signs", "road-incidents", "flights",
   "quakes", "farmers-markets", "food-banks", "community-centers", "aed"]);
 // Console noise that isn't ours: basemap glyph/sprite fetches, fetches aborted
 // on pan, and third-party HTTP errors (their failures are tracked by the layer
