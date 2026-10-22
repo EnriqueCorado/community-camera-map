@@ -37,3 +37,8 @@ records/
 *.csv
 frontend/public/data/history/
 frontend/public/data/alpr/
+
+# Vercel CLI integration leftovers in the relay (never commit)
+relay/.agents/
+relay/.claude/
+relay/skills-lock.json

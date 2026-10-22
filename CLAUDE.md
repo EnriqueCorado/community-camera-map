@@ -7,8 +7,10 @@ lives at `~/dev/stanislaus-cam-map`.
 
 Static React/TS/Vite/MapLibre site (`frontend/`), FastAPI backend (`backend/`)
 used for local dev and for baking data in CI, Playwright tests (`e2e/`), and a
-Vercel relay (`relay/`, live flights, usage counter, mail forwarder; its
-firewall rules live in Vercel only).
+Vercel relay (`relay/`: `/api/flights`, `/api/count` usage counter on Upstash
+KV, `/api/inbound` Resend webhook that forwards corrections mail; its firewall
+rule "Only the relay's own paths" lives in Vercel only and must list every
+endpoint).
 
 ## Commands
 
