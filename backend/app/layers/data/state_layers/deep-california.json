@@ -2425,7 +2425,7 @@
   "category": "point",
   "source": "Riverside County Registrar of Voters (ROVER_Core_2026)",
   "view": {
-   "url": "https://services1.arcgis.com/pWmBUdSlVpXStHU6/arcgis/rest/services/ROVER_Core_2026/FeatureServer/0",
+   "url": "https://services1.arcgis.com/pWmBUdSlVpXStHU6/arcgis/rest/services/ROVER_Core_2026/FeatureServer/1",
    "fields": {
     "Voting_Location_Name": "name",
     "Location": "location",
