@@ -673,3 +673,144 @@ main:focus {
 .sharebox__short {
   overflow-wrap: anywhere;
 }
+/* ------------------------------------------- pages in other languages */
+/* Scripts with tall marks need more line height; system fonts cover both
+   (iOS: MuktaMahee, Geeza Pro; Android: Noto Sans Gurmukhi, Noto Naskh Arabic). */
+:lang(pa) {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Mukta Mahee", "Noto Sans Gurmukhi", "Gurmukhi MN", sans-serif;
+  line-height: 1.75;
+}
+:lang(fa),
+:lang(ps) {
+  font-family: system-ui, -apple-system, "Geeza Pro", "Noto Naskh Arabic", "Segoe UI", Tahoma, sans-serif;
+  line-height: 1.85;
+}
+/* English inside those pages keeps the usual font. */
+:lang(pa) :lang(en),
+:lang(fa) :lang(en) {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+}
+[dir="rtl"] .skip {
+  left: auto;
+  right: 16px;
+}
+[dir="rtl"] .more ul,
+[dir="rtl"] .fside__list {
+  padding-left: 0;
+  padding-right: 1.2em;
+}
+.top__langs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.langnote {
+  margin-top: 1.5rem;
+  padding: 0.25rem 1.1rem 0.5rem;
+  border-inline-start: 4px solid #b54708;
+  background: var(--panel);
+  border-radius: 10px;
+}
+.langnote h2 {
+  margin-top: 0.6em;
+}
+.steps li {
+  margin: 0.35em 0;
+}
+:lang(pa) .steps {
+  list-style-type: gurmukhi;
+}
+:lang(fa) .steps {
+  list-style-type: persian;
+}
+.say {
+  margin: 1rem 0;
+  padding: 0.5rem 1.1rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.say__en {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0.2em 0;
+}
+.ltools {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.ltool {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  padding: 0.85rem 1rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.ltool__name {
+  font-size: 1.05rem;
+}
+.ltool__text {
+  color: var(--muted);
+}
+.ltool__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  font-weight: 600;
+}
+/* Tap targets of at least 24px (WCAG 2.5.8). */
+.ltool__links a,
+.ltel {
+  display: inline-block;
+  min-height: 24px;
+  padding: 2px 0;
+}
+.langlist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  padding: 0;
+  list-style: none;
+  font-weight: 600;
+}
+/* One-language flyer: headline, list and a big QR code. */
+.sheet--single .fside {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.sheet--single .fside__head {
+  font-size: 30pt;
+  margin-bottom: 0.1in;
+}
+.sheet--single .fside__list {
+  font-size: 18pt;
+  line-height: 1.6;
+}
+.sheet--single .fside__list li {
+  margin-bottom: 0.16in;
+}
+.sheet--single .fside__qr {
+  margin-top: auto;
+}
+.sheet--single .qr {
+  width: 2.75in;
+  height: 2.75in;
+}
+.lflyer__en {
+  margin: 0 0 0.2in;
+  font-size: 13pt;
+  color: #333;
+}
+@media (forced-colors: active) {
+  .ltool,
+  .say,
+  .langnote {
+    border: 1px solid CanvasText;
+  }
+}

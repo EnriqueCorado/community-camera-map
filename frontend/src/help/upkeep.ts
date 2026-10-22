@@ -15,6 +15,7 @@ import { CIVICS_CHECKED, CIVICS_OFFICIALS_RECHECK } from "./civics-facts";
 import { PLAN_CHECKED } from "./family-plan-facts";
 import { DACA_CHECKED, DACA_RECHECK } from "./daca-facts";
 import { TAXES_CHECKED, TAXES_RECHECK } from "./taxes-facts";
+import { LANGUAGES_CHECKED, LANGUAGES_REVIEW_BY } from "./languages-facts";
 import { addDays } from "./dates";
 
 export interface UpkeepItem {
@@ -119,6 +120,12 @@ export function upkeepItems(): UpkeepItem[] {
       task: "Before tax season: add FTB's 2026 CalEITC table by number of children (CA_CREDITS.caleitcMax in taxes-facts.ts), this season's VITA / AARP Tax-Aide sites and dates in Stanislaus (TAX_PLACES; IRS locator, United Way, 211), the IRS opening day, and the latest in Center for Taxpayer Rights v. IRS (IRS-ICE sharing); then move TAXES_RECHECK.",
       source: "https://www.ftb.ca.gov/file/personal/credits/caleitc/eligibility-and-credit-information.html",
     },
+    {
+      id: "languages-review",
+      due: LANGUAGES_REVIEW_BY,
+      task: "Get a native speaker to review the Punjabi and Dari pages and flyers (landing/languages.ts; reviewers in research/languages.md). Remove the “not yet checked” note only after a review; otherwise move LANGUAGES_REVIEW_BY.",
+      source: "https://github.com/EnriqueCorado/community-camera-map/blob/main/frontend/src/landing/languages.ts",
+    },
     ...(Object.entries(TABLES) as [string, IncomeTable][]).map(([id, t]) => ({
       id: `benefits-${id}`,
       due: after(t.graceUntil ?? t.to, 1),
@@ -140,6 +147,7 @@ export function upkeepItems(): UpkeepItem[] {
         ["family-plan", PLAN_CHECKED],
         ["daca", DACA_CHECKED],
         ["taxes", TAXES_CHECKED],
+        ["languages", LANGUAGES_CHECKED],
       ] as const
     ).map(([id, checked]) => ({
       id: `yearly-${id}`,

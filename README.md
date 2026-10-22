@@ -485,6 +485,14 @@ nothing else). `e2e/tests/help-pages.spec.ts` (run against `vite preview` or the
 hreflang, WCAG, phone width, that each QR code decodes to the live page, and that each flyer prints
 on one page. Flyers avoid figures that change yearly, so printed copies stay correct.
 
+**Other languages** (`landing/languages.ts`, `LangPages.tsx`, facts in `help/languages-facts.ts`): a page and a
+flyer in **Punjabi** (`/help/punjabi/`) and **Dari** (`/help/dari/`, right to left), chosen from ACS and
+school English-learner data (`~/dev/outreach-help-2026-10/research/languages.md`). They explain each tool and
+link to its English and Spanish page, list only phone lines whose own sites state interpreter help, and link
+ILRC's red cards in those languages. The legal facts themselves aren't translated. The pages are written with
+AI help and say so, with a corrections email, until a native speaker reviews them (upkeep `languages-review`).
+A tool added later shows its English name there until it is translated. Tests: `unit-languages`, `help-languages`.
+
 **Offline and read aloud** (`frontend/src/landing/sw.js`, `client.js`):
 - *Offline is opt-in.* Nothing is stored until someone taps "Save all pages" on `/help/` or `/ayuda/`. That
   registers a service worker for that folder only (never the map app). "Remove saved pages" deletes the copies and
@@ -516,6 +524,8 @@ on one page. Flyers avoid figures that change yearly, so printed copies stay cor
   Texas v. United States, the June 2026 work-permit proposed rule (RIN 1615-AC98), G-1055 fees, the advance parole alert.
 - **Citizenship test**: by `CIVICS_OFFICIALS_RECHECK` (2027-01-04) update today's officials (governor, Speaker, the new
   congressional districts) and USCIS's official Spanish name lists, then regenerate with `make_civics.py`.
+- **Other languages**: by `LANGUAGES_REVIEW_BY` get a native-speaker review of the Punjabi and Dari pages (reviewers
+  in the research note); re-check the interpreter lines and red-card links yearly.
 - **Benefits tables** carry their own effective dates (CalFresh Oct 1, WIC Jul 1, CARE/LifeLine Jun 1, …); the
   unit tests fail when one lapses. Public charge rules changed 2026-09-18; keep that note current.
 - A weekly GitHub Action (`help-links.yml`) checks every cited link and the AG rent-cap page and opens an issue.

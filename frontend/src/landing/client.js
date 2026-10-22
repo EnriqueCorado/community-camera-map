@@ -192,7 +192,8 @@
   var listen = document.querySelector("[data-listen]");
   var synth = window.speechSynthesis;
   if (!listen || !synth || !window.SpeechSynthesisUtterance) return;
-  var lang = document.documentElement.lang;
+  // Match voices on the main language ("fa-AF" -> any "fa-" voice).
+  var lang = document.documentElement.lang.toLowerCase().split("-")[0];
   var button = listen.querySelector("button");
   var label = button.querySelector("[data-label]");
   var voice = null;

@@ -22,6 +22,7 @@ import { qr } from "./qr";
 import CLIENT_SCRIPT from "./client.js?raw";
 import { START_COPY } from "../help/start-copy";
 import { START_CHOICES, SHORT_DIR, pagePath, shortFor, whatsappHref } from "../help/start";
+import { LANG_PAGES, langFlyerPath, langPath } from "./languages";
 
 export interface Site {
   /** "https://example.github.io" (no trailing slash). */
@@ -38,10 +39,10 @@ export interface Site {
 
 const LOCALE: Record<Lang, string> = { en: "en-US", es: "es-US" };
 const other = (lang: Lang): Lang => (lang === "en" ? "es" : "en");
-const absolute = (site: Site, path: string) => `${site.origin}${site.publicBase}${path}`;
+export const absolute = (site: Site, path: string) => `${site.origin}${site.publicBase}${path}`;
 
 /** A US phone number as a tel: link, or null for short codes like 211 (shown as text). */
-function telHref(phone: string): string | null {
+export function telHref(phone: string): string | null {
   const digits = phone.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, "");
   return digits.length === 10 ? `tel:+1${digits}` : null;
 }
@@ -71,11 +72,11 @@ export const flyerPath = (f: Flyer) => `${FLYERS_PATH}${f.id}/`;
 
 // Applies the theme and text size chosen in the map app (same keys as
 // display.ts). Runs before paint so a dark-mode reader never sees a flash.
-const DISPLAY_SCRIPT =
+export const DISPLAY_SCRIPT =
   'try{var d=document.documentElement,t=localStorage.getItem("scm-theme"),s=localStorage.getItem("scm-text");' +
   'if(t==="light"||t==="dark")d.dataset.theme=t;if(s==="large")d.dataset.text="large"}catch(e){}';
-const FLYER_PAGE_CSS = "@page{size:letter;margin:0}";
-const PRINT_SCRIPT = 'document.querySelector("[data-print]").addEventListener("click",function(){window.print()})';
+export const FLYER_PAGE_CSS = "@page{size:letter;margin:0}";
+export const PRINT_SCRIPT = 'document.querySelector("[data-print]").addEventListener("click",function(){window.print()})';
 
 interface DocProps {
   site: Site;
@@ -421,8 +422,30 @@ export function HomePage({ site, lang }: { site: Site; lang: Lang }) {
           </p>
         </section>
         <ShareBox site={site} lang={lang} path={homePath(lang)} title={s.homeTitle} page="home" />
+        <OtherLanguages site={site} title={s.otherLanguages} />
       </Chrome>
     </Doc>
+  );
+}
+
+/** Links to the pages in other languages, each labeled in its own language. */
+function OtherLanguages({ site, title }: { site: Site; title: string }) {
+  return (
+    <section className="group" aria-labelledby="other-langs">
+      <h2 id="other-langs">{title}</h2>
+      <ul className="langlist">
+        {LANG_PAGES.map((p) => (
+          <li key={p.id}>
+            <a href={`${site.base}${langPath(p)}`} hrefLang={p.htmlLang}>
+              <span lang={p.htmlLang} dir={p.dir}>
+                {p.nativeName}
+              </span>{" "}
+              ({p.englishName})
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
@@ -555,7 +578,7 @@ export function ToolPageView({ site, lang, tool, offices }: { site: Site; lang: 
   );
 }
 
-function QrCode({ url, label }: { url: string; label: string }) {
+export function QrCode({ url, label }: { url: string; label: string }) {
   const code = qr(url);
   return (
     <svg className="qr" viewBox={`0 0 ${code.size} ${code.size}`} role="img" aria-label={label} shapeRendering="crispEdges">
@@ -566,7 +589,7 @@ function QrCode({ url, label }: { url: string; label: string }) {
 }
 
 /** The printed address under a QR code, without "https://". */
-const shortUrl = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+export const shortUrl = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
 function FlyerSideView({ site, f, lang, small }: { site: Site; f: Flyer; lang: Lang; small?: boolean }) {
   const side = f.side[lang];
@@ -655,6 +678,21 @@ export function FlyerIndex({ site, flyers }: { site: Site; flyers: readonly Flye
                 <span className="card__text" lang="es">
                   {f.side.es.headline}
                 </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <h2>
+          {SITE_COPY.en.otherLanguages} / <span lang="es">{SITE_COPY.es.otherLanguages}</span>
+        </h2>
+        <ul className="cards">
+          {LANG_PAGES.map((p) => (
+            <li key={p.id}>
+              <a className="card" href={`${site.base}${langFlyerPath(p)}`} hrefLang={p.htmlLang}>
+                <span className="card__title" lang={p.htmlLang} dir={p.dir}>
+                  {p.flyer.headline}
+                </span>
+                <span className="card__text">{p.englishName}</span>
               </a>
             </li>
           ))}
