@@ -436,6 +436,18 @@ itself. `e2e/tests/help-pages.spec.ts` (run against `vite preview` or the live s
 hreflang, WCAG, phone width, that each QR code decodes to the live page, and that each flyer prints
 on one page. Flyers avoid figures that change yearly, so printed copies stay correct.
 
+**Offline and read aloud** (`frontend/src/landing/sw.js`, `client.js`):
+- *Offline is opt-in.* Nothing is stored until someone taps "Save all pages" on `/help/` or `/ayuda/`. That
+  registers a service worker for that folder only (never the map app). "Remove saved pages" deletes the copies and
+  unregisters it.
+- The worker is network-first. A saved copy is shown only offline, on a 5xx, or after 4 s, and with a "saved copy
+  from <date>" banner. It is shown only if its bytes match the hash of the published page, which prerender embeds
+  in `sw.js`, so a stale or planted copy is never served.
+- *Kill switch:* to turn offline off for everyone, publish `help/sw.js` and `ayuda/sw.js` containing only
+  `self.addEventListener("activate", e => e.waitUntil(caches.keys().then(k => Promise.all(k.map(n => caches.delete(n)))).then(() => self.registration.unregister())));`.
+- *Read aloud* uses only voices the browser reports as on-device (`localService`), so page text isn't sent to a
+  cloud voice. If there's none, the button never appears.
+
 **Yearly upkeep** (tests in `e2e/tests/unit-help.spec.ts` fail when these go stale):
 - **By Aug 1:** add the next rent-cap period to `RENT_FACTS.periods` from DIR's April California
   CPI (published ~mid-June) and check it against https://oag.ca.gov/rentcaps ("All other counties").

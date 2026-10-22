@@ -10,6 +10,7 @@
   --accent: #0b7a4c; /* 5.4:1 on white */
   --accent-ink: #ffffff;
   --focus: #1f6feb;
+  --reading: #fff1b8; /* read-aloud highlight; ink stays 15:1 on it */
   color-scheme: light;
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   font-size: 112.5%; /* 18px: easier to read for everyone */
@@ -25,10 +26,12 @@
     --accent: #35c08b;
     --accent-ink: #052016;
     --focus: #79b8ff;
+    --reading: #3d3510;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
+  --reading: #3d3510;
   --bg: #0f1419;
   --panel: #161c24;
   --line: #2f3946;
@@ -87,6 +90,33 @@ main {
 }
 main:focus {
   outline: none;
+}
+/* The page script reveals optional controls; until then (or without it) they stay hidden. */
+[hidden] {
+  display: none !important;
+}
+.listen {
+  margin: -0.25rem 0 1rem;
+}
+.offline__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+/* Added by the service worker to a page shown from the saved copy. */
+.savedcopy {
+  margin: 1rem 0 0;
+  padding: 0.6em 0.9em;
+  border-left: 4px solid #b54708;
+  background: var(--panel);
+  border-radius: 0 8px 8px 0;
+  font-weight: 600;
+}
+.reading {
+  background: var(--reading);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 .vh {
   position: absolute;
@@ -482,7 +512,9 @@ main:focus {
   .noprint,
   .skip,
   .open,
-  .more {
+  .more,
+  .listen,
+  .offline {
     display: none !important;
   }
   .is-flyer {

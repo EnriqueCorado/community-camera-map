@@ -15,6 +15,7 @@ import { SITE_COPY, type SiteCopy } from "./site-copy";
 import { GROUPS, TOOLS, type PlaceInfo, type ToolPage } from "./tools";
 import { FLYER_COPY, flyerTarget, type Flyer } from "./flyers";
 import { qr } from "./qr";
+import CLIENT_SCRIPT from "./client.js?raw";
 
 export interface Site {
   /** "https://example.github.io" (no trailing slash). */
@@ -81,7 +82,11 @@ interface DocProps {
   children: ReactNode;
 }
 
+/** The folder a page's service worker covers: help/ or ayuda/ (flyers included). */
+const swFolder = (path: string) => (path.startsWith("ayuda/") ? "ayuda/" : path.startsWith("help/") ? "help/" : null);
+
 function Doc({ site, lang, title, description, path, alternate, print, children }: DocProps) {
+  const folder = swFolder(path);
   const alt = other(lang);
   return (
     <html lang={lang} {...(print ? { "data-theme": "light" } : {})}>
@@ -109,7 +114,13 @@ function Doc({ site, lang, title, description, path, alternate, print, children 
         {!print && <script dangerouslySetInnerHTML={{ __html: DISPLAY_SCRIPT }} />}
         <style dangerouslySetInnerHTML={{ __html: print ? `${site.css}${FLYER_PAGE_CSS}` : site.css }} />
       </head>
-      <body className={print ? "is-flyer" : undefined}>{children}</body>
+      <body
+        className={print ? "is-flyer" : undefined}
+        {...(folder && !print ? { "data-sw": `${site.base}${folder}sw.js`, "data-scope": `${site.base}${folder}` } : {})}
+      >
+        {children}
+        {!print && <script dangerouslySetInnerHTML={{ __html: CLIENT_SCRIPT }} />}
+      </body>
     </html>
   );
 }
@@ -150,6 +161,18 @@ function Chrome({ site, lang, alternate, children }: { site: Site; lang: Lang; a
   );
 }
 
+/** "Listen to this page": hidden until the page script finds an on-device voice. */
+function Listen({ s }: { s: SiteCopy }) {
+  return (
+    <p className="listen" data-listen hidden>
+      <button type="button" className="btn btn--quiet" data-start={s.listen} data-stop={s.listenStop}>
+        <span aria-hidden="true">🔊 </span>
+        <span data-label>{s.listen}</span>
+      </button>
+    </p>
+  );
+}
+
 function OpenTool({ site, lang, tool }: { site: Site; lang: Lang; tool: ToolPage }) {
   const s = SITE_COPY[lang];
   return (
@@ -172,8 +195,16 @@ function Place({ p, lang, s }: { p: PlaceInfo; lang: Lang; s: SiteCopy }) {
       {p.note && <span>{p.note[lang]}</span>}
       <span className="place__links">
         {p.phone && <PhoneLink phone={p.phone} s={s} />}
-        {p.email && <a href={`mailto:${p.email}`}>{p.email}</a>}
-        {p.url && <a href={p.url}>{s.website}</a>}
+        {p.email && (
+          <a href={`mailto:${p.email}`} data-nosay>
+            {p.email}
+          </a>
+        )}
+        {p.url && (
+          <a href={p.url} data-nosay>
+            {s.website}
+          </a>
+        )}
       </span>
     </li>
   );
@@ -197,7 +228,11 @@ function Office({ o, lang, s }: { o: LegalOffice; lang: Lang; s: SiteCopy }) {
       {o.note[lang] && <span>{o.note[lang]}</span>}
       <span className="place__links">
         {o.phone && <PhoneLink phone={o.phone} s={s} />}
-        {website && <a href={website}>{s.website}</a>}
+        {website && (
+          <a href={website} data-nosay>
+            {s.website}
+          </a>
+        )}
       </span>
     </li>
   );
@@ -211,6 +246,7 @@ export function HomePage({ site, lang }: { site: Site; lang: Lang }) {
       <Chrome site={site} lang={lang} alternate={alternate}>
         <section className="hero" aria-labelledby="hero-title">
           <h1 id="hero-title">{s.heroTitle}</h1>
+          <Listen s={s} />
           <p className="lead">{s.heroLead}</p>
           <ul className="promise" aria-label={s.promiseLabel}>
             {s.promise.map((p) => (
@@ -233,6 +269,33 @@ export function HomePage({ site, lang }: { site: Site; lang: Lang }) {
             </ul>
           </section>
         ))}
+        {/* Shown by the page script when the browser can save pages. */}
+        <section
+          className="group offline"
+          aria-labelledby="offline"
+          data-offline
+          data-saving={s.offlineSaving}
+          data-saved={s.offlineSaved}
+          data-saved-on={s.offlineSavedOn}
+          data-failed={s.offlineFailed}
+          data-no-space={s.offlineNoSpace}
+          data-cleared={s.offlineRemoved}
+          hidden
+        >
+          <h2 id="offline">{s.offlineTitle}</h2>
+          <p>{s.offlineText}</p>
+          <p className="muted">{s.offlineIphone}</p>
+          <p className="muted" data-state></p>
+          <p className="offline__buttons">
+            <button type="button" className="btn btn--quiet" data-save>
+              {s.offlineSave}
+            </button>
+            <button type="button" className="btn btn--quiet" data-clear hidden>
+              {s.offlineRemove}
+            </button>
+          </p>
+          <p role="status" className="muted"></p>
+        </section>
         <section className="group share" aria-labelledby="share">
           <h2 id="share">{s.flyersTitle}</h2>
           <p>{s.flyersLead}</p>
@@ -268,6 +331,7 @@ export function ToolPageView({ site, lang, tool, offices }: { site: Site; lang: 
           <span aria-current="page">{tool.name[lang]}</span>
         </nav>
         <h1>{tool.name[lang]}</h1>
+        <Listen s={s} />
         <p className="lead">{tool.intro[lang]}</p>
         <OpenTool site={site} lang={lang} tool={tool} />
 
@@ -332,7 +396,7 @@ export function ToolPageView({ site, lang, tool, offices }: { site: Site; lang: 
 
         <OpenTool site={site} lang={lang} tool={tool} />
 
-        <section aria-labelledby="sources">
+        <section aria-labelledby="sources" data-quiet>
           <h2 id="sources">{s.sourcesTitle}</h2>
           <ul className="sources">
             {tool.sources.map((src) => (

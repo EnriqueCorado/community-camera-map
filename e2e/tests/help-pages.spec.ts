@@ -85,7 +85,10 @@ test("pages make no requests beyond the page itself, and the browser enforces it
     await page.goto(path);
     await page.waitForLoadState("networkidle");
     page.off("request", log);
-    expect(urls, path).toEqual([page.url()]);
+    // The page itself, plus (in help/ and ayuda/) its own folder's offline worker.
+    const others = urls.filter((u) => u !== page.url() && !/\/(help|ayuda)\/sw\.js$/.test(new URL(u).pathname));
+    expect(others, path).toEqual([]);
+    expect(urls.every((u) => new URL(u).origin === new URL(page.url()).origin), path).toBe(true);
     const csp = await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute("content");
     expect(csp, path).toContain("default-src 'none'");
     await expect(page.locator('meta[name="referrer"]'), path).toHaveAttribute("content", "no-referrer");
@@ -226,4 +229,157 @@ test("home page groups link every tool page, and the Print button prints", async
   await page.getByRole("button", { name: /Print this flyer/ }).click();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   expect(await page.evaluate(() => (window as any).printed)).toBe(1);
+});
+
+test("offline: nothing is stored until asked; saved pages open without internet; Remove deletes them", async ({ page, context }) => {
+  const registrations = () => page.evaluate(async () => (await navigator.serviceWorker.getRegistrations()).map((r) => new URL(r.scope).pathname));
+  const cacheNames = () => page.evaluate(() => caches.keys());
+  // Browsing stores nothing.
+  await page.goto("help/eviction-notice/");
+  await page.goto("help/");
+  expect(await registrations()).toEqual([]);
+  expect(await cacheNames()).toEqual([]);
+
+  const box = page.locator("[data-offline]");
+  await expect(box).toBeVisible();
+  await expect(box.getByRole("button", { name: "Remove saved pages" })).toBeHidden();
+  await box.getByRole("button", { name: /^Save all pages on this device \(about \d+ KB\)$/ }).click();
+  await expect(box.getByRole("status")).toHaveText(/^Saved\./);
+  await expect(box.locator("[data-state]")).toHaveText(/^Saved on this device \(\d{4}-\d{2}-\d{2}\)/);
+  // Only this folder's worker exists: the map app is never controlled.
+  expect((await registrations()).map((p) => p.replace(/^.*\/(help|ayuda)\/$/, "$1"))).toEqual(["help"]);
+
+  // Coming back: the saved state shows, but nothing is announced.
+  await page.reload();
+  await expect(page.locator("[data-offline] [data-state]")).toHaveText(/^Saved on this device/);
+  await expect(page.locator("[data-offline]").getByRole("status")).toHaveText("");
+
+  await context.setOffline(true);
+  for (const path of ["help/eviction-notice/", "help/eviction-notice"]) {
+    await page.goto(path);
+    await expect(page.locator("h1"), path).toHaveText("Got an eviction notice?");
+    await expect(page.locator(".savedcopy"), path).toHaveText(/^Saved copy from \d{4}-\d{2}-\d{2}\. Facts may have changed/);
+    await expect(page.getByText("(209) 577-3811").first()).toBeVisible();
+  }
+  // A copy that isn't exactly the published page is never shown.
+  await page.evaluate(async () => {
+    const cache = await caches.open("scm-help-pages");
+    const key = new URL("help/legal-aid/", location.href.replace(/help\/.*$/, "")).href;
+    await cache.put(key, new Response("<!doctype html><h1>Fake</h1>", { headers: { "Content-Type": "text/html" } }));
+  });
+  await page.goto("help/legal-aid/");
+  await expect(page.locator("h1")).toHaveText("You’re offline");
+  await context.setOffline(false);
+
+  await page.goto("help/");
+  await page.getByRole("button", { name: "Remove saved pages" }).click();
+  await expect(page.locator("[data-offline]").getByRole("status")).toHaveText(/^Removed\./);
+  expect(await registrations()).toEqual([]);
+  expect(await cacheNames()).toEqual([]);
+});
+
+/** A stand-in for the browser's speech engine that behaves like Chrome's:
+ *  voices arrive a moment after load, and cancel() fires a late "error" on
+ *  the utterance it interrupts. Records what is read, with which voice. */
+async function installFakeSpeech(page: Page, voices: { name: string; lang: string; localService: boolean }[], autoEnd: boolean) {
+  await page.addInitScript(
+    ({ voices, autoEnd }) => {
+      const w = window as unknown as Record<string, unknown>;
+      const spoken: { text: string; voice: string }[] = [];
+      let list: typeof voices = [];
+      let pending: { onend?: () => void; onerror?: () => void } | null = null;
+      const listeners: (() => void)[] = [];
+      w.spoken = spoken;
+      w.voiceCalls = 0;
+      w.finishOne = () => pending?.onend?.();
+      Object.defineProperty(window, "speechSynthesis", {
+        value: {
+          getVoices: () => {
+            w.voiceCalls = (w.voiceCalls as number) + 1;
+            return list.map((v) => ({ ...v, default: false }));
+          },
+          speak(u: { text: string; voice: { name: string }; onend?: () => void; onerror?: () => void }) {
+            spoken.push({ text: u.text, voice: u.voice.name });
+            pending = u;
+            if (autoEnd) setTimeout(() => u.onend?.(), 1);
+          },
+          cancel() {
+            const u = pending;
+            pending = null;
+            if (u) setTimeout(() => u.onerror?.(), 5); // late, like Chrome's "interrupted"
+          },
+          addEventListener(_type: string, fn: () => void) {
+            listeners.push(fn);
+          },
+        },
+      });
+      w.SpeechSynthesisUtterance = function (this: { text: string }, t: string) {
+        this.text = t;
+      };
+      setTimeout(() => {
+        list = voices;
+        listeners.forEach((fn) => fn());
+      }, 50);
+    },
+    { voices, autoEnd },
+  );
+}
+
+test("read aloud uses an on-device voice, reads in order, and skips citations", async ({ page }) => {
+  await installFakeSpeech(
+    page,
+    [
+      { name: "Cloud", lang: "es-US", localService: false },
+      { name: "Bad News", lang: "es-US", localService: true },
+      { name: "Phone", lang: "es-MX", localService: true },
+      { name: "English", lang: "en-US", localService: true },
+    ],
+    true,
+  );
+  await page.goto("ayuda/aviso-de-desalojo/");
+  const button = page.getByRole("button", { name: "Escuchar esta página" });
+  await button.click(); // waits for the late voice list to reveal it
+  await expect(button).toHaveText(/Escuchar esta página/); // back to start when done
+  const spoken = await page.evaluate(() => (window as unknown as { spoken: { text: string; voice: string }[] }).spoken);
+  expect(spoken.length).toBeGreaterThan(10);
+  expect(spoken[0]!.text).toBe("¿Recibió un aviso de desalojo?");
+  expect(new Set(spoken.map((s) => s.voice))).toEqual(new Set(["Phone"])); // local, not a joke voice, not cloud
+  const all = spoken.map((s) => s.text).join(" ");
+  expect(all).not.toMatch(/Civ\. Code|CCP §|Sitio web/); // citations and link words skipped
+  expect(all).toContain("(209) 577-3811"); // phone numbers are read
+  expect(all).not.toContain("De dónde viene esta información"); // the sources section isn't read
+  expect(all).toContain("Modesto, CA 95354 Ayuda legal gratis"); // parts of an office stay apart
+});
+
+test("read aloud: stop and a quick restart work, and it's never offered with only cloud voices", async ({ page }) => {
+  await installFakeSpeech(page, [{ name: "Phone", lang: "en-US", localService: true }], false);
+  await page.goto("help/hospital-bills/");
+  await page.getByRole("button", { name: "Listen to this page" }).click();
+  const stopButton = page.getByRole("button", { name: "Stop reading" });
+  await expect(stopButton).toBeVisible();
+  // The part being read is highlighted: the heading first, then the intro.
+  await expect(page.locator("main .reading")).toHaveCount(1);
+  await expect(page.locator("main h1")).toHaveClass(/reading/);
+  await page.evaluate(() => (window as unknown as { finishOne: () => void }).finishOne());
+  await expect(page.locator("main .lead")).toHaveClass(/reading/);
+  // Stop, then start again at once: the late event from the cancelled sentence must not stop the new reading.
+  // (Both taps in one go, so the cancelled sentence's late event lands after the restart.)
+  await page.evaluate(() => {
+    const b = document.querySelector<HTMLButtonElement>("[data-listen] button")!;
+    b.click(); // stop
+    b.click(); // start again
+  });
+  await page.waitForTimeout(50);
+  await expect(page.getByRole("button", { name: "Stop reading" })).toBeVisible();
+  await expect(page.locator("main h1")).toHaveClass(/reading/);
+  await page.getByRole("button", { name: "Stop reading" }).click();
+  await expect(page.locator("main .reading")).toHaveCount(0);
+
+  const cloudOnly = await page.context().newPage();
+  await installFakeSpeech(cloudOnly, [{ name: "Cloud", lang: "en-US", localService: false }], true);
+  await cloudOnly.goto("help/hospital-bills/");
+  // The script did look at the voices (after they arrived), and offered nothing.
+  await expect.poll(() => cloudOnly.evaluate(() => (window as unknown as { voiceCalls: number }).voiceCalls)).toBeGreaterThan(1);
+  await expect(cloudOnly.locator("[data-listen]")).toBeHidden();
+  await cloudOnly.close();
 });

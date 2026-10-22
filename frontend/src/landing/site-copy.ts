@@ -36,6 +36,21 @@ export interface SiteCopy {
   footerVolunteer: string;
   footerSource: string;
   officesTitle: string;
+  listen: string;
+  listenStop: string;
+  offlineTitle: string;
+  offlineText: string;
+  /** "__SAVE_KB__" is replaced with the real size at build time. */
+  offlineSave: string;
+  offlineSaving: string;
+  offlineSaved: string;
+  /** "{date}" is filled in by the page script. */
+  offlineSavedOn: string;
+  offlineFailed: string;
+  offlineNoSpace: string;
+  offlineRemove: string;
+  offlineRemoved: string;
+  offlineIphone: string;
   officeLanguages: Fn<[string]>;
   eoir: string;
 }
@@ -74,6 +89,20 @@ const en: SiteCopy = {
   footerVolunteer: "Built by a local volunteer. Not a government website.",
   footerSource: "Open source",
   officesTitle: "Free and low-cost offices",
+  listen: "Listen to this page",
+  listenStop: "Stop reading",
+  offlineTitle: "Use these pages without internet",
+  offlineText:
+    "Save these pages on this device to have your rights and the phone numbers with you, even without signal. Nothing is saved unless you tap the button, and you can remove them any time.",
+  offlineSave: "Save all pages on this device (about __SAVE_KB__ KB)",
+  offlineSaving: "Saving…",
+  offlineSaved: "Saved. These pages now open on this device without internet.",
+  offlineSavedOn: "Saved on this device ({date}). Each time you open them with internet, they update.",
+  offlineFailed: "Couldn’t save. Check your connection and try again.",
+  offlineNoSpace: "Couldn’t save: this device is out of space.",
+  offlineRemove: "Remove saved pages",
+  offlineRemoved: "Removed. Nothing from these pages is kept on this device.",
+  offlineIphone: "On an iPhone, add this page to your Home Screen too, or the phone may delete saved pages after a few weeks without a visit.",
   officeLanguages: (l) => `Languages: ${l}`,
   eoir: "Recognized by the U.S. Department of Justice to help with immigration cases",
 };
@@ -112,6 +141,20 @@ const es: SiteCopy = {
   footerVolunteer: "Hecho por un voluntario local. No es un sitio del gobierno.",
   footerSource: "Código abierto",
   officesTitle: "Oficinas gratuitas y de bajo costo",
+  listen: "Escuchar esta página",
+  listenStop: "Dejar de leer",
+  offlineTitle: "Use estas páginas sin internet",
+  offlineText:
+    "Guarde estas páginas en este aparato para tener sus derechos y los números de teléfono a la mano, aun sin señal. No se guarda nada a menos que toque el botón, y puede borrarlas cuando quiera.",
+  offlineSave: "Guardar todas las páginas en este aparato (unos __SAVE_KB__ KB)",
+  offlineSaving: "Guardando…",
+  offlineSaved: "Listo. Estas páginas ya se abren en este aparato sin internet.",
+  offlineSavedOn: "Guardadas en este aparato ({date}). Cada vez que las abra con internet, se actualizan.",
+  offlineFailed: "No se pudo guardar. Revise su conexión e intente otra vez.",
+  offlineNoSpace: "No se pudo guardar: este aparato no tiene espacio.",
+  offlineRemove: "Borrar las páginas guardadas",
+  offlineRemoved: "Listo. Ya no se guarda nada de estas páginas en este aparato.",
+  offlineIphone: "En un iPhone, agregue también esta página a su pantalla de inicio; si no, el teléfono puede borrar las páginas guardadas después de unas semanas sin visitarlas.",
   officeLanguages: (l) => `Idiomas: ${l}`,
   eoir: "Reconocida por el Departamento de Justicia de EE. UU. para ayudar con casos de inmigración",
 };
