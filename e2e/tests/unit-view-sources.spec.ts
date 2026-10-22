@@ -1,7 +1,7 @@
 // Unit tests for nationwide view loading (no browser).
 import { test, expect } from "@playwright/test";
 import { applyFields, arcgisQueryUrl, chooseSource, covers, exceededLimit, fieldsAt, levelUrl, tractLabel, within, wrapLon, HOME_BBOX, stateName, stateOfLayer, statesAt, stateViews } from "../../frontend/src/view-logic";
-import { splitCatalog } from "../../frontend/scripts/catalog-split.mjs";
+import { catalogIndex, splitCatalog } from "../../frontend/scripts/catalog-split.mjs";
 import type { ViewSpec } from "../../frontend/src/api/client";
 import { RAMPS, classesColor, fmtMetric, metricStops } from "../../frontend/src/colors";
 
@@ -338,4 +338,17 @@ test("state catalog split: state layers by USPS code, the rest national; layer n
   expect(stateOfLayer("flood")).toBeUndefined();
   expect(stateOfLayer("census-rent")).toBeUndefined();
   expect(stateOfLayer("ca1")).toBeUndefined(); // no dash: not a state layer
+});
+
+test("state catalog index: every state layer, name/titles/state only, no national layers", async () => {
+  const { states } = splitCatalog([
+    { name: "flood", title: "Flood zones", title_es: "Zonas de inundación", coverage: "usa" },
+    { name: "tx-harris-parcels", title: "Parcels (Harris County)", title_es: "Parcelas (condado de Harris)", coverage: "TX", count: 9, view: {} },
+    { name: "ca-la-cooling-centers", title: "Cooling centers (Los Angeles)", title_es: null, coverage: "CA", description: "long" },
+  ]);
+  expect(catalogIndex(states)).toEqual([
+    { n: "tx-harris-parcels", t: "Parcels (Harris County)", e: "Parcelas (condado de Harris)", s: "TX" },
+    { n: "ca-la-cooling-centers", t: "Cooling centers (Los Angeles)", s: "CA" },
+  ]);
+  expect(catalogIndex({})).toEqual([]);
 });

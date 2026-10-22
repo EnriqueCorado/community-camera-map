@@ -2,13 +2,15 @@
 // loads data/catalog/base.json (national layers) up front and one
 // data/catalog/<ST>.json per state only when it's on screen. Most of the
 // catalog is state layers, so a visitor downloads a fraction of it.
+// data/catalog/index.json names every state layer, for the sidebar's layer
+// search (fetched the first time someone types there).
 // data/layers.json (the whole catalog) stays for tools and as a fallback.
 //
 //   node scripts/split-catalog.mjs            (after vite build)
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { splitCatalog } from "./catalog-split.mjs";
+import { catalogIndex, splitCatalog } from "./catalog-split.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const data = join(root, "dist", "data");
@@ -29,6 +31,7 @@ for (const [code, list] of Object.entries(states)) {
 
 await mkdir(join(data, "catalog"), { recursive: true });
 await writeFile(join(data, "catalog", "base.json"), JSON.stringify(base));
+await writeFile(join(data, "catalog", "index.json"), JSON.stringify(catalogIndex(states)));
 // Every state gets a file, even an empty one, so a visit never 404s.
 for (const code of known) {
   await writeFile(join(data, "catalog", `${code}.json`), JSON.stringify(states[code] ?? []));

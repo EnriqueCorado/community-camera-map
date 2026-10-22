@@ -12,3 +12,12 @@ export function splitCatalog(layers) {
   }
   return { base, states };
 }
+
+/** The sidebar's search index of every state layer (data/catalog/index.json),
+ *  so "find a layer" reaches states that aren't loaded: [{n: name, t: title,
+ *  e: title_es (if any), s: state}]; short keys keep the file small. */
+export function catalogIndex(states) {
+  return Object.entries(states).flatMap(([s, list]) =>
+    list.map((l) => (l.title_es ? { n: l.name, t: l.title, e: l.title_es, s } : { n: l.name, t: l.title, s })),
+  );
+}

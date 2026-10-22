@@ -93,3 +93,44 @@ test("static: the layer catalog loads per state (national part first, a state wh
   await expect(page.getByText(/^This state: .*Texas/)).toBeVisible();
   expect(files).not.toContain("layers.json");
 });
+
+test("static: layer search finds a layer in another state; choosing it turns it on and jumps there", async ({ page }) => {
+  const files: string[] = [];
+  page.on("request", (r) => {
+    const m = /data\/(catalog\/[A-Za-z]+\.json)/.exec(r.url());
+    if (m) files.push(m[1]!);
+  });
+  await page.goto(BASE + "/");
+  await expect(page.locator("canvas.maplibregl-canvas")).toBeVisible();
+  await expect.poll(() => files).toContain("catalog/CA.json");
+  // The index of every state layer loads only once someone searches.
+  expect(files).not.toContain("catalog/index.json");
+  const index = page.waitForResponse((r) => r.url().includes("data/catalog/index.json") && r.status() === 200);
+  await page.getByLabel("Filter layers by name").fill("burn bans");
+  await index;
+  const elsewhere = page.getByRole("group", { name: "In other states" });
+  const pick = elsewhere.getByRole("button", { name: "County burn bans (Texas), Texas: turn on and go there" });
+  await expect(pick).toBeVisible();
+  expect(files).not.toContain("catalog/TX.json");
+  const box = page.getByRole("checkbox", { name: /County burn bans \(Texas\)/ });
+  // A jump made before the map has finished loading is dropped: switch the
+  // layer back off (it returns to "In other states") and choose it again.
+  await expect(async () => {
+    if ((await box.count()) && (await box.isChecked())) await box.uncheck();
+    await pick.click();
+    await expect(page.getByText(/^This state: .*Texas/)).toBeVisible({ timeout: 8000 });
+  }).toPass({ timeout: 30000 });
+  expect(files).toContain("catalog/TX.json");
+  await expect(box).toBeChecked();
+  await expect(box).toBeFocused(); // keyboard focus follows the chosen layer
+  await expect(pick).toHaveCount(0); // now listed under "This state"
+
+  // Spanish: the index's Spanish titles, under the Spanish heading.
+  await page.getByRole("button", { name: "Ver en español" }).click();
+  await page.getByLabel("Filtrar capas por nombre").fill("quemas");
+  await expect(
+    page
+      .getByRole("group", { name: "En otros estados" })
+      .getByRole("button", { name: "Prohibiciones de quemas por condado (Arkansas), Arkansas: activar e ir allí" }),
+  ).toBeVisible();
+});
