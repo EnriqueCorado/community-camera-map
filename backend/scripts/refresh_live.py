@@ -35,6 +35,7 @@ from bake import SOURCES  # noqa: E402 - sibling script
 from app.core.config import get_settings
 from app.layers import service as _registry  # noqa: F401 - loads every pack before one is imported
 from app.layers.national import state_bakes
+from app.layers.national.help_offices import WEEKLY as HELP_OFFICES_WEEKLY
 from app.layers.national.roads import KEYED
 from app.layers.national.services import WEEKLY as SERVICES_WEEKLY
 from app.layers.service import LayerService, record_layer_times, sync_catalog
@@ -88,6 +89,7 @@ DAILY = (
 # (PDF/spreadsheet downloads + Census geocoding): once a week, own cache in CI.
 WEEKLY = (
     *SERVICES_WEEKLY,
+    *HELP_OFFICES_WEEKLY,  # SSA offices, LSC legal aid areas, post offices (home copy)
     "building-permits",  # Census BPS: yearly, by place
     *state_bakes.WEEKLY,  # state child-care lists (Texas is geocoded)
 )
