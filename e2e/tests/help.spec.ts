@@ -46,6 +46,19 @@ test("a shared link opens straight to a tab, in Spanish", async ({ page }) => {
   await expect(dialog).toContainText("notarios");
 });
 
+test("each tab downloads only when opened (light on slow phones)", async ({ page }) => {
+  const scripts: string[] = [];
+  page.on("request", (r) => r.resourceType() === "script" && scripts.push(r.url()));
+  const dialog = await openHelp(page, "#help=medical");
+  await expect(dialog.getByRole("heading", { name: /Check if you may qualify/ })).toBeVisible();
+  const tabChunk = (name: string) => scripts.some((u) => new RegExp(`/${name}[-.][^/]*\\.(js|tsx)`).test(u));
+  // The dev server serves source files, a build serves hashed chunks: both are matched.
+  for (const other of ["WorkHelp", "BenefitsHelp", "RenterHelp"]) expect(tabChunk(other), other).toBe(false);
+  await dialog.getByRole("tab", { name: "Work" }).click();
+  await expect(dialog.getByRole("button", { name: "Unpaid wages" })).toBeVisible();
+  expect(tabChunk("WorkHelp")).toBe(true);
+});
+
 test("medical: income check gives the hospital's own result and links", async ({ page }) => {
   const dialog = await openHelp(page);
   await dialog.getByLabel("Hospital", { exact: true }).selectOption({ label: "Memorial Medical Center (Modesto)" });

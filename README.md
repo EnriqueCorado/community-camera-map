@@ -447,6 +447,10 @@ on one page. Flyers avoid figures that change yearly, so printed copies stay cor
 - **Benefits tables** carry their own effective dates (CalFresh Oct 1, WIC Jul 1, CARE/LifeLine Jun 1, …); the
   unit tests fail when one lapses. Public charge rules changed 2026-09-18; keep that note current.
 - A weekly GitHub Action (`help-links.yml`) checks every cited link and the AG rent-cap page and opens an issue.
+- **Upkeep calendar:** `help/upkeep.ts` gathers every dated fact above (from the facts files themselves) into one
+  list. `e2e/tests/unit-upkeep.spec.ts` fails when one is overdue, and the same weekly Action opens a checklist
+  issue ("Help tools: facts to update soon") 45 days before anything is due. Run
+  `UPKEEP_WINDOW=365 npx playwright test tests/unit-upkeep.spec.ts --reporter=line` to see the year ahead.
 - Display settings (theme, larger text) live in `display.ts`; accessibility tests (`help*.spec.ts`) run axe
   WCAG 2.2 AA in light and dark, English and Spanish, plus keyboard-only, 320px and forced-colors checks.
 

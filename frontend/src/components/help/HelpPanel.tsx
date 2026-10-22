@@ -1,18 +1,21 @@
 // Free help: hospital bills, renters' rights, legal aid. A modal over the map
 // (full screen on phones). Nothing typed here is stored or sent anywhere:
 // state lives in these components and is gone when the panel closes.
-import { useRef } from "react";
+import { lazy, Suspense, useRef } from "react";
 import "./help.css";
 import { useI18n } from "../../i18n";
 import { useDialog } from "../../hooks/useDialog";
 import { COPY } from "../../help/copy";
 import { isRentView, isWorkView, type HelpTab, type HelpTarget } from "../../help/target";
 import { Tabs } from "./Tabs";
-import { MedicalHelp } from "./MedicalHelp";
-import { RenterHelp } from "./RenterHelp";
-import { LegalHelp } from "./LegalHelp";
-import { WorkHelp } from "./WorkHelp";
-import { BenefitsHelp } from "./BenefitsHelp";
+
+// Each tab is its own download, fetched the first time it's opened: most
+// visitors need one tool, often on a slow phone connection.
+const MedicalHelp = lazy(() => import("./MedicalHelp").then((m) => ({ default: m.MedicalHelp })));
+const RenterHelp = lazy(() => import("./RenterHelp").then((m) => ({ default: m.RenterHelp })));
+const WorkHelp = lazy(() => import("./WorkHelp").then((m) => ({ default: m.WorkHelp })));
+const BenefitsHelp = lazy(() => import("./BenefitsHelp").then((m) => ({ default: m.BenefitsHelp })));
+const LegalHelp = lazy(() => import("./LegalHelp").then((m) => ({ default: m.LegalHelp })));
 
 interface Props {
   target: HelpTarget;
@@ -69,25 +72,33 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
           aria-labelledby={`help-tab-${target.tab}`}
           tabIndex={0}
         >
-          {target.tab === "medical" && <MedicalHelp c={c} hospitalId={target.hospitalId} onShowOnMap={onShowOnMap} />}
-          {target.tab === "rent" && (
-            <RenterHelp
-              c={c}
-              view={isRentView(target.view) ? target.view : "rent"}
-              onView={(view) => onTarget({ tab: "rent", view })}
-              onLegal={() => go({ tab: "legal" })}
-            />
-          )}
-          {target.tab === "work" && (
-            <WorkHelp
-              c={c}
-              view={isWorkView(target.view) ? target.view : "wages"}
-              onView={(view) => onTarget({ tab: "work", view })}
-              onLegal={() => go({ tab: "legal" })}
-            />
-          )}
-          {target.tab === "benefits" && <BenefitsHelp c={c} />}
-          {target.tab === "legal" && <LegalHelp c={c} onShowOnMap={onShowOnMap} />}
+          <Suspense
+            fallback={
+              <p className="hf__hint" role="status">
+                {c.loading}
+              </p>
+            }
+          >
+            {target.tab === "medical" && <MedicalHelp c={c} hospitalId={target.hospitalId} onShowOnMap={onShowOnMap} />}
+            {target.tab === "rent" && (
+              <RenterHelp
+                c={c}
+                view={isRentView(target.view) ? target.view : "rent"}
+                onView={(view) => onTarget({ tab: "rent", view })}
+                onLegal={() => go({ tab: "legal" })}
+              />
+            )}
+            {target.tab === "work" && (
+              <WorkHelp
+                c={c}
+                view={isWorkView(target.view) ? target.view : "wages"}
+                onView={(view) => onTarget({ tab: "work", view })}
+                onLegal={() => go({ tab: "legal" })}
+              />
+            )}
+            {target.tab === "benefits" && <BenefitsHelp c={c} />}
+            {target.tab === "legal" && <LegalHelp c={c} onShowOnMap={onShowOnMap} />}
+          </Suspense>
           <p className="hdisclaimer">{c.disclaimer}</p>
           <p className="hdisclaimer">
             {/* A new tab, so leaving for the flyers doesn't erase what was typed here. */}
