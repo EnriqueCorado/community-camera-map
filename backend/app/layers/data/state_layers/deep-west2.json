@@ -1,0 +1,2636 @@
+[
+ {
+  "name": "ak-anchorage-trash-days",
+  "state": "AK",
+  "title": "Trash & recycling day (Anchorage)",
+  "title_es": "Día de basura y reciclaje (Anchorage)",
+  "description": "Which weekday Anchorage Solid Waste Services picks up curbside trash in each area, plus the recycling day and whether recycling is on odd or even weeks.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Municipality of Anchorage",
+  "license": "Municipality of Anchorage public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/Ce3DhLRthdwbHlfF/arcgis/rest/services/SWS_Residential_Curbside_Trash_Days_Hosted/FeatureServer/0",
+   "fields": {
+    "DAY": "day",
+    "RecycleDay": "recycle_day",
+    "RecycleWeek": "recycle_week"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -150.0,
+    61.1,
+    -149.7,
+    61.25
+   ],
+   "features_in_probe": 40
+  }
+ },
+ {
+  "name": "ak-anchorage-road-closures",
+  "state": "AK",
+  "title": "Street closures & detours (Anchorage)",
+  "title_es": "Cierres de calles y desvíos (Anchorage)",
+  "description": "Anchorage street closures happening now or scheduled: which street, why (construction, events, hazards), which lanes, and the start and end times.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Municipality of Anchorage",
+  "license": "Municipality of Anchorage public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/Ce3DhLRthdwbHlfF/arcgis/rest/services/RoadClosures_public_2798310ba88a41f8802d54b19685b6f6/FeatureServer/1",
+   "fields": {
+    "street": "street",
+    "direction": "direction",
+    "reason": "reason",
+    "laneimpact": "lanes",
+    "accessallowed": "access",
+    "description": "description",
+    "starttime": "start",
+    "endtime": "end",
+    "altroute": "detour",
+    "url": "url"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "endtime IS NULL OR endtime > CURRENT_TIMESTAMP",
+   "max_features": 2000,
+   "simplify": true,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -150.0,
+    61.1,
+    -149.7,
+    61.25
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "ak-anchorage-ballot-drop-boxes",
+  "state": "AK",
+  "title": "Ballot drop boxes & vote centers (Anchorage)",
+  "title_es": "Buzones de boletas y centros de votación (Anchorage)",
+  "description": "Where to drop off a vote-by-mail ballot or vote in person in Anchorage municipal elections, with the address and notes from the Municipal Clerk.",
+  "group": "civic",
+  "category": "point",
+  "source": "Municipality of Anchorage",
+  "license": "Municipality of Anchorage public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/Ce3DhLRthdwbHlfF/arcgis/rest/services/VoteByMailCenters/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "STREET_ADDRESS": "address",
+    "CITY": "city",
+    "ADDITIONAL_INFORMATION": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -150.0,
+    61.1,
+    -149.7,
+    61.25
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "ak-anchorage-child-care-centers",
+  "state": "AK",
+  "title": "Licensed child care centers (Anchorage)",
+  "title_es": "Guarderías con licencia (Anchorage)",
+  "description": "Child care centers licensed by the Anchorage Health Department, with the ages they serve and how many children they are licensed for. Centers only (not family homes).",
+  "group": "help",
+  "category": "point",
+  "source": "Municipality of Anchorage",
+  "license": "Municipality of Anchorage public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/Ce3DhLRthdwbHlfF/arcgis/rest/services/ChildCare_Providers_Hosted/FeatureServer/0",
+   "fields": {
+    "business_name": "name",
+    "business_address": "address",
+    "business_city": "city",
+    "business_phone_number": "phone",
+    "minimum_age_served": "min_age",
+    "maximum_age_served": "max_age",
+    "capacity": "capacity"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "facility_type = 'Licensed Center'",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -150.0,
+    61.1,
+    -149.7,
+    61.25
+   ],
+   "features_in_probe": 84
+  }
+ },
+ {
+  "name": "ak-anchorage-elementary-areas",
+  "state": "AK",
+  "title": "Elementary school attendance areas (Anchorage)",
+  "title_es": "Zonas escolares de primaria (Anchorage)",
+  "description": "Which Anchorage School District elementary school serves each neighborhood.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Anchorage School District / Municipality of Anchorage",
+  "license": "Anchorage School District / Municipality of Anchorage public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/Ce3DhLRthdwbHlfF/arcgis/rest/services/AnchorageSchoolDistrict_Hosted/FeatureServer/1",
+   "fields": {
+    "School_Name": "name",
+    "Date_Updated": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -150.0,
+    61.1,
+    -149.7,
+    61.25
+   ],
+   "features_in_probe": 52
+  }
+ },
+ {
+  "name": "ak-anchorage-parks",
+  "state": "AK",
+  "title": "Parks (Anchorage)",
+  "title_es": "Parques (Anchorage)",
+  "description": "Municipal park land in Anchorage, by park type, with size in acres and whether there is a facility to rent.",
+  "group": "nature",
+  "category": "park",
+  "source": "Municipality of Anchorage",
+  "license": "Municipality of Anchorage public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/Ce3DhLRthdwbHlfF/arcgis/rest/services/Park_Land_Hosted/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Park_Classification": "kind",
+    "Agency": "agency",
+    "Area_Acres": "acres",
+    "FacilityToRent": "rentable"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -150.0,
+    61.1,
+    -149.7,
+    61.25
+   ],
+   "features_in_probe": 228
+  }
+ },
+ {
+  "name": "ak-anchorage-trails",
+  "state": "AK",
+  "title": "Trails (Anchorage Parks & Rec)",
+  "title_es": "Senderos (Parques de Anchorage)",
+  "description": "Anchorage park trails: summer and winter uses, surface, lighting, difficulty, whether dogs may be off leash, and who maintains them.",
+  "group": "nature",
+  "category": "park",
+  "source": "Municipality of Anchorage",
+  "license": "Municipality of Anchorage public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/Ce3DhLRthdwbHlfF/arcgis/rest/services/ParksRec_Trails_Merged/FeatureServer/0",
+   "fields": {
+    "Trail_Name": "name",
+    "Trail_System": "system",
+    "SummerUse": "summer_use",
+    "WinterUse": "winter_use",
+    "TrailSurfaceType": "surface",
+    "LightedTrail": "lighted",
+    "Difficulty": "difficulty",
+    "OffLeashDogs": "off_leash",
+    "Length_Miles": "miles",
+    "WinterMaintenanceType": "winter_care"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -150.0,
+    61.1,
+    -149.7,
+    61.25
+   ],
+   "features_in_probe": 637
+  }
+ },
+ {
+  "name": "ak-anchorage-avalanche-zones",
+  "state": "AK",
+  "title": "Avalanche hazard zones (Anchorage)",
+  "title_es": "Zonas de peligro de avalancha (Anchorage)",
+  "description": "Areas the Municipality of Anchorage maps as high or moderate avalanche hazard (Chugach front range, Girdwood, Turnagain Arm).",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Municipality of Anchorage",
+  "license": "Municipality of Anchorage public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/Ce3DhLRthdwbHlfF/arcgis/rest/services/AvalancheZones/FeatureServer/0",
+   "fields": {
+    "HAZARD": "hazard",
+    "SOURCE": "source"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -149.9,
+    60.9,
+    -148.9,
+    61.2
+   ],
+   "features_in_probe": 112
+  }
+ },
+ {
+  "name": "ak-anchorage-seismic-zones",
+  "state": "AK",
+  "title": "Earthquake ground-failure zones (Anchorage)",
+  "title_es": "Zonas de falla del terreno por sismo (Anchorage)",
+  "description": "How likely the ground is to fail (landslides, lateral spread) in a large earthquake, from lowest to very high, as mapped for Anchorage's building code.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Municipality of Anchorage",
+  "license": "Municipality of Anchorage public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/Ce3DhLRthdwbHlfF/arcgis/rest/services/Seismic/FeatureServer/0",
+   "fields": {
+    "SEISMIC_TYPE": "hazard",
+    "SEISMIC_CODE": "zone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -150.0,
+    61.1,
+    -149.7,
+    61.25
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ak-anchorage-historic-sites",
+  "state": "AK",
+  "title": "Historic sites (Anchorage)",
+  "title_es": "Sitios históricos (Anchorage)",
+  "description": "Historic buildings, districts and sites in Anchorage from the Alaska Heritage Resources Survey, with period, year built, significance and register status.",
+  "group": "places",
+  "category": "point",
+  "source": "Municipality of Anchorage",
+  "license": "Municipality of Anchorage public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/Ce3DhLRthdwbHlfF/arcgis/rest/services/HistoricSites_Hosted/FeatureServer/1",
+   "fields": {
+    "Site_Name": "name",
+    "AHRS_Number": "number",
+    "Historic_Period": "period",
+    "Year_Built": "year",
+    "Public_Description": "description",
+    "Significance": "significance",
+    "Registry": "registry",
+    "Eligibility": "eligibility",
+    "URL_LearnMore": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "Public_OK = 'Yes'",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -150.0,
+    61.1,
+    -149.7,
+    61.25
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "ak-anchorage-snow-plow-status",
+  "state": "AK",
+  "title": "Snow plowing status (Anchorage streets)",
+  "title_es": "Estado de quitanieves (calles de Anchorage)",
+  "description": "Anchorage street snow routes: plow priority, who maintains the street, and when crews last serviced it during the current storm.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Municipality of Anchorage",
+  "license": "Municipality of Anchorage public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/Ce3DhLRthdwbHlfF/arcgis/rest/services/SnowRoutes_20241120_ReadOnly_View/FeatureServer/0",
+   "fields": {
+    "roadname": "street",
+    "routepriority": "priority",
+    "WinterMaintenanceProvider": "provider",
+    "servicestatus": "status",
+    "lastserviced": "last_plowed",
+    "eventname_Any": "storm"
+   },
+   "geometry": "line",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true,
+   "refresh_s": 1800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -149.89,
+    61.19,
+    -149.85,
+    61.21
+   ],
+   "features_in_probe": 753
+  }
+ },
+ {
+  "name": "ak-matsu-polling-places",
+  "state": "AK",
+  "title": "Polling places (Mat-Su Borough)",
+  "title_es": "Lugares de votación (Mat-Su)",
+  "description": "Where to vote in Matanuska-Susitna Borough elections, by precinct, with the address.",
+  "group": "civic",
+  "category": "point",
+  "source": "Matanuska-Susitna Borough GIS",
+  "license": "Matanuska-Susitna Borough GIS public ArcGIS service",
+  "view": {
+   "url": "https://maps.matsugov.us/map/rest/services/OpenData/Administrative_PollingLocations/MapServer/0",
+   "fields": {
+    "POLLING_PL": "name",
+    "ADDRESS": "address",
+    "NAME": "precinct",
+    "DIST_NAME": "district",
+    "PollingLocationMap": "map"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -149.6,
+    61.5,
+    -149.0,
+    61.7
+   ],
+   "features_in_probe": 24
+  }
+ },
+ {
+  "name": "ak-matsu-parks",
+  "state": "AK",
+  "title": "Local parks (Mat-Su Borough)",
+  "title_es": "Parques locales (Mat-Su)",
+  "description": "Borough and local parks in the Mat-Su: type, whether developed, amenities and website.",
+  "group": "nature",
+  "category": "park",
+  "source": "Matanuska-Susitna Borough GIS",
+  "license": "Matanuska-Susitna Borough GIS public ArcGIS service",
+  "view": {
+   "url": "https://maps.matsugov.us/map/rest/services/OpenData/Recreational_LocalParks/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Developed": "developed",
+    "Amenities": "amenities",
+    "Management": "manager",
+    "Website": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -149.6,
+    61.5,
+    -149.0,
+    61.7
+   ],
+   "features_in_probe": 53
+  }
+ },
+ {
+  "name": "ak-matsu-lake-access",
+  "state": "AK",
+  "title": "Public lake access & boat launches (Mat-Su)",
+  "title_es": "Acceso público a lagos y rampas (Mat-Su)",
+  "description": "Public access points to Mat-Su lakes: boat launch, dock, parking, restrooms, how you get there (vehicle, walk-in, winter only) and posted rules.",
+  "group": "nature",
+  "category": "point",
+  "source": "Matanuska-Susitna Borough GIS",
+  "license": "Matanuska-Susitna Borough GIS public ArcGIS service",
+  "view": {
+   "url": "https://maps.matsugov.us/map/rest/services/OpenData/Recreational_WaterbodyAccess/MapServer/0",
+   "fields": {
+    "Lake_Name_MSB": "lake",
+    "Park_Name": "name",
+    "Boat_Launch": "boat_launch",
+    "Dock": "dock",
+    "Parking": "parking",
+    "Restrooms": "restrooms",
+    "Access_Type": "access",
+    "Trail_Winter_Only": "winter_only",
+    "Rules": "rules",
+    "Nearest_Road": "road"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "Data_Access = 'Public' AND Public_Access = 'Yes'",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -149.6,
+    61.5,
+    -149.0,
+    61.7
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "ak-matsu-fire-service-areas",
+  "state": "AK",
+  "title": "Fire service areas (Mat-Su Borough)",
+  "title_es": "Áreas de servicio de bomberos (Mat-Su)",
+  "description": "Which Mat-Su Borough fire service area covers each place, with its fire insurance (ISO PPC) rating.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Matanuska-Susitna Borough GIS",
+  "license": "Matanuska-Susitna Borough GIS public ArcGIS service",
+  "view": {
+   "url": "https://maps.matsugov.us/map/rest/services/OpenData/Administrative_FireServiceAreas/MapServer/0",
+   "fields": {
+    "FSA_NAME": "name",
+    "FSA_NUM": "number",
+    "PPC": "iso_rating",
+    "AREA_SQMI": "sq_mi"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -149.6,
+    61.5,
+    -149.0,
+    61.7
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ak-matsu-road-service-areas",
+  "state": "AK",
+  "title": "Road service areas (Mat-Su Borough)",
+  "title_es": "Áreas de servicio vial (Mat-Su)",
+  "description": "The Mat-Su Borough road service area responsible for maintaining and plowing local roads in each place.",
+  "group": "roads",
+  "category": "boundary",
+  "source": "Matanuska-Susitna Borough GIS",
+  "license": "Matanuska-Susitna Borough GIS public ArcGIS service",
+  "view": {
+   "url": "https://maps.matsugov.us/map/rest/services/OpenData/Administrative_RoadServiceAreas/MapServer/0",
+   "fields": {
+    "RSA_NAME": "name",
+    "RSA_NUM": "number",
+    "AREA_SQMI": "sq_mi"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -149.6,
+    61.5,
+    -149.0,
+    61.7
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "ak-fire-service-areas",
+  "state": "AK",
+  "title": "Fire service areas (Alaska Division of Forestry)",
+  "title_es": "Áreas de servicio de bomberos (Forestal de Alaska)",
+  "description": "Local fire service areas tracked by the Alaska Division of Forestry & Fire Protection, by borough.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Alaska Department of Natural Resources, Division of Forestry & Fire Protection",
+  "license": "Alaska Department of Natural Resources, Division of Forestry & Fire Protection public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/7HDiw78fcUiM2BWn/arcgis/rest/services/Fire_Service_Areas_Public_View/FeatureServer/0",
+   "fields": {
+    "fire_service_area_name": "name",
+    "borough": "borough",
+    "acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -151.0,
+    61.0,
+    -147.0,
+    65.0
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "nm-albuquerque-land-use",
+  "state": "NM",
+  "title": "Land use by parcel (Albuquerque)",
+  "title_es": "Uso del suelo por parcela (Albuquerque)",
+  "description": "What each Albuquerque parcel is used for today (homes, apartments, stores, offices, industry, schools, parks), in the city's zoning-code categories.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Albuquerque",
+  "license": "City of Albuquerque public ArcGIS service",
+  "view": {
+   "url": "https://coageo.cabq.gov/cabqgeo/rest/services/agis/Land_Use/MapServer/0",
+   "fields": {
+    "LandUseCategory": "kind",
+    "LandUseDescription": "use"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.66,
+    35.07,
+    -106.63,
+    35.1
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "nm-albuquerque-trash-day",
+  "state": "NM",
+  "title": "Trash pickup day (Albuquerque)",
+  "title_es": "Día de recolección de basura (Albuquerque)",
+  "description": "The weekday Albuquerque Solid Waste picks up residential trash carts on each route.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Albuquerque",
+  "license": "City of Albuquerque public ArcGIS service",
+  "view": {
+   "url": "https://coageo.cabq.gov/cabqgeo/rest/services/public/SolidWasteLayersFleetMindIntegration/MapServer/4",
+   "fields": {
+    "Pickup_Day": "day",
+    "Rt_Refuse": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.7,
+    35.03,
+    -106.55,
+    35.15
+   ],
+   "features_in_probe": 93
+  }
+ },
+ {
+  "name": "nm-albuquerque-recycling-day",
+  "state": "NM",
+  "title": "Recycling pickup day (Albuquerque)",
+  "title_es": "Día de recolección de reciclaje (Albuquerque)",
+  "description": "The weekday Albuquerque Solid Waste picks up blue recycling carts on each route.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Albuquerque",
+  "license": "City of Albuquerque public ArcGIS service",
+  "view": {
+   "url": "https://coageo.cabq.gov/cabqgeo/rest/services/public/SolidWasteLayersFleetMindIntegration/MapServer/3",
+   "fields": {
+    "Pickup_Day": "day",
+    "Rt_Recycle": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.7,
+    35.03,
+    -106.55,
+    35.15
+   ],
+   "features_in_probe": 53
+  }
+ },
+ {
+  "name": "nm-albuquerque-parks",
+  "state": "NM",
+  "title": "City parks & amenities (Albuquerque)",
+  "title_es": "Parques y servicios (Albuquerque)",
+  "description": "Albuquerque city parks with what each has: playground, dog park, shaded picnic areas, walking path, courts and skate park (y = yes).",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Albuquerque",
+  "license": "City of Albuquerque public ArcGIS service",
+  "view": {
+   "url": "https://coageo.cabq.gov/cabqgeo/rest/services/agis/City_Parks/MapServer/0",
+   "fields": {
+    "ParkName": "name",
+    "ParkAddress": "address",
+    "PlayStructure": "playground",
+    "ShadedPlayStructure": "shaded_playground",
+    "DogPark": "dog_park",
+    "ShadedPicnic": "shaded_picnic",
+    "WalkingPath": "walking_path",
+    "BasketballCourts": "basketball",
+    "TennisCourts": "tennis",
+    "Pickleball": "pickleball",
+    "SkatePark": "skate_park",
+    "URL": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "ParkStatus = 'Existing'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.7,
+    35.03,
+    -106.55,
+    35.15
+   ],
+   "features_in_probe": 132
+  }
+ },
+ {
+  "name": "nm-albuquerque-open-space-trails",
+  "state": "NM",
+  "title": "Open Space trails (Albuquerque)",
+  "title_es": "Senderos de espacio abierto (Albuquerque)",
+  "description": "Trails in Albuquerque's Open Space lands and foothills: whether hiking, biking, horses and e-bikes are allowed, ADA access and length.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Albuquerque",
+  "license": "City of Albuquerque public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/CWv1abTnC3urn4bV/arcgis/rest/services/OS_Trails_Public_View/FeatureServer/0",
+   "fields": {
+    "TRL_NAME": "name",
+    "trl_type": "kind",
+    "HIKING": "hiking",
+    "BIKING": "biking",
+    "HORSES": "horses",
+    "EBIKES": "ebikes",
+    "ADA": "ada",
+    "Length_mi": "miles",
+    "STATUS": "status",
+    "location": "location"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.55,
+    35.05,
+    -106.45,
+    35.2
+   ],
+   "features_in_probe": 275
+  }
+ },
+ {
+  "name": "nm-albuquerque-community-facilities",
+  "state": "NM",
+  "title": "Community centers, pools & libraries (Albuquerque)",
+  "title_es": "Centros comunitarios, piscinas y bibliotecas (Albuquerque)",
+  "description": "Public community centers, senior centers, health and social service centers, libraries, pools and museums in Albuquerque and Bernalillo County.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Albuquerque",
+  "license": "City of Albuquerque public ArcGIS service",
+  "view": {
+   "url": "https://coageo.cabq.gov/cabqgeo/rest/services/agis/PublicFacilities/MapServer/0",
+   "fields": {
+    "FACILITYNAME": "name",
+    "FACILITYTYPE": "kind",
+    "ADDRESS": "address",
+    "JURISDICTION": "operator"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "FACILITYTYPE IN ('COMMUNITY CENTER','HEALTH AND SOCIAL SERVICE CENTER','INDOOR POOL','OUTDOOR POOL','LIBRARY','SENIOR CENTER','MUSEUM','CULTURAL')",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.7,
+    35.03,
+    -106.55,
+    35.15
+   ],
+   "features_in_probe": 57
+  }
+ },
+ {
+  "name": "nm-albuquerque-senior-meal-sites",
+  "state": "NM",
+  "title": "Senior meal sites (Albuquerque)",
+  "title_es": "Comedores para adultos mayores (Albuquerque)",
+  "description": "City senior centers and meal sites serving lunch to people 60 and older in Albuquerque (2026 list).",
+  "group": "help",
+  "category": "point",
+  "source": "City of Albuquerque Department of Senior Affairs",
+  "license": "City of Albuquerque Department of Senior Affairs public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/CWv1abTnC3urn4bV/arcgis/rest/services/AGOL_SeniorMealSites/FeatureServer/0",
+   "fields": {
+    "FACILITYNAME": "name",
+    "FACILITYTYPE": "kind",
+    "ADDRESS": "address",
+    "Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.7,
+    35.03,
+    -106.55,
+    35.15
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "nm-albuquerque-child-development-centers",
+  "state": "NM",
+  "title": "City child development centers (Albuquerque)",
+  "title_es": "Centros de desarrollo infantil (Albuquerque)",
+  "description": "Child development (child care and pre-K) centers run by the City of Albuquerque, with ages served and programs.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Albuquerque Department of Health, Housing & Homelessness",
+  "license": "City of Albuquerque Department of Health, Housing & Homelessness public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/CWv1abTnC3urn4bV/arcgis/rest/services/ChildDevelopmentCenters/FeatureServer/0",
+   "fields": {
+    "Center_Name": "name",
+    "Address": "address",
+    "Ages_Served": "ages",
+    "Programs_Offered": "programs",
+    "Website": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.7,
+    35.03,
+    -106.55,
+    35.15
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "nm-bernalillo-county-zoning",
+  "state": "NM",
+  "title": "Zoning (unincorporated Bernalillo County)",
+  "title_es": "Zonificación (condado de Bernalillo, fuera de la ciudad)",
+  "description": "Zoning districts outside Albuquerque city limits in Bernalillo County (South and North Valley, East Mountains), with any special-use permit.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Bernalillo County Planning & Development Services",
+  "license": "Bernalillo County Planning & Development Services public ArcGIS service",
+  "view": {
+   "url": "https://pdsgismaps.bernco.gov/server/rest/services/BERNCOBASEMAP/BC_Zoning/MapServer/298",
+   "fields": {
+    "ZoneDesignation": "zone",
+    "ZoneDescription": "description",
+    "SUPermit": "special_use"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.72,
+    34.98,
+    -106.62,
+    35.05
+   ],
+   "features_in_probe": 907
+  }
+ },
+ {
+  "name": "nm-bernalillo-fire-districts",
+  "state": "NM",
+  "title": "Fire districts (Bernalillo County)",
+  "title_es": "Distritos de bomberos (condado de Bernalillo)",
+  "description": "Fire station districts in Bernalillo County: which department (county, Albuquerque, Kirtland AFB, pueblo) and station covers each area.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Bernalillo County",
+  "license": "Bernalillo County public ArcGIS service",
+  "view": {
+   "url": "https://pdsgismaps.bernco.gov/server/rest/services/BERNCOCAD/FireDistricts/MapServer/15",
+   "fields": {
+    "NAME": "name",
+    "GROUP_": "department",
+    "STATION_DISTRICT": "station",
+    "SQ_MILES": "sq_mi"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.7,
+    35.03,
+    -106.55,
+    35.15
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "nm-las-cruces-zoning",
+  "state": "NM",
+  "title": "Zoning (Las Cruces)",
+  "title_es": "Zonificación (Las Cruces)",
+  "description": "City of Las Cruces zoning districts with the zone code, its meaning and acreage.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Las Cruces",
+  "license": "City of Las Cruces public ArcGIS service",
+  "view": {
+   "url": "https://maps.las-cruces.org/gis/rest/services/Zone_Services_gis_App/MapServer/1",
+   "fields": {
+    "ZONECLASS": "zone",
+    "ZONEDESC": "description",
+    "ACREAGE": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.8,
+    32.28,
+    -106.74,
+    32.34
+   ],
+   "features_in_probe": 799
+  }
+ },
+ {
+  "name": "nm-las-cruces-parks",
+  "state": "NM",
+  "title": "Parks (Las Cruces)",
+  "title_es": "Parques (Las Cruces)",
+  "description": "City of Las Cruces parks and open space: park type, address and acreage.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Las Cruces Parks & Recreation",
+  "license": "City of Las Cruces Parks & Recreation public ArcGIS service",
+  "view": {
+   "url": "https://maps.las-cruces.org/gis/rest/services/ParksManagedAreas/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Park_Type": "kind",
+    "Address": "address",
+    "Acres": "acres",
+    "Year_Built": "year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "Status = 'Current'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.85,
+    32.25,
+    -106.7,
+    32.4
+   ],
+   "features_in_probe": 139
+  }
+ },
+ {
+  "name": "nm-las-cruces-trails",
+  "state": "NM",
+  "title": "Trails & paths (Las Cruces)",
+  "title_es": "Senderos y caminos (Las Cruces)",
+  "description": "City-maintained trails in Las Cruces: surface, length, condition, and whether walking, biking or horses are allowed.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Las Cruces Parks & Recreation",
+  "license": "City of Las Cruces Parks & Recreation public ArcGIS service",
+  "view": {
+   "url": "https://maps.las-cruces.org/gis/rest/services/ParksManagedAreas/MapServer/7",
+   "fields": {
+    "Name": "name",
+    "Pavement_Surface_Type": "surface",
+    "Length_mile": "miles",
+    "Condition": "condition",
+    "Pedestrian_Allowed": "walking",
+    "Cycling_Allowed": "biking",
+    "Equestrian_Allowed": "horses"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "Status = 'Current'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.85,
+    32.25,
+    -106.7,
+    32.4
+   ],
+   "features_in_probe": 61
+  }
+ },
+ {
+  "name": "nm-open-gate-access",
+  "state": "NM",
+  "title": "Open Gate hunting & fishing access (NM)",
+  "title_es": "Acceso para cazar y pescar Open Gate (NM)",
+  "description": "Private land opened to the public for hunting or fishing through NM Game and Fish's Open Gate program: what activities, the term, and a link to the property rules and map.",
+  "group": "nature",
+  "category": "park",
+  "source": "New Mexico Department of Game and Fish",
+  "license": "New Mexico Department of Game and Fish public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/CjbW1bVhK4dB3WOa/arcgis/rest/services/NM_Open_Gate_Public_View/FeatureServer/0",
+   "fields": {
+    "PropertyID": "number",
+    "Activities": "activities",
+    "County": "county",
+    "GMU": "unit",
+    "Term": "term",
+    "Acres": "acres",
+    "MORE_INFO": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "OG_status = 'Active'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -107.0,
+    33.0,
+    -103.0,
+    37.0
+   ],
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "nm-special-trout-waters",
+  "state": "NM",
+  "title": "Special Trout Waters (NM)",
+  "title_es": "Aguas especiales para trucha (NM)",
+  "description": "Stream reaches NM Game and Fish manages under special trout rules (catch and release, tackle limits, bag limits).",
+  "group": "nature",
+  "category": "park",
+  "source": "New Mexico Department of Game and Fish",
+  "license": "New Mexico Department of Game and Fish public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/CjbW1bVhK4dB3WOa/arcgis/rest/services/Special_Trout_Waters/FeatureServer/1",
+   "fields": {
+    "Water_Name": "name",
+    "Designatio": "designation",
+    "Pro_Reg": "rules",
+    "Info": "info",
+    "Trout_pres": "trout",
+    "STW_miles": "miles"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -107.0,
+    35.5,
+    -105.0,
+    37.0
+   ],
+   "features_in_probe": 36
+  }
+ },
+ {
+  "name": "nm-game-management-units",
+  "state": "NM",
+  "title": "Game management units (NM)",
+  "title_es": "Unidades de manejo de caza (NM)",
+  "description": "New Mexico hunting units with their bear and cougar zones and links to hunting information and unit maps.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "New Mexico Department of Game and Fish",
+  "license": "New Mexico Department of Game and Fish public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/CjbW1bVhK4dB3WOa/arcgis/rest/services/Game_Management_Units_All_Viewers/FeatureServer/0",
+   "fields": {
+    "Game_Management_Unit": "unit",
+    "Bear_Zone": "bear_zone",
+    "Cougar_Zone": "cougar_zone",
+    "Hunting_Information": "info",
+    "MapPDF": "map"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -107.0,
+    34.0,
+    -105.5,
+    35.5
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "wy-cities-towns",
+  "state": "WY",
+  "title": "City & town limits (Wyoming)",
+  "title_es": "Límites de ciudades y pueblos (Wyoming)",
+  "description": "Incorporated cities and towns in Wyoming, from the 2026 property-tax district maps.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Wyoming Department of Revenue, Property Tax Division",
+  "license": "Wyoming Department of Revenue, Property Tax Division public ArcGIS service",
+  "view": {
+   "url": "https://services3.arcgis.com/r0iJ85SKZ4zAzz3P/arcgis/rest/services/2026_Incorporated_Cities_and_Towns/FeatureServer/0",
+   "fields": {
+    "entityname": "name",
+    "typename": "kind",
+    "statute": "statute",
+    "ForTaxYear": "tax_year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    41.0,
+    -104.1,
+    45.0
+   ],
+   "features_in_probe": 98
+  }
+ },
+ {
+  "name": "wy-water-sewer-districts",
+  "state": "WY",
+  "title": "Water & sewer districts (Wyoming)",
+  "title_es": "Distritos de agua y alcantarillado (Wyoming)",
+  "description": "Special districts that provide water and/or sewer service in Wyoming (2026 tax-district maps).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Wyoming Department of Revenue, Property Tax Division",
+  "license": "Wyoming Department of Revenue, Property Tax Division public ArcGIS service",
+  "view": {
+   "url": "https://services3.arcgis.com/r0iJ85SKZ4zAzz3P/arcgis/rest/services/2026_Water_and_Sewer_Districts/FeatureServer/0",
+   "fields": {
+    "entityname": "name",
+    "typename": "kind",
+    "statute": "statute",
+    "ForTaxYear": "tax_year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    41.0,
+    -104.1,
+    45.0
+   ],
+   "features_in_probe": 60
+  }
+ },
+ {
+  "name": "wy-hospital-districts",
+  "state": "WY",
+  "title": "Hospital districts (Wyoming)",
+  "title_es": "Distritos hospitalarios (Wyoming)",
+  "description": "Wyoming hospital districts that levy property tax to support a local hospital (2026).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Wyoming Department of Revenue, Property Tax Division",
+  "license": "Wyoming Department of Revenue, Property Tax Division public ArcGIS service",
+  "view": {
+   "url": "https://services3.arcgis.com/r0iJ85SKZ4zAzz3P/arcgis/rest/services/2026_Hospital_Districts/FeatureServer/0",
+   "fields": {
+    "entityname": "name",
+    "typename": "kind",
+    "statute": "statute",
+    "ForTaxYear": "tax_year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    41.0,
+    -104.1,
+    45.0
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "wy-conservation-districts",
+  "state": "WY",
+  "title": "Conservation districts (Wyoming)",
+  "title_es": "Distritos de conservación (Wyoming)",
+  "description": "Wyoming conservation districts, which help landowners with soil, water and range conservation (2026).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Wyoming Department of Revenue, Property Tax Division",
+  "license": "Wyoming Department of Revenue, Property Tax Division public ArcGIS service",
+  "view": {
+   "url": "https://services3.arcgis.com/r0iJ85SKZ4zAzz3P/arcgis/rest/services/2026_Conservation_Districts/FeatureServer/0",
+   "fields": {
+    "entityname": "name",
+    "typename": "kind",
+    "statute": "statute",
+    "ForTaxYear": "tax_year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    41.0,
+    -104.1,
+    45.0
+   ],
+   "features_in_probe": 35
+  }
+ },
+ {
+  "name": "wy-solid-waste-districts",
+  "state": "WY",
+  "title": "Solid waste districts (Wyoming)",
+  "title_es": "Distritos de residuos sólidos (Wyoming)",
+  "description": "Wyoming solid waste disposal districts that run landfills and transfer stations (2026).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Wyoming Department of Revenue, Property Tax Division",
+  "license": "Wyoming Department of Revenue, Property Tax Division public ArcGIS service",
+  "view": {
+   "url": "https://services3.arcgis.com/r0iJ85SKZ4zAzz3P/arcgis/rest/services/2026_Solid_Waste_Districts/FeatureServer/0",
+   "fields": {
+    "entityname": "name",
+    "typename": "kind",
+    "statute": "statute",
+    "ForTaxYear": "tax_year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    41.0,
+    -104.1,
+    45.0
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "wy-improvement-service-districts",
+  "state": "WY",
+  "title": "Improvement & service districts (Wyoming)",
+  "title_es": "Distritos de mejoras y servicios (Wyoming)",
+  "description": "Wyoming improvement and service districts (subdivision roads, water, lighting and other local services) from the 2026 tax maps.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Wyoming Department of Revenue, Property Tax Division",
+  "license": "Wyoming Department of Revenue, Property Tax Division public ArcGIS service",
+  "view": {
+   "url": "https://services3.arcgis.com/r0iJ85SKZ4zAzz3P/arcgis/rest/services/2026_Improvement_and_Service_Districts/FeatureServer/0",
+   "fields": {
+    "entityname": "name",
+    "typename": "kind",
+    "statute": "statute",
+    "ForTaxYear": "tax_year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    41.0,
+    -104.1,
+    45.0
+   ],
+   "features_in_probe": 140
+  }
+ },
+ {
+  "name": "wy-cemetery-districts",
+  "state": "WY",
+  "title": "Cemetery districts (Wyoming)",
+  "title_es": "Distritos de cementerios (Wyoming)",
+  "description": "Wyoming cemetery districts that maintain local cemeteries (2026).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Wyoming Department of Revenue, Property Tax Division",
+  "license": "Wyoming Department of Revenue, Property Tax Division public ArcGIS service",
+  "view": {
+   "url": "https://services3.arcgis.com/r0iJ85SKZ4zAzz3P/arcgis/rest/services/2026_Cemetery_Districts/FeatureServer/0",
+   "fields": {
+    "entityname": "name",
+    "typename": "kind",
+    "statute": "statute",
+    "ForTaxYear": "tax_year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    41.0,
+    -104.1,
+    45.0
+   ],
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "wy-community-college-districts",
+  "state": "WY",
+  "title": "Community college districts (Wyoming)",
+  "title_es": "Distritos de colegios comunitarios (Wyoming)",
+  "description": "Which Wyoming community college district each place belongs to (2026).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Wyoming Department of Revenue, Property Tax Division",
+  "license": "Wyoming Department of Revenue, Property Tax Division public ArcGIS service",
+  "view": {
+   "url": "https://services3.arcgis.com/r0iJ85SKZ4zAzz3P/arcgis/rest/services/2026_Community_College_Districts/FeatureServer/0",
+   "fields": {
+    "entityname": "name",
+    "typename": "kind",
+    "statute": "statute",
+    "ForTaxYear": "tax_year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 5,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.0,
+    41.0,
+    -104.1,
+    45.0
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "wy-washakie-evacuation-zones",
+  "state": "WY",
+  "title": "Evacuation zones (Washakie County)",
+  "title_es": "Zonas de evacuación (condado de Washakie)",
+  "description": "Pre-planned evacuation zones for Washakie County (Worland, Ten Sleep). During an emergency each zone shows its Ready, Set or Go status.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Washakie County Emergency Management",
+  "license": "Washakie County Emergency Management public ArcGIS service",
+  "view": {
+   "url": "https://services8.arcgis.com/E5zw9WgzWyNQSbfF/arcgis/rest/services/Washakie_Evacuation_Zones_view/FeatureServer/0",
+   "fields": {
+    "Label": "zone",
+    "ReadSetGo": "status",
+    "EvacType": "kind",
+    "EvacArea": "area",
+    "IncidentNa": "incident",
+    "Comments": "notes",
+    "Starts": "start",
+    "Ends": "end"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true,
+   "refresh_s": 1800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -108.2,
+    43.8,
+    -107.5,
+    44.2
+   ],
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "wy-cheyenne-road-closures",
+  "state": "WY",
+  "title": "Road closures for construction (Cheyenne)",
+  "title_es": "Calles cerradas por obras (Cheyenne)",
+  "description": "Cheyenne-area streets fully closed for construction now (Cheyenne and Laramie County 'Cone Zone'), from one cross street to the other.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Cheyenne and Laramie County GIS Cooperative",
+  "license": "Cheyenne and Laramie County GIS Cooperative public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/e5t4ywWgRBNUuDeU/arcgis/rest/services/Cone_Zone_Project_Impacts_View_Layer/FeatureServer/1",
+   "fields": {
+    "RD_FROM": "from",
+    "RD_TO": "to"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "TYPE = '120'",
+   "max_features": 2000,
+   "simplify": true,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    41.0,
+    -104.6,
+    41.3
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "wy-cheyenne-lane-closures",
+  "state": "WY",
+  "title": "Lane closures & shifts (Cheyenne)",
+  "title_es": "Cierres y desvíos de carril (Cheyenne)",
+  "description": "Cheyenne-area streets with lane closures or lane shifts for construction now (Cone Zone), from one cross street to the other.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Cheyenne and Laramie County GIS Cooperative",
+  "license": "Cheyenne and Laramie County GIS Cooperative public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/e5t4ywWgRBNUuDeU/arcgis/rest/services/Cone_Zone_Project_Impacts_View_Layer/FeatureServer/1",
+   "fields": {
+    "RD_FROM": "from",
+    "RD_TO": "to"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "TYPE IN ('100','110')",
+   "max_features": 2000,
+   "simplify": true,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -105.0,
+    41.0,
+    -104.6,
+    41.3
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "wy-casper-boat-ramps",
+  "state": "WY",
+  "title": "North Platte boat ramps (Casper)",
+  "title_es": "Rampas para botes del río North Platte (Casper)",
+  "description": "Public boat ramps on the North Platte River in Casper-area parks, with ramp length and width in feet.",
+  "group": "nature",
+  "category": "point",
+  "source": "Natrona Regional Geospatial Cooperative (City of Casper / Natrona County)",
+  "license": "Natrona Regional Geospatial Cooperative (City of Casper / Natrona County) public ArcGIS service",
+  "view": {
+   "url": "https://maps.casperwy.gov/nrgisc/rest/services/Recreation/CasperRiverAccessBoatRamps/MapServer/0",
+   "fields": {
+    "AMENITY_PARK_NAME": "park",
+    "AMENITY_TYPE": "kind",
+    "AMENITY_LENGTH": "length_ft",
+    "AMENITY_WIDTH": "width_ft"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.45,
+    42.75,
+    -106.2,
+    42.95
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "wy-casper-pathways",
+  "state": "WY",
+  "title": "Pathways & trails (Casper area)",
+  "title_es": "Senderos y caminos (área de Casper)",
+  "description": "Platte River Trails, park paths and neighborhood pathways in Casper, Mills, Evansville and Bar Nunn, from one end to the other.",
+  "group": "nature",
+  "category": "park",
+  "source": "Natrona Regional Geospatial Cooperative (City of Casper / Natrona County)",
+  "license": "Natrona Regional Geospatial Cooperative (City of Casper / Natrona County) public ArcGIS service",
+  "view": {
+   "url": "https://maps.casperwy.gov/nrgisc/rest/services/Recreation/Parks_Paths/MapServer/1",
+   "fields": {
+    "PATHWAY_NAM": "name",
+    "PATHWAY_FROM": "from",
+    "PATHWAY_TO": "to",
+    "PATHWAY_WIDTH": "width",
+    "PATHWAY_SNOW_ROUTE": "plowed"
+   },
+   "geometry": "line",
+   "min_zoom": 12,
+   "where": "PATHWAY_STATUS IN (1, 2)",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.45,
+    42.75,
+    -106.2,
+    42.95
+   ],
+   "features_in_probe": 490
+  }
+ },
+ {
+  "name": "wy-natrona-county-zoning",
+  "state": "WY",
+  "title": "Zoning (unincorporated Natrona County)",
+  "title_es": "Zonificación (condado de Natrona, fuera de ciudades)",
+  "description": "Natrona County zoning districts outside city limits, with the zoning code and resolution date.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Natrona Regional Geospatial Cooperative (City of Casper / Natrona County)",
+  "license": "Natrona Regional Geospatial Cooperative (City of Casper / Natrona County) public ArcGIS service",
+  "view": {
+   "url": "https://maps.casperwy.gov/nrgisc/rest/services/County_Zoning/County_Zoning/MapServer/0",
+   "fields": {
+    "ZONE_CODE": "zone",
+    "RES_NUMBER": "resolution",
+    "RES_DATE": "adopted",
+    "COMMENT": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -106.5,
+    42.7,
+    -106.1,
+    43.0
+   ],
+   "features_in_probe": 673
+  }
+ },
+ {
+  "name": "wy-state-park-trailheads",
+  "state": "WY",
+  "title": "State park trailheads (Wyoming)",
+  "title_es": "Inicios de senderos en parques estatales (Wyoming)",
+  "description": "Trailheads in Wyoming state parks and historic sites, with the park and the kind of trail (hiking, biking, horse).",
+  "group": "nature",
+  "category": "point",
+  "source": "Wyoming State Parks, Historic Sites & Trails",
+  "license": "Wyoming State Parks, Historic Sites & Trails public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/WOPmQY9FJsLgGOzw/arcgis/rest/services/Trailheads_Statewide/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Facility": "park",
+    "NonMotorized_Trail_Type": "trail_type",
+    "Trail_Status": "status"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.1,
+    41.0,
+    -104.0,
+    45.0
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "or-boat-ramps",
+  "state": "OR",
+  "title": "Boat ramps & boating access (Oregon)",
+  "title_es": "Rampas y acceso para botes (Oregón)",
+  "description": "Public boat ramps, hand launches and marinas from the Oregon State Marine Board: launch type, lanes, fees, season and any current closure or restriction.",
+  "group": "nature",
+  "category": "point",
+  "source": "Oregon State Marine Board",
+  "license": "Oregon State Marine Board public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/Boating_Access_Sites_OA/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "waterway_name": "waterway",
+    "facility_type": "kind",
+    "launch_type": "launch",
+    "ramp_lanes": "lanes",
+    "fees": "fees",
+    "operating_dates": "season",
+    "operating_hours": "hours",
+    "manager": "manager",
+    "county": "county",
+    "oa_status": "status",
+    "oa_note": "notice",
+    "web_url": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "public_display = 'Yes'",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.75,
+    45.45,
+    -122.55,
+    45.6
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "or-structural-fire-districts",
+  "state": "OR",
+  "title": "Fire districts (Oregon State Fire Marshal)",
+  "title_es": "Distritos de bomberos (Jefatura de Bomberos de Oregón)",
+  "description": "Which structural fire department or district protects each place in Oregon, and areas with no structural fire protection.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Oregon State Fire Marshal",
+  "license": "Oregon State Fire Marshal public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/Structural_Fire_Districts_Public/FeatureServer/68",
+   "fields": {
+    "Agency_Name": "name",
+    "Category": "kind",
+    "County": "county",
+    "Coverage_Status": "coverage",
+    "Responding_Agency_Name": "responder",
+    "Agency_Status": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.75,
+    45.45,
+    -122.55,
+    45.6
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "or-odot-construction",
+  "state": "OR",
+  "title": "Highway construction (ODOT TripCheck)",
+  "title_es": "Obras en carreteras (ODOT TripCheck)",
+  "description": "Oregon highway work zones from ODOT TripCheck that are active now: route, location, expected delay and what drivers should expect.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Oregon Department of Transportation (TripCheck), via Oregon Emergency Management",
+  "license": "Oregon Department of Transportation (TripCheck), via Oregon Emergency Management public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODOT_Traffic_Construction/FeatureServer/0",
+   "fields": {
+    "attributes_route": "route",
+    "attributes_locationName": "location",
+    "attributes_comments": "description",
+    "attributes_odotSeverityDescript": "delay",
+    "attributes_beginMarker": "from",
+    "attributes_endMarker": "to",
+    "attributes_incidentDirection": "direction",
+    "attributes_eventSubTypeName": "kind",
+    "attributes_startTime": "start",
+    "attributes_lastUpdated": "updated"
+   },
+   "geometry": "point",
+   "min_zoom": 7,
+   "where": "attributes_eventTypeName = 'Road Work' AND attributes_lastUpdated > CURRENT_TIMESTAMP - 3",
+   "max_features": 2000,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.75,
+    45.45,
+    -122.55,
+    45.6
+   ],
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "or-evacuation-levels",
+  "state": "OR",
+  "title": "Evacuation levels now (Oregon)",
+  "title_es": "Niveles de evacuación actuales (Oregón)",
+  "description": "Active evacuation areas reported by Oregon counties to the state (mostly wildfire). Level 1 = be ready, 2 = be set, 3 = go now. Empty when nothing is active.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Oregon Department of Emergency Management",
+  "license": "Oregon Department of Emergency Management public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/Fire_Evacuation_Areas_Public/FeatureServer/0",
+   "fields": {
+    "Fire_Evacuation_Level": "level",
+    "Fire_Name": "incident",
+    "Evac_Area_Name": "area",
+    "County": "county",
+    "HazardType": "hazard",
+    "last_edited_date": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true,
+   "refresh_s": 900
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -124.6,
+    41.9,
+    -116.4,
+    46.3
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "or-lahar-zones",
+  "state": "OR",
+  "title": "Volcanic lahar hazard zones (Oregon)",
+  "title_es": "Zonas de peligro de lahar volcánico (Oregón)",
+  "description": "Areas downstream of Mount Hood and other Oregon volcanoes that volcanic mudflows (lahars) could reach, by risk zone.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Oregon Department of Land Conservation and Development (DOGAMI/USGS data)",
+  "license": "Oregon Department of Land Conservation and Development (DOGAMI/USGS data) public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/Volcanic_Lahar_Zones/FeatureServer/1",
+   "fields": {
+    "Risk_Zone": "risk",
+    "Lahar_Num": "zone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.0,
+    45.2,
+    -121.4,
+    45.6
+   ],
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "or-child-care-centers",
+  "state": "OR",
+  "title": "Licensed child care centers (Oregon)",
+  "title_es": "Guarderías con licencia (Oregón)",
+  "description": "Licensed child care centers, preschools and school-age programs in Oregon (2025 state list). Centers only, not family homes.",
+  "group": "help",
+  "category": "point",
+  "source": "Oregon Department of Early Learning and Care, via Oregon State Fire Marshal",
+  "license": "Oregon Department of Early Learning and Care, via Oregon State Fire Marshal public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ChildcareFacilities2025/FeatureServer/2",
+   "fields": {
+    "Facility_Name": "name",
+    "Facility_Type": "kind",
+    "Address1": "address",
+    "City": "city",
+    "Zip_Code": "zip",
+    "License": "license"
+   },
+   "geometry": "point",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.75,
+    45.45,
+    -122.55,
+    45.6
+   ],
+   "features_in_probe": 296
+  }
+ },
+ {
+  "name": "or-food-pantries",
+  "state": "OR",
+  "title": "Food pantries (Oregon Food Bank network)",
+  "title_es": "Despensas de alimentos (red Oregon Food Bank)",
+  "description": "Food pantries and meal sites in the Oregon Food Bank network, mapped by the Oregon Department of Human Services. Call ahead for hours.",
+  "group": "help",
+  "category": "point",
+  "source": "Oregon Department of Human Services / Oregon Food Bank",
+  "license": "Oregon Department of Human Services / Oregon Food Bank public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODHS_PB_Oregon_Food_Pantries_(OFB)_158/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "nature_of_business": "kind",
+    "organization_type": "operator",
+    "physical_address": "address"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.75,
+    45.45,
+    -122.55,
+    45.6
+   ],
+   "features_in_probe": 73
+  }
+ },
+ {
+  "name": "or-shellfish-closures",
+  "state": "OR",
+  "title": "Shellfish harvest closures (Oregon coast)",
+  "title_es": "Cierres de mariscos (costa de Oregón)",
+  "description": "Stretches of the Oregon coast the Oregon Department of Agriculture has closed to recreational shellfish harvest because of marine biotoxins; the status says what is closed (for example razor clams). Check ODA before you dig.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Oregon Department of Agriculture, Food Safety Program",
+  "license": "Oregon Department of Agriculture, Food Safety Program public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODA_FoodSafety_RecreationalShellfishBiotoxinClosureStatus2017_ViewLayer/FeatureServer/0",
+   "fields": {
+    "ClosureName": "name",
+    "Status": "status",
+    "SUBJ_STATE": "state"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -124.6,
+    42.0,
+    -123.8,
+    46.3
+   ],
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "or-groundwater-observation-wells",
+  "state": "OR",
+  "title": "Groundwater level monitoring wells (Oregon)",
+  "title_es": "Pozos de monitoreo de agua subterránea (Oregón)",
+  "description": "Wells the Oregon Water Resources Department measures to track groundwater levels: aquifer, depth, last measurement and a link to the water-level hydrograph.",
+  "group": "weather",
+  "category": "point",
+  "source": "Oregon Water Resources Department",
+  "license": "Oregon Water Resources Department public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/Current_Observation_Wells/FeatureServer/2",
+   "fields": {
+    "gw_logid": "well_id",
+    "aquifer": "aquifer",
+    "max_depth": "depth_ft",
+    "calc_obs_well_status_combined": "status",
+    "water_level_date_max_combined": "last_measured",
+    "hydrograph_url": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -123.2,
+    44.8,
+    -122.8,
+    45.2
+   ],
+   "features_in_probe": 325
+  }
+ },
+ {
+  "name": "or-state-park-trails",
+  "state": "OR",
+  "title": "State park trails (Oregon)",
+  "title_es": "Senderos de parques estatales (Oregón)",
+  "description": "Trails in Oregon State Parks, with surface and length, from Oregon Parks and Recreation.",
+  "group": "nature",
+  "category": "park",
+  "source": "Oregon Parks and Recreation Department",
+  "license": "Oregon Parks and Recreation Department public ArcGIS service",
+  "view": {
+   "url": "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/OPRD_Rec_Trails_Hosted_view/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "surface": "surface",
+    "length_ft": "length_ft",
+    "description": "description"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "public_display = 'YES'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -124.2,
+    44.5,
+    -123.9,
+    45.0
+   ],
+   "features_in_probe": 32
+  }
+ },
+ {
+  "name": "or-groundwater-restricted-areas",
+  "state": "OR",
+  "title": "Groundwater restricted areas (Oregon)",
+  "title_es": "Áreas con restricción de agua subterránea (Oregón)",
+  "description": "Areas where Oregon limits new groundwater wells because water levels are declining, with the uses still allowed.",
+  "group": "weather",
+  "category": "hazard",
+  "source": "Oregon Water Resources Department (Oregon GEOHub)",
+  "license": "Oregon Water Resources Department (Oregon GEOHub) public ArcGIS service",
+  "view": {
+   "url": "https://services8.arcgis.com/8PAo5HGmvRMlF2eU/arcgis/rest/services/Groundwater_Restricted_Areas/FeatureServer/0",
+   "fields": {
+    "gwra_area_name": "name",
+    "gwra_status": "status",
+    "allowable_uses": "allowed",
+    "other_limitations": "limits",
+    "affected_aquifer_formation": "aquifer",
+    "effective_date": "effective",
+    "exhibit_link": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -124.6,
+    41.9,
+    -116.4,
+    46.3
+   ],
+   "features_in_probe": 29
+  }
+ },
+ {
+  "name": "or-comprehensive-plan",
+  "state": "OR",
+  "title": "Comprehensive plan land use (Oregon)",
+  "title_es": "Uso del suelo del plan integral (Oregón)",
+  "description": "The long-range land-use designation every Oregon city and county plan gives each area (farm, forest, residential, commercial, industrial), in statewide categories.",
+  "group": "growth",
+  "category": "landuse",
+  "source": "Oregon Department of Land Conservation and Development (Oregon GEOHub)",
+  "license": "Oregon Department of Land Conservation and Development (Oregon GEOHub) public ArcGIS service",
+  "view": {
+   "url": "https://services8.arcgis.com/8PAo5HGmvRMlF2eU/arcgis/rest/services/City_and_County_Comprehensive_Plan_Designations/FeatureServer/0",
+   "fields": {
+    "orCDesc": "kind",
+    "localCDesc": "local",
+    "unitOwnerN": "jurisdiction"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -123.2,
+    44.0,
+    -122.9,
+    44.2
+   ],
+   "features_in_probe": 36
+  }
+ },
+ {
+  "name": "or-portland-trails",
+  "state": "OR",
+  "title": "Trails & pathways (Portland)",
+  "title_es": "Senderos y caminos (Portland)",
+  "description": "Portland Parks & Recreation trails and paths: type, surface, length and whether dogs, mountain bikes and wheelchairs are allowed.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Portland (PortlandMaps)",
+  "license": "City of Portland (PortlandMaps) public ArcGIS service",
+  "view": {
+   "url": "https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Pathways_and_Trails/MapServer/1",
+   "fields": {
+    "TrailName": "name",
+    "ParksProperty": "park",
+    "TrailType": "kind",
+    "TrailSurfaceMaterial": "surface",
+    "Miles": "miles",
+    "DogsPermitted": "dogs",
+    "UserMountainBike": "mountain_bike",
+    "USERADA": "ada"
+   },
+   "geometry": "line",
+   "min_zoom": 15,
+   "where": "TrailStatus = 'existing'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.72,
+    45.52,
+    -122.68,
+    45.55
+   ],
+   "features_in_probe": 517
+  }
+ },
+ {
+  "name": "or-portland-flood-stages",
+  "state": "OR",
+  "title": "River flood stages (Portland)",
+  "title_es": "Etapas de inundación del río (Portland)",
+  "description": "Areas of Portland that flood at each Willamette and Columbia river stage (phase 1 = smallest flood), with the gauge heights for each phase.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "City of Portland (PortlandMaps)",
+  "license": "City of Portland (PortlandMaps) public ArcGIS service",
+  "view": {
+   "url": "https://www.portlandmaps.com/arcgis/rest/services/Public/Natural_Hazards/MapServer/38",
+   "fields": {
+    "Phase_name": "phase",
+    "Willamette_Gauge_Hts_NWSD": "willamette_ft",
+    "Columbia_Gauge_Hts_NWSD": "columbia_ft"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.75,
+    45.45,
+    -122.55,
+    45.6
+   ],
+   "features_in_probe": 56
+  }
+ },
+ {
+  "name": "or-portland-liquefaction",
+  "state": "OR",
+  "title": "Earthquake liquefaction (Portland)",
+  "title_es": "Licuefacción por sismo (Portland)",
+  "description": "How likely Portland soils are to liquefy (turn soft like quicksand) in a large Cascadia earthquake.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "City of Portland (PortlandMaps), DOGAMI data",
+  "license": "City of Portland (PortlandMaps), DOGAMI data public ArcGIS service",
+  "view": {
+   "url": "https://www.portlandmaps.com/arcgis/rest/services/Public/Natural_Hazards/MapServer/64",
+   "fields": {
+    "LiqExpl": "hazard",
+    "LiqSuscept": "susceptibility"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -122.75,
+    45.45,
+    -122.55,
+    45.6
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "or-marion-ballot-drop-sites",
+  "state": "OR",
+  "title": "Ballot drop sites (Marion County)",
+  "title_es": "Buzones de boletas (condado de Marion)",
+  "description": "Official 24-hour ballot drop boxes in Marion County (Salem, Keizer, Woodburn, Silverton and more).",
+  "group": "civic",
+  "category": "point",
+  "source": "Marion County Clerk",
+  "license": "Marion County Clerk public ArcGIS service",
+  "view": {
+   "url": "https://services1.arcgis.com/sYGZnQPdJ0azuLyn/arcgis/rest/services/Elections_Ballot_Drop_Sites_View/FeatureServer/0",
+   "fields": {
+    "DropBoxLocation": "name",
+    "Address": "address",
+    "Hours": "hours",
+    "URL": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -123.2,
+    44.8,
+    -122.7,
+    45.2
+   ],
+   "features_in_probe": 17
+  }
+ },
+ {
+  "name": "or-eugene-taxlots",
+  "state": "OR",
+  "title": "Tax lots (Eugene)",
+  "title_es": "Lotes fiscales (Eugene)",
+  "description": "Property tax lot lines in Eugene, with the map-and-taxlot number and acreage (no owner information).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Eugene",
+  "license": "City of Eugene public ArcGIS service",
+  "view": {
+   "url": "https://services3.arcgis.com/F7NiRLGNbA2hh7gE/arcgis/rest/services/EugTaxlots/FeatureServer/0",
+   "fields": {
+    "maptaxlot": "parcel",
+    "mapacres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -123.1,
+    44.04,
+    -123.08,
+    44.06
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "gu-villages",
+  "state": "GU",
+  "title": "Village (municipality) boundaries (Guam)",
+  "title_es": "Límites de aldeas (municipios) (Guam)",
+  "description": "Guam's 19 villages, each with its own mayor's office.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Government of Guam GIS (GISWEB)",
+  "license": "Government of Guam GIS (GISWEB) public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/VillageBoundary/FeatureServer/0",
+   "fields": {
+    "MUNICIPAL": "name",
+    "AreaSqMile": "sq_mi"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "gu-tsunami-evacuation-zone",
+  "state": "GU",
+  "title": "Tsunami evacuation zone (Guam)",
+  "title_es": "Zona de evacuación por tsunami (Guam)",
+  "description": "Low-lying coastal land on Guam to leave right away after a strong earthquake or a tsunami warning.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Guam Homeland Security / Office of Civil Defense, via Government of Guam GIS",
+  "license": "Guam Homeland Security / Office of Civil Defense, via Government of Guam GIS public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Tsunami_Evacuation_Map_WFL1/FeatureServer/6",
+   "fields": {
+    "Id": "zone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "gu-tsunami-assembly-areas",
+  "state": "GU",
+  "title": "Tsunami assembly areas (Guam)",
+  "title_es": "Puntos de reunión por tsunami (Guam)",
+  "description": "High-ground places to gather after evacuating a Guam tsunami zone, by village.",
+  "group": "hazards",
+  "category": "point",
+  "source": "Guam Homeland Security / Office of Civil Defense, via Government of Guam GIS",
+  "license": "Guam Homeland Security / Office of Civil Defense, via Government of Guam GIS public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Tsunami_Evacuation_Map_WFL1/FeatureServer/1",
+   "fields": {
+    "Name": "name",
+    "Village": "village"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 22
+  }
+ },
+ {
+  "name": "gu-marine-preserves",
+  "state": "GU",
+  "title": "Marine preserves (Guam)",
+  "title_es": "Reservas marinas (Guam)",
+  "description": "Guam's marine preserve areas, where fishing is banned or restricted, with the managing agency and fishing rules.",
+  "group": "nature",
+  "category": "park",
+  "source": "Government of Guam GIS (GISWEB)",
+  "license": "Government of Guam GIS (GISWEB) public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Hazards_and_Constraints_Master/FeatureServer/13",
+   "fields": {
+    "Site_Name": "name",
+    "Prot_Lvl": "protection",
+    "Fish_Rstr": "fishing",
+    "Mgmt_Agen": "manager",
+    "Estab_Yr": "established",
+    "URL": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "gu-mayors-offices",
+  "state": "GU",
+  "title": "Village mayors' offices (Guam)",
+  "title_es": "Oficinas de alcaldes de aldea (Guam)",
+  "description": "Each Guam village mayor's office, the first stop for local services, permits and help after typhoons.",
+  "group": "civic",
+  "category": "point",
+  "source": "Government of Guam GIS (GISWEB)",
+  "license": "Government of Guam GIS (GISWEB) public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/MayorsOffice/FeatureServer/0",
+   "fields": {
+    "DESCRIPTIO": "name",
+    "CATEGORY": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "gu-public-health-offices",
+  "state": "GU",
+  "title": "Public health & social services offices (Guam)",
+  "title_es": "Oficinas de salud pública y servicios sociales (Guam)",
+  "description": "Guam Department of Public Health and Social Services offices and the programs at each (public assistance, WIC, clinics, labs).",
+  "group": "help",
+  "category": "point",
+  "source": "Guam Department of Public Health and Social Services, via Government of Guam GIS",
+  "license": "Guam Department of Public Health and Social Services, via Government of Guam GIS public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Guam_DPHSS_Locations/FeatureServer/0",
+   "fields": {
+    "DPHSS_Location": "name",
+    "Programs": "programs",
+    "Address": "address",
+    "City": "city"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "gu-groundwater-zones",
+  "state": "GU",
+  "title": "Groundwater zones (Guam)",
+  "title_es": "Zonas de agua subterránea (Guam)",
+  "description": "The parts of the Northern Guam Lens aquifer (basal, parabasal, suprabasal, perched) that supply most of the island's drinking water.",
+  "group": "weather",
+  "category": "hazard",
+  "source": "Government of Guam GIS (GISWEB)",
+  "license": "Government of Guam GIS (GISWEB) public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Guam_Hydrology_WFL1/FeatureServer/8",
+   "fields": {
+    "Type": "kind",
+    "Area_mi2": "sq_mi"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "gu-well-protection-zones",
+  "state": "GU",
+  "title": "Drinking water well zones (Guam)",
+  "title_es": "Zonas de pozos de agua potable (Guam)",
+  "description": "1,000-foot zones around Guam utility water wells (Guam Waterworks Authority, Navy, Air Force), with each well's status and depth.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Government of Guam GIS (GISWEB)",
+  "license": "Government of Guam GIS (GISWEB) public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Wells_Web_Layer/FeatureServer/2",
+   "fields": {
+    "Well_ID": "well_id",
+    "Owner__Operator": "operator",
+    "Status": "status",
+    "Sub_type": "kind",
+    "Construction_Well_Depth": "depth_ft"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "Type = 'Utility'",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 199
+  }
+ },
+ {
+  "name": "gu-sinkholes",
+  "state": "GU",
+  "title": "Sinkholes (Guam)",
+  "title_es": "Sumideros (Guam)",
+  "description": "Mapped sinkholes on Guam's limestone plateau, where the ground can collapse and stormwater drains into the aquifer.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Government of Guam GIS (GISWEB)",
+  "license": "Government of Guam GIS (GISWEB) public ArcGIS service",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Hazards_and_Constraints_Master/FeatureServer/23",
+   "fields": {
+    "Sinkhole": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "1=1",
+   "max_features": 2000,
+   "simplify": true
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 15
+  }
+ }
+]

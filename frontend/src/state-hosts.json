@@ -97,6 +97,7 @@
 "kygisserver.ky.gov",
 "mapit.fortworthtexas.gov",
 "maps.brla.gov",
+"maps.casperwy.gov",
 "maps.dot.nh.gov",
 "maps.healthvermont.gov",
 "maps.isgs.illinois.edu",
@@ -104,6 +105,8 @@
 "maps.kdhe.ks.gov",
 "maps.lacity.org",
 "maps.lakecountyil.gov",
+"maps.las-cruces.org",
+"maps.matsugov.us",
 "maps.nola.gov",
 "maps.ohio.gov",
 "maps.phoenix.gov",
@@ -125,6 +128,7 @@
 "nhgeodata.unh.edu",
 "ocgis.com",
 "owrb.csa.ou.edu",
+"pdsgismaps.bernco.gov",
 "portal.henrico.gov",
 "programs.iowadnr.gov",
 "pub.sagis.org",
@@ -153,5 +157,6 @@
 "vginmaps.vdem.virginia.gov",
 "wcgisweb.washoecounty.us",
 "www.gis.dcnr.pa.gov",
-"www.gis.hctx.net"
+"www.gis.hctx.net",
+"www.portlandmaps.com"
 ]
