@@ -196,7 +196,7 @@ export function FamilyPlanTool({
         {status}
       </p>
 
-      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(PLAN_CHECKED, LOCALE[lang]))} items={PLAN_SOURCES} newTab={c.newTab} />
+      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(PLAN_CHECKED, LOCALE[lang]))} items={PLAN_SOURCES} newTab={c.newTab} report={{ topic: p.title, checked: PLAN_CHECKED }} />
       {paper && createPortal(<PlanPaper plan={plan} paper={paper} />, document.body)}
     </div>
   );

@@ -106,7 +106,7 @@ export function DacaTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) {
       </p>
 
       <p className="hf__hint">{t.changing(longDate(DACA_CHECKED, locale))}</p>
-      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(DACA_CHECKED, locale))} items={DACA_SOURCES} newTab={c.newTab} />
+      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(DACA_CHECKED, locale))} items={DACA_SOURCES} newTab={c.newTab} report={{ topic: t.title, checked: DACA_CHECKED }} />
     </>
   );
 }
