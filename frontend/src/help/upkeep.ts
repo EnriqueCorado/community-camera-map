@@ -12,6 +12,7 @@ import { BENEFITS_CHECKED, TABLES, TAX, type IncomeTable } from "./benefits-fact
 import { MCW_CHECKED, MCW_IMMIGRANT_RECHECK, MCW_RECHECK } from "./medi-cal-work-facts";
 import { RIGHTS_CHECKED, RIGHTS_RECHECK } from "./rights-facts";
 import { CIVICS_CHECKED, CIVICS_OFFICIALS_RECHECK } from "./civics-facts";
+import { DACA_CHECKED, DACA_RECHECK } from "./daca-facts";
 import { addDays } from "./dates";
 
 export interface UpkeepItem {
@@ -104,6 +105,12 @@ export function upkeepItems(): UpkeepItem[] {
       task: "Update the citizenship test's current officials (new governor 2027-01-04; Speaker and the new congressional districts 2027-01-03) in make_civics.py, and USCIS's official Spanish name lists (#30, #38, #39, #57) in research/civics-es-study.json from uscis.gov/es; regenerate civics-questions.ts and move CIVICS_OFFICIALS_RECHECK.",
       source: "https://www.uscis.gov/citizenship/testupdates",
     },
+    {
+      id: "daca-monthly",
+      due: DACA_RECHECK,
+      task: "Monthly re-check of the DACA renewal tool (uscis.gov/DACA alerts on renewals and initial requests, any order from Judge Hanen in Texas v. United States, a final version of the June 2026 work-permit rule RIN 1615-AC98, G-1055 fees, the 120–150 day window, the advance parole alert); update daca-facts.ts and move DACA_RECHECK a month ahead.",
+      source: "https://www.uscis.gov/DACA",
+    },
     ...(Object.entries(TABLES) as [string, IncomeTable][]).map(([id, t]) => ({
       id: `benefits-${id}`,
       due: after(t.graceUntil ?? t.to, 1),
@@ -122,6 +129,7 @@ export function upkeepItems(): UpkeepItem[] {
         ["medi-cal-work", MCW_CHECKED],
         ["know-your-rights", RIGHTS_CHECKED],
         ["citizenship", CIVICS_CHECKED],
+        ["daca", DACA_CHECKED],
       ] as const
     ).map(([id, checked]) => ({
       id: `yearly-${id}`,

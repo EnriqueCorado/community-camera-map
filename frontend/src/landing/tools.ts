@@ -22,6 +22,8 @@ import { CIVICS_COPY } from "../help/civics-copy";
 import { CIVICS_QUESTIONS } from "../help/civics-questions";
 import { CIVICS_PARTS } from "../help/civics";
 import { HEAT_COPY } from "../help/heat-copy";
+import { DACA_CHECKED, DACA_FACTS, DACA_HELP, DACA_SOURCES } from "../help/daca-facts";
+import { DACA_COPY } from "../help/daca-copy";
 
 /** A place to call or visit (the shape every facts file's contacts share). */
 export interface PlaceInfo {
@@ -47,7 +49,8 @@ export type ToolId =
   | "medi-cal-work"
   | "know-your-rights"
   | "citizenship"
-  | "legal";
+  | "legal"
+  | "daca";
 
 /** A line in a section. `esEn`: an English part shown first on the Spanish page
  *  (marked lang="en"), e.g. the official civics question the officer asks. */
@@ -411,6 +414,32 @@ export const TOOLS: readonly ToolPage[] = [
     places: [],
     sources: LEGAL_FACTS.sources,
     checked: LEGAL_FACTS.checked,
+  },
+  {
+    id: "daca",
+    group: "immigration",
+    slug: { en: "daca-renewal", es: "renovar-daca" },
+    target: { tab: "immigration", view: "daca" },
+    name: { en: DACA_COPY.en.title, es: DACA_COPY.es.title },
+    summary: {
+      en: "When USCIS wants your DACA renewal (120 to 150 days before it expires), what to send, what it costs, and where DACA stands in court.",
+      es: "Cuándo quiere USCIS su renovación de DACA (entre 120 y 150 días antes de que caduque), qué enviar, cuánto cuesta, y cómo va DACA en las cortes.",
+    },
+    intro: {
+      en: "USCIS wants DACA renewals filed 120 to 150 days (4 to 5 months) before DACA expires. The free tool counts the dates for you from your expiration date, and tells you what to do if it has already expired. This is general information from USCIS, not legal advice for your case.",
+      es: "USCIS quiere que las renovaciones de DACA se presenten entre 120 y 150 días (de 4 a 5 meses) antes de que caduque DACA. La herramienta gratis calcula las fechas con su fecha de vencimiento, y le dice qué hacer si ya caducó. Es información general de USCIS, no consejo legal para su caso.",
+    },
+    groups: [
+      group({ en: DACA_COPY.en.nowTitle, es: DACA_COPY.es.nowTitle }, DACA_FACTS.status),
+      group({ en: DACA_COPY.en.timingTitle, es: DACA_COPY.es.timingTitle }, DACA_FACTS.timing),
+      group({ en: DACA_COPY.en.gatherTitle, es: DACA_COPY.es.gatherTitle }, DACA_FACTS.gather),
+      group({ en: DACA_COPY.en.feesTitle, es: DACA_COPY.es.feesTitle }, DACA_FACTS.fees),
+      group({ en: DACA_COPY.en.travelTitle, es: DACA_COPY.es.travelTitle }, DACA_FACTS.travel),
+      group({ en: DACA_COPY.en.scamTitle, es: DACA_COPY.es.scamTitle }, byId(RIGHTS_FACTS.scams, "scam-notario")),
+    ],
+    places: DACA_HELP,
+    sources: DACA_SOURCES,
+    checked: DACA_CHECKED,
   },
 ];
 
