@@ -64,6 +64,10 @@ def stale_able(spec: dict) -> bool:
     words = f"{spec.get('name', '')} {spec.get('title', '')}"
     if spec.get("category") in STATIC_CATEGORIES or _STATIC.search(words):
         return False
+    # Feeds the map re-reads hourly or faster are live: many agencies replace
+    # their rows without touching the layer's "last edit" date (ODOT road work).
+    if (spec.get("view") or {}).get("refresh_s", 86400) <= 3600:
+        return False
     return (
         spec.get("group") in TIMELY_GROUPS
         or spec.get("category") == "roadops"

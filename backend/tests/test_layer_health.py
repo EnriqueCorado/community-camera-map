@@ -269,3 +269,15 @@ def test_a_server_refusing_every_connection_is_one_line():
     md = summary(rows, checked="2026-10-22")
     assert "`gis.lojic.org`: 3 layers" in md
     assert "ky-a0" not in md and "ky-b" in md
+
+
+def test_hourly_live_feeds_are_never_called_stale():
+    road = {
+        "name": "or-odot-construction",
+        "title": "ODOT construction",
+        "group": "roads",
+        "category": "roadops",
+        "view": {"refresh_s": 3600},
+    }
+    assert not stale_able(road)
+    assert stale_able({**road, "view": {"refresh_s": 86400}})
