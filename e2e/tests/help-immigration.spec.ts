@@ -2,6 +2,7 @@
 // in a real browser — content, links, the practice test's stop rule, Spanish,
 // accessibility (light and dark), a 320px phone, and nothing sent while practicing.
 import { test, expect, type Locator, type Page, type Request } from "@playwright/test";
+import { unexpected } from "./requests";
 import AxeBuilder from "@axe-core/playwright";
 
 const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
@@ -106,7 +107,7 @@ test("links: the chips update the URL, and nothing typed or marked is sent", asy
   await dialog.getByRole("button", { name: "Practice test" }).click();
   await dialog.getByRole("button", { name: /Start a practice test/ }).click();
   await answer(dialog, 2, true);
-  expect(sent.filter((r) => !/\.(js|css|woff2?|png|svg|json|pbf)(\?|$)/.test(r.url()) && !r.url().includes("tiles"))).toEqual([]);
+  expect(unexpected(sent)).toEqual([]);
 });
 
 test("WCAG 2.2 AA (light and dark) and a 320px phone, for both tools", async ({ page }) => {

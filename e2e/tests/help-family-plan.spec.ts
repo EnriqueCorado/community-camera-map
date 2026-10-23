@@ -3,6 +3,7 @@
 // Spanish), erasing, keeping answers only while the tab is open, nothing sent,
 // and accessibility (light and dark, a 320px phone).
 import { test, expect, type Page, type Request } from "@playwright/test";
+import { unexpected } from "./requests";
 import AxeBuilder from "@axe-core/playwright";
 
 const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
@@ -157,7 +158,7 @@ test("nothing typed is sent or saved, and the browser is asked not to remember i
   await caregiver.getByLabel("Name", { exact: true }).fill("SECRET-NAME-123");
   await section(page, "Important documents").getByRole("textbox", { name: /A-Number/ }).fill("SECRET-A-NUMBER");
   await dialog.getByRole("button", { name: "Erase everything" }).click(); // UI only; not confirmed
-  expect(sent.filter((r) => !/\.(js|css|woff2?|png|svg|json|pbf)(\?|$)/.test(r.url()) && !r.url().includes("tiles"))).toEqual([]);
+  expect(unexpected(sent)).toEqual([]);
   for (const r of sent) expect(r.url() + (r.postData() ?? "")).not.toContain("SECRET");
   const stored = await page.evaluate(() => JSON.stringify({ ...localStorage }) + JSON.stringify({ ...sessionStorage }) + document.cookie);
   expect(stored).not.toContain("SECRET");

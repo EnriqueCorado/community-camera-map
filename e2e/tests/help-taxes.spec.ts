@@ -3,6 +3,7 @@
 // the way to legal help, Spanish, accessibility (light and dark), a 320px
 // phone, and nothing sent while reading.
 import { test, expect, type Page, type Request } from "@playwright/test";
+import { unexpected } from "./requests";
 import AxeBuilder from "@axe-core/playwright";
 
 const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
@@ -74,7 +75,7 @@ test("the chip updates the URL, and reading sends nothing", async ({ page }) => 
   await expect(page).toHaveURL(/help=benefits&hv=taxes/);
   await expect(dialog.getByRole("heading", { level: 3, name: "Free tax help for 2027" })).toBeVisible();
   await dialog.getByText("Where this comes from").or(dialog.locator(".hsources summary")).first().click();
-  expect(sent.filter((r) => !/\.(js|css|woff2?|png|svg|json|pbf)(\?|$)/.test(r.url()) && !r.url().includes("tiles"))).toEqual([]);
+  expect(unexpected(sent)).toEqual([]);
 });
 
 test("WCAG 2.2 AA (light and dark) and a 320px phone", async ({ page }) => {

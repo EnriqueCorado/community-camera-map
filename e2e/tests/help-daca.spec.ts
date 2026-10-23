@@ -3,6 +3,7 @@
 // nothing sent while typing, WCAG 2.2 AA in light and dark, and a 320px phone.
 // The page clock is fixed to Oct 22, 2026 (California) so the dates are stable.
 import { test, expect, type Page, type Request } from "@playwright/test";
+import { unexpected } from "./requests";
 import AxeBuilder from "@axe-core/playwright";
 import { addDays, longDate } from "../../frontend/src/help/dates";
 
@@ -87,7 +88,7 @@ test("the chip updates the URL, and the date typed is never sent", async ({ page
   page.on("request", (r) => sent.push(r));
   await dialog.getByLabel("When does your DACA expire?").fill("2027-03-01");
   await expect(result(page)).toContainText("File your renewal now");
-  expect(sent.filter((r) => !/\.(js|css|woff2?|png|svg|json|pbf)(\?|$)/.test(r.url()) && !r.url().includes("tiles"))).toEqual([]);
+  expect(unexpected(sent)).toEqual([]);
   expect(sent.filter((r) => r.url().includes("2027"))).toEqual([]);
 });
 
