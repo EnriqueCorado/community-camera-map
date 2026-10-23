@@ -9,6 +9,9 @@
 // Compare layers (backend national/care_compare.py) add: id CMS certification
 // number · st stars · ss survey stars · ow ownership · er emergency · bf
 // birthing-friendly · ns stations · ls evening shift · sv service bit flags.
+// Marketplace assisters (backend national/help_offices.py) use t as
+// space-separated type codes, d hours, web website and x 2 = area served (CMS
+// lists no public address, so the point is only near the area).
 import type { Lang } from "./i18n"; // type-only: erased at build
 
 export const SERVICE_COLORS: Record<string, string> = {
@@ -34,6 +37,7 @@ export const SERVICE_COLORS: Record<string, string> = {
   "hospice-providers": "#a21caf",
   "home-health-agencies": "#15803d",
   "hospital-ratings": "#b91c1c",
+  "marketplace-assisters": "#9333ea",
 };
 
 type Bi = [en: string, es: string];
@@ -70,10 +74,18 @@ const LINKS: Record<string, [string, Bi]> = {
   "social-security-offices": ["https://secure.ssa.gov/ICON/main.jsp", ["Social Security office locator", "Buscador de oficinas del Seguro Social"]],
   "legal-aid-areas": ["https://www.lsc.gov/about-lsc/what-legal-aid/get-legal-help", ["Find legal aid (LSC)", "Buscar ayuda legal (LSC)"]],
   "post-offices": ["https://tools.usps.com/locations/", ["USPS location finder (hours)", "Buscador de oficinas de USPS (horario)"]],
+  "marketplace-assisters": [
+    "https://www.healthcare.gov/find-assistance/",
+    ["Find local help (HealthCare.gov)", "Buscar ayuda local (CuidadoDeSalud.gov)"],
+  ],
   "dialysis-facilities": CARE_COMPARE,
   "hospice-providers": CARE_COMPARE,
   "home-health-agencies": CARE_COMPARE,
   "hospital-ratings": CARE_COMPARE,
+};
+/** Spanish pages, where the official site has its own (CuidadoDeSalud.gov). */
+const LINKS_ES: Record<string, string> = {
+  "marketplace-assisters": "https://www.cuidadodesalud.gov/es/find-assistance/",
 };
 const COLLEGE_NAVIGATOR = "https://nces.ed.gov/collegenavigator/?id=";
 /** Hand-kept immigration offices link to the official page each row came from. */
@@ -81,7 +93,9 @@ const OFFICE_PAGES = ["https://www.justice.gov/eoir/", "https://www.ice.gov/"];
 
 /** Hosts this pack links to (merged into the popup link allowlist). */
 export const SERVICE_LINK_HOSTS: string[] = [
-  ...new Set([...[...Object.values(LINKS).map(([u]) => u), COLLEGE_NAVIGATOR, ...OFFICE_PAGES].map((u) => new URL(u).hostname)]),
+  ...new Set(
+    [...Object.values(LINKS).map(([u]) => u), ...Object.values(LINKS_ES), COLLEGE_NAVIGATOR, ...OFFICE_PAGES].map((u) => new URL(u).hostname),
+  ),
 ];
 
 /** A short note per layer, shown in every popup of that layer. */
@@ -119,6 +133,10 @@ const NOTES: Record<string, Bi> = {
   "legal-aid-areas": [
     "Free civil legal help (eviction, benefits, family, domestic violence) for people with low incomes. Call the intake line.",
     "Ayuda legal civil gratuita (desalojos, beneficios, familia, violencia doméstica) para personas de bajos ingresos. Llame a la línea de admisión.",
+  ],
+  "marketplace-assisters": [
+    "Free help from trained, certified helpers: they can’t charge you. Call first to make an appointment. Open enrollment starts November 1.",
+    "Ayuda gratuita de personas capacitadas y certificadas: no le pueden cobrar. Llame antes para hacer una cita. La inscripción abierta empieza el 1 de noviembre.",
   ],
   "post-offices": [
     "Many post offices also accept passport applications; check the USPS finder.",
@@ -185,6 +203,7 @@ const LABELS: Record<string, Bi> = {
   note: ["Note", "Nota"],
   yes: ["Yes", "Sí"],
   approx: ["Approximate (ZIP code area)", "Aproximada (zona del código postal)"],
+  area: ["Serves this area (no public address: call for a place to meet)", "Atiende esta zona (sin dirección pública: llame para saber dónde reunirse)"],
   bothMh: ["Substance use", "Adicciones"],
   bothSu: ["Mental health", "Salud mental"],
   stars: ["Medicare star rating", "Calificación de Medicare"],
@@ -292,12 +311,46 @@ TYPES["early-head-start"] = TYPES["head-start"]!;
 TYPES["social-security-offices"] = {
   "Resident station (limited services)": ["Resident station (limited services)", "Oficina auxiliar (servicios limitados)"],
 };
+TYPES["marketplace-assisters"] = {
+  nav: ["Navigator", "Navegador"],
+  cac: ["Certified application counselor", "Consejero de solicitudes certificado"],
+  ipa: ["In-person assister", "Asistente en persona"],
+  mcd: ["Medicaid help", "Ayuda con Medicaid"],
+  chip: ["CHIP (children’s coverage) help", "Ayuda con CHIP (seguro para niños)"],
+};
 TYPES["immigration-offices"] = {
   court: ["Immigration court", "Corte de inmigración"],
   ice: ["ICE field office (ERO)", "Oficina de campo de ICE (ERO)"],
 };
 
-const LANG_ES: Record<string, string> = { English: "Inglés", Spanish: "Español", Chinese: "Chino", Vietnamese: "Vietnamita", Korean: "Coreano", Russian: "Ruso", French: "Francés", Arabic: "Árabe" };
+const LANG_ES: Record<string, string> = {
+  English: "Inglés",
+  Spanish: "Español",
+  Chinese: "Chino",
+  Vietnamese: "Vietnamita",
+  Korean: "Coreano",
+  Russian: "Ruso",
+  French: "Francés",
+  Arabic: "Árabe",
+  // Marketplace assisters' language list (HealthCare.gov Find Local Help)
+  Interpreters: "Intérpretes para otros idiomas",
+  "American Sign Language": "Lengua de señas americana",
+  "French Creole": "Criollo haitiano",
+  "Spanish Creole": "Criollo de base española",
+  Mandarin: "Mandarín",
+  Cantonese: "Cantonés",
+  Portuguese: "Portugués",
+  Urdu: "Urdu",
+  German: "Alemán",
+  Greek: "Griego",
+  Hindi: "Hindi",
+  Italian: "Italiano",
+  Gujarati: "Guyaratí",
+  Japanese: "Japonés",
+  Polish: "Polaco",
+  Persian: "Persa",
+  Tagalog: "Tagalo",
+};
 
 /** "(209) 555-0100" from bare 10-digit or dashed US numbers; others as-is. */
 export function phone(v: unknown): string {
@@ -328,9 +381,18 @@ export function servicePopup(
   const str = (v: unknown) => tidy(raw(v));
   const typeLabel = (v: unknown) => {
     const code = raw(v);
+    if (layer === "marketplace-assisters") {
+      // several codes per site ("nav cac"); unknown codes are left out
+      return code
+        .split(" ")
+        .map((c) => TYPES[layer]![c]?.[i])
+        .filter(Boolean)
+        .join(", ");
+    }
     const hit = TYPES[layer]?.[code];
     return hit ? hit[i] : str(code);
   };
+  const hours = layer === "social-security-offices" || layer === "marketplace-assisters";
   const date = (v: unknown) => {
     const n = typeof v === "number" ? v : Number.NaN;
     return Number.isFinite(n) ? new Date(n).toLocaleDateString(locale, { month: "short", day: "numeric", timeZone: "UTC" }) : "";
@@ -399,11 +461,11 @@ export function servicePopup(
     [L("fieldOffice"), raw(p.fo)],
     [L("population"), pop],
     [L("dates"), p.d0 != null || p.d1 != null ? [date(p.d0), date(p.d1)].filter(Boolean).join(" – ") : ""],
-    [layer === "social-security-offices" ? L("hours") : L("days"), layer === "social-security-offices" ? raw(p.d) : str(p.d)],
+    [hours ? L("hours") : L("days"), hours ? raw(p.d) : str(p.d)],
     [L("breakfast"), raw(p.bt)],
     [L("lunch"), raw(p.lt)],
     [L("website"), /^https:\/\/[^\s]+$/.test(raw(p.web)) ? raw(p.web).replace(/^https:\/\/(www\.)?/, "").replace(/\/$/, "") : ""],
-    [L("location"), p.x === 1 ? L("approx") : ""],
+    [L("location"), p.x === 1 ? L("approx") : p.x === 2 ? L("area") : ""],
     [L("note"), (layer === "immigration-offices" ? OFFICE_NOTES[raw(p.t)]?.[i] : NOTES[layer]?.[i]) ?? ""],
   ];
   const fixed = LINKS[layer];
@@ -417,7 +479,7 @@ export function servicePopup(
       : layer === "colleges" && /^\d{6}$/.test(unitid)
       ? { href: COLLEGE_NAVIGATOR + unitid, label: "College Navigator (NCES)" }
       : fixed
-        ? { href: fixed[0], label: fixed[1][i] }
+        ? { href: (i && LINKS_ES[layer]) || fixed[0], label: fixed[1][i] }
         : undefined;
   return { title: str(p.n) || "", rows, link };
 }

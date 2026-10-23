@@ -5,8 +5,9 @@ The leading underscore keeps this helper from being loaded as a layer pack.
 Pure functions over downloaded text/JSON, each unit-tested with a small
 hand-written fixture. Explicit allowlists only: office names, street
 addresses, public office lines, hours and the program's website. Never a
-person's name, email or personal phone (none of these sources carries them;
-the allowlists keep it that way if one ever does).
+person's name, email or personal phone (SSA and LSC carry none; the
+allowlists keep it that way if one ever does). Find Local Help does list
+people (agents/brokers, counselor-named sites): see its section below.
 
 Social Security offices use the services pack's compact names (n name ·
 a street · c city · s state · p public phone · t type · d hours · x 1 =
@@ -279,3 +280,257 @@ def lsc_areas(areas: list[tuple[str, object]], programs: object, tol: float = 0.
 
 def parse_json(body: bytes) -> object:
     return json.loads(body.decode("utf-8-sig", "replace"))
+
+
+# --- HealthCare.gov "Find Local Help" assisters (data.healthcare.gov) -------
+#
+# One daily CSV backs localhelp.healthcare.gov: free assisters (Navigators,
+# Certified Application Counselors, in-person assisters, Medicaid/CHIP
+# specialists) and, in the same file, ~80,000 agents and brokers. Agents and
+# brokers are individuals who sell plans: their rows are never parsed.
+# Assister rows are organizations, but a site's label is sometimes a
+# counselor's own name, and about a fifth of the sites have no public address
+# (CMS's display_address flag, which localhelp honors too). Those, and sites
+# labeled with a person's name, keep only a ~10 km area point: no street, no
+# hours, and no label that names a person or holds an address, so the map never
+# pins a place the source withholds. A counselor-named site keeps a phone only
+# when it is toll-free or one of the organization's other public lines (each
+# counselor can list their own direct number).
+#
+# Compact names (services-pack): n organization · o site label · a street ·
+# c city · s state · p phone · t types (space-separated codes) · l languages ·
+# d hours · web website · x 1 = ZIP-area point, 2 = area served (no address).
+
+ASSISTER_COLUMNS = (
+    "record_id",
+    "data_set_name",
+    "organization_name",
+    "main_phone_number",
+    "street_address",
+    "city",
+    "state_or_territory",
+    "zip_code",
+    "geo_location",
+    "display",
+    "display_address",
+)
+# data_set_name -> type code; anything else (Agent/Broker...) is skipped.
+ASSISTER_TYPES = {
+    "Navigator (NAV)": "nav",
+    "Certified Application Counselor (CAC)": "cac",
+    "In-person Assister (IPA)": "ipa",
+    "Medicaid Specialist": "mcd",
+    "CHIP Specialist": "chip",
+}
+_TYPE_ORDER = tuple(ASSISTER_TYPES.values())
+# CMS's own QA records ("GDIT Test Org", "TestOrgCSG", "FLHAutomation Dontuse").
+_TEST_ROW = re.compile(
+    r"\btest ?(org|location|cdo)\b|^test[a-z]*(org|automation|location|sec)|automation|"
+    r"dontuse|do not use|\bgdit\b|\bdummy\b|\bux test\b|testing display",
+    re.I,
+)
+_NAME_WORD = r"(?:Mc|Mac|O')?[A-Z][a-z'’]+(?:-[A-Z][a-z'’]+)?"
+_PERSON_NAME = re.compile(rf"^{_NAME_WORD}(?: [A-Z]\.?)?(?: {_NAME_WORD}){{1,3}}$")
+# Words that make a short capitalized label a place or a program, not a person.
+_PLACE_WORDS = re.compile(
+    r"\b(fort|city|hills?|haven|springs?|falls|lakes?|mount|mt|point|park|valley|beach|"
+    r"creek|river|heights|grove|village|county|north|south|east|west|downtown|center|centre|"
+    r"main|office|offices|clinic|clinica|health|healthcare|hospital|medical|mall|plaza|"
+    r"campus|site|branch|library|school|church|community|family|care|services?|program|"
+    r"navigator|counselors?|assistance|enrollment|outreach|helpline|apartments|building|"
+    r"street|avenue|road|island|peninsula|alaska|tribe|tribal|nation|band|pediatrics|"
+    r"wellness|pharmacy|dental|elementary|academy|consulate|heart|hope|life|new|san|santa|"
+    r"saint|st|la|el|de|del|los|las|ave|blvd|hall|house|location|project|council|unity|"
+    r"memorial|aging|remote|only|region|enroll|covering|american|mexican|woods|meadows?|"
+    r"summit|nurses?|association|foodbank|neighbors?|highrise|elderly|legal|aid|mountains?|"
+    r"country|drive|board|children's|foundation|resource|korean|visiting|happens|wic|"
+    r"alabama|arizona|arkansas|california|colorado|connecticut|delaware|florida|georgia|"
+    r"hawaii|idaho|illinois|indiana|iowa|kansas|kentucky|louisiana|maine|maryland|"
+    r"massachusetts|michigan|minnesota|mississippi|missouri|montana|nebraska|nevada|"
+    r"hampshire|jersey|mexico|york|carolina|dakota|ohio|oklahoma|oregon|pennsylvania|"
+    r"rhode|tennessee|texas|utah|vermont|virginia|washington|wisconsin|wyoming)\b",
+    re.I,
+)
+_HOME_LABEL = re.compile(r"\bhome office\b|\bresidence\b|\bmy home\b", re.I)
+# "Heather's Application Services": one person's own business, by first name
+# (not "Women's Health Center" / "Children's Clinic").
+_POSSESSIVE_NAME = re.compile(
+    r"^(?!(?i:women|men|children|kids|people|veterans)['’])[A-Z][a-z]+['’]s\b"
+)
+# Words that make a capitalized "First Last"-shaped organization name a business.
+_ORG_WORDS = re.compile(
+    r"\b(inc|llc|corp|corporation|co|group|university|college|communities|ministries|"
+    r"partners|network|coalition|alliance|society|league|institute|agency|department|dept)\b",
+    re.I,
+)
+_TOLL_FREE = re.compile(r"^\(8(00|33|44|55|66|77|88)\)")
+_LANG_ALIASES = {"Interpretation services available for other languages": "Interpreters"}
+_DAY = ("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+_HOURS_LINE = re.compile(
+    r"^(Mon|Tue|Wed|Thu|Fri|Sat|Sun):\s*(\d{1,2}):(\d\d)\s*([AP]M)\s*-\s*(\d{1,2}):(\d\d)\s*([AP]M)$"
+)
+AREA_DP = 1  # decimal places kept for a site without a public address (~10 km)
+
+
+def _minutes(h: str, m: str, ampm: str) -> int:
+    return (int(h) % 12 + (12 if ampm == "PM" else 0)) * 60 + int(m)
+
+
+def assister_hours(text: object) -> str:
+    """'Mon-Fri 8:00 AM-5:00 PM; Sat 10:00 AM-2:00 PM' from localhelp's
+    one-line-per-day hours. '' when any line is malformed or ends before it
+    starts ('7:00 AM - 5:00 AM' typos): no hours beats wrong hours."""
+    spans: dict[str, str] = {}
+    for line in (ln.strip() for ln in str(text or "").splitlines()):
+        if not line:
+            continue
+        m = _HOURS_LINE.match(line)
+        if not m or _minutes(*m.group(5, 6, 7)) <= _minutes(*m.group(2, 3, 4)):
+            return ""
+        spans[m[1]] = f"{int(m[2])}:{m[3]} {m[4]}-{int(m[5])}:{m[6]} {m[7]}"
+    groups: dict[str, list[str]] = {}
+    for day in _DAY:
+        if day in spans:
+            groups.setdefault(spans[day], []).append(day)
+    parts = []
+    for span, days in groups.items():
+        idx = [_DAY.index(d) for d in days]
+        run = len(days) > 2 and idx == list(range(idx[0], idx[0] + len(idx)))
+        parts.append(f"{days[0]}-{days[-1]} {span}" if run else f"{', '.join(days)} {span}")
+    return "; ".join(parts)
+
+
+def _languages(v: object) -> list[str]:
+    out: list[str] = []
+    for raw in str(v or "").split(","):
+        lang = _LANG_ALIASES.get(sp.clean(raw), sp.clean(raw))
+        if lang and lang not in out and len(lang) <= 40:
+            out.append(lang)
+    return sorted(out, key=_lang_order)
+
+
+def _lang_order(lang: str) -> tuple[bool, bool, bool]:
+    """English, then Spanish, then the rest as listed; "Interpreters" last."""
+    return (lang == "Interpreters", lang != "English", lang != "Spanish")
+
+
+def _website(v: object) -> str:
+    u = sp.clean(v)
+    if u and not re.match(r"https?://", u, re.I):
+        u = "https://" + u
+    return _web(u)
+
+
+def _person_label(label: str, org: str, city: str) -> bool:
+    """A site label that is a person's name ('Jenny Rivera', 'Andrea
+    Thomas/SEARHC'): the counselor, not the place. Each '/'- or ' - '-separated
+    part is checked; a part made only of words from the organization's name or
+    the city ('Capstone Parrish', 'Samuel U. Rodgers') is the place."""
+    known = set(re.findall(r"[a-z'’]+", f"{org} {city}".lower()))
+    for part in re.split(r"\s*/\s*|\s+-\s+", label):
+        if not _PERSON_NAME.match(part) or _PLACE_WORDS.search(part):
+            continue
+        if not set(re.findall(r"[a-z'’]+", part.lower())) <= known:
+            return True
+    return False
+
+
+def _geo(v: object) -> tuple[float, float] | None:
+    """localhelp's '(lat,lon)' -> (lon, lat)."""
+    m = re.fullmatch(r"\(?\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*\)?", sp.clean(v))
+    return (float(m[2]), float(m[1])) if m else None
+
+
+def marketplace_assisters(text: str) -> tuple[list[dict], list[dict]]:
+    """The Find Local Help CSV -> (point features, records to geocode).
+
+    One entry per organization site: a site listed under several assister
+    types (CAC + Medicaid + CHIP...) is merged, its types and languages
+    combined. Agents/brokers, CMS test records and rows without an
+    organization are dropped; emails and free-text notes are never read."""
+    reader = csv.DictReader(io.StringIO(text.lstrip("﻿")))
+    header = [sp.clean(h) for h in reader.fieldnames or []]
+    if not all(c in header for c in ASSISTER_COLUMNS):
+        raise ValueError(f"Find Local Help file: unexpected columns {header[:8]}")
+    sites: dict[tuple, dict] = {}
+    org_lines: dict[str, set[str]] = {}  # organization -> phones of its unnamed sites
+    for raw in reader:
+        kind = ASSISTER_TYPES.get(sp.clean(raw.get("data_set_name")))
+        org = sp.clean(raw.get("organization_name"))
+        label = sp.clean(raw.get("location_name"))
+        if not kind or not org or sp.clean(raw.get("display")).lower() == "false":
+            continue
+        if _TEST_ROW.search(org) or _TEST_ROW.search(label) or sp._is_person(org):
+            continue
+        if _PERSON_NAME.match(org) and not (_PLACE_WORDS.search(org) or _ORG_WORDS.search(org)):
+            continue  # an "organization" that is a person's name
+        state = sp.clean(raw.get("state_or_territory")).upper()
+        state = state if re.fullmatch(r"[A-Z]{2}", state) else ""
+        city = sp.clean(raw.get("city"))
+        lines = str(raw.get("street_address") or "").splitlines()
+        street = ", ".join(sp.clean(x) for x in lines if sp.clean(x))
+        person = bool(label) and (
+            _person_label(label, org, city) or bool(_POSSESSIVE_NAME.match(label))
+        )
+        public = (
+            sp.clean(raw.get("display_address")).lower() == "true"
+            and bool(street)
+            and not person
+            and not _HOME_LABEL.search(label)
+        )
+        geo = _geo(raw.get("geo_location"))
+        if not public:
+            if not geo:
+                continue  # no public address and no point: nothing to show
+            geo = (round(geo[0], AREA_DP), round(geo[1], AREA_DP))
+            street = ""
+        shown = label if label and not person and label.lower() != org.lower() else ""
+        if not public and (re.search(r"\d", shown) or _HOME_LABEL.search(shown)):
+            shown = ""  # a withheld site's label can be its street address
+        tel = sp.phone(raw.get("main_phone_number")) or sp.phone(raw.get("toll_free_phone"))
+        if not person:
+            org_lines.setdefault(org.lower(), set()).add(tel)
+        rec = {
+            "n": org,
+            "o": shown,
+            "a": street,
+            "c": city,
+            "s": state,
+            # a counselor-named site's number can be that person's own line:
+            # decided below, once every public line of the organization is known
+            "p": "" if person else tel,
+            "pp": tel if person else "",
+            "d": assister_hours(raw.get("office_hours")) if public else "",
+            "web": _website(raw.get("website_url")),
+            "x": 0 if public else 2,
+            "types": {kind},
+            "langs": _languages(raw.get("non_english_assistance_offered")),
+            "zip": sp.zip5(sp.clean(raw.get("zip_code"))),
+            "geo": geo,
+        }
+        if public:
+            key: tuple = (org.lower(), street.lower(), city.lower(), state)
+        else:
+            key = (org.lower(), geo)
+        if key in sites:
+            have = sites[key]
+            have["types"] |= rec["types"]
+            have["langs"] += [x for x in rec["langs"] if x not in have["langs"]]
+            for k in ("o", "p", "pp", "d", "web"):
+                have[k] = have[k] or rec[k]
+            have["geo"] = have["geo"] or rec["geo"]
+        else:
+            sites[key] = rec
+    feats, pending = [], []
+    for rec in sites.values():
+        pp, lines = rec["pp"], org_lines.get(rec["n"].lower(), set())
+        if not rec["p"] and pp and (_TOLL_FREE.match(pp) or pp in lines):
+            rec["p"] = pp  # the organization's toll-free or main line, not a person's
+        props = {k: rec[k] for k in ("n", "o", "a", "c", "s", "p", "d", "web", "x")}
+        props["t"] = " ".join(t for t in _TYPE_ORDER if t in rec["types"])
+        props["l"] = ", ".join(sorted(rec["langs"], key=_lang_order))
+        if rec["geo"]:
+            feats.append(sp.point(*rec["geo"], props))
+        else:  # a public street address without a point: the Census geocoder places it
+            pending.append({**props, "zip": rec["zip"]})
+    return [f for f in feats if f], pending

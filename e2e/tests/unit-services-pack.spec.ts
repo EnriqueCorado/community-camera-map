@@ -128,3 +128,29 @@ test("Care Compare: star ratings, services and ownership in both languages, Medi
   for (const n of ["dialysis-facilities", "hospice-providers", "home-health-agencies", "hospital-ratings"]) expect(SERVICE_COLORS[n]).toMatch(/^#[0-9a-f]{6}$/);
   expect(SERVICE_LINK_HOSTS).toContain("www.medicare.gov");
 });
+
+test("Marketplace assisters: types, hours, languages, area-only sites, HealthCare.gov / CuidadoDeSalud.gov links", () => {
+  const p = { n: "Valley Health Center", o: "Downtown", a: "100 Main St", c: "Houston", s: "TX", p: "(209) 555-0100", t: "nav cac evil", l: "English, Spanish, Interpreters", d: "Mon-Fri 8:00 AM-5:00 PM", web: "https://www.valleyhealth.example.org" };
+  const en = servicePopup("marketplace-assisters", p, "en", "en-US", tidy);
+  expect(en.title).toBe("Valley Health Center");
+  expect(row(en.rows, "Type")).toBe("Navigator, Certified application counselor");
+  expect(row(en.rows, "Hours")).toBe("Mon-Fri 8:00 AM-5:00 PM");
+  expect(row(en.rows, "Website")).toBe("valleyhealth.example.org");
+  expect(row(en.rows, "Location")).toBe("");
+  expect(row(en.rows, "Note")).toContain("November 1");
+  expect(en.link?.href).toBe("https://www.healthcare.gov/find-assistance/");
+  const es = servicePopup("marketplace-assisters", p, "es", "es-US", tidy);
+  expect(row(es.rows, "Tipo")).toBe("Navegador, Consejero de solicitudes certificado");
+  expect(row(es.rows, "Idiomas")).toBe("Inglés, Español, Intérpretes para otros idiomas");
+  expect(row(es.rows, "Horario")).toBe("Mon-Fri 8:00 AM-5:00 PM");
+  expect(es.link?.href).toBe("https://www.cuidadodesalud.gov/es/find-assistance/");
+  // A site CMS lists without a public address says so instead of pinning a place.
+  const area = servicePopup("marketplace-assisters", { n: "Covering Texas", t: "nav", x: 2 }, "es", "es-US", tidy);
+  expect(row(area.rows, "Ubicación")).toContain("sin dirección pública");
+  expect(SERVICE_COLORS["marketplace-assisters"]).toMatch(/^#[0-9a-f]{6}$/);
+  expect(SERVICE_LINK_HOSTS).toEqual(expect.arrayContaining(["www.healthcare.gov", "www.cuidadodesalud.gov"]));
+  for (const u of [en.link!.href, es.link!.href]) expect(safeUrl(u, WEBCAM_PAGE_HOSTS)).toBe(u);
+  // Other layers keep one link in both languages and their "Days" row.
+  expect(servicePopup("health-centers", { n: "X" }, "es", "es-US", tidy).link?.href).toBe("https://findahealthcenter.hrsa.gov/");
+  expect(row(servicePopup("summer-meals", { n: "X", d: "Mon-Fri" }, "en", "en-US", tidy).rows, "Days")).toBe("Mon-Fri");
+});

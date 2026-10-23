@@ -8,12 +8,21 @@
     "Find legal aid" data, CC0). LSC publishes no current office list (its
     ArcGIS office layer was last edited in 2020), so the layer shows the
     service areas the programs cover. Baked nationwide, refreshed weekly.
+  - Free health insurance enrollment help (CMS): Navigator, Certified
+    Application Counselor and other assister organizations from the open
+    dataset behind HealthCare.gov's Find Local Help (data.healthcare.gov,
+    daily CSV, public). Agents and brokers (individuals) are never parsed;
+    sites CMS lists without a public address get an area point only. Baked
+    nationwide, refreshed weekly. States running their own marketplace
+    (Covered California, NY State of Health...) aren't in it and publish no
+    open assister data.
   - Post offices (USGS National Structures Dataset): a View of USGS's
     national service, queried for the area on screen; the home county keeps
     a small baked copy.
 
 Privacy: explicit allowlists. Office names, street addresses, public office
-lines, hours and program websites only; none of these sources lists people.
+lines, hours and program websites only; none of these sources lists people
+(Find Local Help does, as agents/brokers and counselor-named sites: dropped).
 Researched and left out (no open, current, keyless bulk source): IRS VITA/TCE
 sites and Taxpayer Assistance Centers, passport acceptance facilities, USCIS
 field offices / Application Support Centers and WIC clinics: each has only a
@@ -134,6 +143,23 @@ async def _legal_aid_areas(client: httpx.AsyncClient, _s: Settings) -> dict:
     return fc
 
 
+# --- Health insurance Marketplace assisters (HealthCare.gov Find Local Help) ------
+
+# CMS's published copy of the data behind localhelp.healthcare.gov
+# (data.healthcare.gov dataset 3ddf85bc-f71b-4417-b271-410cbf9e0905, public,
+# keyless, CORS-open, updated daily). The same file lists agents and brokers;
+# the parser keeps only the free assister organizations.
+LOCAL_HELP_CSV = "https://data.healthcare.gov/datafile/localhelp/prod/helpers.csv"
+
+
+async def _marketplace_assisters(client: httpx.AsyncClient, _s: Settings) -> dict:
+    body = await _get(client, LOCAL_HELP_CSV, max_mb=80)
+    feats, pending = hp.marketplace_assisters(body.decode("utf-8-sig", "replace"))
+    if pending:  # a few public sites come without a point
+        feats += [f for f in await geocode(client, pending, True) if f]
+    return _enough("marketplace-assisters", feats, 1000)
+
+
 # --- Post offices (USGS National Structures Dataset) -----------------------------
 
 POST_OFFICES = "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/3"
@@ -186,6 +212,26 @@ LAYERS: dict[str, Layer] = {
         group="help",
         loader=_legal_aid_areas,
     ),
+    "marketplace-assisters": _layer(
+        "marketplace-assisters",
+        "Free help to sign up for health insurance (Navigators)",
+        "Ayuda gratuita para inscribirse en un seguro médico (Navegadores)",
+        "Organizations with trained Navigators and certified counselors who help "
+        "for free, in person, to apply for Marketplace coverage, Medicaid and CHIP "
+        "(HealthCare.gov Find Local Help, CMS). Open enrollment starts November 1. "
+        "Covers the states that use HealthCare.gov; states with their own "
+        "marketplace, such as California, New York and Illinois, list helpers on "
+        "their own sites.",
+        "Organizaciones con Navegadores capacitados y consejeros certificados que ayudan gratis, "
+        "en persona, a solicitar cobertura del Mercado de Seguros Médicos, Medicaid y CHIP "
+        "(Find Local Help de CuidadoDeSalud.gov, CMS). La inscripción abierta empieza el 1 de "
+        "noviembre. Incluye los estados que usan CuidadoDeSalud.gov; los estados con su propio "
+        "mercado, como California, Nueva York e Illinois, tienen la lista de ayudantes en sus "
+        "propios sitios.",
+        category="service",
+        group="help",
+        loader=_marketplace_assisters,
+    ),
     "post-offices": _layer(
         "post-offices",
         "Post offices",
@@ -215,6 +261,10 @@ SOURCES: dict[str, str] = {
         "U.S. Census Geocoder"
     ),
     "legal-aid-areas": "Legal Services Corporation, Find Legal Aid service areas (lsc.gov, CC0)",
+    "marketplace-assisters": (
+        "CMS, HealthCare.gov Find Local Help: assisters listing (data.healthcare.gov open "
+        "data, public U.S. government work; agents and brokers left out)"
+    ),
     "post-offices": "USGS National Structures Dataset, post offices (The National Map)",
 }
 

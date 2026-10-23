@@ -342,6 +342,7 @@ jobs:
             frontend/public/data/layers/tx-child-care-centers.geojson
             frontend/public/data/layers/social-security-offices.geojson
             frontend/public/data/layers/legal-aid-areas.geojson
+            frontend/public/data/layers/marketplace-assisters.geojson
             frontend/public/data/layers/post-offices.geojson
             frontend/public/data/layers/dialysis-facilities.geojson
             frontend/public/data/layers/hospice-providers.geojson
@@ -386,6 +387,7 @@ jobs:
             frontend/public/data/layers/tx-child-care-centers.geojson
             frontend/public/data/layers/social-security-offices.geojson
             frontend/public/data/layers/legal-aid-areas.geojson
+            frontend/public/data/layers/marketplace-assisters.geojson
             frontend/public/data/layers/post-offices.geojson
             frontend/public/data/layers/dialysis-facilities.geojson
             frontend/public/data/layers/hospice-providers.geojson

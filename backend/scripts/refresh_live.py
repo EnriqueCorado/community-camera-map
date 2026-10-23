@@ -92,7 +92,7 @@ DAILY = (
 # (PDF/spreadsheet downloads + Census geocoding): once a week, own cache in CI.
 WEEKLY = (
     *SERVICES_WEEKLY,
-    *HELP_OFFICES_WEEKLY,  # SSA offices, LSC legal aid areas, post offices (home copy)
+    *HELP_OFFICES_WEEKLY,  # SSA, LSC legal aid, Marketplace assisters, post offices (home)
     *CARE_COMPARE_WEEKLY,  # CMS dialysis, hospice, home health, hospital ratings
     "building-permits",  # Census BPS: yearly, by place
     *state_bakes.WEEKLY,  # state child-care lists (Texas is geocoded)

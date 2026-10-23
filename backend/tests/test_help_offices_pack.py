@@ -283,6 +283,7 @@ ALLOWED = {
     "social-security-offices": {"n", "a", "c", "s", "p", "t", "d", "x"},
     "post-offices": {"n", "a", "c", "s"},
     "legal-aid-areas": {"name", "phone", "web", "area"},
+    "marketplace-assisters": {"n", "o", "a", "c", "s", "p", "t", "l", "d", "web", "x"},
 }
 
 
@@ -372,3 +373,209 @@ async def test_social_security_loader_merges_both_files_and_guards_the_count(mon
     monkeypatch.setattr(ho, "geocode", fake_geocode)
     with pytest.raises(ValueError, match="only 8 offices"):  # 4 per file, far below a real list
         await ho._social_security(None, None)
+
+
+# --- HealthCare.gov Find Local Help (Marketplace assisters) ---------------------
+
+LH_HEADER = (
+    "record_id,data_set_name,organization_name,main_phone_number,street_address,city,"
+    "state_or_territory,zip_code,non_english_assistance_offered,organization_acronym,"
+    "office_hours,toll_free_phone,tty_phone,language_line_phone_for_non_english_speakers,"
+    "location_name,website_url,additional_information,accessibility_service_offered,"
+    "geo_location,email_address,display,display_address,address_comment"
+)
+WEEKDAYS = "\n".join(f"{d}: 8:00 AM - 5:00 PM" for d in ("Mon", "Tue", "Wed", "Thu", "Fri"))
+
+
+def _lh_row(rid, kind, org, **kw) -> list:
+    v = {
+        "phone": "2095550100",
+        "street": "100 Main St",
+        "city": "Houston",
+        "state": "TX",
+        "zip": "77001",
+        "langs": "English",
+        "hours": "",
+        "label": "",
+        "web": "",
+        "geo": "(29.76046,-95.36980)",
+        "email": "",
+        "display": "true",
+        "public": "true",
+        **kw,
+    }
+    return [
+        rid, kind, org, v["phone"], v["street"], v["city"], v["state"], v["zip"], v["langs"],
+        "", v["hours"], "", "", "", v["label"], v["web"], "Call jane@example.org", "", v["geo"],
+        v["email"], v["display"], v["public"], "",
+    ]  # fmt: skip
+
+
+def _lh_csv(*rows: list) -> str:
+    import csv
+    import io
+
+    buf = io.StringIO()
+    w = csv.writer(buf)
+    w.writerow(LH_HEADER.split(","))
+    w.writerows(rows)
+    return buf.getvalue()
+
+
+LH_CSV = _lh_csv(
+    # an agent/broker (a person): never parsed, even with a full address
+    _lh_row("1", "Agent/Broker (ABA)", "", label="Jane Q Doe", email="jane@example.org"),
+    # one clinic listed as CAC and as Medicaid specialist: merged
+    _lh_row(
+        "2", "Certified Application Counselor (CAC)", "Valley Health Center, Inc.",
+        street="100 Main St\nSte 2", hours=WEEKDAYS + "\nSat: 9:00 AM - 1:00 PM",
+        langs="English, Spanish, Interpretation services available for other languages",
+        label="Valley Health - Downtown", web="www.valleyhealth.example.org",
+        email="intake@valleyhealth.example.org",
+    ),
+    _lh_row(
+        "2", "Medicaid Specialist", "Valley Health Center, Inc.", street="100 Main St\nSte 2",
+        langs="English, Vietnamese", label="Valley Health - Downtown",
+    ),
+    # a Navigator with no public address: area point only, no street or hours
+    _lh_row(
+        "3", "Navigator (NAV)", "Covering Texas", street="", city="", state="", zip="",
+        hours=WEEKDAYS, label="TX Navigator", geo="(30.26715,-97.74306)", public="false",
+    ),
+    # a site labeled with a counselor's own name: kept as an area, name dropped
+    _lh_row(
+        "4", "Certified Application Counselor (CAC)", "Rural Clinic Network",
+        street="9 Oak Ln", label="Janet Smithson", geo="(31.54933,-97.14667)",
+    ),
+    # CMS test records and hidden rows are dropped
+    _lh_row("5", "Navigator (NAV)", "GDIT Test Org - 3915", label="River Rd Test Location"),
+    _lh_row("6", "Certified Application Counselor (CAC)", "TestOrgCSG", label="Central Ave"),
+    _lh_row("7", "Navigator (NAV)", "Hidden Org", display="false"),
+    # a public site without a point: handed to the geocoder
+    _lh_row("8", "In-person Assister (IPA)", "Family Services", street="5 Elm St", geo=""),
+    # a bad hours line (ends before it starts): no hours at all
+    _lh_row(
+        "9", "Navigator (NAV)", "Test-Taking Solution Foundation", street="7 Pine St",
+        hours="Mon: 7:00 AM - 5:00 AM", geo="(29.5,-95.1)",
+    ),
+    # counselor-named sites keep only the organization's own line
+    _lh_row("10", "Navigator (NAV)", "Lakeside Health", street="1 Lake Rd", phone="2095550111"),
+    _lh_row(
+        "11", "Navigator (NAV)", "Lakeside Health", label="Kim Hixley", phone="2095550111",
+        geo="(32.71,-96.81)",
+    ),
+    _lh_row(
+        "12", "Navigator (NAV)", "Lakeside Health", label="Joy Humbert", phone="2095550122",
+        geo="(33.11,-96.11)",
+    ),
+    _lh_row(
+        "13", "Certified Application Counselor (CAC)", "Lakeside Health", public="false",
+        street="", label="Heather's Application Services", phone="8505550199",
+        geo="(30.41,-87.21)",
+    ),
+    _lh_row(
+        "14", "Certified Application Counselor (CAC)", "Lakeside Health", public="false",
+        street="", label="Bay Navigator", phone="8005550100", geo="(30.71,-88.01)",
+    ),
+    # an "organization" that is a person's name
+    _lh_row("15", "Certified Application Counselor (CAC)", "Jane Doe", street="4 Elm St"),
+)  # fmt: skip
+
+
+def test_marketplace_assisters_keep_free_organizations_only():
+    feats, pending = hp.marketplace_assisters(LH_CSV)
+    lakeside = [f for f in feats if f["properties"]["n"] == "Lakeside Health"]
+    feats = [f for f in feats if f not in lakeside]
+    by = {f["properties"]["n"]: f for f in feats}
+    assert set(by) == {
+        "Valley Health Center, Inc.",
+        "Covering Texas",
+        "Rural Clinic Network",
+        "Test-Taking Solution Foundation",  # a real-looking name, not a CMS test record
+    }
+    # the org's own and toll-free lines stay; counselors' direct lines don't
+    assert [(f["properties"].get("o"), f["properties"].get("p")) for f in lakeside] == [
+        (None, "(209) 555-0111"),  # the public site
+        (None, "(209) 555-0111"),  # Kim Hixley's site: the org's main line
+        (None, None),  # Joy Humbert's own number
+        (None, None),  # Heather's Application Services: a person's business
+        ("Bay Navigator", "(800) 555-0100"),
+    ]
+    assert sum(1 for f in lakeside if f["properties"].get("x") == 2) == 4
+    clinic = by["Valley Health Center, Inc."]
+    assert clinic["geometry"]["coordinates"] == [-95.3698, 29.76046]
+    assert clinic["properties"] == {
+        "n": "Valley Health Center, Inc.",
+        "o": "Valley Health - Downtown",
+        "a": "100 Main St, Ste 2",
+        "c": "Houston",
+        "s": "TX",
+        "p": "(209) 555-0100",
+        "d": "Mon-Fri 8:00 AM-5:00 PM; Sat 9:00 AM-1:00 PM",
+        "web": "https://www.valleyhealth.example.org",
+        "t": "cac mcd",
+        "l": "English, Spanish, Vietnamese, Interpreters",
+    }
+    nav = by["Covering Texas"]
+    assert nav["geometry"]["coordinates"] == [-97.7, 30.3]  # ~10 km, not the site
+    assert nav["properties"]["x"] == 2 and nav["properties"]["t"] == "nav"
+    assert "a" not in nav["properties"] and "d" not in nav["properties"]
+    rural = by["Rural Clinic Network"]
+    assert rural["properties"]["x"] == 2
+    assert "o" not in rural["properties"] and "a" not in rural["properties"]
+    assert rural["geometry"]["coordinates"] == [-97.1, 31.5]
+    assert "d" not in by["Test-Taking Solution Foundation"]["properties"]
+    assert [p["n"] for p in pending] == ["Family Services"]
+    assert pending[0]["zip"] == "77001" and pending[0]["t"] == "ipa"
+    text = json.dumps([feats, pending])
+    assert "@" not in text and "Jane" not in text and "Janet" not in text
+
+
+def test_marketplace_assisters_refuse_a_changed_file():
+    with pytest.raises(ValueError, match="unexpected columns"):
+        hp.marketplace_assisters("id,name\n1,x\n")
+
+
+def test_assister_hours_group_days_and_reject_typos():
+    assert hp.assister_hours(WEEKDAYS) == "Mon-Fri 8:00 AM-5:00 PM"
+    split = "Mon: 8:00 AM - 5:00 PM\nTue: 8:00 AM - 8:00 PM\nThu: 8:00 AM - 5:00 PM"
+    assert hp.assister_hours(split) == "Mon, Thu 8:00 AM-5:00 PM; Tue 8:00 AM-8:00 PM"
+    assert hp.assister_hours("Mon: 12:00 PM - 1:00 PM") == "Mon 12:00 PM-1:00 PM"
+    assert hp.assister_hours("Mon: 9:00 AM - 5:00 AM") == ""
+    assert hp.assister_hours("Mon: by appointment") == ""
+    assert hp.assister_hours("") == ""
+
+
+def test_person_labels_are_told_apart_from_places():
+    for label in ("Jenny Rivers", "Celeste L. Bondurant-Bell", "Andrea Toms/SEARHC", "Kim Hixley"):
+        assert hp._person_label(label, "Some Health Org", "Austin"), label
+    places = ("Fort Walton", "Winter Haven", "Riverview Location", "Enroll Alabama", "Mound City")
+    for label in places:
+        assert not hp._person_label(label, "Some Health Org", "Winter Haven"), label
+    assert not hp._person_label("Capstone Parrish", "Capstone Health", "Parrish")
+    # a part named after the organization doesn't vouch for the other parts
+    org = "Samuel Q. Dalton Health Center"
+    assert not hp._person_label("Samuel Q. Dalton / County Health Dept.", org, "Kansas City")
+    assert hp._person_label("Samuel Q. Dalton / Mary Jo Fenwick", org, "Kansas City")
+    assert hp._person_label("Mike Jonsson", "Jonsson Navigator Services", "Austin")
+    assert hp._person_label("Adam Smithers", "Some Health Org", "Ada")
+
+
+async def test_marketplace_loader_geocodes_sites_without_a_point(monkeypatch):
+    seen = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        assert request.url.host == "data.healthcare.gov"
+        return httpx.Response(200, content=b"\xef\xbb\xbf" + LH_CSV.encode())
+
+    async def fake_geocode(_client, records, zip_fallback):
+        seen.extend(r["n"] for r in records)
+        assert zip_fallback
+        props = [{k: v for k, v in r.items() if k != "zip"} for r in records]
+        return [sv.sp.point(-95.0, 29.0, p) for p in props]
+
+    monkeypatch.setattr(ho, "geocode", fake_geocode)
+    async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+        with pytest.raises(ValueError, match="only 10 features"):  # far below a real list
+            await ho._marketplace_assisters(client, None)
+    assert seen == ["Family Services"]
