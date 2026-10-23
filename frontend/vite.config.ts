@@ -11,19 +11,18 @@ export default defineConfig(() => ({
   plugins: [
     react(),
     {
-      // Static site: the map waits for the camera index (api/client.ts), so
-      // fetch it alongside the code instead of after it runs. Same URL, mode
-      // and credentials as that fetch, so the browser reuses the response.
-      name: "preload-camera-index",
+      // Static site: the map waits for the camera index and the sidebar for
+      // the national layer catalog (api/client.ts), so fetch both alongside
+      // the code instead of after it runs. Same URL, mode and credentials as
+      // those fetches, so the browser reuses the responses.
+      name: "preload-first-data",
       transformIndexHtml: () =>
         process.env.VITE_STATIC === "1"
-          ? [
-              {
-                tag: "link",
-                attrs: { rel: "preload", href: "data/cameras/index.json", as: "fetch", crossorigin: true },
-                injectTo: "head",
-              },
-            ]
+          ? ["data/cameras/index.json", "data/catalog/base.json"].map((href) => ({
+              tag: "link",
+              attrs: { rel: "preload", href, as: "fetch", crossorigin: true },
+              injectTo: "head" as const,
+            }))
           : [],
     },
   ],
