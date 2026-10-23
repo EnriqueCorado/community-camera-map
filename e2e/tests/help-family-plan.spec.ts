@@ -144,7 +144,7 @@ test("erase everything asks first; answers survive switching views and tabs, but
   // Closing Free Help erases it.
   await dialog.getByRole("button", { name: "Close" }).click();
   await expect(dialog).toBeHidden();
-  await page.locator(".helpbtn").click();
+  await page.getByRole("button", { name: /^Free help/ }).click();
   await dialog.getByRole("tab", { name: "Immigration" }).click();
   await dialog.getByRole("button", { name: "Family emergency plan" }).click();
   await expect(section(page, "Back-up caregiver for the children").getByLabel("Name", { exact: true })).toHaveValue("");

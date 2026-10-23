@@ -3,8 +3,6 @@
 // limits are the Benefits screener's (benefits-facts.ts).
 import type { Lang } from "../i18n";
 
-type Fn<A extends unknown[]> = (...args: A) => string;
-
 export interface UtilitiesCopy {
   title: string;
   lead: string;
@@ -31,7 +29,6 @@ export interface UtilitiesCopy {
   resultsTitle: string;
   fillFirst: string;
   chooseUtility: string;
-  summary: Fn<[number, number, number]>;
   shutoffTitle: string;
   shutoffPge: string;
   shutoffOthers: string;
@@ -68,7 +65,6 @@ const en: UtilitiesCopy = {
   resultsTitle: "What you may get",
   fillFirst: "Choose who sends your electric bill and enter your income to see your results.",
   chooseUtility: "Choose who sends your electric bill to see the discounts for your utility.",
-  summary: (l, m, u) => `${l} likely, ${m} maybe, ${u} unlikely.`,
   shutoffTitle: "If you get a shutoff notice",
   shutoffPge: "PG&E (state rules)",
   shutoffOthers: "MID, TID and crisis help",
@@ -105,7 +101,6 @@ const es: UtilitiesCopy = {
   resultsTitle: "Lo que puede recibir",
   fillFirst: "Elija quién le manda la factura de luz y escriba sus ingresos para ver los resultados.",
   chooseUtility: "Elija quién le manda la factura de luz para ver los descuentos de su compañía.",
-  summary: (l, m, u) => `${l} probables, ${m} quizás, ${u} poco probables.`,
   shutoffTitle: "Si recibe un aviso de corte",
   shutoffPge: "PG&E (reglas estatales)",
   shutoffOthers: "MID, TID y ayuda de emergencia",

@@ -12,6 +12,10 @@ test("the A-Number helper: 8 or 9 digits, any spacing, padded to 9", () => {
   expect(parseANumber(" a-123-456-789 ")).toMatchObject({ digits: "123456789" });
   expect(parseANumber("A# 123 456 789")).toMatchObject({ digits: "123456789" });
   expect(parseANumber("12345678")).toEqual({ digits: "012345678", padded: true, display: "A-012-345-678" });
+  // Pasted numbers often carry Unicode hyphens or dashes (U+2010-2015).
+  for (const dashed of ["A\u2010123\u2010456\u2010789", "123\u2013456\u2013789", "A\u2014 123\u2011456\u2012789"]) {
+    expect(parseANumber(dashed), JSON.stringify(dashed)).toMatchObject({ digits: "123456789" });
+  }
   for (const bad of ["", "A", "1234567", "1234567890", "A12345678X", "000000000", "12a456789", "A-123-456-789-0"]) {
     expect(parseANumber(bad), bad).toBeNull();
   }
@@ -41,6 +45,8 @@ test("only phone numbers verified in the research", () => {
     "2096672378", // IRC Turlock
     "2094445910", // Catholic Charities Modesto, immigration
   ]);
+  // COURT includes EOIR_PHONE, the number the "Check your case" helper shows.
+  expect(COURT.EOIR_PHONE).toBe("1-800-898-7180");
   const text = JSON.stringify(COURT) + JSON.stringify(COURT_COPY);
   const found = [...text.matchAll(/(?:\+?1[\s.-]?)?\(?\b(\d{3})\)?[\s.-]?(\d{3})[\s.-](\d{4})\b/g)].map((m) => m[1]! + m[2]! + m[3]!);
   expect(found.length).toBeGreaterThan(5);

@@ -69,11 +69,16 @@ export const APP_IDS = [
   "legal",
 ] as const;
 
+/** Names older copies of the site still send (offline-saved pages and cached
+ *  app bundles): "medical" before the Health care tab had two tools (2026-10-23).
+ *  Counted as sent; drop after a few months. */
+export const LEGACY_APP_IDS = ["medical"] as const;
+
 export const LANGS = ["en", "es"] as const;
 
 /** Every event the counter accepts. */
 export const EVENTS: ReadonlySet<string> = new Set(
-  LANGS.flatMap((lang) => [...PAGE_IDS.map((id) => `page:${id}:${lang}`), ...APP_IDS.map((id) => `app:${id}:${lang}`)]),
+  LANGS.flatMap((lang) => [...PAGE_IDS.map((id) => `page:${id}:${lang}`), ...[...APP_IDS, ...LEGACY_APP_IDS].map((id) => `app:${id}:${lang}`)]),
 );
 
 const NOT_A_VISITOR = /HeadlessChrome|bot\b|crawl|spider|slurp|Playwright|curl\/|python-|Go-http/i;

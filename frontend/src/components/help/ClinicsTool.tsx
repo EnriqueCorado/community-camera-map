@@ -50,7 +50,16 @@ export function ClinicsTool({
         <p>
           {CLINICS_CONTACTS.crisis.name[lang]}: <Phone number={CLINICS_CONTACTS.crisis.phone} />
         </p>
-        <p>{CLINICS_CONTACTS.lifeline.name[lang]}</p>
+        <p>
+          {CLINICS_CONTACTS.lifeline.name[lang]}{" "}
+          <a href="tel:988" className="hphone">
+            {t.crisisCall}
+          </a>
+          {" · "}
+          <a href="sms:988" className="hphone">
+            {t.crisisText}
+          </a>
+        </p>
         <p>{t.crisis911}</p>
       </Result>
 
@@ -81,6 +90,7 @@ export function ClinicsTool({
         </Field>
       </div>
 
+      {/* hclinics__count: no styles; the tests find the count by it. */}
       <p className="hf__hint hclinics__count" role="status">
         {pick.nearest && town !== "all" ? t.nearest(TOWNS[town].name) : t.count(pick.clinics.length)}
       </p>
@@ -175,13 +185,16 @@ function ClinicCard({
         <Phone number={clinic.phone} />
         <ExtLink href={directionsUrl(clinic.address)} newTab={c.newTab}>
           {t.directions}
+          <span className="sr-only"> ({clinic.name})</span>
         </ExtLink>
         <ExtLink href={clinic.url} newTab={c.newTab}>
           {t.page}
+          <span className="sr-only"> ({clinic.name})</span>
         </ExtLink>
         {clinic.onMap && (
           <button type="button" className="linkbtn" onClick={() => onShowOnMap("health-centers", clinic.center)}>
             {c.showOnMap}
+            <span className="sr-only"> ({clinic.name})</span>
           </button>
         )}
       </div>

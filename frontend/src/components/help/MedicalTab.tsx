@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import type { HelpCopy } from "../../help/copy";
 import type { MedicalView } from "../../help/target";
 import { MedicalHelp } from "./MedicalHelp";
@@ -21,6 +21,12 @@ export function MedicalTab({
   hospitalId?: string;
   onShowOnMap: (layer: string, center?: [number, number]) => void;
 }) {
+  // The view a link in another view just opened, so focus follows the reader there.
+  const [linked, setLinked] = useState<MedicalView | null>(null);
+  const go = (v: MedicalView, fromLink = false) => {
+    setLinked(fromLink ? v : null);
+    onView(v);
+  };
   const views: [MedicalView, string][] = [
     ["bills", c.medicalViewBills],
     ["clinics", c.medicalViewClinics],
@@ -29,13 +35,13 @@ export function MedicalTab({
     <>
       <div className="hsub" role="group" aria-label={c.medicalViewLabel}>
         {views.map(([v, label]) => (
-          <button key={v} type="button" className={`chip${view === v ? " chip--on" : ""}`} aria-pressed={view === v} onClick={() => onView(v)}>
+          <button key={v} type="button" className={`chip${view === v ? " chip--on" : ""}`} aria-pressed={view === v} onClick={() => go(v)}>
             {label}
           </button>
         ))}
       </div>
       {view === "bills" ? (
-        <MedicalHelp c={c} hospitalId={hospitalId} onShowOnMap={onShowOnMap} />
+        <MedicalHelp c={c} hospitalId={hospitalId} onShowOnMap={onShowOnMap} focusTitle={linked === "bills"} />
       ) : (
         <Suspense
           fallback={
@@ -44,7 +50,7 @@ export function MedicalTab({
             </p>
           }
         >
-          <ClinicsTool c={c} onShowOnMap={onShowOnMap} onBills={() => onView("bills")} />
+          <ClinicsTool c={c} onShowOnMap={onShowOnMap} onBills={() => go("bills", true)} />
         </Suspense>
       )}
     </>

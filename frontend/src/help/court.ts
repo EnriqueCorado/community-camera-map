@@ -15,8 +15,9 @@ export interface ANumber {
 /** The A-Number in `input` (8 or 9 digits, with or without "A", spaces or
  *  dashes), or null if it isn't one. */
 export function parseANumber(input: string): ANumber | null {
-  const t = input.trim().replace(/^a\s*[-#:]?\s*/i, "");
-  if (!/^[\d\s.-]+$/.test(t)) return null;
+  // Dashes as typed or pasted: "-" and the Unicode hyphens and dashes (U+2010-2015).
+  const t = input.trim().replace(/^a\s*[-\u2010-\u2015#:]?\s*/i, "");
+  if (!/^[\d\s.\-\u2010-\u2015]+$/.test(t)) return null;
   const d = t.replace(/\D/g, "");
   if ((d.length !== 8 && d.length !== 9) || /^0+$/.test(d)) return null;
   const digits = d.padStart(9, "0");

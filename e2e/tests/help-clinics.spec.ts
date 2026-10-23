@@ -66,7 +66,8 @@ test("filter by town and need; a town with none shows the closest; nothing sent 
   // Each card: a phone link, directions (a plain link, no embedded map), the clinic's own page.
   const card = cards.first();
   await expect(card.getByRole("link", { name: "(209) 722-4842" })).toHaveAttribute("href", "tel:2097224842");
-  const directions = await card.getByRole("link", { name: /Directions/ }).getAttribute("href");
+  // Repeated links name their clinic for screen readers.
+  const directions = await card.getByRole("link", { name: /^See on a map \(.+\)$/ }).getAttribute("href");
   expect(directions).toBe("https://www.openstreetmap.org/search?query=4150%20Patterson%20Rd.%2C%20Riverbank%2C%20CA%2095367");
 
   expect(await page.evaluate(() => location.hash)).toBe(hash);
@@ -78,9 +79,9 @@ test("show on map closes the panel (health center sites only)", async ({ page })
   await dialog.getByLabel("What do you need?").selectOption({ label: "Vaccines" });
   // The county immunization clinic isn't on the health-center layer: no button.
   await expect(dialog.locator(".hdir__item")).toHaveCount(1);
-  await expect(dialog.getByRole("button", { name: "Show on map" })).toHaveCount(0);
+  await expect(dialog.getByRole("button", { name: /^Show on map/ })).toHaveCount(0);
   await dialog.getByLabel("What do you need?").selectOption({ label: "Dental" });
-  await dialog.getByRole("button", { name: "Show on map" }).first().click();
+  await dialog.getByRole("button", { name: /^Show on map/ }).first().click();
   await expect(dialog).toBeHidden();
 });
 
@@ -90,6 +91,9 @@ test("in Spanish, with the cited facts and the crisis line", async ({ page }) =>
   await expect(dialog.getByRole("heading", { level: 3, name: "Sus derechos en la clínica" })).toBeVisible();
   await expect(dialog.getByText(/intérprete calificado/)).toBeVisible();
   await expect(dialog.getByRole("link", { name: "(888) 376-6246" })).toHaveAttribute("href", "tel:8883766246");
+  // 988 is tappable: call or text.
+  await expect(dialog.getByRole("link", { name: "Llamar al 988" })).toHaveAttribute("href", "tel:988");
+  await expect(dialog.getByRole("link", { name: "Mandar un texto al 988" })).toHaveAttribute("href", "sms:988");
   await expect(dialog.locator(".hclinics__count")).toHaveText(`${CLINICS.length} lugares`);
 });
 

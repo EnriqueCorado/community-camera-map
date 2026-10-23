@@ -3,7 +3,7 @@
 // browser side skips Do Not Track / Global Privacy Control and sends nothing
 // but the event name.
 import { test, expect } from "@playwright/test";
-import { APP_IDS, EVENTS, PAGE_IDS, createCounter, memoryStore, monthOf, parseEvent, recentMonths, upstashStore, storeFromEnv } from "../../relay/src/counter";
+import { APP_IDS, LEGACY_APP_IDS, EVENTS, PAGE_IDS, createCounter, memoryStore, monthOf, parseEvent, recentMonths, upstashStore, storeFromEnv } from "../../relay/src/counter";
 import { SITE_ORIGIN } from "../../relay/src/relay";
 import { appCountId, countEvent, mayCount, sendCount } from "../../frontend/src/help/count";
 import { HELP_TABS, isHelpView, BENEFITS_VIEWS, IMMIGRATION_VIEWS, MEDICAL_VIEWS, RENT_VIEWS, WORK_VIEWS, type HelpTab } from "../../frontend/src/help/target";
@@ -40,8 +40,11 @@ test.describe("the fixed list of events", () => {
     // A new tool or view must be added to relay/src/counter.ts (and the relay redeployed).
     const site = siteEvents();
     for (const e of site) expect(EVENTS, e).toContain(e);
-    expect(new Set(site)).toEqual(EVENTS);
-    expect(EVENTS.size).toBe(2 * (PAGE_IDS.length + APP_IDS.length));
+    // Plus the legacy names older cached copies of the site still send.
+    const legacy = LEGACY_APP_IDS.flatMap((id) => [`app:${id}:en`, `app:${id}:es`]);
+    for (const e of legacy) expect(site, `${e} is legacy, not current`).not.toContain(e);
+    expect(new Set([...site, ...legacy])).toEqual(EVENTS);
+    expect(EVENTS.size).toBe(2 * (PAGE_IDS.length + APP_IDS.length + LEGACY_APP_IDS.length));
   });
 
   test("anything else is refused", () => {

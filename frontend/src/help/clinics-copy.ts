@@ -11,6 +11,9 @@ export interface ClinicsCopy {
   private: string;
   crisisTitle: string;
   crisis911: string;
+  /** The 988 links (a 3-digit number, so not a regular phone link). */
+  crisisCall: string;
+  crisisText: string;
   townLabel: string;
   townAll: string;
   needLabel: string;
@@ -37,6 +40,8 @@ const en: ClinicsCopy = {
   private: "Your choices stay on this device and aren’t saved or sent anywhere.",
   crisisTitle: "In a mental health or substance use crisis",
   crisis911: "If someone is in danger right now, call 911.",
+  crisisCall: "Call 988",
+  crisisText: "Text 988",
   townLabel: "Your town",
   townAll: "All towns",
   needLabel: "What do you need?",
@@ -54,7 +59,7 @@ const en: ClinicsCopy = {
   nearest: (town) => `None listed in ${town} for this. These are the closest:`,
   cost: { gvhc: "Sliding fee", lumira: "Sliding fee", pp: "Ask about cost", county: "Free or low cost" },
   dentalText: "Dental appointments (text only)",
-  directions: "Directions",
+  directions: "See on a map",
   page: "Their page",
   callFirst: "Hours change, and clinics close on some days: call before you go.",
   payTitle: "If you don’t have insurance",
@@ -71,6 +76,8 @@ const es: ClinicsCopy = {
   private: "Lo que elija se queda en este aparato y no se guarda ni se envía a ninguna parte.",
   crisisTitle: "En una crisis de salud mental o de uso de sustancias",
   crisis911: "Si alguien está en peligro ahora mismo, llame al 911.",
+  crisisCall: "Llamar al 988",
+  crisisText: "Mandar un texto al 988",
   townLabel: "Su ciudad",
   townAll: "Todas las ciudades",
   needLabel: "¿Qué necesita?",
@@ -88,7 +95,7 @@ const es: ClinicsCopy = {
   nearest: (town) => `No hay ninguno en ${town} para esto. Estos son los más cercanos:`,
   cost: { gvhc: "Cuota según ingresos", lumira: "Cuota según ingresos", pp: "Pregunte el costo", county: "Gratis o de bajo costo" },
   dentalText: "Citas dentales (solo texto)",
-  directions: "Cómo llegar",
+  directions: "Ver en el mapa",
   page: "Su página",
   callFirst: "Los horarios cambian y las clínicas cierran algunos días: llame antes de ir.",
   payTitle: "Si no tiene seguro",

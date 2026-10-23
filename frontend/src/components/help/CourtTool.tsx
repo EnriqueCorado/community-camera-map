@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useI18n } from "../../i18n";
 import type { HelpCopy } from "../../help/copy";
 import { COURT_COPY } from "../../help/court-copy";
-import { COURT_CHECKED, COURT_FACTS, COURT_HELP, COURT_LINKS, COURT_SOURCES, COURTS } from "../../help/court-facts";
+import { COURT_CHECKED, COURT_FACTS, COURT_HELP, COURT_LINKS, COURT_SOURCES, COURTS, EOIR_PHONE } from "../../help/court-facts";
 import { parseANumber } from "../../help/court";
 import { LEGAL_DIRECTORIES, RIGHTS_FACTS, WHO_CAN_ADVISE } from "../../help/rights-facts";
 import { factsById } from "../../help/facts-by-id";
@@ -22,7 +22,11 @@ export function CourtTool({ c, onLegal, onPlan, focusTitle }: { c: HelpCopy; onL
   const { lang, locale } = useI18n();
   const t = COURT_COPY[lang];
   const [aNumber, setANumber] = useState("");
+  const [left, setLeft] = useState(false);
   const parsed = aNumber.trim() ? parseANumber(aNumber) : null;
+  // Every half-typed number is "invalid": say so only once it's long enough
+  // to be one (8+ digits) or the reader has moved on from the field.
+  const showInvalid = !parsed && aNumber.trim() !== "" && (left || aNumber.replace(/\D/g, "").length >= 8);
   // Opened from a link in another view: focus follows the reader here.
   const titleRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
@@ -58,14 +62,19 @@ export function CourtTool({ c, onLegal, onPlan, focusTitle }: { c: HelpCopy; onL
                 spellCheck={false}
                 data-gramm="false"
                 maxLength={20}
+                aria-invalid={showInvalid || undefined}
                 value={aNumber}
-                onChange={(e) => setANumber(e.target.value)}
+                onChange={(e) => {
+                  setANumber(e.target.value);
+                  setLeft(false);
+                }}
+                onBlur={() => setLeft(true)}
               />
             )}
           </Field>
         </div>
         <div aria-live="polite">
-          {aNumber.trim() && !parsed && <p>{t.aInvalid}</p>}
+          {showInvalid && <p>{t.aInvalid}</p>}
           {parsed && (
             <>
               <p>
@@ -73,7 +82,7 @@ export function CourtTool({ c, onLegal, onPlan, focusTitle }: { c: HelpCopy; onL
               </p>
               {parsed.padded && <p className="hf__hint">{t.aPadded}</p>}
               <p>
-                {t.aCall} <Phone number="1-800-898-7180" /> {t.aDial(parsed.digits.split("").join(" "))}
+                {t.aCall} <Phone number={EOIR_PHONE} /> {t.aDial(parsed.digits.split("").join(" "))}
               </p>
             </>
           )}

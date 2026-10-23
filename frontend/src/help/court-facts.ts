@@ -20,6 +20,9 @@ import type { Bilingual } from "./letter-types";
 export const COURT_CHECKED = "2026-10-23";
 export const COURT_RECHECK = "2026-11-23";
 
+/** EOIR's automated case line (phone and the "Check your case" helper). */
+export const EOIR_PHONE = "1-800-898-7180";
+
 export const COURT_LINKS = {
   acis: "https://acis.eoir.justice.gov/en/",
   acisEs: "https://acis.eoir.justice.gov/es/",

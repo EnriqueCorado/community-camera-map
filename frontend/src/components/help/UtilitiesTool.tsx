@@ -129,9 +129,9 @@ export function UtilitiesTool({ c }: { c: HelpCopy }) {
         <h4 id="util-results">{u.resultsTitle}</h4>
         <div aria-live="polite">
           {income.trim() !== "" && cents == null && <p>{c.moneyInvalid}</p>}
-          {(cents == null || electric == null) && income.trim() === "" && <p>{u.fillFirst}</p>}
+          {income.trim() === "" && <p>{u.fillFirst}</p>}
           {cents != null && electric == null && <p>{u.chooseUtility}</p>}
-          {groups && <p className="hstat hben__summary">{u.summary(groups.likely.length, groups.maybe.length, groups.unlikely.length)}</p>}
+          {groups && <p className="hstat hben__summary">{b.summary(groups.likely.length, groups.maybe.length, groups.unlikely.length)}</p>}
         </div>
         {groups && (
           <>
@@ -143,7 +143,7 @@ export function UtilitiesTool({ c }: { c: HelpCopy }) {
                     {b.verdictTitle[v]} ({groups[v].length})
                   </h5>
                   {groups[v].map((r) => (
-                    <ProgramCard key={r.id} r={r} b={b} c={c} money={money} size={size} />
+                    <ProgramCard key={r.id} r={r} b={b} c={c} money={money} size={size} level={6} />
                   ))}
                 </section>
               ),

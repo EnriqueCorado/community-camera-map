@@ -43,9 +43,19 @@ test("the A-Number helper formats the number and never sends, stores or links it
   await expect(box).toHaveAttribute("autocomplete", "off");
   await expect(box).toHaveAttribute("spellcheck", "false");
 
+  // Half typed: no error yet (every partial number is "invalid").
+  const invalid = dialog.getByText("Check the number: an A-Number has 8 or 9 digits.");
   await box.fill("123");
-  await expect(dialog.getByText("Check the number: an A-Number has 8 or 9 digits.")).toBeVisible();
+  await expect(invalid).toHaveCount(0);
+  await expect(box).not.toHaveAttribute("aria-invalid", "true");
+  // Leaving the field with a short number, or typing too many digits, says so.
+  await box.blur();
+  await expect(invalid).toBeVisible();
+  await expect(box).toHaveAttribute("aria-invalid", "true");
+  await box.fill("1234567890");
+  await expect(invalid).toBeVisible();
   await box.fill("A 98765432");
+  await expect(invalid).toHaveCount(0);
   await expect(dialog.getByText("Your A-Number, to read back: A-098-765-432")).toBeVisible();
   await expect(dialog.getByText(/Yours has 8 digits/)).toBeVisible();
   await expect(dialog.getByText("Call 1-800-898-7180 and type these 9 digits: 0 9 8 7 6 5 4 3 2")).toBeVisible();

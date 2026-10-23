@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useI18n } from "../../i18n";
 import type { HelpCopy } from "../../help/copy";
 import { MEDICAL_FACTS } from "../../help/facts";
@@ -16,12 +16,19 @@ export function MedicalHelp({
   c,
   hospitalId,
   onShowOnMap,
+  focusTitle,
 }: {
   c: HelpCopy;
   hospitalId?: string;
   onShowOnMap: (layer: string, center?: [number, number]) => void;
+  /** Move focus to the check's title on open (when reached from a link in another view). */
+  focusTitle?: boolean;
 }) {
   const { lang, locale } = useI18n();
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    if (focusTitle) titleRef.current?.focus();
+  }, [focusTitle]);
   const [size, setSize] = useState(1);
   const [income, setIncome] = useState("");
   const [per, setPer] = useState<"month" | "year">("month");
@@ -45,7 +52,9 @@ export function MedicalHelp({
       <p className="help__lead">{c.medLead}</p>
 
       <section className="hcard" aria-labelledby="med-check">
-        <h3 id="med-check">{c.medCheckTitle}</h3>
+        <h3 id="med-check" ref={titleRef} tabIndex={-1}>
+          {c.medCheckTitle}
+        </h3>
         <div className="hform">
           <Field label={c.medHospital} wide>
             {({ id }) => (

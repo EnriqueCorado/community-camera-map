@@ -259,8 +259,8 @@ export function BenefitsHelp({ c }: { c: HelpCopy }) {
   );
 }
 
-/** One program's result (also used by the utility-bill tool). */
-export function ProgramCard({ r, b, c, money, size }: { r: ProgramResult; b: BenefitsCopy; c: HelpCopy; money: Money; size: number }) {
+/** One program's result (also used by the utility-bill tool, one heading level deeper). */
+export function ProgramCard({ r, b, c, money, size, level = 5 }: { r: ProgramResult; b: BenefitsCopy; c: HelpCopy; money: Money; size: number; level?: 5 | 6 }) {
   const { lang } = useI18n();
   const p = PROGRAMS[r.id];
   const headId = `ben-card-${r.id}`;
@@ -268,11 +268,12 @@ export function ProgramCard({ r, b, c, money, size }: { r: ProgramResult; b: Ben
   const period = TAX_PROGRAMS.has(r.id) ? TAX.period[lang] : table?.period[lang];
   const source = table?.source ?? p.sources[0];
   const compact = r.verdict === "unlikely";
+  const Heading = level === 6 ? "h6" : "h5";
   return (
     <article className={`hresult hresult--${TONE[r.verdict]} hben__card`} aria-labelledby={headId}>
-      <h5 id={headId} className="hresult__title">
+      <Heading id={headId} className="hresult__title">
         {p.name[lang]}
-      </h5>
+      </Heading>
       <p>
         {p.gives[lang]}
         {r.upTo && !compact && <> {b.upTo(money(r.upTo.cents), r.upTo.per, size, r.upTo.year, TAX.year)}</>}

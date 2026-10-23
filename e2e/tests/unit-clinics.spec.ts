@@ -35,7 +35,7 @@ test.describe("the clinic list", () => {
   });
 
   test("sliding-fee health centers in every town with one, and each need covered somewhere", () => {
-    expect(TOWNS_WITH_CLINICS.sort()).toEqual(["ceres", "empire", "hughson", "modesto", "newman", "patterson", "riverbank", "turlock", "waterford", "westley"]);
+    expect([...TOWNS_WITH_CLINICS].sort()).toEqual(["ceres", "empire", "hughson", "modesto", "newman", "patterson", "riverbank", "turlock", "waterford", "westley"]);
     for (const n of NEEDS) expect(CLINICS.some((c) => c.needs.includes(n)), n).toBe(true);
     expect(CLINICS.filter((c) => c.needs.includes("vaccines")).map((c) => c.id)).toEqual(["county-vaccines"]);
   });
