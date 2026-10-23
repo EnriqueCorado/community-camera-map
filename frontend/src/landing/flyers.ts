@@ -204,6 +204,31 @@ export const FLYERS: readonly Flyer[] = [
       },
     },
   },
+  {
+    id: "utilities",
+    to: { tool: "utilities" },
+    layout: "page",
+    side: {
+      en: {
+        headline: "Help with gas and electric bills",
+        bullets: [
+          "Monthly discounts on PG&E, MID and TID bills for families with lower incomes.",
+          "Behind on a bill? Ask for a payment plan, and get help paying.",
+          "Got a shutoff notice? Call your utility today. Know the rules.",
+          "Medical equipment at home? Ask about a medical rate.",
+        ],
+      },
+      es: {
+        headline: "Ayuda con las facturas de luz y gas",
+        bullets: [
+          "Descuentos mensuales en las facturas de PG&E, MID y TID para familias con ingresos más bajos.",
+          "¿Atrasado con una factura? Pida un plan de pagos y ayuda para pagar.",
+          "¿Recibió un aviso de corte? Llame hoy a su compañía. Conozca las reglas.",
+          "¿Equipo médico en casa? Pregunte por una tarifa médica.",
+        ],
+      },
+    },
+  },
 ];
 
 /** Shared flyer wording (both languages appear on every flyer). */

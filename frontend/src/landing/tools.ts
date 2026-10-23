@@ -30,6 +30,8 @@ import { DACA_CHECKED, DACA_FACTS, DACA_HELP, DACA_SOURCES } from "../help/daca-
 import { DACA_COPY } from "../help/daca-copy";
 import { CA_CREDITS, FED_CREDITS, TAX_PLACES, TAX_SEASON, TAXES_CHECKED, TAXES_FACTS, TAXES_SOURCES } from "../help/taxes-facts";
 import { TAXES_COPY } from "../help/taxes-copy";
+import { UTIL_CHECKED, UTIL_CONTACTS, UTIL_FACTS, UTIL_SOURCES } from "../help/utilities-facts";
+import { UTILITIES_COPY } from "../help/utilities-copy";
 import { longDate } from "../help/dates";
 import { LOCALE } from "../i18n";
 
@@ -60,7 +62,8 @@ export type ToolId =
   | "legal"
   | "family-plan"
   | "daca"
-  | "taxes";
+  | "taxes"
+  | "utilities";
 
 /** A line in a section. `esEn`: an English part shown first on the Spanish page
  *  (marked lang="en"), e.g. the official civics question the officer asks. */
@@ -519,6 +522,40 @@ export const TOOLS: readonly ToolPage[] = [
     places: Object.values(TAX_PLACES),
     sources: TAXES_SOURCES,
     checked: TAXES_CHECKED,
+  },
+  {
+    id: "utilities",
+    group: "health",
+    slug: { en: "utility-bills", es: "facturas-de-luz-y-gas" },
+    target: { tab: "benefits", view: "utilities" },
+    name: { en: UTILITIES_COPY.en.title, es: UTILITIES_COPY.es.title },
+    summary: {
+      en: "Discounts on PG&E, MID and TID bills, help with a bill you’re behind on, and what PG&E must do before a shutoff. Stanislaus County.",
+      es: "Descuentos en las facturas de PG&E, MID y TID, ayuda con una factura atrasada, y lo que PG&E debe hacer antes de un corte. Condado de Stanislaus.",
+    },
+    intro: {
+      en: `${UTILITIES_COPY.en.lead} ${UTILITIES_COPY.en.shutoffBoxTitle} ${UTILITIES_COPY.en.shutoffBoxText}`,
+      es: `${UTILITIES_COPY.es.lead} ${UTILITIES_COPY.es.shutoffBoxTitle} ${UTILITIES_COPY.es.shutoffBoxText}`,
+    },
+    groups: [
+      group({ en: UTILITIES_COPY.en.whichTitle, es: UTILITIES_COPY.es.whichTitle }, UTIL_FACTS.which),
+      group({ en: UTILITIES_COPY.en.shutoffTitle, es: UTILITIES_COPY.es.shutoffTitle }, UTIL_FACTS.shutoff),
+      group({ en: UTILITIES_COPY.en.debtTitle, es: UTILITIES_COPY.es.debtTitle }, UTIL_FACTS.debt),
+      group({ en: UTILITIES_COPY.en.medicalTitle, es: UTILITIES_COPY.es.medicalTitle }, UTIL_FACTS.medical),
+      group({ en: UTILITIES_COPY.en.scamsTitle, es: UTILITIES_COPY.es.scamsTitle }, UTIL_FACTS.scams),
+    ],
+    sections: [
+      {
+        title: { en: "Bill discounts and help paying (the free tool checks your income against each one)", es: "Descuentos y ayuda para pagar (la herramienta gratis compara sus ingresos con cada uno)" },
+        items: (["pge-care", "pge-fera", "mid-cares", "tid-cares", "liheap"] as const).map((id) => ({
+          en: `${PROGRAMS[id].name.en}: ${PROGRAMS[id].gives.en}`,
+          es: `${PROGRAMS[id].name.es}: ${PROGRAMS[id].gives.es}`,
+        })),
+      },
+    ],
+    places: Object.values(UTIL_CONTACTS),
+    sources: UTIL_SOURCES,
+    checked: UTIL_CHECKED,
   },
 ];
 

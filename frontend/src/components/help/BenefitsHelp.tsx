@@ -259,7 +259,8 @@ export function BenefitsHelp({ c }: { c: HelpCopy }) {
   );
 }
 
-function ProgramCard({ r, b, c, money, size }: { r: ProgramResult; b: BenefitsCopy; c: HelpCopy; money: Money; size: number }) {
+/** One program's result (also used by the utility-bill tool). */
+export function ProgramCard({ r, b, c, money, size }: { r: ProgramResult; b: BenefitsCopy; c: HelpCopy; money: Money; size: number }) {
   const { lang } = useI18n();
   const p = PROGRAMS[r.id];
   const headId = `ben-card-${r.id}`;

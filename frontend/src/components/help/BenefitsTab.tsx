@@ -3,8 +3,9 @@ import type { BenefitsView } from "../../help/target";
 import { BenefitsHelp } from "./BenefitsHelp";
 import { MediCalWorkTool } from "./MediCalWorkTool";
 import { TaxesTool } from "./TaxesTool";
+import { UtilitiesTool } from "./UtilitiesTool";
 
-/** Benefits tab: the benefits screener, Medi-Cal's 2027 work rules, and free tax help. */
+/** Benefits tab: the benefits screener, Medi-Cal's 2027 work rules, free tax help, and gas and electric bills. */
 export function BenefitsTab({
   c,
   view,
@@ -20,6 +21,7 @@ export function BenefitsTab({
     ["screener", c.benefitsViewScreener],
     ["medi-cal", c.benefitsViewWork],
     ["taxes", c.benefitsViewTaxes],
+    ["utilities", c.benefitsViewUtilities],
   ];
   return (
     <>
@@ -33,6 +35,7 @@ export function BenefitsTab({
       {view === "screener" && <BenefitsHelp c={c} />}
       {view === "medi-cal" && <MediCalWorkTool c={c} />}
       {view === "taxes" && <TaxesTool c={c} onLegal={onLegal} />}
+      {view === "utilities" && <UtilitiesTool c={c} />}
     </>
   );
 }

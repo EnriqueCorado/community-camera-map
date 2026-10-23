@@ -27,6 +27,7 @@ export const PAGES = {
   "family-plan": { target: { tab: "immigration", view: "plan" }, slug: { en: "family-plan", es: "plan-familiar" } },
   daca: { target: { tab: "immigration", view: "daca" }, slug: { en: "daca-renewal", es: "renovar-daca" } },
   taxes: { target: { tab: "benefits", view: "taxes" }, slug: { en: "free-tax-help", es: "impuestos-gratis" } },
+  utilities: { target: { tab: "benefits", view: "utilities" }, slug: { en: "utility-bills", es: "facturas-de-luz-y-gas" } },
   legal: { target: { tab: "legal" }, slug: { en: "legal-aid", es: "ayuda-legal" } },
 } as const satisfies Record<string, { target: HelpTarget; slug: Bilingual }>;
 
@@ -63,6 +64,7 @@ export const START_CHOICES: readonly { page: PageId; label: Bilingual }[] = [
   { page: "family-plan", label: { en: "I want a plan in case my family is separated", es: "Quiero un plan por si separan a mi familia" } },
   { page: "daca", label: { en: "I need to renew DACA", es: "Necesito renovar DACA" } },
   { page: "taxes", label: { en: "I need free help with my taxes", es: "Necesito ayuda gratis con mis impuestos" } },
+  { page: "utilities", label: { en: "I can’t pay my gas or electric bill / I got a shutoff notice", es: "No puedo pagar la luz o el gas / recibí un aviso de corte" } },
   { page: "legal", label: { en: "I need a free or low-cost lawyer", es: "Necesito un abogado gratis o de bajo costo" } },
 ];
 
@@ -102,6 +104,8 @@ export const SHORT_LINKS: readonly { slug: string; page: PageId | "home"; lang: 
   { slug: "daca-es", page: "daca", lang: "es" },
   { slug: "taxes", page: "taxes", lang: "en" },
   { slug: "impuestos", page: "taxes", lang: "es" },
+  { slug: "luz", page: "utilities", lang: "es" },
+  { slug: "energy", page: "utilities", lang: "en" },
   { slug: "lawyer", page: "legal", lang: "en" },
   { slug: "abogado", page: "legal", lang: "es" },
 ];

@@ -15,6 +15,7 @@ import { CIVICS_CHECKED, CIVICS_OFFICIALS_RECHECK } from "./civics-facts";
 import { PLAN_CHECKED } from "./family-plan-facts";
 import { DACA_CHECKED, DACA_RECHECK } from "./daca-facts";
 import { TAXES_CHECKED, TAXES_RECHECK } from "./taxes-facts";
+import { UTIL_CHECKED, UTIL_RECHECK } from "./utilities-facts";
 import { LANGUAGES_CHECKED, LANGUAGES_REVIEW_BY } from "./languages-facts";
 import { addDays } from "./dates";
 
@@ -121,6 +122,12 @@ export function upkeepItems(): UpkeepItem[] {
       source: "https://www.ftb.ca.gov/file/personal/credits/caleitc/eligibility-and-credit-information.html",
     },
     {
+      id: "utilities-winter",
+      due: UTIL_RECHECK,
+      task: "Re-check the utility-bill tool (utilities-facts.ts): PG&E Electric Rule 11 for the CPUC's July 2026 heat rule (90°F) and the winter 32°F rule, AMP terms, CVOC's address and hours on CSD's provider list, CSD's 2027 LIHEAP table and federal LIHEAP funding (benefits-facts.ts TABLES.liheap), and TID's $30 CARES charge discount from Jan 1, 2027; then move UTIL_RECHECK.",
+      source: "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_RULES_11.pdf",
+    },
+    {
       id: "languages-review",
       due: LANGUAGES_REVIEW_BY,
       task: "Get a native speaker to review the Punjabi and Dari pages and flyers (landing/languages.ts; reviewers in research/languages.md). Remove the “not yet checked” note only after a review; otherwise move LANGUAGES_REVIEW_BY.",
@@ -147,6 +154,7 @@ export function upkeepItems(): UpkeepItem[] {
         ["family-plan", PLAN_CHECKED],
         ["daca", DACA_CHECKED],
         ["taxes", TAXES_CHECKED],
+        ["utilities", UTIL_CHECKED],
         ["languages", LANGUAGES_CHECKED],
       ] as const
     ).map(([id, checked]) => ({

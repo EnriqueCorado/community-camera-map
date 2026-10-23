@@ -443,7 +443,23 @@ export function screen(a: Answers, today: string): Screen {
         break;
     }
   }
-  const final = results.map((r) => {
+  return { results: finalize(results, today), pending };
+}
+
+/** Only the energy-bill programs (CARE, FERA, MID CARES, TID CARES, LIHEAP),
+ *  for the utility-bill tool. Same rules as `screen`, except that a MID or TID
+ *  home sees its own discount before saying whether PG&E sends a gas bill
+ *  (CARE is added once it does). */
+export function screenUtilities(a: Answers, today: string): ProgramResult[] {
+  const results: ProgramResult[] = [];
+  if (a.electric != null) results.push(...utilities(a.pgeGas == null && (a.electric === "mid" || a.electric === "tid") ? { ...a, pgeGas: "no" } : a));
+  results.push(liheap(a));
+  return finalize(results, today);
+}
+
+/** The checks every result gets, whichever screen produced it. */
+function finalize(results: ProgramResult[], today: string): ProgramResult[] {
+  return results.map((r) => {
     // Someone already enrolled should check at renewal, not give up.
     if (r.verdict === "unlikely" && r.reasons.some((x) => x.kind === "already")) r = { ...r, verdict: "maybe" };
     // A table whose period has ended (kept only because nothing newer was
@@ -453,7 +469,6 @@ export function screen(a: Answers, today: string): Screen {
     if (TAX_IDS.has(r.id) && isTaxOld(today)) r = capMaybe(r, { kind: "oldTax" });
     return r;
   });
-  return { results: final, pending };
 }
 
 const TAX_IDS = new Set<ProgramId>(["caleitc", "yctc", "federal-eitc"]);
