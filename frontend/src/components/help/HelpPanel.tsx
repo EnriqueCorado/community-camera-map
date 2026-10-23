@@ -7,7 +7,7 @@ import "./help.css";
 import { useI18n } from "../../i18n";
 import { useDialog } from "../../hooks/useDialog";
 import { COPY } from "../../help/copy";
-import { isBenefitsView, isImmigrationView, isRentView, isWorkView, type HelpTab, type HelpTarget } from "../../help/target";
+import { isBenefitsView, isImmigrationView, isMedicalView, isRentView, isWorkView, type HelpTab, type HelpTarget } from "../../help/target";
 import { appCountId, countEvent, mayCount, sendCount } from "../../help/count";
 import { Tabs } from "./Tabs";
 import { StartChooser } from "./StartChooser";
@@ -21,7 +21,7 @@ const counted = new Set<string>();
 
 // Each tab is its own download, fetched the first time it's opened: most
 // visitors need one tool, often on a slow phone connection.
-const MedicalHelp = lazy(() => import("./MedicalHelp").then((m) => ({ default: m.MedicalHelp })));
+const MedicalTab = lazy(() => import("./MedicalTab").then((m) => ({ default: m.MedicalTab })));
 const RenterHelp = lazy(() => import("./RenterHelp").then((m) => ({ default: m.RenterHelp })));
 const WorkHelp = lazy(() => import("./WorkHelp").then((m) => ({ default: m.WorkHelp })));
 const BenefitsTab = lazy(() => import("./BenefitsTab").then((m) => ({ default: m.BenefitsTab })));
@@ -113,7 +113,15 @@ export default function HelpPanel({ target, onTarget, onClose, onShowOnMap }: Pr
               </p>
             }
           >
-            {target.tab === "medical" && <MedicalHelp c={c} hospitalId={target.hospitalId} onShowOnMap={onShowOnMap} />}
+            {target.tab === "medical" && (
+              <MedicalTab
+                c={c}
+                view={isMedicalView(target.view) ? target.view : "bills"}
+                onView={(view) => onTarget({ tab: "medical", view })}
+                hospitalId={target.hospitalId}
+                onShowOnMap={onShowOnMap}
+              />
+            )}
             {target.tab === "rent" && (
               <RenterHelp
                 c={c}

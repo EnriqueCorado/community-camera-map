@@ -19,6 +19,9 @@ export interface HelpCopy {
   tabBenefits: string;
   tabImmigration: string;
   immigrationViewLabel: string;
+  medicalViewLabel: string;
+  medicalViewBills: string;
+  medicalViewClinics: string;
   immigrationViewRights: string;
   immigrationViewCitizenship: string;
   immigrationViewPlan: string;
@@ -192,13 +195,16 @@ const en: HelpCopy = {
   privacyStrong: "Private:",
   privacy: "what you type stays on this device and is never saved or shared. Closing this window erases it.",
   close: "Close",
-  tabMedical: "Medical bills",
+  tabMedical: "Health care",
   tabRent: "Renters",
   tabLegal: "Legal help",
   tabWork: "Work",
   tabBenefits: "Benefits",
   tabImmigration: "Immigration",
   immigrationViewLabel: "Choose a topic",
+  medicalViewLabel: "Choose a topic",
+  medicalViewBills: "Hospital bills",
+  medicalViewClinics: "Free and low-cost clinics",
   immigrationViewRights: "Know your rights",
   immigrationViewCitizenship: "Citizenship test practice",
   immigrationViewPlan: "Family emergency plan",
@@ -394,13 +400,16 @@ const es: HelpCopy = {
   privacyStrong: "Privado:",
   privacy: "lo que escriba se queda en este aparato y nunca se guarda ni se comparte. Al cerrar esta ventana se borra.",
   close: "Cerrar",
-  tabMedical: "Cuentas médicas",
+  tabMedical: "Salud",
   tabRent: "Inquilinos",
   tabLegal: "Ayuda legal",
   tabWork: "Trabajo",
   tabBenefits: "Beneficios",
   tabImmigration: "Inmigración",
   immigrationViewLabel: "Elija un tema",
+  medicalViewLabel: "Elija un tema",
+  medicalViewBills: "Cuentas de hospital",
+  medicalViewClinics: "Clínicas gratis y de bajo costo",
   immigrationViewRights: "Conozca sus derechos",
   immigrationViewCitizenship: "Práctica para la ciudadanía",
   immigrationViewPlan: "Plan familiar de emergencia",

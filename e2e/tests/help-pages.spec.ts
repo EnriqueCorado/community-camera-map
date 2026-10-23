@@ -10,10 +10,10 @@ const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 const LIVE = "https://enriquecorado.github.io/community-camera-map/";
 
 const TOOL_PAGES = {
-  en: ["hospital-bills", "benefits", "medi-cal-work-rules", "rent-increase", "eviction-notice", "repairs", "security-deposit", "mobile-home-space-rent", "unpaid-wages", "heat-at-work", "know-your-rights", "citizenship-test", "legal-aid", "family-plan", "daca-renewal", "free-tax-help", "utility-bills", "immigration-court"],
-  es: ["cuentas-de-hospital", "beneficios", "reglas-de-trabajo-medi-cal", "aumento-de-renta", "aviso-de-desalojo", "reparaciones", "deposito", "renta-de-espacio-casa-movil", "salarios-no-pagados", "calor-en-el-trabajo", "conozca-sus-derechos", "examen-de-ciudadania", "ayuda-legal", "plan-familiar", "renovar-daca", "impuestos-gratis", "facturas-de-luz-y-gas", "corte-de-inmigracion"],
+  en: ["hospital-bills", "benefits", "medi-cal-work-rules", "rent-increase", "eviction-notice", "repairs", "security-deposit", "mobile-home-space-rent", "unpaid-wages", "heat-at-work", "know-your-rights", "citizenship-test", "legal-aid", "family-plan", "daca-renewal", "free-tax-help", "utility-bills", "immigration-court", "free-clinics"],
+  es: ["cuentas-de-hospital", "beneficios", "reglas-de-trabajo-medi-cal", "aumento-de-renta", "aviso-de-desalojo", "reparaciones", "deposito", "renta-de-espacio-casa-movil", "salarios-no-pagados", "calor-en-el-trabajo", "conozca-sus-derechos", "examen-de-ciudadania", "ayuda-legal", "plan-familiar", "renovar-daca", "impuestos-gratis", "facturas-de-luz-y-gas", "corte-de-inmigracion", "clinicas-gratis"],
 };
-const FLYERS = ["general", "hospital-bills", "medi-cal", "citizenship", "renters", "workers", "cards", "taxes", "utilities"];
+const FLYERS = ["general", "hospital-bills", "medi-cal", "citizenship", "renters", "workers", "cards", "taxes", "utilities", "clinics"];
 const ALL = [
   "help/",
   "ayuda/",
@@ -184,6 +184,7 @@ test("flyer QR codes decode to the live pages, and each flyer prints on one lett
     workers: [`${LIVE}help/#work`, `${LIVE}ayuda/#trabajo`],
     taxes: [`${LIVE}help/free-tax-help/`, `${LIVE}ayuda/impuestos-gratis/`],
     utilities: [`${LIVE}help/utility-bills/`, `${LIVE}ayuda/facturas-de-luz-y-gas/`],
+    clinics: [`${LIVE}help/free-clinics/`, `${LIVE}ayuda/clinicas-gratis/`],
   };
   for (const [id, urls] of Object.entries(expected)) {
     await page.goto(`help/flyers/${id}/`);

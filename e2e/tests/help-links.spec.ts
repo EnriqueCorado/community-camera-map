@@ -22,6 +22,7 @@ import * as COURT from "../../frontend/src/help/court-facts";
 import * as TAXES from "../../frontend/src/help/taxes-facts";
 import * as UTIL from "../../frontend/src/help/utilities-facts";
 import * as LANGUAGES from "../../frontend/src/help/languages-facts";
+import * as CLINICS from "../../frontend/src/help/clinics-facts";
 
 test.skip(!process.env.LINKS, "network check; run with LINKS=1");
 
@@ -60,6 +61,7 @@ function links(): string[] {
     ...JSON.stringify(COURT).match(/https:\/\/[^"\s]+/g) ?? [],
     ...JSON.stringify(TAXES).match(/https:\/\/[^"\s]+/g) ?? [],
     ...JSON.stringify(UTIL).match(/https:\/\/[^"\s]+/g) ?? [],
+    ...JSON.stringify(CLINICS).match(/https:\/\/[^"\s]+/g) ?? [],
     ...JSON.stringify(LANGUAGES).match(/https:\/\/[^"\s]+/g) ?? [],
     ...legal.offices.flatMap((o: { website: string; sources: string[] }) => [o.website, ...o.sources]),
   ];

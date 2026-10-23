@@ -27,9 +27,9 @@ async function expectNoA11yViolations(page: Page, include: string) {
 
 test("opens from the sidebar, switches tabs by keyboard, keeps the tab in the URL, closes with Escape", async ({ page }) => {
   const dialog = await openHelp(page);
-  await expect(dialog.getByRole("tab", { name: "Medical bills" })).toHaveAttribute("aria-selected", "true");
+  await expect(dialog.getByRole("tab", { name: "Health care" })).toHaveAttribute("aria-selected", "true");
   await expect(page).toHaveURL(/help=medical/);
-  await dialog.getByRole("tab", { name: "Medical bills" }).focus();
+  await dialog.getByRole("tab", { name: "Health care" }).focus();
   await page.keyboard.press("ArrowRight");
   await expect(dialog.getByRole("tab", { name: "Renters" })).toHaveAttribute("aria-selected", "true");
   await expect(dialog.getByRole("tab", { name: "Renters" })).toBeFocused();
@@ -255,7 +255,7 @@ test("keyboard only: reach the Help panel, every tab, and close it", async ({ pa
   await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog", { name: "Free help" });
   await expect(dialog).toBeVisible();
-  await dialog.getByRole("tab", { name: "Medical bills" }).focus();
+  await dialog.getByRole("tab", { name: "Health care" }).focus();
   for (const name of ["Renters", "Work", "Benefits", "Immigration", "Legal help"]) {
     await page.keyboard.press("ArrowRight");
     await expect(dialog.getByRole("tab", { name })).toHaveAttribute("aria-selected", "true");

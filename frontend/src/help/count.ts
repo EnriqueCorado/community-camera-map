@@ -4,20 +4,21 @@
 // Do Not Track or Global Privacy Control. The public pages do the same in
 // landing/client.js. Kept free of React so unit tests can import it.
 import type { Lang } from "../i18n";
-import { BENEFITS_VIEWS, IMMIGRATION_VIEWS, RENT_VIEWS, WORK_VIEWS, isHelpView, type HelpTab, type HelpTarget } from "./target";
+import { BENEFITS_VIEWS, IMMIGRATION_VIEWS, MEDICAL_VIEWS, RENT_VIEWS, WORK_VIEWS, isHelpView, type HelpTab, type HelpTarget } from "./target";
 
 /** "page:<tool id>:<lang>" (public pages) or "app:<tab>[/<view>]:<lang>" (Help panel). */
 export const countEvent = (kind: "page" | "app", id: string, lang: Lang) => `${kind}:${id}:${lang}`;
 
 // Each tab's first tool (what the panel shows when no view is given).
 const FIRST_VIEW: Partial<Record<HelpTab, string>> = {
+  medical: MEDICAL_VIEWS[0],
   rent: RENT_VIEWS[0],
   work: WORK_VIEWS[0],
   benefits: BENEFITS_VIEWS[0],
   immigration: IMMIGRATION_VIEWS[0],
 };
 
-/** The tool a Help panel target shows, as the counter names it: "rent/eviction", "medical". */
+/** The tool a Help panel target shows, as the counter names it: "rent/eviction", "legal". */
 export function appCountId(t: HelpTarget): string {
   const first = FIRST_VIEW[t.tab];
   if (!first) return t.tab;
