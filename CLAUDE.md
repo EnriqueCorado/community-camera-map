@@ -99,9 +99,12 @@ enforce it). Everything is bilingual (`Record<Lang, Copy>`).
   the preview. Leave out `a11y-i18n` and the other map suites: they only work on
   the dev server. `help-counter.spec.ts` needs a build with
   `VITE_COUNTER_URL=https://counter.invalid/api/count`.
-- Public pages (`landing/`) are prerendered with a strict CSP: one inline script
-  (`landing/client.js`, allowed by hash) and no outside requests except the
-  counter. Flyers must print on one letter page; a test checks this.
+- Public pages (`landing/`) are prerendered with a strict CSP. `landing.css` and
+  `client.js` are written once per build as `help-assets/site.<hash>.css|js`
+  (with Subresource Integrity, cached by the offline workers); the only inline
+  code is the theme script and flyer bits, allowed by hash (no `unsafe-inline`).
+  No outside requests except the counter. Flyers must print on one letter page;
+  a test checks this.
 - Hand merges of parallel branches have dropped closing braces in CSS and
   separators between object-literal entries. `tsc` catches the TS ones, but not
   CSS. After any manual conflict resolution, check every `*.css` brace balances

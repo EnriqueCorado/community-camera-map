@@ -115,8 +115,13 @@ test("no requests beyond the page, and the CSP holds", async ({ page }) => {
     await page.goto(path);
     await page.waitForLoadState("networkidle");
     page.off("request", log);
-    expect(urls.filter((u) => u !== page.url() && !/\/help\/sw\.js$/.test(new URL(u).pathname)), path).toEqual([]);
-    expect(await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute("content"), path).toContain("default-src 'none'");
+    // Besides the page: only the build's shared stylesheet and script, from this site.
+    const shared = urls.filter((u) => new URL(u).origin === new URL(page.url()).origin && /\/help-assets\/site\.[0-9a-f]{12}\.(css|js)$/.test(u));
+    expect(shared.filter((u) => u.endsWith(".css")), path).toHaveLength(1);
+    expect(urls.filter((u) => u !== page.url() && !shared.includes(u) && !/\/help\/sw\.js$/.test(new URL(u).pathname)), path).toEqual([]);
+    const csp = await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute("content");
+    expect(csp, path).toContain("default-src 'none'");
+    expect(csp, path).not.toContain("unsafe-inline");
   }
   expect(errors).toEqual([]);
 });

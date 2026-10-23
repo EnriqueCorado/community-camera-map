@@ -1,5 +1,6 @@
-// The one script on the public help pages (inlined at the end of <body> and
-// allowed by its hash in the page's Content-Security-Policy). Optional
+// The one script on the public help pages: written once per build as
+// help-assets/site.<hash>.js (prerender.mjs), loaded at the end of <body> with
+// Subresource Integrity, and allowed by the pages' CSP as 'self'. Optional
 // helpers, each shown only when the browser supports it, and (when the build
 // has one) the anonymous usage counter:
 //  - share: Copy link and the phone's Share sheet on the "Share this" box;

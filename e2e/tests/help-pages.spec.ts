@@ -103,11 +103,19 @@ test("pages make no requests beyond the page itself, and the browser enforces it
     const counter = await page.locator("body").getAttribute("data-counter");
     const counts = counter ? urls.filter((u) => u === counter) : [];
     expect(counts.length, path).toBeLessThanOrEqual(1);
-    const others = urls.filter((u) => u !== page.url() && !counts.includes(u) && !/\/(help|ayuda)\/sw\.js$/.test(new URL(u).pathname));
+    // The build's one shared stylesheet (every page) and page script (not
+    // flyers), from this site, under content-hashed names.
+    const shared = urls.filter((u) => new URL(u).origin === new URL(page.url()).origin && /\/help-assets\/site\.[0-9a-f]{12}\.(css|js)$/.test(u));
+    expect(shared.filter((u) => u.endsWith(".css")), path).toHaveLength(1);
+    expect(shared.filter((u) => u.endsWith(".js")), path).toHaveLength(/^help\/flyers\/[^/]+\/$/.test(path) ? 0 : 1);
+    const others = urls.filter((u) => u !== page.url() && !counts.includes(u) && !shared.includes(u) && !/\/(help|ayuda)\/sw\.js$/.test(new URL(u).pathname));
     expect(others, path).toEqual([]);
     expect(urls.every((u) => counts.includes(u) || new URL(u).origin === new URL(page.url()).origin), path).toBe(true);
     const csp = await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute("content");
     expect(csp, path).toContain("default-src 'none'");
+    // Inline code runs only by exact hash; shared files only from this site.
+    expect(csp, path).not.toContain("unsafe-inline");
+    expect(csp, path).toMatch(/style-src 'self'[^;]*;/);
     // The only place a page may connect to is the counter (and only if there is one).
     if (counter) expect(csp, path).toContain(`connect-src ${new URL(counter).origin};`);
     else expect(csp, path).not.toContain("connect-src");
@@ -292,6 +300,10 @@ test("offline: nothing is stored until asked; saved pages open without internet;
     await expect(page.locator(".savedcopy"), path).toHaveText(/^Saved copy from \d{4}-\d{2}-\d{2}\. Facts may have changed/);
     await expect(page.getByText("(209) 577-3811").first()).toBeVisible();
   }
+  // The shared stylesheet and script come from the device too.
+  expect(await page.evaluate(() => [...document.styleSheets].filter((sh) => /\/help-assets\/site\.[0-9a-f]{12}\.css$/.test(sh.href ?? "") && sh.cssRules.length > 50).length)).toBe(1);
+  await page.goto("help/");
+  await expect(page.locator("[data-offline] [data-state]")).toHaveText(/^Saved on this device/); // set by the page script
   // A copy that isn't exactly the published page is never shown.
   await page.evaluate(async () => {
     const cache = await caches.open("scm-help-pages");
@@ -413,4 +425,42 @@ test("read aloud: stop and a quick restart work, and it's never offered with onl
   await expect.poll(() => cloudOnly.evaluate(() => (window as unknown as { voiceCalls: number }).voiceCalls)).toBeGreaterThan(1);
   await expect(cloudOnly.locator("[data-listen]")).toBeHidden();
   await cloudOnly.close();
+});
+
+test("offline: pages saved before an update (stale page, no shared files) are brought up to date", async ({ page, context }) => {
+  await page.goto("help/");
+  await page.locator("[data-offline]").getByRole("button", { name: /^Save all pages/ }).click();
+  await expect(page.locator("[data-offline]").getByRole("status")).toHaveText(/^Saved\./);
+  // What an older save looks like: no shared stylesheet or script, and a page
+  // whose bytes are an older version.
+  await page.evaluate(async () => {
+    const cache = await caches.open("scm-help-pages");
+    for (const req of await cache.keys()) if (req.url.includes("/help-assets/")) await cache.delete(req);
+    const key = new URL("help/eviction-notice/", location.href.replace(/help\/.*$/, "")).href;
+    await cache.put(key, new Response("<!doctype html><title>old</title><style>p{}</style><h1>Old version</h1>", { headers: { "Content-Type": "text/html" } }));
+  });
+  // The next visit online quietly saves this build's copies again.
+  await page.reload();
+  await expect
+    .poll(() => page.evaluate(async () => (await (await caches.open("scm-help-pages")).keys()).filter((r) => r.url.includes("/help-assets/")).length))
+    .toBe(2);
+  await context.setOffline(true);
+  await page.goto("help/eviction-notice/");
+  await expect(page.locator("h1")).toHaveText("Got an eviction notice?");
+  await expect(page.locator(".savedcopy")).toBeVisible();
+  expect(await page.evaluate(() => [...document.styleSheets].some((sh) => (sh.href ?? "").includes("/help-assets/") && sh.cssRules.length > 50))).toBe(true);
+  await context.setOffline(false);
+  await page.goto("help/");
+  await page.getByRole("button", { name: "Remove saved pages" }).click();
+  await expect(page.locator("[data-offline]").getByRole("status")).toHaveText(/^Removed\./);
+});
+
+test("without the shared stylesheet and script, every page still reads", async ({ page }) => {
+  await page.route(/\/help-assets\//, (route) => route.abort());
+  for (const path of ["help/", "ayuda/aviso-de-desalojo/", "help/punjabi/", "help/flyers/general/"]) {
+    await page.goto(path);
+    await expect(page.locator("h1").first(), path).toBeVisible();
+    // Buttons that need the script stay hidden instead of doing nothing.
+    await expect(page.locator("button:visible[data-save], button:visible[data-share-copy], button:visible[data-copy]"), path).toHaveCount(0);
+  }
 });

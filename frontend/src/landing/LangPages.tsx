@@ -11,17 +11,16 @@ import { GROUPS, TOOLS } from "./tools";
 import { AI_NOTE_EN, LANG_PAGES, langFlyerPath, langPath, type LangPage } from "./languages";
 import {
   absolute,
-  DISPLAY_SCRIPT,
-  FLYER_PAGE_CSS,
+  HeadAssets,
   homePath,
   PRINT_SCRIPT,
   QrCode,
   shortUrl,
   telHref,
+  PageScript,
   toolPath,
   type Site,
 } from "./Pages";
-import CLIENT_SCRIPT from "./client.js?raw";
 
 const OG_LOCALE: Record<LangPage["id"], string> = { pa: "pa_IN", prs: "fa_AF" };
 
@@ -53,15 +52,14 @@ function LangDoc({ site, page, title, description, path, print, children }: {
         <meta property="og:url" content={absolute(site, path)} />
         <meta property="og:locale" content={OG_LOCALE[page.id]} />
         <meta name="color-scheme" content={print ? "light" : "light dark"} />
-        {!print && <script dangerouslySetInnerHTML={{ __html: DISPLAY_SCRIPT }} />}
-        <style dangerouslySetInnerHTML={{ __html: print ? `${site.css}${FLYER_PAGE_CSS}` : site.css }} />
+        <HeadAssets site={site} print={print} />
       </head>
       <body
         className={print ? "is-flyer" : undefined}
         {...(!print ? { "data-sw": `${site.base}help/sw.js`, "data-scope": `${site.base}help/` } : {})}
       >
         {children}
-        {!print && <script dangerouslySetInnerHTML={{ __html: CLIENT_SCRIPT }} />}
+        {!print && <PageScript site={site} />}
       </body>
     </html>
   );
