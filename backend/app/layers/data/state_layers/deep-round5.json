@@ -1,0 +1,5757 @@
+[
+ {
+  "name": "gu-proposed-flood-zones",
+  "state": "GU",
+  "title": "Proposed new flood zones (FEMA Flood Risk Review, Guam)",
+  "title_es": "Nuevas zonas de inundación propuestas (FEMA, Guam)",
+  "description": "FEMA's draft flood maps for Guam from the 2026 Flood Risk Review: the flood zone (AE, VE, X and so on) proposed for each area and whether it is a high-risk Special Flood Hazard Area. These are proposals, not yet the official maps used for insurance.",
+  "description_es": "Los mapas preliminares de inundación de FEMA para Guam de la Revisión de Riesgo de Inundación 2026: la zona de inundación (AE, VE, X, etc.) propuesta para cada área y si es un Área Especial de Peligro de Inundación de alto riesgo. Son propuestas, todavía no son los mapas oficiales que se usan para el seguro.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "FEMA Region 9 (Guam Flood Risk Review, proposed data 2026)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Guam_FRR_Viewer_WFL1/FeatureServer/5",
+   "fields": {
+    "FLD_ZONE": "kind",
+    "ZONE_SUBTY": "subtype",
+    "SFHA_TF": "high_risk",
+    "STATIC_BFE": "base_flood_elev_ft",
+    "STUDY_TYP": "study"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 1324
+  }
+ },
+ {
+  "name": "gu-land-use-applications",
+  "state": "GU",
+  "title": "Rezoning and land use applications (Guam Land Use Commission)",
+  "title_es": "Solicitudes de rezonificación y uso de suelo (Comisión de Uso de Suelo de Guam)",
+  "description": "Zone changes, variances, conditional uses and subdivisions brought to the Guam Land Use Commission: what is proposed on which lot, the current and requested zone, the Bureau of Statistics and Plans recommendation and the Commission's decision.",
+  "description_es": "Cambios de zona, variaciones, usos condicionales y subdivisiones presentados a la Comisión de Uso de Suelo de Guam: qué se propone en cada lote, la zona actual y la solicitada, la recomendación de la Oficina de Estadísticas y Planes y la decisión de la Comisión.",
+  "group": "growth",
+  "category": "point",
+  "source": "Guam Bureau of Statistics and Plans (Application Review Committee land use applications)",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/ARC_Land_Use_Applications_with_Location_Point/FeatureServer/0",
+   "fields": {
+    "F01_Application_Number": "number",
+    "F02_Application_Type": "kind",
+    "F04_Proposed_Use_Zone": "description",
+    "F08_Date_Submitted": "submitted",
+    "F09_Lot_Number": "lot",
+    "F10_Municipality": "village",
+    "F13_Current_Zone": "current_zone",
+    "F14_Proposed_Zone": "proposed_zone",
+    "F17_BSP_Position": "bsp_recommendation",
+    "F18_GLUC_Determination": "decision",
+    "F16_Land_Area_Sq__Meters": "area_sq_m"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 131
+  }
+ },
+ {
+  "name": "gu-military-land",
+  "state": "GU",
+  "title": "Military land parcels (Guam)",
+  "title_es": "Terrenos militares (Guam)",
+  "description": "Land held by the U.S. military on Guam, lot by lot: the area name, how the land was acquired (condemnation, treaty, purchase and so on), the year, and its size. Useful to see where public access is restricted.",
+  "description_es": "Terrenos en manos de las fuerzas armadas de EE. UU. en Guam, lote por lote: el nombre del área, cómo se adquirió el terreno (expropiación, tratado, compra, etc.), el año y su tamaño. Útil para ver dónde el acceso público está restringido.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Government of Guam GIS (Department of Defense land records)",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/DOD_Lands/FeatureServer/0",
+   "fields": {
+    "FEATURENAME": "name",
+    "LANDPARCELIDPK": "lot",
+    "LANDACQUISITIONTYPE": "acquired_by",
+    "DATEACQUIRED": "acquired",
+    "OWNER": "service",
+    "MEASUREDAREA": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 1136
+  }
+ },
+ {
+  "name": "gu-firing-range-danger-zones",
+  "state": "GU",
+  "title": "Military firing range danger zones (Guam)",
+  "title_es": "Zonas de peligro de campos de tiro militares (Guam)",
+  "description": "Surface danger zones around military firing ranges on Guam: the land and water areas that can be reached by rounds fired at each range. Stay out when ranges are active.",
+  "description_es": "Zonas de peligro alrededor de los campos de tiro militares en Guam: las áreas de tierra y agua que pueden alcanzar los disparos de cada campo. Manténgase fuera cuando los campos estén activos.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Government of Guam GIS (Submerged Lands Summit map, U.S. Navy range data)",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/WebMap_Submerged_Lands_Summit_WFL1/FeatureServer/8",
+   "fields": {
+    "feat_name": "name",
+    "feat_desc": "ammunition",
+    "maxrng_wep": "max_range_m",
+    "sdz_typ_d": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 31
+  }
+ },
+ {
+  "name": "gu-sea-level-rise-3ft",
+  "state": "GU",
+  "title": "Sea level rise: 3 feet (Guam)",
+  "title_es": "Aumento del nivel del mar: 3 pies (Guam)",
+  "description": "Low coastal land on Guam that would be under water at high tide if the sea rises 3 feet, a level expected later this century.",
+  "description_es": "Terrenos costeros bajos de Guam que quedarían bajo el agua con la marea alta si el mar sube 3 pies, un nivel que se espera más adelante en este siglo.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Government of Guam GIS (Sea Level Rise 1-10 ft scenarios)",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Sea_Level_Rise_1_to_10/FeatureServer/18",
+   "fields": {
+    "gridcode": "class"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 236
+  }
+ },
+ {
+  "name": "gu-tsunami-walk-time",
+  "state": "GU",
+  "title": "Tsunami evacuation walking time (Guam)",
+  "title_es": "Tiempo para evacuar a pie por tsunami (Guam)",
+  "description": "How many minutes it takes someone who walks slowly (older adults, people with disabilities, parents with small children) to walk out of the tsunami hazard zone from each place.",
+  "description_es": "Cuántos minutos tarda una persona que camina despacio (personas mayores, personas con discapacidad, padres con niños pequeños) en salir a pie de la zona de peligro de tsunami desde cada lugar.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Government of Guam GIS (tsunami evacuation time map)",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/GuamTsunamiEvacuation_TimeMap_shapefiles/FeatureServer/1",
+   "fields": {
+    "TIME_min": "minutes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "gu-community-senior-centers",
+  "state": "GU",
+  "title": "Village community and senior centers (Guam)",
+  "title_es": "Centros comunitarios y de personas mayores de cada pueblo (Guam)",
+  "description": "Community centers and senior citizen centers in each Guam village, with phone number where listed. Many open as typhoon shelters or relief sites after storms.",
+  "description_es": "Centros comunitarios y centros para personas mayores en cada pueblo de Guam, con teléfono cuando aparece. Muchos abren como refugios o centros de ayuda después de los tifones.",
+  "group": "help",
+  "category": "point",
+  "source": "Government of Guam GIS (State Hazard Mitigation Plan essential facilities)",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/State_Hazard_Mitigation_Plan/FeatureServer/8",
+   "fields": {
+    "DESCRIPTIO": "name",
+    "CATEGORY": "kind",
+    "PHONE": "phone",
+    "TAG": "village"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "CATEGORY IN ('Community centers','Senior centers')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "gu-government-offices",
+  "state": "GU",
+  "title": "Government of Guam offices and facilities",
+  "title_es": "Oficinas e instalaciones del Gobierno de Guam",
+  "description": "Government of Guam agency buildings from the 911 address system: public health centers, utilities, courts and other offices, with the kind of service and address.",
+  "description_es": "Edificios de las agencias del Gobierno de Guam del sistema de direcciones del 911: centros de salud pública, servicios públicos, tribunales y otras oficinas, con el tipo de servicio y la dirección.",
+  "group": "civic",
+  "category": "point",
+  "source": "Government of Guam GIS (NG911 points of interest)",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Ng_911/FeatureServer/6",
+   "fields": {
+    "DESC_": "name",
+    "SUBCATEGRY": "kind",
+    "ADDRESS": "address"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 49
+  }
+ },
+ {
+  "name": "gu-coastal-springs",
+  "state": "GU",
+  "title": "Coastal springs (Guam)",
+  "title_es": "Manantiales costeros (Guam)",
+  "description": "Places where fresh groundwater from Guam's northern aquifer flows out at the shoreline, with the estimated flow.",
+  "description_es": "Lugares donde el agua subterránea dulce del acuífero del norte de Guam sale en la costa, con el caudal estimado.",
+  "group": "nature",
+  "category": "point",
+  "source": "Government of Guam GIS (Guam hydrology)",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/Guam_Hydrology_WFL1/FeatureServer/3",
+   "fields": {
+    "Springname": "name",
+    "Flow_est": "flow_estimate"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 56
+  }
+ },
+ {
+  "name": "gu-shoreline-parks",
+  "state": "GU",
+  "title": "Shoreline parks and recreation areas (Guam)",
+  "title_es": "Parques y áreas recreativas de la costa (Guam)",
+  "description": "Public beach parks and other recreation areas along Guam's shoreline, by name, from the Guam Shoreline Atlas.",
+  "description_es": "Parques de playa públicos y otras áreas recreativas a lo largo de la costa de Guam, por nombre, del Atlas de la Costa de Guam.",
+  "group": "places",
+  "category": "park",
+  "source": "Government of Guam GIS (Guam Shoreline Atlas)",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/GuamShorelineAtlas_gdb_view/FeatureServer/7",
+   "fields": {
+    "featureName": "name",
+    "featureDescription": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 72
+  }
+ },
+ {
+  "name": "gu-reef-restoration-areas",
+  "state": "GU",
+  "title": "Priority coral reef restoration areas (Guam)",
+  "title_es": "Áreas prioritarias para restaurar arrecifes (Guam)",
+  "description": "Reef and watershed areas Guam is considering or targeting for coral reef restoration, by name and status.",
+  "description_es": "Áreas de arrecife y cuencas que Guam está considerando o priorizando para restaurar los arrecifes de coral, por nombre y estado.",
+  "group": "nature",
+  "category": "park",
+  "source": "Government of Guam GIS (High Priority Restoration Areas)",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/High_Priority_Restoration_Areas_Borders_and_Labels/FeatureServer/0",
+   "fields": {
+    "AreaName": "name",
+    "Field": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.6,
+    13.2,
+    145.0,
+    13.7
+   ],
+   "features_in_probe": 34
+  }
+ },
+ {
+  "name": "gu-manell-geus-watershed-projects",
+  "state": "GU",
+  "title": "Watershed project sites in Merizo (Manell-Geus plan, Guam)",
+  "title_es": "Sitios de proyectos de la cuenca en Merizo (plan Manell-Geus, Guam)",
+  "description": "Sites in the Manell and Geus watersheds (Merizo) where stormwater fixes, stream restoration and erosion control are proposed, with the problem found and the project suggested.",
+  "description_es": "Sitios en las cuencas de Manell y Geus (Merizo) donde se proponen arreglos de aguas pluviales, restauración de ríos y control de erosión, con el problema encontrado y el proyecto sugerido.",
+  "group": "planning",
+  "category": "point",
+  "source": "Government of Guam GIS (Manell-Geus Watershed Management Plan)",
+  "view": {
+   "url": "https://services2.arcgis.com/FPJlJZYRsD8OhCWA/arcgis/rest/services/MWMP_Project_points/FeatureServer/0",
+   "fields": {
+    "Site_Name": "name",
+    "TypeProjec": "kind",
+    "ProjectExi": "existing_conditions",
+    "ProjectPro": "proposed_project",
+    "ProjectRan": "priority"
+   },
+   "geometry": "point",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    144.65,
+    13.24,
+    144.73,
+    13.3
+   ],
+   "features_in_probe": 35
+  }
+ },
+ {
+  "name": "mp-proposed-flood-zones",
+  "state": "MP",
+  "title": "Proposed new flood zones (FEMA Flood Risk Review, CNMI)",
+  "title_es": "Nuevas zonas de inundación propuestas (FEMA, CNMI)",
+  "description": "FEMA's draft flood maps for Saipan, Tinian and Rota from the 2026 Flood Risk Review: the flood zone proposed for each area and whether it is a high-risk Special Flood Hazard Area. These are proposals, not yet the official insurance maps.",
+  "description_es": "Los mapas preliminares de inundación de FEMA para Saipán, Tinián y Rota de la Revisión de Riesgo de Inundación 2026: la zona de inundación propuesta para cada área y si es un Área Especial de Peligro de Inundación de alto riesgo. Son propuestas, todavía no son los mapas oficiales del seguro.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "FEMA Region 9 (CNMI Flood Risk Review, proposed data 2026)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/CNMI_FRR_Viewer_WFL1/FeatureServer/4",
+   "fields": {
+    "FLD_ZONE": "kind",
+    "ZONE_SUBTY": "subtype",
+    "SFHA_TF": "high_risk",
+    "STATIC_BFE": "base_flood_elev_ft",
+    "STUDY_TYP": "study"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    145.68,
+    15.12,
+    145.82,
+    15.2
+   ],
+   "features_in_probe": 103
+  }
+ },
+ {
+  "name": "mp-watersheds",
+  "state": "MP",
+  "title": "Watersheds (CNMI)",
+  "title_es": "Cuencas hidrográficas (CNMI)",
+  "description": "The watersheds of Saipan, Tinian and Rota: the land area that drains to each stretch of coast, used for water quality and coastal planning.",
+  "description_es": "Las cuencas de Saipán, Tinián y Rota: el área de tierra que drena hacia cada tramo de costa, usada para la calidad del agua y la planificación costera.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "CNMI Bureau of Environmental and Coastal Quality (Division of Coastal Resources Management)",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/Watersheds/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "Island": "island",
+    "Area": "area_sq_km"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    145.65,
+    15.08,
+    145.85,
+    15.3
+   ],
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "mp-formerly-used-defense-sites",
+  "state": "MP",
+  "title": "Old military sites not yet cleaned up (CNMI)",
+  "title_es": "Antiguos sitios militares aún sin limpiar (CNMI)",
+  "description": "Formerly Used Defense Sites on Saipan, Tinian and Rota that still need cleanup: what was there (fuel caves, bomb storage, disposal areas) and the history. Some may hold old munitions; do not dig or pick up metal objects.",
+  "description_es": "Antiguos sitios de defensa en Saipán, Tinián y Rota que todavía necesitan limpieza: qué había allí (cuevas de combustible, depósitos de bombas, áreas de desecho) y su historia. Algunos pueden tener municiones viejas; no excave ni recoja objetos de metal.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "CNMI Bureau of Environmental and Coastal Quality (FUDS un-remediated sites)",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/FUDS_UnRemediatedSites_2/FeatureServer/0",
+   "fields": {
+    "FUDS_Publi": "name",
+    "FUDS_Pub_1": "description",
+    "FUDS_Pub_2": "history",
+    "ISLAND": "island"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    145.65,
+    15.08,
+    145.85,
+    15.3
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "mp-underground-fuel-tanks",
+  "state": "MP",
+  "title": "Underground fuel storage tanks (CNMI)",
+  "title_es": "Tanques subterráneos de combustible (CNMI)",
+  "description": "Gas stations and other facilities with underground fuel storage tanks regulated by BECQ, by village and island.",
+  "description_es": "Gasolineras y otras instalaciones con tanques subterráneos de combustible regulados por BECQ, por pueblo e isla.",
+  "group": "infra",
+  "category": "point",
+  "source": "CNMI Bureau of Environmental and Coastal Quality (UST program)",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/USTs/FeatureServer/0",
+   "fields": {
+    "FACILITY_N": "name",
+    "VILLAGE": "village",
+    "ISLAND": "island"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    145.65,
+    15.08,
+    145.85,
+    15.3
+   ],
+   "features_in_probe": 33
+  }
+ },
+ {
+  "name": "mp-rota-shelters",
+  "state": "MP",
+  "title": "Typhoon shelters (Rota)",
+  "title_es": "Refugios para tifones (Rota)",
+  "description": "Buildings on Rota used as typhoon shelters and how many people each holds. Listen to HSEM announcements for which shelters are open.",
+  "description_es": "Edificios de Rota que se usan como refugios para tifones y cuántas personas caben en cada uno. Escuche los anuncios de HSEM para saber cuáles están abiertos.",
+  "group": "help",
+  "category": "point",
+  "source": "CNMI Bureau of Environmental and Coastal Quality (Rota GIS layers)",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/RotaGISLayers_WFL/FeatureServer/8",
+   "fields": {
+    "Name": "name",
+    "sheltr_cap": "capacity"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "Name IS NOT NULL"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    145.1,
+    14.1,
+    145.3,
+    14.2
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "mp-rota-master-plan",
+  "state": "MP",
+  "title": "Rota land use master plan",
+  "title_es": "Plan maestro de uso de suelo de Rota",
+  "description": "Planned land uses on Rota from the island master plan: resort, village, agriculture, conservation, beach parks and more, with acreage.",
+  "description_es": "Usos de suelo planificados en Rota según el plan maestro de la isla: hoteles, pueblo, agricultura, conservación, parques de playa y más, con su superficie en acres.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "CNMI Bureau of Environmental and Coastal Quality (Rota Master Plan 2010)",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/RotaGISLayers_WFL/FeatureServer/29",
+   "fields": {
+    "MPUSE": "kind",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    145.1,
+    14.1,
+    145.3,
+    14.2
+   ],
+   "features_in_probe": 28
+  }
+ },
+ {
+  "name": "mp-rota-conservation-areas",
+  "state": "MP",
+  "title": "Conservation areas (Rota)",
+  "title_es": "Áreas de conservación (Rota)",
+  "description": "Protected conservation areas on Rota such as Sabana Heights, Wedding Cake and I' Chenchon, with size.",
+  "description_es": "Áreas de conservación protegidas en Rota como Sabana Heights, Wedding Cake e I' Chenchon, con su tamaño.",
+  "group": "nature",
+  "category": "park",
+  "source": "CNMI Bureau of Environmental and Coastal Quality (Rota GIS layers)",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/RotaGISLayers_WFL/FeatureServer/27",
+   "fields": {
+    "Name": "name",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    145.1,
+    14.1,
+    145.3,
+    14.2
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "mp-rota-places-to-visit",
+  "state": "MP",
+  "title": "Beaches, latte sites and scenic spots (Rota)",
+  "title_es": "Playas, sitios latte y miradores (Rota)",
+  "description": "Beaches, latte stone sites, caves, scenic points and other places to visit on Rota, by type.",
+  "description_es": "Playas, sitios de piedras latte, cuevas, miradores y otros lugares para visitar en Rota, por tipo.",
+  "group": "places",
+  "category": "point",
+  "source": "CNMI Bureau of Environmental and Coastal Quality (Rota GIS layers)",
+  "view": {
+   "url": "https://services.arcgis.com/qchgHH9IIeiivY5M/arcgis/rest/services/RotaGISLayers_WFL/FeatureServer/9",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    145.1,
+    14.1,
+    145.3,
+    14.2
+   ],
+   "features_in_probe": 55
+  }
+ },
+ {
+  "name": "as-land-use-permits",
+  "state": "AS",
+  "title": "Land use permit applications (American Samoa)",
+  "title_es": "Solicitudes de permisos de uso de suelo (Samoa Americana)",
+  "description": "Land use permit applications filed with the American Samoa Department of Commerce since 2023: the permit number, date received, status, proposed land use and activities, whether a zoning variance is needed and the board hearing date.",
+  "description_es": "Solicitudes de permisos de uso de suelo presentadas al Departamento de Comercio de Samoa Americana desde 2023: número de permiso, fecha de recibo, estado, uso de suelo y actividades propuestas, si necesita una variación de zonificación y la fecha de audiencia de la junta.",
+  "group": "growth",
+  "category": "point",
+  "source": "American Samoa Department of Commerce (Land Use Permitting)",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Land_Use_Permitting_2023_Application_Status/FeatureServer/0",
+   "fields": {
+    "permit_id": "number",
+    "date_received": "received",
+    "status": "status",
+    "proposed_land_use": "land_use",
+    "proposed_activities": "activities",
+    "zoning_variance_required": "variance_needed",
+    "board_hearing_dt": "hearing"
+   },
+   "geometry": "point",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -170.76,
+    -14.32,
+    -170.62,
+    -14.24
+   ],
+   "features_in_probe": 609
+  }
+ },
+ {
+  "name": "as-stream-setbacks",
+  "state": "AS",
+  "title": "Stream setbacks, 50 ft (American Samoa)",
+  "title_es": "Retiros de ríos, 50 pies (Samoa Americana)",
+  "description": "The 50-foot buffer along streams on Tutuila where building and land clearing need special review under the land use permit rules.",
+  "description_es": "La franja de 50 pies a lo largo de los ríos de Tutuila donde construir o desmontar terreno necesita una revisión especial según las reglas de permisos de uso de suelo.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "American Samoa Department of Commerce (Land Use Permitting data)",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Land_Use_Permitting_Data/FeatureServer/2",
+   "fields": {
+    "STREAM_MAJ": "stream",
+    "BUFFER_LEN": "buffer_ft"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -170.85,
+    -14.38,
+    -170.55,
+    -14.22
+   ],
+   "features_in_probe": 82
+  }
+ },
+ {
+  "name": "as-wetland-setbacks",
+  "state": "AS",
+  "title": "Wetland setbacks, 50 ft (American Samoa)",
+  "title_es": "Retiros de humedales, 50 pies (Samoa Americana)",
+  "description": "The 50-foot buffer around wetlands on Tutuila where building and fill need special review under the land use permit rules.",
+  "description_es": "La franja de 50 pies alrededor de los humedales de Tutuila donde construir o rellenar necesita una revisión especial según las reglas de permisos de uso de suelo.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "American Samoa Department of Commerce (Land Use Permitting data)",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Land_Use_Permitting_Data/FeatureServer/5",
+   "fields": {
+    "DESCRIPTIO": "kind",
+    "BUFFER_LEN": "buffer_ft"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -170.85,
+    -14.38,
+    -170.55,
+    -14.22
+   ],
+   "features_in_probe": 36
+  }
+ },
+ {
+  "name": "as-protected-areas",
+  "state": "AS",
+  "title": "Protected forests, parks and management areas (American Samoa)",
+  "title_es": "Bosques protegidos, parques y áreas de manejo (Samoa Americana)",
+  "description": "Protected land on Tutuila used in land use permit review: protected forest, the Malaeimi special management area, the Otto rainforest and Utulei Beach Park.",
+  "description_es": "Tierras protegidas en Tutuila que se usan para revisar permisos de uso de suelo: bosque protegido, el área de manejo especial de Malaeimi, el bosque lluvioso Otto y el parque de playa de Utulei.",
+  "group": "nature",
+  "category": "park",
+  "source": "American Samoa Department of Commerce (Land Use Permitting data)",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Land_Use_Permitting_Data/FeatureServer/6",
+   "fields": {
+    "TYPE": "name",
+    "LANDTYPE": "kind",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -170.85,
+    -14.38,
+    -170.55,
+    -14.22
+   ],
+   "features_in_probe": 86
+  }
+ },
+ {
+  "name": "as-tutuila-counties",
+  "state": "AS",
+  "title": "Traditional counties (Tutuila)",
+  "title_es": "Condados tradicionales (Tutuila)",
+  "description": "The traditional counties of Tutuila and Aunu'u and the district (Eastern or Western) each belongs to.",
+  "description_es": "Los condados tradicionales de Tutuila y Aunu'u y el distrito (Este u Oeste) al que pertenece cada uno.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "American Samoa Department of Commerce GIS",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Tutuila_Counties/FeatureServer/0",
+   "fields": {
+    "COUNTY": "name",
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -170.85,
+    -14.38,
+    -170.55,
+    -14.22
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "as-manua-counties",
+  "state": "AS",
+  "title": "Traditional counties (Manu'a)",
+  "title_es": "Condados tradicionales (Manu'a)",
+  "description": "The traditional counties of the Manu'a Islands (Ta'u, Ofu and Olosega), with 2010 population.",
+  "description_es": "Los condados tradicionales de las islas Manu'a (Ta'u, Ofu y Olosega), con la población de 2010.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "American Samoa Department of Commerce GIS",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Manua_Counties/FeatureServer/0",
+   "fields": {
+    "COUNTY": "name",
+    "Pop_2010": "population_2010",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -169.8,
+    -14.3,
+    -169.4,
+    -14.1
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "as-zoned-areas",
+  "state": "AS",
+  "title": "Industrial park and Pago Harbor zoned areas (American Samoa)",
+  "title_es": "Zonas reguladas del parque industrial y la bahía de Pago (Samoa Americana)",
+  "description": "The two specially zoned areas in American Samoa's land use rules: the industrial park and the Pago Pago Harbor area.",
+  "description_es": "Las dos áreas con zonificación especial en las reglas de uso de suelo de Samoa Americana: el parque industrial y el área de la bahía de Pago Pago.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "American Samoa Department of Commerce (Land Use Permitting)",
+  "view": {
+   "url": "https://services5.arcgis.com/ugcD1wqDyNIfJ9ce/arcgis/rest/services/Zoned_Areas/FeatureServer/0",
+   "fields": {
+    "Name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -170.85,
+    -14.38,
+    -170.55,
+    -14.22
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "vi-parcels",
+  "state": "VI",
+  "title": "Property parcels (US Virgin Islands)",
+  "title_es": "Parcelas de propiedad (Islas Vírgenes de EE. UU.)",
+  "description": "Every property parcel in St. Thomas, St. John, St. Croix and Water Island with its parcel number, map, lot, acreage and DPNR zoning district. No owner information.",
+  "description_es": "Cada parcela de propiedad en St. Thomas, St. John, St. Croix y Water Island con su número de parcela, mapa, lote, superficie en acres y distrito de zonificación de DPNR. Sin información del dueño.",
+  "group": "housing",
+  "category": "landuse",
+  "source": "Office of the Lieutenant Governor, USVI (GIS Division, Parcels of the U.S. Virgin Islands)",
+  "view": {
+   "url": "https://services3.arcgis.com/UfiM23HwAqZRk1vw/arcgis/rest/services/Parcels_of_the_US_Virgin_Islands/FeatureServer/0",
+   "fields": {
+    "PARCEL_NO": "parcel",
+    "MAP": "map",
+    "PARCEL_NAME": "lot",
+    "ACRE": "acres",
+    "DPNR_ZONE": "zoning"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17.5
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -64.936,
+    18.339,
+    -64.924,
+    18.345
+   ],
+   "features_in_probe": 1351
+  }
+ },
+ {
+  "name": "vi-historic-districts",
+  "state": "VI",
+  "title": "Historic districts (US Virgin Islands)",
+  "title_es": "Distritos históricos (Islas Vírgenes de EE. UU.)",
+  "description": "The national historic districts of Charlotte Amalie, Christiansted and Frederiksted, and the Charlotte Amalie historic and architectural control district, where exterior changes need State Historic Preservation Office review.",
+  "description_es": "Los distritos históricos nacionales de Charlotte Amalie, Christiansted y Frederiksted, y el distrito de control histórico y arquitectónico de Charlotte Amalie, donde los cambios exteriores necesitan revisión de la Oficina Estatal de Preservación Histórica.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Office of the Lieutenant Governor, USVI (GIS Division, SHPO historic districts)",
+  "view": {
+   "url": "https://services3.arcgis.com/UfiM23HwAqZRk1vw/arcgis/rest/services/USVI_Historic_Districts_SHPO/FeatureServer/0",
+   "fields": {
+    "DISTRICT_T": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -65.1,
+    17.65,
+    -64.55,
+    18.42
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "vi-enterprise-zones",
+  "state": "VI",
+  "title": "Enterprise zones (USVI Economic Development Authority)",
+  "title_es": "Zonas empresariales (Autoridad de Desarrollo Económico de las Islas Vírgenes)",
+  "description": "USVI Economic Development Authority enterprise zones in Charlotte Amalie, Christiansted and Frederiksted, where businesses and property owners can get tax incentives for investing.",
+  "description_es": "Zonas empresariales de la Autoridad de Desarrollo Económico en Charlotte Amalie, Christiansted y Frederiksted, donde los negocios y dueños de propiedades pueden recibir incentivos fiscales por invertir.",
+  "group": "growth",
+  "category": "boundary",
+  "source": "Office of the Lieutenant Governor, USVI (GIS Division, EDA zones)",
+  "view": {
+   "url": "https://services3.arcgis.com/UfiM23HwAqZRk1vw/arcgis/rest/services/EDA_Zones/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "ZONE_Descr": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -65.1,
+    17.65,
+    -64.55,
+    18.42
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "vi-coastal-erosion",
+  "state": "VI",
+  "title": "Coastal erosion risk (US Virgin Islands)",
+  "title_es": "Riesgo de erosión costera (Islas Vírgenes de EE. UU.)",
+  "description": "Shoreline areas FEMA expects to erode in a storm with a 1% chance each year, from the updated advisory flood study after Hurricanes Irma and Maria.",
+  "description_es": "Zonas de la costa que FEMA espera que se erosionen en una tormenta con 1% de probabilidad cada año, según el estudio de inundación actualizado tras los huracanes Irma y María.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "FEMA Region 2 (USVI Advisory Base Flood Elevations)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/USVI_ABFE/FeatureServer/1",
+   "fields": {
+    "CATEGORY": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -65.1,
+    17.65,
+    -64.55,
+    18.42
+   ],
+   "features_in_probe": 69
+  }
+ },
+ {
+  "name": "vi-water-plants",
+  "state": "VI",
+  "title": "Drinking water plants (US Virgin Islands)",
+  "title_es": "Plantas de agua potable (Islas Vírgenes de EE. UU.)",
+  "description": "Desalination plants and other drinking water facilities, with daily capacity, operator, year built and backup power notes.",
+  "description_es": "Plantas desalinizadoras y otras instalaciones de agua potable, con su capacidad diaria, operador, año de construcción y notas sobre energía de respaldo.",
+  "group": "infra",
+  "category": "point",
+  "source": "FEMA Region 2 (Water Distribution Infrastructure USVI)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Water_Distribution_Infrastructure_USVI_2022/FeatureServer/56",
+   "fields": {
+    "Name": "name",
+    "FacilityType": "kind",
+    "Island": "island",
+    "Operator": "operator",
+    "Gallons_Per_Day__GPD_": "gallons_per_day",
+    "Year_Built_Installed": "year_built",
+    "Emergency_Generator_s_": "backup_power"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -65.1,
+    17.65,
+    -64.55,
+    18.42
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "vi-wastewater-plants",
+  "state": "VI",
+  "title": "Wastewater treatment plants (US Virgin Islands)",
+  "title_es": "Plantas de tratamiento de aguas residuales (Islas Vírgenes de EE. UU.)",
+  "description": "Sewage treatment plants run by the Virgin Islands Waste Management Authority on each island.",
+  "description_es": "Plantas de tratamiento de aguas negras operadas por la Autoridad de Manejo de Desperdicios de las Islas Vírgenes en cada isla.",
+  "group": "infra",
+  "category": "point",
+  "source": "FEMA Region 2 (VIWMA wastewater treatment plants)",
+  "view": {
+   "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/Waste_Water_Treatment_Plants_VIWMA_2021/FeatureServer/91",
+   "fields": {
+    "Facility": "name",
+    "Island": "island",
+    "Operator": "operator"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -65.1,
+    17.65,
+    -64.55,
+    18.42
+   ],
+   "features_in_probe": 8
+  }
+ },
+ {
+  "name": "vi-mount-eagle-trails",
+  "state": "VI",
+  "title": "Mount Eagle / Maroon Sanctuary trails (St. Croix)",
+  "title_es": "Senderos de Mount Eagle / Maroon Sanctuary (St. Croix)",
+  "description": "Hiking trails in the Maroon Sanctuary territorial park around Mount Eagle, St. Croix's highest point, with length, difficulty and allowed use.",
+  "description_es": "Senderos en el parque territorial Maroon Sanctuary alrededor de Mount Eagle, el punto más alto de St. Croix, con su largo, dificultad y uso permitido.",
+  "group": "nature",
+  "category": "park",
+  "source": "USVI Territorial Parks and Protected Areas (DPNR)",
+  "view": {
+   "url": "https://services3.arcgis.com/VlblJrJklerBHiW0/arcgis/rest/services/Mt_Eagle_Trail_Network/FeatureServer/0",
+   "fields": {
+    "TrailName": "name",
+    "Distance_mi": "miles",
+    "Difficulty": "difficulty",
+    "UseType": "use"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -64.9,
+    17.67,
+    -64.55,
+    17.8
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "vi-st-thomas-east-end-reserves",
+  "state": "VI",
+  "title": "St. Thomas East End Reserves (STEER)",
+  "title_es": "Reservas del Extremo Este de St. Thomas (STEER)",
+  "description": "The St. Thomas East End Reserves marine protected area, which covers the mangroves, lagoons and bays around Benner Bay, Mangrove Lagoon and Cas Cay. Fishing and anchoring rules apply.",
+  "description_es": "El área marina protegida de las Reservas del Extremo Este de St. Thomas, que cubre los manglares, lagunas y bahías alrededor de Benner Bay, Mangrove Lagoon y Cas Cay. Hay reglas de pesca y de anclaje.",
+  "group": "nature",
+  "category": "park",
+  "source": "USVI Territorial Parks and Protected Areas (DPNR)",
+  "view": {
+   "url": "https://services3.arcgis.com/VlblJrJklerBHiW0/arcgis/rest/services/STEER_Boundary/FeatureServer/3",
+   "fields": {
+    "Area_sqmi": "square_miles"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -65.05,
+    18.28,
+    -64.83,
+    18.4
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "sd-sioux-falls-council-districts",
+  "state": "SD",
+  "title": "Sioux Falls city council districts",
+  "title_es": "Distritos del concejo municipal de Sioux Falls",
+  "description": "The five Sioux Falls City Council districts, so you can see which district (and district council seat) covers your address.",
+  "description_es": "Los cinco distritos del Concejo Municipal de Sioux Falls, para ver qué distrito (y qué escaño del concejo) le corresponde a su dirección.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Sioux Falls GIS",
+  "view": {
+   "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Community/MapServer/5",
+   "fields": {
+    "districtid": "district",
+    "name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.85,
+    43.48,
+    -96.65,
+    43.62
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "sd-sioux-falls-historic-districts",
+  "state": "SD",
+  "title": "Sioux Falls historic districts",
+  "title_es": "Distritos históricos de Sioux Falls",
+  "description": "Locally designated historic districts in Sioux Falls, where exterior changes to buildings may need a historic-preservation review.",
+  "description_es": "Distritos históricos designados en Sioux Falls, donde los cambios exteriores a los edificios pueden requerir una revisión de preservación histórica.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Sioux Falls GIS",
+  "view": {
+   "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Community/MapServer/12",
+   "fields": {
+    "NAME": "name",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.85,
+    43.48,
+    -96.65,
+    43.62
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "sd-sioux-falls-capital-projects",
+  "state": "SD",
+  "title": "Sioux Falls capital projects (sites)",
+  "title_es": "Proyectos de obras públicas de Sioux Falls (sitios)",
+  "description": "City capital-improvement projects at specific sites (water, light and power, parks, facilities): what is planned or under construction and the proposed construction year.",
+  "description_es": "Proyectos de mejoras de capital de la ciudad en sitios específicos (agua, luz y energía, parques, instalaciones): qué está planeado o en construcción y el año de construcción propuesto.",
+  "group": "growth",
+  "category": "point",
+  "source": "City of Sioux Falls (Capital Improvement Program)",
+  "view": {
+   "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Community/MapServer/42",
+   "fields": {
+    "PROJECTNAME": "name",
+    "PROJECTTYPE": "kind",
+    "DEPARTMENT": "department",
+    "PROJECTSTATUS": "status",
+    "PROPOSEDCONSTRUCTIONYEAR": "year",
+    "CIPNUMBER": "number",
+    "MAPDESCRIPTION": "description",
+    "PROJECTWEBPAGELINK": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.85,
+    43.48,
+    -96.65,
+    43.62
+   ],
+   "features_in_probe": 167
+  }
+ },
+ {
+  "name": "sd-sioux-falls-street-projects",
+  "state": "SD",
+  "title": "Sioux Falls capital projects (streets and pipes)",
+  "title_es": "Proyectos de obras públicas de Sioux Falls (calles y tuberías)",
+  "description": "City capital-improvement projects along streets: street reconstruction, water main and sewer replacement, with status and proposed construction year.",
+  "description_es": "Proyectos de mejoras de capital de la ciudad a lo largo de calles: reconstrucción de calles y reemplazo de tuberías de agua y alcantarillado, con su estado y año de construcción propuesto.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Sioux Falls (Capital Improvement Program)",
+  "view": {
+   "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Community/MapServer/41",
+   "fields": {
+    "PROJECTNAME": "name",
+    "PROJECTTYPE": "kind",
+    "DEPARTMENT": "department",
+    "PROJECTSTATUS": "status",
+    "PROPOSEDCONSTRUCTIONYEAR": "year",
+    "CIPNUMBER": "number",
+    "MAPDESCRIPTION": "description",
+    "PROJECTWEBPAGELINK": "url"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.85,
+    43.48,
+    -96.65,
+    43.62
+   ],
+   "features_in_probe": 115
+  }
+ },
+ {
+  "name": "sd-sioux-falls-closures",
+  "state": "SD",
+  "title": "Sioux Falls street and lane closures",
+  "title_es": "Cierres de calles y carriles en Sioux Falls",
+  "description": "Current street, lane and park-trail closures posted by the City of Sioux Falls, with start and expected end dates and what the detour is.",
+  "description_es": "Cierres actuales de calles, carriles y senderos publicados por la Ciudad de Sioux Falls, con fechas de inicio y de fin previstas y cuál es el desvío.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Sioux Falls (Public Works)",
+  "view": {
+   "url": "https://services.arcgis.com/YpECgwASS4iMvgsA/arcgis/rest/services/Sioux_Falls_Closure_Layers_view/FeatureServer/0",
+   "fields": {
+    "Closure_Type": "kind",
+    "Begin_Date": "start",
+    "Expiration_Date": "end",
+    "Details": "description"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "refresh_s": 1800
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.85,
+    43.48,
+    -96.65,
+    43.62
+   ],
+   "features_in_probe": 34
+  }
+ },
+ {
+  "name": "sd-sioux-falls-trail-closures",
+  "state": "SD",
+  "title": "Sioux Falls bike trail closures",
+  "title_es": "Cierres de la ciclovía de Sioux Falls",
+  "description": "Closures and maintenance work on the Sioux Falls recreation trail system, with dates and what is going on.",
+  "description_es": "Cierres y trabajos de mantenimiento en el sistema de senderos recreativos de Sioux Falls, con fechas y qué se está haciendo.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Sioux Falls (Parks and Recreation)",
+  "view": {
+   "url": "https://services.arcgis.com/YpECgwASS4iMvgsA/arcgis/rest/services/BikeTrailClosures/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Status": "status",
+    "Dates": "dates",
+    "Info": "description"
+   },
+   "geometry": "point",
+   "min_zoom": 9,
+   "where": "Name IS NOT NULL",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.85,
+    43.48,
+    -96.65,
+    43.62
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "sd-sioux-falls-park-boundaries",
+  "state": "SD",
+  "title": "Sioux Falls parks",
+  "title_es": "Parques de Sioux Falls",
+  "description": "City parks, greenways and open spaces in Sioux Falls with address, acreage, park hours and park type.",
+  "description_es": "Parques, corredores verdes y espacios abiertos de la ciudad de Sioux Falls, con dirección, superficie, horario y tipo de parque.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Sioux Falls (Parks and Recreation)",
+  "view": {
+   "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Park/MapServer/8",
+   "fields": {
+    "Name": "name",
+    "Address": "address",
+    "ParkType": "kind",
+    "CLASSIFICATION": "classification",
+    "PlanningType": "plan_type",
+    "Acreage": "acres",
+    "HOURS": "hours",
+    "WEBSITE": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.85,
+    43.48,
+    -96.65,
+    43.62
+   ],
+   "features_in_probe": 114
+  }
+ },
+ {
+  "name": "sd-sioux-falls-snow-routes",
+  "state": "SD",
+  "title": "Sioux Falls snow routes",
+  "title_es": "Rutas de nieve de Sioux Falls",
+  "description": "Emergency and priority snow routes in Sioux Falls. When a snow alert is declared, these streets are plowed first and parking rules apply.",
+  "description_es": "Rutas de nieve de emergencia y prioritarias en Sioux Falls. Cuando se declara una alerta de nieve, estas calles se limpian primero y aplican reglas de estacionamiento.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Sioux Falls (Public Works - Street Division)",
+  "view": {
+   "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Transportation/MapServer/21",
+   "fields": {
+    "FullRouteName": "name",
+    "ROUTE": "route",
+    "RouteType": "kind",
+    "RouteReminders": "notes"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.85,
+    43.48,
+    -96.65,
+    43.62
+   ],
+   "features_in_probe": 493
+  }
+ },
+ {
+  "name": "sd-sioux-falls-sweeping-districts",
+  "state": "SD",
+  "title": "Sioux Falls street sweeping districts",
+  "title_es": "Distritos de barrido de calles de Sioux Falls",
+  "description": "Street-sweeping districts in Sioux Falls with the current sweeping status (not started, in progress, done) and a link to the district map.",
+  "description_es": "Distritos de barrido de calles en Sioux Falls con el estado actual del barrido (sin empezar, en curso, terminado) y un enlace al mapa del distrito.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Sioux Falls (Public Works - Street Division)",
+  "view": {
+   "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Transportation/MapServer/19",
+   "fields": {
+    "DistrictName": "district",
+    "Status": "status",
+    "OperatedBy": "area",
+    "Link": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.85,
+    43.48,
+    -96.65,
+    43.62
+   ],
+   "features_in_probe": 40
+  }
+ },
+ {
+  "name": "sd-sioux-falls-elementary-zones",
+  "state": "SD",
+  "title": "Sioux Falls elementary school attendance areas",
+  "title_es": "Zonas de asistencia de escuelas primarias de Sioux Falls",
+  "description": "Which Sioux Falls School District elementary school serves each neighborhood.",
+  "description_es": "Qué escuela primaria del Distrito Escolar de Sioux Falls le corresponde a cada vecindario.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Sioux Falls GIS / Sioux Falls School District",
+  "view": {
+   "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Education/MapServer/5",
+   "fields": {
+    "DISTRCTNAME": "school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.85,
+    43.48,
+    -96.65,
+    43.62
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "sd-sioux-falls-middle-zones",
+  "state": "SD",
+  "title": "Sioux Falls middle school attendance areas",
+  "title_es": "Zonas de asistencia de escuelas secundarias (middle school) de Sioux Falls",
+  "description": "Which Sioux Falls School District middle school serves each neighborhood.",
+  "description_es": "Qué escuela secundaria (middle school) del Distrito Escolar de Sioux Falls le corresponde a cada vecindario.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Sioux Falls GIS / Sioux Falls School District",
+  "view": {
+   "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Education/MapServer/6",
+   "fields": {
+    "DISTRCTNAME": "school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.85,
+    43.48,
+    -96.65,
+    43.62
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "sd-sioux-falls-high-zones",
+  "state": "SD",
+  "title": "Sioux Falls high school attendance areas",
+  "title_es": "Zonas de asistencia de preparatorias de Sioux Falls",
+  "description": "Which Sioux Falls School District high school serves each neighborhood.",
+  "description_es": "Qué preparatoria (high school) del Distrito Escolar de Sioux Falls le corresponde a cada vecindario.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Sioux Falls GIS / Sioux Falls School District",
+  "view": {
+   "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Education/MapServer/7",
+   "fields": {
+    "DISTRCTNAME": "school"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -96.85,
+    43.48,
+    -96.65,
+    43.62
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "sd-minnehaha-zoning",
+  "state": "SD",
+  "title": "Minnehaha County zoning (rural)",
+  "title_es": "Zonificación del condado de Minnehaha (zona rural)",
+  "description": "County zoning outside city limits in Minnehaha County: agricultural, rural residential, commercial, industrial and planned development districts.",
+  "description_es": "Zonificación del condado fuera de los límites de las ciudades en el condado de Minnehaha: distritos agrícolas, residenciales rurales, comerciales, industriales y de desarrollo planificado.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Minnehaha County Planning",
+  "view": {
+   "url": "https://gis.minnehahacounty.gov/minnemap/rest/services/Planning/Zoning/MapServer/0",
+   "fields": {
+    "ZONECLASS": "zone",
+    "ZONEDESC": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -97.13,
+    43.5,
+    -96.45,
+    43.94
+   ],
+   "features_in_probe": 312
+  }
+ },
+ {
+  "name": "sd-pennington-precincts-polling-places",
+  "state": "SD",
+  "title": "Pennington County voting precincts and polling places",
+  "title_es": "Precintos electorales y lugares de votación del condado de Pennington",
+  "description": "Voting precincts in Pennington County (Rapid City area) with the assigned polling place and its address, plus the ward, county commission and legislative district for each precinct.",
+  "description_es": "Precintos electorales del condado de Pennington (área de Rapid City) con el lugar de votación asignado y su dirección, además del distrito municipal, de comisión del condado y legislativo de cada precinto.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Pennington County Auditor / Rapid City-Pennington County GIS",
+  "view": {
+   "url": "https://gis.rcgov.org/server/rest/services/AGOL/Voting/MapServer/13",
+   "fields": {
+    "Precinct": "precinct",
+    "PollingPlace": "polling_place",
+    "Address": "address",
+    "Ward": "ward",
+    "CommDist": "commission_district",
+    "LegisDist": "legislative_district",
+    "SchoolDist": "school_district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -103.3,
+    44.02,
+    -103.15,
+    44.12
+   ],
+   "features_in_probe": 37
+  }
+ },
+ {
+  "name": "sd-pennington-commission-districts",
+  "state": "SD",
+  "title": "Pennington County commission districts",
+  "title_es": "Distritos de la comisión del condado de Pennington",
+  "description": "The five Pennington County Commission districts.",
+  "description_es": "Los cinco distritos de la Comisión del Condado de Pennington.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Rapid City-Pennington County GIS",
+  "view": {
+   "url": "https://gis.rcgov.org/server/rest/services/AGOL/Voting/MapServer/11",
+   "fields": {
+    "CommDist": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -103.3,
+    44.02,
+    -103.15,
+    44.12
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "sd-rapid-city-wards",
+  "state": "SD",
+  "title": "Rapid City wards",
+  "title_es": "Distritos municipales (wards) de Rapid City",
+  "description": "Rapid City council wards; each ward elects two council members.",
+  "description_es": "Distritos municipales (wards) del concejo de Rapid City; cada distrito elige a dos miembros del concejo.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Rapid City-Pennington County GIS",
+  "view": {
+   "url": "https://gis.rcgov.org/server/rest/services/PublicSites/PublicRapidMap/MapServer/124",
+   "fields": {
+    "Ward": "ward"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -103.3,
+    44.02,
+    -103.15,
+    44.12
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "sd-rapid-city-trash-days",
+  "state": "SD",
+  "title": "Rapid City trash and recycling collection days",
+  "title_es": "Días de recolección de basura y reciclaje en Rapid City",
+  "description": "Which day the City of Rapid City picks up trash and recycling in each area.",
+  "description_es": "Qué día la Ciudad de Rapid City recoge la basura y el reciclaje en cada zona.",
+  "group": "infra",
+  "category": "info",
+  "source": "City of Rapid City (Solid Waste)",
+  "view": {
+   "url": "https://gis.rcgov.org/server/rest/services/AGOL/SWCollectionDays/MapServer/5",
+   "fields": {
+    "DAY": "day",
+    "MATERIAL": "material",
+    "ROUTE_ID": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -103.3,
+    44.02,
+    -103.15,
+    44.12
+   ],
+   "features_in_probe": 53
+  }
+ },
+ {
+  "name": "sd-rapid-city-parks",
+  "state": "SD",
+  "title": "Rapid City area parks",
+  "title_es": "Parques del área de Rapid City",
+  "description": "Municipal parks in Rapid City and nearby towns with address, hours and amenities (playgrounds, restrooms, shelters, trails, sports courts).",
+  "description_es": "Parques municipales de Rapid City y pueblos cercanos con dirección, horario y servicios (juegos infantiles, baños, refugios, senderos, canchas).",
+  "group": "nature",
+  "category": "park",
+  "source": "Rapid City-Pennington County GIS (Parks)",
+  "view": {
+   "url": "https://gis.rcgov.org/server/rest/services/PublicSites/PenningtonOutdoors/MapServer/13",
+   "fields": {
+    "ParkName": "name",
+    "ParkType": "kind",
+    "Address": "address",
+    "Times_of_Operation": "hours",
+    "Amenities": "amenities",
+    "Playground": "playground",
+    "Restrooms": "restrooms",
+    "Shelters": "shelters",
+    "WalkingHikingTrails": "trails",
+    "LeashFreeArea": "off_leash",
+    "Link": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -103.3,
+    44.02,
+    -103.15,
+    44.12
+   ],
+   "features_in_probe": 83
+  }
+ },
+ {
+  "name": "sd-rapid-city-historic-districts",
+  "state": "SD",
+  "title": "Rapid City historic districts",
+  "title_es": "Distritos históricos de Rapid City",
+  "description": "The West Boulevard and Downtown historic districts in Rapid City, where exterior changes may need historic-preservation review.",
+  "description_es": "Los distritos históricos West Boulevard y Downtown de Rapid City, donde los cambios exteriores pueden requerir una revisión de preservación histórica.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Rapid City-Pennington County GIS (Historic Preservation)",
+  "view": {
+   "url": "https://gis.rcgov.org/server/rest/services/PublicSites/PublicRapidMap/MapServer/88",
+   "fields": {
+    "District": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -103.3,
+    44.02,
+    -103.15,
+    44.12
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "sd-rapid-city-snow-emergency-routes",
+  "state": "SD",
+  "title": "Rapid City snow emergency routes",
+  "title_es": "Rutas de emergencia por nieve de Rapid City",
+  "description": "Streets Rapid City plows first in a snow event (emergency routes). Parking may be banned on them during a snow emergency.",
+  "description_es": "Calles que Rapid City limpia primero cuando nieva (rutas de emergencia). Durante una emergencia por nieve se puede prohibir estacionarse en ellas.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Rapid City (Street Division)",
+  "view": {
+   "url": "https://gis.rcgov.org/server/rest/services/AGOL/SnowEvents/MapServer/0",
+   "fields": {
+    "Roadname": "street",
+    "Plow_Route_Level_Classification": "level",
+    "Route_Number": "route"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -103.3,
+    44.02,
+    -103.15,
+    44.12
+   ],
+   "features_in_probe": 788
+  }
+ },
+ {
+  "name": "sd-pennington-future-land-use",
+  "state": "SD",
+  "title": "Pennington County future land use (2040 plan)",
+  "title_es": "Uso futuro del suelo del condado de Pennington (plan 2040)",
+  "description": "The Pennington County comprehensive plan's future land use for each area outside city limits (rural residential, ranchette, agriculture, commercial and more).",
+  "description_es": "El uso futuro del suelo del plan integral del condado de Pennington para cada zona fuera de los límites de las ciudades (residencial rural, ranchos pequeños, agricultura, comercial y más).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Pennington County Planning",
+  "view": {
+   "url": "https://gis.rcgov.org/server/rest/services/AGOL/CountyFLU2025/MapServer/4",
+   "fields": {
+    "FLU_2040": "future_use",
+    "Region": "region",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -103.3,
+    44.02,
+    -103.15,
+    44.12
+   ],
+   "features_in_probe": 708
+  }
+ },
+ {
+  "name": "mt-missoula-polling-places",
+  "state": "MT",
+  "title": "Missoula County polling places",
+  "title_es": "Lugares de votación del condado de Missoula",
+  "description": "Polling places used by Missoula County Elections, with address.",
+  "description_es": "Lugares de votación que usa la oficina electoral del condado de Missoula, con su dirección.",
+  "group": "civic",
+  "category": "point",
+  "source": "Missoula County Elections",
+  "view": {
+   "url": "https://services1.arcgis.com/NQWYt9dWr9BlL9QE/arcgis/rest/services/PollingLocation/FeatureServer/25",
+   "fields": {
+    "name": "name",
+    "address": "address",
+    "city": "city",
+    "zipcode": "zip"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -114.1,
+    46.82,
+    -113.95,
+    46.92
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "mt-missoula-polling-areas",
+  "state": "MT",
+  "title": "Missoula County polling-place areas",
+  "title_es": "Zonas de lugares de votación del condado de Missoula",
+  "description": "Which polling place serves each part of Missoula County (polling area boundaries).",
+  "description_es": "Qué lugar de votación le corresponde a cada parte del condado de Missoula (límites de zonas de votación).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Missoula County Elections",
+  "view": {
+   "url": "https://services1.arcgis.com/NQWYt9dWr9BlL9QE/arcgis/rest/services/PollingArea/FeatureServer/28",
+   "fields": {
+    "name": "polling_place",
+    "revyear": "revised"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8,
+   "where": "active = 1"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -114.1,
+    46.82,
+    -113.95,
+    46.92
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "mt-missoula-school-attendance",
+  "state": "MT",
+  "title": "Missoula school attendance areas",
+  "title_es": "Zonas de asistencia escolar de Missoula",
+  "description": "Which public school (elementary, middle or high) serves each address in the Missoula area.",
+  "description_es": "Qué escuela pública (primaria, secundaria o preparatoria) le corresponde a cada dirección en el área de Missoula.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Missoula County GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/NQWYt9dWr9BlL9QE/arcgis/rest/services/SchoolAttendanceBoundaries/FeatureServer/5",
+   "fields": {
+    "name": "school",
+    "type": "level",
+    "schooldistrictnumber": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -114.1,
+    46.82,
+    -113.95,
+    46.92
+   ],
+   "features_in_probe": 23
+  }
+ },
+ {
+  "name": "mt-missoula-fire-districts",
+  "state": "MT",
+  "title": "Missoula County fire districts",
+  "title_es": "Distritos de bomberos del condado de Missoula",
+  "description": "Which rural fire district or fire service area covers each part of Missoula County.",
+  "description_es": "Qué distrito rural de bomberos o zona de servicio de bomberos cubre cada parte del condado de Missoula.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Missoula County GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/NQWYt9dWr9BlL9QE/arcgis/rest/services/Fire/FeatureServer/23",
+   "fields": {
+    "name": "name",
+    "description": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -114.1,
+    46.82,
+    -113.95,
+    46.92
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "mt-missoula-county-zoning",
+  "state": "MT",
+  "title": "Missoula County zoning",
+  "title_es": "Zonificación del condado de Missoula",
+  "description": "Missoula County base zoning districts (outside the City of Missoula) with minimum lot size, setbacks, allowed use type and a link to the zoning rules.",
+  "description_es": "Distritos de zonificación base del condado de Missoula (fuera de la Ciudad de Missoula) con tamaño mínimo de lote, retiros, tipo de uso permitido y un enlace a las reglas de zonificación.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Missoula County Planning, Development and Sustainability",
+  "view": {
+   "url": "https://services1.arcgis.com/NQWYt9dWr9BlL9QE/arcgis/rest/services/MslaCo_BaseZones/FeatureServer/14",
+   "fields": {
+    "basedistrictabbrv": "zone",
+    "zoneregtype": "code",
+    "districtusetype": "use_type",
+    "minlotsize": "min_lot",
+    "setbackfront": "setback_front",
+    "setbackside": "setback_side",
+    "setbackrear": "setback_rear",
+    "acres": "acres",
+    "zoningdoclink": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -114.1,
+    46.82,
+    -113.95,
+    46.92
+   ],
+   "features_in_probe": 171
+  }
+ },
+ {
+  "name": "mt-missoula-land-use-designations",
+  "state": "MT",
+  "title": "Missoula County land use plan designations",
+  "title_es": "Designaciones del plan de uso del suelo del condado de Missoula",
+  "description": "Land use designations from Missoula County's adopted plans (density and type of development each area is planned for), with the plan name and a link to the page in the plan.",
+  "description_es": "Designaciones de uso del suelo de los planes adoptados del condado de Missoula (densidad y tipo de desarrollo previstos para cada zona), con el nombre del plan y un enlace a la página del plan.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Missoula County Planning, Development and Sustainability",
+  "view": {
+   "url": "https://services1.arcgis.com/NQWYt9dWr9BlL9QE/arcgis/rest/services/LandUseDesignations/FeatureServer/13",
+   "fields": {
+    "luname": "designation",
+    "planname": "plan",
+    "neighborplanname": "neighborhood_plan",
+    "pdfpagelink": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -114.1,
+    46.82,
+    -113.95,
+    46.92
+   ],
+   "features_in_probe": 929
+  }
+ },
+ {
+  "name": "mt-missoula-evacuation-zones",
+  "state": "MT",
+  "title": "Missoula County active evacuation zones",
+  "title_es": "Zonas de evacuación activas del condado de Missoula",
+  "description": "Evacuation orders and warnings currently in effect in Missoula County (wildfire, flood and other emergencies). Empty when no evacuation is active.",
+  "description_es": "Órdenes y advertencias de evacuación vigentes en el condado de Missoula (incendios forestales, inundaciones y otras emergencias). Vacío cuando no hay evacuaciones activas.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Missoula County Office of Emergency Management",
+  "view": {
+   "url": "https://services1.arcgis.com/NQWYt9dWr9BlL9QE/arcgis/rest/services/Evacution_Zones_Public/FeatureServer/0",
+   "fields": {
+    "zonename": "zone",
+    "zonetype": "kind",
+    "incidentname": "incident",
+    "incidenttype": "incident_type",
+    "incidentyear": "year",
+    "last_edited_date": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7,
+   "where": "active = 1",
+   "refresh_s": 300
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -114.8,
+    46.6,
+    -113.3,
+    47.6
+   ],
+   "features_in_probe": 0
+  }
+ },
+ {
+  "name": "mt-missoula-county-parks",
+  "state": "MT",
+  "title": "Missoula County parks",
+  "title_es": "Parques del condado de Missoula",
+  "description": "Parks and open space owned or maintained by Missoula County, with class, acreage, amenities and how to get in.",
+  "description_es": "Parques y espacios abiertos del condado de Missoula, con su tipo, superficie, servicios y cómo llegar.",
+  "group": "nature",
+  "category": "park",
+  "source": "Missoula County Parks, Trails and Open Lands",
+  "view": {
+   "url": "https://services1.arcgis.com/NQWYt9dWr9BlL9QE/arcgis/rest/services/County_Parks_2/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "class": "kind",
+    "developed": "developed",
+    "planning_area": "area",
+    "acres": "acres",
+    "Amenities": "amenities",
+    "Accessibility": "access",
+    "ParkDesc": "description"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9,
+   "where": "filter = 'show'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -114.1,
+    46.82,
+    -113.95,
+    46.92
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "mt-missoula-county-trails",
+  "state": "MT",
+  "title": "Missoula County trails",
+  "title_es": "Senderos del condado de Missoula",
+  "description": "Shared-use paths and trails managed by Missoula County, with surface, length, difficulty and accessibility.",
+  "description_es": "Caminos de uso compartido y senderos del condado de Missoula, con tipo de superficie, longitud, dificultad y accesibilidad.",
+  "group": "nature",
+  "category": "park",
+  "source": "Missoula County Parks, Trails and Open Lands",
+  "view": {
+   "url": "https://services1.arcgis.com/NQWYt9dWr9BlL9QE/arcgis/rest/services/County_Trails_Master/FeatureServer/0",
+   "fields": {
+    "Trail_Name": "name",
+    "Surface_Type": "surface",
+    "Length_Miles": "miles",
+    "Difficulty": "difficulty",
+    "Universally_Accessible": "accessible",
+    "Managing_Agency": "agency",
+    "Status": "status",
+    "Notes": "notes"
+   },
+   "geometry": "line",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -114.5,
+    46.7,
+    -113.4,
+    47.3
+   ],
+   "features_in_probe": 53
+  }
+ },
+ {
+  "name": "mt-gallatin-commission-districts",
+  "state": "MT",
+  "title": "Gallatin County commission districts",
+  "title_es": "Distritos de la comisión del condado de Gallatin",
+  "description": "The three Gallatin County Commission districts (2023 boundaries).",
+  "description_es": "Los tres distritos de la Comisión del Condado de Gallatin (límites de 2023).",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Gallatin County GIS",
+  "view": {
+   "url": "https://services3.arcgis.com/JuknJLoAEm9DTWXh/arcgis/rest/services/Commission_Districts_2023/FeatureServer/286",
+   "fields": {
+    "Commission_District": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.25,
+    45.55,
+    -111.0,
+    45.8
+   ],
+   "features_in_probe": 3
+  }
+ },
+ {
+  "name": "mt-gallatin-zoning",
+  "state": "MT",
+  "title": "Gallatin County zoning",
+  "title_es": "Zonificación del condado de Gallatin",
+  "description": "Zoning in Gallatin County's local zoning districts (outside city limits), such as residential, commercial, agricultural and public land.",
+  "description_es": "Zonificación en los distritos de zonificación locales del condado de Gallatin (fuera de los límites de las ciudades), como residencial, comercial, agrícola y terrenos públicos.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Gallatin County Planning",
+  "view": {
+   "url": "https://services3.arcgis.com/JuknJLoAEm9DTWXh/arcgis/rest/services/County_Zoning_Districts/FeatureServer/42",
+   "fields": {
+    "ZONED_ABV": "zone",
+    "LANDUSE": "land_use",
+    "DISTRICT_N": "zoning_district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.25,
+    45.55,
+    -111.0,
+    45.8
+   ],
+   "features_in_probe": 255
+  }
+ },
+ {
+  "name": "mt-gallatin-water-sewer-districts",
+  "state": "MT",
+  "title": "Gallatin County water and sewer districts",
+  "title_es": "Distritos de agua y alcantarillado del condado de Gallatin",
+  "description": "Water and sewer districts in Gallatin County, so you can see which district provides service to an area.",
+  "description_es": "Distritos de agua y alcantarillado del condado de Gallatin, para ver qué distrito da servicio a una zona.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Gallatin County GIS",
+  "view": {
+   "url": "https://services3.arcgis.com/JuknJLoAEm9DTWXh/arcgis/rest/services/Water_and_Sewer_Districts/FeatureServer/287",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "DIST_NO": "number"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.25,
+    45.55,
+    -111.0,
+    45.8
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "mt-gallatin-recreation-sites",
+  "state": "MT",
+  "title": "Gallatin County recreation sites",
+  "title_es": "Sitios recreativos del condado de Gallatin",
+  "description": "Trailheads, campgrounds, fishing access sites and other recreation sites around Gallatin County.",
+  "description_es": "Inicios de sendero, campamentos, accesos para pesca y otros sitios recreativos en el condado de Gallatin.",
+  "group": "nature",
+  "category": "point",
+  "source": "Gallatin County GIS",
+  "view": {
+   "url": "https://services3.arcgis.com/JuknJLoAEm9DTWXh/arcgis/rest/services/Public_Lands/FeatureServer/4",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.6,
+    45.0,
+    -110.7,
+    46.2
+   ],
+   "features_in_probe": 170
+  }
+ },
+ {
+  "name": "mt-gallatin-trails",
+  "state": "MT",
+  "title": "Gallatin County trails",
+  "title_es": "Senderos del condado de Gallatin",
+  "description": "Trails across Gallatin County with surface, length, class and who maintains them.",
+  "description_es": "Senderos en todo el condado de Gallatin con tipo de superficie, longitud, clase y quién les da mantenimiento.",
+  "group": "nature",
+  "category": "park",
+  "source": "Gallatin County GIS",
+  "view": {
+   "url": "https://services3.arcgis.com/JuknJLoAEm9DTWXh/arcgis/rest/services/Public_Lands/FeatureServer/5",
+   "fields": {
+    "TRAIL_NAME": "name",
+    "SURFACE": "surface",
+    "CLASS": "class",
+    "MAINTENANCE": "maintained_by",
+    "OWNERSHIP": "ownership",
+    "ADA": "accessible",
+    "STATUS": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 14,
+   "where": "PUBLIC_VIEW = 'YES'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.1,
+    45.63,
+    -110.98,
+    45.72
+   ],
+   "features_in_probe": 1386
+  }
+ },
+ {
+  "name": "mt-bozeman-zoning",
+  "state": "MT",
+  "title": "Bozeman zoning (2026)",
+  "title_es": "Zonificación de Bozeman (2026)",
+  "description": "City of Bozeman zoning districts under the 2026 zoning map (residential, business, mixed use, industrial and more).",
+  "description_es": "Distritos de zonificación de la Ciudad de Bozeman según el mapa de zonificación de 2026 (residencial, comercial, uso mixto, industrial y más).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Bozeman (Community Development)",
+  "view": {
+   "url": "https://gisweb.bozeman.net/arcgis/rest/services/Open_Data/Zoning/FeatureServer/1",
+   "fields": {
+    "ZONING": "zone",
+    "Acreage": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.1,
+    45.63,
+    -110.98,
+    45.72
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "mt-bozeman-parks",
+  "state": "MT",
+  "title": "Bozeman parks",
+  "title_es": "Parques de Bozeman",
+  "description": "Parks and park land in Bozeman with acreage, who maintains them, public access and notes on what is there.",
+  "description_es": "Parques y terrenos de parque en Bozeman con superficie, quién les da mantenimiento, acceso público y notas sobre lo que hay.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Bozeman (Parks and Recreation)",
+  "view": {
+   "url": "https://gisweb.bozeman.net/arcgis/rest/services/Open_Data/Parks/FeatureServer/3",
+   "fields": {
+    "PARK_NAME": "name",
+    "LOCATION": "location",
+    "TYPE": "kind",
+    "ACRES": "acres",
+    "ACCESS": "access",
+    "MAINTENANCE": "maintained_by",
+    "COMMENTS": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.1,
+    45.63,
+    -110.98,
+    45.72
+   ],
+   "features_in_probe": 222
+  }
+ },
+ {
+  "name": "mt-bozeman-street-closures",
+  "state": "MT",
+  "title": "Bozeman street closures",
+  "title_es": "Cierres de calles en Bozeman",
+  "description": "Street and lane closures in Bozeman from construction and city work, with limits, type of closure and dates.",
+  "description_es": "Cierres de calles y carriles en Bozeman por obras y trabajos de la ciudad, con los tramos, el tipo de cierre y las fechas.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Bozeman (Transportation and Engineering)",
+  "view": {
+   "url": "https://gisweb.bozeman.net/arcgis/rest/services/AGOL/Street_Maintenance/FeatureServer/1",
+   "fields": {
+    "NAME": "name",
+    "CLOSURE": "closure",
+    "LIMITS": "limits",
+    "AGENCY": "agency",
+    "TYPE": "kind",
+    "CLOSURE_TYPE": "closure_type",
+    "BEGIN_DATE": "start",
+    "END_DATE": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.1,
+    45.63,
+    -110.98,
+    45.72
+   ],
+   "features_in_probe": 27
+  }
+ },
+ {
+  "name": "mt-bozeman-fall-cleanup",
+  "state": "MT",
+  "title": "Bozeman fall leaf cleanup schedule",
+  "title_es": "Calendario de limpieza de hojas de otoño en Bozeman",
+  "description": "Bozeman's fall street cleanup (leaf pickup) routes, with the scheduled day for each street segment so you know when to move cars and rake leaves to the curb.",
+  "description_es": "Rutas de limpieza de calles de otoño (recolección de hojas) en Bozeman, con el día programado para cada tramo, para saber cuándo mover el auto y dejar las hojas junto a la banqueta.",
+  "group": "infra",
+  "category": "info",
+  "source": "City of Bozeman (Streets)",
+  "view": {
+   "url": "https://services3.arcgis.com/f4hk1qcfxRJ0L2BU/arcgis/rest/services/Fall_2025_Core_Cleanup_Routes/FeatureServer/2",
+   "fields": {
+    "Street": "street",
+    "ExcelRange": "between",
+    "SIDE": "side",
+    "WEEKDAY": "weekday",
+    "DATE": "date",
+    "ROUTE_TYPE": "route_type"
+   },
+   "geometry": "line",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.1,
+    45.63,
+    -110.98,
+    45.72
+   ],
+   "features_in_probe": 251
+  }
+ },
+ {
+  "name": "mt-helena-future-land-use",
+  "state": "MT",
+  "title": "Helena area future land use",
+  "title_es": "Uso futuro del suelo del área de Helena",
+  "description": "Future land use in the Helena growth policy: what kind of development each area is planned for.",
+  "description_es": "Uso futuro del suelo en la política de crecimiento de Helena: qué tipo de desarrollo está previsto para cada zona.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Helena / Lewis and Clark County GIS",
+  "view": {
+   "url": "https://helenamontanamaps.org/arcgisadp/rest/services/LCSimple/MapServer/110",
+   "fields": {
+    "UseType": "future_use",
+    "Comments": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.1,
+    46.55,
+    -111.95,
+    46.65
+   ],
+   "features_in_probe": 426
+  }
+ },
+ {
+  "name": "mt-helena-recycling",
+  "state": "MT",
+  "title": "Helena area recycling drop-offs",
+  "title_es": "Puntos de reciclaje del área de Helena",
+  "description": "Recycling drop-off locations in the Helena area and what each one accepts.",
+  "description_es": "Puntos para dejar reciclaje en el área de Helena y qué acepta cada uno.",
+  "group": "infra",
+  "category": "point",
+  "source": "Lewis and Clark County / City of Helena",
+  "view": {
+   "url": "https://helenamontanamaps.org/arcgisadp/rest/services/LCSimple/MapServer/59",
+   "fields": {
+    "Label": "name",
+    "Address": "address",
+    "Location": "town",
+    "Type": "kind",
+    "Recycling": "accepts"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -112.1,
+    46.55,
+    -111.95,
+    46.65
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "mt-great-falls-trash-days",
+  "state": "MT",
+  "title": "Great Falls trash pickup days",
+  "title_es": "Días de recolección de basura en Great Falls",
+  "description": "Which day the City of Great Falls picks up trash on each street.",
+  "description_es": "Qué día la Ciudad de Great Falls recoge la basura en cada calle.",
+  "group": "infra",
+  "category": "info",
+  "source": "City of Great Falls (Public Works - Sanitation)",
+  "view": {
+   "url": "https://services3.arcgis.com/9RL0UDVaNxg1PvwI/arcgis/rest/services/Sanitation_Routes/FeatureServer/0",
+   "fields": {
+    "FULLNAME": "street",
+    "Pickup": "pickup_day"
+   },
+   "geometry": "line",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.4,
+    47.46,
+    -111.22,
+    47.55
+   ],
+   "features_in_probe": 1969
+  }
+ },
+ {
+  "name": "mt-great-falls-snow-plow-routes",
+  "state": "MT",
+  "title": "Great Falls snow plow routes",
+  "title_es": "Rutas de quitanieves de Great Falls",
+  "description": "Great Falls snow plow routes (priority order) for each street.",
+  "description_es": "Rutas de quitanieves de Great Falls (orden de prioridad) para cada calle.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Great Falls (Public Works - Streets)",
+  "view": {
+   "url": "https://services3.arcgis.com/9RL0UDVaNxg1PvwI/arcgis/rest/services/Snow_Plow_Routes/FeatureServer/0",
+   "fields": {
+    "FULLNAME": "street",
+    "PlowRoute": "route",
+    "ROAD_SURFA": "surface"
+   },
+   "geometry": "line",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.4,
+    47.46,
+    -111.22,
+    47.55
+   ],
+   "features_in_probe": 1445
+  }
+ },
+ {
+  "name": "mt-great-falls-parks",
+  "state": "MT",
+  "title": "Great Falls parks",
+  "title_es": "Parques de Great Falls",
+  "description": "City parks in Great Falls with type, acreage and whether they are developed.",
+  "description_es": "Parques de la ciudad de Great Falls con tipo, superficie y si están desarrollados.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Great Falls (Park and Recreation)",
+  "view": {
+   "url": "https://services3.arcgis.com/9RL0UDVaNxg1PvwI/arcgis/rest/services/Great_Falls_City_Parks/FeatureServer/0",
+   "fields": {
+    "PK_NAME": "name",
+    "TYPE": "kind",
+    "ACRES": "acres",
+    "STATUS": "status"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.4,
+    47.46,
+    -111.22,
+    47.55
+   ],
+   "features_in_probe": 91
+  }
+ },
+ {
+  "name": "mt-great-falls-historic-districts",
+  "state": "MT",
+  "title": "Great Falls historic districts",
+  "title_es": "Distritos históricos de Great Falls",
+  "description": "National Register historic districts in Great Falls and the year each was listed.",
+  "description_es": "Distritos históricos del Registro Nacional en Great Falls y el año en que se incluyó cada uno.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Great Falls (Planning and Community Development)",
+  "view": {
+   "url": "https://services3.arcgis.com/9RL0UDVaNxg1PvwI/arcgis/rest/services/Historic_Districts/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Year": "year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.4,
+    47.46,
+    -111.22,
+    47.55
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "mt-great-falls-future-land-use",
+  "state": "MT",
+  "title": "Great Falls future land use",
+  "title_es": "Uso futuro del suelo de Great Falls",
+  "description": "Future land use in the Great Falls growth policy: what kind of development each area is planned for.",
+  "description_es": "Uso futuro del suelo en la política de crecimiento de Great Falls: qué tipo de desarrollo está previsto para cada zona.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Great Falls (Planning and Community Development)",
+  "view": {
+   "url": "https://services3.arcgis.com/9RL0UDVaNxg1PvwI/arcgis/rest/services/Future_Land_Use/FeatureServer/0",
+   "fields": {
+    "FLU": "future_use"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "FLU IS NOT NULL"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.4,
+    47.46,
+    -111.22,
+    47.55
+   ],
+   "features_in_probe": 14
+  }
+ },
+ {
+  "name": "mt-great-falls-neighborhood-councils",
+  "state": "MT",
+  "title": "Great Falls neighborhood councils",
+  "title_es": "Consejos vecinales de Great Falls",
+  "description": "The nine Great Falls neighborhood council areas; each council advises the City Commission on local issues.",
+  "description_es": "Las nueve zonas de consejos vecinales de Great Falls; cada consejo asesora a la Comisión de la Ciudad sobre asuntos locales.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Great Falls",
+  "view": {
+   "url": "https://gis.greatfallsmt.gov/arcgis/rest/services/AdministrativeAreas/Neighborhood_Councils/MapServer/0",
+   "fields": {
+    "NUMBER": "council"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -111.4,
+    47.46,
+    -111.22,
+    47.55
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "mt-yellowstone-rsids",
+  "state": "MT",
+  "title": "Yellowstone County rural improvement districts",
+  "title_es": "Distritos rurales de mejoras especiales del condado de Yellowstone",
+  "description": "Rural Special Improvement Districts (RSIDs) around Billings: subdivisions that pay a special assessment for street maintenance, snow removal, lighting, dry hydrants, parks or weed control.",
+  "description_es": "Distritos Rurales de Mejoras Especiales (RSID) alrededor de Billings: fraccionamientos que pagan una cuota especial por mantenimiento de calles, limpieza de nieve, alumbrado, hidrantes secos, parques o control de maleza.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "Yellowstone County GIS / Public Works",
+  "view": {
+   "url": "https://services5.arcgis.com/yTCmMFjlqdhhFKP9/arcgis/rest/services/rsids/FeatureServer/1",
+   "fields": {
+    "NAME": "rsid",
+    "Type": "kind",
+    "DESCRIPTION": "description",
+    "SUBDIVISION": "subdivision",
+    "STREET_MAINTENANCE": "street_maintenance",
+    "SNOW_REMOVAL": "snow_removal",
+    "LIGHTING": "lighting"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -108.75,
+    45.65,
+    -108.3,
+    45.95
+   ],
+   "features_in_probe": 315
+  }
+ },
+ {
+  "name": "mt-yellowstone-wildfires-2020s",
+  "state": "MT",
+  "title": "Yellowstone County wildfires since 2020",
+  "title_es": "Incendios forestales en el condado de Yellowstone desde 2020",
+  "description": "Burned areas of wildfires in Yellowstone County since 2020, with fire name, year, cause and acres.",
+  "description_es": "Áreas quemadas por incendios forestales en el condado de Yellowstone desde 2020, con nombre del incendio, año, causa y hectáreas (en acres).",
+  "group": "hazards",
+  "category": "perimeter",
+  "source": "Yellowstone County GIS (from NIFC records)",
+  "view": {
+   "url": "https://services5.arcgis.com/yTCmMFjlqdhhFKP9/arcgis/rest/services/Fire_History/FeatureServer/5",
+   "fields": {
+    "Fire_Name": "name",
+    "Year": "year",
+    "FireType": "kind",
+    "FireCause": "cause",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -109.0,
+    45.5,
+    -107.6,
+    46.4
+   ],
+   "features_in_probe": 43
+  }
+ },
+ {
+  "name": "mt-fire-restrictions",
+  "state": "MT",
+  "title": "Montana fire restrictions (active)",
+  "title_es": "Restricciones por incendios en Montana (vigentes)",
+  "description": "Areas of Montana under Stage 1 or Stage 2 fire restrictions right now, by jurisdiction (county, state, federal or tribal land), with a link to the restriction order.",
+  "description_es": "Zonas de Montana con restricciones por incendios de etapa 1 o etapa 2 vigentes, por jurisdicción (condado, tierras estatales, federales o tribales), con un enlace a la orden de restricción.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Montana DNRC (Fire Restrictions by Jurisdiction)",
+  "view": {
+   "url": "https://services2.arcgis.com/DRQySz3VhPgOv7Bo/arcgis/rest/services/Fire_Restrictions_by_Jurisdiction_Update_-_Read_Only_view/FeatureServer/3",
+   "fields": {
+    "RestrictionType": "status",
+    "JurisdictionalUnitName": "jurisdiction",
+    "JurisdictionalUnitAgency": "agency",
+    "AreaName": "area",
+    "NAME_1": "county",
+    "LandownerCategory": "landowner",
+    "Restriction_Document": "url",
+    "EditDate": "updated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "RestrictionType IS NOT NULL AND RestrictionType <> 'No Restrictions and Closures'",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -116.1,
+    44.3,
+    -104.0,
+    49.0
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "mt-fwp-waterbody-restrictions",
+  "state": "MT",
+  "title": "Montana fishing and river closures (active)",
+  "title_es": "Cierres de pesca y de ríos en Montana (vigentes)",
+  "description": "Current FWP closures and restrictions on rivers and lakes (hoot-owl fishing limits, full closures, construction or emergency closures), with what is restricted and where.",
+  "description_es": "Cierres y restricciones vigentes de FWP en ríos y lagos (límites de pesca por calor, cierres totales, cierres por obras o emergencias), con qué está restringido y dónde.",
+  "group": "nature",
+  "category": "hazard",
+  "source": "Montana Fish, Wildlife & Parks",
+  "view": {
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/FISH_WATERBODY_RESTRICTIONS/FeatureServer/0",
+   "fields": {
+    "WATERBODY": "waterbody",
+    "RESTRICTIONTYPE": "kind",
+    "LOCATION": "location",
+    "DESCRIPTION": "description",
+    "PUBLISHDATE": "start",
+    "ARCHIVEDATE": "end"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6,
+   "where": "ARCHIVEDATE IS NULL OR ARCHIVEDATE > CURRENT_TIMESTAMP",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -116.1,
+    44.3,
+    -104.0,
+    49.0
+   ],
+   "features_in_probe": 1
+  }
+ },
+ {
+  "name": "mt-fwp-site-closures",
+  "state": "MT",
+  "title": "FWP site closures and restrictions",
+  "title_es": "Cierres y restricciones en sitios de FWP",
+  "description": "Fishing access sites, state parks and wildlife areas that are closed or restricted right now (flooding, fire restrictions, construction), with dates.",
+  "description_es": "Accesos de pesca, parques estatales y áreas de vida silvestre que están cerrados o con restricciones ahora mismo (inundaciones, restricciones por incendios, obras), con fechas.",
+  "group": "nature",
+  "category": "point",
+  "source": "Montana Fish, Wildlife & Parks",
+  "view": {
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/FWPLND_LANDS_CLOSURES_RESTRICTIONS/FeatureServer/0",
+   "fields": {
+    "SITE_NAME": "name",
+    "SITE_TYPE": "site_type",
+    "RESTRICTION": "restriction",
+    "DESCRIPTION": "description",
+    "DATE_BEGIN": "start",
+    "DATE_END": "end",
+    "WEBLINK": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -116.1,
+    44.3,
+    -104.0,
+    49.0
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "mt-deer-elk-hunting-districts",
+  "state": "MT",
+  "title": "Deer and elk hunting districts (2026-27)",
+  "title_es": "Distritos de caza de venado y alce (2026-27)",
+  "description": "FWP deer, elk and mountain lion hunting districts for the 2026 and 2027 seasons, with links to the district regulations and map.",
+  "description_es": "Distritos de caza de venado, alce y puma de FWP para las temporadas 2026 y 2027, con enlaces al reglamento y mapa de cada distrito.",
+  "group": "nature",
+  "category": "boundary",
+  "source": "Montana Fish, Wildlife & Parks",
+  "view": {
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/ADMBND_HD_DEERELKLION/FeatureServer/0",
+   "fields": {
+    "DISTRICT": "district",
+    "EMU_NAME": "management_unit",
+    "REG": "region",
+    "HARVTYPE": "harvest_type",
+    "DEERWEBPAGE": "deer_url",
+    "ELKWEBPAGE": "elk_url",
+    "MAPLINK": "map_url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -116.1,
+    44.3,
+    -104.0,
+    49.0
+   ],
+   "features_in_probe": 151
+  }
+ },
+ {
+  "name": "mt-cwd-check-stations",
+  "state": "MT",
+  "title": "CWD sampling and hunter check stations",
+  "title_es": "Estaciones de muestreo de CWD y de revisión para cazadores",
+  "description": "Where hunters can get deer, elk and moose sampled for chronic wasting disease (CWD) this season, with dates, hours and location.",
+  "description_es": "Dónde los cazadores pueden llevar venados, alces y alces americanos para la prueba de la enfermedad debilitante crónica (CWD) esta temporada, con fechas, horario y ubicación.",
+  "group": "nature",
+  "category": "point",
+  "source": "Montana Fish, Wildlife & Parks",
+  "view": {
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/Hunter_Harvest_Check_Stations_for_CWD_Surveillance__PublicView/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "DATES": "dates",
+    "DAY_TIME": "hours",
+    "LOCATION": "location",
+    "COMMENTS": "notes",
+    "YEAR": "year"
+   },
+   "geometry": "point",
+   "min_zoom": 6,
+   "where": "YEAR >= 2026"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -116.1,
+    44.3,
+    -104.0,
+    49.0
+   ],
+   "features_in_probe": 30
+  }
+ },
+ {
+  "name": "mt-carcass-disposal-sites",
+  "state": "MT",
+  "title": "Wild game carcass disposal sites",
+  "title_es": "Sitios para desechar restos de animales de caza",
+  "description": "Landfills and transfer sites in Montana that accept wild game carcasses (to slow chronic wasting disease), with rules for each site.",
+  "description_es": "Rellenos sanitarios y estaciones de transferencia de Montana que aceptan restos de animales de caza (para frenar la enfermedad debilitante crónica), con las reglas de cada sitio.",
+  "group": "nature",
+  "category": "point",
+  "source": "Montana Fish, Wildlife & Parks",
+  "view": {
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/Carcass_Disposal_Sites_In_Montana_PublicView/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "TYPE": "kind",
+    "COMMENTS": "notes",
+    "WEBSITE": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -116.1,
+    44.3,
+    -104.0,
+    49.0
+   ],
+   "features_in_probe": 201
+  }
+ },
+ {
+  "name": "mt-ais-inspection-stations",
+  "state": "MT",
+  "title": "Watercraft inspection stations (invasive species)",
+  "title_es": "Estaciones de inspección de embarcaciones (especies invasoras)",
+  "description": "Stations where boats must stop to be checked for zebra and quagga mussels and other aquatic invasive species, with hours.",
+  "description_es": "Estaciones donde las embarcaciones deben detenerse para revisión de mejillones cebra y quagga y otras especies acuáticas invasoras, con horario.",
+  "group": "nature",
+  "category": "point",
+  "source": "Montana Fish, Wildlife & Parks",
+  "view": {
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/Montana_Aquatic_Invasive_Species_Watercraft_Inspection_Stations_View/FeatureServer/0",
+   "fields": {
+    "STATIONNM": "name",
+    "STATIONTYP": "kind",
+    "AGENCY": "agency",
+    "ADDRESS": "address",
+    "HOURSDAYS": "hours",
+    "OPERATNAL": "operating",
+    "YEAR": "year"
+   },
+   "geometry": "point",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -116.1,
+    44.3,
+    -104.0,
+    49.0
+   ],
+   "features_in_probe": 46
+  }
+ },
+ {
+  "name": "mt-shooting-ranges",
+  "state": "MT",
+  "title": "Montana shooting ranges",
+  "title_es": "Campos de tiro de Montana",
+  "description": "Public and club shooting ranges in Montana and what each offers (rifle, handgun, shotgun, archery).",
+  "description_es": "Campos de tiro públicos y de clubes en Montana y qué ofrece cada uno (rifle, pistola, escopeta, tiro con arco).",
+  "group": "nature",
+  "category": "point",
+  "source": "Montana Fish, Wildlife & Parks",
+  "view": {
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/SHOOTING_RANGES/FeatureServer/0",
+   "fields": {
+    "RANGENAME": "name",
+    "ORGANIZATI": "organization",
+    "CITY": "city",
+    "COUNTY": "county",
+    "WEBSITE": "url",
+    "RIFLE": "rifle",
+    "HANDG": "handgun",
+    "SHOTG": "shotgun",
+    "ARCH": "archery"
+   },
+   "geometry": "point",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -116.1,
+    44.3,
+    -104.0,
+    49.0
+   ],
+   "features_in_probe": 214
+  }
+ },
+ {
+  "name": "al-montgomery-zoning",
+  "state": "AL",
+  "title": "Zoning (City of Montgomery)",
+  "title_es": "Zonificación (ciudad de Montgomery)",
+  "description": "Montgomery zoning districts: the zoning code and what it means, plus the ordinance number and date that set it. Shows what can be built or opened on a lot.",
+  "description_es": "Distritos de zonificación de Montgomery: el código de zona y su significado, más el número y la fecha de la ordenanza que lo estableció. Indica qué se puede construir o abrir en un terreno.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Montgomery Planning / GIS",
+  "view": {
+   "url": "https://gis.montgomeryal.gov/server/rest/services/Zoning/MapServer/0",
+   "fields": {
+    "ZoningCode": "zone",
+    "ZoningDesc": "description",
+    "Ordinance": "ordinance",
+    "Ord_Date": "ordinance_date"
+   },
+   "geometry": "polygon",
+   "min_zoom": 13
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.33,
+    32.35,
+    -86.27,
+    32.4
+   ],
+   "features_in_probe": 475
+  }
+ },
+ {
+  "name": "al-montgomery-council-districts",
+  "state": "AL",
+  "title": "City council districts (Montgomery)",
+  "title_es": "Distritos del concejo municipal (Montgomery)",
+  "description": "The nine Montgomery City Council districts. Find which district you live in to know who represents you on the council.",
+  "description_es": "Los nueve distritos del Concejo Municipal de Montgomery. Busque en qué distrito vive para saber quién lo representa en el concejo.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Montgomery GIS",
+  "view": {
+   "url": "https://gis.montgomeryal.gov/server/rest/services/SDE_City_Council/MapServer/0",
+   "fields": {
+    "District": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.4,
+    32.3,
+    -86.2,
+    32.45
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "al-montgomery-pavement-condition",
+  "state": "AL",
+  "title": "Street pavement condition (Montgomery, 2025 survey)",
+  "title_es": "Estado del pavimento de las calles (Montgomery, estudio 2025)",
+  "description": "Montgomery's 2025 pavement assessment for every city street: a condition rating (excellent to lost) and a 0-100 pavement condition index, plus surface type and length.",
+  "description_es": "Evaluación del pavimento de 2025 de Montgomery para cada calle de la ciudad: una calificación de estado (de excelente a perdido) y un índice de condición del pavimento de 0 a 100, más el tipo de superficie y la longitud.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Montgomery Public Works (Pavement Assessment 2025)",
+  "view": {
+   "url": "https://gis.montgomeryal.gov/server/rest/services/PublicWorks/Pavement_Assessment_2025/MapServer/0",
+   "fields": {
+    "Street_Nam": "street",
+    "FSCond25": "condition",
+    "PCI": "pci",
+    "Surf_Type": "surface",
+    "Priority": "class",
+    "Length__mi": "miles",
+    "District": "district"
+   },
+   "geometry": "line",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.32,
+    32.36,
+    -86.28,
+    32.39
+   ],
+   "features_in_probe": 1176
+  }
+ },
+ {
+  "name": "al-montgomery-parks",
+  "state": "AL",
+  "title": "City parks (Montgomery)",
+  "title_es": "Parques municipales (Montgomery)",
+  "description": "Montgomery city parks with address, hours and what each has: restrooms, playground, picnic areas, trails, sports fields, swimming, fishing and more (Y = yes, N = no).",
+  "description_es": "Parques de la ciudad de Montgomery con dirección, horario y lo que tiene cada uno: baños, juegos infantiles, áreas de picnic, senderos, canchas, natación, pesca y más (Y = sí, N = no).",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Montgomery Parks and Recreation / GIS",
+  "view": {
+   "url": "https://gis.montgomeryal.gov/server/rest/services/OneView/City_Parks/MapServer/7",
+   "fields": {
+    "FACILITYID": "name",
+    "FULLADDR": "address",
+    "OPERDAYS": "days",
+    "OPERHOURS": "hours",
+    "RESTROOM": "restroom",
+    "PLAYGROUND": "playground",
+    "PICNIC": "picnic",
+    "HIKING": "trails",
+    "SWIMMING": "swimming",
+    "FISHING": "fishing",
+    "BASKETBALL": "basketball",
+    "TENNIS": "tennis",
+    "SOCCER": "soccer",
+    "BASEBALL": "baseball",
+    "ADACOMPLY": "accessible",
+    "PETS": "pets",
+    "PARKURL": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.4,
+    32.3,
+    -86.2,
+    32.45
+   ],
+   "features_in_probe": 88
+  }
+ },
+ {
+  "name": "al-mobile-zoning",
+  "state": "AL",
+  "title": "Zoning (City of Mobile)",
+  "title_es": "Zonificación (ciudad de Mobile)",
+  "description": "City of Mobile zoning districts under the Unified Development Code: district code and name, sub-district and any overlay. Shows what can be built or opened on a lot.",
+  "description_es": "Distritos de zonificación de la ciudad de Mobile según el Código Unificado de Desarrollo: código y nombre del distrito, subdistrito y cualquier superposición. Indica qué se puede construir o abrir en un terreno.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Mobile Planning and Zoning / GIS",
+  "view": {
+   "url": "https://maps.cityofmobile.org/arcgis/rest/services/Portal_Operational_Layers/PLAN_ZONE_APP_MS/MapServer/10",
+   "fields": {
+    "district_code": "zone",
+    "district_name": "description",
+    "sub_district_name": "sub_district",
+    "overlay": "overlay"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.08,
+    30.68,
+    -88.05,
+    30.7
+   ],
+   "features_in_probe": 699
+  }
+ },
+ {
+  "name": "al-mobile-future-land-use",
+  "state": "AL",
+  "title": "Future land use plan (City of Mobile, 2024)",
+  "title_es": "Plan de uso futuro del suelo (ciudad de Mobile, 2024)",
+  "description": "The City of Mobile's 2024 Future Land Use Map: what kind of development the city plans for each area (residential densities, mixed use, commercial, industrial, institutional, open space).",
+  "description_es": "Mapa de Uso Futuro del Suelo 2024 de la ciudad de Mobile: qué tipo de desarrollo planea la ciudad para cada zona (densidades residenciales, uso mixto, comercio, industria, instituciones, áreas verdes).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Mobile Planning / GIS",
+  "view": {
+   "url": "https://maps.cityofmobile.org/arcgis/rest/services/Portal_Operational_Layers/PLAN_ZONE_APP_MS/MapServer/12",
+   "fields": {
+    "flu_cat": "land_use",
+    "flu_ab": "code"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.08,
+    30.68,
+    -88.05,
+    30.7
+   ],
+   "features_in_probe": 523
+  }
+ },
+ {
+  "name": "al-mobile-garbage-days",
+  "state": "AL",
+  "title": "Garbage pickup day (City of Mobile)",
+  "title_es": "Día de recolección de basura (ciudad de Mobile)",
+  "description": "City of Mobile household garbage routes: which day your garbage is picked up (and the route) for each part of the city.",
+  "description_es": "Rutas de recolección de basura doméstica de la ciudad de Mobile: qué día se recoge su basura (y la ruta) en cada parte de la ciudad.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Mobile Public Works (Sanitation) / GIS",
+  "view": {
+   "url": "https://maps.cityofmobile.org/arcgis/rest/services/Operational_Map_Data1_MS/MapServer/6",
+   "fields": {
+    "pickupday": "day",
+    "direction": "area",
+    "route": "route",
+    "council_district": "council_district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "status = 'ACTIVE'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.26,
+    30.53,
+    -88.03,
+    30.77
+   ],
+   "features_in_probe": 101
+  }
+ },
+ {
+  "name": "al-mobile-trash-days",
+  "state": "AL",
+  "title": "Trash and yard waste pickup day (City of Mobile)",
+  "title_es": "Día de recolección de desechos y ramas (ciudad de Mobile)",
+  "description": "City of Mobile trash (bulk and yard waste) collection areas: which day and week the trash truck comes to each neighborhood. Household garbage is a separate route.",
+  "description_es": "Zonas de recolección de desechos (voluminosos y de jardín) de la ciudad de Mobile: qué día y semana pasa el camión a cada vecindario. La basura doméstica tiene otra ruta.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Mobile Public Works (Trash Collection) / GIS",
+  "view": {
+   "url": "https://maps.cityofmobile.org/arcgis/rest/services/Operational_Map_Data1_MS/MapServer/14",
+   "fields": {
+    "pickup": "day",
+    "unit_name": "unit",
+    "unit_zone": "zone",
+    "council_district": "council_district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10,
+   "where": "status = 'ACTIVE'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.26,
+    30.53,
+    -88.03,
+    30.77
+   ],
+   "features_in_probe": 134
+  }
+ },
+ {
+  "name": "al-mobile-parks",
+  "state": "AL",
+  "title": "City parks (Mobile)",
+  "title_es": "Parques municipales (Mobile)",
+  "description": "City of Mobile parks: name, kind of park, acreage, amenities (ballfields, playgrounds, pavilions, restrooms, fishing) and a link to the park's page.",
+  "description_es": "Parques de la ciudad de Mobile: nombre, tipo de parque, superficie en acres, servicios (campos de juego, juegos infantiles, pabellones, baños, pesca) y un enlace a la página del parque.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Mobile Parks and Recreation / GIS",
+  "view": {
+   "url": "https://maps.cityofmobile.org/arcgis/rest/services/Operational_Map_Data1_MS/MapServer/10",
+   "fields": {
+    "name": "name",
+    "classification": "kind",
+    "amenities": "amenities",
+    "tags": "tags",
+    "acres": "acres",
+    "hsn": "house_number",
+    "roadname": "street",
+    "url": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.26,
+    30.53,
+    -88.03,
+    30.77
+   ],
+   "features_in_probe": 72
+  }
+ },
+ {
+  "name": "al-mobile-council-districts",
+  "state": "AL",
+  "title": "City council districts (Mobile)",
+  "title_es": "Distritos del concejo municipal (Mobile)",
+  "description": "The seven Mobile City Council districts. Find which district you live in to know who represents you on the council.",
+  "description_es": "Los siete distritos del Concejo Municipal de Mobile. Busque en qué distrito vive para saber quién lo representa en el concejo.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Mobile GIS",
+  "view": {
+   "url": "https://maps.cityofmobile.org/arcgis/rest/services/Operational_Map_Data1_MS/MapServer/1",
+   "fields": {
+    "name": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.26,
+    30.53,
+    -88.03,
+    30.77
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "al-mobile-historic-districts",
+  "state": "AL",
+  "title": "Local historic districts (Mobile)",
+  "title_es": "Distritos históricos locales (Mobile)",
+  "description": "City of Mobile's local historic districts (such as De Tonti Square, Oakleigh Garden and Ashland Place). Exterior changes here need review by the Architectural Review Board.",
+  "description_es": "Distritos históricos locales de la ciudad de Mobile (como De Tonti Square, Oakleigh Garden y Ashland Place). Los cambios exteriores aquí requieren revisión de la Junta de Revisión Arquitectónica.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Mobile Historic Development / GIS",
+  "view": {
+   "url": "https://maps.cityofmobile.org/arcgis/rest/services/Operational_Map_Data1_MS/MapServer/7",
+   "fields": {
+    "name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.12,
+    30.66,
+    -88.03,
+    30.72
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "al-tuscaloosa-zoning",
+  "state": "AL",
+  "title": "Zoning (City of Tuscaloosa)",
+  "title_es": "Zonificación (ciudad de Tuscaloosa)",
+  "description": "City of Tuscaloosa zoning districts under the new zoning code (for example R-1 single-family, MR-2 mixed residential, MFR multifamily). Shows what can be built or opened on a lot.",
+  "description_es": "Distritos de zonificación de la ciudad de Tuscaloosa según el nuevo código (por ejemplo R-1 unifamiliar, MR-2 residencial mixto, MFR multifamiliar). Indica qué se puede construir o abrir en un terreno.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Tuscaloosa Planning / GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/DADyRNMb7tdzKmmq/arcgis/rest/services/Tuscaloosa_City_Zoning_Districts/FeatureServer/3",
+   "fields": {
+    "zone_class": "zone",
+    "zone_descript": "description",
+    "Note": "note"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.6,
+    33.19,
+    -87.52,
+    33.23
+   ],
+   "features_in_probe": 298
+  }
+ },
+ {
+  "name": "al-tuscaloosa-historic-districts",
+  "state": "AL",
+  "title": "Historic districts (City of Tuscaloosa)",
+  "title_es": "Distritos históricos (ciudad de Tuscaloosa)",
+  "description": "City of Tuscaloosa historic districts. Exterior changes in local districts need review by the Historic Preservation Commission.",
+  "description_es": "Distritos históricos de la ciudad de Tuscaloosa. Los cambios exteriores en los distritos locales requieren revisión de la Comisión de Preservación Histórica.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Tuscaloosa Planning / GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/DADyRNMb7tdzKmmq/arcgis/rest/services/Tuscaloosa_City_Zoning_Districts/FeatureServer/0",
+   "fields": {
+    "name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.6,
+    33.18,
+    -87.5,
+    33.24
+   ],
+   "features_in_probe": 26
+  }
+ },
+ {
+  "name": "al-tuscaloosa-school-zones",
+  "state": "AL",
+  "title": "School zones (Tuscaloosa City Schools, 2026-2027)",
+  "title_es": "Zonas escolares (escuelas de la ciudad de Tuscaloosa, 2026-2027)",
+  "description": "Which elementary, middle and high school serves each address in Tuscaloosa City Schools for 2026-2027, plus any school-choice option for the area.",
+  "description_es": "Qué escuela primaria, secundaria y preparatoria corresponde a cada dirección en las escuelas de la ciudad de Tuscaloosa para 2026-2027, más cualquier opción de elección de escuela en la zona.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Tuscaloosa / Tuscaloosa City Schools",
+  "view": {
+   "url": "https://services1.arcgis.com/DADyRNMb7tdzKmmq/arcgis/rest/services/Tuscaloosa_City_Schools_Zones/FeatureServer/1",
+   "fields": {
+    "elem": "elementary",
+    "middle": "middle",
+    "high": "high",
+    "es_choice": "elementary_choice",
+    "ms_choice": "middle_choice",
+    "hs_choice": "high_choice"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.65,
+    33.11,
+    -87.4,
+    33.3
+   ],
+   "features_in_probe": 21
+  }
+ },
+ {
+  "name": "al-tuscaloosa-garbage-days",
+  "state": "AL",
+  "title": "Garbage pickup day (City of Tuscaloosa)",
+  "title_es": "Día de recolección de basura (ciudad de Tuscaloosa)",
+  "description": "City of Tuscaloosa Environmental Services pickup areas: the weekday your household garbage is collected.",
+  "description_es": "Zonas de recolección de Servicios Ambientales de la ciudad de Tuscaloosa: el día de la semana en que se recoge su basura doméstica.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Tuscaloosa Environmental Services",
+  "view": {
+   "url": "https://services1.arcgis.com/DADyRNMb7tdzKmmq/arcgis/rest/services/ESD_Pickup_Day_Boundary_Map/FeatureServer/0",
+   "fields": {
+    "service_day": "day",
+    "route_number": "route"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.65,
+    33.11,
+    -87.4,
+    33.3
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "al-tuscaloosa-council-districts",
+  "state": "AL",
+  "title": "City council districts and polling places (Tuscaloosa)",
+  "title_es": "Distritos del concejo municipal y lugares de votación (Tuscaloosa)",
+  "description": "The seven Tuscaloosa City Council districts, with the polling place for city elections in each district, the next city election and a link to the district's council page.",
+  "description_es": "Los siete distritos del Concejo Municipal de Tuscaloosa, con el lugar de votación para las elecciones municipales de cada distrito, la próxima elección municipal y un enlace a la página del distrito.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Tuscaloosa GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/DADyRNMb7tdzKmmq/arcgis/rest/services/Tuscaloosa_Administrative_Areas/FeatureServer/0",
+   "fields": {
+    "name": "district",
+    "polling_station": "polling_place",
+    "polling_notes": "next_election",
+    "url": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.65,
+    33.11,
+    -87.4,
+    33.3
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "al-tuscaloosa-county-parcels",
+  "state": "AL",
+  "title": "Property parcels (Tuscaloosa County)",
+  "title_es": "Parcelas de propiedad (condado de Tuscaloosa)",
+  "description": "Tuscaloosa County tax parcels: parcel number, the property's street location, mapped acreage, appraised value, tax district and tax class. Owner and mailing fields are left out.",
+  "description_es": "Parcelas fiscales del condado de Tuscaloosa: número de parcela, ubicación de la propiedad, superficie en acres, valor tasado, distrito fiscal y clase fiscal. No se muestran datos del dueño ni direcciones postales.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Tuscaloosa County Tax Assessor / Public Works GIS",
+  "view": {
+   "url": "https://services.arcgis.com/AWzSDaKZ41uuVges/arcgis/rest/services/Parcels/FeatureServer/0",
+   "fields": {
+    "PCNUM_FMT": "parcel",
+    "pcliLocati": "location",
+    "rtMAP_ACRE": "acres",
+    "appraised": "appraised_value",
+    "tdDESC": "tax_district",
+    "TaxClass": "tax_class",
+    "tyYEAR": "tax_year"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.58,
+    33.2,
+    -87.56,
+    33.215
+   ],
+   "features_in_probe": 1404
+  }
+ },
+ {
+  "name": "al-tuscaloosa-county-road-closures",
+  "state": "AL",
+  "title": "County road projects and closures (Tuscaloosa County)",
+  "title_es": "Obras y cierres en caminos del condado (Tuscaloosa)",
+  "description": "Tuscaloosa County Public Works road work and closures: what is happening, where, whether the road is fully closed, the detour if any, and a phone number for questions.",
+  "description_es": "Obras y cierres de caminos de Obras Públicas del condado de Tuscaloosa: qué pasa, dónde, si el camino está cerrado por completo, el desvío si lo hay y un teléfono para preguntas.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Tuscaloosa County Public Works",
+  "view": {
+   "url": "https://services.arcgis.com/AWzSDaKZ41uuVges/arcgis/rest/services/Road_projects_and_closures_(public_view)/FeatureServer/0",
+   "fields": {
+    "BLOCKNM": "name",
+    "LOCDESC": "location",
+    "COMMENT": "details",
+    "FULLCLOSE": "full_closure",
+    "ALTROUTE": "detour",
+    "Status": "status",
+    "STARTDATE": "start",
+    "ENDDATE": "end",
+    "CONTACT": "phone"
+   },
+   "geometry": "line",
+   "min_zoom": 8,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.85,
+    32.95,
+    -87.05,
+    33.65
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "al-tuscaloosa-county-road-advisories",
+  "state": "AL",
+  "title": "County road advisories (Tuscaloosa County)",
+  "title_es": "Avisos en caminos del condado (Tuscaloosa)",
+  "description": "Spots on Tuscaloosa County roads with a posted advisory, such as road damage or slides: what the problem is and how to drive through it.",
+  "description_es": "Puntos de los caminos del condado de Tuscaloosa con un aviso vigente, como daños o deslaves: cuál es el problema y cómo circular con precaución.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "Tuscaloosa County Public Works",
+  "view": {
+   "url": "https://services.arcgis.com/AWzSDaKZ41uuVges/arcgis/rest/services/Road_advisory_points_public_view/FeatureServer/0",
+   "fields": {
+    "Location": "location",
+    "Desc1": "advisory",
+    "Desc2": "advice",
+    "Desc3": "more",
+    "Desc4": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 8,
+   "refresh_s": 21600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.85,
+    32.95,
+    -87.05,
+    33.65
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "al-tuscaloosa-county-polling-places",
+  "state": "AL",
+  "title": "Voting wards and polling places (Tuscaloosa County)",
+  "title_es": "Distritos electorales y lugares de votación (condado de Tuscaloosa)",
+  "description": "Tuscaloosa County voting wards (precincts), each with the polling place where voters in that ward vote on Election Day and its address.",
+  "description_es": "Distritos electorales (precintos) del condado de Tuscaloosa, cada uno con el lugar donde votan sus electores el día de la elección y su dirección.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Tuscaloosa County (Board of Registrars data, County GIS)",
+  "view": {
+   "url": "https://services.arcgis.com/AWzSDaKZ41uuVges/arcgis/rest/services/Join_Features_to_Tuscaloosa_County_Voting_Wards_Precincts/FeatureServer/0",
+   "fields": {
+    "ward": "ward",
+    "LOCATION": "polling_place",
+    "STREET": "address",
+    "CITY": "city",
+    "ZIP": "zip"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.65,
+    33.11,
+    -87.4,
+    33.3
+   ],
+   "features_in_probe": 35
+  }
+ },
+ {
+  "name": "al-jefferson-parks",
+  "state": "AL",
+  "title": "Parks (Jefferson County)",
+  "title_es": "Parques (condado de Jefferson)",
+  "description": "City and county parks across Jefferson County (Birmingham, Hoover, Bessemer and other towns): name, which government runs it, whether it has a playground and a link for more information.",
+  "description_es": "Parques municipales y del condado en todo el condado de Jefferson (Birmingham, Hoover, Bessemer y otros pueblos): nombre, qué gobierno lo administra, si tiene juegos infantiles y un enlace con más información.",
+  "group": "nature",
+  "category": "park",
+  "source": "Jefferson County, AL GIS",
+  "view": {
+   "url": "https://jccgis.jccal.org/server/rest/services/Basemap/Parks/MapServer/0",
+   "fields": {
+    "NAME": "name",
+    "Parcel_Own": "managed_by",
+    "Playground": "playground",
+    "ParkInformationURL": "url"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -86.9,
+    33.45,
+    -86.7,
+    33.58
+   ],
+   "features_in_probe": 116
+  }
+ },
+ {
+  "name": "al-baldwin-curbside-recycling",
+  "state": "AL",
+  "title": "Curbside recycling rollout areas (Baldwin County)",
+  "title_es": "Zonas del nuevo reciclaje en la acera (condado de Baldwin)",
+  "description": "Baldwin County Solid Waste curbside recycling program areas: which communities are in each area, whether service is active or pending, mail-out and sign-up deadlines, the start week and the application link.",
+  "description_es": "Zonas del programa de reciclaje en la acera de Residuos Sólidos del condado de Baldwin: qué comunidades incluye cada zona, si el servicio está activo o pendiente, las fechas de envío y de inscripción, la semana de inicio y el enlace a la solicitud.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Baldwin County Solid Waste Department",
+  "view": {
+   "url": "https://services6.arcgis.com/aROFfSNHbmHPb6wX/arcgis/rest/services/SWDA_Recycling_Project_view/FeatureServer/0",
+   "fields": {
+    "POD": "area",
+    "PODDescription": "communities",
+    "PODStatus": "status",
+    "PODStatusDetails": "details",
+    "MailoutDate": "mailout",
+    "ResponseDue": "sign_up_by",
+    "StartDate": "start",
+    "CurbsideRecyclingApplication": "application"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -88.04,
+    30.15,
+    -87.37,
+    31.32
+   ],
+   "features_in_probe": 10
+  }
+ },
+ {
+  "name": "al-gulf-shores-zoning",
+  "state": "AL",
+  "title": "Zoning (City of Gulf Shores)",
+  "title_es": "Zonificación (ciudad de Gulf Shores)",
+  "description": "City of Gulf Shores zoning districts: zone code, what it means, any conditions and the most recent zoning ordinance for the area.",
+  "description_es": "Distritos de zonificación de la ciudad de Gulf Shores: código de zona, su significado, condiciones especiales y la ordenanza de zonificación más reciente de la zona.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Gulf Shores Planning / GIS",
+  "view": {
+   "url": "https://services2.arcgis.com/d53H8HWVL7iicQLS/arcgis/rest/services/ZoningDistricts/FeatureServer/0",
+   "fields": {
+    "Zone": "zone",
+    "Description": "description",
+    "Conditions": "conditions",
+    "LastZngOrd": "last_ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -87.8,
+    30.23,
+    -87.62,
+    30.34
+   ],
+   "features_in_probe": 804
+  }
+ },
+ {
+  "name": "ms-desoto-polling-places",
+  "state": "MS",
+  "title": "Polling places (DeSoto County, Nov. 3, 2026)",
+  "title_es": "Lugares de votación (condado de DeSoto, 3 de nov. de 2026)",
+  "description": "DeSoto County Election Day polling places for each precinct: location, address, voting hours, the next election date, the voter registration deadline and a link to the sample ballot.",
+  "description_es": "Lugares de votación del condado de DeSoto para el día de la elección en cada precinto: lugar, dirección, horario, la fecha de la próxima elección, el plazo para registrarse y un enlace a la boleta de muestra.",
+  "group": "civic",
+  "category": "point",
+  "source": "DeSoto County Circuit Clerk / DeSoto County GIS",
+  "view": {
+   "url": "https://gis.desotocountyms.gov/arcgis/rest/services/Election_Info/MapServer/0",
+   "fields": {
+    "PRECINCT": "precinct",
+    "LOCATION": "location",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "OPERHOURS": "hours",
+    "NEXTELEC1": "next_election",
+    "REGDATE1": "registration_deadline",
+    "BALLOT_GENERAL": "sample_ballot"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.17,
+    34.75,
+    -89.73,
+    35.0
+   ],
+   "features_in_probe": 154
+  }
+ },
+ {
+  "name": "ms-desoto-municipal-voting-sites",
+  "state": "MS",
+  "title": "City election voting sites (DeSoto County cities)",
+  "title_es": "Lugares de votación para elecciones municipales (ciudades del condado de DeSoto)",
+  "description": "Where to vote in city (municipal) elections in Southaven, Olive Branch, Horn Lake, Hernando and the other DeSoto County towns, by ward: location, address and hours.",
+  "description_es": "Dónde votar en las elecciones municipales de Southaven, Olive Branch, Horn Lake, Hernando y los demás pueblos del condado de DeSoto, por distrito: lugar, dirección y horario.",
+  "group": "civic",
+  "category": "point",
+  "source": "DeSoto County GIS (city clerks' election data)",
+  "view": {
+   "url": "https://gis.desotocountyms.gov/arcgis/rest/services/Election_Info_Municipal/MapServer/0",
+   "fields": {
+    "City": "city",
+    "NAME": "ward",
+    "Location": "location",
+    "Address": "address",
+    "HOURS": "hours",
+    "BALLOT_GENERAL": "ballot_note",
+    "WEBSITE": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.17,
+    34.75,
+    -89.73,
+    35.0
+   ],
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "ms-desoto-parcels",
+  "state": "MS",
+  "title": "Property parcels (DeSoto County)",
+  "title_es": "Parcelas de propiedad (condado de DeSoto)",
+  "description": "DeSoto County tax parcels: parcel number, property address, acreage, appraised value, zoning, subdivision, school districts and tax district. Owner and mailing fields are left out.",
+  "description_es": "Parcelas fiscales del condado de DeSoto: número de parcela, dirección de la propiedad, superficie en acres, valor tasado, zonificación, fraccionamiento, distritos escolares y distrito fiscal. No se muestran datos del dueño ni direcciones postales.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "DeSoto County Tax Assessor / DeSoto County GIS",
+  "view": {
+   "url": "https://gis.desotocountyms.gov/arcgis/rest/services/BaseLayers/MapServer/1",
+   "fields": {
+    "PIN": "parcel",
+    "FULL_ADDR": "address",
+    "ACREAGE": "acres",
+    "LANDVALUE": "land_value",
+    "TOT_APVAL": "appraised_value",
+    "Zoning": "zoning",
+    "SUBD_NAME": "subdivision",
+    "Elementary_District": "elementary_district",
+    "Middle_High_District": "middle_high_district",
+    "Tax_District": "tax_district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 16
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.02,
+    34.96,
+    -90.0,
+    34.975
+   ],
+   "features_in_probe": 453
+  }
+ },
+ {
+  "name": "ms-desoto-zoning",
+  "state": "MS",
+  "title": "Zoning (DeSoto County)",
+  "title_es": "Zonificación (condado de DeSoto)",
+  "description": "DeSoto County zoning, including rezonings: the current zone, the zone before a rezoning, the case number, acreage and a link to the zoning ordinance.",
+  "description_es": "Zonificación del condado de DeSoto, incluidos los cambios de zona: la zona actual, la zona anterior al cambio, el número de caso, la superficie y un enlace a la ordenanza de zonificación.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "DeSoto County Planning / DeSoto County GIS",
+  "view": {
+   "url": "https://gis.desotocountyms.gov/arcgis/rest/services/Planning_EnerGov/MapServer/9",
+   "fields": {
+    "ZONE": "zone",
+    "PREV_ZONE": "previous_zone",
+    "CASE_NO": "case",
+    "DATE_APPROVED": "approved",
+    "ACREAGE": "acres",
+    "ORDINANCE": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 14
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.05,
+    34.9,
+    -89.95,
+    34.98
+   ],
+   "features_in_probe": 450
+  }
+ },
+ {
+  "name": "ms-desoto-parks",
+  "state": "MS",
+  "title": "Parks and recreation (DeSoto County)",
+  "title_es": "Parques y recreación (condado de DeSoto)",
+  "description": "Parks across DeSoto County and its cities: name, kind of park, what it offers, address, city and a link to the park's page.",
+  "description_es": "Parques en todo el condado de DeSoto y sus ciudades: nombre, tipo de parque, lo que ofrece, dirección, ciudad y un enlace a la página del parque.",
+  "group": "nature",
+  "category": "point",
+  "source": "DeSoto County GIS",
+  "view": {
+   "url": "https://gis.desotocountyms.gov/arcgis/rest/services/Parks_Trails/MapServer/0",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Description": "description",
+    "Location": "address",
+    "Community": "city",
+    "Website": "url"
+   },
+   "geometry": "point",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.17,
+    34.75,
+    -89.73,
+    35.0
+   ],
+   "features_in_probe": 68
+  }
+ },
+ {
+  "name": "ms-desoto-trails",
+  "state": "MS",
+  "title": "Walking and biking trails (DeSoto County)",
+  "title_es": "Senderos para caminar y andar en bicicleta (condado de DeSoto)",
+  "description": "Existing walking and biking trails in DeSoto County parks and greenways, such as the DeSoto Discovery Trail.",
+  "description_es": "Senderos existentes para caminar y andar en bicicleta en parques y corredores verdes del condado de DeSoto, como el DeSoto Discovery Trail.",
+  "group": "nature",
+  "category": "park",
+  "source": "DeSoto County GIS",
+  "view": {
+   "url": "https://gis.desotocountyms.gov/arcgis/rest/services/Parks_Trails/MapServer/2",
+   "fields": {
+    "Name": "name"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.17,
+    34.75,
+    -89.73,
+    35.0
+   ],
+   "features_in_probe": 46
+  }
+ },
+ {
+  "name": "ms-desoto-garbage-days",
+  "state": "MS",
+  "title": "County garbage pickup day (unincorporated DeSoto County)",
+  "title_es": "Día de recolección de basura del condado (zonas rurales de DeSoto)",
+  "description": "Garbage collection day for county-served (unincorporated) areas of DeSoto County. Residents inside a city follow their city's schedule.",
+  "description_es": "Día de recolección de basura en las zonas atendidas por el condado (no incorporadas) de DeSoto. Quienes viven dentro de una ciudad siguen el calendario de su ciudad.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "DeSoto County GIS",
+  "view": {
+   "url": "https://gis.desotocountyms.gov/arcgis/rest/services/Trash_Pickup/MapServer/0",
+   "fields": {
+    "COUNTY": "day"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -90.17,
+    34.75,
+    -89.73,
+    35.0
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ms-hattiesburg-polling-places",
+  "state": "MS",
+  "title": "Polling places (City of Hattiesburg)",
+  "title_es": "Lugares de votación (ciudad de Hattiesburg)",
+  "description": "Hattiesburg polling places by precinct and ward: where the precinct votes and the street address.",
+  "description_es": "Lugares de votación de Hattiesburg por precinto y distrito: dónde vota cada precinto y la dirección.",
+  "group": "civic",
+  "category": "point",
+  "source": "City of Hattiesburg GIS",
+  "view": {
+   "url": "https://services.arcgis.com/jDD84VOqBEa0haCs/arcgis/rest/services/HattiesburgMS_PublicLayers_PSA_WFL1/FeatureServer/16",
+   "fields": {
+    "Name": "precinct",
+    "PrecinctNum": "precinct_number",
+    "Location": "location",
+    "FullAddress": "address",
+    "Ward": "ward"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.36,
+    31.27,
+    -89.25,
+    31.35
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "ms-hattiesburg-zoning",
+  "state": "MS",
+  "title": "Zoning (City of Hattiesburg)",
+  "title_es": "Zonificación (ciudad de Hattiesburg)",
+  "description": "City of Hattiesburg zoning by parcel: the zoning class, previous zone after a rezoning, ordinance number and acreage.",
+  "description_es": "Zonificación de la ciudad de Hattiesburg por parcela: la clase de zona, la zona anterior tras un cambio, el número de ordenanza y la superficie en acres.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Hattiesburg Planning / GIS",
+  "view": {
+   "url": "https://services.arcgis.com/jDD84VOqBEa0haCs/arcgis/rest/services/HattiesburgMS_PublicLayers_PSA_WFL1/FeatureServer/126",
+   "fields": {
+    "ZoneClass": "zone",
+    "PreviousZone": "previous_zone",
+    "ORD_NUM": "ordinance",
+    "ApprovedDate": "approved",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.31,
+    31.31,
+    -89.29,
+    31.33
+   ],
+   "features_in_probe": 2000
+  }
+ },
+ {
+  "name": "ms-hattiesburg-wards",
+  "state": "MS",
+  "title": "City council wards (Hattiesburg, 2025)",
+  "title_es": "Distritos del concejo municipal (Hattiesburg, 2025)",
+  "description": "Hattiesburg's six City Council wards as redrawn in 2025, with each ward's population. Find which ward you live in to know who represents you on the council.",
+  "description_es": "Los seis distritos del Concejo Municipal de Hattiesburg según el nuevo trazado de 2025, con la población de cada uno. Busque en qué distrito vive para saber quién lo representa en el concejo.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Hattiesburg GIS",
+  "view": {
+   "url": "https://services.arcgis.com/jDD84VOqBEa0haCs/arcgis/rest/services/CityWards2025/FeatureServer/0",
+   "fields": {
+    "Ward_Label": "ward",
+    "TOTAL_POP": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.4,
+    31.25,
+    -89.25,
+    31.4
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ms-hattiesburg-future-land-use",
+  "state": "MS",
+  "title": "Future land use plan (City of Hattiesburg)",
+  "title_es": "Plan de uso futuro del suelo (ciudad de Hattiesburg)",
+  "description": "Hattiesburg's future land use map: the kind of development the city plans for each area, such as neighborhood conservation, community business or mixed use.",
+  "description_es": "Mapa de uso futuro del suelo de Hattiesburg: el tipo de desarrollo que la ciudad planea para cada zona, como conservación de vecindarios, comercio comunitario o uso mixto.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Hattiesburg Planning",
+  "view": {
+   "url": "https://services.arcgis.com/jDD84VOqBEa0haCs/arcgis/rest/services/FutureLandUse/FeatureServer/0",
+   "fields": {
+    "Name": "land_use"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.4,
+    31.25,
+    -89.25,
+    31.4
+   ],
+   "features_in_probe": 100
+  }
+ },
+ {
+  "name": "ms-hattiesburg-bike-paths",
+  "state": "MS",
+  "title": "Bike paths and trails (Hattiesburg)",
+  "title_es": "Ciclovías y senderos (Hattiesburg)",
+  "description": "Bike lanes, paths and trails in Hattiesburg, including the Longleaf Trace: name, type and whether each is complete or planned.",
+  "description_es": "Carriles, ciclovías y senderos en Hattiesburg, incluido el Longleaf Trace: nombre, tipo y si cada uno está terminado o planeado.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Hattiesburg GIS",
+  "view": {
+   "url": "https://services.arcgis.com/jDD84VOqBEa0haCs/arcgis/rest/services/HattiesburgMS_PublicLayers_PSA_WFL1/FeatureServer/56",
+   "fields": {
+    "PathName": "name",
+    "PathType": "kind",
+    "Status": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.4,
+    31.25,
+    -89.25,
+    31.4
+   ],
+   "features_in_probe": 55
+  }
+ },
+ {
+  "name": "ms-hattiesburg-historic-districts",
+  "state": "MS",
+  "title": "Historic districts (Hattiesburg)",
+  "title_es": "Distritos históricos (Hattiesburg)",
+  "description": "Hattiesburg's historic districts (local and National Register), such as the Hattiesburg Historic Neighborhood and North Main. Exterior changes in local districts need Historic Conservation Commission review.",
+  "description_es": "Distritos históricos de Hattiesburg (locales y del Registro Nacional), como el Hattiesburg Historic Neighborhood y North Main. Los cambios exteriores en los distritos locales requieren revisión de la Comisión de Conservación Histórica.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Hattiesburg Planning / GIS",
+  "view": {
+   "url": "https://services.arcgis.com/jDD84VOqBEa0haCs/arcgis/rest/services/HistoricDistricts/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "DistType": "kind",
+    "Designatio": "designated"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.33,
+    31.3,
+    -89.27,
+    31.35
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "ms-biloxi-parks",
+  "state": "MS",
+  "title": "Parks, playgrounds and ballfields (Biloxi)",
+  "title_es": "Parques, juegos infantiles y campos deportivos (Biloxi)",
+  "description": "City of Biloxi parks and park features (playgrounds, ballfields, piers, boat launches and more) with address and a short description.",
+  "description_es": "Parques de la ciudad de Biloxi y sus instalaciones (juegos infantiles, campos deportivos, muelles, rampas para botes y más) con dirección y una breve descripción.",
+  "group": "nature",
+  "category": "point",
+  "source": "City of Biloxi Parks and Recreation / GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/WJhHbwy2YfOSix5p/arcgis/rest/services/Parks_view/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Park_Type": "kind",
+    "Address": "address",
+    "Description": "description"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.01,
+    30.39,
+    -88.85,
+    30.45
+   ],
+   "features_in_probe": 67
+  }
+ },
+ {
+  "name": "ms-biloxi-wards",
+  "state": "MS",
+  "title": "City council wards (Biloxi)",
+  "title_es": "Distritos del concejo municipal (Biloxi)",
+  "description": "Biloxi's seven City Council wards (drawn after the 2020 census), with each ward's population. Find which ward you live in to know who represents you.",
+  "description_es": "Los siete distritos del Concejo Municipal de Biloxi (trazados tras el censo de 2020), con la población de cada uno. Busque en qué distrito vive para saber quién lo representa.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Biloxi GIS",
+  "view": {
+   "url": "https://services1.arcgis.com/WJhHbwy2YfOSix5p/arcgis/rest/services/Wards2022/FeatureServer/8",
+   "fields": {
+    "Ward_2020": "ward",
+    "Population": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -89.05,
+    30.38,
+    -88.84,
+    30.5
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "wv-huntington-council-districts",
+  "state": "WV",
+  "title": "Huntington city council districts",
+  "title_es": "Distritos del concejo municipal de Huntington",
+  "description": "The nine City of Huntington council districts - which district your address is in, with its population.",
+  "description_es": "Los nueve distritos del concejo municipal de la ciudad de Huntington: en qué distrito está su dirección y cuánta población tiene.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Huntington, WV (Planning & GIS)",
+  "view": {
+   "url": "https://services1.arcgis.com/8y9N82F3nS8JSOBl/arcgis/rest/services/City_Council_Districts_2024/FeatureServer/0",
+   "fields": {
+    "District": "district",
+    "Populatio": "population",
+    "Area": "area"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -82.55,
+    38.38,
+    -82.35,
+    38.46
+   ],
+   "features_in_probe": 12
+  }
+ },
+ {
+  "name": "wv-huntington-zoning",
+  "state": "WV",
+  "title": "Huntington zoning (by parcel)",
+  "title_es": "Zonificación de Huntington (por lote)",
+  "description": "City of Huntington zoning district for each parcel (2025 zoning map) - what kind of building and use the city allows on a lot. Zoom in close to see it.",
+  "description_es": "Distrito de zonificación de la ciudad de Huntington para cada lote (mapa de zonificación 2025): qué tipo de construcción y uso permite la ciudad en un terreno. Acérquese mucho para verlo.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Huntington, WV (Planning & GIS)",
+  "view": {
+   "url": "https://services1.arcgis.com/8y9N82F3nS8JSOBl/arcgis/rest/services/Zoning_WFL1/FeatureServer/0",
+   "fields": {
+    "Zoning": "zoning",
+    "ParcelID": "parcel_id",
+    "TaxClass": "tax_class"
+   },
+   "geometry": "polygon",
+   "min_zoom": 17
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -82.4475,
+    38.4135,
+    -82.4305,
+    38.4235
+   ],
+   "features_in_probe": 1428
+  }
+ },
+ {
+  "name": "wv-huntington-neighborhood-associations",
+  "state": "WV",
+  "title": "Huntington neighborhood associations",
+  "title_es": "Asociaciones de vecinos de Huntington",
+  "description": "Areas served by Huntington's recognized neighborhood associations - find the association for your street and get involved.",
+  "description_es": "Zonas que atienden las asociaciones de vecinos reconocidas de Huntington: encuentre la asociación de su calle y participe.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Huntington, WV (Planning & GIS)",
+  "view": {
+   "url": "https://services1.arcgis.com/8y9N82F3nS8JSOBl/arcgis/rest/services/Neighborhood_Associations_2026_WFL1/FeatureServer/0",
+   "fields": {
+    "name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -82.55,
+    38.38,
+    -82.35,
+    38.46
+   ],
+   "features_in_probe": 11
+  }
+ },
+ {
+  "name": "wv-huntington-fire-districts",
+  "state": "WV",
+  "title": "Huntington fire station first-due areas",
+  "title_es": "Zonas de primera respuesta de las estaciones de bomberos de Huntington",
+  "description": "Which Huntington Fire Department engine company is first to respond to each part of the city.",
+  "description_es": "Qué compañía de bomberos de Huntington llega primero a cada parte de la ciudad.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Huntington, WV (Fire Department / GIS)",
+  "view": {
+   "url": "https://services1.arcgis.com/8y9N82F3nS8JSOBl/arcgis/rest/services/Fire_Districts/FeatureServer/1",
+   "fields": {
+    "Name": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -82.55,
+    38.38,
+    -82.35,
+    38.46
+   ],
+   "features_in_probe": 45
+  }
+ },
+ {
+  "name": "wv-huntington-path-trails",
+  "state": "WV",
+  "title": "Paul Ambrose Trail for Health (PATH), Huntington",
+  "title_es": "Sendero PATH (Paul Ambrose Trail for Health), Huntington",
+  "description": "Segments of Huntington's PATH walking and biking network - surface, on-road or off-road, and difficulty.",
+  "description_es": "Tramos de la red PATH para caminar y andar en bicicleta en Huntington: superficie, si va por la calle o separado, y dificultad.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Huntington, WV",
+  "view": {
+   "url": "https://services1.arcgis.com/8y9N82F3nS8JSOBl/arcgis/rest/services/PATH_Existing/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "Type_1": "kind",
+    "Surface": "surface",
+    "Length_1": "miles",
+    "Difficulty": "difficulty",
+    "Restrooms": "restrooms",
+    "Website": "website"
+   },
+   "geometry": "line",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -82.55,
+    38.38,
+    -82.35,
+    38.46
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "wv-charleston-zoning",
+  "state": "WV",
+  "title": "Charleston zoning districts",
+  "title_es": "Distritos de zonificación de Charleston",
+  "description": "City of Charleston zoning districts (residential, commercial, mixed use and more), with links to the matching section of the 2023 zoning ordinance.",
+  "description_es": "Distritos de zonificación de la ciudad de Charleston (residencial, comercial, uso mixto y otros), con enlaces a la sección correspondiente del reglamento de zonificación de 2023.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Regional Intergovernmental Council (Kanawha-Putnam) for the City of Charleston, WV",
+  "view": {
+   "url": "https://services9.arcgis.com/fVcw4GvGXZ2a5g3r/arcgis/rest/services/RIC_Zoning_Districts_WFL1/FeatureServer/0",
+   "fields": {
+    "ZONECLASS": "zone",
+    "ZONEDESC": "description",
+    "ZOA": "ordinance"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -81.7,
+    38.32,
+    -81.58,
+    38.4
+   ],
+   "features_in_probe": 388
+  }
+ },
+ {
+  "name": "wv-kanawha-boat-launches",
+  "state": "WV",
+  "title": "Boat launches (Kanawha Valley region)",
+  "title_es": "Rampas para botes (región del valle de Kanawha)",
+  "description": "Public boat ramps and river access in the Kanawha-Putnam region - waterbody, ramp type, parking, restrooms and accessibility.",
+  "description_es": "Rampas públicas para botes y accesos al río en la región Kanawha-Putnam: cuerpo de agua, tipo de rampa, estacionamiento, baños y accesibilidad.",
+  "group": "nature",
+  "category": "point",
+  "source": "Regional Intergovernmental Council (Kanawha-Putnam), WV",
+  "view": {
+   "url": "https://services9.arcgis.com/fVcw4GvGXZ2a5g3r/arcgis/rest/services/RIC_Boat_Launches_WFL1/FeatureServer/0",
+   "fields": {
+    "sitename": "name",
+    "waterbody": "waterbody",
+    "county": "county",
+    "accesstype": "access",
+    "parkingtyp": "parking",
+    "parkingspa": "parking_spaces",
+    "toilets": "restrooms",
+    "pier": "pier",
+    "handicappa": "accessible_parking",
+    "drivingdir": "directions"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -82.2,
+    38.0,
+    -81.2,
+    38.7
+   ],
+   "features_in_probe": 26
+  }
+ },
+ {
+  "name": "wv-kanawha-trails",
+  "state": "WV",
+  "title": "Kanawha County park trails",
+  "title_es": "Senderos de los parques del condado de Kanawha",
+  "description": "Hiking and biking trails in Kanawha County parks (Coonskin, Meeks Mountain and others) - who can use each trail.",
+  "description_es": "Senderos para caminar y andar en bicicleta en los parques del condado de Kanawha (Coonskin, Meeks Mountain y otros): quién puede usar cada uno.",
+  "group": "nature",
+  "category": "park",
+  "source": "Kanawha County Metro 911 / Kanawha County Parks & Recreation, WV",
+  "view": {
+   "url": "https://services2.arcgis.com/qUlW0gyyDMxg6tCb/arcgis/rest/services/KanRecTrails/FeatureServer/0",
+   "fields": {
+    "Name": "name",
+    "BIKE": "bike",
+    "PED_RESTR": "walkers",
+    "CAR_RESTR": "cars",
+    "BIKESAFETY": "bike_safety"
+   },
+   "geometry": "line",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -81.75,
+    38.3,
+    -81.55,
+    38.45
+   ],
+   "features_in_probe": 71
+  }
+ },
+ {
+  "name": "wv-morgantown-wards",
+  "state": "WV",
+  "title": "Morgantown city council wards (2025-2027)",
+  "title_es": "Distritos (wards) del concejo municipal de Morgantown (2025-2027)",
+  "description": "The seven City of Morgantown council wards in effect for 2025-2027, with registered voters and population.",
+  "description_es": "Los siete distritos del concejo municipal de Morgantown vigentes para 2025-2027, con votantes registrados y población.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Morgantown, WV (GIS)",
+  "view": {
+   "url": "https://services7.arcgis.com/lE5mQkgxehcTjzKf/arcgis/rest/services/Morgantown_Wards_2025_to_2027/FeatureServer/0",
+   "fields": {
+    "WardName": "ward",
+    "WardNum": "number",
+    "Voters2026": "voters_2026",
+    "populationtotals_totpop_cy": "population"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.02,
+    39.6,
+    -79.9,
+    39.68
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "wv-morgantown-zoning",
+  "state": "WV",
+  "title": "Morgantown zoning",
+  "title_es": "Zonificación de Morgantown",
+  "description": "City of Morgantown zoning districts with the basic rules for each: minimum lot size, setbacks and maximum building height, plus a link to the city code.",
+  "description_es": "Distritos de zonificación de Morgantown con sus reglas básicas: tamaño mínimo del lote, retiros y altura máxima de los edificios, y un enlace al código municipal.",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Morgantown, WV (Development Services / GIS)",
+  "view": {
+   "url": "https://services7.arcgis.com/lE5mQkgxehcTjzKf/arcgis/rest/services/Morgantown_Zoning_and_Overlay_Districts_Public/FeatureServer/1",
+   "fields": {
+    "ZONECLASS": "zone",
+    "ZONEDESC": "description",
+    "minlotsize": "min_lot_sqft",
+    "minfrontsetback": "min_front_setback_ft",
+    "maxstructureheight": "max_height_ft",
+    "maxlotcover": "max_lot_cover_pct",
+    "UseURL": "code_link"
+   },
+   "geometry": "polygon",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.02,
+    39.6,
+    -79.9,
+    39.68
+   ],
+   "features_in_probe": 182
+  }
+ },
+ {
+  "name": "wv-morgantown-snow-routes",
+  "state": "WV",
+  "title": "Morgantown snow plow routes",
+  "title_es": "Rutas de quitanieves de Morgantown",
+  "description": "City of Morgantown snow-removal priority for each street (Priority 1 is plowed first), so you know when to expect your street to be cleared.",
+  "description_es": "Prioridad de limpieza de nieve de cada calle de Morgantown (la prioridad 1 se limpia primero), para saber cuándo esperar que limpien su calle.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Morgantown, WV (Public Works / GIS)",
+  "view": {
+   "url": "https://services7.arcgis.com/lE5mQkgxehcTjzKf/arcgis/rest/services/SnowRoutes_public_b991e7530e4745979ce730de01e343a2/FeatureServer/0",
+   "fields": {
+    "roadname": "street",
+    "routepriority": "priority",
+    "roadsbetween": "between",
+    "servicestatus": "status",
+    "lastserviced": "last_serviced"
+   },
+   "geometry": "line",
+   "min_zoom": 15,
+   "where": "routepriority IN ('Priority 1','Priority 2','Priority 3')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -79.97,
+    39.62,
+    -79.93,
+    39.65
+   ],
+   "features_in_probe": 1333
+  }
+ },
+ {
+  "name": "wv-morgantown-road-closures",
+  "state": "WV",
+  "title": "Morgantown street closures",
+  "title_es": "Cierres de calles en Morgantown",
+  "description": "Current City of Morgantown street and lane closures for construction and events - what is closed, why, and until when. Shows only closures that have not ended.",
+  "description_es": "Cierres actuales de calles y carriles en Morgantown por obras y eventos: qué está cerrado, por qué y hasta cuándo. Solo muestra cierres que no han terminado.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Morgantown, WV (Engineering / GIS)",
+  "view": {
+   "url": "https://services7.arcgis.com/lE5mQkgxehcTjzKf/arcgis/rest/services/RoadClosures_public_8e28e9bcd73045f3ab325811fba28091/FeatureServer/1",
+   "fields": {
+    "street": "street",
+    "description": "description",
+    "starttime": "start",
+    "endtime": "end",
+    "altroute": "detour"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "endtime > CURRENT_TIMESTAMP",
+   "refresh_s": 3600
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.02,
+    39.58,
+    -79.88,
+    39.7
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "wv-morgantown-parks",
+  "state": "WV",
+  "title": "Morgantown parks and recreation sites",
+  "title_es": "Parques y sitios recreativos de Morgantown",
+  "description": "BOPARC and city park and recreation sites in Morgantown, including the Caperton Trail and White Park.",
+  "description_es": "Parques y sitios recreativos de la ciudad y de BOPARC en Morgantown, incluidos el sendero Caperton y White Park.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Morgantown, WV (GIS)",
+  "view": {
+   "url": "https://services7.arcgis.com/lE5mQkgxehcTjzKf/arcgis/rest/services/Park_and_Recreation_Facilities_public_5c83266be26949ecab83da7ed12273d1/FeatureServer/2",
+   "fields": {
+    "name": "name",
+    "comments": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.02,
+    39.58,
+    -79.88,
+    39.7
+   ],
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "wv-morgantown-meal-services",
+  "state": "WV",
+  "title": "Food pantries and free meals (Morgantown area)",
+  "title_es": "Despensas de alimentos y comidas gratis (zona de Morgantown)",
+  "description": "Food pantries and free-meal sites in and around Morgantown listed by the city - address, phone, hours and website.",
+  "description_es": "Despensas de alimentos y lugares con comidas gratis en Morgantown y alrededores, según la ciudad: dirección, teléfono, horario y sitio web.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Morgantown, WV (GIS)",
+  "view": {
+   "url": "https://services7.arcgis.com/lE5mQkgxehcTjzKf/arcgis/rest/services/Meal_Services_View/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "factype": "kind",
+    "fulladdr": "address",
+    "municipality": "town",
+    "phone": "phone",
+    "operhours": "hours",
+    "agencyurl": "website"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.2,
+    39.45,
+    -79.7,
+    39.75
+   ],
+   "features_in_probe": 18
+  }
+ },
+ {
+  "name": "wv-morgantown-neighborhoods",
+  "state": "WV",
+  "title": "Morgantown neighborhoods",
+  "title_es": "Vecindarios de Morgantown",
+  "description": "Named neighborhoods of Morgantown with population and links to each neighborhood's page.",
+  "description_es": "Vecindarios de Morgantown con su población y enlaces a la página de cada vecindario.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Morgantown, WV (GIS)",
+  "view": {
+   "url": "https://services7.arcgis.com/lE5mQkgxehcTjzKf/arcgis/rest/services/Morgantown_Neighborhoods_Public/FeatureServer/0",
+   "fields": {
+    "name": "name",
+    "Population": "population",
+    "Acres": "acres",
+    "URL": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.02,
+    39.6,
+    -79.9,
+    39.68
+   ],
+   "features_in_probe": 13
+  }
+ },
+ {
+  "name": "wv-monongalia-fire-districts",
+  "state": "WV",
+  "title": "Monongalia County fire districts",
+  "title_es": "Distritos de bomberos del condado de Monongalia",
+  "description": "Which volunteer or city fire department covers each part of Monongalia County.",
+  "description_es": "Qué departamento de bomberos (voluntario o municipal) cubre cada parte del condado de Monongalia.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "Monongalia County, WV (GIS)",
+  "view": {
+   "url": "https://services3.arcgis.com/MGBEQZtkTlJin8UB/arcgis/rest/services/Monongalia_County_Fire_Districts/FeatureServer/0",
+   "fields": {
+    "Department": "department"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -80.3,
+    39.45,
+    -79.75,
+    39.73
+   ],
+   "features_in_probe": 16
+  }
+ },
+ {
+  "name": "wv-martinsburg-zoning",
+  "state": "WV",
+  "title": "Martinsburg zoning",
+  "title_es": "Zonificación de Martinsburg",
+  "description": "City of Martinsburg zoning districts (downtown, urban and suburban residential, mixed use, medical-institutional).",
+  "description_es": "Distritos de zonificación de la ciudad de Martinsburg (centro, residencial urbano y suburbano, uso mixto, médico-institucional).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "City of Martinsburg, WV (Planning Department)",
+  "view": {
+   "url": "https://services6.arcgis.com/deAS8KeQ1ASFd1S2/arcgis/rest/services/PlanningDeptData_Zones/FeatureServer/0",
+   "fields": {
+    "MartinsburgZone_TaxParcel_Join_": "zone"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -78.0,
+    39.42,
+    -77.92,
+    39.49
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "wv-martinsburg-city-limits",
+  "state": "WV",
+  "title": "Martinsburg city limits (2026)",
+  "title_es": "Límites de la ciudad de Martinsburg (2026)",
+  "description": "City of Martinsburg boundary as updated in 2026 - whether an address is inside the city.",
+  "description_es": "Límite de la ciudad de Martinsburg actualizado en 2026: si una dirección está dentro de la ciudad.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Martinsburg, WV",
+  "view": {
+   "url": "https://services6.arcgis.com/deAS8KeQ1ASFd1S2/arcgis/rest/services/Martinsburg_City_Limits_2026_Update/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -78.0,
+    39.42,
+    -77.92,
+    39.49
+   ],
+   "features_in_probe": 2
+  }
+ },
+ {
+  "name": "wv-jefferson-zoning",
+  "state": "WV",
+  "title": "Jefferson County zoning (unincorporated)",
+  "title_es": "Zonificación del condado de Jefferson (zona no incorporada)",
+  "description": "Jefferson County, WV zoning districts outside the towns (rural, residential growth, commercial, industrial).",
+  "description_es": "Distritos de zonificación del condado de Jefferson, WV, fuera de los pueblos (rural, crecimiento residencial, comercial, industrial).",
+  "group": "planning",
+  "category": "landuse",
+  "source": "Jefferson County, WV (Planning & Zoning / GIS)",
+  "view": {
+   "url": "https://gisarcweb.jeffersoncountywv.org/gisarcweb/rest/services/Zoning/Zoning_AllZones/MapServer/3",
+   "fields": {
+    "District": "zone",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -77.95,
+    39.2,
+    -77.72,
+    39.45
+   ],
+   "features_in_probe": 142
+  }
+ },
+ {
+  "name": "wv-jefferson-parks",
+  "state": "WV",
+  "title": "Jefferson County parks",
+  "title_es": "Parques del condado de Jefferson",
+  "description": "County, town and state parks in Jefferson County, WV - type, public access and amenities like boat ramps, trails and picnic areas.",
+  "description_es": "Parques del condado, de los pueblos y del estado en el condado de Jefferson, WV: tipo, acceso público y servicios como rampas para botes, senderos y áreas de picnic.",
+  "group": "nature",
+  "category": "park",
+  "source": "Jefferson County, WV (GIS)",
+  "view": {
+   "url": "https://gisarcweb.jeffersoncountywv.org/gisarcweb/rest/services/StaffMap/Staff_Recreation/MapServer/3",
+   "fields": {
+    "Name": "name",
+    "Type": "kind",
+    "Access": "access",
+    "Status": "status",
+    "Comments": "amenities",
+    "Acreage": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -77.95,
+    39.2,
+    -77.72,
+    39.45
+   ],
+   "features_in_probe": 75
+  }
+ },
+ {
+  "name": "wv-jefferson-urban-growth-boundaries",
+  "state": "WV",
+  "title": "Urban growth boundaries (Jefferson County)",
+  "title_es": "Límites de crecimiento urbano (condado de Jefferson)",
+  "description": "Approved urban growth boundaries around Charles Town, Ranson, Shepherdstown and other towns (2024 comprehensive plan) - where future town growth is planned.",
+  "description_es": "Límites de crecimiento urbano aprobados alrededor de Charles Town, Ranson, Shepherdstown y otros pueblos (plan integral 2024): dónde se planea el crecimiento futuro.",
+  "group": "growth",
+  "category": "boundary",
+  "source": "Jefferson County, WV (Envision Jefferson 2045 comprehensive plan)",
+  "view": {
+   "url": "https://gisarcweb.jeffersoncountywv.org/gisarcweb/rest/services/CompPlan2045_Pro/CompPlan2045/MapServer/5",
+   "fields": {
+    "name": "name",
+    "Type": "kind",
+    "Approved": "approved",
+    "area_ac": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -77.95,
+    39.2,
+    -77.72,
+    39.45
+   ],
+   "features_in_probe": 7
+  }
+ },
+ {
+  "name": "wv-wvdot-active-projects",
+  "state": "WV",
+  "title": "Active highway projects (WVDOT 2026)",
+  "title_es": "Obras activas en carreteras (WVDOT 2026)",
+  "description": "West Virginia Division of Highways projects that are active now - bridge, paving and safety work, the route and county, cost, and scheduled phase dates.",
+  "description_es": "Proyectos de la División de Carreteras de West Virginia activos ahora: obras en puentes, pavimentación y seguridad, la ruta y el condado, el costo y las fechas de cada fase.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "West Virginia Department of Transportation (Division of Highways)",
+  "view": {
+   "url": "https://services2.arcgis.com/xLpB90lOmCXYDAWo/arcgis/rest/services/2026_Active_Project/FeatureServer/2",
+   "fields": {
+    "Project_Name": "name",
+    "Work_Code": "kind",
+    "Construction_Code_Name": "work",
+    "County": "county",
+    "Route": "route",
+    "Proj_Status": "status",
+    "Total_Project_Cost": "cost",
+    "Construction_Start_Date": "construction_start",
+    "Phase_End_Date": "phase_end",
+    "Project": "project_number"
+   },
+   "geometry": "line",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -82.0,
+    38.0,
+    -80.5,
+    39.0
+   ],
+   "features_in_probe": 71
+  }
+ },
+ {
+  "name": "wv-park-and-ride-lots",
+  "state": "WV",
+  "title": "Park & Ride lots (WVDOT)",
+  "title_es": "Estacionamientos Park & Ride (WVDOT)",
+  "description": "WVDOT park-and-ride lots for carpooling and transit - location, nearest exit, surface, lighting and whether transit serves the lot.",
+  "description_es": "Estacionamientos Park & Ride de WVDOT para compartir auto o tomar transporte público: ubicación, salida más cercana, superficie, iluminación y si llega transporte público.",
+  "group": "roads",
+  "category": "point",
+  "source": "West Virginia Department of Transportation",
+  "view": {
+   "url": "https://services2.arcgis.com/xLpB90lOmCXYDAWo/arcgis/rest/services/WV_Park___Rides/FeatureServer/1228",
+   "fields": {
+    "Name": "name",
+    "Location": "location",
+    "County": "county",
+    "Exit_": "exit",
+    "Surface": "surface",
+    "Lighting": "lighting",
+    "Transit": "transit",
+    "Bike": "bike_parking",
+    "Exhibit": "map_pdf"
+   },
+   "geometry": "point",
+   "min_zoom": 6
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -82.7,
+    37.2,
+    -77.7,
+    40.6
+   ],
+   "features_in_probe": 68
+  }
+ },
+ {
+  "name": "ri-fishing-boating-access",
+  "state": "RI",
+  "title": "Boat ramps and fishing access (RIDEM)",
+  "title_es": "Rampas para botes y accesos de pesca (RIDEM)",
+  "description": "State and local boat ramps and fishing access sites in Rhode Island - ramp type and condition, parking, salt or fresh water, and notes such as trout stocking.",
+  "description_es": "Rampas para botes y accesos de pesca estatales y locales en Rhode Island: tipo y estado de la rampa, estacionamiento, agua salada o dulce, y notas como la siembra de truchas.",
+  "group": "nature",
+  "category": "point",
+  "source": "RI Department of Environmental Management via RIGIS",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/HYDRO_Fishing_Boating_Access_2024_spf/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "TYPE": "kind",
+    "Wat_Ttp": "water",
+    "RMP_CNS": "ramp",
+    "RMP_CND": "condition",
+    "PARK": "parking",
+    "RSTRCTN": "notes",
+    "UNI": "universal_access"
+   },
+   "geometry": "point",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.9,
+    41.3,
+    -71.1,
+    42.02
+   ],
+   "features_in_probe": 200
+  }
+ },
+ {
+  "name": "ri-state-conservation-lands",
+  "state": "RI",
+  "title": "State conservation lands - hunting and fishing (RIDEM)",
+  "title_es": "Tierras estatales de conservación: caza y pesca (RIDEM)",
+  "description": "State-owned and state-protected open land with public access (management areas, parks, fishing areas), showing whether hunting and fishing are allowed.",
+  "description_es": "Terrenos abiertos del estado o protegidos por el estado con acceso público (áreas de manejo, parques, áreas de pesca), indicando si se permite cazar y pescar.",
+  "group": "nature",
+  "category": "park",
+  "source": "RI Department of Environmental Management via RIGIS",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/ENV_Conservation_Lands_State_spf/FeatureServer/0",
+   "fields": {
+    "DEM_AREA": "area",
+    "DEM_DIV": "division",
+    "PrimUse": "primary_use",
+    "HUNTING": "hunting",
+    "FISHING": "fishing",
+    "Pub_Access": "public_access",
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11,
+   "where": "Pub_Access IN ('YES','LIM')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.8,
+    41.5,
+    -71.6,
+    41.65
+   ],
+   "features_in_probe": 161
+  }
+ },
+ {
+  "name": "ri-bike-paths",
+  "state": "RI",
+  "title": "Bike paths and routes (RIDOT)",
+  "title_es": "Ciclovías y rutas para bicicleta (RIDOT)",
+  "description": "Rhode Island bike paths, bike lanes and signed bike routes from RIDOT (proposed and dropped projects are left out).",
+  "description_es": "Ciclovías, carriles para bicicleta y rutas señalizadas de Rhode Island según RIDOT (se omiten los proyectos propuestos o cancelados).",
+  "group": "roads",
+  "category": "park",
+  "source": "RI Department of Transportation via RIGIS",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/TRANS_Bike_Paths_RIDOT_spf/FeatureServer/0",
+   "fields": {
+    "PROJ_NAME": "name",
+    "TYPE": "kind",
+    "ROAD_NAME": "road",
+    "TOWN": "town",
+    "STATUS": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "TYPE IN ('BIKE LANES','BRIDGE','LOCAL BIKE ROUTE','PATH','PEDESTRIAN BRIDGE','SPUR','STATEWIDE ROUTE')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.5,
+    41.75,
+    -71.35,
+    41.9
+   ],
+   "features_in_probe": 129
+  }
+ },
+ {
+  "name": "ri-state-hiking-trails",
+  "state": "RI",
+  "title": "Hiking trails in state management areas (RIDEM)",
+  "title_es": "Senderos en áreas de manejo estatales (RIDEM)",
+  "description": "Trails in RIDEM management areas and state parks such as Arcadia, Big River and Carolina - trail type and which area it is in.",
+  "description_es": "Senderos en las áreas de manejo y parques estatales de RIDEM, como Arcadia, Big River y Carolina: tipo de sendero y en qué área está.",
+  "group": "nature",
+  "category": "park",
+  "source": "RI Department of Environmental Management via RIGIS",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/TRANS_State_Hiking_Trails/FeatureServer/0",
+   "fields": {
+    "Mgt_Area": "area",
+    "Type": "kind",
+    "Comments": "notes"
+   },
+   "geometry": "line",
+   "min_zoom": 12
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.75,
+    41.55,
+    -71.65,
+    41.62
+   ],
+   "features_in_probe": 146
+  }
+ },
+ {
+  "name": "ri-recreation-facilities",
+  "state": "RI",
+  "title": "Parks, playgrounds and recreation facilities (SCORP 2024)",
+  "title_es": "Parques, áreas de juegos e instalaciones recreativas (SCORP 2024)",
+  "description": "Rhode Island's 2024 statewide inventory of public recreation sites - which have a playground, courts, pool, beach, trails, restrooms, dog area or community garden (1 = yes).",
+  "description_es": "Inventario estatal 2024 de sitios recreativos públicos de Rhode Island: cuáles tienen área de juegos, canchas, piscina, playa, senderos, baños, área para perros o huerto comunitario (1 = sí).",
+  "group": "nature",
+  "category": "park",
+  "source": "RI Department of Environmental Management / Division of Statewide Planning (SCORP) via RIGIS",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/SCORP_Inventory_2024/FeatureServer/0",
+   "fields": {
+    "F_Name": "name",
+    "Street": "street",
+    "Town": "town",
+    "P_Ground": "playground",
+    "B_Court": "basketball",
+    "T_Court": "tennis",
+    "PickBall": "pickleball",
+    "Pool": "pool",
+    "SplashPark": "splash_pad",
+    "Beach": "beach",
+    "Trails": "trails",
+    "RestRoom": "restrooms",
+    "Dog": "dog_area",
+    "CommGard": "community_garden",
+    "Fishing": "fishing",
+    "Boating": "boating"
+   },
+   "geometry": "point",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.47,
+    41.78,
+    -71.38,
+    41.86
+   ],
+   "features_in_probe": 154
+  }
+ },
+ {
+  "name": "ri-wellhead-protection-areas",
+  "state": "RI",
+  "title": "Wellhead protection areas (community water wells)",
+  "title_es": "Áreas de protección de pozos (pozos de agua comunitarios)",
+  "description": "Land around public community water-supply wells where RIDEM and RIDOH limit activities that could pollute the groundwater people drink.",
+  "description_es": "Terrenos alrededor de los pozos públicos de agua potable donde RIDEM y RIDOH limitan actividades que podrían contaminar el agua subterránea que se bebe.",
+  "group": "infra",
+  "category": "hazard",
+  "source": "RI Department of Health / RIDEM via RIGIS",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/HYDRO_Wellhead_Protection_Areas_Community/FeatureServer/0",
+   "fields": {
+    "WaterSup": "water_supplier",
+    "Area_Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 9
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.9,
+    41.3,
+    -71.1,
+    42.02
+   ],
+   "features_in_probe": 60
+  }
+ },
+ {
+  "name": "ri-surface-water-protection-areas",
+  "state": "RI",
+  "title": "Drinking-water reservoir watersheds",
+  "title_es": "Cuencas de los embalses de agua potable",
+  "description": "Watersheds that drain to Rhode Island's public drinking-water reservoirs, and which water system each one feeds.",
+  "description_es": "Cuencas que drenan a los embalses públicos de agua potable de Rhode Island, y a qué sistema de agua abastece cada una.",
+  "group": "infra",
+  "category": "boundary",
+  "source": "RI Department of Health via RIGIS",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/HYDRO_Surface_Water_Protection_Areas_2024/FeatureServer/0",
+   "fields": {
+    "NAME": "name",
+    "PWSID": "system_id",
+    "ACRES": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 8
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.9,
+    41.3,
+    -71.1,
+    42.02
+   ],
+   "features_in_probe": 50
+  }
+ },
+ {
+  "name": "ri-sewer-overflows",
+  "state": "RI",
+  "title": "Combined sewer overflow outfalls (Narragansett Bay Commission)",
+  "title_es": "Descargas de desbordes del alcantarillado combinado (Narragansett Bay Commission)",
+  "description": "Active outfalls where the Narragansett Bay Commission's combined sewers can overflow into rivers and the bay after heavy rain - avoid swimming or fishing nearby after storms.",
+  "description_es": "Descargas activas donde el alcantarillado combinado de la Narragansett Bay Commission puede desbordarse a ríos y a la bahía tras lluvias fuertes: evite nadar o pescar cerca después de tormentas.",
+  "group": "hazards",
+  "category": "hazard",
+  "source": "Narragansett Bay Commission via RIGIS",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/UTILITY_NBC_Sewer_Overflows_spf/FeatureServer/0",
+   "fields": {
+    "OF_": "outfall"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "STATUS = 'A'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.5,
+    41.75,
+    -71.35,
+    41.9
+   ],
+   "features_in_probe": 4
+  }
+ },
+ {
+  "name": "ri-urban-services-boundary",
+  "state": "RI",
+  "title": "Urban services boundary (Land Use 2025 plan)",
+  "title_es": "Límite de servicios urbanos (plan Land Use 2025)",
+  "description": "Where Rhode Island's state land-use plan expects public water, sewer and dense development - growth is steered inside this line.",
+  "description_es": "Donde el plan estatal de uso del suelo de Rhode Island prevé agua pública, alcantarillado y desarrollo denso: el crecimiento se orienta dentro de esta línea.",
+  "group": "growth",
+  "category": "boundary",
+  "source": "RI Division of Statewide Planning via RIGIS",
+  "view": {
+   "url": "https://services2.arcgis.com/S8zZg9pg23JUEexQ/arcgis/rest/services/PLAN_Urban_Services_Boundary/FeatureServer/0",
+   "fields": {
+    "Acres": "acres"
+   },
+   "geometry": "polygon",
+   "min_zoom": 7
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.9,
+    41.3,
+    -71.1,
+    42.02
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "ri-cranston-trash-days",
+  "state": "RI",
+  "title": "Cranston trash pickup days",
+  "title_es": "Días de recolección de basura en Cranston",
+  "description": "Which weekday the City of Cranston collects trash in each part of the city.",
+  "description_es": "Qué día de la semana la ciudad de Cranston recoge la basura en cada parte de la ciudad.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Cranston, RI (GIS)",
+  "view": {
+   "url": "https://arcgisserver.cranstonri.org/arcgis/rest/services/RefuseCollectionDays/MapServer/0",
+   "fields": {
+    "PICKUP_DAY": "pickup_day"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.55,
+    41.73,
+    -71.4,
+    41.8
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "ri-cranston-wards",
+  "state": "RI",
+  "title": "Cranston city council wards",
+  "title_es": "Distritos (wards) del concejo municipal de Cranston",
+  "description": "The six City of Cranston council wards (2022 redistricting plan), with population and registered voters.",
+  "description_es": "Los seis distritos del concejo municipal de Cranston (plan de redistribución de 2022), con población y votantes registrados.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Cranston, RI (GIS)",
+  "view": {
+   "url": "https://arcgisserver.cranstonri.org/arcgis/rest/services/Canvassing/MapServer/4",
+   "fields": {
+    "Ward": "ward",
+    "SUM_P0010001": "population",
+    "SUM_Voters": "voters"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.55,
+    41.73,
+    -71.4,
+    41.8
+   ],
+   "features_in_probe": 6
+  }
+ },
+ {
+  "name": "ri-cranston-polling-places",
+  "state": "RI",
+  "title": "Cranston polling places",
+  "title_es": "Lugares de votación de Cranston",
+  "description": "Where each Cranston precinct votes on Election Day, including the room. Confirm your polling place with the RI Board of Elections (vote.ri.gov) before you go.",
+  "description_es": "Dónde vota cada precinto de Cranston el día de la elección, incluido el salón. Confirme su lugar de votación con la Junta Electoral de RI (vote.ri.gov) antes de ir.",
+  "group": "civic",
+  "category": "point",
+  "source": "City of Cranston, RI (Canvassing / GIS)",
+  "view": {
+   "url": "https://arcgisserver.cranstonri.org/arcgis/rest/services/Canvassing/MapServer/0",
+   "fields": {
+    "USER_POLLING_PLACE_NAME": "name",
+    "USER_POLLING_PLACE_STREET_ADDRE": "address",
+    "Room": "room",
+    "USER_PRCT": "precinct",
+    "USER_WARD": "ward"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "DisplayOnMap = 'Yes'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.55,
+    41.73,
+    -71.4,
+    41.8
+   ],
+   "features_in_probe": 25
+  }
+ },
+ {
+  "name": "ri-cranston-parks",
+  "state": "RI",
+  "title": "Cranston parks and recreation areas",
+  "title_es": "Parques y áreas recreativas de Cranston",
+  "description": "City of Cranston parks, fields and school recreation grounds managed with Parks & Recreation.",
+  "description_es": "Parques, canchas y terrenos recreativos escolares de la ciudad de Cranston administrados con Parques y Recreación.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Cranston, RI (Parks & Recreation / GIS)",
+  "view": {
+   "url": "https://arcgisserver.cranstonri.org/arcgis/rest/services/ParksRec_Viewer/MapServer/0",
+   "fields": {
+    "CommonName": "name",
+    "DedicatedName": "dedicated_name",
+    "Location": "location",
+    "Notes": "notes"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.55,
+    41.73,
+    -71.4,
+    41.8
+   ],
+   "features_in_probe": 35
+  }
+ },
+ {
+  "name": "ri-warwick-wards",
+  "state": "RI",
+  "title": "Warwick city council wards",
+  "title_es": "Distritos (wards) del concejo municipal de Warwick",
+  "description": "The nine City of Warwick council wards and the school committee district each one falls in.",
+  "description_es": "Los nueve distritos del concejo municipal de Warwick y el distrito del comité escolar al que pertenece cada uno.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Warwick, RI (GIS)",
+  "view": {
+   "url": "https://services.arcgis.com/FULpfKXdE8WhHh1Y/arcgis/rest/services/City_Council_Wards/FeatureServer/85",
+   "fields": {
+    "DISTRICT": "ward",
+    "SchoolBrd": "school_committee_district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.52,
+    41.65,
+    -71.35,
+    41.77
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "ri-warwick-polling-places",
+  "state": "RI",
+  "title": "Warwick polling places",
+  "title_es": "Lugares de votación de Warwick",
+  "description": "Where each Warwick precinct votes on Election Day, with the ward and districts. Confirm your polling place with the RI Board of Elections (vote.ri.gov) before you go.",
+  "description_es": "Dónde vota cada precinto de Warwick el día de la elección, con su distrito municipal y legislativo. Confirme su lugar de votación con la Junta Electoral de RI (vote.ri.gov) antes de ir.",
+  "group": "civic",
+  "category": "point",
+  "source": "City of Warwick, RI (GIS)",
+  "view": {
+   "url": "https://services.arcgis.com/FULpfKXdE8WhHh1Y/arcgis/rest/services/Polling_Places/FeatureServer/83",
+   "fields": {
+    "USER_NAME": "name",
+    "USER_ADDRE": "address",
+    "USER_PRECI": "precinct",
+    "USER_WARD1": "ward",
+    "USER_SENAT": "state_senate",
+    "USER_REP": "state_house"
+   },
+   "geometry": "point",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.52,
+    41.65,
+    -71.35,
+    41.77
+   ],
+   "features_in_probe": 40
+  }
+ },
+ {
+  "name": "ri-warwick-lwcf-parks",
+  "state": "RI",
+  "title": "Warwick parks protected by federal LWCF grants",
+  "title_es": "Parques de Warwick protegidos por fondos federales LWCF",
+  "description": "Warwick parks and fields built or bought with Land and Water Conservation Fund grants - they must stay public outdoor recreation land.",
+  "description_es": "Parques y canchas de Warwick construidos o comprados con fondos del Land and Water Conservation Fund: deben seguir siendo terreno público para recreación al aire libre.",
+  "group": "nature",
+  "category": "park",
+  "source": "City of Warwick, RI / RIDEM",
+  "view": {
+   "url": "https://services.arcgis.com/FULpfKXdE8WhHh1Y/arcgis/rest/services/Land_and_Water_Conserv_Fund_Properties/FeatureServer/74",
+   "fields": {
+    "Site": "name",
+    "Title": "project",
+    "P_Year": "year",
+    "GIS_Acre": "acres",
+    "URL": "document"
+   },
+   "geometry": "polygon",
+   "min_zoom": 11
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.52,
+    41.65,
+    -71.35,
+    41.77
+   ],
+   "features_in_probe": 40
+  }
+ },
+ {
+  "name": "ri-woonsocket-trash-days",
+  "state": "RI",
+  "title": "Woonsocket trash pickup days",
+  "title_es": "Días de recolección de basura en Woonsocket",
+  "description": "Which weekday the City of Woonsocket collects trash in each district.",
+  "description_es": "Qué día de la semana la ciudad de Woonsocket recoge la basura en cada distrito.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Woonsocket, RI",
+  "view": {
+   "url": "https://services3.arcgis.com/xbJIXto6cXXmodeK/arcgis/rest/services/Trash_Districts/FeatureServer/118",
+   "fields": {
+    "MSLABEL": "pickup_day"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.56,
+    41.97,
+    -71.47,
+    42.02
+   ],
+   "features_in_probe": 5
+  }
+ },
+ {
+  "name": "ri-woonsocket-snow-districts",
+  "state": "RI",
+  "title": "Woonsocket snow plow districts",
+  "title_es": "Distritos de quitanieves de Woonsocket",
+  "description": "City of Woonsocket snow-removal districts - which plow district your street is in.",
+  "description_es": "Distritos de limpieza de nieve de la ciudad de Woonsocket: en qué distrito de quitanieves está su calle.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Woonsocket, RI",
+  "view": {
+   "url": "https://services3.arcgis.com/xbJIXto6cXXmodeK/arcgis/rest/services/Snow_Districts/FeatureServer/115",
+   "fields": {
+    "MSLABEL": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.56,
+    41.97,
+    -71.47,
+    42.02
+   ],
+   "features_in_probe": 20
+  }
+ },
+ {
+  "name": "ri-pvd-council-wards",
+  "state": "RI",
+  "title": "Providence city council wards",
+  "title_es": "Distritos (wards) del concejo municipal de Providence",
+  "description": "The 15 Providence city council wards, with a link to each ward's page on the City Council website.",
+  "description_es": "Los 15 distritos del concejo municipal de Providence, con un enlace a la página de cada distrito en el sitio del Concejo Municipal.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Providence, RI (GIS)",
+  "view": {
+   "url": "https://services6.arcgis.com/wv9mHoqblhTsnqdG/arcgis/rest/services/City_Council_Wards/FeatureServer/0",
+   "fields": {
+    "district": "ward",
+    "pvd_wards_2023_info_website": "website"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.47,
+    41.78,
+    -71.38,
+    41.86
+   ],
+   "features_in_probe": 15
+  }
+ },
+ {
+  "name": "ri-pvd-snow-districts",
+  "state": "RI",
+  "title": "Providence snow plow districts",
+  "title_es": "Distritos de quitanieves de Providence",
+  "description": "City of Providence snow-removal districts (ward splits like 1A and 1B) - which plow district your street belongs to.",
+  "description_es": "Distritos de limpieza de nieve de la ciudad de Providence (divisiones de cada ward, como 1A y 1B): a qué distrito de quitanieves pertenece su calle.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Providence, RI (Department of Public Works)",
+  "view": {
+   "url": "https://services6.arcgis.com/wv9mHoqblhTsnqdG/arcgis/rest/services/Snow_Wards_WFL1/FeatureServer/9",
+   "fields": {
+    "DISTRICT": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.47,
+    41.78,
+    -71.38,
+    41.86
+   ],
+   "features_in_probe": 32
+  }
+ },
+ {
+  "name": "ri-pvd-food-pantries",
+  "state": "RI",
+  "title": "Providence food pantries",
+  "title_es": "Despensas de alimentos en Providence",
+  "description": "Open food pantries and food banks in Providence listed by the city - hours, how often you can visit, and notes such as languages spoken and accessibility.",
+  "description_es": "Despensas y bancos de alimentos abiertos en Providence, según la ciudad: horario, con qué frecuencia puede ir y notas como idiomas que se hablan y accesibilidad.",
+  "group": "help",
+  "category": "point",
+  "source": "City of Providence, RI",
+  "view": {
+   "url": "https://services6.arcgis.com/wv9mHoqblhTsnqdG/arcgis/rest/services/Food_Pantry_and_Food_Bank_Resources/FeatureServer/0",
+   "fields": {
+    "USER_Locat": "name",
+    "USER_Addre": "address",
+    "USER_Hours": "hours",
+    "USER_Frequ": "how_often",
+    "USER_Addit": "notes"
+   },
+   "geometry": "point",
+   "min_zoom": 10,
+   "where": "USER_Open = 'Yes'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.47,
+    41.78,
+    -71.38,
+    41.86
+   ],
+   "features_in_probe": 34
+  }
+ },
+ {
+  "name": "ri-pvd-urban-trails",
+  "state": "RI",
+  "title": "Providence Urban Trail Network",
+  "title_es": "Red de Senderos Urbanos de Providence",
+  "description": "Existing and under-construction bike and walking routes of the Providence Urban Trail Network - protected trails, neighborhood greenways and shared paths.",
+  "description_es": "Rutas existentes o en construcción de la Red de Senderos Urbanos de Providence para bicicleta y a pie: senderos protegidos, calles verdes de barrio y caminos compartidos.",
+  "group": "roads",
+  "category": "park",
+  "source": "City of Providence, RI (Planning & Development)",
+  "view": {
+   "url": "https://services6.arcgis.com/wv9mHoqblhTsnqdG/arcgis/rest/services/Providence_Urban_Trail_Network_2025/FeatureServer/0",
+   "fields": {
+    "Type": "kind",
+    "Street": "street",
+    "From_": "from",
+    "To_": "to",
+    "Status": "status"
+   },
+   "geometry": "line",
+   "min_zoom": 11,
+   "where": "Status IN ('Existing or Under Construction','Existing and Upgrade Potentially Needed')"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.47,
+    41.78,
+    -71.38,
+    41.86
+   ],
+   "features_in_probe": 252
+  }
+ },
+ {
+  "name": "ri-pvd-capital-projects",
+  "state": "RI",
+  "title": "Providence road and bridge construction projects",
+  "title_es": "Obras en calles y puentes de Providence",
+  "description": "Current City of Providence and RIDOT capital construction projects on streets and bridges - project, limits, and planned start and end.",
+  "description_es": "Obras de construcción actuales de la ciudad de Providence y de RIDOT en calles y puentes: proyecto, tramo y fechas previstas de inicio y fin.",
+  "group": "roads",
+  "category": "roadops",
+  "source": "City of Providence, RI (Department of Public Works)",
+  "view": {
+   "url": "https://services6.arcgis.com/wv9mHoqblhTsnqdG/arcgis/rest/services/Capital_Projects_view/FeatureServer/242",
+   "fields": {
+    "Project_Name": "name",
+    "Department": "agency",
+    "Project_Scope": "scope",
+    "Limits": "limits",
+    "Project_neighborhood": "neighborhood",
+    "Construction_startDate": "start",
+    "Construction_endDate": "end"
+   },
+   "geometry": "line",
+   "min_zoom": 10,
+   "where": "Status IS NULL OR Status <> 'Complete'"
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.47,
+    41.78,
+    -71.38,
+    41.86
+   ],
+   "features_in_probe": 19
+  }
+ },
+ {
+  "name": "ri-pvd-police-districts",
+  "state": "RI",
+  "title": "Providence police districts",
+  "title_es": "Distritos policiales de Providence",
+  "description": "The nine Providence Police Department districts - which district station covers your neighborhood.",
+  "description_es": "Los nueve distritos del Departamento de Policía de Providence: qué distrito cubre su vecindario.",
+  "group": "civic",
+  "category": "boundary",
+  "source": "City of Providence, RI (GIS)",
+  "view": {
+   "url": "https://services6.arcgis.com/wv9mHoqblhTsnqdG/arcgis/rest/services/Police_Districts/FeatureServer/0",
+   "fields": {
+    "ppd_dist": "district"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.47,
+    41.78,
+    -71.38,
+    41.86
+   ],
+   "features_in_probe": 9
+  }
+ },
+ {
+  "name": "ri-pvd-neighborhoods",
+  "state": "RI",
+  "title": "Providence neighborhoods",
+  "title_es": "Vecindarios de Providence",
+  "description": "The 25 official neighborhoods of Providence, as used in city planning.",
+  "description_es": "Los 25 vecindarios oficiales de Providence que usa la ciudad en su planificación.",
+  "group": "places",
+  "category": "boundary",
+  "source": "City of Providence, RI (GIS)",
+  "view": {
+   "url": "https://services6.arcgis.com/wv9mHoqblhTsnqdG/arcgis/rest/services/Neighborhoods/FeatureServer/0",
+   "fields": {
+    "lname": "name"
+   },
+   "geometry": "polygon",
+   "min_zoom": 10
+  },
+  "verified": {
+   "date": "2026-10-22",
+   "bbox": [
+    -71.47,
+    41.78,
+    -71.38,
+    41.86
+   ],
+   "features_in_probe": 25
+  }
+ }
+]
