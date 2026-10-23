@@ -34,6 +34,7 @@ import { HISTORY_LAYERS } from "../history";
 import { ALPR_TILE_ZOOM, alprCells, alprIndex, alprNear, alprTile, evictAlprTile, mergeTiles, type AlprIndex } from "../alpr-tiles";
 import { VOTING_KEYS } from "../colors";
 import { servicePopup } from "../services-pack";
+import { isSchoolMealsLayer, schoolMealsPopup } from "../school-meals";
 import { VOTING_SITE } from "../presets";
 import { helpFor } from "../help/popup-help";
 import { LEGAL_COST_KEYS, LEGAL_KIND_KEYS } from "../help/legal-kinds";
@@ -2307,8 +2308,9 @@ function overlayPopup(info: LayerInfo, p: Record<string, unknown>, i18n: I18nSta
       };
     }
     case "service": {
-      // Community & immigrant services pack (services-pack.ts).
-      const sp = servicePopup(info.name, p, lang, locale, tidy);
+      // Community & immigrant services pack (services-pack.ts); free school
+      // meals by state (school-meals.ts).
+      const sp = isSchoolMealsLayer(info.name) ? schoolMealsPopup(info.name, p, lang, tidy) : servicePopup(info.name, p, lang, locale, tidy);
       return { ...base, ...sp, title: sp.title || kind };
     }
     case "poi":

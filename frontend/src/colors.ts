@@ -1,5 +1,6 @@
 import type { ClassesSpec, MetricSpec } from "./api/client";
 import { SERVICE_COLORS } from "./services-pack";
+import { SCHOOL_MEAL_COLORS } from "./school-meals";
 // Single source of truth for layer colors, shared by the map and the sidebar
 // legend so the dots on the map always match their legend swatch.
 
@@ -23,6 +24,7 @@ export const VENDOR_SWATCH: Record<string, string> = {
 
 export const OVERLAY_COLOR: Record<string, string> = {
   ...SERVICE_COLORS,
+  ...SCHOOL_MEAL_COLORS, // <st>-free-school-meals (school-meals.ts)
   voting: "#1d4ed8",
   buses: "#0f766e",
   "transit-vehicles": "#0e7490",
