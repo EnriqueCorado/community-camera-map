@@ -30,6 +30,7 @@ export interface RightsCopy {
   legal: string;
   legalButton: string;
   planButton: string;
+  courtButton: string;
   changing: (date: string) => string;
 }
 
@@ -61,6 +62,7 @@ const en: RightsCopy = {
   legal: "Get real legal help",
   legalButton: "See free legal help near you",
   planButton: "Make your family plan now (free and private)",
+  courtButton: "Immigration court: find a hearing date, change an address, find a lawyer",
   changing: (d) => `Some of these rules are being decided in court right now. Last checked ${d}.`,
 };
 
@@ -92,6 +94,7 @@ const es: RightsCopy = {
   legal: "Consiga ayuda legal de verdad",
   legalButton: "Ver ayuda legal gratis cerca de usted",
   planButton: "Haga su plan familiar ahora (gratis y privado)",
+  courtButton: "Corte de inmigración: encontrar una audiencia, cambiar la dirección, buscar abogado",
   changing: (d) => `Algunas de estas reglas se están decidiendo en las cortes ahora mismo. Revisado por última vez el ${d}.`,
 };
 

@@ -23,7 +23,19 @@ import {
 import { longDate } from "../../help/dates";
 import { ExtLink, FactList, Phone, Result, Sources } from "./ui";
 
-export function RightsTool({ c, onLegal, onPlan, focusTitle }: { c: HelpCopy; onLegal: () => void; onPlan?: () => void; focusTitle?: boolean }) {
+export function RightsTool({
+  c,
+  onLegal,
+  onPlan,
+  onCourt,
+  focusTitle,
+}: {
+  c: HelpCopy;
+  onLegal: () => void;
+  onPlan?: () => void;
+  onCourt?: () => void;
+  focusTitle?: boolean;
+}) {
   const { lang, locale } = useI18n();
   const r = RIGHTS_COPY[lang];
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -118,6 +130,13 @@ export function RightsTool({ c, onLegal, onPlan, focusTitle }: { c: HelpCopy; on
       <section aria-labelledby="rights-detained">
         <h3 id="rights-detained">{r.detained}</h3>
         <FactList facts={RIGHTS_FACTS.detained} />
+        {onCourt && (
+          <p>
+            <button type="button" className="hbtn" onClick={onCourt}>
+              {r.courtButton}
+            </button>
+          </p>
+        )}
         <h4>{r.centersTitle}</h4>
         <p className="hf__hint">{r.centersNote}</p>
         <ul className="hplaces">
