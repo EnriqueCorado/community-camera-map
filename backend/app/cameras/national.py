@@ -9,7 +9,8 @@ Rules every source follows:
   - media URLs must be https on that source's own hosts (`_safe`), so a tampered
     feed can't point the browser (or the snapshot proxy) anywhere else;
   - HLS is kept only where the stream host answers `Access-Control-Allow-Origin: *`
-    (verified 2026-10-19: MoDOT, MD CHART, DelDOT, ALGO/Wowza, SCDOT/skyvdn);
+    (verified 2026-10-19: MoDOT, MD CHART, DelDOT, ALGO/Wowza, SCDOT/skyvdn;
+    2026-10-23: MnDOT);
     everything else is snapshot-only;
   - records without usable coordinates or media are dropped, not guessed.
 
@@ -29,7 +30,7 @@ import re
 import time
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
-from urllib.parse import quote, urlsplit
+from urllib.parse import quote, unquote, urlsplit
 
 import httpx
 
@@ -205,7 +206,47 @@ SOURCES.update(
 )
 # Sources added after the others overlapped them at the same spot; their
 # cameras give way to an earlier source's camera there (see dedupe_by_location).
-YIELDING_SOURCES = ("ia", "fl", "or")
+
+# Keyless feeds added 2026-10-23 for states that had no cameras: MnDOT's
+# documented IRIS public data, and three cities' own open-data layers (Texas and
+# Kansas have no keyless statewide feed). Terms are as stated on each item.
+SOURCES.update(
+    {
+        "mn": SourceInfo(
+            name="MnDOT",
+            state="MN",
+            url="https://511mn.org/",
+            credit="Minnesota DOT (MnDOT Regional Transportation Management Center)",
+            license="Public data, no license stated",
+            license_url="https://www.dot.state.mn.us/information/disclaimer.html",
+        ),
+        "tx-austin": SourceInfo(
+            name="City of Austin",
+            state="TX",
+            url="https://data.austintexas.gov/d/b4k4-adkb",
+            credit="City of Austin Transportation and Public Works (Open Data Portal)",
+            license="Public Domain",
+            license_url="https://data.austintexas.gov/stories/s/ranj-cccq",
+        ),
+        "tx-arlington": SourceInfo(
+            name="City of Arlington, TX",
+            state="TX",
+            url="https://www.arcgis.com/home/item.html?id=27304d8d6a974f7d8998e198f225ee71",
+            credit="City of Arlington, Texas",
+            license="Public data, no license stated",
+            license_url="https://www.arcgis.com/home/item.html?id=27304d8d6a974f7d8998e198f225ee71",
+        ),
+        "ks-lawrence": SourceInfo(
+            name="City of Lawrence, KS",
+            state="KS",
+            url="https://www.arcgis.com/home/item.html?id=e8c0a78e50084eb782607ce02c38501e",
+            credit="City of Lawrence, Kansas GIS",
+            license="Public record, City of Lawrence disclaimer",
+            license_url="https://www.arcgis.com/home/item.html?id=e8c0a78e50084eb782607ce02c38501e",
+        ),
+    }
+)
+YIELDING_SOURCES = ("ia", "fl", "or", "mn", "tx-austin", "tx-arlington", "ks-lawrence")
 
 # HLS kept only where the research verified CORS-open, unauthenticated streams.
 ITERIS_VIDEO_HOSTS: dict[str, tuple[str, ...]] = {"wi": ("cctv1.dot.wi.gov",)}
@@ -238,6 +279,11 @@ HOSTS: dict[str, tuple[str, ...]] = {
     "ia": ("atmsqf.iowadot.gov",),
     "fl": ("images-dis.divas.cloud",),  # FDOT DIVAS video/image system
     "or": ("tripcheck.com",),
+    # MnDOT stills and HLS (the HLS host answers Access-Control-Allow-Origin: *).
+    "mn": ("video.dot.state.mn.us",),
+    "tx-austin": ("cctv.austinmobility.io",),
+    "tx-arlington": ("webapps.arlingtontx.gov",),
+    "ks-lawrence": ("assets.lawrenceks.gov",),
 }
 
 
@@ -958,6 +1004,184 @@ def parse_or(fc: object) -> list[Camera]:
     return _by_site("or", items)
 
 
+# ---------- keyless feeds added 2026-10-23 (MN, Austin TX, Arlington TX, Lawrence KS) ----------
+
+_MN_NAME = re.compile(r"[A-Za-z0-9-]{1,24}")
+_MN_TH = re.compile(r"T\.H\.\s*(\d{1,3}[A-Z]?)")
+_MN_US = re.compile(r"U\.S\.\s*(\d{1,3}[A-Z]?)")
+MN_IMAGE = "https://video.dot.state.mn.us/video/image/metro/{}"
+MN_HLS = "https://video.dot.state.mn.us/public/{}.stream/playlist.m3u8"
+
+
+def _mn_route(raw: str) -> str:
+    """MnDOT writes 'T.H.36' (trunk highway) and 'U.S.169'."""
+    if m := _MN_TH.fullmatch(raw):
+        return f"TH-{m.group(1)}"
+    if m := _MN_US.fullmatch(raw):
+        return f"US-{m.group(1)}"
+    return _route(raw) or raw
+
+
+def parse_mn(payload: object) -> list[Camera]:
+    """MnDOT IRIS `camera_pub` (documented public JSON, statewide). Published
+    cameras only. A camera with `views` (road-weather sites) answers only with
+    `?view=N`, one still per view; the others have one still, plus HLS when
+    `streamable`."""
+    out = []
+    seen: set[str] = set()  # names differing only in punctuation share a slug
+    for r in _rows(payload):
+        name = str(r.get("name") or "")
+        ll = _coords(r.get("lat"), r.get("lon"))
+        if r.get("publish") is not True or not ll or not _MN_NAME.fullmatch(name):
+            continue
+        if "TEST" in name.upper() or _slug("mn", name) in seen:
+            continue
+        seen.add(_slug("mn", name))
+        raw_views = r.get("views")
+        nums = sorted(
+            {
+                v
+                for v in (raw_views if isinstance(raw_views, list) else [])
+                if isinstance(v, int) and not isinstance(v, bool) and 0 < v < 100
+            }
+        )
+        base = MN_IMAGE.format(name)
+        urls = [f"{base}?view={v}" for v in nums] or [base]
+        stream = MN_HLS.format(name) if r.get("streamable") is True and not nums else ""
+        loc = _text(r.get("location"))
+        road = _text(r.get("roadway"))
+        out.append(
+            _cam(
+                "mn",
+                id=_slug("mn", name),
+                name=loc or f"MnDOT camera {name}",
+                route=_mn_route(road),
+                direction=_direction(r.get("road_dir")),
+                latitude=ll[0],
+                longitude=ll[1],
+                snapshot_url=urls[0],
+                views=urls[1:],
+                stream_url=stream,
+            )
+        )
+    return out
+
+
+_AUSTIN_CITY = {"AUSTIN FULL PURPOSE", "AUSTIN LTD"}  # not the ETJ areas outside the city
+
+
+def parse_tx_austin(payload: object) -> list[Camera]:
+    """City of Austin `Traffic Cameras` (Socrata b4k4-adkb, public domain):
+    cameras that are turned on, with their screenshot."""
+    out = []
+    for r in _rows(payload):
+        cam_id = str(r.get("camera_id") or "")
+        loc = r.get("location")
+        ll = _point({"geometry": loc}) if isinstance(loc, dict) else None
+        snap = _safe(r.get("screenshot_address"), HOSTS["tx-austin"])
+        if r.get("camera_status") != "TURNED_ON" or not ll or not snap:
+            continue
+        if not re.fullmatch(r"\d{1,8}", cam_id):
+            continue
+        primary, cross = _text(r.get("primary_st")), _text(r.get("cross_st"))
+        name = _text(r.get("location_name")) or " / ".join(x for x in (primary, cross) if x)
+        place = _text(r.get("jurisdiction_label"))
+        out.append(
+            _cam(
+                "tx-austin",
+                id=_slug("tx-austin", cam_id),
+                name=name or f"Austin camera {cam_id}",
+                nearby_place="Austin" if place.upper() in _AUSTIN_CITY else "",
+                route=_route(name),
+                latitude=ll[0],
+                longitude=ll[1],
+                snapshot_url=snap,
+            )
+        )
+    return out
+
+
+def _file_stem(url: str) -> str:
+    """'https://h/a/GEN_2nd%20&%20Locust.jpeg' -> 'GEN_2nd & Locust'."""
+    name = unquote(urlsplit(url).path.rsplit("/", 1)[-1])
+    return re.sub(r"\.(jpe?g|png|gif)$", "", name, flags=re.I)
+
+
+def parse_tx_arlington(fc: object) -> list[Camera]:
+    """City of Arlington, TX `Traffic_Camera_Updates_view` (ArcGIS). Stills,
+    updated every 5 minutes; retired cameras are dropped and offline ones are
+    marked out of service (so the service hides them). The id comes from the
+    image's file name (stable across the layer's re-publishes); an image listed
+    twice keeps its online row."""
+    best: dict[str, Camera] = {}
+    for f in _features(fc):
+        p, ll = _props(f), _point(f)
+        status = _text(p.get("Status")).lower()
+        snap = next(
+            (
+                s
+                for u in (p.get("Pic_URL"), p.get("Thumb_URL"))
+                if (s := _safe(_encode_path(u), HOSTS["tx-arlington"]))
+            ),
+            "",
+        )
+        cam_id = _slug("tx-arlington", _file_stem(snap)) if snap else ""
+        if not ll or not snap or status == "retired" or cam_id == "tx-arlington":
+            continue
+        online = status.startswith("online")
+        if cam_id in best and (best[cam_id].in_service or not online):
+            continue
+        name = _text(p.get("Camera_Location"))
+        best[cam_id] = _cam(
+            "tx-arlington",
+            id=cam_id,
+            name=name or "Arlington camera",
+            nearby_place="Arlington",
+            route=_route(name),
+            latitude=ll[0],
+            longitude=ll[1],
+            snapshot_url=snap,
+            in_service=online,
+        )
+    return list(best.values())
+
+
+LAWRENCE_IN_SERVICE = 8  # the layer's coded `Status` domain: 8 = "In Service"
+
+
+def parse_ks_lawrence(fc: object) -> list[Camera]:
+    """City of Lawrence, KS `Traffic Cameras` (ArcGIS detection equipment):
+    in-service cameras with a still. The layer has no name field, so the name is
+    the image's file name ('GEN_2nd & Locust' -> '2nd & Locust')."""
+    out = []
+    seen: set[str] = set()
+    for f in _features(fc):
+        p, ll = _props(f), _point(f)
+        snap = _safe(_encode_path(p.get("Hyperlink")), HOSTS["ks-lawrence"])
+        fac = str(p.get("FacilityID") or "")
+        if not ll or not snap or p.get("Status") != LAWRENCE_IN_SERVICE:
+            continue
+        if not _SAFE_ID.fullmatch(fac) or _slug("ks-lawrence", fac) in seen:
+            continue
+        seen.add(_slug("ks-lawrence", fac))
+        name = _text(re.sub(r"^GEN_", "", _file_stem(snap)))
+        out.append(
+            _cam(
+                "ks-lawrence",
+                id=_slug("ks-lawrence", fac),
+                name=name or f"Lawrence camera {fac}",
+                nearby_place="Lawrence",
+                county="Douglas",
+                route=_route(name),
+                direction=_direction(p.get("Direction")),
+                latitude=ll[0],
+                longitude=ll[1],
+                snapshot_url=snap,
+            )
+        )
+    return out
+
+
 def dedupe_by_location(cameras: list[Camera]) -> list[Camera]:
     """Drop a YIELDING_SOURCES camera at the same spot (coordinates rounded to 4
     decimals, ~10 m) as a camera from a different source (an earlier source, or Caltrans, wins), so
@@ -999,6 +1223,12 @@ OHGO_URL = "https://publicapi.ohgo.com/api/v1/cameras"
 IA_URL = "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Traffic_Cameras_View/FeatureServer/0"
 FL_URL = "https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/FL511_Traffic_Cameras/FeatureServer/0"
 OR_URL = "https://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/TripCheck_Cameras/FeatureServer/0"
+MN_URL = "https://data.dot.state.mn.us/iris/camera_pub"
+AUSTIN_URL = (
+    "https://data.austintexas.gov/resource/b4k4-adkb.json?camera_status=TURNED_ON&$limit=5000"
+)
+ARLINGTON_URL = "https://services.arcgis.com/jXi5GuMZwfCYtZP9/arcgis/rest/services/Traffic_Camera_Updates_view/FeatureServer/0"
+LAWRENCE_URL = "https://services.arcgis.com/8O9UlSTnqjKptoda/arcgis/rest/services/Traffic_Cameras/FeatureServer/4"
 Fetcher = Callable[[httpx.AsyncClient, int], Awaitable[list[Camera]]]
 
 
@@ -1062,6 +1292,14 @@ FETCHERS: dict[str, Fetcher] = {
         "attributes_title,attributes_route,attributes_filename,attributes_cameraId",
         parse_or,
         1000,
+    ),
+    "mn": _plain(MN_URL, parse_mn),
+    "tx-austin": _plain(AUSTIN_URL, parse_tx_austin),
+    "tx-arlington": _arcgis(
+        ARLINGTON_URL, "ObjectId,Camera_Location,Status,Pic_URL,Thumb_URL", parse_tx_arlington, 1000
+    ),
+    "ks-lawrence": _arcgis(
+        LAWRENCE_URL, "OBJECTID,FacilityID,Status,Direction,Hyperlink", parse_ks_lawrence, 1000
     ),
 }
 

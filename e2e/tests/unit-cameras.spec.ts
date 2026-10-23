@@ -58,6 +58,12 @@ test.describe("safeCameraUrl", () => {
       "https://atmsqf.iowadot.gov/SNAPSHOTS/PUBLIC/Metro/ictv29hd.jpeg",
       "https://images-dis.divas.cloud/DGI/chan-9422_h.jpg",
       "https://tripcheck.com/RoadCams/cams/OR99W%20at%20Durham%20Rd_pid2107.JPG",
+      // Keyless feeds added 2026-10-23 (MnDOT, Austin TX, Arlington TX, Lawrence KS).
+      "https://video.dot.state.mn.us/video/image/metro/C30198?view=1",
+      "https://video.dot.state.mn.us/public/C001.stream/playlist.m3u8",
+      "https://cctv.austinmobility.io/image/100.jpg",
+      "https://webapps.arlingtontx.gov/webcams/Abram_Center.jpg",
+      "https://assets.lawrenceks.gov/gis/traffic/GEN_2nd%20&%20Locust.jpeg",
     ]) {
       expect(safeCameraUrl(u), u).toBe(u);
     }

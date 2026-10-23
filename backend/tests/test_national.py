@@ -532,7 +532,7 @@ def test_parse_ndbc_stable_station_image():
 
 @pytest.mark.parametrize("name", [n for n in national.FETCHERS])
 def test_every_parser_tolerates_garbage(name):
-    parse = getattr(national, f"parse_{name}")
+    parse = getattr(national, f"parse_{name.replace('-', '_')}")
     for junk in (
         None,
         5,

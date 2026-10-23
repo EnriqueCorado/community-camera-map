@@ -176,6 +176,10 @@ export const CAMERA_MEDIA_HOSTS = [
   "atmsqf.iowadot.gov",
   "images-dis.divas.cloud",
   "tripcheck.com",
+  "video.dot.state.mn.us",
+  "cctv.austinmobility.io",
+  "webapps.arlingtontx.gov",
+  "assets.lawrenceks.gov",
 ];
 
 /** A camera still / stream URL if it's https on a CAMERA_MEDIA_HOSTS host (or a

@@ -161,13 +161,27 @@ Counts are from the 2026-10-19 bake.
 | FL511 / Florida DOT, via FDEM (no license stated) | ArcGIS `FL511_Traffic_Cameras` (FDEM's republish) | 3,992 | stills (FDOT DIVAS) |
 | ODOT TripCheck, via Oregon Emergency Management ("Public") | ArcGIS `TripCheck_Cameras` (OEM's daily republish) | 1,040 | stills, several views per site |
 | Iowa DOT (CC BY 4.0) | ArcGIS `Traffic_Cameras_View` | 847 | stills, several views per site (HLS is on port 8888, so not used) |
-| CDOT (no license stated) | CDOT ArcGIS Server `ATMS/MapServer/7` (public views only) | 222 | stills, several views per site |
+| MnDOT (no license stated; MnDOT disclaimer) | IRIS `data.dot.state.mn.us/iris/camera_pub` (documented public JSON; published cameras only) | 1,539 | still + HLS (1,254); road-weather sites as several views |
+| City of Austin TX (Public Domain) | Socrata `b4k4-adkb` (cameras turned on) | 823 | stills |
+| City of Arlington TX (no license stated) | ArcGIS `Traffic_Camera_Updates_view` (retired dropped, offline hidden) | 79 | stills |
+| City of Lawrence KS (city public-record disclaimer) | ArcGIS `Traffic_Cameras/FeatureServer/4` (in service) | 74 | stills |
 
-The last four (counts from the 2026-10-21 bake) give way to an earlier source's
-camera at the same spot (coordinates rounded to 4 decimals), so a camera is never
-listed twice. Skipped on purpose: TripCheck's own `cctvinventory.js` and NYC DOT's
+The last seven (Iowa, FL, OR: 2026-10-21 bake; MN and the three cities:
+2026-10-23) give way to an earlier source's camera at the same spot (coordinates
+rounded to 4 decimals), so a camera is never listed twice. CDOT's ArcGIS cameras
+were removed (that server is labelled "development and testing"). Skipped on
+purpose: TripCheck's own `cctvinventory.js` and NYC DOT's
 `webcams.nyctmc.org/api/cameras` (undocumented web-app endpoints; the official
-TripCheck and 511NY APIs need keys), and NDDOT's `cameras.json` (undocumented).
+TripCheck and 511NY APIs need keys), and NDDOT's `cameras.json` (its Web Map
+Services page says the files are "not to be consumed directly in any
+public-facing application" and bars compiling them without written consent).
+
+Researched 2026-10-23 and not added (need a key, an account or permission):
+511NY, PennDOT/511PA, VDOT SmarterRoads, TDOT, COtrip, Castle Rock CARS feeds
+(Indiana, Nebraska, Kansas), CTDOT (written consent), MassDOT and DDOT (both via
+TrafficLand), MDOT Mississippi and IDrive Arkansas (terms forbid it). New England
+Compass (NH/VT/ME) is keyless and allows redistribution, but its stills come as
+base64 inside the XML, with no image URL to show.
 
 USGS HIVIS river cameras (~1,140, nationwide) stay a separate overlay layer
 (`river-cameras`). The static site's camera list (`frontend/public/data/cameras/`,
