@@ -3,11 +3,10 @@
 // under the site base and its complete HTML.
 import { renderToStaticMarkup } from "react-dom/server";
 import type { ReactElement } from "react";
-import css from "./landing.css?raw";
 import { nearestModestoFirst, parseOffices } from "../help/legal-dir";
 import { TOOLS } from "./tools";
 import { FLYERS } from "./flyers";
-import { FlyerIndex, FlyerPage, FLYERS_PATH, flyerPath, HomePage, homePath, PartnersPage, ShortLinkPage, shortPath, ToolPageView, toolPath, type Site } from "./Pages";
+import { FlyerIndex, FlyerPage, FLYERS_PATH, flyerPath, HomePage, homePath, PartnersPage, ShortLinkPage, shortPath, ToolPageView, toolPath, type Site, type SiteAssets } from "./Pages";
 import { partnersPath } from "./partners";
 import { SITE_COPY } from "./site-copy";
 import { SHORT_LINKS, shortTarget } from "../help/start";
@@ -30,12 +29,14 @@ export interface RenderOptions {
   legalHelp: GeoJSON.FeatureCollection;
   /** The anonymous usage counter's URL, or "" for none. */
   counter?: string;
+  /** The shared stylesheet and page script (written by prerender.mjs). */
+  assets: SiteAssets;
 }
 
 const page = (path: string, el: ReactElement): BuiltPage => ({ path, html: `<!doctype html>${renderToStaticMarkup(el)}` });
 
-export function renderSite({ origin, base, publicBase, repo, legalHelp, counter = "" }: RenderOptions): BuiltPage[] {
-  const site: Site = { origin, base, publicBase, repo, css, counter };
+export function renderSite({ origin, base, publicBase, repo, legalHelp, counter = "", assets }: RenderOptions): BuiltPage[] {
+  const site: Site = { origin, base, publicBase, repo, assets, counter };
   const offices = parseOffices(legalHelp).sort(nearestModestoFirst);
   const pages: BuiltPage[] = [];
   for (const lang of ["en", "es"] as const) {
