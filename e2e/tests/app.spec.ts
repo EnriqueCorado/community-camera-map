@@ -1,4 +1,5 @@
 import { test, expect, type Page, type ConsoleMessage } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 
 // Collect console errors + page errors so every test can assert the app stayed clean.
 function trackErrors(page: Page): string[] {
@@ -359,6 +360,60 @@ test("Windy webcams show 'needs API key' until a key is configured", async ({ pa
   const row = page.locator(".layerrow", { hasText: "Windy webcams" });
   await expect(row).toContainText("needs API key");
   await expect(row.locator("input")).toBeDisabled();
+});
+
+test("each layer row explains what it shows, where it's from and where it covers", async ({ page }) => {
+  // The dev API has no bake-time `source`; give one layer a source and a Spanish description.
+  await page.route("**/api/layers", async (route) => {
+    const res = await route.fetch();
+    const list = (await res.json()) as { name: string; source?: string; description_es?: string | null }[];
+    for (const l of list) {
+      if (l.name === "city-limits") Object.assign(l, { source: "Test county GIS", description_es: "Límites de las ciudades (prueba)." });
+      if (l.name === "zip-codes") l.description_es = null;
+    }
+    await route.fulfill({ response: res, json: list });
+  });
+  await page.goto("/");
+  await waitForMap(page);
+  const row = (name: string) => page.locator(".layerrow").filter({ has: page.locator(`input[data-layer="${name}"]`) });
+
+  const info = row("city-limits").getByRole("button", { name: "About: City limits" });
+  await expect(info).toHaveAttribute("aria-expanded", "false");
+  await expect(page.locator(".layerabout")).toHaveCount(0); // rendered only while open
+  await info.click();
+  await expect(info).toHaveAttribute("aria-expanded", "true");
+  const panel = page.locator("#about-city-limits");
+  await expect(info).toHaveAttribute("aria-controls", "about-city-limits");
+  await expect(panel).toContainText("Incorporated city boundaries");
+  await expect(panel).toContainText("Source: Test county GIS");
+  await expect(panel).toContainText("Covers: the United States");
+  const { violations } = await new AxeBuilder({ page }).include("#about-city-limits").analyze();
+  expect(violations.map((v) => v.id)).toEqual([]);
+
+  // One open at a time; the keyboard closes it again.
+  const zip = row("zip-codes").locator("button.dl--info");
+  await zip.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator(".layerabout")).toHaveCount(1);
+  await expect(page.locator("#about-zip-codes")).toContainText("ZIP Code");
+  await expect(page.locator("#about-zip-codes")).not.toContainText("Source:"); // none in this catalog entry
+  await page.keyboard.press("Space");
+  await expect(page.locator(".layerabout")).toHaveCount(0);
+  await expect(zip).toHaveAttribute("aria-expanded", "false");
+
+  // Spanish: description_es when there is one, else the English text marked lang="en".
+  await page.getByRole("button", { name: "Ver en español" }).click();
+  await row("city-limits").getByRole("button", { name: /^Acerca de: / }).click();
+  const es = page.locator("#about-city-limits p").first();
+  await expect(es).toHaveText("Límites de las ciudades (prueba).");
+  await expect(es).not.toHaveAttribute("lang", /./);
+  await expect(page.locator("#about-city-limits")).toContainText("Fuente: Test county GIS");
+  await expect(page.locator("#about-city-limits")).toContainText("Cubre: Estados Unidos");
+  await row("zip-codes").locator("button.dl--info").click();
+  await expect(page.locator(".layerabout")).toHaveCount(1);
+  const fallback = page.locator("#about-zip-codes p").first();
+  await expect(fallback).toContainText("ZIP Code");
+  await expect(fallback).toHaveAttribute("lang", "en");
 });
 
 test("flights refresh themselves while the layer is on", async ({ page }) => {

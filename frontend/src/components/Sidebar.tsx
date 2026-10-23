@@ -222,6 +222,14 @@ const ONLY_KEY: Record<string, Key> = {
   usa: "onlyUSA",
 };
 
+/** Where a layer has data, for its "About this layer" note. */
+const COVER_KEY: Record<string, Key> = {
+  stanislaus: "coverStanislaus",
+  california: "coverCalifornia",
+  usa: "coverUSA",
+  world: "coverWorld",
+};
+
 export function Sidebar({
   cameraCount,
   agencyCount,
@@ -443,6 +451,21 @@ export function Sidebar({
     pendingFocus.current = x.n;
   };
 
+  // "About this layer": one open at a time, rendered only while open.
+  const [aboutOpen, setAboutOpen] = useState<string | null>(null);
+  const coverName = (c?: string) => stateName(c) ?? (c && COVER_KEY[c] ? t(COVER_KEY[c]) : null);
+  const aboutPanel = (l: LayerInfo) => {
+    const es = lang === "es" && l.description_es;
+    const where = coverName(coverageOf(l));
+    return (
+      <div id={`about-${l.name}`} className="layerabout">
+        <p lang={lang === "es" && !es ? "en" : undefined}>{es || l.description}</p>
+        {l.source && <p className="layerabout__meta">{t("aboutSource", { source: l.source })}</p>}
+        {where && <p className="layerabout__meta">{t("aboutCovers", { where })}</p>}
+      </div>
+    );
+  };
+
   const overlayRow = (l: LayerInfo) => (
           <div key={l.name} className="layerrow">
             <label className={`toggle ${l.available ? "" : "toggle--disabled"}`}>
@@ -482,6 +505,17 @@ export function Sidebar({
                 )}
               </span>
             </label>
+            <button
+              type="button"
+              className="dl dl--info"
+              title={t("aboutLayer", { layer: title(l) })}
+              aria-label={t("aboutLayer", { layer: title(l) })}
+              aria-expanded={aboutOpen === l.name}
+              aria-controls={aboutOpen === l.name ? `about-${l.name}` : undefined}
+              onClick={() => setAboutOpen(aboutOpen === l.name ? null : l.name)}
+            >
+              <span aria-hidden="true">i</span>
+            </button>
             {(layers.overlays[l.name] ?? false) && l.category !== "raster" && !LIVE_SOURCES[l.name] && !fromSource(l) && (
               <button
                 type="button"
@@ -493,6 +527,7 @@ export function Sidebar({
                 <span aria-hidden="true">⬇</span>
               </button>
             )}
+            {aboutOpen === l.name && aboutPanel(l)}
           </div>
   );
 

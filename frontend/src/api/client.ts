@@ -49,6 +49,8 @@ export interface LayerInfo {
   view?: ViewSpec | null;
   /** Self-describing layers: Spanish title, sidebar group, choropleth. */
   title_es?: string | null;
+  /** Spanish description (falls back to `description`). */
+  description_es?: string | null;
   group?: string | null;
   metric?: MetricSpec | null;
   classes?: ClassesSpec | null;
