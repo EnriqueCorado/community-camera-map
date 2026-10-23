@@ -5,7 +5,10 @@
 // · a street · c city · s state · p phone · rp enrollment phone · t type ·
 // k site kind · l languages · sv services · es Spanish · sf sliding fee ·
 // fo ICE field office · pop average population · u college id · d/d0/d1/bt/lt
-// summer-meal days, dates and times · x approximate location.
+// summer-meal days, dates and times · x approximate location. Medicare Care
+// Compare layers (backend national/care_compare.py) add: id CMS certification
+// number · st stars · ss survey stars · ow ownership · er emergency · bf
+// birthing-friendly · ns stations · ls evening shift · sv service bit flags.
 import type { Lang } from "./i18n"; // type-only: erased at build
 
 export const SERVICE_COLORS: Record<string, string> = {
@@ -27,11 +30,18 @@ export const SERVICE_COLORS: Record<string, string> = {
   "social-security-offices": "#0369a1",
   "legal-aid-areas": "#0f766e",
   "post-offices": "#475569",
+  "dialysis-facilities": "#0e7490",
+  "hospice-providers": "#a21caf",
+  "home-health-agencies": "#15803d",
+  "hospital-ratings": "#b91c1c",
 };
 
 type Bi = [en: string, es: string];
 const HEAD_START: [string, Bi] = ["https://headstart.gov/center-locator", ["Head Start center locator", "Buscador de centros Head Start"]];
 const TREATMENT: [string, Bi] = ["https://findtreatment.gov/", ["FindTreatment.gov", "FindTreatment.gov (en español)"]];
+const CARE_COMPARE: [string, Bi] = ["https://www.medicare.gov/care-compare/", ["Compare on Medicare Care Compare", "Comparar en Care Compare de Medicare"]];
+/** Medicare Care Compare layers (star ratings, CMS ids, services). */
+const CARE_LAYERS = new Set(["dialysis-facilities", "hospice-providers", "home-health-agencies", "hospital-ratings"]);
 
 /** Official page for each layer (all https, government hosts). */
 const LINKS: Record<string, [string, Bi]> = {
@@ -60,6 +70,10 @@ const LINKS: Record<string, [string, Bi]> = {
   "social-security-offices": ["https://secure.ssa.gov/ICON/main.jsp", ["Social Security office locator", "Buscador de oficinas del Seguro Social"]],
   "legal-aid-areas": ["https://www.lsc.gov/about-lsc/what-legal-aid/get-legal-help", ["Find legal aid (LSC)", "Buscar ayuda legal (LSC)"]],
   "post-offices": ["https://tools.usps.com/locations/", ["USPS location finder (hours)", "Buscador de oficinas de USPS (horario)"]],
+  "dialysis-facilities": CARE_COMPARE,
+  "hospice-providers": CARE_COMPARE,
+  "home-health-agencies": CARE_COMPARE,
+  "hospital-ratings": CARE_COMPARE,
 };
 const COLLEGE_NAVIGATOR = "https://nces.ed.gov/collegenavigator/?id=";
 /** Hand-kept immigration offices link to the official page each row came from. */
@@ -110,6 +124,22 @@ const NOTES: Record<string, Bi> = {
     "Many post offices also accept passport applications; check the USPS finder.",
     "Muchas oficinas de correos también aceptan solicitudes de pasaporte; consulte el buscador de USPS.",
   ],
+  "dialysis-facilities": [
+    "Stars are Medicare’s quality-of-care rating (1 to 5). Ask your kidney doctor which center and type of dialysis fit you.",
+    "Las estrellas son la calificación de calidad de Medicare (de 1 a 5). Pregunte a su médico de los riñones qué centro y tipo de diálisis le convienen.",
+  ],
+  "hospice-providers": [
+    "Hospice care usually comes to the home. Stars come from a survey of patients’ families (1 to 5).",
+    "Los cuidados de hospicio suelen darse en el hogar. Las estrellas vienen de una encuesta a las familias de los pacientes (de 1 a 5).",
+  ],
+  "home-health-agencies": [
+    "Agencies send nurses and therapists to the home. Check which agencies serve your ZIP code on Care Compare.",
+    "Las agencias envían enfermeras y terapeutas al hogar. Consulte en Care Compare qué agencias atienden su código postal.",
+  ],
+  "hospital-ratings": [
+    "In an emergency, call 911. Stars are Medicare’s overall hospital rating (1 to 5).",
+    "En una emergencia, llame al 911. Las estrellas son la calificación general de hospitales de Medicare (de 1 a 5).",
+  ],
 };
 
 /** Notes for the hand-kept offices, by kind. */
@@ -157,6 +187,44 @@ const LABELS: Record<string, Bi> = {
   approx: ["Approximate (ZIP code area)", "Aproximada (zona del código postal)"],
   bothMh: ["Substance use", "Adicciones"],
   bothSu: ["Mental health", "Salud mental"],
+  stars: ["Medicare star rating", "Calificación de Medicare"],
+  quality: ["Quality of care", "Calidad de la atención"],
+  survey: ["Patient survey", "Encuesta a pacientes"],
+  familySurvey: ["Family survey", "Encuesta a familias"],
+  outOf: ["of 5", "de 5"],
+  notRated: ["Not rated", "Sin calificación"],
+  ownership: ["Ownership", "Tipo de propiedad"],
+  emergency: ["Emergency room", "Sala de emergencias"],
+  birthing: ["Birthing-friendly (Medicare)", "Buena atención de partos (Medicare)"],
+  stations: ["Dialysis stations", "Estaciones de diálisis"],
+  evening: ["Evening shift (after 5 pm)", "Turno de tarde-noche (después de las 5 p. m.)"],
+  company: ["Company", "Empresa"],
+  medicareId: ["Medicare provider number (CCN)", "Número de proveedor de Medicare (CCN)"],
+  no: ["No", "No"],
+};
+
+/** Care Compare codes -> words: ownership and the services each place offers. */
+const OWNERSHIP: Record<string, Bi> = {
+  fp: ["For-profit", "Con fines de lucro"],
+  np: ["Nonprofit", "Sin fines de lucro"],
+  gov: ["Government", "Gobierno"],
+  tribal: ["Tribal", "Tribal"],
+};
+/** `sv` is a sum of these bit flags, in this order (backend _care_compare_parse.py). */
+const CARE_SERVICES: Record<string, Bi[]> = {
+  "dialysis-facilities": [
+    ["In-center hemodialysis", "Hemodiálisis en el centro"],
+    ["Peritoneal dialysis (at home)", "Diálisis peritoneal (en casa)"],
+    ["Home hemodialysis training", "Capacitación para hemodiálisis en casa"],
+  ],
+  "home-health-agencies": [
+    ["Nursing", "Enfermería"],
+    ["Physical therapy", "Fisioterapia"],
+    ["Occupational therapy", "Terapia ocupacional"],
+    ["Speech therapy", "Terapia del habla"],
+    ["Medical social services", "Servicios sociales médicos"],
+    ["Home health aide", "Asistente de salud en el hogar"],
+  ],
 };
 
 /** Type codes per layer -> readable labels (unknown codes are shown as-is). */
@@ -208,6 +276,16 @@ const TYPES: Record<string, Record<string, Bi>> = {
   "border-ports": {
     Mexico: ["Mexico border", "Frontera con México"],
     Canada: ["Canada border", "Frontera con Canadá"],
+  },
+  "hospital-ratings": {
+    acute: ["Acute care hospital", "Hospital general"],
+    cah: ["Critical access hospital (rural)", "Hospital de acceso crítico (rural)"],
+    psych: ["Psychiatric hospital", "Hospital psiquiátrico"],
+    kids: ["Children’s hospital", "Hospital infantil"],
+    va: ["VA hospital", "Hospital del VA"],
+    dod: ["Military hospital", "Hospital militar"],
+    reh: ["Rural emergency hospital", "Hospital rural de emergencias"],
+    ltc: ["Long-term care hospital", "Hospital de cuidados prolongados"],
   },
 };
 TYPES["early-head-start"] = TYPES["head-start"]!;
@@ -271,16 +349,50 @@ export function servicePopup(
   const both = p.t === "both" ? (layer === "mental-health" ? L("bothMh") : L("bothSu")) : "";
   const kind = raw(p.k) && raw(p.k) !== "Permanent" ? typeLabel(p.k) : "";
   const isTreatment = layer === "mental-health" || layer === "addiction-treatment";
+  // Medicare Care Compare layers: stars, ownership and service codes.
+  const care = CARE_LAYERS.has(layer);
+  const starText = (v: unknown, unrated: boolean) => {
+    const n = typeof v === "number" && v >= 1 && v <= 5 ? v : null;
+    if (n == null) return unrated ? L("notRated") : "";
+    const glyphs = "★".repeat(Math.floor(n)) + (n % 1 ? "½" : "");
+    return `${glyphs} ${n.toLocaleString(locale)} ${L("outOf")}`;
+  };
+  const bits = typeof p.sv === "number" ? p.sv : 0;
+  const services = care
+    ? (CARE_SERVICES[layer] ?? [])
+        .filter((_, b) => bits & (1 << b))
+        .map((x) => x[i])
+        .join(", ")
+    : raw(p.sv);
+  const yesNo = (v: unknown) => (v === 1 ? L("yes") : v === 0 || v == null ? L("no") : "");
+  const starRows: [string, string][] = !care
+    ? []
+    : layer === "home-health-agencies"
+      ? [
+          [L("quality"), starText(p.st, true)],
+          [L("survey"), starText(p.ss, true)],
+        ]
+      : [[layer === "hospice-providers" ? L("familySurvey") : L("stars"), starText(p.st, true)]];
   const rows: [string, string][] = [
+    ...starRows,
     [L("type"), isTreatment ? "" : [typeLabel(p.t), kind].filter(Boolean).join(" · ")],
     [L("office"), raw(p.o)],
-    [layer === "summer-meals" ? L("sponsor") : layer.endsWith("head-start") ? L("program") : L("org"), str(p.g)],
+    [
+      layer === "summer-meals" ? L("sponsor") : layer.endsWith("head-start") ? L("program") : layer === "dialysis-facilities" ? L("company") : L("org"),
+      layer === "dialysis-facilities" ? raw(p.g) : str(p.g),
+    ],
     [L("address"), str(p.a)],
     [L("city"), city],
     [L("phone"), phone(p.p)],
     [L("enroll"), phone(p.rp)],
     [L("languages"), langs],
-    [L("services"), raw(p.sv)],
+    [L("services"), services],
+    [L("emergency"), layer === "hospital-ratings" ? yesNo(p.er) : ""],
+    [L("birthing"), layer === "hospital-ratings" && p.bf === 1 ? L("yes") : ""],
+    [L("stations"), layer === "dialysis-facilities" && typeof p.ns === "number" && p.ns > 0 ? p.ns.toLocaleString(locale) : ""],
+    [L("evening"), layer === "dialysis-facilities" && p.ls === 1 ? L("yes") : ""],
+    [L("ownership"), care ? (OWNERSHIP[raw(p.ow)]?.[i] ?? "") : ""],
+    [L("medicareId"), care && /^[0-9A-Z]{6}$/.test(raw(p.id)) ? raw(p.id) : ""],
     [L("spanish"), p.es === 1 ? L("yes") : ""],
     [L("sliding"), p.sf === 1 ? L("yes") : ""],
     [L("both"), both],
