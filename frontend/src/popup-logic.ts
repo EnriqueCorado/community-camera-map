@@ -1,6 +1,7 @@
 // Pure popup helpers — no React/DOM, so they're unit-tested directly
 // (e2e/tests/unit-popup-logic.spec.ts).
 import { SERVICE_LINK_HOSTS } from "./services-pack";
+import { SCHOOL_MEAL_LINK_HOSTS } from "./school-meals";
 
 export type FloodRiskKey = "floodHigh" | "floodModerate" | "floodMinimal" | "floodUndetermined";
 
@@ -103,6 +104,7 @@ export const WEBCAM_PAGE_HOSTS = [
   "echo.epa.gov", // EPA ECHO facility reports (hazards pack)
   "obipublic11.epa.gov", // EPA Cleanups in My Community profiles
   ...SERVICE_LINK_HOSTS, // community & immigrant services pack (official .gov pages)
+  ...SCHOOL_MEAL_LINK_HOSTS, // free school meals: state program pages and USDA CEP
 ];
 
 /** State traffic-info sites the road-operations popups may link to (work zones,

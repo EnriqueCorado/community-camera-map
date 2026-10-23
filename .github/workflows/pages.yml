@@ -350,6 +350,15 @@ jobs:
             frontend/public/data/layers/hospital-ratings.geojson
           key: services-weekly-v1-${{ github.run_id }}
           restore-keys: services-weekly-v1-
+      # Free school meals, one file per state (national/school_meals.py), also
+      # refreshed by --weekly: a cache of their own, so adding them didn't
+      # reset the service lists' cache (its path list is part of its key).
+      - name: Restore weekly school meals lists
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: frontend/public/data/layers/*-free-school-meals.geojson
+          key: school-meals-weekly-v1-${{ github.run_id }}
+          restore-keys: school-meals-weekly-v1-
       - name: Refresh live layers (fast)
         if: github.event_name == 'schedule' && github.event.schedule == '*/15 * * * *'
         working-directory: backend
@@ -394,6 +403,12 @@ jobs:
             frontend/public/data/layers/home-health-agencies.geojson
             frontend/public/data/layers/hospital-ratings.geojson
           key: services-weekly-v1-${{ github.run_id }}
+      - name: Save weekly school meals lists
+        if: github.event.schedule == '41 9 * * 1'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: frontend/public/data/layers/*-free-school-meals.geojson
+          key: school-meals-weekly-v1-${{ github.run_id }}
       - name: Refresh OpenStreetMap places (daily, and on manual runs)
         if: github.event.schedule == '37 11 * * *' || github.event_name == 'workflow_dispatch'
         working-directory: backend

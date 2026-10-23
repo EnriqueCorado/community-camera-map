@@ -143,15 +143,25 @@ def test_workflow_weekly_cache_lists_match_the_weekly_layers():
     import re
     from pathlib import Path
 
+    from app.layers.national import school_meals
     from scripts.refresh_live import WEEKLY
 
     yml = (Path(__file__).resolve().parents[2] / ".github/workflows/pages.yml").read_text()
     blocks = re.findall(r"key: services-weekly-v\d+-\$\{\{ github\.run_id \}\}", yml)
     assert len(blocks) == 2
+    # The per-state school meals files have their own cache, one glob line
+    # that must match exactly that pack's layers.
+    meals = set(school_meals.WEEKLY)
+    assert all(n.endswith("-free-school-meals") for n in meals) and meals <= set(WEEKLY)
+    layers_dir = Path(__file__).resolve().parents[2] / "frontend/public/data/layers"
+    assert {p.stem for p in layers_dir.glob("*-free-school-meals.geojson")} == meals
+    glob = "path: frontend/public/data/layers/*-free-school-meals.geojson\n"
+    assert yml.count(glob) == 2
+    assert len(re.findall(r"key: school-meals-weekly-v\d+-\$\{\{ github\.run_id \}\}", yml)) == 2
     for part in yml.split("key: services-weekly-")[:2]:
         paths = part.rsplit("path: |", 1)[1]
         names = re.findall(r"layers/([\w-]+)\.geojson", paths)
-        assert sorted(names) == sorted(WEEKLY)
+        assert sorted(names) == sorted(set(WEEKLY) - meals)
 
 
 def test_every_polygon_view_is_generalized_to_the_zoom():
