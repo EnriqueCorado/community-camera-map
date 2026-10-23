@@ -7,6 +7,7 @@ import { DACA_CHECKED, DACA_FACTS, DACA_FEES, DACA_HELP, DACA_RECHECK } from "..
 import { DACA_COPY } from "../../frontend/src/help/daca-copy";
 import { addDays, daysBetween } from "../../frontend/src/help/dates";
 import { upkeepItems } from "../../frontend/src/help/upkeep";
+import { factsById } from "../../frontend/src/help/facts-by-id";
 
 const TODAY = "2026-10-22";
 const inDays = (n: number) => addDays(TODAY, n)!;
@@ -109,4 +110,10 @@ test("upkeep re-checks DACA every month, because it is in court", () => {
   const item = upkeepItems().find((i) => i.id === "daca-monthly");
   expect(item?.due).toBe(DACA_RECHECK);
   expect(upkeepItems().map((i) => i.id)).toContain("yearly-daca");
+});
+
+test("picking facts by id: in order, and a missing id fails loudly", () => {
+  const facts = [{ id: "a" }, { id: "b" }, { id: "c" }];
+  expect(factsById(facts, "c", "a").map((f) => f.id)).toEqual(["c", "a"]);
+  expect(() => factsById(facts, "a", "nope")).toThrow(/no fact "nope"/);
 });

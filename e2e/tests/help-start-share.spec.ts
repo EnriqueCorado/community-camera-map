@@ -84,6 +84,27 @@ test.describe("Help panel", () => {
     await expect(share.getByRole("status")).toHaveText(/Couldn’t copy/);
     const field = share.getByRole("textbox", { name: "Link to share" });
     await expect(field).toHaveValue(/\/help\/heat-at-work\/$/);
+    // Focused and selected, so a phone shows the selection to copy by hand.
+    await expect(field).toBeFocused();
+    await expect.poll(() => field.evaluate((el: HTMLInputElement) => el.selectionStart === 0 && el.selectionEnd === el.value.length)).toBe(true);
+  });
+
+  test("copying again is announced again (the status is cleared, then set)", async ({ page, context }) => {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    const dialog = await openPanel(page, "help=work&hv=heat");
+    const share = dialog.locator(".hshare");
+    const status = share.getByRole("status");
+    await share.getByRole("button", { name: "Copy link" }).click();
+    await expect(status).toHaveText(/Link copied/);
+    // Record every text the live region shows during the second copy.
+    await status.evaluate((el) => {
+      (window as unknown as { seen: string[] }).seen = [];
+      new MutationObserver(() => (window as unknown as { seen: string[] }).seen.push(el.textContent ?? "")).observe(el, { childList: true, characterData: true, subtree: true });
+    });
+    await share.getByRole("button", { name: "Copy link" }).click();
+    const seen = () => page.evaluate(() => (window as unknown as { seen: string[] }).seen);
+    await expect.poll(async () => (await seen()).at(-1) ?? "").toMatch(/Link copied/);
+    expect((await seen())[0]).toBe("");
   });
 
   test("WCAG 2.2 AA in light and dark with the chooser open, and no sideways scroll at 320px", async ({ page }) => {

@@ -74,8 +74,30 @@ test("removing an entry keeps the others in order", () => {
   plan = setField(plan, "children", 0, "name", "Ana");
   plan = setField(plan, "children", 1, "name", "Luis");
   plan = setField(plan, "children", 2, "name", "Sofía");
+  const [ana, , sofia] = plan.keys.children;
   plan = removeEntry(plan, "children", 1);
   expect(plan.entries.children.map((c) => c.name)).toEqual(["Ana", "Sofía"]);
+  // Each person keeps their key, so the form keeps focus and typing on the right one.
+  expect(plan.keys.children).toEqual([ana, sofia]);
+});
+
+test("entry keys are unique, line up with the entries, and are never printed", () => {
+  let plan = emptyPlan();
+  for (let i = 0; i < 3; i++) plan = addEntry(plan, "contacts");
+  plan = removeEntry(plan, "contacts", 0);
+  plan = addEntry(plan, "contacts");
+  const all = Object.values(plan.keys).flat();
+  expect(new Set(all).size).toBe(all.length);
+  for (const id of Object.keys(plan.entries) as (keyof typeof plan.entries)[]) expect(plan.keys[id]).toHaveLength(plan.entries[id].length);
+  // A blocked add or remove changes nothing.
+  expect(addEntry(plan, "caregiver")).toBe(plan);
+  plan = setField(plan, "contacts", 0, "name", "Rosa");
+  // Paper holds only field labels and what was typed: keys never reach it.
+  const labels = new Set(PLAN_SECTIONS.flatMap((x) => x.fields.map((f) => f.label.en)));
+  const lines = printSections(plan, "en", "filled").flatMap((x) => x.entries.flatMap((e) => e.lines));
+  expect(lines).toEqual([{ label: "Name", value: "Rosa" }]);
+  for (const l of lines) expect(labels.has(l.label)).toBe(true);
+  expect(hasContent(emptyPlan())).toBe(false);
 });
 
 test("paper: only what was written, renumbered, in the chosen language", () => {

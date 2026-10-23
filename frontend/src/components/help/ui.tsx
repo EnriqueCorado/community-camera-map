@@ -1,7 +1,8 @@
-// Small form and layout pieces shared by the Help tools. Plain, labeled
-// controls (no custom widgets) so they work with screen readers, zoom and
-// phone keyboards.
-import { useId, type ReactNode } from "react";
+// Small pieces shared by the Help tools: plain, labeled form controls (no
+// custom widgets, so they work with screen readers, zoom and phone keyboards),
+// results, links, cited facts and sources, plus copy-to-clipboard, a status
+// announcer and lazily filled <details>.
+import { useCallback, useId, useRef, useState, type ReactNode } from "react";
 import { useI18n } from "../../i18n";
 import { longDate } from "../../help/dates";
 import { REPORT_COPY, reportHref } from "../../help/report";
@@ -218,5 +219,54 @@ export function FactList({ facts }: { facts: readonly CitedFact[] }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+/** A message for a `role="status"` element that's announced every time, even
+ *  when it's the same words again (cleared first, then set a beat later). */
+export function useAnnounce(): [string, (message: string) => void] {
+  const [status, setStatus] = useState("");
+  const timer = useRef<number | undefined>(undefined);
+  const announce = useCallback((message: string) => {
+    window.clearTimeout(timer.current);
+    setStatus("");
+    timer.current = window.setTimeout(() => setStatus(message), 50);
+  }, []);
+  return [status, announce];
+}
+
+/** Copy text to the clipboard. When that's blocked (permissions, older
+ *  browsers), `fallback` runs and `select` returns the field holding the text,
+ *  which is focused and selected (focus first, so phones visibly select it) for
+ *  the reader to copy by hand. Resolves to whether the clipboard took it. */
+export async function copyText(
+  text: string,
+  select: () => HTMLInputElement | HTMLTextAreaElement | null,
+  fallback?: () => void,
+): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    fallback?.();
+    // A frame later: the fallback may have just rendered the field.
+    requestAnimationFrame(() => {
+      const el = select();
+      el?.focus();
+      el?.select();
+    });
+    return false;
+  }
+}
+
+/** A <details> whose body is built only once it's opened (long fact lists and
+ *  answer cards cost nothing until someone looks). */
+export function LazyDetails({ summary, className, children }: { summary: ReactNode; className?: string; children: () => ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <details className={className} onToggle={(e) => setOpen(e.currentTarget.open)}>
+      <summary>{summary}</summary>
+      {open && children()}
+    </details>
   );
 }
