@@ -6203,21 +6203,26 @@
   "title": "Older adult centers (New York City)",
   "title_es": "Centros para adultos mayores (ciudad de Nueva York)",
   "description": "NYC Aging-funded older adult (senior) centers offering meals, activities and services, from the city Facilities Database.",
-  "description_es": "Centros para adultos mayores financiados por NYC Aging que ofrecen comidas, actividades y servicios, según la base de datos de instalaciones de la ciudad (Facilities Database).",
+  "description_es": "Centros para adultos mayores financiados por NYC Aging que ofrecen comidas, actividades y servicios, según la base de datos de instalaciones de la ciudad.",
   "group": "help",
   "category": "point",
   "source": "NYC Department of City Planning Facilities Database / NYC Aging",
+  "license": "NYC Open Data terms of use (free public use; attribution)",
   "view": {
-   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/Senior_Center/FeatureServer/0",
+   "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/Facilities/FeatureServer/0",
    "fields": {
     "FACNAME": "name",
     "ADDRESS": "address",
     "CITY": "city",
     "ZIPCODE": "zip",
-    "FACTYPE": "kind"
+    "FACTYPE": "kind",
+    "OPNAME": "operator"
    },
    "geometry": "point",
-   "min_zoom": 11
+   "min_zoom": 11,
+   "where": "FACTYPE = 'SENIOR CENTER'",
+   "max_features": 2000,
+   "refresh_s": 604800
   },
   "verified": {
    "date": "2026-10-22",
@@ -6226,8 +6231,7 @@
     40.68,
     -73.92,
     40.78
-   ],
-   "features_in_probe": 60
+   ]
   }
  },
  {

@@ -7635,47 +7635,6 @@
   }
  },
  {
-  "name": "nm-road-projects",
-  "state": "NM",
-  "title": "Road projects (New Mexico)",
-  "title_es": "Proyectos viales (Nuevo México)",
-  "description": "NMDOT-awarded roadway, safety and bridge projects (2021-2024) with type, award year and description.",
-  "description_es": "Proyectos viales, de seguridad y de puentes adjudicados por NMDOT (2021-2024), con el tipo, el año de adjudicación y la descripción.",
-  "group": "roads",
-  "category": "roadops",
-  "source": "New Mexico Department of Transportation (NMDOT)",
-  "license": "Public (NMDOT ArcGIS Online)",
-  "view": {
-   "url": "https://services.arcgis.com/hOpd7wfnKm16p9D9/arcgis/rest/services/Roadway_Projects/FeatureServer/4",
-   "fields": {
-    "ProjectName": "name",
-    "Type": "kind",
-    "DateAwarded": "year",
-    "Amount": "amount",
-    "Description": "description",
-    "County": "county"
-   },
-   "geometry": "point",
-   "min_zoom": 6,
-   "where": "1=1",
-   "max_features": 2000
-  },
-  "verified": {
-   "date": "2026-10-21",
-   "cors": true,
-   "bbox": [
-    -109.05,
-    31.3,
-    -103.0,
-    37.0
-   ],
-   "count": 30,
-   "kb": 9.1,
-   "max_record_count": 2000,
-   "features_in_probe": 30
-  }
- },
- {
   "name": "nm-scenic-byways",
   "state": "NM",
   "title": "Scenic byways (New Mexico)",

@@ -702,43 +702,40 @@
   "state": "NY",
   "title": "Early childhood centers, 3-K/Pre-K (New York City)",
   "title_es": "Centros de educación infantil 3-K/Pre-K (ciudad de Nueva York)",
-  "description": "NYC Public Schools contracted early childhood centers (3-K, Pre-K, infant/toddler); centers only, no home-based providers.",
-  "description_es": "Centros de educación infantil contratados por NYC Public Schools (3-K, Pre-K, bebés y niños pequeños); solo centros, sin proveedores en el hogar.",
+  "description": "Free and public early childhood programs in NYC (3-K, Pre-K, 2-K and toddler, Head Start) at centers and schools, with ages served and usual hours, from the city's Child Care Hub; centers and schools only, no home-based providers.",
+  "description_es": "Programas gratuitos y públicos de educación infantil en la ciudad de Nueva York (3-K, Pre-K, 2-K y niños pequeños, Head Start) en centros y escuelas, con las edades que atienden y su horario habitual, según el Child Care Hub de la ciudad; solo centros y escuelas, no proveedores en casas.",
   "group": "help",
   "category": "point",
-  "source": "NYC Public Schools, Division of Early Childhood (NYC Open Data)",
+  "source": "NYC Public Schools, Division of Early Childhood, via the NYC Child Care Hub (NYC Office of Technology and Innovation)",
   "license": "NYC Open Data terms of use (free public use; attribution)",
   "view": {
-   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/Childcare_Providers_PROD_view/FeatureServer/0",
+   "url": "https://services6.arcgis.com/yG5s3afENB5iO9fj/arcgis/rest/services/PRD2_childcarenyc_view/FeatureServer/0",
    "fields": {
-    "name": "name",
-    "address": "address",
-    "boro": "city",
-    "phone": "phone",
-    "model_type": "kind",
-    "contract_type": "program"
+    "NAME": "name",
+    "ADDRESS": "address",
+    "CITY": "city",
+    "ZIPCODE": "zip",
+    "TELEPHONE1": "phone",
+    "CARETYPE_NAME": "program",
+    "SETTINGTYPE_STD": "kind",
+    "AGEMIN_YEAR": "ages_from",
+    "AGEMAX_YEAR": "ages_to",
+    "TYPEHOURS": "hours"
    },
    "geometry": "point",
    "min_zoom": 12,
-   "where": "model_type IN ('PP','GC')",
+   "where": "SETTINGTYPE_STD IN ('Center','School') AND CARETYPE_GROUP <> 'Private'",
    "max_features": 2000,
    "simplify": false
   },
   "verified": {
-   "date": "2026-10-21",
-   "cors": true,
+   "date": "2026-10-22",
    "bbox": [
     -74.1903,
     40.5759,
     -73.7097,
     40.7841
-   ],
-   "zoom": 12,
-   "count": 1706,
-   "kb": 420,
-   "max_record_count": 2000,
-   "exceeded_transfer_limit": false,
-   "features_in_probe": 1706
+   ]
   }
  },
  {

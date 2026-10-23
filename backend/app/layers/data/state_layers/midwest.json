@@ -3052,14 +3052,14 @@
   "state": "IL",
   "title": "Winter road conditions by maintenance section (IDOT)",
   "title_es": "Condiciones invernales de carreteras por sección de mantenimiento (IDOT)",
-  "description": "Illinois DOT winter road condition (clear, wet, snow, ice) reported for each highway maintenance section.",
-  "description_es": "Condición invernal de las carreteras (despejada, mojada, nieve, hielo) reportada por el Illinois DOT para cada sección de mantenimiento de carreteras.",
+  "description": "Illinois DOT winter road condition (clear, wet, snow, ice) reported for each highway maintenance section, refreshed through the day.",
+  "description_es": "Condición invernal de las carreteras (despejada, mojada, con nieve, con hielo) que reporta el Departamento de Transporte de Illinois para cada sección de mantenimiento, actualizada durante el día.",
   "group": "roads",
   "category": "roadops",
   "source": "Illinois Department of Transportation",
   "license": "Public data, IDOT; attribute IDOT",
   "view": {
-   "url": "https://services2.arcgis.com/aIrBD8yn1TDTEXoz/arcgis/rest/services/Wrc_Maintenance_Section_Road_Condition/FeatureServer/0",
+   "url": "https://services2.arcgis.com/aIrBD8yn1TDTEXoz/arcgis/rest/services/IL_DOT_Winter_Road_Conditions_/FeatureServer/2",
    "fields": {
     "WrcMntSectionName": "name",
     "COUNTY_NAM": "county",
@@ -3069,21 +3069,17 @@
    "min_zoom": 8,
    "where": "1=1",
    "max_features": 2000,
-   "simplify": true
+   "simplify": true,
+   "refresh_s": 1800
   },
   "verified": {
-   "date": "2026-10-21",
-   "cors": true,
+   "date": "2026-10-22",
    "bbox": [
     -92.5156,
     38.3168,
     -85.4844,
     41.6832
-   ],
-   "count": 335,
-   "kb": 435,
-   "max_record_count": 2000,
-   "features_in_probe": 335
+   ]
   }
  },
  {
