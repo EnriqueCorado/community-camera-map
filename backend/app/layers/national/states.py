@@ -52,6 +52,9 @@ def _check(spec: dict, where: str) -> None:
     need(name.startswith(f"{st.lower()}-"), f"{name}: name must start with '{st.lower()}-'")
     for key in ("title", "title_es", "description", "source"):
         need(isinstance(spec.get(key), str) and spec[key].strip() != "", f"{name}: missing {key}")
+    if "description_es" in spec:
+        des = spec["description_es"]
+        need(isinstance(des, str) and des.strip() != "", f"{name}: bad or empty description_es")
     need(spec.get("group") in GROUPS, f"{name}: bad group {spec.get('group')!r}")
     need(spec.get("category") in CATEGORIES, f"{name}: bad category {spec.get('category')!r}")
     v = spec.get("view") or {}
@@ -98,6 +101,7 @@ def _layer(spec: dict) -> Layer:
         ),
         title_es=spec["title_es"],
         group=spec["group"],
+        description_es=spec.get("description_es"),
     )
 
 

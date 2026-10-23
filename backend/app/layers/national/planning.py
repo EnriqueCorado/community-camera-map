@@ -36,6 +36,7 @@ def _layer(
     title: str,
     title_es: str,
     description: str,
+    description_es: str,
     category: str,
     group: str,
     view: View | None = None,
@@ -46,6 +47,7 @@ def _layer(
         title=title,
         title_es=title_es,
         description=description,
+        description_es=description_es,
         category=category,
         group=group,
         coverage="usa",
@@ -55,13 +57,21 @@ def _layer(
 
 
 def _boundary(
-    name: str, title: str, title_es: str, description: str, url: str, fields: dict, min_zoom: float
+    name: str,
+    title: str,
+    title_es: str,
+    description: str,
+    description_es: str,
+    url: str,
+    fields: dict,
+    min_zoom: float,
 ) -> Layer:
     return _layer(
         name,
         title,
         title_es,
         description,
+        description_es,
         "boundary",
         "planning",
         View(
@@ -232,6 +242,7 @@ LAYERS: dict[str, Layer] = {
         "State senate districts",
         "Distritos del senado estatal",
         "State legislative districts, upper chamber (Census TIGERweb, 2026).",
+        "Distritos legislativos estatales, cámara alta (Census TIGERweb, 2026).",
         f"{TW}/Legislative/MapServer/1",
         {"NAME": "name", "SLDU": "district", "STATE": "state", "GEOID": "GEOID"},
         6,
@@ -241,6 +252,7 @@ LAYERS: dict[str, Layer] = {
         "State assembly / house districts",
         "Distritos de la asamblea estatal",
         "State legislative districts, lower chamber (Census TIGERweb, 2026).",
+        "Distritos legislativos estatales, cámara baja (Census TIGERweb, 2026).",
         f"{TW}/Legislative/MapServer/2",
         {"NAME": "name", "SLDL": "district", "STATE": "state", "GEOID": "GEOID"},
         7,
@@ -250,6 +262,7 @@ LAYERS: dict[str, Layer] = {
         "Counties",
         "Condados",
         "County boundaries (Census TIGERweb).",
+        "Límites de los condados (Census TIGERweb).",
         f"{TW}/State_County/MapServer/1",
         {"NAME": "name", "GEOID": "GEOID", "STATE": "state"},
         6,
@@ -259,6 +272,8 @@ LAYERS: dict[str, Layer] = {
         "Towns & townships",
         "Municipios y subdivisiones del condado",
         "County subdivisions: towns, townships and census county divisions (Census TIGERweb).",
+        "Subdivisiones de los condados: pueblos, municipios (townships) y divisiones censales de "
+        "condado (Census TIGERweb).",
         f"{TW}/Places_CouSub_ConCity_SubMCD/MapServer/1",
         {"NAME": "name", "GEOID": "GEOID", "FUNCSTAT": "status"},
         8,
@@ -268,6 +283,8 @@ LAYERS: dict[str, Layer] = {
         "Unincorporated communities",
         "Comunidades no incorporadas",
         "Census Designated Places: named unincorporated communities (Census TIGERweb).",
+        "Lugares designados por el Censo (Census Designated Places): comunidades no incorporadas "
+        "con nombre (Census TIGERweb).",
         f"{TW}/Places_CouSub_ConCity_SubMCD/MapServer/5",
         {"NAME": "name", "GEOID": "GEOID"},
         9,
@@ -277,6 +294,7 @@ LAYERS: dict[str, Layer] = {
         "Tribal lands",
         "Tierras tribales",
         "American Indian, Alaska Native and Native Hawaiian areas (Census TIGERweb).",
+        "Áreas de indígenas americanos, nativos de Alaska y nativos de Hawái (Census TIGERweb).",
         f"{TW}/AIANNHA/MapServer/47",
         {"NAME": "name", "GEOID": "GEOID", "AIANNHCOMP": "kind"},
         5,
@@ -287,6 +305,8 @@ LAYERS: dict[str, Layer] = {
         "Distritos electorales (2020)",
         "2020 Census voting districts (precinct-like). California and a few other "
         "states did not take part, so there are none there.",
+        "Distritos electorales del Censo 2020 (similares a precintos electorales). California y "
+        "algunos otros estados no participaron, así que allí no hay ninguno.",
         f"{TW}/Legislative/MapServer/15",
         {"NAME": "name", "GEOID": "GEOID", "COUNTY": "county", "STATE": "state"},
         11,
@@ -297,6 +317,8 @@ LAYERS: dict[str, Layer] = {
         "Parks & public lands",
         "Parques y tierras públicas",
         "Publicly accessible parks, forests, refuges and open space (USGS PAD-US).",
+        "Parques, bosques, refugios de vida silvestre y espacios abiertos accesibles al público "
+        "(USGS PAD-US).",
         "info",
         "nature",
         View(
@@ -324,6 +346,7 @@ LAYERS: dict[str, Layer] = {
         "Major rivers",
         "Ríos principales",
         "Major rivers and streams (USGS National Atlas, via Esri).",
+        "Ríos y arroyos principales (USGS National Atlas, vía Esri).",
         "info",
         "nature",
         View(
@@ -343,6 +366,7 @@ LAYERS: dict[str, Layer] = {
         "Streams & canals",
         "Arroyos y canales",
         "Named streams, rivers and canals (USGS NHD, via Esri).",
+        "Arroyos, ríos y canales con nombre (USGS NHD, vía Esri).",
         "info",
         "nature",
         View(
@@ -361,6 +385,7 @@ LAYERS: dict[str, Layer] = {
         "Lakes & reservoirs",
         "Lagos y embalses",
         "Lakes, reservoirs and ponds (USGS NHD, via Esri).",
+        "Lagos, embalses y estanques (USGS NHD, vía Esri).",
         "info",
         "nature",
         View(
@@ -378,6 +403,8 @@ LAYERS: dict[str, Layer] = {
         "Trails",
         "Senderos",
         "Hiking, biking and multi-use trails (USGS National Digital Trails).",
+        "Senderos para caminar, andar en bicicleta y de uso múltiple (USGS National Digital "
+        "Trails).",
         "info",
         "nature",
         View(
@@ -406,6 +433,8 @@ LAYERS: dict[str, Layer] = {
         "Cobertura del suelo",
         "What covers the ground: cities, farms, forest, wetlands, water (USGS NLCD 2021, "
         "lower 48 states).",
+        "Lo que cubre el suelo: ciudades, cultivos, bosques, humedales, agua (USGS NLCD 2021, 48 "
+        "estados contiguos).",
         "raster",
         "planning",
         client_side=True,
@@ -415,6 +444,8 @@ LAYERS: dict[str, Layer] = {
         "Crops",
         "Cultivos",
         "Which crop was grown in each field last season (USDA NASS Cropland Data Layer 2025).",
+        "Qué cultivo se sembró en cada campo la temporada pasada (USDA NASS Cropland Data Layer "
+        "2025).",
         "raster",
         "planning",
         client_side=True,
@@ -424,6 +455,8 @@ LAYERS: dict[str, Layer] = {
         "Mobile home parks (US)",
         "Parques de casas móviles (EE. UU.)",
         "Mobile home parks nationwide, with number of spaces (ORNL / DHS HIFLD, via FEMA).",
+        "Parques de casas móviles en todo el país, con el número de espacios (ORNL / DHS HIFLD, "
+        "vía FEMA).",
         "info",
         "planning",
         View(
@@ -449,6 +482,8 @@ LAYERS: dict[str, Layer] = {
         "Viviendas nuevas con permiso (por ciudad)",
         "New homes each city, town or county authorized last year, by building size "
         "(Census Building Permits Survey, annual).",
+        "Viviendas nuevas que cada ciudad, pueblo o condado autorizó el año pasado, según el "
+        "tamaño del edificio (Census Building Permits Survey, anual).",
         "dev",
         "growth",
         loader=load_building_permits,
@@ -461,6 +496,8 @@ LAYERS: dict[str, Layer] = {
         "Paradas de transporte público (EE. UU.)",
         "Bus, rail and ferry stops from every agency's GTFS feed (BTS National Transit Map, "
         "CC BY 3.0 US).",
+        "Paradas de autobús, tren y ferry de los datos GTFS de cada agencia (BTS National Transit "
+        "Map, CC BY 3.0 US).",
         "info",
         "roads",
         View(
@@ -483,6 +520,8 @@ LAYERS: dict[str, Layer] = {
         "Rutas de transporte público (EE. UU.)",
         "Bus, rail and ferry routes from every agency's GTFS feed (BTS National Transit Map, "
         "CC BY 3.0 US).",
+        "Rutas de autobús, tren y ferry de los datos GTFS de cada agencia (BTS National Transit "
+        "Map, CC BY 3.0 US).",
         "info",
         "roads",
         View(
@@ -506,6 +545,8 @@ LAYERS: dict[str, Layer] = {
         "Cruces de ferrocarril",
         "Public at-grade road-rail crossings, their warning devices and train traffic "
         "(FRA, via BTS NTAD).",
+        "Cruces públicos a nivel entre calles y vías del tren, con sus dispositivos de "
+        "advertencia y el tráfico de trenes (FRA, vía BTS NTAD).",
         "info",
         "roads",
         View(
@@ -522,6 +563,7 @@ LAYERS: dict[str, Layer] = {
         "Traffic (vehicles per day)",
         "Tráfico (vehículos por día)",
         "Annual average daily traffic on freeways and major roads (FHWA HPMS 2024).",
+        "Tráfico promedio diario anual en autopistas y vías principales (FHWA HPMS 2024).",
         "line",
         "roads",
         View(
@@ -542,6 +584,8 @@ LAYERS: dict[str, Layer] = {
         "Estado del pavimento",
         "How rough major roads are (International Roughness Index, inches per mile; "
         "over 170 is poor). FHWA HPMS 2024.",
+        "Qué tan irregulares están las vías principales (Índice Internacional de Rugosidad, en "
+        "pulgadas por milla; más de 170 es malo). FHWA HPMS 2024.",
         "line",
         "roads",
         View(
@@ -562,6 +606,8 @@ LAYERS: dict[str, Layer] = {
         "Estaciones de combustible alternativo",
         "Public EV chargers and CNG, propane, hydrogen and biofuel stations "
         "(DOE AFDC, via BTS NTAD; updated daily).",
+        "Cargadores públicos para vehículos eléctricos y estaciones de GNC, propano, hidrógeno y "
+        "biocombustibles (DOE AFDC, vía BTS NTAD; se actualiza a diario).",
         "info",
         "roads",
         View(
@@ -578,6 +624,8 @@ LAYERS: dict[str, Layer] = {
         "Truck parking (2019)",
         "Estacionamiento para camiones (2019)",
         "Interstate rest areas with truck parking and their number of spaces (FHWA, 2019).",
+        "Áreas de descanso de las autopistas interestatales con estacionamiento para camiones y "
+        "su número de espacios (FHWA, 2019).",
         "info",
         "roads",
         View(
@@ -602,6 +650,9 @@ LAYERS: dict[str, Layer] = {
         "Puentes en mal estado",
         "Bridges rated Poor in the National Bridge Inventory, with deck and structure "
         "ratings (0-9, 4 or less is poor) and daily traffic (FHWA, via BTS NTAD).",
+        "Puentes calificados en mal estado (Poor) en el National Bridge Inventory, con "
+        "calificaciones de la plataforma y de la estructura (0-9; 4 o menos es malo) y su tráfico "
+        "diario (FHWA, vía BTS NTAD).",
         "info",
         "infra",
         View(
@@ -619,6 +670,8 @@ LAYERS: dict[str, Layer] = {
         "Major ports",
         "Puertos principales",
         "The 150 principal U.S. ports ranked by tonnage handled (USACE, via FEMA).",
+        "Los 150 puertos principales de EE. UU., clasificados por toneladas de carga manejadas "
+        "(USACE, vía FEMA).",
         "info",
         "infra",
         View(

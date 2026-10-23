@@ -477,12 +477,15 @@ def _home(url: str, fields: dict[str, str], where: str = "1=1"):
     )
 
 
-def _layer(name: str, title: str, title_es: str, description: str, group: str, **kw) -> Layer:
+def _layer(
+    name: str, title: str, title_es: str, description: str, description_es: str, group: str, **kw
+) -> Layer:
     return Layer(
         name=name,
         title=title,
         title_es=title_es,
         description=description,
+        description_es=description_es,
         category="service",
         group=group,
         coverage="usa",
@@ -498,6 +501,9 @@ LAYERS: dict[str, Layer] = {
         "Ayuda legal de inmigración (reconocida por el DOJ)",
         "Nonprofits the Justice Department recognizes to give free or low-cost "
         "immigration legal help. Beware of 'notarios' (DOJ EOIR roster).",
+        "Organizaciones sin fines de lucro que el Departamento de Justicia reconoce para dar "
+        "ayuda legal de inmigración gratuita o de bajo costo. Cuidado con los 'notarios' (lista "
+        "de DOJ EOIR).",
         "help",
         loader=_immigration_legal_help,
     ),
@@ -508,6 +514,9 @@ LAYERS: dict[str, Layer] = {
         "Facilities holding people in ICE custody this fiscal year, with average "
         "daily population (ICE detention statistics). Find a detained relative "
         "with ICE's online detainee locator.",
+        "Instalaciones que tienen personas bajo custodia de ICE en este año fiscal, con su "
+        "población diaria promedio (estadísticas de detención de ICE). Busque a un familiar "
+        "detenido con el localizador de detenidos en línea de ICE.",
         "help",
         loader=_detention_centers,
     ),
@@ -517,6 +526,8 @@ LAYERS: dict[str, Layer] = {
         "Cortes de inmigración y oficinas de ICE",
         "Immigration courts (DOJ EOIR) and ICE field offices, each from its official "
         "page. Check a court case at 1-800-898-7180.",
+        "Cortes de inmigración (DOJ EOIR) y oficinas locales de ICE, cada una según su página "
+        "oficial. Revise un caso en la corte al 1-800-898-7180.",
         "help",
         loader=_local_json(IMMIGRATION_OFFICES, immigration_offices),
     ),
@@ -526,6 +537,8 @@ LAYERS: dict[str, Layer] = {
         "Centros de salud comunitarios (pago según ingresos)",
         "HRSA-funded health centers: care regardless of ability to pay, with fees "
         "on a sliding scale by income (HRSA).",
+        "Centros de salud financiados por HRSA: atención sin importar su capacidad de pago, con "
+        "tarifas en escala móvil según sus ingresos (HRSA).",
         "places",
         loader=_home(HRSA_SITES, HEALTH_CENTER_FIELDS, HEALTH_CENTER_WHERE),
         view=View(
@@ -544,6 +557,9 @@ LAYERS: dict[str, Layer] = {
         "Head Start (preescolar gratuito, de 3 a 5 años)",
         "Free Head Start preschool centers for children 3 to 5 from families with "
         "low incomes, including migrant and seasonal programs (Office of Head Start).",
+        "Centros preescolares gratuitos de Head Start para niños de 3 a 5 años de familias de "
+        "bajos ingresos, incluidos los programas para familias migrantes y de temporada (Office "
+        "of Head Start).",
         "places",
         loader=_head_start_loader(early=False),
     ),
@@ -553,6 +569,8 @@ LAYERS: dict[str, Layer] = {
         "Early Head Start (bebés y niños pequeños)",
         "Free Early Head Start programs for pregnant women, babies and toddlers up "
         "to age 3 from families with low incomes (Office of Head Start).",
+        "Programas gratuitos de Early Head Start para mujeres embarazadas, bebés y niños pequeños "
+        "de hasta 3 años de familias de bajos ingresos (Office of Head Start).",
         "places",
         loader=_head_start_loader(early=True),
     ),
@@ -562,6 +580,8 @@ LAYERS: dict[str, Layer] = {
         "Centros de empleo (ayuda gratuita)",
         "Free help finding work, training and benefits, funded by the U.S. "
         "Department of Labor (CareerOneStop).",
+        "Ayuda gratuita para encontrar trabajo, capacitación y beneficios, financiada por el "
+        "Departamento de Trabajo de EE. UU. (CareerOneStop).",
         "civic",
         loader=_job_centers,
     ),
@@ -571,6 +591,9 @@ LAYERS: dict[str, Layer] = {
         "Atención de salud mental",
         "Mental health treatment facilities, with Spanish and sliding-fee flags "
         "(SAMHSA FindTreatment.gov). In a crisis, call or text 988.",
+        "Centros de tratamiento de salud mental, con indicación de atención en español y tarifas "
+        "según ingresos (SAMHSA FindTreatment.gov). En una crisis, llame o envíe un mensaje de "
+        "texto al 988.",
         "places",
         loader=_treatment_loader(mental_health=True),
     ),
@@ -580,6 +603,8 @@ LAYERS: dict[str, Layer] = {
         "Tratamiento de adicciones",
         "Substance use treatment facilities, with Spanish and sliding-fee flags "
         "(SAMHSA FindTreatment.gov).",
+        "Centros de tratamiento por uso de sustancias, con indicación de atención en español y "
+        "tarifas según ingresos (SAMHSA FindTreatment.gov).",
         "places",
         loader=_treatment_loader(mental_health=False),
     ),
@@ -589,6 +614,8 @@ LAYERS: dict[str, Layer] = {
         "Asesores de vivienda de HUD (gratuitos)",
         "HUD-approved housing counseling agencies: renting, buying, avoiding "
         "foreclosure and homelessness (HUD).",
+        "Agencias de asesoría de vivienda aprobadas por HUD: alquilar, comprar, evitar la "
+        "ejecución hipotecaria y quedarse sin hogar (HUD).",
         "housing",
         loader=_home(HOUSING_COUNSELING, HOUSING_COUNSELING_FIELDS),
         view=View(
@@ -605,6 +632,7 @@ LAYERS: dict[str, Layer] = {
         "Public housing authorities (where to apply)",
         "Autoridades de vivienda pública (dónde solicitar)",
         "Where to apply for public housing and Section 8 vouchers (HUD).",
+        "Dónde solicitar vivienda pública y vales de la Sección 8 (HUD).",
         "housing",
         loader=_home(PUBLIC_HOUSING, PUBLIC_HOUSING_FIELDS),
         view=View(
@@ -621,6 +649,7 @@ LAYERS: dict[str, Layer] = {
         "Colleges & trade schools",
         "Universidades y escuelas técnicas",
         "Colleges, universities and trade schools, 2025-26 (NCES IPEDS).",
+        "Universidades, colleges comunitarios y escuelas técnicas, 2025-26 (NCES IPEDS).",
         "places",
         loader=_home(COLLEGES, COLLEGE_FIELDS),
         view=View(
@@ -632,6 +661,7 @@ LAYERS: dict[str, Layer] = {
         "VA health care & Vet Centers",
         "Atención médica del VA y Vet Centers",
         "VA medical centers, clinics and Vet Centers for veterans (VHA).",
+        "Centros médicos y clínicas del VA y Vet Centers para veteranos (VHA).",
         "places",
         loader=_home(VA_FACILITIES, VA_FIELDS),
         view=View(
@@ -643,6 +673,8 @@ LAYERS: dict[str, Layer] = {
         "Land border crossings",
         "Cruces fronterizos terrestres",
         "U.S. land ports of entry on the Mexico and Canada borders (BTS / CBP).",
+        "Puertos de entrada terrestres de EE. UU. en las fronteras con México y Canadá (BTS / "
+        "CBP).",
         "civic",
         view=View(BORDER_PORTS, BORDER_FIELDS, "point", min_zoom=3, refresh_s=7 * 24 * 3600),
     ),
@@ -653,6 +685,9 @@ LAYERS: dict[str, Layer] = {
         "Free meals for anyone 18 and under at summer sites, no paperwork (USDA). "
         "Seasonal: only sites open today are shown, so the map is empty outside "
         "summer.",
+        "Comidas gratis para cualquier persona de 18 años o menos en sitios de verano, sin "
+        "papeleo (USDA). Temporal: solo se muestran los sitios abiertos hoy, así que el mapa está "
+        "vacío fuera del verano.",
         "places",
         view=View(
             SUMMER_MEALS,

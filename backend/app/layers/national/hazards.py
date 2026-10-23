@@ -106,6 +106,11 @@ _add(
         "USDA Forest Service Wildfire Hazard Potential (2023): how hard a wildfire would be "
         "to contain, very low to very high, lower 48 states. A modeled index, not a legal zone."
     ),
+    description_es=(
+        "Wildfire Hazard Potential (2023) del USDA Forest Service: qué tan difícil sería controlar "
+        "un incendio forestal, de muy bajo a muy alto, en los 48 estados contiguos. Es un índice "
+        "modelado, no una zona legal."
+    ),
     category="raster",
     client_side=True,
     group="hazards",
@@ -116,6 +121,9 @@ _add(
     title="Landslide susceptibility",
     title_es="Susceptibilidad a deslizamientos",
     description="USGS map of where slopes are prone to landslides, lower 48 states.",
+    description_es=(
+        "Mapa del USGS de las pendientes propensas a deslizamientos, en los 48 estados contiguos."
+    ),
     category="raster",
     client_side=True,
     group="hazards",
@@ -129,6 +137,10 @@ _add(
         "NOAA: coastal land that would be under water at high tide with 3 feet of "
         "sea-level rise (all US coasts)."
     ),
+    description_es=(
+        "NOAA: terrenos costeros que quedarían bajo el agua con la marea alta si el nivel del mar "
+        "sube 3 pies (todas las costas de EE. UU.)."
+    ),
     category="raster",
     client_side=True,
     group="hazards",
@@ -141,6 +153,11 @@ _add(
     description=(
         "NOAA National Hurricane Center: how deep storm-surge flooding could get in a "
         "Category 3 hurricane (Atlantic and Gulf coasts, Puerto Rico, Hawaii)."
+    ),
+    description_es=(
+        "National Hurricane Center de NOAA: qué tan profunda podría ser la inundación por marejada "
+        "ciclónica en un huracán de categoría 3 (costas del Atlántico y del Golfo, Puerto Rico, "
+        "Hawái)."
     ),
     category="raster",
     client_side=True,
@@ -156,6 +173,11 @@ _add(
     description=(
         "CDC/ATSDR Environmental Justice Index 2024: combined environmental, social and "
         "health burden, as a national percentile by census tract (zoom in to see tracts)."
+    ),
+    description_es=(
+        "Índice de Justicia Ambiental 2024 de CDC/ATSDR (Environmental Justice Index): la carga "
+        "ambiental, social y de salud combinada, como percentil nacional por sector censal "
+        "(acerque el mapa para ver los sectores)."
     ),
     category="census",
     view=View(
@@ -184,6 +206,10 @@ _add(
         "Average days a year above the local 95th-percentile high temperature, by census "
         "tract (CDC/ATSDR Environmental Justice Index 2024)."
     ),
+    description_es=(
+        "Promedio de días al año por encima de la temperatura máxima del percentil 95 local, por "
+        "sector censal (CDC/ATSDR Environmental Justice Index 2024)."
+    ),
     category="census",
     view=View(
         EJI,
@@ -207,6 +233,11 @@ _add(
         "CDC/ATSDR Social Vulnerability Index 2022: how hard it may be for a community to "
         "prepare for and recover from a disaster, as a national percentile (tracts; counties "
         "when zoomed out)."
+    ),
+    description_es=(
+        "Índice de Vulnerabilidad Social 2022 de CDC/ATSDR (Social Vulnerability Index): qué tan "
+        "difícil puede ser para una comunidad prepararse para un desastre y recuperarse, como "
+        "percentil nacional (sectores censales; condados al alejar el mapa)."
     ),
     category="census",
     view=View(
@@ -234,6 +265,11 @@ _add(
         "USGS/EPA geologic radon potential by geologic province: 3 = high (test your home), "
         "2 = moderate, 1 = low. Any home can have high radon; only a test tells."
     ),
+    description_es=(
+        "Potencial geológico de radón de USGS/EPA por provincia geológica: 3 = alto (haga la "
+        "prueba en su casa), 2 = moderado, 1 = bajo. Cualquier casa puede tener radón alto; solo "
+        "una prueba lo dice."
+    ),
     category="census",
     view=View(
         RADON,
@@ -257,6 +293,10 @@ _add(
     description=(
         "USGS Quaternary Fault and Fold Database: faults active in the last 1.6 million years."
     ),
+    description_es=(
+        "USGS Quaternary Fault and Fold Database: fallas activas en los últimos 1.6 millones de "
+        "años."
+    ),
     category="fault",
     view=View(
         QFAULTS,
@@ -274,6 +314,10 @@ _add(
     title="Mapped landslides",
     title_es="Deslizamientos registrados",
     description="USGS U.S. Landslide Inventory: landslides mapped by federal and state surveys.",
+    description_es=(
+        "U.S. Landslide Inventory del USGS: deslizamientos mapeados por estudios federales y "
+        "estatales."
+    ),
     category="info",
     view=View(
         LANDSLIDES,
@@ -295,6 +339,10 @@ _add(
     description=(
         "NASA VIIRS heat detections in the last 24 hours, nationwide. Refineries and flares "
         "can show up as steady hotspots."
+    ),
+    description_es=(
+        "Detecciones de calor de NASA VIIRS en las últimas 24 horas, en todo el país. Las "
+        "refinerías y los quemadores de gas pueden aparecer como puntos de calor constantes."
     ),
     category="hotspot",
     view=View(
@@ -323,6 +371,10 @@ _add(
         "Fires spotted today by NOAA analysts on GOES and polar-orbiting satellite images "
         "(Hazard Mapping System)."
     ),
+    description_es=(
+        "Incendios detectados hoy por analistas de NOAA en imágenes de satélites GOES y de órbita "
+        "polar (Hazard Mapping System)."
+    ),
     category="hotspot",
     view=View(
         HMS_FIRE,
@@ -342,6 +394,11 @@ _add(
     description=(
         "Smoke drawn by NOAA analysts from satellite images today: light, medium or heavy. "
         "It's smoke anywhere in the air column, not necessarily at ground level."
+    ),
+    description_es=(
+        "Humo trazado hoy por analistas de NOAA a partir de imágenes de satélite: ligero, medio o "
+        "denso. Es humo en cualquier parte de la columna de aire, no necesariamente a nivel del "
+        "suelo."
     ),
     category="info",
     view=View(
@@ -364,6 +421,10 @@ _add(
     title="Hurricane forecast cones",
     title_es="Conos de pronóstico de huracanes",
     description="Where active tropical storms and hurricanes may track (NHC forecast cones).",
+    description_es=(
+        "Por dónde podrían pasar las tormentas tropicales y los huracanes activos (conos de "
+        "pronóstico del NHC)."
+    ),
     category="info",
     view=View(
         f"{HURRICANES}/4",
@@ -389,6 +450,10 @@ _add(
     description=(
         "Counties in a federal major-disaster declaration posted in the last year (FEMA). "
         "Overlapping shading means more than one."
+    ),
+    description_es=(
+        "Condados incluidos en una declaración federal de desastre mayor publicada en el último "
+        "año (FEMA). Si el sombreado se superpone, hay más de una."
     ),
     category="info",
     view=View(
@@ -417,6 +482,10 @@ _add(
     description=(
         "Emergency shelters open right now (FEMA / American Red Cross National Shelter System)."
     ),
+    description_es=(
+        "Refugios de emergencia abiertos en este momento (FEMA / National Shelter System de la "
+        "Cruz Roja Americana)."
+    ),
     category="info",
     view=View(
         f"{NSS}/OpenShelters/MapServer/0",
@@ -440,6 +509,10 @@ _add(
     title="Disaster recovery centers",
     title_es="Centros de recuperación de desastres",
     description="FEMA Disaster Recovery Centers open now, where survivors can get help in person.",
+    description_es=(
+        "Centros de Recuperación de Desastres de FEMA abiertos ahora, donde los sobrevivientes "
+        "pueden recibir ayuda en persona."
+    ),
     category="info",
     view=View(
         DRC,
@@ -483,6 +556,10 @@ _add(
         "Facilities EPA lists as currently in violation of air, water or waste permits (ECHO). "
         "Click for the EPA facility report."
     ),
+    description_es=(
+        "Instalaciones que la EPA tiene registradas con infracciones actuales a sus permisos de "
+        "aire, agua o desechos (ECHO). Haga clic para ver el reporte de la instalación de la EPA."
+    ),
     category="info",
     view=View(
         ECHO,
@@ -507,6 +584,10 @@ _add(
         "Facilities that report toxic chemical releases to EPA's Toxics Release Inventory, "
         "with pounds released on site."
     ),
+    description_es=(
+        "Instalaciones que reportan emisiones de químicos tóxicos al Toxics Release Inventory de "
+        "la EPA, con las libras emitidas en el sitio."
+    ),
     category="info",
     view=View(
         ECHO,
@@ -528,6 +609,11 @@ _add(
         "Facilities that store enough hazardous chemicals to file an EPA Risk Management "
         "Plan (location only; the plans themselves are not public online)."
     ),
+    description_es=(
+        "Instalaciones que almacenan suficientes químicos peligrosos como para presentar un Plan "
+        "de Manejo de Riesgos (Risk Management Plan) ante la EPA (solo la ubicación; los planes no "
+        "son públicos en línea)."
+    ),
     category="info",
     view=View(
         ECHO,
@@ -548,6 +634,11 @@ _add(
     description=(
         "Public water systems EPA lists with a current Safe Drinking Water Act violation "
         "(dots mark the system's office, not its service area)."
+    ),
+    description_es=(
+        "Sistemas públicos de agua que la EPA tiene registrados con una infracción actual a la Ley "
+        "de Agua Potable Segura (Safe Drinking Water Act) (los puntos marcan la oficina del "
+        "sistema, no su área de servicio)."
     ),
     category="info",
     view=View(
@@ -572,6 +663,10 @@ _add(
     description=(
         "Which community water system serves an area (EPA). Many boundaries are modeled "
         "estimates; the popup says which."
+    ),
+    description_es=(
+        "Qué sistema comunitario de agua da servicio a un área (EPA). Muchos límites son "
+        "estimaciones modeladas; la ventana emergente indica cuáles."
     ),
     category="info",
     view=View(
@@ -598,6 +693,10 @@ _add(
     title="Brownfields",
     title_es="Terrenos contaminados (brownfields)",
     description="Brownfield properties (possibly contaminated land) in EPA's cleanup programs.",
+    description_es=(
+        "Propiedades brownfield (terrenos posiblemente contaminados) en los programas de limpieza "
+        "de la EPA."
+    ),
     category="info",
     view=View(
         CLEANUPS,
@@ -618,6 +717,10 @@ _add(
     title="Natural gas pipelines",
     title_es="Gasoductos",
     description="Interstate and intrastate natural gas pipelines (US EIA, about 1:250,000 detail).",
+    description_es=(
+        "Gasoductos de gas natural interestatales e intraestatales (US EIA, con un detalle de "
+        "aproximadamente 1:250,000)."
+    ),
     category="info",
     view=View(
         GAS_PIPELINES,
@@ -635,6 +738,7 @@ _add(
     title="Nuclear power plants",
     title_es="Centrales nucleares",
     description="Operating nuclear power plants (HIFLD / US EIA).",
+    description_es="Centrales nucleares en operación (HIFLD / US EIA).",
     category="power",
     view=View(
         POWER_PLANTS,
@@ -655,6 +759,11 @@ _add(
         "Distance rings around nuclear plants. The 10-mile ring is the emergency planning "
         "zone for evacuation; the 50-mile ring is for food and water protection."
     ),
+    description_es=(
+        "Anillos de distancia alrededor de las centrales nucleares. El anillo de 10 millas es la "
+        "zona de planificación de emergencias para evacuación; el anillo de 50 millas es para la "
+        "protección de alimentos y agua."
+    ),
     category="info",
     view=View(
         NPP_RINGS,
@@ -674,6 +783,9 @@ _add(
     title="Levees",
     title_es="Diques",
     description="Levee systems from the USACE National Levee Database, with FEMA accreditation.",
+    description_es=(
+        "Sistemas de diques de la National Levee Database del USACE, con su acreditación de FEMA."
+    ),
     category="info",
     view=View(
         f"{LEVEES}/14",
@@ -699,6 +811,10 @@ _add(
     description=(
         "Land a levee system protects (USACE). Levees lower the risk of flooding; they "
         "don't remove it."
+    ),
+    description_es=(
+        "Terrenos que protege un sistema de diques (USACE). Los diques reducen el riesgo de "
+        "inundación; no lo eliminan."
     ),
     category="info",
     view=View(

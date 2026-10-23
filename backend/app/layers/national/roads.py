@@ -504,6 +504,12 @@ LAYERS: dict[str, Layer] = {
             "keyless state and city feed in the USDOT Work Zone Data Exchange registry plus "
             "state 511 systems (refreshed hourly). California: see Lane closures."
         ),
+        description_es=(
+            "Zonas de obras en carreteras vigentes ahora o que empiezan en las próximas 24 horas, "
+            "de todas las fuentes estatales y municipales sin clave del registro USDOT Work Zone "
+            "Data Exchange, más los sistemas 511 estatales (se actualiza cada hora). California: "
+            "vea Cierres de carriles."
+        ),
         category="roadops",
         group="roads",
         coverage="usa",
@@ -518,6 +524,11 @@ LAYERS: dict[str, Layer] = {
             "Crashes, closures, special events and other incidents reported by state "
             "traffic centers (Maryland CHART, Alabama ALGO, Ohio OHGO, and 511 in GA, WI, "
             "NV, NC and AK, more as keys are approved). Refreshed hourly."
+        ),
+        description_es=(
+            "Choques, cierres, eventos especiales y otros incidentes reportados por los centros de "
+            "tráfico estatales (Maryland CHART, Alabama ALGO, Ohio OHGO y 511 en GA, WI, NV, NC y "
+            "AK; habrá más a medida que se aprueben claves). Se actualiza cada hora."
         ),
         category="roadops",
         group="roads",
@@ -534,6 +545,11 @@ LAYERS: dict[str, Layer] = {
             "Georgia, Wisconsin, Nevada, North Carolina and Alaska, more as 511 keys are "
             "approved (refreshed hourly)."
         ),
+        description_es=(
+            "Letreros electrónicos de autopista y su texto actual en Maryland, Alabama, Ohio, "
+            "Georgia, Wisconsin, Nevada, Carolina del Norte y Alaska; habrá más a medida que se "
+            "aprueben claves 511 (se actualiza cada hora)."
+        ),
         category="info",
         group="roads",
         coverage="usa",
@@ -547,6 +563,11 @@ LAYERS: dict[str, Layer] = {
         description=(
             "Roadside weather stations: air and pavement temperature, wind and humidity, in "
             "Maryland (CHART) and Ohio (OHGO). Refreshed hourly."
+        ),
+        description_es=(
+            "Estaciones meteorológicas junto a las carreteras: temperatura del aire y del "
+            "pavimento, viento y humedad, en Maryland (CHART) y Ohio (OHGO). Se actualiza cada "
+            "hora."
         ),
         category="roadweather",
         group="roads",

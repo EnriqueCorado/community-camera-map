@@ -32,6 +32,7 @@ class LayerInfo(BaseModel):
     view: dict | None = None
     osm: str | None = None
     title_es: str | None = None
+    description_es: str | None = None
     group: str | None = None
     metric: dict | None = None
     classes: dict | None = None

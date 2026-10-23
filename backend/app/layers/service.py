@@ -161,6 +161,8 @@ class Layer:
     group: str | None = None
     metric: Metric | None = None
     classes: Classes | None = None
+    # Spanish description for the "About this layer" panel (None: show the English)
+    description_es: str | None = None
 
     @property
     def has_home_copy(self) -> bool:
@@ -180,6 +182,7 @@ class Layer:
             "view": {**self.view.as_json(), "baked": self.has_home_copy} if self.view else None,
             "osm": self.osm,
             "title_es": self.title_es,
+            "description_es": self.description_es,
             "group": self.group,
             "metric": self.metric.as_json() if self.metric else None,
             "classes": self.classes.as_json() if self.classes else None,
@@ -210,6 +213,7 @@ def _acs_metric(
     title: str,
     title_es: str,
     what: str,
+    what_es: str,
     service: str,
     fields: dict[str, str],
     metric: Metric,
@@ -223,6 +227,9 @@ def _acs_metric(
         name=name,
         title=title,
         description=f"{what}, by census tract (county and state when zoomed out). ACS 2020-2024.",
+        description_es=(
+            f"{what_es}, por sector censal (condado y estado al alejar el mapa). ACS 2020-2024."
+        ),
         category="census",
         coverage="usa",
         view=View(**{**view.__dict__, "post": post}),
@@ -232,7 +239,7 @@ def _acs_metric(
     )
 
 
-# name, title, Spanish title, what it measures, ACS view, source field -> our
+# name, title, Spanish title, what it measures (English, Spanish), ACS view, source field -> our
 # property, legend breaks (national tract spread), format, ramp, group
 _ACS_METRICS: tuple[tuple, ...] = (
     (
@@ -240,6 +247,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Median age",
         "Edad mediana",
         "Median age of residents",
+        "Edad mediana de los residentes",
         "ACS_Population_and_Housing_Basics_View_Boundaries",
         {"B01002_001E": "median_age"},
         (30, 35, 40, 45, 50),
@@ -252,6 +260,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Hispanic or Latino",
         "Hispanos o latinos",
         "Share of residents who are Hispanic or Latino",
+        "Porcentaje de residentes hispanos o latinos",
         "ACS_Race_and_Hispanic_Origin_View_Boundaries",
         {"B03002_calc_pctHispLatE": "pct_hispanic"},
         (2, 5, 10, 25, 55),
@@ -264,6 +273,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Black",
         "Afroamericanos",
         "Share of residents who are Black (non-Hispanic)",
+        "Porcentaje de residentes afroamericanos (no hispanos)",
         "ACS_Race_and_Hispanic_Origin_View_Boundaries",
         {"B03002_calc_pctBlackE": "pct_black"},
         (1, 4, 15, 40, 70),
@@ -276,6 +286,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Asian",
         "Asiáticos",
         "Share of residents who are Asian (non-Hispanic)",
+        "Porcentaje de residentes asiáticos (no hispanos)",
         "ACS_Race_and_Hispanic_Origin_View_Boundaries",
         {"B03002_calc_pctAsianE": "pct_asian"},
         (0.5, 2, 6, 15, 30),
@@ -288,6 +299,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "White (non-Hispanic)",
         "Blancos (no hispanos)",
         "Share of residents who are White, not Hispanic",
+        "Porcentaje de residentes blancos no hispanos",
         "ACS_Race_and_Hispanic_Origin_View_Boundaries",
         {"B03002_calc_pctNHWhiteE": "pct_white_nh"},
         (10, 30, 50, 70, 90),
@@ -300,6 +312,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Limited English households",
         "Hogares con inglés limitado",
         "People 5+ in households where no adult speaks English very well",
+        "Personas de 5 años o más en hogares donde ningún adulto habla inglés muy bien",
         "ACS_English_Ability_and_Linguistic_Isolation_View_Boundaries",
         {"B16003_calc_pctLEHE": "pct_limited_english"},
         (1, 3, 6, 12, 20),
@@ -312,6 +325,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Not a U.S. citizen",
         "No ciudadanos de EE. UU.",
         "Share of residents who are not U.S. citizens",
+        "Porcentaje de residentes que no son ciudadanos de EE. UU.",
         "ACS_Nativity_and_Citizenship_View_Boundaries",
         {"B05011_002E": "_num", "B05003_001E": "_den"},
         (1, 3, 6, 12, 20),
@@ -325,6 +339,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Children (under 18)",
         "Niños (menores de 18)",
         "Share of residents under 18",
+        "Porcentaje de residentes menores de 18 años",
         "ACS_Population_and_Housing_Basics_View_Boundaries",
         {"B01001_calc_pctLT18E": "pct_children"},
         (12, 17, 21, 26, 30),
@@ -337,6 +352,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Seniors (65+)",
         "Adultos mayores (65+)",
         "Share of residents 65 and older",
+        "Porcentaje de residentes de 65 años o más",
         "ACS_Population_and_Housing_Basics_View_Boundaries",
         {"B01001_calc_pctGE65E": "pct_seniors"},
         (8, 12, 17, 22, 28),
@@ -349,6 +365,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Veterans",
         "Veteranos",
         "Share of adults who are veterans",
+        "Porcentaje de adultos que son veteranos",
         "ACS_Veteran_Status_View_Boundaries",
         {"B21001_calc_pctVetsE": "pct_veterans"},
         (2, 3.5, 6, 8, 11),
@@ -361,6 +378,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "People with a disability",
         "Personas con discapacidad",
         "Share of residents with a disability",
+        "Porcentaje de residentes con una discapacidad",
         "ACS_Disability_Status_View_Boundaries",
         {"B18101_calc_pctDE": "pct_disability"},
         (7, 10, 13, 18, 22),
@@ -373,6 +391,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Bachelor's degree or higher",
         "Licenciatura o más",
         "Adults 25+ with a bachelor's degree or higher",
+        "Adultos de 25 años o más con licenciatura o un título superior",
         "ACS_Educational_Attainment_View_Boundaries",
         {"B15002_calc_pctGEBAE": "pct_bachelors"},
         (12, 20, 30, 47, 65),
@@ -385,6 +404,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "No high-school diploma",
         "Sin diploma de preparatoria",
         "Adults 25+ without a high-school diploma",
+        "Adultos de 25 años o más sin diploma de preparatoria (high school)",
         "ACS_Educational_Attainment_View_Boundaries",
         {"B15002_calc_pctLTHSE": "pct_no_diploma"},
         (2, 4, 8, 15, 24),
@@ -397,6 +417,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "No health insurance (all ages)",
         "Sin seguro médico (todas las edades)",
         "Share of residents with no health insurance",
+        "Porcentaje de residentes sin seguro médico",
         "ACS_Health_Insurance_by_Age_by_Race_View_Boundaries",
         {"B27010_calc_pctNoInsE": "pct_uninsured"},
         (2, 4, 7, 12, 18),
@@ -409,6 +430,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Unemployment rate",
         "Tasa de desempleo",
         "Share of the labor force that is unemployed (5-year average)",
+        "Porcentaje de la fuerza laboral que está desempleada (promedio de 5 años)",
         "ACS_Employment_Status_View_Boundaries",
         {"B23025_calc_pctUnempE": "pct_unemployed"},
         (1, 2.5, 4.5, 7, 11),
@@ -421,6 +443,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Median home value",
         "Valor mediano de la vivienda",
         "Median value of owner-occupied homes",
+        "Valor mediano de las viviendas ocupadas por sus dueños",
         "ACS_Population_and_Housing_Basics_View_Boundaries",
         {"B25077_001E": "median_home_value"},
         (125000, 200000, 300000, 500000, 800000),
@@ -433,6 +456,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Median rent",
         "Renta mediana",
         "Median monthly contract rent",
+        "Renta mensual mediana según contrato",
         "ACS_Population_and_Housing_Basics_View_Boundaries",
         {"B25058_001E": "median_rent"},
         (600, 800, 1100, 1650, 2150),
@@ -445,6 +469,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Rent-burdened renters (30%+ of income)",
         "Inquilinos con carga de renta (30%+)",
         "Renter households paying 30% or more of income on rent",
+        "Hogares inquilinos que pagan el 30% o más de sus ingresos en renta",
         "ACS_Housing_Costs_View_Boundaries",
         {"B25070_calc_pctGE30pctE": "pct_rent_burdened"},
         (20, 30, 45, 55, 65),
@@ -457,6 +482,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Overcrowded homes",
         "Viviendas hacinadas",
         "Occupied homes with more than one person per room",
+        "Viviendas ocupadas con más de una persona por cuarto",
         "ACS_Occupants_per_Room_View_Boundaries",
         {"B25015_calc_pctTotE": "pct_overcrowded"},
         (1, 2, 5, 10, 20),
@@ -469,6 +495,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Vacant homes",
         "Viviendas desocupadas",
         "Share of housing units that are vacant",
+        "Porcentaje de viviendas desocupadas",
         "ACS_Housing_Units_Occupancy_View_Boundaries",
         {"B25002_calc_pctVacE": "pct_vacant"},
         (2, 4, 7, 13, 22),
@@ -481,6 +508,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Median year built",
         "Año mediano de construcción",
         "Median year homes were built",
+        "Año mediano de construcción de las viviendas",
         "ACS_Housing_Units_by_Year_Built_View_Boundaries",
         {"B25035_001E": "median_year_built"},
         (1950, 1963, 1978, 1990, 2001),
@@ -493,6 +521,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Households without a car",
         "Hogares sin auto",
         "Households with no vehicle available",
+        "Hogares sin vehículo disponible",
         "ACS_Vehicle_Availability_View_Boundaries",
         {"B08201_calc_pctNoVehE": "pct_no_car"},
         (1, 2, 5, 10, 20),
@@ -505,6 +534,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Households with no internet",
         "Hogares sin internet",
         "Households with no internet access",
+        "Hogares sin acceso a internet",
         "ACS_Internet_Connectivity_View_Boundaries",
         {"B28002_calc_pctNoIntE": "pct_no_internet"},
         (1, 2, 5, 10, 16),
@@ -517,6 +547,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Broadband subscription",
         "Suscripción a banda ancha",
         "Households with a broadband internet subscription",
+        "Hogares con suscripción a internet de banda ancha",
         "ACS_Internet_Access_by_Income_View_Boundaries",
         {"B28004_calc_pctBBE": "pct_broadband"},
         (80, 86, 92, 96, 98),
@@ -529,6 +560,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Commute by public transit",
         "Viajan en transporte público",
         "Workers who commute by public transportation",
+        "Trabajadores que van al trabajo en transporte público",
         "ACS_Transportation_to_Work_View_Boundaries",
         {"B08301_calc_pctPublicE": "pct_transit"},
         (0.5, 2, 5, 10, 25),
@@ -541,6 +573,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Work from home",
         "Trabajan desde casa",
         "Workers who work from home",
+        "Trabajadores que trabajan desde casa",
         "ACS_Transportation_to_Work_View_Boundaries",
         {"B08301_calc_pctHomeE": "pct_wfh"},
         (3.5, 7, 12, 19, 28),
@@ -553,6 +586,7 @@ _ACS_METRICS: tuple[tuple, ...] = (
         "Long commutes (60+ min)",
         "Traslados largos (60+ min)",
         "Commuters whose trip to work takes an hour or more",
+        "Personas cuyo viaje al trabajo dura una hora o más",
         "ACS_Travel_Time_To_Work_View_Boundaries",
         {"B08303_calc_pct60to89E": "_a", "B08303_calc_pctGE90E": "_b"},
         (3, 6, 10, 15, 25),
@@ -626,36 +660,70 @@ OVERPASS_MIRRORS = (  # the OSM community's main instance first; third-party las
     "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
 )
 OSM_REGION = (37.13, -121.56, 38.08, -120.38)  # south, west, north, east
-OSM_PLACES = {  # layer -> (title, description noun, Overpass selector)
-    "aed": ("Defibrillators (AED)", "Public defibrillators", '["emergency"="defibrillator"]'),
-    "drinking-water": ("Drinking fountains", "Drinking water", '["amenity"="drinking_water"]'),
-    "restrooms": ("Public restrooms", "Public toilets", '["amenity"="toilets"]'),
+OSM_PLACES = {  # layer -> (title, description noun, Spanish noun, Overpass selector)
+    "aed": (
+        "Defibrillators (AED)",
+        "Public defibrillators",
+        "Desfibriladores públicos",
+        '["emergency"="defibrillator"]',
+    ),
+    "drinking-water": (
+        "Drinking fountains",
+        "Drinking water",
+        "Agua potable",
+        '["amenity"="drinking_water"]',
+    ),
+    "restrooms": ("Public restrooms", "Public toilets", "Baños públicos", '["amenity"="toilets"]'),
     "ev-chargers": (
         "EV chargers",
         "Electric-vehicle charging stations",
+        "Estaciones de carga para vehículos eléctricos",
         '["amenity"="charging_station"]',
     ),
-    "libraries": ("Libraries", "Public libraries", '["amenity"="library"]'),
-    "playgrounds": ("Playgrounds", "Playgrounds", '["leisure"="playground"]'),
-    "pharmacies": ("Pharmacies", "Pharmacies", '["amenity"="pharmacy"]'),
-    "fire-stations": ("Fire stations", "Fire stations", '["amenity"="fire_station"]'),
+    "libraries": (
+        "Libraries",
+        "Public libraries",
+        "Bibliotecas públicas",
+        '["amenity"="library"]',
+    ),
+    "playgrounds": (
+        "Playgrounds",
+        "Playgrounds",
+        "Áreas de juegos infantiles",
+        '["leisure"="playground"]',
+    ),
+    "pharmacies": ("Pharmacies", "Pharmacies", "Farmacias", '["amenity"="pharmacy"]'),
+    "fire-stations": (
+        "Fire stations",
+        "Fire stations",
+        "Estaciones de bomberos",
+        '["amenity"="fire_station"]',
+    ),
     "free-wifi": (
         "Free Wi-Fi",
         "Free public Wi-Fi hotspots",
+        "Puntos de acceso a Wi-Fi público gratis",
         '["internet_access"~"^(wlan|yes)$"]["internet_access:fee"="no"]',
     ),
     "food-banks": (
         "Food banks & pantries",
         "Food banks and pantries",
+        "Bancos de alimentos y despensas",
         '["social_facility"="food_bank"]',
     ),
-    "clinics": ("Clinics", "Health clinics", '["amenity"="clinic"]'),
+    "clinics": ("Clinics", "Health clinics", "Clínicas de salud", '["amenity"="clinic"]'),
     "community-centers": (
         "Community centers",
         "Community centers",
+        "Centros comunitarios",
         '["amenity"="community_centre"]',
     ),
-    "farmers-markets": ("Markets", "Farmers' and public markets", '["amenity"="marketplace"]'),
+    "farmers-markets": (
+        "Markets",
+        "Farmers' and public markets",
+        "Mercados de agricultores y mercados públicos",
+        '["amenity"="marketplace"]',
+    ),
 }
 
 
@@ -727,7 +795,7 @@ async def _osm_elements(client: httpx.AsyncClient) -> list[dict]:
         if _osm_union and time.monotonic() - _osm_union["at"] < OSM_UNION_TTL:
             return _osm_union["elements"]
         s, w, n, e = OSM_REGION
-        union = "".join(f"nwr{sel}({s},{w},{n},{e});" for _t, _n, sel in OSM_PLACES.values())
+        union = "".join(f"nwr{sel}({s},{w},{n},{e});" for _t, _n, _es, sel in OSM_PLACES.values())
         query = f"[out:json][timeout:120];({union});out center tags;"
         last: Exception | None = None
         for attempt in range(2):  # two passes over the mirrors, with a pause
@@ -802,20 +870,35 @@ def _arcgis_select(
     return load
 
 
-# Browser-live layers: (name, title, description, category).
+# Browser-live layers: (name, title, description, Spanish description, category).
 BROWSER_LIVE = (
-    ("iss", "Space station (ISS)", "Live position of the International Space Station.", "space"),
+    (
+        "iss",
+        "Space station (ISS)",
+        "Live position of the International Space Station.",
+        "Posición en vivo de la Estación Espacial Internacional.",
+        "space",
+    ),
     (
         "satellites",
         "Satellites overhead",
         "The ~150 brightest satellites, computed live from CelesTrak orbits.",
+        "Los ~150 satélites más brillantes, calculados en vivo con las órbitas de CelesTrak.",
         "space",
     ),
-    ("trains", "Amtrak trains", "Live Amtrak train positions (via Amtraker).", "train"),
+    (
+        "trains",
+        "Amtrak trains",
+        "Live Amtrak train positions (via Amtraker).",
+        "Posición en vivo de los trenes de Amtrak (vía Amtraker).",
+        "train",
+    ),
     (
         "buses",
         "StanRTA buses (live)",
         "Live positions of Stanislaus Regional Transit buses (StanRTA's real-time feed).",
+        "Posición en vivo de los autobuses de Stanislaus Regional Transit (datos en tiempo real "
+        "de StanRTA).",
         "bus",
     ),
     (
@@ -824,30 +907,39 @@ BROWSER_LIVE = (
         "Live bus and train positions from ~20 US transit agencies' official keyless feeds "
         "(Boston, New York commuter rail, Austin, Twin Cities, Louisville and more). "
         "Zoom in to see them; your browser asks only the agencies in view, directly.",
+        "Posición en vivo de autobuses y trenes de unas 20 agencias de transporte público de "
+        "EE. UU., con sus datos oficiales abiertos (sin clave) (Boston, trenes suburbanos de "
+        "Nueva York, Austin, Twin Cities, Louisville y más). Acérquese para verlos; su "
+        "navegador consulta directamente solo a las agencias que están a la vista.",
         "transit",
     ),
     (
         "wildlife",
         "Wildlife sightings",
         "Recent iNaturalist observations where you're looking.",
+        "Observaciones recientes de iNaturalist en la zona que está viendo.",
         "nature",
     ),
     (
         "wikipedia",
         "Wikipedia places",
         "Wikipedia articles about places near the map's center.",
+        "Artículos de Wikipedia sobre lugares cerca del centro del mapa.",
         "wiki",
     ),
     (
         "weather-now",
         "Temperature & wind",
         "Current conditions on a grid across the view (Open-Meteo).",
+        "Condiciones actuales en una cuadrícula sobre la vista del mapa (Open-Meteo).",
         "weather-now",
     ),
     (
         "air-now",
         "Air quality (live)",
         "Current US AQI on a grid across the view (Open-Meteo).",
+        "Índice de calidad del aire (AQI de EE. UU.) actual en una cuadrícula sobre la vista "
+        "del mapa (Open-Meteo).",
         "aqi",
     ),
 )
@@ -924,11 +1016,15 @@ def _health(measure: str) -> dict[str, str]:
     return {"TractFIPS": "tract", "CountyName": "county", f"{measure}_CrudePrev": "pct"}
 
 
-def _health_layer(name: str, title: str, what: str, measure: str) -> Layer:
+def _health_layer(name: str, title: str, what: str, what_es: str, measure: str) -> Layer:
     return Layer(
         name=name,
         title=title,
         description=f"CDC PLACES model estimate: {what}, by census tract (county when zoomed out).",
+        description_es=(
+            f"Estimación del modelo CDC PLACES: {what_es}, por sector censal (condado al alejar "
+            "el mapa)."
+        ),
         category="health",
         loader=_arcgis_select(
             PLACES_TRACTS,
@@ -1216,6 +1312,10 @@ LAYERS: dict[str, Layer] = {
             "Automated license plate readers (Flock, Vigilant, others) across the US, "
             "from OpenStreetMap / DeFlock."
         ),
+        description_es=(
+            "Lectores automáticos de placas (Flock, Vigilant y otros) en todo EE. UU., según "
+            "OpenStreetMap / DeFlock."
+        ),
         category="alpr",
         file="alpr_ca.geojson",
         coverage="usa",  # nationwide tiles (alpr/<lat>_<lon>.geojson) load as you pan
@@ -1226,6 +1326,10 @@ LAYERS: dict[str, Layer] = {
         description=(
             "Incorporated city boundaries (Stanislaus County GIS at home; "
             "Census places nationwide)."
+        ),
+        description_es=(
+            "Límites de las ciudades incorporadas (Stanislaus County GIS en nuestra zona; lugares "
+            "del Censo en el resto del país)."
         ),
         category="boundary",
         loader=_arcgis("City_Limits_AGOL/FeatureServer/0"),
@@ -1242,6 +1346,7 @@ LAYERS: dict[str, Layer] = {
         name="general-plan",
         title="General plan land use",
         description="Stanislaus County general plan land-use designations.",
+        description_es="Designaciones de uso de suelo del plan general del condado de Stanislaus.",
         category="landuse",
         loader=_arcgis("General_Plan/FeatureServer/0"),
     ),
@@ -1249,6 +1354,7 @@ LAYERS: dict[str, Layer] = {
         name="zoning",
         title="Zoning",
         description="Stanislaus County zoning districts.",
+        description_es="Distritos de zonificación del condado de Stanislaus.",
         category="landuse",
         loader=_arcgis("Zoning_AGOL/FeatureServer/0"),
     ),
@@ -1256,6 +1362,10 @@ LAYERS: dict[str, Layer] = {
         name="annexations",
         title="Annexations (growth)",
         description="LAFCO annexations — the mappable proxy for city growth/development.",
+        description_es=(
+            "Anexiones de LAFCO: la forma de ver en el mapa el crecimiento y desarrollo de las "
+            "ciudades."
+        ),
         category="boundary",
         loader=_arcgis("Annexations/FeatureServer/6"),
     ),
@@ -1263,6 +1373,7 @@ LAYERS: dict[str, Layer] = {
         name="parks",
         title="Parks",
         description="Parks and recreation areas in Stanislaus County.",
+        description_es="Parques y áreas de recreación en el condado de Stanislaus.",
         category="point",
         loader=_arcgis("Parks_Hosted/FeatureServer/0"),
     ),
@@ -1270,6 +1381,7 @@ LAYERS: dict[str, Layer] = {
         name="schools",
         title="Public schools",
         description="Public schools nationwide (NCES).",
+        description_es="Escuelas públicas de todo el país (NCES).",
         category="point",
         loader=_arcgis("Public_School_by_NCES/FeatureServer/0"),
         view=View(
@@ -1284,6 +1396,10 @@ LAYERS: dict[str, Layer] = {
         name="census",
         title="Census (income)",
         description="ACS 5-year tract demographics (median household income, population, age).",
+        description_es=(
+            "Datos demográficos de 5 años del ACS por sector censal (census tract): ingreso "
+            "familiar mediano, población y edad."
+        ),
         category="census",
         loader=_census,
         requires_key=True,
@@ -1296,6 +1412,10 @@ LAYERS: dict[str, Layer] = {
         name="census-spanish",
         title="Spanish spoken at home",
         description="Share of residents (5+) who speak Spanish at home, by census tract (ACS).",
+        description_es=(
+            "Porcentaje de residentes (de 5 años o más) que hablan español en casa, por sector "
+            "censal (ACS)."
+        ),
         category="census",
         requires_key=True,
         same_data_as="census",
@@ -1308,6 +1428,10 @@ LAYERS: dict[str, Layer] = {
         name="census-poverty",
         title="Below the poverty line",
         description="Share of residents with income below the poverty line, by census tract (ACS).",
+        description_es=(
+            "Porcentaje de residentes con ingresos por debajo de la línea de pobreza, por sector "
+            "censal (ACS)."
+        ),
         category="census",
         requires_key=True,
         same_data_as="census",
@@ -1320,6 +1444,7 @@ LAYERS: dict[str, Layer] = {
         name="census-renters",
         title="Renters",
         description="Share of homes that are renter-occupied, by census tract (ACS).",
+        description_es="Porcentaje de viviendas ocupadas por inquilinos, por sector censal (ACS).",
         category="census",
         requires_key=True,
         same_data_as="census",
@@ -1332,6 +1457,10 @@ LAYERS: dict[str, Layer] = {
         name="census-foreign-born",
         title="Born outside the US",
         description="Share of residents born outside the United States, by census tract (ACS).",
+        description_es=(
+            "Porcentaje de residentes nacidos fuera de los Estados Unidos, por sector censal "
+            "(ACS)."
+        ),
         category="census",
         requires_key=True,
         same_data_as="census",
@@ -1349,10 +1478,11 @@ LAYERS: dict[str, Layer] = {
             row[3],
             row[4],
             row[5],
+            row[6],
             # computed fields (post) land in "pct"
-            Metric("pct" if len(row) > 10 else next(iter(row[5].values())), row[7], row[6], row[8]),
-            group=row[9],
-            post=row[10] if len(row) > 10 else None,
+            Metric("pct" if len(row) > 11 else next(iter(row[6].values())), row[8], row[7], row[9]),
+            group=row[10],
+            post=row[11] if len(row) > 11 else None,
         )
         for row in _ACS_METRICS
     },
@@ -1361,6 +1491,7 @@ LAYERS: dict[str, Layer] = {
         name="hospitals",
         title="Hospitals",
         description="Hospitals nationwide (HIFLD).",
+        description_es="Hospitales de todo el país (HIFLD).",
         category="point",
         loader=_arcgis_url(
             "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Hospitals_hifld/FeatureServer/0",
@@ -1384,6 +1515,7 @@ LAYERS: dict[str, Layer] = {
         name="law-enforcement",
         title="Law enforcement",
         description="Law enforcement facilities nationwide (HIFLD).",
+        description_es="Instalaciones de las fuerzas del orden en todo el país (HIFLD).",
         category="point",
         loader=_arcgis_url(
             "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Local_Law_Enforcement_Locations_RAPT/FeatureServer/0",
@@ -1406,6 +1538,10 @@ LAYERS: dict[str, Layer] = {
         name="flood",
         title="FEMA flood zones",
         description="FEMA National Flood Hazard Layer — special flood hazard areas.",
+        description_es=(
+            "Capa Nacional de Peligro de Inundación de FEMA (National Flood Hazard Layer): zonas "
+            "especiales de peligro de inundación."
+        ),
         category="hazard",
         loader=_arcgis_url(
             "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28",
@@ -1428,6 +1564,10 @@ LAYERS: dict[str, Layer] = {
         name="fire-hazard",
         title="Fire hazard severity",
         description="CAL FIRE Fire Hazard Severity Zones (State Responsibility Area).",
+        description_es=(
+            "Zonas de severidad de peligro de incendio de CAL FIRE (Área de Responsabilidad "
+            "Estatal)."
+        ),
         category="hazard",
         loader=_arcgis_url(
             "https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/FHSZSRA_23_3/FeatureServer/0",
@@ -1440,6 +1580,7 @@ LAYERS: dict[str, Layer] = {
         name="enviroscreen",
         title="Pollution burden",
         description="CalEnviroScreen 4.0 overall percentile by census tract (OEHHA).",
+        description_es="Percentil general de CalEnviroScreen 4.0 por sector censal (OEHHA).",
         category="enviroscreen",
         loader=_arcgis_url(
             "https://services1.arcgis.com/PCHfdHz4GlDNAhBb/arcgis/rest/services/CalEnviroScreen_4_0_Results_/FeatureServer/0",
@@ -1452,6 +1593,7 @@ LAYERS: dict[str, Layer] = {
         name="wildfire",
         title="Wildfire incidents",
         description="Active wildfire incidents nationwide (NIFC / WFIGS).",
+        description_es="Incendios forestales activos en todo el país (NIFC / WFIGS).",
         category="fire",
         loader=_arcgis_url(
             f"{NIFC}/WFIGS_Incident_Locations_Current/FeatureServer/0",
@@ -1478,6 +1620,10 @@ LAYERS: dict[str, Layer] = {
         name="weather-alerts",
         title="Weather alerts",
         description="Active National Weather Service watches, warnings and advisories.",
+        description_es=(
+            "Vigilancias, avisos y advertencias activas del Servicio Meteorológico Nacional "
+            "(National Weather Service)."
+        ),
         category="weather",
         loader=_geojson("https://api.weather.gov/alerts/active?area=CA"),
         ttl=120,
@@ -1497,6 +1643,10 @@ LAYERS: dict[str, Layer] = {
         name="quakes",
         title="Earthquakes (24h)",
         description="USGS earthquakes, magnitude 1+, past 24 hours (all US; CA relevant).",
+        description_es=(
+            "Sismos del USGS de magnitud 1 o más, de las últimas 24 horas (todo EE. UU.; importa "
+            "para CA)."
+        ),
         category="quake",
         loader=_geojson(
             "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
@@ -1508,6 +1658,10 @@ LAYERS: dict[str, Layer] = {
         name="streamflow",
         title="River gauges",
         description="USGS real-time streamflow/stage at area river gauges (flood sentinel).",
+        description_es=(
+            "Caudal y nivel en tiempo real del USGS en los medidores de los ríos de la zona "
+            "(alerta temprana de inundaciones)."
+        ),
         category="point",
         loader=_json_transform(
             "https://waterservices.usgs.gov/nwis/iv/?format=json"
@@ -1530,6 +1684,7 @@ LAYERS: dict[str, Layer] = {
         name="lane-closures",
         title="Lane closures",
         description="Caltrans active lane closures, statewide.",
+        description_es="Cierres de carriles activos de Caltrans en todo el estado.",
         category="roadops",
         loader=_caltrans("lcs", transforms.caltrans_lcs),
         ttl=180,
@@ -1539,6 +1694,9 @@ LAYERS: dict[str, Layer] = {
         name="message-signs",
         title="Highway message signs",
         description="Caltrans changeable message signs and their current text, statewide.",
+        description_es=(
+            "Letreros electrónicos de mensajes de Caltrans y su texto actual, en todo el estado."
+        ),
         category="info",  # INFO_FIELDS in MapView.tsx shows the sign text
         loader=_caltrans("cms", transforms.caltrans_cms),
         ttl=180,
@@ -1548,6 +1706,10 @@ LAYERS: dict[str, Layer] = {
         name="air-quality",
         title="Air quality monitors (AirNow)",
         description="Current AQI at EPA AirNow monitors (ozone and PM2.5), across North America.",
+        description_es=(
+            "AQI (índice de calidad del aire) actual en los monitores AirNow de la EPA (ozono y "
+            "PM2.5), en toda Norteamérica."
+        ),
         category="aqi",
         loader=_arcgis_select(AIRNOW, transforms.airnow_monitors, bbox="-122.6,36.8,-119.4,38.6"),
         ttl=900,
@@ -1573,6 +1735,10 @@ LAYERS: dict[str, Layer] = {
         description=(
             "NOAA river gauges: current level and flood status (action, minor, moderate, major)."
         ),
+        description_es=(
+            "Medidores de ríos de NOAA: nivel actual y estado de inundación (acción, menor, "
+            "moderada, mayor)."
+        ),
         category="gauge",
         loader=_arcgis_select(RIVER_GAUGES, transforms.river_gauges),
         ttl=900,
@@ -1592,6 +1758,10 @@ LAYERS: dict[str, Layer] = {
         description=(
             "Tornadoes, hail, damaging wind and flooding reported to the NWS in the past 24 hours."
         ),
+        description_es=(
+            "Tornados, granizo, vientos dañinos e inundaciones reportados al NWS en las últimas 24 "
+            "horas."
+        ),
         category="storm",
         loader=_arcgis_select(STORM_REPORTS, transforms.storm_reports),
         ttl=900,
@@ -1609,6 +1779,10 @@ LAYERS: dict[str, Layer] = {
         title="Fire weather outlook (today)",
         description=(
             "NWS Storm Prediction Center day-1 fire weather outlook: elevated, critical, extreme."
+        ),
+        description_es=(
+            "Pronóstico de clima de incendios para el día 1 del Storm Prediction Center del NWS: "
+            "elevado, crítico, extremo."
         ),
         category="firewx",
         loader=_arcgis_select(FIRE_WX, transforms.fire_weather, simplify=0.005),
@@ -1628,6 +1802,9 @@ LAYERS: dict[str, Layer] = {
         name="smoke-forecast",
         title="Smoke forecast (this hour)",
         description="NOAA's model of near-surface wildfire smoke for the current hour.",
+        description_es=(
+            "Modelo de NOAA del humo de incendios forestales cerca del suelo para la hora actual."
+        ),
         category="raster",
         client_side=True,
         coverage="usa",
@@ -1637,6 +1814,7 @@ LAYERS: dict[str, Layer] = {
         name="transit-routes",
         title="Transit routes (Stanislaus local)",
         description="MOVE Stanislaus / Modesto Area Express bus route shapes.",
+        description_es="Trazado de las rutas de autobús de MOVE Stanislaus / Modesto Area Express.",
         category="line",
         file="transit_routes.geojson",
     ),
@@ -1644,6 +1822,7 @@ LAYERS: dict[str, Layer] = {
         name="transit-stops",
         title="Transit stops (Stanislaus local)",
         description="MOVE Stanislaus / Modesto Area Express bus stops.",
+        description_es="Paradas de autobús de MOVE Stanislaus / Modesto Area Express.",
         category="point",
         file="transit_stops.geojson",
     ),
@@ -1652,6 +1831,7 @@ LAYERS: dict[str, Layer] = {
         name="supervisor-districts",
         title="Supervisor districts",
         description="Stanislaus County Board of Supervisors districts.",
+        description_es="Distritos de la Junta de Supervisores del condado de Stanislaus.",
         category="boundary",
         loader=_arcgis("Supervisorial_Districts_AGOL/FeatureServer/8"),
         ttl=24 * 3600,
@@ -1660,6 +1840,10 @@ LAYERS: dict[str, Layer] = {
         name="zip-codes",
         title="ZIP codes",
         description="ZIP Code Tabulation Areas (Census TIGERweb).",
+        description_es=(
+            "Áreas de tabulación de códigos postales (ZIP Code Tabulation Areas) (Census "
+            "TIGERweb)."
+        ),
         category="boundary",
         loader=_arcgis_url(
             "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
@@ -1682,6 +1866,7 @@ LAYERS: dict[str, Layer] = {
         name="congressional-districts",
         title="Congressional districts",
         description="U.S. congressional districts (Census TIGERweb).",
+        description_es="Distritos del Congreso de EE. UU. (Census TIGERweb).",
         category="boundary",
         loader=_arcgis_url(
             "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0",
@@ -1705,6 +1890,7 @@ LAYERS: dict[str, Layer] = {
         name="airports",
         title="Airports",
         description="Public-use airports nationwide (FAA/NTAD).",
+        description_es="Aeropuertos de uso público en todo el país (FAA/NTAD).",
         category="point",
         loader=_arcgis_url(
             "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_Aviation_Facilities/FeatureServer/0",
@@ -1723,6 +1909,7 @@ LAYERS: dict[str, Layer] = {
         name="amtrak",
         title="Amtrak stations",
         description="Amtrak rail stations nationwide (BTS/NTAD).",
+        description_es="Estaciones de tren de Amtrak en todo el país (BTS/NTAD).",
         category="point",
         loader=_arcgis_url(
             "https://services2.arcgis.com/aIrBD8yn1TDTEXoz/ArcGIS/rest/services/Amtrak/FeatureServer/0",
@@ -1743,6 +1930,10 @@ LAYERS: dict[str, Layer] = {
         name="dams",
         title="Dams",
         description="USACE National Inventory of Dams, with hazard class.",
+        description_es=(
+            "Inventario Nacional de Presas del USACE (National Inventory of Dams), con su clase de "
+            "peligro."
+        ),
         category="point",
         loader=_json_transform(
             "https://nid.sec.usace.army.mil/api/query?sy=@stateKey:CA", transforms.nid_dams
@@ -1761,6 +1952,10 @@ LAYERS: dict[str, Layer] = {
         name="road-weather",
         title="Road weather stations",
         description="Caltrans roadside weather stations (temperature, wind, humidity), statewide.",
+        description_es=(
+            "Estaciones meteorológicas de Caltrans junto a las carreteras (temperatura, viento, "
+            "humedad), en todo el estado."
+        ),
         category="roadweather",
         loader=_caltrans("rwis", transforms.caltrans_rwis),
         ttl=600,
@@ -1770,6 +1965,9 @@ LAYERS: dict[str, Layer] = {
         name="chain-controls",
         title="Chain controls",
         description="Caltrans chain-control checkpoints and their current requirement.",
+        description_es=(
+            "Puntos de control de cadenas de Caltrans y el requisito actual en cada uno."
+        ),
         category="chain",
         loader=_caltrans("cc", transforms.caltrans_chain),
         ttl=600,
@@ -1779,6 +1977,7 @@ LAYERS: dict[str, Layer] = {
         name="wildfire-perimeters",
         title="Wildfire perimeters",
         description="Current wildfire perimeters nationwide (NIFC WFIGS).",
+        description_es="Perímetros actuales de incendios forestales en todo el país (NIFC WFIGS).",
         category="perimeter",
         loader=_arcgis_select(
             f"{NIFC}/WFIGS_Interagency_Perimeters_Current/FeatureServer/0",
@@ -1813,6 +2012,7 @@ LAYERS: dict[str, Layer] = {
         name="faults",
         title="Earthquake faults (California, detailed)",
         description="Quaternary-active fault traces (California Geological Survey).",
+        description_es="Trazas de fallas activas en el Cuaternario (California Geological Survey).",
         category="fault",
         loader=_arcgis_select(
             "https://gis.conservation.ca.gov/server/rest/services/CGS/FAM_QFaults/FeatureServer/0",
@@ -1833,6 +2033,10 @@ LAYERS: dict[str, Layer] = {
         name="superfund",
         title="Superfund sites",
         description="EPA National Priorities List hazardous-waste cleanup sites.",
+        description_es=(
+            "Sitios de limpieza de desechos peligrosos de la Lista de Prioridades Nacionales de la "
+            "EPA."
+        ),
         category="superfund",
         loader=_arcgis_select(
             "https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/"
@@ -1861,6 +2065,7 @@ LAYERS: dict[str, Layer] = {
         name="power-plants",
         title="Power plants",
         description="Power plants and their primary fuel (HIFLD / EIA).",
+        description_es="Plantas de energía y su combustible principal (HIFLD / EIA).",
         category="power",
         loader=_arcgis_select(
             "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Power_Plants/FeatureServer/0",
@@ -1893,6 +2098,7 @@ LAYERS: dict[str, Layer] = {
         name="substations",
         title="Electric substations",
         description="Electric substations (HIFLD).",
+        description_es="Subestaciones eléctricas (HIFLD).",
         category="power",
         loader=_arcgis_select(
             "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/Electric_Substations/FeatureServer/0",
@@ -1912,6 +2118,9 @@ LAYERS: dict[str, Layer] = {
         name="cooling-centers",
         title="Cooling & warming centers",
         description="County cooling/warming centers, with hours and status.",
+        description_es=(
+            "Centros de enfriamiento y de calefacción del condado, con horarios y estado."
+        ),
         category="info",
         loader=_arcgis_select(
             f"{ARCGIS_BASE}/Cooling_Warming_Centers_(Public)/FeatureServer/0",
@@ -1940,6 +2149,7 @@ LAYERS: dict[str, Layer] = {
         name="sandbags",
         title="Sandbag pickup sites",
         description="Where the county and cities hand out sandbags.",
+        description_es="Dónde el condado y las ciudades reparten sacos de arena.",
         category="info",
         loader=_arcgis_select(
             f"{ARCGIS_BASE}/Sandbags_locations_Public/FeatureServer/0",
@@ -1955,6 +2165,11 @@ LAYERS: dict[str, Layer] = {
         description=(
             "Places listed as emergency shelters (county list at home; FEMA pre-identified "
             "sites nationwide). Not necessarily open now: see Open emergency shelters."
+        ),
+        description_es=(
+            "Lugares registrados como refugios de emergencia (lista del condado en nuestra zona; "
+            "sitios preidentificados por FEMA en el resto del país). No necesariamente están "
+            "abiertos ahora: vea Refugios de emergencia abiertos."
         ),
         category="info",
         loader=_arcgis_select(
@@ -1978,6 +2193,7 @@ LAYERS: dict[str, Layer] = {
         name="fire-districts",
         title="Fire districts",
         description="Fire protection districts and agencies.",
+        description_es="Distritos y agencias de protección contra incendios.",
         category="boundary",
         loader=_arcgis_select(
             f"{ARCGIS_BASE}/Fire_Districts/FeatureServer/1",
@@ -1991,6 +2207,10 @@ LAYERS: dict[str, Layer] = {
         description=(
             "Bridges: county-maintained at home (Stanislaus County GIS), "
             "the National Bridge Inventory elsewhere."
+        ),
+        description_es=(
+            "Puentes: los que mantiene el condado en nuestra zona (Stanislaus County GIS) y los "
+            "del Inventario Nacional de Puentes (National Bridge Inventory) en otras partes."
         ),
         category="info",
         loader=_arcgis_select(
@@ -2025,6 +2245,7 @@ LAYERS: dict[str, Layer] = {
         name="rivers",
         title="Rivers (Stanislaus County)",
         description="Rivers in Stanislaus County.",
+        description_es="Ríos en el condado de Stanislaus.",
         category="info",
         loader=_arcgis_select(
             f"{ARCGIS_BASE}/Rivers/FeatureServer/5",
@@ -2036,6 +2257,9 @@ LAYERS: dict[str, Layer] = {
         name="railroads",
         title="Railroads",
         description="Rail lines nationwide (Stanislaus County GIS at home).",
+        description_es=(
+            "Líneas de ferrocarril en todo el país (Stanislaus County GIS en nuestra zona)."
+        ),
         category="info",
         loader=_arcgis_select(
             f"{ARCGIS_BASE}/Railroads_AGOL/FeatureServer/0",
@@ -2054,6 +2278,7 @@ LAYERS: dict[str, Layer] = {
         name="elementary-districts",
         title="Elementary school districts",
         description="Elementary and unified school district boundaries.",
+        description_es="Límites de los distritos escolares de primaria y unificados.",
         category="boundary",
         loader=_arcgis_select(
             f"{ARCGIS_BASE}/Elementary_School_Districts/FeatureServer/4",
@@ -2073,6 +2298,7 @@ LAYERS: dict[str, Layer] = {
         name="high-school-districts",
         title="High school districts",
         description="High school district boundaries.",
+        description_es="Límites de los distritos escolares de preparatoria (high school).",
         category="boundary",
         loader=_arcgis_select(
             f"{ARCGIS_BASE}/High_School_Districts/FeatureServer/3",
@@ -2092,6 +2318,7 @@ LAYERS: dict[str, Layer] = {
         name="county-islands",
         title="County islands",
         description="Unincorporated pockets surrounded by a city.",
+        description_es="Áreas no incorporadas rodeadas por una ciudad.",
         category="boundary",
         loader=_arcgis_select(
             f"{ARCGIS_BASE}/County_Islands/FeatureServer/0",
@@ -2103,6 +2330,7 @@ LAYERS: dict[str, Layer] = {
         name="mosquito-districts",
         title="Mosquito abatement districts",
         description="Mosquito abatement district boundaries.",
+        description_es="Límites de los distritos de control de mosquitos.",
         category="boundary",
         loader=_arcgis_select(
             f"{ARCGIS_BASE}/MosquitoAbatement/FeatureServer/0",
@@ -2114,6 +2342,9 @@ LAYERS: dict[str, Layer] = {
         name="historical-markers",
         title="Historical markers",
         description="Roadside historical markers (Historical Marker Database, via Cal OES).",
+        description_es=(
+            "Placas históricas junto a las carreteras (Historical Marker Database, vía Cal OES)."
+        ),
         category="info",
         loader=_arcgis_select(
             "https://services.arcgis.com/BLN4oKB0N1YSgvY8/arcgis/rest/services/Historical_Marker_Database/FeatureServer/0",
@@ -2126,6 +2357,9 @@ LAYERS: dict[str, Layer] = {
         name="mobile-home-parks",
         title="Mobile home parks (California)",
         description="Licensed mobile home parks (CA Housing & Community Development).",
+        description_es=(
+            "Parques de casas móviles con licencia (CA Housing & Community Development)."
+        ),
         category="info",
         loader=_arcgis_select(
             "https://services.arcgis.com/BLN4oKB0N1YSgvY8/arcgis/rest/services/CA_HCD_Mobilehome_Parks_view/FeatureServer/0",
@@ -2140,6 +2374,10 @@ LAYERS: dict[str, Layer] = {
         name="historic-places",
         title="Historic places",
         description="National Register of Historic Places listings (National Park Service).",
+        description_es=(
+            "Lugares inscritos en el Registro Nacional de Lugares Históricos (National Register of "
+            "Historic Places) (National Park Service)."
+        ),
         category="info",
         loader=_arcgis_select(
             "https://mapservices.nps.gov/arcgis/rest/services/cultural_resources/nrhp_locations/MapServer/0",
@@ -2168,13 +2406,17 @@ LAYERS: dict[str, Layer] = {
             name=name,
             title=title,
             description=f"{noun} anywhere in the US (zoom in to a city), from OpenStreetMap.",
+            description_es=(
+                f"{noun_es} en cualquier lugar de EE. UU. (acerque el mapa a una ciudad), "
+                "de OpenStreetMap."
+            ),
             category="poi",
             loader=_overpass(name),
             ttl=24 * 3600,
             osm=selector,
             view=POI_VIEWS.get(name),
         )
-        for name, (title, noun, selector) in OSM_PLACES.items()
+        for name, (title, noun, noun_es, selector) in OSM_PLACES.items()
     },
     # --- Public webcams ---
     "fire-cameras": Layer(
@@ -2183,6 +2425,10 @@ LAYERS: dict[str, Layer] = {
         description=(
             "ALERTCalifornia (UC San Diego) and ALERTWildfire mountaintop cameras in "
             "California, via Cal OES's consolidated webcam layer."
+        ),
+        description_es=(
+            "Cámaras de ALERTCalifornia (UC San Diego) y ALERTWildfire en cimas de montañas de "
+            "California, vía la capa unificada de cámaras web de Cal OES."
         ),
         category="webcam",
         loader=_arcgis_transform(
@@ -2198,6 +2444,9 @@ LAYERS: dict[str, Layer] = {
         name="windy-webcams",
         title="Windy webcams",
         description="Public webcams within 150 km of Modesto listed on Windy.com.",
+        description_es=(
+            "Cámaras web públicas a menos de 150 km de Modesto registradas en Windy.com."
+        ),
         category="webcam",
         loader=_windy,
         requires_key=True,
@@ -2210,6 +2459,11 @@ LAYERS: dict[str, Layer] = {
             "How washed-out the view is on ALERTCalifornia cameras near Modesto: an "
             "experimental visibility index (smoke, fog or dust look alike)."
         ),
+        description_es=(
+            "Qué tan borrosa se ve la imagen en las cámaras de ALERTCalifornia cerca de Modesto: "
+            "un índice experimental de visibilidad (el humo, la niebla o el polvo se ven "
+            "parecidos)."
+        ),
         category="haze",
         loader=None,  # built in LayerService from the cached fire-cameras layer
         ttl=3600,
@@ -2220,6 +2474,7 @@ LAYERS: dict[str, Layer] = {
         name="flights",
         title="Flights overhead",
         description="Aircraft broadcasting ADS-B around the area on screen (adsb.fi).",
+        description_es="Aviones que transmiten ADS-B en el área que aparece en pantalla (adsb.fi).",
         category="flight",
         loader=_json_transform(
             "https://opendata.adsb.fi/api/v2/lat/37.64/lon/-120.99/dist/80",
@@ -2232,6 +2487,7 @@ LAYERS: dict[str, Layer] = {
         name="rain-radar",
         title="Rain radar",
         description="Latest precipitation radar (RainViewer).",
+        description_es="Radar de precipitación más reciente (RainViewer).",
         category="raster",
         client_side=True,
         coverage="world",
@@ -2240,6 +2496,7 @@ LAYERS: dict[str, Layer] = {
         name="satellite",
         title="Satellite (yesterday)",
         description="True-color satellite imagery from NASA GIBS (VIIRS), previous day.",
+        description_es="Imágenes satelitales en color real de NASA GIBS (VIIRS), del día anterior.",
         category="raster",
         client_side=True,
         coverage="world",
@@ -2248,6 +2505,9 @@ LAYERS: dict[str, Layer] = {
         name="fire-hotspots",
         title="Satellite fire detections, California (24h)",
         description="NASA FIRMS VIIRS heat detections in California over the last 24 hours.",
+        description_es=(
+            "Detecciones de calor de NASA FIRMS VIIRS en California en las últimas 24 horas."
+        ),
         category="hotspot",
         loader=_text_transform(
             "https://firms.modaps.eosdis.nasa.gov/data/active_fire/suomi-npp-viirs-c2/csv/"
@@ -2265,6 +2525,10 @@ LAYERS: dict[str, Layer] = {
             "Where to vote or drop off a ballot for the November 3, 2026 general "
             "election (Stanislaus County Registrar of Voters)."
         ),
+        description_es=(
+            "Dónde votar o dejar su boleta para la elección general del 3 de noviembre de 2026 "
+            "(Registro de Votantes del condado de Stanislaus)."
+        ),
         category="voting",
         loader=_local_json(
             LAYER_DATA / "voting_locations_20261103.json", transforms.voting_locations
@@ -2279,6 +2543,11 @@ LAYERS: dict[str, Layer] = {
             "Free and low-cost legal help: immigration (DOJ-recognized nonprofits), housing, "
             "court self-help, seniors and more. Each office checked against its own website."
         ),
+        description_es=(
+            "Ayuda legal gratuita y de bajo costo: inmigración (organizaciones sin fines de lucro "
+            "reconocidas por el DOJ), vivienda, autoayuda en la corte, personas mayores y más. "
+            "Cada oficina fue verificada con su propio sitio web."
+        ),
         category="legal",
         loader=_local_json(LAYER_DATA / "legal_help.json", transforms.legal_help),
         ttl=3600,
@@ -2290,6 +2559,11 @@ LAYERS: dict[str, Layer] = {
         description=(
             "Current outages reported by PG&E, SCE, SDG&E and SMUD (Cal OES, every "
             "15 minutes). Modesto and Turlock Irrigation District customers aren't included."
+        ),
+        description_es=(
+            "Cortes de luz actuales reportados por PG&E, SCE, SDG&E y SMUD (Cal OES, cada 15 "
+            "minutos). No incluye a los clientes de Modesto Irrigation District ni de Turlock "
+            "Irrigation District."
         ),
         category="outage",
         loader=_arcgis_select(
@@ -2305,6 +2579,7 @@ LAYERS: dict[str, Layer] = {
         name="outage-areas",
         title="Power outage areas (PG&E)",
         description="Approximate areas of current PG&E outages (Cal OES).",
+        description_es="Áreas aproximadas de los cortes de luz actuales de PG&E (Cal OES).",
         category="outage-area",
         loader=_arcgis_select(
             f"{OUTAGES}/1",
@@ -2318,24 +2593,36 @@ LAYERS: dict[str, Layer] = {
     ),
     # --- Health & food ---
     "health-asthma": _health_layer(
-        "health-asthma", "Asthma (adults)", "adults with asthma", "CASTHMA"
+        "health-asthma", "Asthma (adults)", "adults with asthma", "adultos con asma", "CASTHMA"
     ),
     "health-diabetes": _health_layer(
-        "health-diabetes", "Diabetes (adults)", "adults with diagnosed diabetes", "DIABETES"
+        "health-diabetes",
+        "Diabetes (adults)",
+        "adults with diagnosed diabetes",
+        "adultos con diagnóstico de diabetes",
+        "DIABETES",
     ),
     "health-uninsured": _health_layer(
         "health-uninsured",
         "No health insurance",
         "adults 18-64 without health insurance",
+        "adultos de 18 a 64 años sin seguro médico",
         "ACCESS2",
     ),
     "food-insecurity": _health_layer(
-        "food-insecurity", "Food insecurity", "adults who were food insecure", "FOODINSECU"
+        "food-insecurity",
+        "Food insecurity",
+        "adults who were food insecure",
+        "adultos que sufrieron inseguridad alimentaria",
+        "FOODINSECU",
     ),
     "snap-stores": Layer(
         name="snap-stores",
         title="Stores that take SNAP / EBT",
         description="Retailers authorized to accept SNAP benefits (CalFresh in California) (USDA).",
+        description_es=(
+            "Tiendas autorizadas para aceptar beneficios de SNAP (CalFresh en California) (USDA)."
+        ),
         category="point",
         loader=_arcgis_select(
             SNAP_STORES,
@@ -2351,6 +2638,9 @@ LAYERS: dict[str, Layer] = {
         name="fatal-crashes",
         title="Fatal crashes (2024)",
         description="Every crash in 2024 where someone died (NHTSA FARS, initial release).",
+        description_es=(
+            "Todos los choques de 2024 en los que murió alguien (NHTSA FARS, publicación inicial)."
+        ),
         category="crash",
         loader=_arcgis_select(
             FARS_2024,
@@ -2368,6 +2658,9 @@ LAYERS: dict[str, Layer] = {
         name="reservoirs",
         title="Reservoir levels",
         description="How full California's major reservoirs are today (DWR / CDEC).",
+        description_es=(
+            "Qué tan llenos están hoy los principales embalses de California (DWR / CDEC)."
+        ),
         category="reservoir",
         loader=_arcgis_select(DWR_RESERVOIRS, transforms.reservoirs, bbox=None),
         ttl=3 * 3600,
@@ -2377,6 +2670,10 @@ LAYERS: dict[str, Layer] = {
         name="drought",
         title="Drought monitor",
         description="This week's U.S. Drought Monitor (D0 abnormally dry to D4 exceptional).",
+        description_es=(
+            "El U.S. Drought Monitor (Monitor de Sequía) de esta semana (de D0 anormalmente seco a "
+            "D4 excepcional)."
+        ),
         category="drought",
         loader=_arcgis_select(
             USDM,
@@ -2402,6 +2699,11 @@ LAYERS: dict[str, Layer] = {
             "COVID, flu A and RSV levels in sewage, latest week (CDC NWSS), by county: an "
             "early warning that doesn't depend on who gets tested."
         ),
+        description_es=(
+            "Niveles de COVID, influenza A y RSV en las aguas residuales, de la semana más "
+            "reciente (CDC NWSS), por condado: una alerta temprana que no depende de quién se hace "
+            "la prueba."
+        ),
         category="wastewater",
         loader=_wastewater,
         ttl=12 * 3600,
@@ -2414,6 +2716,10 @@ LAYERS: dict[str, Layer] = {
             "How far below ground the water is in California's monitored wells, and "
             "whether it's deeper than a year or two ago (DWR periodic measurements)."
         ),
+        description_es=(
+            "Qué tan profunda está el agua bajo el suelo en los pozos monitoreados de California, "
+            "y si está más profunda que hace uno o dos años (mediciones periódicas del DWR)."
+        ),
         category="groundwater",
         loader=_groundwater,
         ttl=24 * 3600,
@@ -2424,6 +2730,10 @@ LAYERS: dict[str, Layer] = {
         title="Volcano alerts",
         description=(
             "USGS-monitored volcanoes and their current alert level and aviation color code."
+        ),
+        description_es=(
+            "Volcanes monitoreados por el USGS, con su nivel de alerta actual y su código de color "
+            "para la aviación."
         ),
         category="volcano",
         loader=_volcanoes,
@@ -2437,6 +2747,10 @@ LAYERS: dict[str, Layer] = {
             "Housing applications Stanislaus County and its cities report to the state "
             "each year (HCD Annual Progress Report): units, status, and when filed."
         ),
+        description_es=(
+            "Solicitudes de vivienda que el condado de Stanislaus y sus ciudades reportan cada año "
+            "al estado (HCD Annual Progress Report): unidades, estado y fecha de solicitud."
+        ),
         category="dev",
         loader=development.load_housing_proposals,
         ttl=24 * 3600,
@@ -2447,6 +2761,10 @@ LAYERS: dict[str, Layer] = {
         description=(
             "Homes approved, given a building permit, or finished in the county's cities "
             "over the last few years (HCD Annual Progress Report)."
+        ),
+        description_es=(
+            "Viviendas aprobadas, con permiso de construcción o terminadas en las ciudades del "
+            "condado en los últimos años (HCD Annual Progress Report)."
         ),
         category="dev",
         loader=development.load_new_homes,
@@ -2459,6 +2777,10 @@ LAYERS: dict[str, Layer] = {
             "Subdivisions, commercial, road and water projects filed with the State "
             "Clearinghouse (CEQAnet), with links to their documents."
         ),
+        description_es=(
+            "Proyectos de subdivisiones, comerciales, de caminos y de agua registrados en el State "
+            "Clearinghouse (CEQAnet), con enlaces a sus documentos."
+        ),
         category="dev",
         loader=development.load_ceqa,
         ttl=24 * 3600,
@@ -2468,6 +2790,10 @@ LAYERS: dict[str, Layer] = {
         title="National parks",
         description=(
             "National Park Service unit boundaries (parks, monuments, seashores, trails...)."
+        ),
+        description_es=(
+            "Límites de las unidades del National Park Service (parques, monumentos, costas "
+            "nacionales, senderos...)."
         ),
         category="park",
         loader=_arcgis_select(
@@ -2492,6 +2818,9 @@ LAYERS: dict[str, Layer] = {
         name="heat-risk",
         title="Heat risk (today)",
         description="NWS HeatRisk: today's risk of heat-related illness (experimental).",
+        description_es=(
+            "NWS HeatRisk: el riesgo de hoy de enfermedades causadas por el calor (experimental)."
+        ),
         category="raster",
         client_side=True,
         coverage="usa",
@@ -2503,6 +2832,7 @@ LAYERS: dict[str, Layer] = {
             name=name,
             title=title,
             description=desc,
+            description_es=desc_es,
             category=cat,
             client_side=True,
             coverage={"trains": "usa", "buses": "stanislaus", "transit-vehicles": "usa"}.get(
@@ -2510,12 +2840,15 @@ LAYERS: dict[str, Layer] = {
             ),
             **BROWSER_LIVE_EXTRAS.get(name, {}),
         )
-        for name, title, desc, cat in BROWSER_LIVE
+        for name, title, desc, desc_es, cat in BROWSER_LIVE
     },
     "river-cameras": Layer(
         name="river-cameras",
         title="River cameras",
         description="USGS streamgage webcams across the US (HIVIS).",
+        description_es=(
+            "Cámaras web de las estaciones de medición de ríos del USGS en todo EE. UU. (HIVIS)."
+        ),
         category="webcam",
         loader=_json_transform(
             "https://api.waterdata.usgs.gov/nims/cameras", transforms.usgs_cameras
