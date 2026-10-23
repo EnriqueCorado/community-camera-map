@@ -91,7 +91,6 @@ test("the rights page lists only phone numbers verified in the research", () => 
     "8008987180", // EOIR immigration court status line
     "4153658800", // ICE San Francisco field office
     "6617922731", "6617923492", "6618591028", "7604918104", "7604918150", // detention centers (ice.gov)
-    "7033050470", // EOIR fraud program
     "8008703676", // USCIS forms line
     "8008841684", // CA Civil Rights Department
   ]);

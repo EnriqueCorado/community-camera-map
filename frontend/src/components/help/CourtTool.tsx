@@ -159,6 +159,12 @@ export function CourtTool({ c, onLegal, onPlan, focusTitle }: { c: HelpCopy; onL
             <ExtLink href={h.url} newTab={c.newTab}>
               {c.website}
             </ExtLink>
+            {h.note && (
+              <>
+                <br />
+                <span className="hf__hint">{h.note[lang]}</span>
+              </>
+            )}
           </li>
         ))}
       </ul>

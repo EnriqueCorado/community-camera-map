@@ -92,7 +92,7 @@ export function ClinicsTool({
 
       {/* hclinics__count: no styles; the tests find the count by it. */}
       <p className="hf__hint hclinics__count" role="status">
-        {pick.nearest && town !== "all" ? t.nearest(TOWNS[town].name) : t.count(pick.clinics.length)}
+        {town === "all" ? t.count(pick.clinics.length) : pick.nearest ? t.nearest(TOWNS[town].name) : pick.limitedOnly ? t.limitedOnly(TOWNS[town].name) : t.count(pick.clinics.length)}
       </p>
       <div className="hgrid">
         {pick.clinics.map((clinic) => (
@@ -166,7 +166,7 @@ function ClinicCard({
     <article className="hcard hdir__item" aria-labelledby={`clinic-${clinic.id}`}>
       <h4 id={`clinic-${clinic.id}`}>{clinic.name}</h4>
       <div className="hdir__tags">
-        <span className={`htag${clinic.org === "county" ? " htag--free" : ""}`}>{t.cost[clinic.org]}</span>
+        <span className={`htag${clinic.org === "county" || clinic.org === "free" ? " htag--free" : ""}`}>{t.cost[clinic.org]}</span>
         {clinic.needs.map((n) => (
           <span key={n} className="htag">
             {t.needs[n]}

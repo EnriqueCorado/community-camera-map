@@ -21,6 +21,7 @@ export interface ClinicsCopy {
   needs: Record<Need, string>;
   count: Fn<[number]>;
   nearest: Fn<[string]>;
+  limitedOnly: Fn<[string]>;
   cost: Record<Org, string>;
   dentalText: string;
   directions: string;
@@ -56,8 +57,9 @@ const en: ClinicsCopy = {
     vaccines: "Vaccines",
   },
   count: (n) => (n === 1 ? "1 place" : `${n} places`),
-  nearest: (town) => `None listed in ${town} for this. These are the closest:`,
-  cost: { gvhc: "Sliding fee", lumira: "Sliding fee", pp: "Ask about cost", county: "Free or low cost" },
+  nearest: (town) => `None listed in ${town} for this. These are the closest (some are on school campuses or open only some days):`,
+  limitedOnly: (town) => `In ${town}, the only places listed for this are on school campuses or open only some days, so the closest full-time clinic is shown too:`,
+  cost: { gvhc: "Sliding fee", lumira: "Sliding fee", pp: "Won’t turn you away for cost", county: "Free or low cost", free: "Free if you have no insurance", hospital: "Takes Medi-Cal; ask about cost" },
   dentalText: "Dental appointments (text only)",
   directions: "See on a map",
   page: "Their page",
@@ -84,7 +86,7 @@ const es: ClinicsCopy = {
   needAll: "Cualquier cosa",
   needs: {
     primary: "Consulta médica",
-    urgent: "Atención urgente, por la tarde o sábados",
+    urgent: "Atención urgente, en la noche o los sábados",
     dental: "Dental",
     mental: "Salud mental",
     women: "Salud de la mujer y anticonceptivos",
@@ -92,8 +94,9 @@ const es: ClinicsCopy = {
     vaccines: "Vacunas",
   },
   count: (n) => (n === 1 ? "1 lugar" : `${n} lugares`),
-  nearest: (town) => `No hay ninguno en ${town} para esto. Estos son los más cercanos:`,
-  cost: { gvhc: "Cuota según ingresos", lumira: "Cuota según ingresos", pp: "Pregunte el costo", county: "Gratis o de bajo costo" },
+  nearest: (town) => `No tenemos ninguno en la lista en ${town} para esto. Estos son los más cercanos (algunos están en escuelas o abren solo algunos días):`,
+  limitedOnly: (town) => `En ${town}, los únicos lugares en la lista para esto están en escuelas o abren solo algunos días, así que también se muestra la clínica de tiempo completo más cercana:`,
+  cost: { gvhc: "Cuota según ingresos", lumira: "Cuota según ingresos", pp: "No lo rechazan por no poder pagar", county: "Gratis o de bajo costo", free: "Gratis si no tiene seguro", hospital: "Acepta Medi-Cal; pregunte el costo" },
   dentalText: "Citas dentales (solo texto)",
   directions: "Ver en el mapa",
   page: "Su página",

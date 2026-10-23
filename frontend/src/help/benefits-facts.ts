@@ -90,11 +90,12 @@ const SRC = {
   senate: { label: "CA Senate Republican Fiscal Office: 2026-27 budget highlights (Sept 30, 2026)", url: "https://src.senate.ca.gov/sites/src.senate.ca.gov/files/2026-27%20Highlights%20and%20Analysis%20-%20Sept%2030%20Final.pdf" },
   ccImmigrant: { label: "Covered California: 2027 changes for lawfully present immigrants", url: "https://hbex.coveredca.com/toolkit/PDFs/Final-LPI-Consumer-Fact-Sheet.pdf" },
   cpucCare: { label: "CPUC: CARE and FERA programs (income limits Jun 1, 2026 – May 31, 2027)", url: "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/electric-costs/care-fera-program" },
-  mid: { label: "Modesto Irrigation District: MID CARES", url: "https://www.mid.org/yourhome/programs/mid_cares.html" },
-  tid: { label: "Turlock Irrigation District: TID CARES", url: "https://www.tid.org/cares" },
+  mid: { label: "Modesto Irrigation District: MID CARES", url: "https://www.mid.org/customer-service/payments-billing/financial-assistance/mid-cares/" },
+  tid: { label: "Turlock Irrigation District: TID CARES", url: "https://www.tid.org/customer-service/payment-assistance-programs/cares-low-income-program/" },
   lifeline: { label: "CPUC: California LifeLine fact sheet (Jun 1, 2026 – May 31, 2027)", url: "https://www.cpuc.ca.gov/-/media/cpuc-website/about-cpuc/documents/transparency-and-reporting/fact_sheets/california-lifeline/lifeline_onesheet_051126.pdf" },
   liheapIncome: { label: "CSD: LIHEAP income eligibility (2026 program year)", url: "https://www.csd.ca.gov/Pages/LIHEAP-Income-Eligibility.aspx" },
   liheapPlan: { label: "CSD: 2026 LIHEAP State Plan", url: "https://www.csd.ca.gov/Shared%20Documents/2026-Final-LIHEAP-State-Plan.pdf" },
+  liheapFunding: { label: "APPA: HHS releases FY2027 LIHEAP funding (Oct. 13, 2026)", url: "https://www.publicpower.org/periodical/article/hhs-releases-36-billion-fy-2027-liheap-funding" },
   caleitc: { label: "FTB: CalEITC (tax year 2026 limits, FTB memo Sept 3, 2026)", url: "https://www.caltax.org/regulatory-issues/ftb/2026-PIT-Indexing-Memo.pdf" },
   caleitcAmounts: { label: "FTB: CalEITC eligibility and credit amounts (tax year 2025 amounts)", url: "https://www.ftb.ca.gov/file/personal/credits/caleitc/eligibility-and-credit-information.html" },
   yctc: { label: "FTB: Young Child Tax Credit", url: "https://www.ftb.ca.gov/file/personal/credits/young-child-tax-credit.html" },
@@ -332,7 +333,7 @@ const MEDI_CAL_NOTES: Bilingual[] = [
   },
 ];
 
-const PGE_APPLY_PHONE: Phone = { number: "1-866-743-2273", label: { en: "PG&E", es: "PG&E" } };
+const PGE_APPLY_PHONE: Phone = { number: "1-866-743-5832", label: { en: "PG&E CARE/FERA questions", es: "PG&E, preguntas sobre CARE/FERA" } };
 
 const TAX_APPLY: ProgramFacts["apply"] = {
   url: "https://www.ftb.ca.gov/file/ways-to-file/online/calfile/",
@@ -484,6 +485,14 @@ export const PROGRAMS = {
         en: "Income counts everyone in the home, taxable and nontaxable.",
         es: "Se cuentan los ingresos de todos en la casa, con o sin impuestos.",
       },
+      {
+        en: "PG&E checks some homes after they enroll. If PG&E asks for proof of income, answer by the date on the letter, or the discount stops. If you gave wrong information, PG&E can charge you back for up to 3 years of discounts. Tell PG&E if your income goes over the limit. Homes that use a lot of electricity may be asked for IRS tax transcripts.",
+        es: "PG&E revisa algunos hogares después de inscribirlos. Si PG&E le pide comprobante de ingresos, conteste antes de la fecha de la carta o perderá el descuento. Si dio información incorrecta, PG&E le puede cobrar hasta 3 años de descuentos. Avísele a PG&E si sus ingresos pasan el límite. A los hogares que usan mucha electricidad les pueden pedir transcripciones de impuestos del IRS.",
+      },
+      {
+        en: "The PG&E bill must be in your name, at the home where you live.",
+        es: "La factura de PG&E tiene que estar a su nombre, en la casa donde vive.",
+      },
     ],
     sources: [SRC.cpucCare],
   },
@@ -492,7 +501,7 @@ export const PROGRAMS = {
     gives: { en: "18% off PG&E electricity (not gas).", es: "18% de descuento en la luz de PG&E (no en el gas)." },
     immigration: { en: "The CPUC lists no immigration status requirement.", es: "La CPUC no menciona ningún requisito migratorio." },
     apply: {
-      url: "https://www.pge.com/en/account/billing-and-assistance/financial-assistance/fera-program.html",
+      url: "https://www.pge.com/en/account/billing-and-assistance/financial-assistance/family-electric-rate-assistance-program-fera.html",
       urlLabel: "PG&E FERA application",
       phones: [PGE_APPLY_PHONE],
       office: { en: "Apply online or by mail.", es: "Solicite en línea o por correo." },
@@ -501,6 +510,18 @@ export const PROGRAMS = {
       {
         en: "Only for homes that get ELECTRICITY from PG&E. A home can have CARE or FERA, not both.",
         es: "Solo para hogares que reciben la LUZ de PG&E. Un hogar puede tener CARE o FERA, no los dos.",
+      },
+      {
+        en: "Homes of 1 or 2 people can get FERA since June 2025.",
+        es: "Desde junio de 2025, los hogares de 1 o 2 personas también pueden recibir FERA.",
+      },
+      {
+        en: "PG&E checks some homes after they enroll. If PG&E asks for proof of income, answer by the date on the letter, or the discount stops. If you gave wrong information, PG&E can charge you back for up to 3 years of discounts. Tell PG&E if your income goes over the limit. Homes that use a lot of electricity may be asked for IRS tax transcripts.",
+        es: "PG&E revisa algunos hogares después de inscribirlos. Si PG&E le pide comprobante de ingresos, conteste antes de la fecha de la carta o perderá el descuento. Si dio información incorrecta, PG&E le puede cobrar hasta 3 años de descuentos. Avísele a PG&E si sus ingresos pasan el límite. A los hogares que usan mucha electricidad les pueden pedir transcripciones de impuestos del IRS.",
+      },
+      {
+        en: "The PG&E bill must be in your name, at the home where you live.",
+        es: "La factura de PG&E tiene que estar a su nombre, en la casa donde vive.",
       },
     ],
     sources: [SRC.cpucCare],
@@ -557,8 +578,8 @@ export const PROGRAMS = {
       es: "Un pago una vez al año para su factura de energía, ayuda de emergencia si recibe un aviso de corte, y ayuda para proteger su casa del clima (weatherization).",
     },
     immigration: {
-      en: "The person who applies must be a U.S. citizen or a “qualified” immigrant. In a mixed-status home, another member who qualifies can apply. People who don’t qualify aren’t counted in the household size, but their income still counts.",
-      es: "La persona que solicita debe ser ciudadana o inmigrante “calificado”. En un hogar de estatus mixto, otro miembro que califique puede solicitar. Las personas que no califican no cuentan en el tamaño del hogar, pero sus ingresos sí cuentan.",
+      en: "The person who applies must be a U.S. citizen or a “qualified” immigrant. In a mixed-status home, another member who qualifies can apply. People who don’t qualify aren’t counted in the household size, but their income still counts. If someone in your home can't be counted, the income limit is for a smaller household, so you may not qualify even if this says 'likely.'",
+      es: "La persona que solicita debe ser ciudadana o inmigrante “calificado”. En un hogar de estatus mixto, otro miembro que califique puede solicitar. Las personas que no califican no cuentan en el tamaño del hogar, pero sus ingresos sí cuentan. Si alguien en su casa no puede contarse, el límite de ingresos es el de un hogar más pequeño, así que es posible que no califique aunque aquí diga 'probable'.",
     },
     apply: {
       url: "https://www.csd.ca.gov/Pages/FindServicesInYourArea.aspx",
@@ -574,11 +595,11 @@ export const PROGRAMS = {
     },
     notes: [
       {
-        en: "Money is first-come, first-served and can run out. The federal government has proposed ending LIHEAP for next year; we could not confirm what happened.",
-        es: "El dinero se da por orden de llegada y se puede acabar. El gobierno federal propuso eliminar LIHEAP para el próximo año; no pudimos confirmar qué pasó.",
+        en: "Money is first-come, first-served and can run out. The federal government released LIHEAP money for Oct 2026 – Sep 2027 under a temporary funding law; call CVOC to ask whether applications are open.",
+        es: "El dinero se da por orden de llegada y se puede acabar. El gobierno federal liberó fondos de LIHEAP para oct. de 2026 – sept. de 2027 bajo una ley de fondos temporal; llame a CVOC para preguntar si ya aceptan solicitudes.",
       },
     ],
-    sources: [SRC.liheapIncome, SRC.liheapPlan],
+    sources: [SRC.liheapIncome, SRC.liheapPlan, SRC.liheapFunding],
   },
   lifeline: {
     name: { en: "California LifeLine (phone discount)", es: "California LifeLine (descuento en el teléfono)" },

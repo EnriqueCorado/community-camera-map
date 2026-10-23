@@ -132,7 +132,7 @@ export function upkeepItems(): UpkeepItem[] {
     {
       id: "utilities-winter",
       due: UTIL_RECHECK,
-      task: "Re-check the utility-bill tool (utilities-facts.ts): PG&E Electric Rule 11 for the CPUC's July 2026 heat rule (90°F) and the winter 32°F rule, AMP terms, CVOC's address and hours on CSD's provider list, CSD's 2027 LIHEAP table and federal LIHEAP funding (benefits-facts.ts TABLES.liheap), and TID's $30 CARES charge discount from Jan 1, 2027; then move UTIL_RECHECK.",
+      task: "Re-check the utility-bill tool (utilities-facts.ts): whether PG&E's posted Electric Rule 11 now carries CPUC Resolution E-5468 (90°F for electric) and its CalHeatScore switch (around 2027-01-16), PG&E Gas Rule 11's heat rule (100°F), the winter 32°F rule, AMP terms, CVOC's address and hours on CSD's provider list, CSD's 2027 LIHEAP table and federal LIHEAP funding (benefits-facts.ts TABLES.liheap), and TID's $30 CARES charge discount from Jan 1, 2027; then move UTIL_RECHECK.",
       source: "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_RULES_11.pdf",
     },
     {

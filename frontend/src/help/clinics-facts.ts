@@ -56,7 +56,7 @@ export const TOWNS: Record<Town, { name: string; center: [number, number] }> = {
 export type Need = "primary" | "urgent" | "dental" | "mental" | "women" | "kids" | "vaccines";
 export const NEEDS: readonly Need[] = ["primary", "urgent", "dental", "mental", "women", "kids", "vaccines"];
 
-export type Org = "gvhc" | "lumira" | "pp" | "county";
+export type Org = "gvhc" | "lumira" | "pp" | "county" | "free" | "hospital";
 
 export interface Clinic {
   id: string;
@@ -75,6 +75,9 @@ export interface Clinic {
   center: [number, number];
   /** On the map's "Community health centers" layer (HRSA sites only). */
   onMap: boolean;
+  /** On a school campus or open only part of the week: ranked after full-time
+   *  sites, and a town with only these also gets the nearest full-time one. */
+  limited?: true;
   url: string;
 }
 
@@ -89,7 +92,7 @@ const SCHOOL: Bilingual = {
 };
 const EVENINGS = (closeEn: string): Bilingual => ({
   en: `Urgent care and evening visits until ${closeEn} weekdays, plus Saturdays.`,
-  es: `Atención urgente y citas por la tarde hasta las ${closeEn} entre semana, y los sábados.`,
+  es: `Atención urgente y citas en la tarde y la noche hasta las ${closeEn} entre semana, y los sábados.`,
 });
 
 /** Every site, in the order shown (Modesto first, then by town). */
@@ -102,7 +105,7 @@ export const CLINICS: readonly Clinic[] = [
     address: "401 Paradise Rd., Modesto, CA 95351",
     town: "modesto",
     phone: GVHC_PHONE,
-    hours: { en: "Mon–Fri 8 a.m.–5 p.m.; urgent care Mon–Fri until 8:30 p.m.", es: "lunes a viernes 8 a. m.–5 p. m.; atención urgente lunes a viernes hasta las 8:30 p. m." },
+    hours: { en: "Mon–Fri 8 a.m.–5 p.m. (closed noon–1); urgent care Mon–Fri 8 a.m.–8:30 p.m. (closed 4–5 p.m.)", es: "lunes a viernes 8 a. m.–5 p. m. (cerrado de 12 a 1); atención urgente lunes a viernes 8 a. m.–8:30 p. m. (cerrado de 4 a 5 p. m.)" },
     needs: ["primary", "urgent", "kids", "women", "mental"],
     note: { en: "GVHC’s largest Stanislaus clinic. Also addiction treatment (MAT) and HIV care.", es: "La clínica más grande de GVHC en Stanislaus. También tratamiento para adicciones (MAT) y atención del VIH." },
     center: [-121.01281, 37.62801],
@@ -131,7 +134,7 @@ export const CLINICS: readonly Clinic[] = [
     town: "modesto",
     phone: GVHC_PHONE,
     dentalText: "(209) 573-8880",
-    hours: MF("8 a.m.", "4:30 p.m."),
+    hours: { en: "Mon–Fri 8 a.m.–4:30 p.m. (closed 12–12:45)", es: "lunes a viernes 8 a. m.–4:30 p. m. (cerrado de 12 a 12:45)" },
     needs: ["dental"],
     center: [-121.00417, 37.63823],
     onMap: true,
@@ -170,7 +173,7 @@ export const CLINICS: readonly Clinic[] = [
     address: "1121 Hammond St., Modesto, CA 95351",
     town: "modesto",
     phone: GVHC_PHONE,
-    hours: { en: "Medical Mon–Fri 8 a.m.–5 p.m.; dental Mon–Fri 8 a.m.–4:30 p.m.", es: "Médica lunes a viernes 8 a. m.–5 p. m.; dental lunes a viernes 8 a. m.–4:30 p. m." },
+    hours: { en: "Medical Mon–Fri 8 a.m.–5 p.m. (closed noon–1); dental Mon–Fri 8 a.m.–4:30 p.m. (closed noon–1)", es: "Médica lunes a viernes 8 a. m.–5 p. m. (cerrado de 12 a 1); dental lunes a viernes 8 a. m.–4:30 p. m. (cerrado de 12 a 1)" },
     needs: ["primary", "dental"],
     center: [-121.0191, 37.61522],
     onMap: true,
@@ -184,9 +187,10 @@ export const CLINICS: readonly Clinic[] = [
     town: "modesto",
     phone: GVHC_PHONE,
     dentalText: "(209) 556-5044",
-    hours: { en: "Medical Mon–Fri 8 a.m.–5 p.m.; dental Mon–Fri 8 a.m.–4:30 p.m.", es: "Médica lunes a viernes 8 a. m.–5 p. m.; dental lunes a viernes 8 a. m.–4:30 p. m." },
+    hours: { en: "Medical Mon–Fri 8 a.m.–5 p.m.; dental Mon–Fri 8 a.m.–4:30 p.m. (closed noon–1)", es: "Médica lunes a viernes 8 a. m.–5 p. m.; dental lunes a viernes 8 a. m.–4:30 p. m. (cerrado de 12 a 1)" },
     needs: ["primary", "dental"],
     note: SCHOOL,
+    limited: true,
     center: [-121.00319, 37.60534],
     onMap: true,
     url: `${GVHC_LOC}modesto/modesto-hanshaw-school/`,
@@ -198,7 +202,7 @@ export const CLINICS: readonly Clinic[] = [
     address: "208 W. Coolidge Ave., Modesto, CA 95350",
     town: "modesto",
     phone: GVHC_PHONE,
-    hours: MF("8 a.m.", "5 p.m."),
+    hours: { en: "Mon–Fri 8 a.m.–5 p.m. (closed noon–1)", es: "lunes a viernes 8 a. m.–5 p. m. (cerrado de 12 a 1)" },
     needs: ["primary"],
     center: [-120.99519, 37.66487],
     onMap: true,
@@ -211,7 +215,7 @@ export const CLINICS: readonly Clinic[] = [
     address: "209 Kerr Ave., Modesto, CA 95354",
     town: "modesto",
     phone: GVHC_PHONE,
-    hours: { en: "Mon, Tue, Thu and Fri 8 a.m.–5 p.m.", es: "lunes, martes, jueves y viernes 8 a. m.–5 p. m." },
+    hours: { en: "Mon, Tue, Thu and Fri 8 a.m.–5 p.m. (closed noon–1)", es: "lunes, martes, jueves y viernes 8 a. m.–5 p. m. (cerrado de 12 a 1)" },
     needs: ["primary"],
     center: [-120.97177, 37.63668],
     onMap: true,
@@ -238,7 +242,7 @@ export const CLINICS: readonly Clinic[] = [
     address: "1524 McHenry Ave. (Suites 300, 330, 535, 560), Modesto, CA 95350",
     town: "modesto",
     phone: GVHC_PHONE,
-    hours: MF("8 a.m.", "5 p.m."),
+    hours: { en: "Mon–Fri 8 a.m.–5 p.m. (closed noon–1)", es: "lunes a viernes 8 a. m.–5 p. m. (cerrado de 12 a 1)" },
     needs: ["primary"],
     note: { en: "Specialty care: surgery, physical and occupational therapy, rheumatology, endocrinology.", es: "Especialidades: cirugía, terapia física y ocupacional, reumatología, endocrinología." },
     center: [-120.99395, 37.66621],
@@ -252,8 +256,10 @@ export const CLINICS: readonly Clinic[] = [
     address: "198 N. G St., Empire, CA 95319",
     town: "empire",
     phone: GVHC_PHONE,
-    hours: { en: "Medical Mon–Fri 8 a.m.–5 p.m.; dental Mon–Fri 8 a.m.–4:30 p.m.", es: "Médica lunes a viernes 8 a. m.–5 p. m.; dental lunes a viernes 8 a. m.–4:30 p. m." },
+    hours: { en: "Medical Mon–Fri 8 a.m.–5 p.m. (closed noon–1); dental Mon–Fri 8 a.m.–4:30 p.m.", es: "Médica lunes a viernes 8 a. m.–5 p. m. (cerrado de 12 a 1); dental lunes a viernes 8 a. m.–4:30 p. m." },
     needs: ["primary", "dental"],
+    note: SCHOOL,
+    limited: true,
     center: [-120.90088, 37.64091],
     onMap: true,
     url: `${GVHC_LOC}empire/`,
@@ -321,7 +327,7 @@ export const CLINICS: readonly Clinic[] = [
     address: "1100 Delbon Ave., Turlock, CA 95382",
     town: "turlock",
     phone: GVHC_PHONE,
-    hours: MF("8 a.m.", "5 p.m."),
+    hours: { en: "Mon–Fri 8 a.m.–5 p.m. (closed noon–1)", es: "lunes a viernes 8 a. m.–5 p. m. (cerrado de 12 a 1)" },
     needs: ["kids"],
     note: { en: "More pediatric suites at 1120 and 1199 Delbon Ave.", es: "Más consultorios de pediatría en 1120 y 1199 Delbon Ave." },
     center: [-120.83577, 37.51045],
@@ -336,7 +342,7 @@ export const CLINICS: readonly Clinic[] = [
     town: "patterson",
     phone: GVHC_PHONE,
     dentalText: "(209) 892-6307",
-    hours: { en: "Medical Mon–Fri 8 a.m.–5 p.m., Sat 8 a.m.–5:30 p.m.; urgent care Mon–Fri until 8:30 p.m.; dental Mon–Fri 8 a.m.–4:30 p.m.", es: "Médica lunes a viernes 8 a. m.–5 p. m., sábado 8 a. m.–5:30 p. m.; atención urgente lunes a viernes hasta las 8:30 p. m.; dental lunes a viernes 8 a. m.–4:30 p. m." },
+    hours: { en: "Medical Mon–Fri 8 a.m.–5 p.m.; urgent care Mon–Fri until 8:30 p.m. and Sat 8 a.m.–5:30 p.m.; dental Mon–Fri 8 a.m.–4:30 p.m. (closed noon–1)", es: "Médica lunes a viernes 8 a. m.–5 p. m.; atención urgente lunes a viernes hasta las 8:30 p. m. y sábado 8 a. m.–5:30 p. m.; dental lunes a viernes 8 a. m.–4:30 p. m. (cerrado de 12 a 1)" },
     needs: ["primary", "urgent", "dental", "mental"],
     center: [-121.12578, 37.46727],
     onMap: true,
@@ -349,7 +355,7 @@ export const CLINICS: readonly Clinic[] = [
     address: "637 Merced St., Newman, CA 95360",
     town: "newman",
     phone: GVHC_PHONE,
-    hours: { en: "Medical Mon–Fri 8 a.m.–5 p.m.; dental Mon–Fri 8 a.m.–4:30 p.m. (dental appointments: (209) 862-9449)", es: "Médica lunes a viernes 8 a. m.–5 p. m.; dental lunes a viernes 8 a. m.–4:30 p. m. (citas dentales: (209) 862-9449)" },
+    hours: { en: "Medical Mon–Fri 8 a.m.–5 p.m.; dental Mon–Fri 8 a.m.–4:30 p.m. (closed 12–12:45) (dental appointments: (209) 862-9449)", es: "Médica lunes a viernes 8 a. m.–5 p. m.; dental lunes a viernes 8 a. m.–4:30 p. m. (cerrado de 12 a 12:45) (citas dentales: (209) 862-9449)" },
     needs: ["primary", "dental"],
     center: [-121.01635, 37.31502],
     onMap: true,
@@ -362,9 +368,10 @@ export const CLINICS: readonly Clinic[] = [
     address: "4150 Patterson Rd., Riverbank, CA 95367",
     town: "riverbank",
     phone: GVHC_PHONE,
-    hours: MF("8 a.m.", "5 p.m."),
+    hours: { en: "Mon–Fri 8 a.m.–5 p.m. (closed noon–1)", es: "lunes a viernes 8 a. m.–5 p. m. (cerrado de 12 a 1)" },
     needs: ["primary"],
     note: SCHOOL,
+    limited: true,
     center: [-120.92014, 37.73174],
     onMap: true,
     url: `${GVHC_LOC}riverbank/`,
@@ -379,6 +386,7 @@ export const CLINICS: readonly Clinic[] = [
     hours: { en: "Mon and Thu 8:30 a.m.–2:30 p.m.", es: "lunes y jueves 8:30 a. m.–2:30 p. m." },
     needs: ["primary"],
     note: SCHOOL,
+    limited: true,
     center: [-121.19877, 37.54478],
     onMap: true,
     url: `${GVHC_LOC}westley/`,
@@ -443,13 +451,47 @@ export const CLINICS: readonly Clinic[] = [
     address: "12619 Bentley St., Waterford, CA 95386",
     town: "waterford",
     phone: LUMIRA_PHONE,
-    hours: { en: "Mon–Fri 8 a.m.–5 p.m. (closed noon–1); first Saturday of the month 8 a.m.–4 p.m.", es: "lunes a viernes 8 a. m.–5 p. m. (cerrado de 12 a 1); primer sábado del mes 8 a. m.–4 p. m." },
+    hours: { en: "Mon–Fri 8 a.m.–5 p.m. (closed noon–1); first Saturday of the month 8 a.m.–4 p.m. (call to confirm)", es: "lunes a viernes 8 a. m.–5 p. m. (cerrado de 12 a 1); primer sábado del mes 8 a. m.–4 p. m. (llame para confirmar)" },
     needs: ["primary", "mental"],
     center: [-120.7613, 37.64094],
     onMap: true,
     url: LUMIRA_LOC,
   },
   // ------------------------------------------------------------------- others
+  {
+    id: "st-lukes",
+    org: "free",
+    name: "St. Luke’s Family Practice (free clinic)",
+    address: "1700 McHenry Village Way, Suite 2, Modesto, CA 95350",
+    town: "modesto",
+    phone: "(209) 549-1057",
+    hours: { en: "Mon, Tue, Thu and Fri 8:15 a.m.–5 p.m. (closed Wednesday)", es: "lunes, martes, jueves y viernes 8:15 a. m.–5 p. m. (cerrado los miércoles)" },
+    needs: ["primary", "women", "kids"],
+    note: {
+      en: "Free doctor visits for people with no insurance (not for people with Medi-Cal, Medicare or other insurance). Not same-day: go in or call to get an appointment, and bring any letter denying you Medi-Cal or Covered California if you have one. Medicines, outside lab tests, X-rays and dental are not free.",
+      es: "Consultas médicas gratis para personas sin seguro (no para quienes tienen Medi-Cal, Medicare u otro seguro). No atiende el mismo día: vaya o llame para hacer una cita, y lleve la carta en la que le negaron Medi-Cal o Covered California si la tiene. Las medicinas, los análisis fuera de la clínica, las radiografías y la atención dental no son gratis.",
+    },
+    center: [-120.98989, 37.66849],
+    onMap: false,
+    url: "https://stlukesfp.org/receive-care/",
+  },
+  {
+    id: "oak-valley-oakdale",
+    org: "hospital",
+    name: "Oak Valley Hospital District – Oakdale Clinic",
+    address: "1420 West H St., Oakdale, CA 95361",
+    town: "oakdale",
+    phone: "(209) 848-4180",
+    hours: { en: "Open 7 days, 8 a.m.–6 p.m.; walk-ins welcome", es: "Abierto los 7 días, 8 a. m.–6 p. m.; atienden sin cita" },
+    needs: ["primary", "urgent", "women", "kids"],
+    note: {
+      en: "Oak Valley Hospital District’s community clinic. Takes Medi-Cal; patient navigators can help you apply for Medi-Cal or Covered California.",
+      es: "Clínica comunitaria del Distrito Hospitalario Oak Valley. Acepta Medi-Cal; sus navegadores de pacientes pueden ayudarle a solicitar Medi-Cal o Covered California.",
+    },
+    center: [-120.86172, 37.75825],
+    onMap: false,
+    url: "https://www.oakvalleycares.org/clinics/",
+  },
   {
     id: "pp-modesto",
     org: "pp",
@@ -459,7 +501,10 @@ export const CLINICS: readonly Clinic[] = [
     phone: "(209) 579-2300",
     hours: MF("8:30 a.m.", "5 p.m."),
     needs: ["women"],
-    note: { en: "Birth control, pregnancy and STD testing, and wellness exams. Ask about cost when you call.", es: "Anticonceptivos, pruebas de embarazo y de enfermedades de transmisión sexual, y exámenes de bienestar. Pregunte el costo cuando llame." },
+    note: {
+      en: "Birth control, emergency contraception, pregnancy testing, abortion, prenatal care, STD testing and treatment, vaccines and wellness exams. Takes Medi-Cal and Family PACT; insurance not required. Planned Parenthood says it will never turn you away if you can’t pay; otherwise you pay on the day of your visit. Walk-ins are seen when there is room.",
+      es: "Anticonceptivos, anticoncepción de emergencia, pruebas de embarazo, aborto, atención prenatal, pruebas y tratamiento de enfermedades de transmisión sexual, vacunas y exámenes de bienestar. Acepta Medi-Cal y Family PACT; no necesita seguro. Planned Parenthood dice que nunca lo rechazará si no puede pagar; si no, se paga el día de la cita. Atienden sin cita cuando hay espacio.",
+    },
     center: [-120.99401, 37.66474],
     onMap: false,
     url: "https://www.plannedparenthood.org/health-center/california/modesto/95350/modesto-health-center-2527-90130",
@@ -471,11 +516,11 @@ export const CLINICS: readonly Clinic[] = [
     address: "1524 McHenry Ave., Modesto, CA 95350",
     town: "modesto",
     phone: "(209) 558-7700",
-    hours: { en: "Call for an appointment.", es: "Llame para hacer una cita." },
+    hours: { en: "Call for an appointment; limited walk-ins Mon, Wed and Fri 10 a.m.–4 p.m.", es: "Llame para hacer una cita; algunas visitas sin cita lunes, miércoles y viernes de 10 a. m. a 4 p. m." },
     needs: ["vaccines"],
     note: {
-      en: "Free or low-cost vaccines for children and adults with no insurance (or whose insurance doesn’t cover vaccines), children with Medi-Cal, and flu shots for anyone 6 months or older.",
-      es: "Vacunas gratis o de bajo costo para niños y adultos sin seguro (o cuyo seguro no cubre vacunas), niños con Medi-Cal, y vacunas contra la gripe para cualquier persona de 6 meses o más.",
+      en: "Free or low-cost vaccines for children and adults with no insurance (or whose insurance doesn’t cover vaccines), children 0–18 who have or qualify for Medi-Cal, and flu shots for anyone 6 months or older.",
+      es: "Vacunas gratis o de bajo costo para niños y adultos sin seguro (o cuyo seguro no cubre vacunas), niños de 0 a 18 años que tienen Medi-Cal o califican para Medi-Cal, y vacunas contra la gripe para cualquier persona de 6 meses o más.",
     },
     center: [-120.99387, 37.66553],
     onMap: false,
@@ -512,8 +557,8 @@ export const CLINICS_FACTS = {
     {
       id: "bring",
       cite: "Lumira HealthCare: Patient Resources",
-      en: "Bring a photo ID, any insurance or Medi-Cal card, and your medicines. For the sliding fee, you’ll be asked about your income and family size.",
-      es: "Lleve una identificación con foto, su tarjeta de seguro o de Medi-Cal si tiene, y sus medicinas. Para el descuento le preguntarán sus ingresos y el tamaño de su familia.",
+      en: "If you have them, bring a photo ID, any insurance or Medi-Cal card, and your medicines. For the sliding fee, bring proof of income such as pay stubs or your last tax return (Lumira asks for these). If you don’t have an ID or proof of income, call first and ask what they accept.",
+      es: "Si los tiene, lleve una identificación con foto, su tarjeta de seguro o de Medi-Cal, y sus medicinas. Para el descuento, lleve comprobantes de ingresos, como talones de pago o su última declaración de impuestos (Lumira los pide). Si no tiene identificación ni comprobantes de ingresos, llame antes y pregunte qué aceptan.",
     },
   ] satisfies Fact[],
 
@@ -522,8 +567,14 @@ export const CLINICS_FACTS = {
     {
       id: "interpreter",
       cite: "45 CFR 92.201 (Affordable Care Act §1557)",
-      en: "Clinics that take federal money must give you language help for free, with a qualified interpreter. They may not make you bring or pay for your own interpreter, and should not rely on your child or another untrained adult to interpret, except in a narrow emergency or if you ask for it yourself.",
-      es: "Las clínicas que reciben dinero federal deben darle ayuda con el idioma gratis, con un intérprete calificado. No pueden obligarlo a traer ni a pagar su propio intérprete, y no deben depender de su hijo ni de otro adulto sin capacitación para interpretar, salvo en una emergencia limitada o si usted mismo lo pide.",
+      en: "Clinics that take federal money must take reasonable steps to give you language help free of charge, and when you need an interpreter they must offer a qualified one. They may not make you bring or pay for your own interpreter. They may not use your child to interpret, except briefly in an emergency while they find a qualified interpreter. They may use an adult who came with you only in an emergency, or if you ask for it in private and that adult agrees.",
+      es: "Las clínicas que reciben dinero federal deben tomar medidas razonables para darle ayuda con el idioma gratis y, cuando necesite un intérprete, deben ofrecerle uno calificado. No pueden obligarlo a traer ni a pagar su propio intérprete. No pueden usar a su hijo o hija como intérprete, salvo por poco tiempo en una emergencia mientras consiguen un intérprete calificado. Solo pueden usar a un adulto que lo acompañe en una emergencia, o si usted lo pide en privado y ese adulto está de acuerdo.",
+    },
+    {
+      id: "status-checks",
+      cite: "New York v. U.S. Dept. of Justice, D.R.I. 1:25-cv-00345 (Oregon DOJ litigation tracker)",
+      en: "Health centers don’t have to check immigration status. In July 2025 the federal health department (HHS) said health-center care should be limited by immigration status, but a federal court blocked that in California and other states, and ruled for the states on September 21, 2026 (New York v. U.S. Department of Justice). HHS could try again with a new rule.",
+      es: "Los centros de salud no tienen que revisar el estatus migratorio. En julio de 2025 el Departamento de Salud federal (HHS) dijo que la atención en los centros de salud debía limitarse según el estatus migratorio, pero una corte federal lo bloqueó en California y otros estados, y falló a favor de los estados el 21 de septiembre de 2026 (New York v. U.S. Department of Justice). HHS podría intentarlo de nuevo con una nueva regla.",
     },
     ...factsById(RIGHTS_FACTS.california, "law-sb81"),
   ] satisfies Fact[],
@@ -552,13 +603,14 @@ export const CLINICS_FACTS = {
     {
       id: "ihcp",
       cite: "Stanislaus County Health Services Agency: Indigent Health Care Program",
-      en: "Stanislaus County’s Indigent Health Care Program gives limited coverage to low-income residents 21 to 65 who have no other coverage. It is only for U.S. citizens and qualified immigrants. Call (209) 558-7232.",
-      es: "El Programa de Atención Médica para Personas de Bajos Recursos del Condado de Stanislaus da cobertura limitada a residentes de bajos ingresos de 21 a 65 años sin otra cobertura. Es solo para ciudadanos de EE. UU. e inmigrantes calificados. Llame al (209) 558-7232.",
+      en: "Stanislaus County’s Indigent Health Care Program gives limited coverage to low-income residents 21 to 65 who can’t get Medi-Cal, Covered California or other coverage (choosing not to apply doesn’t count). It has income and asset limits and is only for U.S. citizens and qualified immigrants. Call (209) 558-7232.",
+      es: "El Programa de Atención Médica para Personas de Bajos Recursos del Condado de Stanislaus da cobertura limitada a residentes de bajos ingresos de 21 a 65 años que no pueden recibir Medi-Cal, Covered California ni otra cobertura (no solicitarlos no cuenta). Tiene límites de ingresos y bienes, y es solo para ciudadanos de EE. UU. e inmigrantes calificados. Llame al (209) 558-7232.",
     },
     {
       id: "public-charge",
-      cite: "DHS Public Charge rule (effective Sept 18, 2026)",
-      ...PUBLIC_CHARGE.text,
+      cite: "DHS Public Charge rule (effective Sept 18, 2026); California Health and Human Services: Public Charge",
+      en: `${PUBLIC_CHARGE.text.en} ${PUBLIC_CHARGE.caveat.en} Public charge does not apply to most immigrants already in the U.S., and it doesn’t decide who can get care. Don’t skip care you need: ask a free immigration legal provider about your case.`,
+      es: `${PUBLIC_CHARGE.text.es} ${PUBLIC_CHARGE.caveat.es} La carga pública no se aplica a la mayoría de los inmigrantes que ya están en EE. UU., y no decide quién puede recibir atención. No deje de recibir la atención que necesita: consulte su caso con un proveedor legal gratuito de inmigración.`,
     },
   ] satisfies Fact[],
 };
@@ -570,8 +622,8 @@ export const CLINICS_CONTACTS = {
     url: "https://www.stancounty.com/bhrs/",
   } satisfies Contact,
   lifeline: {
-    name: { en: "988 Suicide & Crisis Lifeline: call or text 988 (say “hola” for Spanish)", es: "Línea 988 de Prevención del Suicidio y Crisis: llame o mande un texto al 988 (diga “hola” para español)" },
-    url: "https://www.stancounty.com/bhrs/",
+    name: { en: "988 Suicide & Crisis Lifeline: call 988 and press 2 for Spanish, or text AYUDA to 988", es: "Línea 988 de Prevención del Suicidio y Crisis: llame al 988 y oprima el 2 para español, o mande la palabra AYUDA por texto al 988" },
+    url: "https://988lifeline.org/get-help/",
   } satisfies Contact,
   mobile: {
     name: { en: "Golden Valley’s mobile clinic: where it parks each day", es: "Clínica móvil de Golden Valley: dónde se estaciona cada día" },
@@ -597,6 +649,12 @@ export const CLINICS_SOURCES: SourceRef[] = [
   { label: "Golden Valley Health Centers: language services", url: "https://www.gvhc.org/language-services/" },
   { label: "Lumira HealthCare: locations", url: LUMIRA_LOC },
   { label: "Lumira HealthCare: patient resources (payment, rides)", url: "https://lumirahealthcare.com/patient-resources/" },
+  { label: "St. Luke’s Family Practice: Receive Care (free clinic)", url: "https://stlukesfp.org/receive-care/" },
+  { label: "Stanislaus County BHRS: Community Provider Resource List (PDF)", url: "https://www.stancounty.com/bhrs/pdf/CommunityProviderResourceList_Eng.pdf" },
+  { label: "Oak Valley Hospital District: Clinics", url: "https://www.oakvalleycares.org/clinics/" },
+  { label: "Oregon DOJ litigation tracker: New York v. U.S. Dept. of Justice (D.R.I.)", url: "https://www.doj.state.or.us/oregon-department-of-justice/federal-oversight/federal-litigation-tracker/efforts-to-restrict-public-benefits-new-york-v-u-s-dept-of-justice-d-r-i-125-cv-00345/" },
+  { label: "California Health and Human Services: Public Charge", url: "https://www.chhs.ca.gov/public-charge/" },
+  { label: "988 Suicide & Crisis Lifeline: Get help (Spanish: press 2, text AYUDA)", url: "https://988lifeline.org/get-help/" },
   { label: "Planned Parenthood: Modesto Health Center", url: "https://www.plannedparenthood.org/health-center/california/modesto/95350/modesto-health-center-2527-90130" },
   { label: "42 CFR 51c.303: health center fees and discounts", url: CFR_51C },
   { label: "45 CFR 92.201: language assistance (ACA §1557)", url: CFR_92 },

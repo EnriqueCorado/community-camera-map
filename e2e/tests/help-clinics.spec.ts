@@ -57,10 +57,15 @@ test("filter by town and need; a town with none shows the closest; nothing sent 
   await expect(cards.first().getByRole("heading")).toHaveText("Golden Valley Health Centers – Turlock West");
   await expect(cards.first().getByRole("link", { name: "(209) 656-6000" })).toHaveAttribute("href", "sms:+12096566000");
 
-  await dialog.getByLabel("Your town").selectOption({ label: "Oakdale" });
+  await dialog.getByLabel("Your town").selectOption({ label: "Salida" });
   await dialog.getByLabel("What do you need?").selectOption({ label: "Anything" });
-  await expect(status).toHaveText("None listed in Oakdale for this. These are the closest:");
-  await expect(cards).toHaveCount(3);
+  await expect(status).toHaveText("None listed in Salida for this. These are the closest (some are on school campuses or open only some days):");
+  expect(await cards.count()).toBeGreaterThanOrEqual(3);
+
+  // Riverbank's only site is on a school campus: the closest full-time clinic is added.
+  await dialog.getByLabel("Your town").selectOption({ label: "Riverbank" });
+  await expect(status).toHaveText("In Riverbank, the only places listed for this are on school campuses or open only some days, so the closest full-time clinic is shown too:");
+  await expect(cards).toHaveCount(2);
   await expect(cards.first().getByRole("heading")).toHaveText("Golden Valley Health Centers – Riverbank High School");
 
   // Each card: a phone link, directions (a plain link, no embedded map), the clinic's own page.

@@ -92,7 +92,7 @@ test("the facts say what the rules say, cited, in both languages", () => {
   expect(fact("cold").en).toContain("32°F");
   expect(fact("cold").en).toContain("90°F");
   expect(fact("cold").en).toContain("still owed");
-  expect(fact("amp").en).toMatch(/\$500.*\$250.*90 days.*12 months.*\$8,000/s);
+  expect(fact("amp").en).toMatch(/\$8,000.*\$500.*\$250.*90 days.*1\/12.*12 months/s);
   expect(fact("mid-medical").en).toContain("$8,717");
   // MID and TID aren't under the CPUC: the page says so instead of applying PG&E's rules to them.
   expect(fact("which-rules").en).toContain("does not take complaints about them");

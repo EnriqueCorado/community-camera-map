@@ -6,6 +6,8 @@ import { parseANumber } from "../../frontend/src/help/court";
 import * as COURT from "../../frontend/src/help/court-facts";
 import { COURT_COPY } from "../../frontend/src/help/court-copy";
 import { upkeepItems } from "../../frontend/src/help/upkeep";
+import { RIGHTS_FACTS } from "../../frontend/src/help/rights-facts";
+import { factsById } from "../../frontend/src/help/facts-by-id";
 
 test("the A-Number helper: 8 or 9 digits, any spacing, padded to 9", () => {
   expect(parseANumber("A123456789")).toEqual({ digits: "123456789", padded: false, display: "A-123-456-789" });
@@ -43,6 +45,7 @@ test("only phone numbers verified in the research", () => {
     "9256809015", // Concord Immigration Court
     "2094912712", // World Relief Modesto
     "2096672378", // IRC Turlock
+    "5104528222", // IRC immigration consultations (IRC's Turlock page, checked 2026-10-23)
     "2094445910", // Catholic Charities Modesto, immigration
   ]);
   // COURT includes EOIR_PHONE, the number the "Check your case" helper shows.
@@ -61,7 +64,13 @@ test("the San Francisco court's closure and the nearest courts are stated", () =
 });
 
 test("careful wording: never tells people to skip court, rulings are dated and can change", () => {
-  const all = JSON.stringify(COURT.COURT_FACTS) + JSON.stringify(COURT_COPY);
+  // The reused rights facts are shown on this page too, so they're checked as well.
+  const reused = [
+    ...factsById(RIGHTS_FACTS.detained, "find-eoir-phone", "find-eoir-acis"),
+    ...factsById(RIGHTS_FACTS.stopped, "right-no-sign"),
+    ...factsById(RIGHTS_FACTS.scams, "scam-notario", "scam-report"),
+  ];
+  const all = JSON.stringify(COURT.COURT_FACTS) + JSON.stringify(COURT_COPY) + JSON.stringify(reused);
   for (const risky of [/don.t go to (court|your hearing)/i, /no vaya a (la corte|su audiencia)/i, /\bsafe to (go|attend)\b/i, /free interpreter/i, /intérprete gratis/i]) {
     expect(all, String(risky)).not.toMatch(risky);
   }
@@ -70,6 +79,17 @@ test("careful wording: never tells people to skip court, rulings are dated and c
   expect(arrests.es).toMatch(/los fallos pueden cambiar/);
   expect(arrests.cite).toMatch(/2026/);
   expect(COURT_COPY.en.goTitle).toMatch(/Go to every hearing/);
+});
+
+test("change of address points to the current EOIR-33/IC (Feb. 2026), in both languages", () => {
+  expect(COURT.COURT_LINKS.eoir33).toBe("https://www.justice.gov/eoir/media/1341856/dl?inline");
+  expect(COURT.COURT_LINKS.eoir33Es).toBe("https://www.justice.gov/eoir/media/1341886/dl?inline");
+  const urls = COURT.COURT_SOURCES.map((s) => s.url);
+  expect(urls).toContain(COURT.COURT_LINKS.eoir33);
+  expect(urls).toContain(COURT.COURT_LINKS.eoir33Es);
+  const moved = COURT.COURT_FACTS.move.find((f) => f.id === "eoir33")!;
+  expect(moved.en).toContain("current edition: Feb. 2026");
+  expect(moved.es).toContain("edición actual: febrero de 2026");
 });
 
 test("upkeep: a monthly re-check and a yearly one", () => {

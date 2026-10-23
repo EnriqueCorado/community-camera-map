@@ -35,7 +35,7 @@ test.describe("the clinic list", () => {
   });
 
   test("sliding-fee health centers in every town with one, and each need covered somewhere", () => {
-    expect([...TOWNS_WITH_CLINICS].sort()).toEqual(["ceres", "empire", "hughson", "modesto", "newman", "patterson", "riverbank", "turlock", "waterford", "westley"]);
+    expect([...TOWNS_WITH_CLINICS].sort()).toEqual(["ceres", "empire", "hughson", "modesto", "newman", "oakdale", "patterson", "riverbank", "turlock", "waterford", "westley"]);
     for (const n of NEEDS) expect(CLINICS.some((c) => c.needs.includes(n)), n).toBe(true);
     expect(CLINICS.filter((c) => c.needs.includes("vaccines")).map((c) => c.id)).toEqual(["county-vaccines"]);
   });
@@ -48,6 +48,8 @@ test.describe("the clinic list", () => {
       "2095766766", // GVHC Tenaya
       "2098503500", // Lumira (call or text)
       "2095792300", // Planned Parenthood Modesto
+      "2095491057", // St. Luke's Family Practice (stlukesfp.org/receive-care)
+      "2098484180", // Oak Valley Hospital District, Oakdale Clinic (oakvalleycares.org/clinics)
       "2095587700", // county Immunization Program
       "2095587232", // county Indigent Health Care Program
       "8883766246", // county BHRS 24/7 access and crisis line
@@ -67,7 +69,7 @@ test.describe("the clinic list", () => {
 
 test.describe("picking clinics", () => {
   test("all, by need, by town", () => {
-    expect(pickClinics({ town: "all", need: "all" })).toEqual({ clinics: [...CLINICS], nearest: false });
+    expect(pickClinics({ town: "all", need: "all" })).toEqual({ clinics: [...CLINICS], nearest: false, limitedOnly: false });
     const dental = pickClinics({ town: "all", need: "dental" }).clinics;
     expect(dental.length).toBeGreaterThan(5);
     expect(dental.every((c) => c.needs.includes("dental"))).toBe(true);
@@ -76,18 +78,38 @@ test.describe("picking clinics", () => {
     expect(turlock.clinics.every((c) => c.town === "turlock")).toBe(true);
   });
 
-  test("a town with none for this need: the closest ones, nearest first", () => {
-    const oakdale = pickClinics({ town: "oakdale", need: "all" });
-    expect(oakdale.nearest).toBe(true);
-    expect(oakdale.clinics).toHaveLength(NEAREST_COUNT);
-    expect(oakdale.clinics[0]!.id).toBe("gvhc-riverbank");
-    const d = oakdale.clinics.map((c) => distanceKm(TOWNS.oakdale.center, c.center));
+  test("a town with none for this need: the closest ones, full-time sites first", () => {
+    const salida = pickClinics({ town: "salida", need: "all" });
+    expect(salida.nearest).toBe(true);
+    expect(salida.clinics.length).toBeGreaterThanOrEqual(NEAREST_COUNT);
+    expect(salida.clinics[0]!.limited).toBeUndefined();
+    // Within the full-time group, nearest first; school/part-time sites come after.
+    const full = salida.clinics.filter((c) => !c.limited);
+    const d = full.map((c) => distanceKm(TOWNS.salida.center, c.center));
     expect([...d].sort((a, b) => a - b)).toEqual(d);
+    const firstLimited = salida.clinics.findIndex((c) => c.limited);
+    if (firstLimited >= 0) expect(salida.clinics.slice(firstLimited).every((c) => c.limited)).toBe(true);
     // Newman has a clinic, but not for mental health: the closest that do.
     const newman = pickClinics({ town: "newman", need: "mental" });
     expect(newman.nearest).toBe(true);
     expect(newman.clinics.every((c) => c.needs.includes("mental"))).toBe(true);
     expect(newman.clinics[0]!.id).toBe("gvhc-patterson");
+  });
+
+  test("a town whose only sites are on a school campus also gets the closest full-time clinic", () => {
+    for (const town of ["riverbank", "empire"] as const) {
+      const pick = pickClinics({ town, need: "primary" });
+      expect(pick.nearest, town).toBe(false);
+      expect(pick.limitedOnly, town).toBe(true);
+      expect(pick.clinics.slice(0, -1).every((c) => c.town === town && c.limited), town).toBe(true);
+      const extra = pick.clinics[pick.clinics.length - 1]!;
+      expect(extra.limited, town).toBeUndefined();
+      expect(extra.town, town).not.toBe(town);
+    }
+    // Oakdale now has a full-time clinic of its own.
+    const oakdale = pickClinics({ town: "oakdale", need: "all" });
+    expect(oakdale).toMatchObject({ nearest: false, limitedOnly: false });
+    expect(oakdale.clinics.map((c) => c.id)).toEqual(["oak-valley-oakdale"]);
   });
 
   test("distance: about right", () => {

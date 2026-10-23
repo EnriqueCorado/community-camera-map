@@ -81,7 +81,7 @@ export const RIGHTS_FACTS = {
       id: "right-no-sign",
       cite: "ILRC, Step-by-Step Family Preparedness Plan, Part III 'Talking to ICE' (Mar 10, 2026)",
       en: "Do not sign anything before you talk to a lawyer. Signing could take away your right to a hearing before an immigration judge, and you could be deported right away without one. ICE may ask you to sign papers agreeing to be deported without seeing a judge. If you want to stay in the United States, ask to go before an immigration judge. If you fear persecution or torture in your home country, tell an officer and contact a lawyer right away.",
-      es: "Usted tiene el derecho a negarse a firmar cualquier documento sin antes hablar con un abogado. Usted no tiene que firmar nada que no entienda o con lo que no esté de acuerdo. Hacerlo podría anular su derecho a hablar con un abogado o a una audiencia ante un juez de inmigración. Esto podría resultar en su deportación inmediata sin una audiencia. Si desea quedarse en Estados Unidos, pida ir ante un juez de inmigración. Si teme persecución o tortura en su país, dígaselo a un oficial y comuníquese con un abogado de inmediato.",
+      es: "Usted tiene el derecho a negarse a firmar cualquier documento sin antes hablar con un abogado. Usted no tiene que firmar nada que no entienda o con lo que no esté de acuerdo. Hacerlo podría anular su derecho a hablar con un abogado o a una audiencia ante un juez de inmigración. Esto podría resultar en su deportación inmediata sin una audiencia. ICE puede pedirle que firme papeles en los que acepta ser deportado sin ver a un juez. Si desea quedarse en Estados Unidos, pida ir ante un juez de inmigración. Si teme persecución o tortura en su país, dígaselo a un oficial y comuníquese con un abogado de inmediato.",
     },
     {
       id: "right-no-false-docs",
@@ -288,8 +288,8 @@ export const RIGHTS_FACTS = {
     {
       id: "scam-report",
       cite: "Cal DOJ 'Protect Yourself from Immigration Scams' (EN/ES), Resources",
-      en: "If you were scammed, report it to your county District Attorney or consumer affairs office, the FTC (ReportFraud.ftc.gov), the U.S. DOJ immigration court Fraud and Abuse Prevention Program (EOIR.Fraud.Program@usdoj.gov or (703) 305-0470), and the California DOJ (oag.ca.gov/report).",
-      es: "Si fue víctima de una estafa, denúnciela ante el Fiscal de Distrito o el departamento de asuntos del consumidor de su condado, la FTC (ReportFraud.ftc.gov), el Programa de Prevención de Fraudes y Abusos del Departamento de Justicia de EE. UU. (EOIR.Fraud.Program@usdoj.gov o (703) 305-0470) y el Departamento de Justicia de California (oag.ca.gov/report).",
+      en: "If you were scammed, report it to your county District Attorney or consumer affairs office, the FTC (ReportFraud.ftc.gov), the U.S. DOJ immigration court Fraud and Abuse Prevention Program (EOIR.Fraud.Program@usdoj.gov), and the California DOJ (oag.ca.gov/report).",
+      es: "Si fue víctima de una estafa, denúnciela ante el Fiscal de Distrito o el departamento de asuntos del consumidor de su condado, la FTC (ReportFraud.ftc.gov), el Programa de Prevención de Fraudes y Abusos del Departamento de Justicia de EE. UU. (EOIR.Fraud.Program@usdoj.gov) y el Departamento de Justicia de California (oag.ca.gov/report).",
     },
   ] satisfies Fact[],
 };

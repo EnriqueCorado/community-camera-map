@@ -237,18 +237,18 @@ export const FLYERS: readonly Flyer[] = [
       en: {
         headline: "Need a doctor or dentist, but no insurance?",
         bullets: [
-          "Community health centers in Stanislaus County see you even if you can’t pay, with fees based on your income.",
+          "Community health centers see you even if you can’t pay, with fees based on income.",
           "Doctor visits, dental, mental health, women’s health and children’s care.",
-          "Clinics that take federal money must give you a free interpreter.",
+          "Clinics that take federal money must offer free language help, including a qualified interpreter when you need one.",
           "Find the clinics near you, with phone numbers and hours.",
         ],
       },
       es: {
         headline: "¿Necesita un doctor o dentista, pero no tiene seguro?",
         bullets: [
-          "Los centros de salud comunitarios del condado de Stanislaus lo atienden aunque no pueda pagar, con cuotas según sus ingresos.",
-          "Consultas médicas, dental, salud mental, salud de la mujer y atención para niños.",
-          "Las clínicas que reciben dinero federal deben darle un intérprete gratis.",
+          "Los centros de salud lo atienden aunque no pueda pagar, con cuotas según sus ingresos.",
+          "Consultas médicas, dental, salud mental, salud de la mujer y de los niños.",
+          "Las clínicas que reciben dinero federal deben ofrecer ayuda gratis con el idioma, con un intérprete calificado cuando lo necesite.",
           "Encuentre las clínicas cerca de usted, con teléfonos y horarios.",
         ],
       },
