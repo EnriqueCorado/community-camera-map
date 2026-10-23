@@ -11,7 +11,10 @@
 // birthing-friendly · ns stations · ls evening shift · sv service bit flags.
 // Marketplace assisters (backend national/help_offices.py) use t as
 // space-separated type codes, d hours, web website and x 2 = area served (CMS
-// lists no public address, so the point is only near the area).
+// lists no public address, so the point is only near the area). Assisted
+// housing (hud-multifamily, usda-rural-rentals) adds z ZIP · pr HUD program
+// code · un apartments with rent help · ut all apartments; g is the
+// management company (kept only when it reads as an organization: orgName).
 import type { Lang } from "./i18n"; // type-only: erased at build
 
 export const SERVICE_COLORS: Record<string, string> = {
@@ -26,6 +29,8 @@ export const SERVICE_COLORS: Record<string, string> = {
   "addiction-treatment": "#6d28d9",
   "housing-counseling": "#059669",
   "public-housing": "#65a30d",
+  "hud-multifamily": "#c026d3",
+  "usda-rural-rentals": "#a16207",
   colleges: "#1e40af",
   "va-facilities": "#334155",
   "border-ports": "#b45309",
@@ -67,6 +72,14 @@ const LINKS: Record<string, [string, Bi]> = {
   "public-housing": [
     "https://www.hud.gov/program_offices/public_indian_housing/pha/contacts",
     ["HUD list of housing authorities", "Lista de autoridades de vivienda de HUD"],
+  ],
+  "hud-multifamily": [
+    "https://resources.hud.gov/",
+    ["Find HUD-assisted apartments (HUD Resource Locator)", "Buscar apartamentos con ayuda de HUD (HUD Resource Locator)"],
+  ],
+  "usda-rural-rentals": [
+    "https://rdmfhrentals.sc.egov.usda.gov/",
+    ["Search USDA rural rentals (vacancies)", "Buscar apartamentos del USDA en zonas rurales (disponibles)"],
   ],
   "va-facilities": ["https://www.va.gov/find-locations/", ["Find VA locations", "Buscar centros del VA"]],
   "border-ports": ["https://bwt.cbp.gov/", ["Border wait times (CBP)", "Tiempos de espera en la frontera (CBP)"]],
@@ -124,6 +137,14 @@ const NOTES: Record<string, Bi> = {
   "public-housing": [
     "Apply here for public housing or Section 8 vouchers (waiting lists may be closed).",
     "Solicite aquí vivienda pública o vales de Sección 8 (las listas de espera pueden estar cerradas).",
+  ],
+  "hud-multifamily": [
+    "Apply at the property’s office (most have a waiting list). In an assisted apartment, rent is usually about 30% of your income.",
+    "Solicite en la oficina de la propiedad (la mayoría tiene lista de espera). En un apartamento con ayuda, la renta suele ser de alrededor del 30% de sus ingresos.",
+  ],
+  "usda-rural-rentals": [
+    "Apply with the property or its management company. With USDA rental assistance, rent is usually about 30% of your income.",
+    "Solicite en la propiedad o con su empresa administradora. Con la ayuda del USDA, la renta suele ser de alrededor del 30% de sus ingresos.",
   ],
   "summer-meals": ["Free meals for kids and teens 18 and under.", "Comidas gratis para niños y jóvenes de 18 años o menos."],
   "social-security-offices": [
@@ -220,7 +241,52 @@ const LABELS: Record<string, Bi> = {
   company: ["Company", "Empresa"],
   medicareId: ["Medicare provider number (CCN)", "Número de proveedor de Medicare (CCN)"],
   no: ["No", "No"],
+  serves: ["Who it’s for", "Para quién es"],
+  managedBy: ["Managed by", "Administrado por"],
+  apartments: ["Apartments", "Apartamentos"],
+  rentHelp: ["With rent help", "Con ayuda para la renta"],
 };
+
+/** Housing layers whose popup adds program, apartments and ZIP rows. */
+const ASSISTED_HOUSING = new Set(["hud-multifamily", "usda-rural-rentals"]);
+
+/** HUD PROGRAM_TYPE1 codes ("202/8 NC", "PRAC/811", "LMSA", "RAD PH Conv") in
+ *  plain words, first match wins; insurance-only codes show nothing. */
+const HUD_PROGRAMS: [RegExp, Bi][] = [
+  [/^RAD\b/, ["Section 8 (converted under RAD)", "Sección 8 (convertida con RAD)"]],
+  [/811/, ["Section 811 (people with disabilities)", "Sección 811 (personas con discapacidad)"]],
+  [/515/, ["Section 8 + USDA Section 515", "Sección 8 + Sección 515 del USDA"]],
+  // 202/162 and PAC/202 are the old Section 202 for people with disabilities.
+  [/202\/162|PAC\/202/, ["Section 202 (people with disabilities)", "Sección 202 (personas con discapacidad)"]],
+  [/202|SPRAC/, ["Section 202 (seniors)", "Sección 202 (personas mayores)"]],
+  [/Sec(tion)? 8|\/8 |LMSA|Preservation|Pension Fund/, ["Section 8 (project-based)", "Sección 8 (basada en el proyecto)"]],
+];
+/** A HUD program code in plain words ("" when it isn't a rent-help program). */
+export function hudProgram(code: unknown, lang: Lang): string {
+  const c = code == null ? "" : String(code);
+  const hit = HUD_PROGRAMS.find(([re]) => re.test(c));
+  return hit ? hit[1][lang === "es" ? 1 : 0] : "";
+}
+
+// Words that mark a management agent as an organization. Many USDA (and some
+// HUD) agents are individuals ("MILLER, GLENN D", "Todd Byers"): without one
+// of these words the name and the phone shown with it are dropped (post "mgmt").
+// Surname-like words (Park, House, Trust, Church, Living, Ha, Co) are left out on purpose.
+const ORG_WORDS =
+  /\b(inc|incorporated|llc|l\.l\.c|l\.?p|llp|pllc|ltd|limited|corp|corporation|company|companies|management|mgmt|mgt|housing|hsg|authority|properties|property|props?|realty|real estate|group|services?|associates|assoc|association|partners|partnership|foundation|ministries|society|agency|enterprises|development|residential|communit(?:y|ies)|homes|apartments|apts|cent(?:er|ers|re)|cooperative|co-?op|organization|charities|catholic|lutheran|presbyterian|methodist|baptist|episcopal|commission|department|dept|university|institute|network|alliance|solutions|investments|capital|holdings|ventures|healthcare|health|behavioral|aging|counseling|ymca|ywca|h\/a|hra|cdc|cda|pha|mha)\b/i;
+// A person riding along: "Inc./Robert Ercolini", "/ J. Roe", "c/o", "% BALDUS,
+// ANDREA" (USDA's c/o), "Attn", "Acme - Jane Roe", "(Jane Roe)", "DBA RON MOLINE".
+// ("H/A" is a housing authority.)
+const PERSON_TAIL = /c\/o|%|\battn\b|(?<!\bh)\/\s*[a-z]|\s-\s|\(|\bdba\s+[a-z]+\s+[a-z]+$/i;
+// Every comma must lead to a legal suffix ("SPM, LLC", "Ellis & Ellis, PLLC"):
+// "MILLER, GLENN D", "CHURCH, JANET", "BENCHMARK REAL ESTATE, JO T" are people.
+const LEGAL_AFTER_COMMA = /^\s*(inc|incorporated|llc|l\.l\.c|l\.?p|llp|pllc|ltd|corp|corporation)\b/i;
+/** The name if it reads as an organization, else "". Errs toward dropping. */
+export function orgName(v: unknown): string {
+  const s = v == null ? "" : String(v).trim().replace(/\s+/g, " ");
+  if (!s || !ORG_WORDS.test(s) || PERSON_TAIL.test(s)) return "";
+  return s.split(",").slice(1).every((part) => LEGAL_AFTER_COMMA.test(part)) ? s : "";
+}
 
 /** Care Compare codes -> words: ownership and the services each place offers. */
 const OWNERSHIP: Record<string, Bi> = {
@@ -318,6 +384,20 @@ TYPES["marketplace-assisters"] = {
   mcd: ["Medicaid help", "Ayuda con Medicaid"],
   chip: ["CHIP (children’s coverage) help", "Ayuda con CHIP (seguro para niños)"],
 };
+TYPES["hud-multifamily"] = {
+  Elderly: ["Seniors", "Personas mayores"],
+  Disabled: ["People with disabilities", "Personas con discapacidad"],
+  Family: ["Families and individuals", "Familias y personas que viven solas"],
+  "Health Care": ["Health care residence", "Residencia con atención médica"],
+};
+TYPES["usda-rural-rentals"] = {
+  "FA - Family": ["Families and individuals", "Familias y personas que viven solas"],
+  "EL - Elderly": ["Seniors and people with disabilities", "Personas mayores y con discapacidad"],
+  "MX - Mixed": ["Families and seniors", "Familias y personas mayores"],
+  "CG - Congregate": ["Seniors (shared meals and services)", "Personas mayores (comidas y servicios compartidos)"],
+  "GH - Group Home": ["Group home", "Hogar grupal"],
+  "?? - Unknown": ["", ""],
+};
 TYPES["immigration-offices"] = {
   court: ["Immigration court", "Corte de inmigración"],
   ice: ["ICE field office (ERO)", "Oficina de campo de ICE (ERO)"],
@@ -406,7 +486,11 @@ export function servicePopup(
     // LSC service areas keep the tool's own names: name · phone · web.
     p = { n: p.name, p: p.phone, web: p.web };
   }
-  const city = [str(p.c), raw(p.s).length === 2 ? raw(p.s) : str(p.s)].filter(Boolean).join(", ");
+  const zip = /^\d{5}$/.test(raw(p.z)) ? raw(p.z) : "";
+  const state = [raw(p.s).length === 2 ? raw(p.s) : str(p.s), zip].filter(Boolean).join(" ");
+  const city = [str(p.c), state].filter(Boolean).join(", ");
+  const housing = ASSISTED_HOUSING.has(layer);
+  const count = (v: unknown) => (typeof v === "number" && v > 0 ? v.toLocaleString(locale) : "");
   const pop = typeof p.pop === "number" ? p.pop.toLocaleString(locale) : "";
   const both = p.t === "both" ? (layer === "mental-health" ? L("bothMh") : L("bothSu")) : "";
   const kind = raw(p.k) && raw(p.k) !== "Permanent" ? typeLabel(p.k) : "";
@@ -437,11 +521,14 @@ export function servicePopup(
       : [[layer === "hospice-providers" ? L("familySurvey") : L("stars"), starText(p.st, true)]];
   const rows: [string, string][] = [
     ...starRows,
-    [L("type"), isTreatment ? "" : [typeLabel(p.t), kind].filter(Boolean).join(" · ")],
+    [housing ? L("serves") : L("type"), isTreatment ? "" : [typeLabel(p.t), kind].filter(Boolean).join(" · ")],
+    [L("program"), layer === "hud-multifamily" ? hudProgram(p.pr, lang) : ""],
+    [L("rentHelp"), housing ? count(p.un) : ""],
+    [L("apartments"), housing ? count(p.ut) : ""],
     [L("office"), raw(p.o)],
     [
-      layer === "summer-meals" ? L("sponsor") : layer.endsWith("head-start") ? L("program") : layer === "dialysis-facilities" ? L("company") : L("org"),
-      layer === "dialysis-facilities" ? raw(p.g) : str(p.g),
+      layer === "summer-meals" ? L("sponsor") : layer.endsWith("head-start") ? L("program") : layer === "dialysis-facilities" ? L("company") : housing ? L("managedBy") : L("org"),
+      layer === "dialysis-facilities" ? raw(p.g) : housing ? str(orgName(p.g)) : str(p.g),
     ],
     [L("address"), str(p.a)],
     [L("city"), city],

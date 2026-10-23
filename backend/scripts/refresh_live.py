@@ -38,6 +38,7 @@ from app.layers.national import parity, state_bakes
 from app.layers.national.care_compare import WEEKLY as CARE_COMPARE_WEEKLY
 from app.layers.national.help_offices import WEEKLY as HELP_OFFICES_WEEKLY
 from app.layers.national.roads import KEYED
+from app.layers.national.school_meals import WEEKLY as SCHOOL_MEALS_WEEKLY
 from app.layers.national.services import WEEKLY as SERVICES_WEEKLY
 from app.layers.service import LayerService, record_layer_times, sync_catalog
 
@@ -96,6 +97,7 @@ WEEKLY = (
     *CARE_COMPARE_WEEKLY,  # CMS dialysis, hospice, home health, hospital ratings
     "building-permits",  # Census BPS: yearly, by place
     *state_bakes.WEEKLY,  # state child-care lists (Texas is geocoded)
+    *SCHOOL_MEALS_WEEKLY,  # free school meals, one file per state (NCES + state lists)
 )
 HOURLY = (
     "reservoirs",

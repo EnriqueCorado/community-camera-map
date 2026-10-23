@@ -387,6 +387,16 @@ HRSA_SITES = (
 HUD = "https://services.arcgis.com/VTyQ9soqVukalItT/arcgis/rest/services"
 HOUSING_COUNSELING = f"{HUD}/Single_Family_Housing_Counseling_Agencies/FeatureServer/0"
 PUBLIC_HOUSING = f"{HUD}/Public_Housing_Authorities/FeatureServer/0"
+# HUD eGIS "Multifamily Properties - Assisted" (project-based Section 8, 202,
+# 811, RAP/Rent Supplement, RAD conversions); read-only, CORS *, data edited
+# 2026-07-21, 23,783 properties (checked 2026-10-23). HUD's separate Section
+# 202 service adds only unsubsidized properties; its Section 811 service is a
+# 2023 subset of this one.
+HUD_MF_ASSISTED = f"{HUD}/MULTIFAMILY_PROPERTIES_ASSISTED/FeatureServer/0"
+# USDA Rural Development multifamily housing as republished by HUD eGIS (USDA
+# itself has no ArcGIS service); read-only, CORS *, data as of 2024-11-08,
+# 13,262 properties (checked 2026-10-23).
+USDA_RURAL_RENTALS = f"{HUD}/USDA_Rural_Housing_Assets/FeatureServer/0"
 COLLEGES = (
     "https://services1.arcgis.com/Ua5sjt3LWTPigjyD/arcgis/rest/services/"
     "Postsecondary_School_Locations_Current/FeatureServer/0"
@@ -429,6 +439,38 @@ PUBLIC_HOUSING_FIELDS = {  # never HA_EMAIL_ADDR_TEXT or EXEC_DIR_* (personal)
     "STD_ST": "s",
     "HA_PHN_NUM": "p",  # the authority's main line
     "HA_PROGRAM_TYPE": "t",  # Low-Rent | Section 8 | Combined
+}
+# Never MGMT_CONTACT_* (a named person with their own line and email) or
+# PROJECT_MANAGER_NAME_TEXT (HUD staff). The management agent's name reaches
+# the popup only when it reads as an organization, and the phone only with it
+# (browser post "mgmt": where the agent is a person, the on-site line is often theirs).
+HUD_MF_FIELDS = {
+    "PROPERTY_NAME_TEXT": "n",
+    "ADDRESS_LINE1_TEXT": "a",  # HUD's own; STD_ADDR is blank for ~850 properties
+    "STD_CITY": "c",
+    "STD_ST": "s",
+    "STD_ZIP5": "z",
+    "PROPERTY_ON_SITE_PHONE_NUMBER": "p",  # the property's own office line
+    "CLIENT_GROUP_TYPE": "t",  # Elderly | Family | Disabled | Health Care
+    "PROGRAM_TYPE1": "pr",  # Sec 8 NC | 202/8 NC | PRAC/811 | LMSA | RAD PH Conv ...
+    "TOTAL_ASSISTED_UNIT_COUNT": "un",
+    "TOTAL_UNIT_COUNT": "ut",
+    "MGMT_AGENT_ORG_NAME": "g",
+}
+# Never MGMT_AGENT_EMAIL, MGMT_AGENT_ADDR_* or MGMT_AGENT_PH_EXTN (often a
+# person's extension). Many agents are individuals ("MILLER, GLENN D"): the
+# browser post "mgmt" keeps the name and phone only for organizations.
+USDA_RURAL_FIELDS = {
+    "PROJECT_NAME": "n",
+    "PRJ_ADDRESS_LINE1": "a",
+    "PRJ_ADDRESS_CITY": "c",
+    "PRJ_ADDRESS_STATE": "s",
+    "PRJ_ADDRESS_ZIP": "z",
+    "RENTAL_DESIGNATION": "t",  # FA - Family | EL - Elderly | MX - Mixed | CG | GH
+    "RA_UNITS": "un",  # apartments with USDA rental assistance
+    "TOTAL_UNITS": "ut",
+    "MGMT_AGENT_NAME": "g",
+    "MGMT_AGENT_PH_NBR": "p",
 }
 COLLEGE_FIELDS = {"NAME": "n", "STREET": "a", "CITY": "c", "STATE": "s", "UNITID": "u"}
 VA_FIELDS = {"STA_NAME": "n", "S_ADD2": "a", "S_CITY": "c", "S_STATE": "s", "S_ABBR": "t"}
@@ -642,6 +684,48 @@ LAYERS: dict[str, Layer] = {
             min_zoom=7,
             refresh_s=24 * 3600,
             home_complete=True,
+        ),
+    ),
+    "hud-multifamily": _layer(
+        "hud-multifamily",
+        "HUD-assisted apartments (where to apply)",
+        "Apartamentos con ayuda de HUD (dónde solicitar)",
+        "Apartment buildings with HUD rent help built in: project-based Section 8, "
+        "Section 202 for seniors, Section 811 for people with disabilities. Apply at "
+        "the property. HUD Multifamily Assisted Properties, updated July 2026.",
+        "Edificios de apartamentos con ayuda de HUD para la renta: Sección 8 basada en el "
+        "proyecto, Sección 202 para personas mayores y Sección 811 para personas con "
+        "discapacidad. Se solicita en la propiedad. HUD Multifamily Assisted Properties, "
+        "actualizado en julio de 2026.",
+        "housing",
+        view=View(
+            HUD_MF_ASSISTED,
+            HUD_MF_FIELDS,
+            "point",
+            min_zoom=9,
+            where="TOTAL_ASSISTED_UNIT_COUNT > 0",
+            refresh_s=24 * 3600,
+            post="mgmt",
+        ),
+    ),
+    "usda-rural-rentals": _layer(
+        "usda-rural-rentals",
+        "USDA rural rental apartments",
+        "Apartamentos de renta en zonas rurales (USDA)",
+        "Apartment complexes financed by USDA Rural Development (such as Section 515 "
+        "rural rentals), many with USDA rental assistance. Apply with the property or "
+        "its management company. USDA list as of Nov 2024, via HUD.",
+        "Complejos de apartamentos financiados por USDA Rural Development (como los de renta "
+        "rural de la Sección 515), muchos con ayuda del USDA para la renta. Se solicita en la "
+        "propiedad o con su empresa administradora. Lista del USDA de nov. de 2024, vía HUD.",
+        "housing",
+        view=View(
+            USDA_RURAL_RENTALS,
+            USDA_RURAL_FIELDS,
+            "point",
+            min_zoom=8,
+            refresh_s=24 * 3600,
+            post="mgmt",
         ),
     ),
     "colleges": _layer(

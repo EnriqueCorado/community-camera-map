@@ -1,6 +1,6 @@
 // Unit tests for the community & immigrant services pack popups (no browser).
 import { test, expect } from "@playwright/test";
-import { mealsOpen, phone, servicePopup, SERVICE_COLORS, SERVICE_LINK_HOSTS } from "../../frontend/src/services-pack";
+import { hudProgram, mealsOpen, orgName, phone, servicePopup, SERVICE_COLORS, SERVICE_LINK_HOSTS } from "../../frontend/src/services-pack";
 import { applyFields } from "../../frontend/src/view-logic";
 import { safeUrl, WEBCAM_PAGE_HOSTS } from "../../frontend/src/popup-logic";
 import type { ViewSpec } from "../../frontend/src/api/client";
@@ -153,4 +153,72 @@ test("Marketplace assisters: types, hours, languages, area-only sites, HealthCar
   // Other layers keep one link in both languages and their "Days" row.
   expect(servicePopup("health-centers", { n: "X" }, "es", "es-US", tidy).link?.href).toBe("https://findahealthcenter.hrsa.gov/");
   expect(row(servicePopup("summer-meals", { n: "X", d: "Mon-Fri" }, "en", "en-US", tidy).rows, "Days")).toBe("Mon-Fri");
+});
+
+test("HUD-assisted apartments: who it's for, program, rent-help apartments, ZIP and the HUD locator", () => {
+  const p = { n: "Parkview Christian Estates", a: "3112 NAPIER DR", c: "Modesto                     ", s: "CA", z: "95350", p: "(209) 521-0860", t: "Elderly", pr: "202/8 NC", un: 60, ut: 98, g: "Foundation Property Management, Inc." };
+  const es = servicePopup("hud-multifamily", p, "es", "es-US", tidy);
+  expect(es.title).toBe("Parkview Christian Estates");
+  expect(row(es.rows, "Para quién es")).toBe("Personas mayores");
+  expect(row(es.rows, "Programa")).toBe("Sección 202 (personas mayores)");
+  expect(row(es.rows, "Con ayuda para la renta")).toBe("60");
+  expect(row(es.rows, "Apartamentos")).toBe("98");
+  expect(row(es.rows, "Ciudad")).toBe("Modesto, CA 95350");
+  expect(row(es.rows, "Teléfono")).toBe("(209) 521-0860");
+  expect(row(es.rows, "Administrado por")).toBe("Foundation Property Management, Inc.");
+  expect(row(es.rows, "Nota")).toContain("lista de espera");
+  expect(es.link?.href).toBe("https://resources.hud.gov/");
+  expect(safeUrl(es.link?.href, WEBCAM_PAGE_HOSTS)).toBe("https://resources.hud.gov/");
+  const en = servicePopup("hud-multifamily", { ...p, t: "Family", pr: "LMSA", g: "Todd Byers" }, "en", "en-US", tidy);
+  expect(row(en.rows, "Who it’s for")).toBe("Families and individuals");
+  expect(row(en.rows, "Program")).toBe("Section 8 (project-based)");
+  expect(row(en.rows, "Managed by")).toBe(""); // a person's name is never shown
+  expect(SERVICE_COLORS["hud-multifamily"]).toMatch(/^#[0-9a-f]{6}$/);
+  expect(SERVICE_COLORS["usda-rural-rentals"]).toMatch(/^#[0-9a-f]{6}$/);
+});
+
+test("HUD program codes in plain words; insurance-only codes show nothing", () => {
+  const en = (c: string) => hudProgram(c, "en");
+  expect(en("RAD PRAC Conv")).toBe("Section 8 (converted under RAD)");
+  expect(en("PRAC/811")).toBe("Section 811 (people with disabilities)");
+  expect(en("811 PRA DEMO")).toBe("Section 811 (people with disabilities)");
+  expect(en("515/8 NC")).toBe("Section 8 + USDA Section 515");
+  expect(en("SPRAC")).toBe("Section 202 (seniors)");
+  expect(en("PRAC/202")).toBe("Section 202 (seniors)");
+  for (const c of ["202/162 NC", "PAC/202"]) expect(en(c)).toBe("Section 202 (people with disabilities)");
+  for (const c of ["Sec 8 NC", "HFDA/8 SR", "PD/8 Existing", "Preservation", "Section 8"]) expect(en(c)).toBe("Section 8 (project-based)");
+  for (const c of ["S 221(d)(4)", "BMIR", "", "223(f) Refi/ Purchase Apts"]) expect(en(c)).toBe("");
+  expect(hudProgram(null, "es")).toBe("");
+});
+
+test("management agents: organizations kept, people (and, for USDA, their phones) dropped", () => {
+  for (const n of ["BUCKINGHAM PROP MGMT", "INTERSTATE REALTY MANAGEMENT CO.", "CIC OAKRIDGE LP", "Ellis & Ellis, PLLC", "RIVER FALLS H/A", "AWI MANAGEMENT COMPANY", "Volunteers of America Housing", "SPM, LLC", "CARE, INC.", "BIGGS, INC DBA BIGGS PROPERTY MGMT", "HOUSING AUTHORITY-STATESVILLE"]) {
+    expect(orgName(n), n).not.toBe("");
+  }
+  for (const n of ["MILLER, GLENN D", "Todd Byers", "J. L. GRAY", "PARK, JUNG", "JOHN DOE TRUST", "Urban ManagementINC./Robert Ercolini", "Acme Housing c/o Jane Roe", "CHURCH, JANET", "HOMES, ANA M", "Janet Church", "ROBERT CHURCH", "JOHN DOE LIVING TRUST",
+    "B & G PARTNERSHIP % BALDUS, ANDREA", "CHILHOWEE SCH, INC % MICHAEL TER", "MOLINE MGMT GROUP DBA RON MOLINE", "BENCHMARK REAL ESTATE, JO T",
+    "Acme Housing / J. Roe", "Acme Housing - Jane Roe", "Acme Mgmt (Jane Roe)", "Jane Roe, Acme Management", "APC Management / A Division of Art Pugsley Constru", "", null]) {
+    expect(orgName(n), String(n)).toBe("");
+  }
+  const spec = (post: string): ViewSpec => ({
+    kind: "arcgis", url: "https://x.example/FeatureServer/0", fields: { NAME: "n", AGENT: "g", PHONE: "p" },
+    geometry: "point", min_zoom: 8, where: "1=1", max: 2000, simplify: false, refresh_s: 3600, post,
+  });
+  const pt = { type: "Point", coordinates: [-120.9, 37.6] };
+  const json = { features: [
+    { type: "Feature", geometry: pt, properties: { NAME: "Garden Apts", AGENT: "MILLER, GLENN D", PHONE: "5595550100" } },
+    { type: "Feature", geometry: pt, properties: { NAME: "Oakdale Apts", AGENT: "AWI MANAGEMENT COMPANY", PHONE: "5307456170" } },
+  ] };
+  // A person's name never reaches the map, and neither does the phone beside it
+  // (USDA's is the agent's own; a HUD "on-site" line is often the owner's).
+  const usda = applyFields(json, spec("mgmt")).features.map((f) => f.properties ?? {});
+  expect(usda[0]).toEqual({ n: "Garden Apts", g: null, p: null });
+  expect(usda[1]).toEqual({ n: "Oakdale Apts", g: "AWI MANAGEMENT COMPANY", p: "5307456170" });
+  const rural = servicePopup("usda-rural-rentals", { n: "SUNRISE VISTA APTS", t: "EL - Elderly", un: 18, ut: 24, ...usda[1] }, "es", "es-US", tidy);
+  expect(row(rural.rows, "Para quién es")).toBe("Personas mayores y con discapacidad");
+  expect(row(rural.rows, "Con ayuda para la renta")).toBe("18");
+  expect(row(rural.rows, "Teléfono")).toBe("(530) 745-6170");
+  expect(row(rural.rows, "Programa")).toBe("");
+  expect(rural.link?.href).toBe("https://rdmfhrentals.sc.egov.usda.gov/");
+  expect(safeUrl(rural.link?.href, WEBCAM_PAGE_HOSTS)).not.toBeNull();
 });

@@ -190,6 +190,9 @@ SOURCES.update(_CARE_COMPARE_SOURCES)
 from app.layers.national.parity import SOURCES as _PARITY_SOURCES  # noqa: E402
 
 SOURCES.update(_PARITY_SOURCES)
+from app.layers.national.school_meals import SOURCES as _SCHOOL_MEALS_SOURCES  # noqa: E402
+
+SOURCES.update(_SCHOOL_MEALS_SOURCES)
 for _row in _ACS_METRICS:
     SOURCES[_row[0]] = "U.S. Census Bureau ACS 2020-2024 5-year, via Esri Living Atlas"
 # Community & immigrant services pack (app/layers/national/services.py).
@@ -215,6 +218,8 @@ SOURCES.update(
         "addiction-treatment": "SAMHSA FindTreatment.gov",
         "housing-counseling": "HUD-approved housing counseling agencies (HUD)",
         "public-housing": "HUD public housing authorities",
+        "hud-multifamily": "HUD eGIS Multifamily Properties - Assisted",
+        "usda-rural-rentals": "USDA Rural Development multifamily housing, via HUD eGIS",
         "colleges": "NCES EDGE postsecondary school locations (IPEDS)",
         "va-facilities": "Veterans Health Administration facilities (VA)",
         "border-ports": "BTS / CBP border crossing entry data (NTAD)",
