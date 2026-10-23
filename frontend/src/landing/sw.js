@@ -4,8 +4,9 @@
 // registers it then) and "Remove saved pages" deletes it again.
 //
 // Rules, for a privacy-first site whose pages carry legal facts:
-//  - Only the listed pages of this folder are ever handled or stored: never
-//    the map app, its data, anything typed, or the address's ?query.
+//  - Only the listed pages of this folder, and the shared stylesheet and page
+//    script they use (help-assets/, content-hashed names), are ever handled or
+//    stored: never the map app, its data, anything typed, or the address's ?query.
 //  - Network first. A saved copy is shown only when there is no connection,
 //    the host fails (5xx) or the network takes over WAIT_MS, and it carries a
 //    "saved copy from <date>" banner.
@@ -21,6 +22,8 @@ var CACHE = "__CACHE__";
 var LANG = "__LANG__";
 /** [path, sha256 hex of the exact published HTML] */
 var PAGES = __PAGES__;
+/** [path, sha256 hex] of the shared stylesheet and script the pages load. */
+var ASSETS = __ASSETS__;
 var WAIT_MS = 4000;
 var ORIGIN = self.location.origin;
 var MARKER = ORIGIN + SCOPE + "__saved__";
@@ -44,6 +47,15 @@ var EXPECTED = {};
 PAGES.forEach(function (p) {
   EXPECTED[ORIGIN + p[0]] = p[1];
 });
+var ASSET = {};
+ASSETS.forEach(function (a) {
+  ASSET[ORIGIN + a[0]] = a[1];
+});
+/** The hash a saved copy of `key` must have (page or shared file), if any. */
+function expected(key) {
+  return EXPECTED[key] || ASSET[key];
+}
+var ASSET_TYPES = { css: "text/css; charset=utf-8", js: "text/javascript; charset=utf-8" };
 
 /** The cache key for a URL: origin + path, with a trailing slash for pages. */
 function keyFor(url) {
@@ -80,7 +92,7 @@ self.addEventListener("activate", function (event) {
           return Promise.all(
             reqs
               .filter(function (r) {
-                return r.url !== MARKER && !EXPECTED[r.url];
+                return r.url !== MARKER && !expected(r.url);
               })
               .map(function (r) {
                 return cache.delete(r);
@@ -94,17 +106,18 @@ self.addEventListener("activate", function (event) {
   );
 });
 
-/** Keep a downloaded page, only if it is exactly this build's page. */
+/** Keep a downloaded page or shared file, only if it is exactly this build's. */
 function keep(cache, key, res) {
   if (!res.ok || res.redirected || res.type !== "basic") return Promise.reject(new Error("fetch"));
   return res.arrayBuffer().then(function (buf) {
     return hex(buf).then(function (h) {
-      if (h !== EXPECTED[key]) {
+      if (h !== expected(key)) {
         self.registration.update(); // the site is newer than this worker
         throw new Error("version");
       }
+      var type = ASSET[key] ? ASSET_TYPES[key.split(".").pop()] : "text/html; charset=utf-8";
       // A fresh Response: the stored copy keeps no URL or query string.
-      return cache.put(key, new Response(buf, { headers: { "Content-Type": "text/html; charset=utf-8", "X-Saved-At": today() } }));
+      return cache.put(key, new Response(buf, { headers: { "Content-Type": type, "X-Saved-At": today() } }));
     });
   });
 }
@@ -123,9 +136,11 @@ function safeDate(s) {
 function saveAll() {
   return caches.open(CACHE).then(function (cache) {
     return Promise.all(
-      Object.keys(EXPECTED).map(function (key) {
-        return savePage(cache, key);
-      }),
+      Object.keys(EXPECTED)
+        .concat(Object.keys(ASSET))
+        .map(function (key) {
+          return savePage(cache, key);
+        }),
     ).then(function () {
       return cache.put(MARKER, new Response(today()));
     });
@@ -151,6 +166,20 @@ function savedCopy(key) {
   });
 }
 
+/** The saved copy of a shared file, or null if missing or not this build's. */
+function savedAsset(key) {
+  return caches.open(CACHE).then(function (cache) {
+    return cache.match(key).then(function (hit) {
+      if (!hit) return null;
+      return hit.arrayBuffer().then(function (buf) {
+        return hex(buf).then(function (h) {
+          return h === ASSET[key] ? new Response(buf, { headers: { "Content-Type": hit.headers.get("Content-Type") } }) : null;
+        });
+      });
+    });
+  });
+}
+
 function offlinePage() {
   var html =
     '<!doctype html><html lang="' + LANG + '"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' +
@@ -161,7 +190,19 @@ function offlinePage() {
 
 self.addEventListener("fetch", function (event) {
   var req = event.request;
-  if (req.method !== "GET" || req.mode !== "navigate") return;
+  if (req.method !== "GET") return;
+  // The shared stylesheet and script: their names change with their content,
+  // so a verified saved copy is always right (and works offline).
+  var asset = new URL(req.url).origin === ORIGIN ? ORIGIN + new URL(req.url).pathname : "";
+  if (ASSET[asset]) {
+    event.respondWith(
+      savedAsset(asset).then(function (copy) {
+        return copy || fetch(req);
+      }),
+    );
+    return;
+  }
+  if (req.mode !== "navigate") return;
   var key = keyFor(req.url);
   if (!EXPECTED[key]) return; // not one of this folder's pages: the browser handles it
   event.respondWith(
@@ -223,9 +264,15 @@ self.addEventListener("message", function (event) {
             reply({ type: "status", saved: true, date: safeDate(date) });
             // After a site update, quietly bring saved pages up to this build.
             return Promise.all(
-              Object.keys(EXPECTED).map(function (key) {
-                return savedCopy(key);
-              }),
+              Object.keys(EXPECTED)
+                .map(function (key) {
+                  return savedCopy(key);
+                })
+                .concat(
+                  Object.keys(ASSET).map(function (key) {
+                    return savedAsset(key);
+                  }),
+                ),
             ).then(function (copies) {
               if (copies.some(function (c) { return !c; })) return saveAll().catch(function () {});
             });

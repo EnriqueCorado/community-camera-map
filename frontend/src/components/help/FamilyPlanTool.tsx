@@ -2,7 +2,7 @@
 // where the documents are. Everything lives in memory (the Immigration tab
 // holds it, so switching to "Know your rights" and back keeps it); nothing is
 // stored or sent. "Print or save as PDF" prints only the plan.
-import { useEffect, useId, useRef, useState, type Dispatch, type SetStateAction } from "react";
+import { memo, useCallback, useEffect, useId, useRef, useState, type Dispatch, type SetStateAction } from "react";
 import { createPortal, flushSync } from "react-dom";
 import { LOCALE, useI18n, type Lang } from "../../i18n";
 import type { HelpCopy } from "../../help/copy";
@@ -18,13 +18,14 @@ import {
   setField,
   TEXT_MAX,
   toggleTodo,
+  type Entry,
   type PlanSection,
   type PlanState,
 } from "../../help/family-plan";
 import { FAMILY_PLAN_COPY, type FamilyPlanCopy } from "../../help/family-plan-copy";
 import { PLAN_CHECKED, PLAN_FACTS, PLAN_LINKS, PLAN_SOURCES } from "../../help/family-plan-facts";
 import { RAPID_RESPONSE } from "../../help/rights-facts";
-import { ExtLink, FactList, Field, Phone, Sources } from "./ui";
+import { ExtLink, FactList, Field, LazyDetails, Phone, Sources } from "./ui";
 import "./family-plan.css";
 
 type Paper = { mode: "filled" | "blank"; lang: Lang };
@@ -49,7 +50,7 @@ export function FamilyPlanTool({
   /** Move focus to the title on open (when reached from a link in another view). */
   focusTitle?: boolean;
 }) {
-  const { lang } = useI18n();
+  const { lang, locale } = useI18n();
   const p = FAMILY_PLAN_COPY[lang];
   const uid = useId();
   const root = useRef<HTMLDivElement>(null);
@@ -59,36 +60,41 @@ export function FamilyPlanTool({
   const [paper, setPaper] = useState<Paper | null>(null);
   const [asking, setAsking] = useState(false);
   const [status, setStatus] = useState("");
-  // What to focus after the next render: an entry's first field, or a button.
-  const focusNext = useRef<string | null>(null);
 
   useEffect(() => {
     if (focusTitle) titleRef.current?.focus();
   }, [focusTitle]);
 
-  useEffect(() => {
-    const sel = focusNext.current;
-    if (!sel) return;
-    focusNext.current = null;
-    root.current?.querySelector<HTMLElement>(sel)?.focus();
-  });
+  /** Apply a change now (so the new or remaining fields are in the page), then move focus. */
+  const changeThenFocus = useCallback(
+    (change: (old: PlanState) => PlanState, focus: () => HTMLElement | null | undefined) => {
+      flushSync(() => setPlan(change));
+      focus()?.focus();
+    },
+    [setPlan],
+  );
+  const find = (sel: string) => root.current?.querySelector<HTMLElement>(sel);
 
   useEffect(() => {
     if (asking) cancelRef.current?.focus();
   }, [asking]);
 
-  const add = (s: PlanSection) => {
-    const n = plan.entries[s.id].length + 1;
-    setPlan((old) => addEntry(old, s.id));
-    focusNext.current = `[data-entry="${s.id}-${n - 1}"]`;
-    setStatus(p.added(s.repeat!.item[lang], n));
-  };
+  // Stable (no dependency on the plan), so typing re-renders only the section being typed in.
+  const add = useCallback(
+    (s: PlanSection, count: number) => {
+      changeThenFocus((old) => addEntry(old, s.id), () => find(`[data-entry="${s.id}-${count}"]`));
+      setStatus(p.added(s.repeat!.item[lang], count + 1));
+    },
+    [changeThenFocus, p, lang],
+  );
 
-  const remove = (s: PlanSection, i: number) => {
-    setPlan((old) => removeEntry(old, s.id, i));
-    focusNext.current = `[data-add="${s.id}"]`;
-    setStatus(p.removed(s.repeat!.item[lang], i + 1));
-  };
+  const remove = useCallback(
+    (s: PlanSection, i: number) => {
+      changeThenFocus((old) => removeEntry(old, s.id, i), () => find(`[data-add="${s.id}"]`));
+      setStatus(p.removed(s.repeat!.item[lang], i + 1));
+    },
+    [changeThenFocus, p, lang],
+  );
 
   const print = (mode: Paper["mode"]) => {
     // An empty plan prints the blank one, rather than a page with only a title.
@@ -107,10 +113,9 @@ export function FamilyPlanTool({
   };
 
   const clearAll = () => {
-    setPlan(emptyPlan());
-    setAsking(false);
+    flushSync(() => setAsking(false));
+    changeThenFocus(() => emptyPlan(), () => titleRef.current);
     setStatus(p.cleared);
-    focusNext.current = "h3";
   };
 
   return (
@@ -130,7 +135,20 @@ export function FamilyPlanTool({
       </p>
 
       {PLAN_SECTIONS.map((s) => (
-        <PlanSectionForm key={s.id} s={s} plan={plan} setPlan={setPlan} p={p} c={c} uid={uid} onAdd={add} onRemove={remove} onLegal={onLegal} />
+        <PlanSectionForm
+          key={s.id}
+          s={s}
+          list={plan.entries[s.id]}
+          keys={plan.keys[s.id]}
+          done={plan.done}
+          setPlan={setPlan}
+          p={p}
+          c={c}
+          uid={uid}
+          onAdd={add}
+          onRemove={remove}
+          onLegal={onLegal}
+        />
       ))}
 
       <section className="hcard hplan__done" aria-labelledby={`${uid}-done`}>
@@ -169,8 +187,8 @@ export function FamilyPlanTool({
                 type="button"
                 className="hbtn"
                 onClick={() => {
-                  setAsking(false);
-                  focusNext.current = "[data-clear]";
+                  flushSync(() => setAsking(false));
+                  find("[data-clear]")?.focus();
                 }}
               >
                 {p.clearNo}
@@ -183,15 +201,19 @@ export function FamilyPlanTool({
         {status}
       </p>
 
-      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(PLAN_CHECKED, LOCALE[lang]))} items={PLAN_SOURCES} newTab={c.newTab} report={{ topic: p.title, checked: PLAN_CHECKED }} />
+      <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(PLAN_CHECKED, locale))} items={PLAN_SOURCES} newTab={c.newTab} report={{ topic: p.title, checked: PLAN_CHECKED }} />
       {paper && createPortal(<PlanPaper plan={plan} paper={paper} />, document.body)}
     </div>
   );
 }
 
-function PlanSectionForm({
+/** One section of the form. Memoized: it gets only its own entries, so typing
+ *  in one section doesn't re-render the others. */
+const PlanSectionForm = memo(function PlanSectionForm({
   s,
-  plan,
+  list,
+  keys,
+  done,
   setPlan,
   p,
   c,
@@ -201,17 +223,18 @@ function PlanSectionForm({
   onLegal,
 }: {
   s: PlanSection;
-  plan: PlanState;
+  list: Entry[];
+  keys: number[];
+  done: PlanState["done"];
   setPlan: Dispatch<SetStateAction<PlanState>>;
   p: FamilyPlanCopy;
   c: HelpCopy;
   uid: string;
-  onAdd: (s: PlanSection) => void;
+  onAdd: (s: PlanSection, count: number) => void;
   onRemove: (s: PlanSection, i: number) => void;
   onLegal: () => void;
 }) {
   const { lang } = useI18n();
-  const list = plan.entries[s.id];
   const facts = PLAN_FACTS[s.id];
   const headingId = `${uid}-${s.id}`;
   const fields = (i: number) => (
@@ -259,7 +282,7 @@ function PlanSectionForm({
       {s.repeat ? (
         <>
           {list.map((_, i) => (
-            <fieldset key={i} className="hplan__entry">
+            <fieldset key={keys[i]} className="hplan__entry">
               <legend className="hf__label">{p.entry(s.repeat!.item[lang], i + 1)}</legend>
               {fields(i)}
               {list.length > s.repeat!.min && (
@@ -270,7 +293,7 @@ function PlanSectionForm({
             </fieldset>
           ))}
           {list.length < s.repeat.max && (
-            <button type="button" className="hbtn" data-add={s.id} onClick={() => onAdd(s)}>
+            <button type="button" className="hbtn" data-add={s.id} onClick={() => onAdd(s, list.length)}>
               {p.add(s.repeat.item[lang])}
             </button>
           )}
@@ -285,7 +308,7 @@ function PlanSectionForm({
           <div className="hchecks">
             {s.todo.map((t) => (
               <label key={t.id} className="hcheck">
-                <input type="checkbox" checked={!!plan.done[t.id]} onChange={() => setPlan((old) => toggleTodo(old, t.id))} />
+                <input type="checkbox" checked={!!done[t.id]} onChange={() => setPlan((old) => toggleTodo(old, t.id))} />
                 {t.label[lang]}
               </label>
             ))}
@@ -303,14 +326,13 @@ function PlanSectionForm({
       )}
 
       {facts && (
-        <details className="hplan__why">
-          <summary>{p.learnMore}</summary>
-          <FactList facts={facts} />
-        </details>
+        <LazyDetails className="hplan__why" summary={p.learnMore}>
+          {() => <FactList facts={facts} />}
+        </LazyDetails>
       )}
     </section>
   );
-}
+});
 
 function CaregiverLinks({ p, c }: { p: FamilyPlanCopy; c: HelpCopy }) {
   const { lang } = useI18n();

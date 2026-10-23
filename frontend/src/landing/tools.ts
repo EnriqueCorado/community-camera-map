@@ -8,6 +8,7 @@ import type { HelpTarget } from "../help/target";
 import type { CitedFact, SourceRef } from "../components/help/ui";
 import { COPY, type HelpCopy } from "../help/copy";
 import { DEPOSIT_FACTS, LEGAL_FACTS, MEDICAL_FACTS, MOBILE_FACTS, RENT_FACTS, RENT_SOURCES, REPAIR_FACTS } from "../help/facts";
+import { factsById } from "../help/facts-by-id";
 import { EVICTION_FACTS, EVICTION_SOURCES } from "../help/eviction-facts";
 import { WAGE_FACTS, WAGE_SOURCES } from "../help/wages-facts";
 import { HEAT_FACTS } from "../help/heat-facts";
@@ -98,12 +99,7 @@ const wage = (key: "rulesMinWage" | "rulesOvertime" | "rulesBreaks" | "rulesFina
 const heat = (key: "tierIndoor82" | "tierIndoor87" | "payTitle" | "rightsTitle") => both(HEAT_COPY.en, HEAT_COPY.es, key);
 type TextKey = { [K in keyof HelpCopy]: HelpCopy[K] extends string ? K : never }[keyof HelpCopy];
 const copy = (key: TextKey): Bilingual => ({ en: COPY.en[key], es: COPY.es[key] });
-const byId = (facts: readonly CitedFact[], ...ids: string[]) =>
-  ids.map((id) => {
-    const f = facts.find((x) => x.id === id);
-    if (!f) throw new Error(`landing: no fact "${id}"`);
-    return f;
-  });
+const byId = factsById;
 
 export const GROUPS: { id: GroupId; name: Bilingual; anchor: Bilingual }[] = [
   { id: "health", name: { en: "Health and benefits", es: "Salud y beneficios" }, anchor: { en: "health", es: "salud" } },

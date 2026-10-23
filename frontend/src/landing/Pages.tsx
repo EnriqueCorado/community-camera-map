@@ -1,8 +1,10 @@
 // The public "Free help" pages, rendered to static HTML at build time
 // (scripts/prerender.mjs) so they load fast, work without JavaScript and can
 // be found by search engines. Every link is a plain link; the only scripts are
-// the saved theme/text size (read, never written), the flyer Print button and
-// the page script (client.js: offline, read aloud, the optional usage counter).
+// the saved theme/text size (read, never written, inline), the flyer Print
+// button (inline) and the page script (client.js, one shared file: copy, share,
+// offline, read aloud, the optional usage counter). The stylesheet is one shared
+// file too, so a page costs only its own HTML once the first has loaded.
 import type { ReactNode } from "react";
 import { translate, type Lang } from "../i18n";
 import { COPY } from "../help/copy";
@@ -19,7 +21,6 @@ import { PARTNERS_COPY } from "./partners-copy";
 import { generalBlurb, partnersPath, toolBlurb } from "./partners";
 import { REPORT_COPY, mailto, reportHref } from "../help/report";
 import { qr } from "./qr";
-import CLIENT_SCRIPT from "./client.js?raw";
 import { START_COPY } from "../help/start-copy";
 import { START_CHOICES, SHORT_DIR, pagePath, shortFor, whatsappHref } from "../help/start";
 import { LANG_PAGES, langFlyerPath, langPath } from "./languages";
@@ -31,10 +32,17 @@ export interface Site {
   base: string;
   /** Base path of the public site, for canonical links and QR codes (always the live site). */
   publicBase: string;
-  css: string;
+  /** The shared stylesheet and page script, written once per build by
+   *  prerender.mjs (content-hashed names, checked with Subresource Integrity). */
+  assets: SiteAssets;
   repo: string;
   /** The anonymous usage counter's URL (relay/api/count.ts), or "" for none. */
   counter: string;
+}
+
+export interface SiteAssets {
+  css: { href: string; integrity: string };
+  js: { href: string; integrity: string };
 }
 
 const LOCALE: Record<Lang, string> = { en: "en-US", es: "es-US" };
@@ -93,6 +101,23 @@ interface DocProps {
   children: ReactNode;
 }
 
+/** In <head>: the theme script (before paint, so dark mode never flashes), the
+ *  shared stylesheet, and on flyers their letter-size page rule. */
+export function HeadAssets({ site, print }: { site: Site; print?: boolean }) {
+  return (
+    <>
+      {!print && <script dangerouslySetInnerHTML={{ __html: DISPLAY_SCRIPT }} />}
+      <link rel="stylesheet" href={site.assets.css.href} integrity={site.assets.css.integrity} />
+      {print && <style dangerouslySetInnerHTML={{ __html: FLYER_PAGE_CSS }} />}
+    </>
+  );
+}
+
+/** At the end of <body>: the shared page script (not on flyers). */
+export function PageScript({ site }: { site: Site }) {
+  return <script src={site.assets.js.href} integrity={site.assets.js.integrity} />;
+}
+
 /** The folder a page's service worker covers: help/ or ayuda/ (flyers included). */
 const swFolder = (path: string) => (path.startsWith("ayuda/") ? "ayuda/" : path.startsWith("help/") ? "help/" : null);
 
@@ -123,8 +148,7 @@ function Doc({ site, lang, title, description, path, alternate, print, countId, 
         <meta property="og:url" content={absolute(site, path)} />
         <meta property="og:locale" content={LOCALE[lang].replace("-", "_")} />
         <meta name="color-scheme" content={print ? "light" : "light dark"} />
-        {!print && <script dangerouslySetInnerHTML={{ __html: DISPLAY_SCRIPT }} />}
-        <style dangerouslySetInnerHTML={{ __html: print ? `${site.css}${FLYER_PAGE_CSS}` : site.css }} />
+        <HeadAssets site={site} print={print} />
       </head>
       <body
         className={print ? "is-flyer" : undefined}
@@ -132,7 +156,7 @@ function Doc({ site, lang, title, description, path, alternate, print, countId, 
         {...count}
       >
         {children}
-        {!print && <script dangerouslySetInnerHTML={{ __html: CLIENT_SCRIPT }} />}
+        {!print && <PageScript site={site} />}
       </body>
     </html>
   );

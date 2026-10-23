@@ -36,17 +36,24 @@ function checkLinks(path, html) {
   }
 }
 
-/** A Content-Security-Policy that lets the page load nothing but itself (and,
- *  when the build has one, send to the usage counter): the browser enforces
- *  the "no requests" promise, and only these exact inline scripts can run. */
+const cspHash = (text) => `'sha256-${createHash("sha256").update(text).digest("base64")}'`;
+
+/** What a page may run or style with: this site's shared file (only if the page
+ *  uses one) plus its exact inline blocks, by hash; 'none' when it has neither. */
+function sources(html, inlineTag, external) {
+  const list = [...(external.test(html) ? ["'self'"] : []), ...[...html.matchAll(inlineTag)].map(([, body]) => cspHash(body))];
+  return list.join(" ") || "'none'";
+}
+
+/** A Content-Security-Policy that lets the page load nothing but itself and the
+ *  shared stylesheet and script (and, when the build has one, send to the usage
+ *  counter): the browser enforces the "no requests" promise, and only these
+ *  exact inline blocks can run. */
 function withCsp(html) {
-  const hashes = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(
-    ([, body]) => `'sha256-${createHash("sha256").update(body).digest("base64")}'`,
-  );
   const policy = [
     "default-src 'none'",
-    "style-src 'unsafe-inline'",
-    `script-src ${hashes.join(" ") || "'none'"}`,
+    `style-src ${sources(html, /<style>([\s\S]*?)<\/style>/g, /<link rel="stylesheet" href="[^"]+"/)}`,
+    `script-src ${sources(html, /<script>([\s\S]*?)<\/script>/g, /<script src="[^"]+"/)}`,
     "worker-src 'self'", // the folder's offline service worker (help/sw.js, ayuda/sw.js)
     // Only pages that count (not flyers) may reach the counter.
     ...(counter && /<body[^>]*\sdata-counter="/.test(html) ? [`connect-src ${new URL(counter).origin}`] : []),
@@ -66,29 +73,55 @@ const savedPages = (pages, folder) =>
 const sha256 = (text) => createHash("sha256").update(text, "utf8").digest("hex");
 
 /** `pages` hold the final HTML as written: the worker only keeps or shows a
- *  saved page whose bytes have exactly this hash. */
-async function writeServiceWorker(folder, pages) {
+ *  saved page (or shared file) whose bytes have exactly this hash. */
+async function writeServiceWorker(folder, pages, shared) {
   const list = savedPages(pages, folder).map((p) => [`${base}${p.path}`, sha256(p.html)]);
-  const version = sha256(JSON.stringify(list)).slice(0, 12);
+  const assets = shared.map((a) => [a.href, sha256(a.text)]);
+  const version = sha256(JSON.stringify([list, assets])).slice(0, 12);
   const template = await readFile(join(root, "src/landing/sw.js"), "utf8");
   const code = template
     .replace('"__SCOPE__"', JSON.stringify(`${base}${folder}`))
     .replace('"__CACHE__"', JSON.stringify(`scm-${folder.replace("/", "")}-pages`))
     .replace('"__LANG__"', JSON.stringify(folder === "ayuda/" ? "es" : "en"))
-    .replace("__PAGES__", JSON.stringify(list));
-  if (/__(SCOPE|CACHE|LANG|PAGES)__/.test(code)) throw new Error(`prerender: unfilled token in ${folder}sw.js`);
+    .replace("__PAGES__", JSON.stringify(list))
+    .replace("__ASSETS__", JSON.stringify(assets));
+  if (/__(SCOPE|CACHE|LANG|PAGES|ASSETS)__/.test(code)) throw new Error(`prerender: unfilled token in ${folder}sw.js`);
   // The version line changes the file when pages change, so browsers update the worker.
   await writeFile(join(dist, folder, "sw.js"), `// pages ${version}\n${code}`);
+}
+
+/** The shared stylesheet and page script, once per build, under names that
+ *  change with their content (so browsers and the offline worker can keep them
+ *  for good), with Subresource Integrity hashes. */
+async function writeSharedAssets() {
+  const files = [
+    ["css", "src/landing/landing.css"],
+    ["js", "src/landing/client.js"],
+  ];
+  const out = {};
+  const list = [];
+  await mkdir(join(dist, "help-assets"), { recursive: true });
+  for (const [kind, source] of files) {
+    const text = await readFile(join(root, source), "utf8");
+    const name = `help-assets/site.${sha256(text).slice(0, 12)}.${kind}`;
+    await writeFile(join(dist, name), text);
+    out[kind] = { href: `${base}${name}`, integrity: `sha384-${createHash("sha384").update(text, "utf8").digest("base64")}` };
+    list.push({ href: `${base}${name}`, text });
+  }
+  return { assets: out, shared: list };
 }
 
 const vite = await createServer({ root, logLevel: "error", server: { middlewareMode: true, hmr: false }, appType: "custom" });
 try {
   const { renderSite } = await vite.ssrLoadModule("/src/landing/render.tsx");
   const legalHelp = JSON.parse(await readFile(join(root, "public/data/layers/legal-help.geojson"), "utf8"));
-  const pages = renderSite({ origin, base, publicBase, repo, legalHelp, counter });
-  // "Save all pages (about N KB)": what saving really downloads (compressed).
+  const { assets, shared } = await writeSharedAssets();
+  const pages = renderSite({ origin, base, publicBase, repo, legalHelp, counter, assets });
+  // "Save all pages (about N KB)": what saving really downloads (compressed):
+  // the folder's pages plus the shared stylesheet and script, once.
+  const sharedBytes = shared.reduce((n, a) => n + gzipSync(a.text).length, 0);
   for (const folder of SW_FOLDERS) {
-    const bytes = savedPages(pages, folder).reduce((n, p) => n + gzipSync(p.html).length, 0);
+    const bytes = savedPages(pages, folder).reduce((n, p) => n + gzipSync(p.html).length, sharedBytes);
     const kb = String(Math.ceil(bytes / 1024 / 10) * 10);
     for (const p of pages) if (p.path.startsWith(folder)) p.html = p.html.replaceAll("__SAVE_KB__", kb);
   }
@@ -106,7 +139,7 @@ try {
     await writeFile(file, html);
     page.html = html; // the published bytes (the service worker hashes these)
   }
-  for (const folder of SW_FOLDERS) await writeServiceWorker(folder, pages);
+  for (const folder of SW_FOLDERS) await writeServiceWorker(folder, pages, shared);
   console.log(`prerender: wrote ${pages.length} pages and ${SW_FOLDERS.length} service workers`);
 } finally {
   await vite.close();

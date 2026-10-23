@@ -2,6 +2,7 @@
 // link, and the phone's own Share sheet where the browser has one. Only the
 // page's address is shared, never anything typed into a tool.
 import { useId, useRef, useState } from "react";
+import { copyText, useAnnounce } from "./ui";
 import { useI18n } from "../../i18n";
 import { START_COPY } from "../../help/start-copy";
 import { whatsappHref } from "../../help/start";
@@ -10,23 +11,17 @@ export function ShareLinks({ url, title, newTab }: { url: string; title: string;
   const { lang } = useI18n();
   const s = START_COPY[lang];
   const id = useId();
-  const [status, setStatus] = useState("");
+  const [status, announce] = useAnnounce();
   const [manual, setManual] = useState(false);
   const field = useRef<HTMLInputElement>(null);
   const canShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
   const text = s.message();
 
   const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(url);
-      setManual(false);
-      setStatus(s.copied);
-    } catch {
-      // No clipboard access (old browser, or blocked): show the link to copy by hand.
-      setManual(true);
-      setStatus(s.copyFailed);
-      requestAnimationFrame(() => field.current?.select());
-    }
+    // No clipboard access (old browser, or blocked): show the link to copy by hand.
+    const ok = await copyText(url, () => field.current, () => setManual(true));
+    if (ok) setManual(false);
+    announce(ok ? s.copied : s.copyFailed);
   };
   const share = () => {
     // Cancelling the share sheet rejects; nothing to report.

@@ -5,7 +5,7 @@ import { useI18n, type Lang } from "../../i18n";
 import { todayIso } from "../../help/dates";
 import type { LetterDef, LetterValues } from "../../help/letter-types";
 import { triggerDownload } from "../../download";
-import { Field } from "./ui";
+import { copyText, Field, useAnnounce } from "./ui";
 import type { HelpCopy } from "../../help/copy";
 
 export function LetterBuilder({ def, c, initial }: { def: LetterDef; c: HelpCopy; initial?: LetterValues }) {
@@ -13,7 +13,7 @@ export function LetterBuilder({ def, c, initial }: { def: LetterDef; c: HelpCopy
   const [values, setValues] = useState<LetterValues>(initial ?? {});
   // Default the letter to English: landlords, hospitals and courts expect it.
   const [letterLang, setLetterLang] = useState<Lang>("en");
-  const [status, setStatus] = useState("");
+  const [status, announce] = useAnnounce();
   const previewId = useId();
   const text = useMemo(() => def.render(values, letterLang, todayIso()), [def, values, letterLang]);
 
@@ -25,16 +25,9 @@ export function LetterBuilder({ def, c, initial }: { def: LetterDef; c: HelpCopy
   };
 
   const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setStatus(c.letterCopied);
-    } catch {
-      // Clipboard blocked (permissions/older browser): select it for Ctrl+C.
-      const el = document.getElementById(previewId) as HTMLTextAreaElement | null;
-      el?.focus();
-      el?.select();
-      setStatus(c.letterSelectToCopy);
-    }
+    // Clipboard blocked (permissions/older browser): select it for Ctrl+C.
+    const ok = await copyText(text, () => document.getElementById(previewId) as HTMLTextAreaElement | null);
+    announce(ok ? c.letterCopied : c.letterSelectToCopy);
   };
 
   const print = () => {
@@ -58,7 +51,7 @@ export function LetterBuilder({ def, c, initial }: { def: LetterDef; c: HelpCopy
 
   const download = () => {
     triggerDownload(`${def.filename}.txt`, new Blob([text], { type: "text/plain;charset=utf-8" }));
-    setStatus(c.letterDownloaded);
+    announce(c.letterDownloaded);
   };
 
   return (

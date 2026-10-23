@@ -514,6 +514,11 @@ A tool added later shows its English name there until it is translated. Tests: `
 - The worker is network-first. A saved copy is shown only offline, on a 5xx, or after 4 s, and with a "saved copy
   from <date>" banner. It is shown only if its bytes match the hash of the published page, which prerender embeds
   in `sw.js`, so a stale or planted copy is never served.
+- *Shared files:* every page loads one stylesheet and one script, written per build as
+  `help-assets/site.<hash>.css|js` (content-hashed names, Subresource Integrity). Saving stores them once per
+  folder, verified by hash like the pages and served from the device first. That keeps "Save all" at about
+  120 KB per folder instead of re-downloading about 8 KB of CSS and JS with every page. A visit after an update
+  quietly re-saves the new pages and files.
 - *Kill switch:* to turn offline off for everyone, publish `help/sw.js` and `ayuda/sw.js` containing only
   `self.addEventListener("activate", e => e.waitUntil(caches.keys().then(k => Promise.all(k.map(n => caches.delete(n)))).then(() => self.registration.unregister())));`.
 - *Read aloud* uses only voices the browser reports as on-device (`localService`), so page text isn't sent to a
