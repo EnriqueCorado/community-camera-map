@@ -90,6 +90,8 @@ interface Props {
 const STYLE = "https://tiles.openfreemap.org/styles/liberty";
 // Font the basemap's glyph set provides (used for cluster-count labels).
 const LABEL_FONT = ["Noto Sans Bold"];
+// The style's shaded-relief raster layer (loaded after the first view; see below).
+const RELIEF_LAYER = "natural_earth";
 
 const CA_CENTER: [number, number] = [-119.4, 37.2];
 
@@ -218,7 +220,17 @@ export function MapView({
     });
     ro.observe(containerRef.current);
 
+    // The basemap's shaded relief (raster tiles, ~1 MB at the opening view on
+    // a phone, drawn at ~20% opacity) held back "load", and with it the camera
+    // dots, by several seconds on slow mobile data. Hidden layers fetch no
+    // tiles, so leave it off until the rest of the first view is in.
+    map.once("style.load", () => {
+      if (map.getLayer(RELIEF_LAYER)) map.setLayoutProperty(RELIEF_LAYER, "visibility", "none");
+    });
+
     map.on("load", () => {
+      if (map.getLayer(RELIEF_LAYER)) map.setLayoutProperty(RELIEF_LAYER, "visibility", "visible");
+
       // Camera source (clustered).
       map.addSource("cameras", {
         type: "geojson",
@@ -926,16 +938,20 @@ export function MapView({
   return <div ref={containerRef} className="map" />;
 }
 
-/** True when the browser can create a WebGL 2 context (MapLibre's minimum). */
-function hasWebGL2(): boolean {
+/** True when the browser can create a WebGL 2 context (MapLibre's minimum).
+ *  Probed once: main.tsx asks too, before starting the map's worker. */
+let webgl2: boolean | undefined;
+export function hasWebGL2(): boolean {
+  if (webgl2 !== undefined) return webgl2;
   try {
     const canvas = document.createElement("canvas");
     const gl = canvas.getContext("webgl2");
     gl?.getExtension("WEBGL_lose_context")?.loseContext();
-    return !!gl;
+    webgl2 = !!gl;
   } catch {
-    return false;
+    webgl2 = false;
   }
+  return webgl2;
 }
 
 // --- helpers ---

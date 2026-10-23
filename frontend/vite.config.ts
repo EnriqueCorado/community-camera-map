@@ -8,7 +8,25 @@ export default defineConfig(() => ({
   // GitHub Pages serves under /<repo>/; set VITE_BASE at build time. Default "/"
   // for local dev and root hosts.
   base: process.env.VITE_BASE ?? "/",
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      // Static site: the map waits for the camera index (api/client.ts), so
+      // fetch it alongside the code instead of after it runs. Same URL, mode
+      // and credentials as that fetch, so the browser reuses the response.
+      name: "preload-camera-index",
+      transformIndexHtml: () =>
+        process.env.VITE_STATIC === "1"
+          ? [
+              {
+                tag: "link",
+                attrs: { rel: "preload", href: "data/cameras/index.json", as: "fetch", crossorigin: true },
+                injectTo: "head",
+              },
+            ]
+          : [],
+    },
+  ],
   build: {
     rollupOptions: {
       output: {
