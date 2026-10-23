@@ -31,10 +31,12 @@ export interface DacaCopy {
   changing: Fn<[string]>;
   /** On "file now", "urgent" and "expired, can renew": when to see a legal service first. */
   beforeFile: string;
+  courtButton: string;
 }
 
 const en: DacaCopy = {
   title: "When to renew DACA",
+  courtButton: "Have an immigration court case? See the immigration court guide",
   beforeFile: "Before you file: if since your last DACA you were arrested, charged or convicted, went to immigration court, or left the U.S., talk to a free or low-cost legal service first.",
   lead: "Enter the date your DACA expires to see when USCIS wants your renewal, what to send, and what it costs. This is general information from USCIS, not legal advice for your case.",
   private: "The date you enter stays on this device and isn’t saved.",
@@ -78,6 +80,7 @@ const en: DacaCopy = {
 
 const es: DacaCopy = {
   title: "Cuándo renovar DACA",
+  courtButton: "¿Tiene un caso en la corte de inmigración? Vea la guía de la corte",
   beforeFile: "Antes de presentarla: si desde su último DACA lo arrestaron, le hicieron cargos o lo condenaron, tuvo corte de inmigración o salió de EE. UU., hable primero con un servicio legal gratis o de bajo costo.",
   lead: "Escriba la fecha en que caduca su DACA para ver cuándo USCIS quiere su renovación, qué enviar y cuánto cuesta. Es información general de USCIS, no consejo legal para su caso.",
   private: "La fecha que escriba se queda en este aparato y no se guarda.",

@@ -18,6 +18,7 @@ import * as RIGHTS from "../../frontend/src/help/rights-facts";
 import * as CIVICS from "../../frontend/src/help/civics-facts";
 import * as PLAN from "../../frontend/src/help/family-plan-facts";
 import * as DACA from "../../frontend/src/help/daca-facts";
+import * as COURT from "../../frontend/src/help/court-facts";
 import * as TAXES from "../../frontend/src/help/taxes-facts";
 import * as UTIL from "../../frontend/src/help/utilities-facts";
 import * as LANGUAGES from "../../frontend/src/help/languages-facts";
@@ -56,6 +57,7 @@ function links(): string[] {
     ...JSON.stringify(CIVICS).match(/https:\/\/[^"\s]+/g) ?? [],
     ...JSON.stringify(PLAN).match(/https:\/\/[^"\s]+/g) ?? [],
     ...JSON.stringify(DACA).match(/https:\/\/[^"\s]+/g) ?? [],
+    ...JSON.stringify(COURT).match(/https:\/\/[^"\s]+/g) ?? [],
     ...JSON.stringify(TAXES).match(/https:\/\/[^"\s]+/g) ?? [],
     ...JSON.stringify(UTIL).match(/https:\/\/[^"\s]+/g) ?? [],
     ...JSON.stringify(LANGUAGES).match(/https:\/\/[^"\s]+/g) ?? [],

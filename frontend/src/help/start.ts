@@ -28,6 +28,7 @@ export const PAGES = {
   daca: { target: { tab: "immigration", view: "daca" }, slug: { en: "daca-renewal", es: "renovar-daca" } },
   taxes: { target: { tab: "benefits", view: "taxes" }, slug: { en: "free-tax-help", es: "impuestos-gratis" } },
   utilities: { target: { tab: "benefits", view: "utilities" }, slug: { en: "utility-bills", es: "facturas-de-luz-y-gas" } },
+  court: { target: { tab: "immigration", view: "court" }, slug: { en: "immigration-court", es: "corte-de-inmigracion" } },
   legal: { target: { tab: "legal" }, slug: { en: "legal-aid", es: "ayuda-legal" } },
 } as const satisfies Record<string, { target: HelpTarget; slug: Bilingual }>;
 
@@ -65,6 +66,7 @@ export const START_CHOICES: readonly { page: PageId; label: Bilingual }[] = [
   { page: "daca", label: { en: "I need to renew DACA", es: "Necesito renovar DACA" } },
   { page: "taxes", label: { en: "I need free help with my taxes", es: "Necesito ayuda gratis con mis impuestos" } },
   { page: "utilities", label: { en: "I can’t pay my gas or electric bill / I got a shutoff notice", es: "No puedo pagar la luz o el gas / recibí un aviso de corte" } },
+  { page: "court", label: { en: "I have an immigration court date (or I moved)", es: "Tengo una cita en la corte de inmigración (o me mudé)" } },
   { page: "legal", label: { en: "I need a free or low-cost lawyer", es: "Necesito un abogado gratis o de bajo costo" } },
 ];
 
@@ -106,6 +108,8 @@ export const SHORT_LINKS: readonly { slug: string; page: PageId | "home"; lang: 
   { slug: "impuestos", page: "taxes", lang: "es" },
   { slug: "luz", page: "utilities", lang: "es" },
   { slug: "energy", page: "utilities", lang: "en" },
+  { slug: "court", page: "court", lang: "en" },
+  { slug: "corte", page: "court", lang: "es" },
   { slug: "lawyer", page: "legal", lang: "en" },
   { slug: "abogado", page: "legal", lang: "es" },
 ];

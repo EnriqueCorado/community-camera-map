@@ -28,6 +28,8 @@ import { FAMILY_PLAN_COPY } from "../help/family-plan-copy";
 import { PLAN_SECTIONS } from "../help/family-plan";
 import { DACA_CHECKED, DACA_FACTS, DACA_HELP, DACA_SOURCES } from "../help/daca-facts";
 import { DACA_COPY } from "../help/daca-copy";
+import { COURT_CHECKED, COURT_FACTS, COURT_HELP, COURT_SOURCES, COURTS } from "../help/court-facts";
+import { COURT_COPY } from "../help/court-copy";
 import { CA_CREDITS, FED_CREDITS, TAX_PLACES, TAX_SEASON, TAXES_CHECKED, TAXES_FACTS, TAXES_SOURCES } from "../help/taxes-facts";
 import { TAXES_COPY } from "../help/taxes-copy";
 import { UTIL_CHECKED, UTIL_CONTACTS, UTIL_FACTS, UTIL_SOURCES } from "../help/utilities-facts";
@@ -63,7 +65,8 @@ export type ToolId =
   | "family-plan"
   | "daca"
   | "taxes"
-  | "utilities";
+  | "utilities"
+  | "court";
 
 /** A line in a section. `esEn`: an English part shown first on the Spanish page
  *  (marked lang="en"), e.g. the official civics question the officer asks. */
@@ -556,6 +559,42 @@ export const TOOLS: readonly ToolPage[] = [
     places: Object.values(UTIL_CONTACTS),
     sources: UTIL_SOURCES,
     checked: UTIL_CHECKED,
+  },
+  {
+    id: "court",
+    group: "immigration",
+    slug: { en: "immigration-court", es: "corte-de-inmigracion" },
+    target: { tab: "immigration", view: "court" },
+    name: { en: COURT_COPY.en.title, es: COURT_COPY.es.title },
+    summary: {
+      en: "Find your hearing date and court, change your address with the court, what happens if you miss a hearing, and where to find a lawyer.",
+      es: "Encuentre la fecha y la corte de su audiencia, cambie su dirección con la corte, qué pasa si falta a una audiencia y dónde encontrar un abogado.",
+    },
+    intro: {
+      en: `${COURT_COPY.en.goText} ${COURT_COPY.en.lead}`,
+      es: `${COURT_COPY.es.goText} ${COURT_COPY.es.lead}`,
+    },
+    groups: [
+      group({ en: COURT_COPY.en.findTitle, es: COURT_COPY.es.findTitle }, COURT_FACTS.find, byId(RIGHTS_FACTS.detained, "find-eoir-phone", "find-eoir-acis")),
+      group({ en: COURT_COPY.en.courtsTitle, es: COURT_COPY.es.courtsTitle }, COURT_FACTS.courts),
+      group({ en: COURT_COPY.en.moveTitle, es: COURT_COPY.es.moveTitle }, COURT_FACTS.move),
+      group({ en: COURT_COPY.en.missedTitle, es: COURT_COPY.es.missedTitle }, COURT_FACTS.missed),
+      group({ en: COURT_COPY.en.lawyerTitle, es: COURT_COPY.es.lawyerTitle }, COURT_FACTS.lawyer),
+      group({ en: COURT_COPY.en.changesTitle, es: COURT_COPY.es.changesTitle }, COURT_FACTS.changes, byId(RIGHTS_FACTS.stopped, "right-no-sign")),
+      group({ en: COURT_COPY.en.scamsTitle, es: COURT_COPY.es.scamsTitle }, COURT_FACTS.scams, byId(RIGHTS_FACTS.scams, "scam-notario", "scam-report")),
+    ],
+    sections: [
+      {
+        title: { en: COURT_COPY.en.bringTitle, es: COURT_COPY.es.bringTitle },
+        items: COURT_COPY.en.bring.map((en, i) => ({ en, es: COURT_COPY.es.bring[i]! })),
+      },
+    ],
+    places: [
+      ...COURTS.map((p) => ({ name: p.name, phone: p.phone, address: p.address, hours: p.hours, url: p.url })),
+      ...COURT_HELP.map((h) => ({ name: h.name, phone: h.phone, address: h.address, note: { en: COURT_COPY.en.helpNote, es: COURT_COPY.es.helpNote }, url: h.url })),
+    ],
+    sources: COURT_SOURCES,
+    checked: COURT_CHECKED,
   },
 ];
 

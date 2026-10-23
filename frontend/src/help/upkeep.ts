@@ -14,6 +14,7 @@ import { RIGHTS_CHECKED, RIGHTS_RECHECK } from "./rights-facts";
 import { CIVICS_CHECKED, CIVICS_OFFICIALS_RECHECK } from "./civics-facts";
 import { PLAN_CHECKED } from "./family-plan-facts";
 import { DACA_CHECKED, DACA_RECHECK } from "./daca-facts";
+import { COURT_CHECKED, COURT_RECHECK } from "./court-facts";
 import { TAXES_CHECKED, TAXES_RECHECK } from "./taxes-facts";
 import { UTIL_CHECKED, UTIL_RECHECK } from "./utilities-facts";
 import { LANGUAGES_CHECKED, LANGUAGES_REVIEW_BY } from "./languages-facts";
@@ -116,6 +117,12 @@ export function upkeepItems(): UpkeepItem[] {
       source: "https://www.uscis.gov/DACA",
     },
     {
+      id: "court-monthly",
+      due: COURT_RECHECK,
+      task: "Monthly re-check of the immigration court guide (court-facts.ts): the courthouse-arrest case (Pablo Sequen v. Albarran, N.D. Cal. 25-cv-06487-PCP, on appeal), expedited removal (Make the Road New York v. Mullin, D.C. Cir.), EOIR court changes near Stanislaus (Concord, Sacramento, the Sansome Street hearing location), EOIR's interpreter policy, and the court phone numbers; then move COURT_RECHECK a month ahead.",
+      source: "https://www.justice.gov/eoir/immigration-court-operational-status",
+    },
+    {
       id: "taxes-season",
       due: TAXES_RECHECK,
       task: "Before tax season: add FTB's 2026 CalEITC table by number of children (CA_CREDITS.caleitcMax in taxes-facts.ts and TAX.caleitc.maxCredit/maxCreditYear in benefits-facts.ts), this season's VITA / AARP Tax-Aide sites and dates in Stanislaus (TAX_PLACES; IRS locator, United Way, 211), the IRS opening day, and the latest in Center for Taxpayer Rights v. IRS (IRS-ICE sharing); then move TAXES_RECHECK.",
@@ -153,6 +160,7 @@ export function upkeepItems(): UpkeepItem[] {
         ["citizenship", CIVICS_CHECKED],
         ["family-plan", PLAN_CHECKED],
         ["daca", DACA_CHECKED],
+        ["court", COURT_CHECKED],
         ["taxes", TAXES_CHECKED],
         ["utilities", UTIL_CHECKED],
         ["languages", LANGUAGES_CHECKED],

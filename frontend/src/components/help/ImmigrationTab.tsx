@@ -9,9 +9,10 @@ import "./civics.css";
 const CivicsTool = lazy(() => import("./CivicsTool").then((m) => ({ default: m.CivicsTool })));
 const FamilyPlanTool = lazy(() => import("./FamilyPlanTool").then((m) => ({ default: m.FamilyPlanTool })));
 const DacaTool = lazy(() => import("./DacaTool").then((m) => ({ default: m.DacaTool })));
+const CourtTool = lazy(() => import("./CourtTool").then((m) => ({ default: m.CourtTool })));
 
 /** Immigration tab: know your rights with immigration agents, citizenship test
- *  practice, a family emergency plan, and DACA renewal timing. The plan's answers
+ *  practice, a family emergency plan, DACA renewal timing, and immigration court. The plan's answers
  *  live here, so they survive switching views, and are erased when the tab closes. */
 export function ImmigrationTab({ c, view, onView, onLegal }: { c: HelpCopy; view: ImmigrationView; onView: (v: ImmigrationView) => void; onLegal: () => void }) {
   const [plan, setPlan] = useFamilyPlan();
@@ -23,6 +24,7 @@ export function ImmigrationTab({ c, view, onView, onLegal }: { c: HelpCopy; view
     ["citizenship", c.immigrationViewCitizenship],
     ["plan", c.immigrationViewPlan],
     ["daca", c.immigrationViewDaca],
+    ["court", c.immigrationViewCourt],
   ];
   const go = (v: ImmigrationView, fromLink = false) => {
     setLinked(fromLink ? v : null);
@@ -45,11 +47,13 @@ export function ImmigrationTab({ c, view, onView, onLegal }: { c: HelpCopy; view
         }
       >
         {view === "rights" ? (
-          <RightsTool c={c} onLegal={onLegal} onPlan={() => go("plan", true)} focusTitle={linked === "rights"} />
+          <RightsTool c={c} onLegal={onLegal} onPlan={() => go("plan", true)} onCourt={() => go("court", true)} focusTitle={linked === "rights"} />
         ) : view === "citizenship" ? (
           <CivicsTool c={c} />
         ) : view === "daca" ? (
-          <DacaTool c={c} onLegal={onLegal} />
+          <DacaTool c={c} onLegal={onLegal} onCourt={() => go("court", true)} />
+        ) : view === "court" ? (
+          <CourtTool c={c} onLegal={onLegal} onPlan={() => go("plan", true)} focusTitle={linked === "court"} />
         ) : (
           <FamilyPlanTool c={c} plan={plan} setPlan={setPlan} onLegal={onLegal} onRights={() => go("rights", true)} focusTitle={linked === "plan"} />
         )}

@@ -23,7 +23,7 @@ const TONE: Record<DacaStatus, Tone> = {
 
 const NOTARIO = factsById(RIGHTS_FACTS.scams, "scam-notario");
 
-export function DacaTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) {
+export function DacaTool({ c, onLegal, onCourt }: { c: HelpCopy; onLegal: () => void; onCourt?: () => void }) {
   const { lang, locale } = useI18n();
   const t = DACA_COPY[lang];
   const [expires, setExpires] = useState("");
@@ -105,6 +105,13 @@ export function DacaTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) {
           {t.legalButton}
         </button>
       </p>
+      {onCourt && (
+        <p>
+          <button type="button" className="hbtn" onClick={onCourt}>
+            {t.courtButton}
+          </button>
+        </p>
+      )}
 
       <p className="hf__hint">{t.changing(longDate(DACA_CHECKED, locale))}</p>
       <Sources heading={c.sourcesHeading} checked={c.checkedOn(longDate(DACA_CHECKED, locale))} items={DACA_SOURCES} newTab={c.newTab} report={{ topic: t.title, checked: DACA_CHECKED }} />
