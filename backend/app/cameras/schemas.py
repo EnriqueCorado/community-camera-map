@@ -8,7 +8,9 @@ source be added) without touching clients. The raw-feed parsing lives in
 
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+import unicodedata
+
+from pydantic import BaseModel, Field, field_validator
 
 
 class Camera(BaseModel):
@@ -30,6 +32,21 @@ class Camera(BaseModel):
     views: list[str] = Field(
         default_factory=list, description="Extra still images from the same site (other directions)"
     )
+
+    @field_validator("name", "county", "nearby_place", "route", "direction", mode="before")
+    @classmethod
+    def _plain_text(cls, v: object) -> object:
+        """Drop control and invisible formatting characters (bidi overrides,
+        zero-width spaces) that a feed could use to make a name display as
+        something else; collapse runs of whitespace."""
+        if not isinstance(v, str):
+            return v
+        kept = "".join(
+            " " if c.isspace() else c
+            for c in v
+            if unicodedata.category(c) not in ("Cc", "Cf") or c.isspace()
+        )
+        return " ".join(kept.split())
 
 
 class SourceInfo(BaseModel):

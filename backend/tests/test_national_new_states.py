@@ -308,3 +308,19 @@ async def test_service_keeps_new_sources_when_others_fail():
         cams = await svc.list_cameras()
     assert sorted(c.id for c in cams) == ["mn-c001", "tx-austin-100"]
     assert svc.source_counts == {"mn": 1, "tx-austin": 1}
+
+
+def test_camera_text_drops_invisible_and_control_characters():
+    from app.cameras.schemas import Camera
+
+    cam = Camera(
+        id="x",
+        name="I-35W‮@ Lake​ St\x07  NB",
+        county="Hennepin⁦",
+        latitude=45.0,
+        longitude=-93.0,
+        snapshot_url="https://example.gov/a.jpg",
+        stream_url="",
+    )
+    assert cam.name == "I-35W@ Lake St NB"
+    assert cam.county == "Hennepin"
