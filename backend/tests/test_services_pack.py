@@ -526,6 +526,10 @@ COMPACT = {
     "lt",
     "x",
     "pg",
+    "z",
+    "pr",
+    "un",
+    "ut",
 }
 
 
@@ -669,3 +673,19 @@ def test_treatment_drops_solo_practitioners_listed_under_their_own_name():
     ]
     names = [f["properties"]["n"] for f in sp.treatment(rows, mental_health=False)]
     assert names == ["Jane Doe, LCSW", "Lisa B Creef LCSW PC", "Hope House"]
+
+
+def test_assisted_housing_views_are_hud_egis_and_skip_contacts():
+    """HUD multifamily + USDA rural rentals: HUD eGIS views, no contact people,
+    and the browser cleanup that drops individuals' names and phones exists."""
+    posts = (ROOT / "frontend/src/view-logic.ts").read_text()
+    for name, post in (("hud-multifamily", "mgmt"), ("usda-rural-rentals", "mgmt")):
+        v = sv.LAYERS[name].view
+        assert v and not sv.LAYERS[name].loader, name  # view-only: nothing baked
+        assert v.url.startswith(sv.HUD + "/"), name
+        assert v.post == post and re.search(rf"^\s*{post}:", posts, re.M), name
+        assert v.min_zoom >= 8 and v.max_features >= 1000, name
+        for src in v.fields:
+            assert not re.search(r"contact|email|manager_name|agent_addr|extn", src, re.I), src
+        assert {"n", "a", "c", "s", "z", "t", "un", "ut", "g", "p"} <= set(v.fields.values())
+    assert sv.LAYERS["hud-multifamily"].view.where == "TOTAL_ASSISTED_UNIT_COUNT > 0"

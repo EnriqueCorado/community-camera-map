@@ -215,6 +215,8 @@ SOURCES.update(
         "addiction-treatment": "SAMHSA FindTreatment.gov",
         "housing-counseling": "HUD-approved housing counseling agencies (HUD)",
         "public-housing": "HUD public housing authorities",
+        "hud-multifamily": "HUD eGIS Multifamily Properties - Assisted",
+        "usda-rural-rentals": "USDA Rural Development multifamily housing, via HUD eGIS",
         "colleges": "NCES EDGE postsecondary school locations (IPEDS)",
         "va-facilities": "Veterans Health Administration facilities (VA)",
         "border-ports": "BTS / CBP border crossing entry data (NTAD)",

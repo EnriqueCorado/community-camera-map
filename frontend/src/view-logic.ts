@@ -3,7 +3,7 @@
 import type { ViewSpec } from "./api/client"; // type-only: erased at build
 import STATES from "./state-bboxes.json"; // USPS code -> {name, bbox} (backend scripts/sync_state_specs.py)
 import { HAZARD_POST } from "./view-posts-hazards";
-import { mealsOpen } from "./services-pack";
+import { mealsOpen, orgName } from "./services-pack";
 
 type FC = GeoJSON.FeatureCollection;
 type Bbox = [number, number, number, number]; // [west, south, east, north]
@@ -221,6 +221,13 @@ const POST: Record<string, (p: Record<string, unknown>) => void> = {
   // USDA summer meal sites: never show a site whose season isn't today.
   meals: (p) => {
     if (!mealsOpen(p)) p._drop = true;
+  },
+  // HUD / USDA assisted apartments: the management agent's name only when it's
+  // an organization. The phone goes with it: USDA's is the agent's own, and
+  // where a HUD agent is a person the "on-site" line is often theirs too.
+  mgmt: (p) => {
+    p.g = orgName(p.g) || null;
+    if (!p.g) p.p = null;
   },
   // National Bridge Inventory text fields come wrapped in single quotes.
   nbi: (p) => {
