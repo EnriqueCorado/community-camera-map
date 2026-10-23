@@ -35,6 +35,7 @@ from bake import SOURCES  # noqa: E402 - sibling script
 from app.core.config import get_settings
 from app.layers import service as _registry  # noqa: F401 - loads every pack before one is imported
 from app.layers.national import parity, state_bakes
+from app.layers.national.care_compare import WEEKLY as CARE_COMPARE_WEEKLY
 from app.layers.national.help_offices import WEEKLY as HELP_OFFICES_WEEKLY
 from app.layers.national.roads import KEYED
 from app.layers.national.services import WEEKLY as SERVICES_WEEKLY
@@ -92,6 +93,7 @@ DAILY = (
 WEEKLY = (
     *SERVICES_WEEKLY,
     *HELP_OFFICES_WEEKLY,  # SSA offices, LSC legal aid areas, post offices (home copy)
+    *CARE_COMPARE_WEEKLY,  # CMS dialysis, hospice, home health, hospital ratings
     "building-permits",  # Census BPS: yearly, by place
     *state_bakes.WEEKLY,  # state child-care lists (Texas is geocoded)
 )

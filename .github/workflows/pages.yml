@@ -343,6 +343,10 @@ jobs:
             frontend/public/data/layers/social-security-offices.geojson
             frontend/public/data/layers/legal-aid-areas.geojson
             frontend/public/data/layers/post-offices.geojson
+            frontend/public/data/layers/dialysis-facilities.geojson
+            frontend/public/data/layers/hospice-providers.geojson
+            frontend/public/data/layers/home-health-agencies.geojson
+            frontend/public/data/layers/hospital-ratings.geojson
           key: services-weekly-v1-${{ github.run_id }}
           restore-keys: services-weekly-v1-
       - name: Refresh live layers (fast)
@@ -383,6 +387,10 @@ jobs:
             frontend/public/data/layers/social-security-offices.geojson
             frontend/public/data/layers/legal-aid-areas.geojson
             frontend/public/data/layers/post-offices.geojson
+            frontend/public/data/layers/dialysis-facilities.geojson
+            frontend/public/data/layers/hospice-providers.geojson
+            frontend/public/data/layers/home-health-agencies.geojson
+            frontend/public/data/layers/hospital-ratings.geojson
           key: services-weekly-v1-${{ github.run_id }}
       - name: Refresh OpenStreetMap places (daily, and on manual runs)
         if: github.event.schedule == '37 11 * * *' || github.event_name == 'workflow_dispatch'

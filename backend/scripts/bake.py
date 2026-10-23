@@ -184,6 +184,9 @@ SOURCES.update(_ROAD_SOURCES)
 from app.layers.national.help_offices import SOURCES as _HELP_OFFICE_SOURCES  # noqa: E402
 
 SOURCES.update(_HELP_OFFICE_SOURCES)
+from app.layers.national.care_compare import SOURCES as _CARE_COMPARE_SOURCES  # noqa: E402
+
+SOURCES.update(_CARE_COMPARE_SOURCES)
 from app.layers.national.parity import SOURCES as _PARITY_SOURCES  # noqa: E402
 
 SOURCES.update(_PARITY_SOURCES)
