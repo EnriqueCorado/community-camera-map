@@ -13,6 +13,7 @@ type Bilingual = Record<Lang, string>;
  *  under help/ (English) or ayuda/ (Spanish). Same ids and slugs as landing/tools.ts. */
 export const PAGES = {
   medical: { target: { tab: "medical" }, slug: { en: "hospital-bills", es: "cuentas-de-hospital" } },
+  clinics: { target: { tab: "medical", view: "clinics" }, slug: { en: "free-clinics", es: "clinicas-gratis" } },
   benefits: { target: { tab: "benefits" }, slug: { en: "benefits", es: "beneficios" } },
   "medi-cal-work": { target: { tab: "benefits", view: "medi-cal" }, slug: { en: "medi-cal-work-rules", es: "reglas-de-trabajo-medi-cal" } },
   rent: { target: { tab: "rent", view: "rent" }, slug: { en: "rent-increase", es: "aumento-de-renta" } },
@@ -49,6 +50,7 @@ export function pageFor(t: HelpTarget): PageId | null {
 /** "What do you need help with?", in everyday words, most common first. */
 export const START_CHOICES: readonly { page: PageId; label: Bilingual }[] = [
   { page: "medical", label: { en: "I got a hospital bill I can’t pay", es: "Me llegó una cuenta de hospital que no puedo pagar" } },
+  { page: "clinics", label: { en: "I need a doctor or dentist and have no insurance", es: "Necesito un doctor o dentista y no tengo seguro" } },
   { page: "rent", label: { en: "My rent went up", es: "Me subieron la renta" } },
   { page: "eviction", label: { en: "My landlord wants me out, or I got a notice", es: "El dueño quiere sacarme, o recibí un aviso" } },
   { page: "repairs", label: { en: "My landlord won’t fix things", es: "El dueño no hace las reparaciones" } },
@@ -74,6 +76,8 @@ export const SHORT_LINKS: readonly { slug: string; page: PageId | "home"; lang: 
   { slug: "ayuda", page: "home", lang: "es" },
   { slug: "hospital", page: "medical", lang: "en" },
   { slug: "hospital-es", page: "medical", lang: "es" },
+  { slug: "clinics", page: "clinics", lang: "en" },
+  { slug: "clinicas", page: "clinics", lang: "es" },
   { slug: "rent", page: "rent", lang: "en" },
   { slug: "renta", page: "rent", lang: "es" },
   { slug: "eviction", page: "eviction", lang: "en" },

@@ -13,7 +13,7 @@ async function ready(page: Page) {
 async function openHelp(page: Page, hash = "") {
   await page.goto(`./${hash}`);
   await ready(page);
-  if (!hash.includes("help=")) await page.getByRole("button", { name: /Free help/ }).click();
+  if (!hash.includes("help=")) await page.getByRole("button", { name: /^Free help/ }).click();
   const dialog = page.getByRole("dialog", { name: /Free help|Ayuda gratis/ });
   await expect(dialog).toBeVisible();
   return dialog;
@@ -27,9 +27,9 @@ async function expectNoA11yViolations(page: Page, include: string) {
 
 test("opens from the sidebar, switches tabs by keyboard, keeps the tab in the URL, closes with Escape", async ({ page }) => {
   const dialog = await openHelp(page);
-  await expect(dialog.getByRole("tab", { name: "Medical bills" })).toHaveAttribute("aria-selected", "true");
+  await expect(dialog.getByRole("tab", { name: "Health care" })).toHaveAttribute("aria-selected", "true");
   await expect(page).toHaveURL(/help=medical/);
-  await dialog.getByRole("tab", { name: "Medical bills" }).focus();
+  await dialog.getByRole("tab", { name: "Health care" }).focus();
   await page.keyboard.press("ArrowRight");
   await expect(dialog.getByRole("tab", { name: "Renters" })).toHaveAttribute("aria-selected", "true");
   await expect(dialog.getByRole("tab", { name: "Renters" })).toBeFocused();
@@ -37,7 +37,7 @@ test("opens from the sidebar, switches tabs by keyboard, keeps the tab in the UR
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
   await expect(page).not.toHaveURL(/help=/);
-  await expect(page.getByRole("button", { name: /Free help/ })).toBeFocused();
+  await expect(page.getByRole("button", { name: /^Free help/ })).toBeFocused();
 });
 
 test("a shared link opens straight to a tab, in Spanish", async ({ page }) => {
@@ -242,7 +242,7 @@ test("theme and text size: chosen explicitly, remembered, and still accessible",
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await expect(page.locator("html")).toHaveAttribute("data-text", "large");
-  await page.getByRole("button", { name: /Free help/ }).click();
+  await page.getByRole("button", { name: /^Free help/ }).click();
   await expect(page.locator(".help__card")).toBeVisible();
   await expectNoA11yViolations(page, ".help__card");
 });
@@ -250,12 +250,12 @@ test("theme and text size: chosen explicitly, remembered, and still accessible",
 test("keyboard only: reach the Help panel, every tab, and close it", async ({ page }) => {
   await page.goto("./");
   await ready(page);
-  const help = page.getByRole("button", { name: /Free help/ });
+  const help = page.getByRole("button", { name: /^Free help/ });
   await help.focus();
   await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog", { name: "Free help" });
   await expect(dialog).toBeVisible();
-  await dialog.getByRole("tab", { name: "Medical bills" }).focus();
+  await dialog.getByRole("tab", { name: "Health care" }).focus();
   for (const name of ["Renters", "Work", "Benefits", "Immigration", "Legal help"]) {
     await page.keyboard.press("ArrowRight");
     await expect(dialog.getByRole("tab", { name })).toHaveAttribute("aria-selected", "true");

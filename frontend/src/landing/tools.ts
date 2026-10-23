@@ -28,6 +28,8 @@ import { FAMILY_PLAN_COPY } from "../help/family-plan-copy";
 import { PLAN_SECTIONS } from "../help/family-plan";
 import { DACA_CHECKED, DACA_FACTS, DACA_HELP, DACA_SOURCES } from "../help/daca-facts";
 import { DACA_COPY } from "../help/daca-copy";
+import { CLINICS, CLINICS_CHECKED, CLINICS_CONTACTS, CLINICS_FACTS, CLINICS_SOURCES } from "../help/clinics-facts";
+import { CLINICS_COPY } from "../help/clinics-copy";
 import { CA_CREDITS, FED_CREDITS, TAX_PLACES, TAX_SEASON, TAXES_CHECKED, TAXES_FACTS, TAXES_SOURCES } from "../help/taxes-facts";
 import { TAXES_COPY } from "../help/taxes-copy";
 import { longDate } from "../help/dates";
@@ -46,6 +48,7 @@ export interface PlaceInfo {
 
 export type ToolId =
   | "medical"
+  | "clinics"
   | "rent"
   | "eviction"
   | "repairs"
@@ -127,6 +130,45 @@ export const TOOLS: readonly ToolPage[] = [
     places: [MEDICAL_FACTS.freeHelp, MEDICAL_FACTS.complaint],
     sources: MEDICAL_FACTS.sources,
     checked: MEDICAL_FACTS.checked,
+  },
+  {
+    id: "clinics",
+    group: "health",
+    slug: { en: "free-clinics", es: "clinicas-gratis" },
+    target: { tab: "medical", view: "clinics" },
+    name: { en: CLINICS_COPY.en.title, es: CLINICS_COPY.es.title },
+    summary: {
+      en: "Community health centers across Stanislaus County that see you without insurance, with fees based on your income: doctor visits, dental, mental health, women’s health and children.",
+      es: "Centros de salud comunitarios en todo el condado de Stanislaus que lo atienden sin seguro, con cuotas según sus ingresos: consultas médicas, dental, salud mental, salud de la mujer y niños.",
+    },
+    intro: {
+      en: `${CLINICS_COPY.en.lead} The free tool filters the list by town and need, and shows the closest ones when your town has none. ${CLINICS_COPY.en.callFirst}`,
+      es: `${CLINICS_COPY.es.lead} La herramienta gratis filtra la lista por ciudad y necesidad, y muestra las más cercanas cuando su ciudad no tiene ninguna. ${CLINICS_COPY.es.callFirst}`,
+    },
+    groups: [
+      group({ en: CLINICS_COPY.en.payTitle, es: CLINICS_COPY.es.payTitle }, CLINICS_FACTS.pay),
+      group({ en: CLINICS_COPY.en.rightsTitle, es: CLINICS_COPY.es.rightsTitle }, CLINICS_FACTS.rights),
+      group({ en: CLINICS_COPY.en.coverageTitle, es: CLINICS_COPY.es.coverageTitle }, CLINICS_FACTS.coverage),
+    ],
+    places: [
+      CLINICS_CONTACTS.crisis,
+      ...CLINICS.map((cl) => ({
+        name: { en: cl.name, es: cl.name },
+        phone: cl.phone,
+        address: cl.address,
+        hours: cl.hours,
+        note: {
+          en: [CLINICS_COPY.en.cost[cl.org], cl.dentalText && `${CLINICS_COPY.en.dentalText}: ${cl.dentalText}`, cl.note?.en].filter(Boolean).join(". "),
+          es: [CLINICS_COPY.es.cost[cl.org], cl.dentalText && `${CLINICS_COPY.es.dentalText}: ${cl.dentalText}`, cl.note?.es].filter(Boolean).join(". "),
+        },
+        url: cl.url,
+      })),
+      CLINICS_CONTACTS.ihcp,
+      CLINICS_CONTACTS.mediCal,
+      CLINICS_CONTACTS.hca,
+    ],
+    sources: CLINICS_SOURCES,
+    checked: CLINICS_CHECKED,
   },
   {
     id: "benefits",

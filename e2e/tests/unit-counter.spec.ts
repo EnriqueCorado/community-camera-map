@@ -6,12 +6,12 @@ import { test, expect } from "@playwright/test";
 import { APP_IDS, EVENTS, PAGE_IDS, createCounter, memoryStore, monthOf, parseEvent, recentMonths, upstashStore, storeFromEnv } from "../../relay/src/counter";
 import { SITE_ORIGIN } from "../../relay/src/relay";
 import { appCountId, countEvent, mayCount, sendCount } from "../../frontend/src/help/count";
-import { HELP_TABS, isHelpView, BENEFITS_VIEWS, IMMIGRATION_VIEWS, RENT_VIEWS, WORK_VIEWS, type HelpTab } from "../../frontend/src/help/target";
+import { HELP_TABS, isHelpView, BENEFITS_VIEWS, IMMIGRATION_VIEWS, MEDICAL_VIEWS, RENT_VIEWS, WORK_VIEWS, type HelpTab } from "../../frontend/src/help/target";
 import { TOOLS } from "../../frontend/src/landing/tools";
 
 const URL_BASE = "https://stanislaus-flights.vercel.app/api/count";
 const NOV = Date.UTC(2026, 10, 14, 23, 59, 59); // 2026-11-14, late evening UTC
-const VIEWS: Partial<Record<HelpTab, readonly string[]>> = { rent: RENT_VIEWS, work: WORK_VIEWS, benefits: BENEFITS_VIEWS, immigration: IMMIGRATION_VIEWS };
+const VIEWS: Partial<Record<HelpTab, readonly string[]>> = { medical: MEDICAL_VIEWS, rent: RENT_VIEWS, work: WORK_VIEWS, benefits: BENEFITS_VIEWS, immigration: IMMIGRATION_VIEWS };
 
 const post = (e: string | null, headers: Record<string, string> = {}, search = "") =>
   new Request(`${URL_BASE}${search}`, {
@@ -213,7 +213,8 @@ test("Upstash: HINCRBY to count, one pipelined HGETALL to read, only the token a
 
 test.describe("browser side", () => {
   test("names Help panel tools the way the server lists them", () => {
-    expect(appCountId({ tab: "medical", hospitalId: "dmc" })).toBe("medical");
+    expect(appCountId({ tab: "medical", hospitalId: "dmc" })).toBe("medical/bills");
+    expect(appCountId({ tab: "medical", view: "clinics" })).toBe("medical/clinics");
     expect(appCountId({ tab: "rent" })).toBe("rent/rent");
     expect(appCountId({ tab: "rent", view: "eviction" })).toBe("rent/eviction");
     // A view from another tab falls back to the tab's first tool, like the panel does.

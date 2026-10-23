@@ -16,6 +16,7 @@ import { PLAN_CHECKED } from "./family-plan-facts";
 import { DACA_CHECKED, DACA_RECHECK } from "./daca-facts";
 import { TAXES_CHECKED, TAXES_RECHECK } from "./taxes-facts";
 import { LANGUAGES_CHECKED, LANGUAGES_REVIEW_BY } from "./languages-facts";
+import { CLINICS_CHECKED, CLINICS_RECHECK } from "./clinics-facts";
 import { addDays } from "./dates";
 
 export interface UpkeepItem {
@@ -126,6 +127,12 @@ export function upkeepItems(): UpkeepItem[] {
       task: "Get a native speaker to review the Punjabi and Dari pages and flyers (landing/languages.ts; reviewers in research/languages.md). Remove the “not yet checked” note only after a review; otherwise move LANGUAGES_REVIEW_BY.",
       source: "https://github.com/EnriqueCorado/community-camera-map/blob/main/frontend/src/landing/languages.ts",
     },
+    {
+      id: "clinics-sites",
+      due: CLINICS_RECHECK,
+      task: "Re-check the clinic finder (clinics-facts.ts CLINICS): every site's address, phone and hours on gvhc.org and lumirahealthcare.com, new or closed sites in HRSA's data for Stanislaus (FIPS 06099), Planned Parenthood Modesto, the county IHCP and immunization pages; then move CLINICS_RECHECK six months ahead.",
+      source: "https://gisportal.hrsa.gov/server/rest/services/HealthCareFacilities/HealthCareFacilities/MapServer/18",
+    },
     ...(Object.entries(TABLES) as [string, IncomeTable][]).map(([id, t]) => ({
       id: `benefits-${id}`,
       due: after(t.graceUntil ?? t.to, 1),
@@ -148,6 +155,7 @@ export function upkeepItems(): UpkeepItem[] {
         ["daca", DACA_CHECKED],
         ["taxes", TAXES_CHECKED],
         ["languages", LANGUAGES_CHECKED],
+        ["clinics", CLINICS_CHECKED],
       ] as const
     ).map(([id, checked]) => ({
       id: `yearly-${id}`,

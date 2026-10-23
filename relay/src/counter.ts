@@ -26,6 +26,7 @@ import { SITE_ORIGIN } from "./relay.js";
 export const PAGE_IDS = [
   "home",
   "medical",
+  "clinics",
   "rent",
   "eviction",
   "repairs",
@@ -45,7 +46,8 @@ export const PAGE_IDS = [
 
 /** Help panel tools in the map app: "<tab>" or "<tab>/<view>" (help/target.ts). */
 export const APP_IDS = [
-  "medical",
+  "medical/bills",
+  "medical/clinics",
   "rent/rent",
   "rent/eviction",
   "rent/repairs",
