@@ -141,12 +141,15 @@ POST_OFFICES = "https://carto.nationalmap.gov/arcgis/rest/services/structures/Ma
 POST_OFFICE_FIELDS = {"name": "n", "address": "a", "city": "c", "state": "s"}
 
 
-def _layer(name: str, title: str, title_es: str, description: str, **kw) -> Layer:
+def _layer(
+    name: str, title: str, title_es: str, description: str, description_es: str, **kw
+) -> Layer:
     return Layer(
         name=name,
         title=title,
         title_es=title_es,
         description=description,
+        description_es=description_es,
         coverage="usa",
         ttl=WEEK,
         **kw,
@@ -161,6 +164,9 @@ LAYERS: dict[str, Layer] = {
         "Social Security field offices and resident stations, with weekday hours "
         "(SSA). Most services work online or at 1-800-772-1213; call ahead or "
         "make an appointment.",
+        "Oficinas locales y estaciones residentes del Seguro Social, con horarios de lunes a "
+        "viernes (SSA). La mayoría de los servicios funcionan en línea o en el 1-800-772-1213; "
+        "llame antes o haga una cita.",
         category="service",
         group="help",
         loader=_social_security,
@@ -172,6 +178,10 @@ LAYERS: dict[str, Layer] = {
         "The nonprofit legal aid program funded by the Legal Services Corporation "
         "for each area, with its intake line: free help with eviction, benefits, "
         "family and other civil cases for people with low incomes (LSC).",
+        "El programa de ayuda legal sin fines de lucro financiado por la Legal Services "
+        "Corporation para cada zona, con su línea de admisión: ayuda gratuita con desalojos, "
+        "beneficios, asuntos familiares y otros casos civiles para personas de bajos ingresos "
+        "(LSC).",
         category="boundary",
         group="help",
         loader=_legal_aid_areas,
@@ -182,6 +192,8 @@ LAYERS: dict[str, Layer] = {
         "Oficinas de correos",
         "U.S. post offices (USGS National Structures Dataset). Many also take "
         "passport applications by appointment.",
+        "Oficinas de correos de EE. UU. (USGS National Structures Dataset). Muchas también "
+        "reciben solicitudes de pasaporte con cita.",
         category="service",
         group="civic",
         loader=_home(POST_OFFICES, POST_OFFICE_FIELDS),

@@ -92,6 +92,32 @@ def test_self_describing_layers_carry_title_group_metric_and_no_baked_copy():
     assert c["view"]["levels"] == [{"min_zoom": 0, "url": "s"}, {"min_zoom": 5, "url": "c"}]
 
 
+def test_spanish_descriptions_reach_the_catalog():
+    """description_es (the "About this layer" panel) flows registry -> catalog;
+    a layer without one gets null (the frontend falls back to English)."""
+    reg = [
+        Layer(
+            name="a", title="A", description="Parks.", category="park", description_es="Parques."
+        ),
+        Layer(name="b", title="B", description="d", category="point"),
+    ]
+    a, b = sync_catalog([{"name": "a", "available": True}], reg, {})
+    assert a["description"] == "Parks." and a["description_es"] == "Parques."
+    assert "description_es" in b and b["description_es"] is None
+    # real registry layers: a home layer, a national pack layer and a state spec
+    out = {c["name"]: c for c in sync_catalog([], list(LAYERS.values()), {})}
+    for name in ("hospitals", "census-hispanic", "immigration-legal-help", "ca-lacounty-parcels"):
+        es = out[name]["description_es"]
+        assert es and es != out[name]["description"], name
+
+
+def test_every_layer_has_a_spanish_description():
+    missing = [n for n, lay in LAYERS.items() if not (lay.description_es or "").strip()]
+    assert not missing, f"add description_es to: {missing[:20]}"
+    same = [n for n, lay in LAYERS.items() if lay.description_es == lay.description]
+    assert not same, f"description_es is just the English text: {same[:20]}"
+
+
 def test_every_acs_metric_layer_is_nationwide_with_state_and_county_levels():
     acs = [lay for lay in LAYERS.values() if lay.metric and lay.name.startswith("census-")]
     assert len(acs) >= 27
@@ -163,6 +189,9 @@ def test_state_specs_are_validated_strictly(tmp_path):
     lay = layers["tx-parcels"]
     assert lay.coverage == "TX" and lay.view.simplify and lay.group == "planning" and lay.title_es
     assert sources == {"tx-parcels": "TxGIO"} and hosts == {"example.gov"}
+    assert lay.description_es is None  # optional in a spec
+    (tmp_path / "a.json").write_text(json.dumps([{**good, "description_es": "Lotes."}]))
+    assert states.load(tmp_path)[0]["tx-parcels"].description_es == "Lotes."
     bad = [
         {**good, "name": "ok-parcels"},  # prefix must match the state
         {**good, "view": {**good["view"], "url": "http://example.gov/x/FeatureServer/0"}},
@@ -170,6 +199,8 @@ def test_state_specs_are_validated_strictly(tmp_path):
         {**good, "view": {**good["view"], "fields": {"A;DROP": "x"}}},
         {**good, "group": "secret"},
         {**good, "title_es": ""},
+        {**good, "description_es": " "},
+        {**good, "description_es": 7},
     ]
     for spec in bad:
         (tmp_path / "a.json").write_text(json.dumps([spec]))

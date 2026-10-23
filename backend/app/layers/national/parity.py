@@ -136,6 +136,12 @@ _add(
         "shallower than a year ago. Provisional data. California's DWR layer has many more "
         "wells there."
     ),
+    description_es=(
+        "Profundidad del agua en unos 1,800 pozos que el USGS mide de forma continua en todo el "
+        "país: la lectura más reciente (últimos 30 días) y, para cerca de la mitad, si el agua "
+        "está más profunda o menos profunda que hace un año. Datos provisionales. La capa del DWR "
+        "de California tiene muchos más pozos en ese estado."
+    ),
     category="groundwater",
     loader=_groundwater_usa,
     ttl=DAY,
@@ -159,6 +165,12 @@ _add(
         "report customers without power now (about 150 utilities so far; many, including "
         "PG&E, aren't in it yet, so a blank county doesn't mean no outages). Counts are "
         "meters out."
+    ),
+    description_es=(
+        "Condados donde las compañías eléctricas que comparten datos con el programa ODIN del "
+        "Departamento de Energía reportan clientes sin luz ahora (unas 150 compañías hasta ahora; "
+        "muchas, incluida PG&E, todavía no participan, así que un condado en blanco no significa "
+        "que no haya cortes). Las cifras son medidores sin servicio."
     ),
     category="info",
     loader=_power_outages_usa,

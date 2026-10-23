@@ -57,6 +57,7 @@ def _metric_layer(
     title: str,
     title_es: str,
     description: str,
+    description_es: str,
     view: View,
     metric: Metric,
     group: str,
@@ -66,6 +67,7 @@ def _metric_layer(
         name=name,
         title=title,
         description=description,
+        description_es=description_es,
         category=category,
         coverage="usa",
         view=view,
@@ -76,13 +78,20 @@ def _metric_layer(
 
 
 def _flag_layer(
-    name: str, title: str, title_es: str, description: str, view: View, group: str
+    name: str,
+    title: str,
+    title_es: str,
+    description: str,
+    description_es: str,
+    view: View,
+    group: str,
 ) -> Layer:
     """Polygons that are simply 'in' a designation: one fill color, no legend."""
     return Layer(
         name=name,
         title=title,
         description=description,
+        description_es=description_es,
         category="landuse",  # plain tinted fill + the generic name popup
         coverage="usa",
         view=view,
@@ -92,13 +101,20 @@ def _flag_layer(
 
 
 def _point_layer(
-    name: str, title: str, title_es: str, description: str, view: View, group: str
+    name: str,
+    title: str,
+    title_es: str,
+    description: str,
+    description_es: str,
+    view: View,
+    group: str,
 ) -> Layer:
     """Points whose NAME/ADDRESS/CITY read in the generic popup."""
     return Layer(
         name=name,
         title=title,
         description=description,
+        description_es=description_es,
         category="point",
         coverage="usa",
         view=view,
@@ -107,38 +123,56 @@ def _point_layer(
     )
 
 
-# name, title, Spanish title, what it measures, PLACES measure, legend breaks
-# (% of adults, national tract spread), ramp
-_PLACES: tuple[tuple[str, str, str, str, str, tuple[float, ...], str], ...] = (
+# name, title, Spanish title, what it measures (English, Spanish), PLACES measure,
+# legend breaks (% of adults, national tract spread), ramp
+_PLACES: tuple[tuple[str, str, str, str, str, str, tuple[float, ...], str], ...] = (
     ("health-depression", "Depression (adults)", "Depresión (adultos)",
-     "adults ever told they have depression", "DEPRESSION", (17, 19, 22, 25, 27), "purple"),
+     "adults ever told they have depression",
+     "adultos a quienes alguna vez se les dijo que tienen depresión",
+     "DEPRESSION", (17, 19, 22, 25, 27), "purple"),
     ("health-mental-distress", "Frequent mental distress", "Angustia mental frecuente",
-     "adults with 14+ poor mental health days a month", "MHLTH", (13, 15, 17, 19, 21), "purple"),
+     "adults with 14+ poor mental health days a month",
+     "adultos con 14 o más días al mes de mala salud mental",
+     "MHLTH", (13, 15, 17, 19, 21), "purple"),
     ("health-obesity", "Obesity (adults)", "Obesidad (adultos)",
-     "adults with obesity", "OBESITY", (24, 29, 34, 39, 43), "orange"),
+     "adults with obesity", "adultos con obesidad",
+     "OBESITY", (24, 29, 34, 39, 43), "orange"),
     ("health-high-bp", "High blood pressure", "Presión arterial alta",
-     "adults with high blood pressure", "BPHIGH", (27, 30, 34, 39, 44), "red"),
+     "adults with high blood pressure", "adultos con presión arterial alta",
+     "BPHIGH", (27, 30, 34, 39, 44), "red"),
     ("health-smoking", "Smoking (adults)", "Fumadores (adultos)",
-     "adults who currently smoke", "CSMOKING", (8, 10, 13, 16, 20), "orange"),
+     "adults who currently smoke", "adultos que fuman actualmente",
+     "CSMOKING", (8, 10, 13, 16, 20), "orange"),
     ("health-checkup", "Routine checkup in past year", "Chequeo médico en el último año",
-     "adults with a routine checkup in the past year", "CHECKUP", (70, 74, 78, 80, 82), "green"),
+     "adults with a routine checkup in the past year",
+     "adultos que tuvieron un chequeo médico de rutina en el último año",
+     "CHECKUP", (70, 74, 78, 80, 82), "green"),
     ("health-dental", "Dental visit in past year", "Visita al dentista en el último año",
-     "adults who visited a dentist in the past year", "DENTAL", (45, 54, 62, 69, 74), "green"),
+     "adults who visited a dentist in the past year",
+     "adultos que fueron al dentista en el último año",
+     "DENTAL", (45, 54, 62, 69, 74), "green"),
     ("health-disability", "Any disability (adults)", "Alguna discapacidad (adultos)",
-     "adults with any disability", "DISABILITY", (22, 26, 31, 36, 42), "teal"),
+     "adults with any disability", "adultos con alguna discapacidad",
+     "DISABILITY", (22, 26, 31, 36, 42), "teal"),
     ("health-no-transport", "Lacked reliable transportation", "Sin transporte confiable",
-     "adults who lacked reliable transportation in the past year", "LACKTRPT",
-     (5, 6, 8, 12, 17), "red"),
+     "adults who lacked reliable transportation in the past year",
+     "adultos que no tuvieron transporte confiable en el último año",
+     "LACKTRPT", (5, 6, 8, 12, 17), "red"),
     ("health-housing-insecure", "Housing insecurity", "Inseguridad de vivienda",
-     "adults who experienced housing insecurity in the past year", "HOUSINSECU",
-     (7, 9, 12, 18, 26), "red"),
+     "adults who experienced housing insecurity in the past year",
+     "adultos que sufrieron inseguridad de vivienda en el último año",
+     "HOUSINSECU", (7, 9, 12, 18, 26), "red"),
     ("health-utility-shutoff", "Utility shut-off threat", "Amenaza de corte de servicios",
-     "adults threatened with a utility shut-off in the past year", "SHUTUTILITY",
-     (4, 5, 7, 11, 17), "red"),
+     "adults threatened with a utility shut-off in the past year",
+     "adultos a quienes amenazaron con cortarles los servicios (luz, agua o gas) en el "
+     "último año",
+     "SHUTUTILITY", (4, 5, 7, 11, 17), "red"),
     ("health-isolation", "Social isolation", "Aislamiento social",
-     "adults who feel socially isolated", "ISOLATION", (29, 31, 34, 37, 41), "blue"),
+     "adults who feel socially isolated", "adultos que se sienten aislados socialmente",
+     "ISOLATION", (29, 31, 34, 37, 41), "blue"),
     ("health-snap", "Received SNAP (food stamps)", "Reciben SNAP (cupones de alimentos)",
-     "adults who received SNAP in the past year", "FOODSTAMP", (5, 7, 12, 19, 31), "orange"),
+     "adults who received SNAP in the past year", "adultos que recibieron SNAP en el último año",
+     "FOODSTAMP", (5, 7, 12, 19, 31), "orange"),
 )  # fmt: skip
 
 
@@ -148,12 +182,15 @@ SOCIAL_NEEDS = {"LACKTRPT", "HOUSINSECU", "SHUTUTILITY", "ISOLATION", "FOODSTAMP
 
 
 def _places_layer(row: tuple) -> Layer:
-    name, title, title_es, what, measure, breaks, ramp = row
+    name, title, title_es, what, what_es, measure, breaks, ramp = row
     value = f"{measure}_CrudePrev"
-    gaps = (
-        " Not measured in every state (none for TX, FL, PA and 8 others)."
+    gaps, gaps_es = (
+        (
+            " Not measured in every state (none for TX, FL, PA and 8 others).",
+            " No se mide en todos los estados (no hay datos para TX, FL, PA y otros 8).",
+        )
         if measure in SOCIAL_NEEDS
-        else ""
+        else ("", "")
     )
     return _metric_layer(
         name,
@@ -161,6 +198,8 @@ def _places_layer(row: tuple) -> Layer:
         title_es,
         f"CDC PLACES model estimate (2025 release): {what}, by census tract "
         f"(county when zoomed out).{gaps}",
+        f"Estimación del modelo CDC PLACES (versión 2025): {what_es}, por sector censal "
+        f"(condado al alejar el mapa).{gaps_es}",
         View(
             PLACES_TRACTS,
             {"TractFIPS": "_geoid", "CountyName": "_county", "StateAbbr": "_state", value: "pct"},
@@ -195,6 +234,10 @@ LAYERS: dict[str, Layer] = {
         "service (FCC 'unserved' plus 'underserved' locations), by block group "
         "(tract, county and state when zoomed out). Latest FCC Broadband Data "
         "Collection, via Esri.",
+        "Porcentaje de casas y negocios donde ningún proveedor ofrece servicio de 100/20 Mbps "
+        "(ubicaciones 'sin servicio' más 'con servicio insuficiente' según la FCC), por grupo de "
+        "manzanas (sector censal, condado y estado al alejar el mapa). Datos más recientes del "
+        "FCC Broadband Data Collection, vía Esri.",
         View(
             f"{FCC_BDC}/3",
             FCC_FIELDS,
@@ -221,6 +264,9 @@ LAYERS: dict[str, Layer] = {
         "Low-income census tracts where many residents live more than 1 mile "
         "(urban) or 10 miles (rural) by road from a SNAP-authorized grocery "
         "store. USDA ERS Food Access Research Atlas, 2025 edition.",
+        "Sectores censales de bajos ingresos donde muchos residentes viven a más de 1 milla (zona "
+        "urbana) o 10 millas (zona rural) por carretera de un supermercado autorizado para SNAP. "
+        "USDA ERS Food Access Research Atlas, edición 2025.",
         View(
             FOOD_DESERTS,
             {"CensusTract20": "_geoid", "County24": "_county", "State": "_state"},
@@ -241,6 +287,9 @@ LAYERS: dict[str, Layer] = {
         "FEMA National Risk Index composite risk score (national percentile, "
         "0-100: expected losses from 18 hazards, social vulnerability and "
         "resilience), by census tract (county when zoomed out). Dec 2025 release.",
+        "Puntaje de riesgo compuesto del National Risk Index de FEMA (percentil nacional, "
+        "0-100: pérdidas esperadas por 18 peligros, vulnerabilidad social y resiliencia), "
+        "por sector censal (condado al alejar el mapa). Versión de diciembre de 2025.",
         View(
             NRI_TRACTS,
             {"TRACTFIPS": "_geoid", **NRI_COUNTY_FIELDS},
@@ -263,6 +312,9 @@ LAYERS: dict[str, Layer] = {
         "Vivienda asequible con crédito fiscal (LIHTC)",
         "Rental properties built or rehabilitated with Low-Income Housing Tax "
         "Credits (HUD LIHTC database, updated Dec 2024).",
+        "Propiedades de alquiler construidas o renovadas con créditos fiscales para vivienda de "
+        "bajos ingresos (Low-Income Housing Tax Credits) (base de datos HUD LIHTC, actualizada en "
+        "dic. 2024).",
         View(
             f"{HUD}/LIHTC/FeatureServer/0",
             {"PROJECT": "NAME", "PROJ_ADD": "ADDRESS", "PROJ_CTY": "CITY"},
@@ -278,6 +330,8 @@ LAYERS: dict[str, Layer] = {
         "Public housing developments",
         "Desarrollos de vivienda pública",
         "Public housing developments run by local housing authorities (HUD).",
+        "Desarrollos de vivienda pública administrados por las autoridades de vivienda locales "
+        "(HUD).",
         View(
             f"{HUD}/Public_Housing_Developments/FeatureServer/0",
             {"PROJECT_NAME": "NAME", "STD_ADDR": "ADDRESS", "STD_CITY": "CITY"},
@@ -294,6 +348,9 @@ LAYERS: dict[str, Layer] = {
         "Vales de vivienda (Sección 8)",
         "Housing Choice Vouchers in use as a share of renter-occupied homes, by "
         "census tract (HUD). Tracts with too few vouchers to report are blank.",
+        "Vales de vivienda (Housing Choice Vouchers) en uso como porcentaje de las viviendas "
+        "ocupadas por inquilinos, por sector censal (HUD). Los sectores con muy pocos vales para "
+        "reportar aparecen en blanco.",
         View(
             f"{HUD}/Housing_Choice_Vouchers_by_Tract/FeatureServer/0",
             {"GEOID": "_geoid", "HCV_PUBLIC_PCT": "pct_vouchers"},
@@ -315,6 +372,10 @@ LAYERS: dict[str, Layer] = {
         "HUD Fair Market Rent for a 2-bedroom home (rent plus basic utilities), "
         "by FMR area (metro area or county). Latest published year in HUD's "
         "service (its notes say FY2024 but it was updated Sept 2025).",
+        "Renta justa de mercado (Fair Market Rent) de HUD para una vivienda de 2 recámaras (renta "
+        "más servicios básicos), por área FMR (área metropolitana o condado). Último año "
+        "publicado en el servicio de HUD (sus notas dicen FY2024, pero se actualizó en sept. "
+        "2025).",
         View(
             f"{HUD}/Fair_Market_Rents/FeatureServer/0",
             {"FMR_AREANAME": "name", "FMR_2BDR": "fmr_2br"},
@@ -334,6 +395,8 @@ LAYERS: dict[str, Layer] = {
         "Zonas de Oportunidad",
         "Census tracts designated as Qualified Opportunity Zones in 2018 (2010 "
         "tracts; HUD / CDFI Fund).",
+        "Sectores censales designados como Zonas de Oportunidad Calificadas (Qualified "
+        "Opportunity Zones) en 2018 (sectores de 2010; HUD / CDFI Fund).",
         View(
             f"{HUD}/Opportunity_Zones/FeatureServer/13",
             {"GEOID10": "_geoid", "STATE_NAME": "_state"},
@@ -352,6 +415,8 @@ LAYERS: dict[str, Layer] = {
         "Zonas de Oportunidad 2.0 (elegibles)",
         "Census tracts eligible to be nominated for the 2027-2036 Opportunity "
         "Zones under the 2025 law (HUD, April 2026). Eligible is not designated.",
+        "Sectores censales elegibles para ser nominados como Zonas de Oportunidad 2027-2036 bajo "
+        "la ley de 2025 (HUD, abril de 2026). Ser elegible no significa estar designado.",
         View(
             f"{HUD}/Opportunity_Zones_2/FeatureServer/0",
             {"GEOID": "_geoid", "OZ_ELIGIBLE": "TYPE"},  # "OZ Eligible - Rural"
@@ -372,6 +437,9 @@ LAYERS: dict[str, Layer] = {
         "Census tracts the former Climate & Economic Justice Screening Tool "
         "identified as disadvantaged: archived 2022 v1.0 (2010 tracts), as "
         "re-hosted by Esri. The tool itself is no longer online.",
+        "Sectores censales que la antigua herramienta Climate & Economic Justice Screening Tool "
+        "identificó como desfavorecidos: versión archivada 2022 v1.0 (sectores de 2010), tal como "
+        "la volvió a publicar Esri. La herramienta ya no está en línea.",
         View(
             CEJST,
             {"GEOID10": "_geoid", "CF": "_county", "SF": "_state"},
@@ -391,6 +459,8 @@ LAYERS: dict[str, Layer] = {
         "Viviendas nuevas con permiso (2022)",
         "Housing units authorized by building permits in 2022, by county "
         "(Census Building Permits Survey via HUD; this service runs through 2022).",
+        "Viviendas autorizadas con permisos de construcción en 2022, por condado (Census Building "
+        "Permits Survey vía HUD; este servicio llega hasta 2022).",
         View(
             f"{HUD}/Residential_Construction_Permits_by_County/FeatureServer/24",
             {"NAME": "_county", "STUSAB": "_state", "ALL_PERMITS_2022": "permits_2022"},

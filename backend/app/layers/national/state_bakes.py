@@ -296,6 +296,11 @@ _add(
         "Texas counties under a burn ban right now and since when, as reported to the Texas "
         "A&M Forest Service. County judges issue and lift bans; check the county for details."
     ),
+    description_es=(
+        "Condados de Texas con prohibición de quemas en este momento y desde cuándo, según lo "
+        "reportado al Texas A&M Forest Service. Los jueces de condado emiten y levantan las "
+        "prohibiciones; consulte con el condado para más detalles."
+    ),
     category="info",
     coverage="TX",
     view=View(
@@ -321,6 +326,10 @@ _add(
         "Arkansas counties under a burn ban issued by the county judge, with the Forestry "
         "Division's wildfire danger level. Updated daily."
     ),
+    description_es=(
+        "Condados de Arkansas con prohibición de quemas emitida por el juez del condado, con el "
+        "nivel de peligro de incendios forestales de la Forestry Division. Se actualiza a diario."
+    ),
     category="info",
     coverage="AR",
     loader=_ar_burn_bans,
@@ -336,6 +345,10 @@ _add(
     description=(
         "How full ~400 reservoirs are today, as % of capacity: the 12 western states "
         "(USDA NRCS) and Texas (TWDB). Provisional daily data."
+    ),
+    description_es=(
+        "Qué tan llenos están hoy ~400 embalses, como % de su capacidad: los 12 estados del Oeste "
+        "(USDA NRCS) y Texas (TWDB). Datos diarios provisionales."
     ),
     category="reservoir",
     coverage="usa",
@@ -353,6 +366,10 @@ _add(
         "OCFS-licensed day care centers, small day care centers and school-age programs "
         "across New York State. Family day care homes are not shown."
     ),
+    description_es=(
+        "Guarderías, guarderías pequeñas y programas para niños en edad escolar con licencia de "
+        "OCFS en todo el estado de Nueva York. No se muestran las guarderías familiares en casas."
+    ),
     category="point",
     coverage="NY",
     loader=_ny_child_care,
@@ -367,6 +384,10 @@ _add(
     description=(
         "DHS-certified child care centers across Pennsylvania, with Keystone STARS level. "
         "Family and group child care homes are not shown."
+    ),
+    description_es=(
+        "Centros de cuidado infantil certificados por el DHS en toda Pensilvania, con su nivel de "
+        "Keystone STARS. No se muestran los hogares de cuidado infantil familiares ni grupales."
     ),
     category="point",
     coverage="PA",
@@ -383,6 +404,10 @@ _add(
     description=(
         "HHSC-licensed child care centers operating in Texas. Licensed, registered and "
         "listed child-care homes are not shown."
+    ),
+    description_es=(
+        "Centros de cuidado infantil con licencia de HHSC que operan en Texas. No se muestran los "
+        "hogares de cuidado infantil con licencia, registrados ni inscritos."
     ),
     category="point",
     coverage="TX",

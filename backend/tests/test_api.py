@@ -69,6 +69,7 @@ def test_layer_catalog_shape(client):
     hisp = layers["census-hispanic"]
     assert hisp["available"] is True and hisp["group"] == "people" and hisp["title_es"]
     assert hisp["metric"]["field"] == "pct_hispanic" and hisp["view"]["baked"] is False
+    assert hisp["description_es"] and hisp["description_es"] != hisp["description"]
     # a national-only layer has no file to serve
     assert client.get("/api/layers/census-hispanic").status_code == 404
 
