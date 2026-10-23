@@ -30,9 +30,15 @@ export type Entry = Record<string, string>;
 
 export interface PlanState {
   entries: Record<PlanSectionId, Entry[]>;
+  /** A stable key per entry (same order as `entries`), so the form keeps focus and
+   *  typing on the right person when another one is removed. Never printed. */
+  keys: Record<PlanSectionId, number[]>;
   /** Ticked to-do boxes, by id. */
   done: Record<string, boolean>;
 }
+
+let lastKey = 0;
+const newKey = () => ++lastKey;
 
 export const TEXT_MAX = 200;
 export const MULTILINE_MAX = 1000;
@@ -204,8 +210,10 @@ export const sectionById = (id: PlanSectionId): PlanSection => {
 const blankEntry = (s: PlanSection): Entry => Object.fromEntries(s.fields.map((x) => [x.id, ""]));
 
 export function emptyPlan(): PlanState {
-  const entries = Object.fromEntries(PLAN_SECTIONS.map((s) => [s.id, Array.from({ length: s.repeat?.min ?? 1 }, () => blankEntry(s))])) as PlanState["entries"];
-  return { entries, done: {} };
+  const count = (s: PlanSection) => s.repeat?.min ?? 1;
+  const entries = Object.fromEntries(PLAN_SECTIONS.map((s) => [s.id, Array.from({ length: count(s) }, () => blankEntry(s))])) as PlanState["entries"];
+  const keys = Object.fromEntries(PLAN_SECTIONS.map((s) => [s.id, Array.from({ length: count(s) }, newKey)])) as PlanState["keys"];
+  return { entries, keys, done: {} };
 }
 
 const limit = (s: PlanSection, field: string) => (s.fields.find((x) => x.id === field)?.kind === "multiline" ? MULTILINE_MAX : TEXT_MAX);
@@ -222,14 +230,22 @@ export function addEntry(plan: PlanState, section: PlanSectionId): PlanState {
   const s = sectionById(section);
   const list = plan.entries[section];
   if (!s.repeat || list.length >= s.repeat.max) return plan;
-  return { ...plan, entries: { ...plan.entries, [section]: [...list, blankEntry(s)] } };
+  return {
+    ...plan,
+    entries: { ...plan.entries, [section]: [...list, blankEntry(s)] },
+    keys: { ...plan.keys, [section]: [...plan.keys[section], newKey()] },
+  };
 }
 
 export function removeEntry(plan: PlanState, section: PlanSectionId, index: number): PlanState {
   const s = sectionById(section);
   const list = plan.entries[section];
   if (!s.repeat || list.length <= s.repeat.min || !list[index]) return plan;
-  return { ...plan, entries: { ...plan.entries, [section]: list.filter((_, i) => i !== index) } };
+  return {
+    ...plan,
+    entries: { ...plan.entries, [section]: list.filter((_, i) => i !== index) },
+    keys: { ...plan.keys, [section]: plan.keys[section].filter((_, i) => i !== index) },
+  };
 }
 
 export function toggleTodo(plan: PlanState, id: string): PlanState {
@@ -268,15 +284,14 @@ export function printSections(plan: PlanState, lang: Lang, mode: "filled" | "bla
   for (const s of PLAN_SECTIONS) {
     const list = mode === "blank" ? Array.from({ length: s.repeat ? Math.max(s.repeat.min, 2) : 1 }, () => blankEntry(s)) : plan.entries[s.id];
     const entries = list
-      .map((e, i) => ({
-        heading: s.repeat ? `${s.repeat.item[lang]} ${i + 1}` : undefined,
+      .map((e) => ({
         lines: s.fields
           .map((x): PrintLine => ({ label: x.label[lang], value: (e[x.id] ?? "").trim(), ...(x.kind === "multiline" ? { multiline: true as const } : {}) }))
           .filter((l) => mode === "blank" || l.value !== ""),
       }))
       .filter((e) => e.lines.length > 0)
-      // Renumber after dropping empty entries, so the paper reads 1, 2, 3.
-      .map((e, i) => (s.repeat ? { ...e, heading: `${s.repeat.item[lang]} ${i + 1}` } : e));
+      // Numbered after dropping empty entries, so the paper reads 1, 2, 3.
+      .map((e, i) => (s.repeat ? { heading: `${s.repeat.item[lang]} ${i + 1}`, ...e } : e));
     const todo = (s.todo ?? []).map((t) => ({ label: t.label[lang], done: mode === "filled" && !!plan.done[t.id] })).filter((t) => mode === "blank" || t.done);
     if (entries.length || todo.length) out.push({ id: s.id, title: s.title[lang], entries, todo });
   }

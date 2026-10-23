@@ -10,7 +10,7 @@ import { CIVICS_CHECKED, CIVICS_FACTS, CIVICS_HELP, CIVICS_LINKS, CIVICS_SOURCES
 import { CIVICS_PARTS, FULL_TEST, SENIOR_TEST, pickQuestions, quizState, studyPool, type CivicsPart, type CivicsQuestion, type Mark } from "../../help/civics";
 import { pickVoice } from "../../help/voices";
 import { longDate } from "../../help/dates";
-import { ExtLink, FactList, Phone, Result, Sources } from "./ui";
+import { ExtLink, FactList, LazyDetails, Phone, Result, Sources } from "./ui";
 
 type Mode = "study" | "practice";
 
@@ -255,22 +255,31 @@ export function CivicsTool({ c }: { c: HelpCopy }) {
           <ul className="hcivics__list">
             {shown.map((q) => (
               <li key={q.n}>
-                <details className="hcivics__card">
-                  <summary>
-                    <span lang="en">
-                      <span className="hcivics__n">{q.n}.</span> {q.q}
-                    </span>
-                    {q.star && !seniors && <span className="hf__hint"> ★</span>}
-                  </summary>
-                  {/* The question is already in the summary: here, only listening and the Spanish. */}
-                  {speak && (
-                    <p>
-                      <ListenButton q={q} m={m} lang={lang} speak={speak} />
-                    </p>
+                {/* 128 cards: each answer is built only when its card is opened. */}
+                <LazyDetails
+                  className="hcivics__card"
+                  summary={
+                    <>
+                      <span lang="en">
+                        <span className="hcivics__n">{q.n}.</span> {q.q}
+                      </span>
+                      {q.star && !seniors && <span className="hf__hint"> ★</span>}
+                    </>
+                  }
+                >
+                  {() => (
+                    <>
+                      {/* The question is already in the summary: here, only listening and the Spanish. */}
+                      {speak && (
+                        <p>
+                          <ListenButton q={q} m={m} lang={lang} speak={speak} />
+                        </p>
+                      )}
+                      {spanish && <SpanishQuestion q={q} m={m} />}
+                      <Answers q={q} m={m} c={c} spanish={spanish} />
+                    </>
                   )}
-                  {spanish && <SpanishQuestion q={q} m={m} />}
-                  <Answers q={q} m={m} c={c} spanish={spanish} />
-                </details>
+                </LazyDetails>
               </li>
             ))}
           </ul>

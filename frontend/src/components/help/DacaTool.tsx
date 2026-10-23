@@ -9,6 +9,7 @@ import { DACA_COPY, type DacaCopy } from "../../help/daca-copy";
 import { DACA_CHECKED, DACA_FACTS, DACA_HELP, DACA_LINKS, DACA_SOURCES } from "../../help/daca-facts";
 import { dacaPlan, type DacaPlan, type DacaStatus } from "../../help/daca";
 import { RIGHTS_FACTS } from "../../help/rights-facts";
+import { factsById } from "../../help/facts-by-id";
 import { longDate, todayIso } from "../../help/dates";
 import { ExtLink, FactList, Field, Phone, Result, Sources, type Tone } from "./ui";
 
@@ -20,7 +21,7 @@ const TONE: Record<DacaStatus, Tone> = {
   "expired-initial": "bad",
 };
 
-const NOTARIO = RIGHTS_FACTS.scams.filter((f) => f.id === "scam-notario");
+const NOTARIO = factsById(RIGHTS_FACTS.scams, "scam-notario");
 
 export function DacaTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) {
   const { lang, locale } = useI18n();
@@ -54,7 +55,7 @@ export function DacaTool({ c, onLegal }: { c: HelpCopy; onLegal: () => void }) {
 
       <div aria-live="polite">
         {!expires && <p className="hf__hint">{t.fillDate}</p>}
-        {expires && !plan && <p role="alert">{t.invalidDate}</p>}
+        {expires && !plan && <p>{t.invalidDate}</p>}
         {plan && <PlanView plan={plan} expires={expires} t={t} locale={locale} />}
       </div>
 
@@ -124,7 +125,7 @@ function PlanView({ plan, expires, t, locale }: { plan: DacaPlan; expires: strin
       {/* "Too early" already names the window; once it has passed, its dates would only confuse. */}
       {plan.status === "file-now" && <p>{t.window(dates.opens, dates.ideal)}</p>}
       {FILING.has(plan.status) && <p>{t.beforeFile}</p>}
-      {plan.far && <p role="alert">{t.farDate}</p>}
+      {plan.far && <p>{t.farDate}</p>}
     </Result>
   );
 }
