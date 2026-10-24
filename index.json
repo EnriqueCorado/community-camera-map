@@ -80,6 +80,15 @@
    "smoke-haze",
    "power-outages",
    "weather-alerts"
+  ],
+  "2026-10-24": [
+   "quakes",
+   "wildfire",
+   "wildfire-perimeters",
+   "fire-hotspots",
+   "smoke-haze",
+   "power-outages",
+   "weather-alerts"
   ]
  }
 }
