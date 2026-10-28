@@ -1,6 +1,8 @@
 // Unit tests for the community & immigrant services pack popups (no browser).
 import { test, expect } from "@playwright/test";
-import { mealsOpen, phone, servicePopup, SERVICE_COLORS, SERVICE_LINK_HOSTS } from "../../frontend/src/services-pack";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { CONSULATE_HOSTS, CONSULATE_ROSTER, mealsOpen, phone, servicePopup, SERVICE_COLORS, SERVICE_LINK_HOSTS } from "../../frontend/src/services-pack";
 import { applyFields } from "../../frontend/src/view-logic";
 import { safeUrl, WEBCAM_PAGE_HOSTS } from "../../frontend/src/popup-logic";
 import type { ViewSpec } from "../../frontend/src/api/client";
@@ -41,6 +43,10 @@ test("every pack link host is https-allowlisted and every layer has a color", ()
   for (const h of SERVICE_LINK_HOSTS) expect(WEBCAM_PAGE_HOSTS).toContain(h);
   // USPS is federal but lives on usps.com.
   expect(SERVICE_LINK_HOSTS.every((h) => /\.(gov|org)$/.test(h) || h === "tools.usps.com")).toBe(true);
+  // Consulate hosts stay out of the shared allowlist: each consulate link carries its own country's list.
+  const foreign = Object.values(CONSULATE_HOSTS).flat();
+  expect(foreign.filter((h) => WEBCAM_PAGE_HOSTS.includes(h))).toEqual([]);
+  expect(WEBCAM_PAGE_HOSTS).not.toContain("travel.state.gov");
   expect(Object.keys(SERVICE_COLORS).length).toBeGreaterThanOrEqual(14);
 });
 
@@ -153,4 +159,78 @@ test("Marketplace assisters: types, hours, languages, area-only sites, HealthCar
   // Other layers keep one link in both languages and their "Days" row.
   expect(servicePopup("health-centers", { n: "X" }, "es", "es-US", tidy).link?.href).toBe("https://findahealthcenter.hrsa.gov/");
   expect(row(servicePopup("summer-meals", { n: "X", d: "Mon-Fri" }, "en", "en-US", tidy).rows, "Days")).toBe("Mon-Fri");
+});
+
+test("consulates: titles in both languages, official links only, State Department fallback", () => {
+  const korea = { cc: "KR", t: "consulate-general", pl: "Los Angeles", a: "3243 Wilshire Blvd", c: "Los Angeles", s: "CA", p: "(213) 385-9300", web: "https://overseas.mofa.go.kr/us-losangeles-en/index.do" };
+  const es = servicePopup("consulates", korea, "es", "es-US", tidy);
+  expect(es.title).toBe("Consulado General de Corea del Sur en Los Angeles");
+  expect(row(es.rows, "Tipo")).toBe("Consulado general");
+  expect(row(es.rows, "Teléfono")).toBe("(213) 385-9300");
+  expect(row(es.rows, "Sitio web")).toBe("overseas.mofa.go.kr/us-losangeles-en/index.do");
+  expect(row(es.rows, "Nota")).toContain("pasaportes");
+  expect(es.link).toEqual({ href: korea.web, label: "Página oficial del consulado", hosts: ["overseas.mofa.go.kr"] });
+  expect(safeUrl(es.link?.href, es.link!.hosts!)).toBe(korea.web);
+  const en = servicePopup("consulates", korea, "en", "en-US", tidy);
+  expect(en.title).toBe("Consulate General of the Republic of Korea in Los Angeles");
+  expect(row(en.rows, "Note")).toContain("detained");
+
+  // An embassy site on a generic domain is never linked or shown: the State Department page instead.
+  const vn = servicePopup("consulates", { cc: "VN", t: "consulate", pl: "New York", web: "https://www.vietnamconsulate-ny.org/" }, "en", "en-US", tidy);
+  expect(row(vn.rows, "Website")).toBe("");
+  expect(vn.link?.href).toBe("https://travel.state.gov/content/travel/en/consularnotification/ConsularNotificationandAccess/VietNam.html");
+  expect(vn.link?.label).toBe("Contact info (U.S. State Department)");
+  expect(vn.link?.hosts).toEqual(["travel.state.gov"]);
+  expect(safeUrl(vn.link?.href, vn.link!.hosts!)).not.toBeNull();
+  // Another country's official host doesn't count either, nor http or look-alike hosts.
+  for (const web of ["https://overseas.mofa.go.kr/x", "http://usa.mirex.gob.do/x", "https://usa.mirex.gob.do.evil.example/x", "javascript:alert(1)"]) {
+    expect(servicePopup("consulates", { cc: "DO", t: "consulate-general", pl: "Boston", web }, "en", "en-US", tidy).link?.href).toContain("travel.state.gov");
+  }
+  // No office page: the official appointment site, then the government's own list.
+  const ec = servicePopup("consulates", { cc: "EC", t: "consulate", pl: "Miami", ap: "https://citas.cancilleria.gob.ec/" }, "es", "es-US", tidy);
+  expect(ec.link?.href).toBe("https://citas.cancilleria.gob.ec/");
+  expect(ec.link?.label).toBe("Hacer una cita (sitio oficial)");
+  expect(row(ec.rows, "Citas")).toBe("citas.cancilleria.gob.ec");
+  const sv = servicePopup("consulates", { cc: "SV", t: "consulate-general", pl: "Doral", dl: "https://rree.gob.sv/directorio-de-consulados/" }, "en", "en-US", tidy);
+  expect(sv.link?.label).toBe("Official list of consulates");
+  // Embassy consular sections are named after the embassy.
+  const cuba = servicePopup("consulates", { cc: "CU", t: "consular-section", pl: "Washington" }, "es", "es-US", tidy);
+  expect(cuba.title).toBe("Embajada de Cuba: sección consular");
+  expect(row(cuba.rows, "Tipo")).toBe("Sección consular de la embajada");
+  expect(SERVICE_COLORS.consulates).toMatch(/^#[0-9a-f]{6}$/);
+
+  // Mexico: 24-hour CIAM line, MiConsulado appointments and the matrícula consular note.
+  const mx = { cc: "MX", t: "consulate", pl: "Fresno", a: "7435 N Ingram Ave", c: "Fresno", s: "CA", p: "(559) 233-3065", hl: "(520) 623-7874", ap: "https://citas.sre.gob.mx/", web: "https://consulmex.sre.gob.mx/fresno/" };
+  const mxEs = servicePopup("consulates", mx, "es", "es-US", tidy);
+  expect(mxEs.title).toBe("Consulado de México en Fresno");
+  expect(row(mxEs.rows, "Línea de ayuda 24 horas")).toBe("(520) 623-7874");
+  expect(row(mxEs.rows, "Citas")).toBe("citas.sre.gob.mx");
+  expect(row(mxEs.rows, "Nota")).toMatch(/^Los consulados de México expiden pasaportes mexicanos y la matrícula consular/);
+  expect(mxEs.link?.href).toBe("https://consulmex.sre.gob.mx/fresno/");
+  expect(row(servicePopup("consulates", mx, "en", "en-US", tidy).rows, "Note")).toContain("matrícula consular");
+  // the help line and Mexico's note never leak into another country's popup
+  const gt = servicePopup("consulates", { cc: "GT", t: "consulate", pl: "Del Rio" }, "en", "en-US", tidy);
+  expect(row(gt.rows, "Note")).not.toContain("Mexican");
+});
+
+test("consulates: every baked office has a named country and a link that passes the allowlist", () => {
+  const fc = JSON.parse(readFileSync(join(__dirname, "../../frontend/public/data/layers/consulates.geojson"), "utf8"));
+  expect(fc.features.length).toBeGreaterThan(200);
+  const countries = new Set<string>();
+  for (const f of fc.features) {
+    const p = f.properties;
+    countries.add(p.cc);
+    expect(CONSULATE_ROSTER[p.cc], p.cc).toBeTruthy();
+    for (const lang of ["en", "es"] as const) {
+      const pop = servicePopup("consulates", p, lang, lang === "es" ? "es-US" : "en-US", tidy);
+      expect(pop.title, p.n).not.toMatch(/ (of|de) [A-Z]{2}\b/); // a raw country code: missing name
+      expect(pop.link, p.n).toBeDefined();
+      // re-checked by the popup against the link's own list (MapView linkHtml)
+      expect(pop.link!.hosts, p.n).toBeDefined();
+      expect(safeUrl(pop.link!.href, pop.link!.hosts!), `${p.n}: ${pop.link!.href}`).toBe(pop.link!.href);
+    }
+    // what the data links to is on that country's own allowlist
+    for (const k of ["web", "ap", "dl"]) if (p[k]) expect(CONSULATE_HOSTS[p.cc], `${p.n} ${k}`).toContain(new URL(p[k]).hostname);
+  }
+  expect(countries.has("MX")).toBe(true);
 });

@@ -11,7 +11,11 @@
 // birthing-friendly · ns stations · ls evening shift · sv service bit flags.
 // Marketplace assisters (backend national/help_offices.py) use t as
 // space-separated type codes, d hours, web website and x 2 = area served (CMS
-// lists no public address, so the point is only near the area).
+// lists no public address, so the point is only near the area). Consulates
+// (backend national/consulates.py) use cc country (ISO 3166 alpha-2) · t kind
+// · pl place · web office page · ap appointments page · dl the government's
+// consulate list · hl help line (every link is re-checked against the
+// country's own hosts).
 import type { Lang } from "./i18n"; // type-only: erased at build
 
 export const SERVICE_COLORS: Record<string, string> = {
@@ -38,6 +42,7 @@ export const SERVICE_COLORS: Record<string, string> = {
   "home-health-agencies": "#15803d",
   "hospital-ratings": "#b91c1c",
   "marketplace-assisters": "#9333ea",
+  consulates: "#e11d48",
 };
 
 type Bi = [en: string, es: string];
@@ -91,7 +96,92 @@ const COLLEGE_NAVIGATOR = "https://nces.ed.gov/collegenavigator/?id=";
 /** Hand-kept immigration offices link to the official page each row came from. */
 const OFFICE_PAGES = ["https://www.justice.gov/eoir/", "https://www.ice.gov/"];
 
+/** Consulates: the exact hosts each country's links may use, its own
+ *  government domains only (an embassy site on a .org/.com domain isn't
+ *  here). Mirrors backend national/consulates.py OFFICIAL_HOSTS; backend
+ *  tests/test_consulates.py fails if the two drift. */
+export const CONSULATE_HOSTS: Record<string, string[]> = {
+  BR: ["www.gov.br", "econsular.itamaraty.gov.br"],
+  CN: ["us.china-embassy.gov.cn", "newyork.china-consulate.gov.cn", "sanfrancisco.china-consulate.gov.cn", "losangeles.china-consulate.gov.cn", "chicago.china-consulate.gov.cn"],
+  CO: [
+    "atlanta.consulado.gov.co", "boston.consulado.gov.co", "chicago.consulado.gov.co", "houston.consulado.gov.co", "losangeles.consulado.gov.co", "miami.consulado.gov.co",
+    "newark.consulado.gov.co", "nuevayork.consulado.gov.co", "orlando.consulado.gov.co", "sanfrancisco.consulado.gov.co", "sanjuan.consulado.gov.co", "washington.consulado.gov.co",
+    "tramites.cancilleria.gov.co",
+  ],
+  CU: ["misiones.cubaminrex.cu"],
+  DO: ["usa.mirex.gob.do", "consultas.mirex.gob.do"],
+  EC: ["www.cancilleria.gob.ec", "citas.cancilleria.gob.ec"],
+  GT: ["www.embaguateusa.gob.gt"],
+  HN: ["sreci.gob.hn"],
+  HT: ["ambetatsunis.gouv.ht", "cgatlanta.gouv.ht", "cgboston.gouv.ht", "cgchicago.gouv.ht", "cgmiami.gouv.ht", "cgnewyork.gouv.ht", "conorlando.gouv.ht", "mae.gouv.ht"],
+  IN: ["indianembassyusa.gov.in", "www.indiainnewyork.gov.in", "www.cgisf.gov.in", "www.cgichicago.gov.in", "www.cgihouston.gov.in", "indiainatlanta.gov.in", "indiainseattle.gov.in", "www.indiainla.gov.in"],
+  KR: ["overseas.mofa.go.kr"],
+  MX: ["consulmex.sre.gob.mx", "citas.sre.gob.mx", "www.gob.mx"],
+  PE: ["www.gob.pe"],
+  PH: ["honolulupcg.dfa.gov.ph", "houstonpcg.dfa.gov.ph"],
+  SV: ["rree.gob.sv", "www.rree.gob.sv"],
+  UA: ["mfa.gov.ua", "usa.mfa.gov.ua", "ny.mfa.gov.ua", "chicago.mfa.gov.ua", "san-francisco.mfa.gov.ua", "houston.mfa.gov.ua", "online.mfa.gov.ua"],
+};
+/** The U.S. State Department's consular contact page for each country
+ *  (travel.state.gov, ".../ConsularNotificationandAccess/<slug>.html"): the
+ *  fallback link. Mirrors backend consulates.py ROSTER_SLUGS. */
+export const CONSULATE_ROSTER: Record<string, string> = {
+  AF: "Afghanistan",
+  BR: "Brazil",
+  CN: "China",
+  CO: "Colombia",
+  CU: "Cuba",
+  DO: "DominicanRepublic",
+  EC: "Ecuador",
+  GT: "Guatemala",
+  HN: "Honduras",
+  HT: "Haiti",
+  IN: "India",
+  KR: "KoreaRepublicof",
+  MX: "Mexico",
+  NI: "Nicaragua",
+  PE: "Peru",
+  PH: "Philippines",
+  SV: "ElSalvador",
+  UA: "Ukraine",
+  VE: "VenezuelaBolivarianRepublicof",
+  VN: "VietNam",
+};
+const ROSTER_PAGE = "https://travel.state.gov/content/travel/en/consularnotification/ConsularNotificationandAccess/";
+const ROSTER_HOSTS = ["travel.state.gov"];
+const CONSULATE_NAMES: Record<string, Bi> = {
+  AF: ["Afghanistan", "Afganistán"],
+  BR: ["Brazil", "Brasil"],
+  CN: ["China", "China"],
+  CO: ["Colombia", "Colombia"],
+  CU: ["Cuba", "Cuba"],
+  DO: ["the Dominican Republic", "la República Dominicana"],
+  EC: ["Ecuador", "Ecuador"],
+  GT: ["Guatemala", "Guatemala"],
+  HN: ["Honduras", "Honduras"],
+  HT: ["Haiti", "Haití"],
+  IN: ["India", "India"],
+  KR: ["the Republic of Korea", "Corea del Sur"],
+  MX: ["Mexico", "México"],
+  NI: ["Nicaragua", "Nicaragua"],
+  PE: ["Peru", "Perú"],
+  PH: ["the Philippines", "Filipinas"],
+  SV: ["El Salvador", "El Salvador"],
+  UA: ["Ukraine", "Ucrania"],
+  VE: ["Venezuela", "Venezuela"],
+  VN: ["Vietnam", "Vietnam"],
+};
+/** Country-specific notes (official sources in backend data/consulates.json). */
+const CONSULATE_NOTES: Record<string, Bi> = {
+  // gob.mx/sre "Matrícula Consular de Alta Seguridad"; appointments on citas.sre.gob.mx
+  MX: [
+    "Mexican consulates issue Mexican passports and the matrícula consular (a high-security consular ID card) to Mexican citizens, by appointment through MiConsulado.",
+    "Los consulados de México expiden pasaportes mexicanos y la matrícula consular de alta seguridad (identificación consular) a personas mexicanas, con cita a través de MiConsulado.",
+  ],
+};
+
 /** Hosts this pack links to (merged into the popup link allowlist). */
+// (Consulate links carry their own country's host list instead: see consulateLink.)
 export const SERVICE_LINK_HOSTS: string[] = [
   ...new Set(
     [...Object.values(LINKS).map(([u]) => u), ...Object.values(LINKS_ES), COLLEGE_NAVIGATOR, ...OFFICE_PAGES].map((u) => new URL(u).hostname),
@@ -220,7 +310,56 @@ const LABELS: Record<string, Bi> = {
   company: ["Company", "Empresa"],
   medicareId: ["Medicare provider number (CCN)", "Número de proveedor de Medicare (CCN)"],
   no: ["No", "No"],
+  appointments: ["Appointments", "Citas"],
+  helpLine: ["24-hour help line", "Línea de ayuda 24 horas"],
 };
+const CONSULATE_NOTE: Bi = [
+  "Consulates issue passports and ID documents to their citizens and can help citizens who are detained or in an emergency. Call or make an appointment before you go.",
+  "Los consulados emiten pasaportes y documentos de identidad a sus ciudadanos y pueden ayudar a los que están detenidos o en una emergencia. Llame o haga una cita antes de ir.",
+];
+const CONSULATE_LINKS: Record<"web" | "ap" | "dl" | "roster", Bi> = {
+  web: ["Official consulate page", "Página oficial del consulado"],
+  ap: ["Make an appointment (official site)", "Hacer una cita (sitio oficial)"],
+  dl: ["Official list of consulates", "Lista oficial de consulados"],
+  roster: ["Contact info (U.S. State Department)", "Contactos (Departamento de Estado de EE. UU.)"],
+};
+const CONSULATE_TITLES: Record<string, Bi> = {
+  "consulate-general": ["Consulate General", "Consulado General"],
+  consulate: ["Consulate", "Consulado"],
+  "consular-agency": ["Consular Office", "Oficina Consular"],
+};
+/** The office's name in the popup's language. */
+function consulateTitle(cc: string, kind: string, place: string, i: 0 | 1): string {
+  const country = CONSULATE_NAMES[cc]?.[i] ?? cc;
+  if (kind === "consular-section") return i ? `Embajada de ${country}: sección consular` : `Embassy of ${country}: consular section`;
+  const head = (CONSULATE_TITLES[kind] ?? CONSULATE_TITLES.consulate!)[i];
+  return i ? `${head} de ${country} en ${place}` : `${head} of ${country} in ${place}`;
+}
+/** `v` if it's an https URL on one of the country's official hosts, else "". */
+export function consulateUrl(cc: string, v: unknown): string {
+  if (typeof v !== "string") return "";
+  try {
+    const u = new URL(v.trim());
+    const ok = u.protocol === "https:" && (CONSULATE_HOSTS[cc] ?? []).includes(u.hostname) && !u.username && !u.password;
+    return ok ? u.href : "";
+  } catch {
+    return "";
+  }
+}
+/** A consulate's single popup link: its own official page, else the official
+ *  appointment site, else the government's consulate list, else the State
+ *  Department's page for that country. */
+function consulateLink(cc: string, p: Record<string, unknown>, i: 0 | 1): ServicePopup["link"] {
+  // Each link carries its own allowlist, so these hosts never widen what
+  // other layers' data may link to.
+  const hosts = CONSULATE_HOSTS[cc] ?? [];
+  for (const k of ["web", "ap", "dl"] as const) {
+    const href = consulateUrl(cc, p[k]);
+    if (href) return { href, label: CONSULATE_LINKS[k][i], hosts };
+  }
+  const slug = CONSULATE_ROSTER[cc];
+  return slug ? { href: `${ROSTER_PAGE}${slug}.html`, label: CONSULATE_LINKS.roster[i], hosts: ROSTER_HOSTS } : undefined;
+}
 
 /** Care Compare codes -> words: ownership and the services each place offers. */
 const OWNERSHIP: Record<string, Bi> = {
@@ -318,6 +457,12 @@ TYPES["marketplace-assisters"] = {
   mcd: ["Medicaid help", "Ayuda con Medicaid"],
   chip: ["CHIP (children’s coverage) help", "Ayuda con CHIP (seguro para niños)"],
 };
+TYPES.consulates = {
+  "consulate-general": ["Consulate general", "Consulado general"],
+  consulate: ["Consulate", "Consulado"],
+  "consular-section": ["Embassy consular section", "Sección consular de la embajada"],
+  "consular-agency": ["Consular office", "Oficina consular"],
+};
 TYPES["immigration-offices"] = {
   court: ["Immigration court", "Corte de inmigración"],
   ice: ["ICE field office (ERO)", "Oficina de campo de ICE (ERO)"],
@@ -363,7 +508,9 @@ export function phone(v: unknown): string {
 export interface ServicePopup {
   title: string;
   rows: [string, string][];
-  link?: { href: string; label: string };
+  /** `hosts`: the allowlist the popup re-checks this link against (default:
+   *  the shared WEBCAM_PAGE_HOSTS). */
+  link?: { href: string; label: string; hosts?: readonly string[] };
 }
 
 /** Popup content for a services-pack feature. `tidy` turns ALL-CAPS source
@@ -411,6 +558,9 @@ export function servicePopup(
   const both = p.t === "both" ? (layer === "mental-health" ? L("bothMh") : L("bothSu")) : "";
   const kind = raw(p.k) && raw(p.k) !== "Permanent" ? typeLabel(p.k) : "";
   const isTreatment = layer === "mental-health" || layer === "addiction-treatment";
+  const consulate = layer === "consulates";
+  const cc = raw(p.cc).toUpperCase();
+  const shortUrl = (u: string) => u.replace(/^https:\/\/(www\.)?/, "").replace(/\/$/, "");
   // Medicare Care Compare layers: stars, ownership and service codes.
   const care = CARE_LAYERS.has(layer);
   const starText = (v: unknown, unrated: boolean) => {
@@ -447,6 +597,8 @@ export function servicePopup(
     [L("city"), city],
     [L("phone"), phone(p.p)],
     [L("enroll"), phone(p.rp)],
+    [L("helpLine"), consulate ? phone(p.hl) : ""],
+    [L("appointments"), consulate ? shortUrl(consulateUrl(cc, p.ap)) : ""],
     [L("languages"), langs],
     [L("services"), services],
     [L("emergency"), layer === "hospital-ratings" ? yesNo(p.er) : ""],
@@ -464,10 +616,16 @@ export function servicePopup(
     [hours ? L("hours") : L("days"), hours ? raw(p.d) : str(p.d)],
     [L("breakfast"), raw(p.bt)],
     [L("lunch"), raw(p.lt)],
-    [L("website"), /^https:\/\/[^\s]+$/.test(raw(p.web)) ? raw(p.web).replace(/^https:\/\/(www\.)?/, "").replace(/\/$/, "") : ""],
+    [L("website"), consulate ? shortUrl(consulateUrl(cc, p.web)) : /^https:\/\/[^\s]+$/.test(raw(p.web)) ? shortUrl(raw(p.web)) : ""],
     [L("location"), p.x === 1 ? L("approx") : p.x === 2 ? L("area") : ""],
-    [L("note"), (layer === "immigration-offices" ? OFFICE_NOTES[raw(p.t)]?.[i] : NOTES[layer]?.[i]) ?? ""],
+    [
+      L("note"),
+      consulate
+        ? [CONSULATE_NOTES[cc]?.[i], CONSULATE_NOTE[i]].filter(Boolean).join(" ")
+        : ((layer === "immigration-offices" ? OFFICE_NOTES[raw(p.t)]?.[i] : NOTES[layer]?.[i]) ?? ""),
+    ],
   ];
+  if (consulate) return { title: consulateTitle(cc, raw(p.t), str(p.pl), i), rows, link: consulateLink(cc, p, i) };
   const fixed = LINKS[layer];
   const unitid = raw(p.u);
   const page = raw(p.pg);
