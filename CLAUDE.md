@@ -10,7 +10,8 @@ used for local dev and for baking data in CI, Playwright tests (`e2e/`), and a
 Vercel relay (`relay/`: `/api/flights`, `/api/count` usage counter on Upstash
 KV, `/api/inbound` Resend webhook that forwards corrections mail; its firewall
 rule "Only the relay's own paths" lives in Vercel only and must list every
-endpoint).
+endpoint; deploy with `vercel deploy --prod --scope personal-fun-enrique`, as
+other scopes fail with "Not authorized").
 
 ## Commands
 
